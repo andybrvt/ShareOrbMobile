@@ -7,6 +7,7 @@ import Routes from './Routes'
 import { NavigationContainer } from '@react-navigation/native';
 import axios from "axios";
 // import * as dateFns from 'date-fns';
+// import './global.js';
 
 
 
@@ -17,7 +18,7 @@ class App extends Component{
 
 
   componentDidMount(){
-      axios.get("http://192.168.1.24:8000/userprofile/all-users")
+      axios.get(`${global.IP_CHANGE}/userprofile/all-users`)
       .then(res => {
         console.log(res)
       })
