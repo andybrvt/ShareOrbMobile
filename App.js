@@ -17,10 +17,7 @@ class App extends Component{
 
 
   componentDidMount(){
-      fetch("http://192.168.1.24:8000/userprofile/all-users", {
-        method:"GET"
-      })
-      .then(res => res.json())
+      axios.get("http://192.168.1.24:8000/userprofile/all-users")
       .then(res => {
         console.log(res)
       })
