@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.9.3",
+    "antd-mobile": "^2.3.4",
     "axios": "^0.21.1",
     "expo": "~40.0.0",
     "expo-splash-screen": "~0.8.0",
@@ -22,6 +23,9 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
+    "react-native-svg": "^12.1.0",
+    "react-native-svg-transformer": "^0.14.3",
+    "react-native-svg-uri": "^1.2.3",
     "react-native-unimodules": "~0.12.0",
     "react-native-web": "~0.13.12"
   },
