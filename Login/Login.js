@@ -15,6 +15,7 @@ import {
 import styles from './LoginStyle';
 import SvgUri from 'react-native-svg-uri';
 import { List, InputItem } from 'antd-mobile';
+import { connect } from "react-redux";
 
 
 
@@ -27,13 +28,12 @@ class Login extends React.Component{
 }
 
   render(){
+    console.log(this.props)
 
 
     return (
       <View style = {styles.background}>
-
-
-
+ 
          <StatusBar style="auto" />
          <View style = {styles.logo}>
            <MainLogo height = {100}  width = {200} />
@@ -87,4 +87,13 @@ class Login extends React.Component{
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  // you get the token here
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+    test: state.auth.test,
+  };
+};
+
+export default connect(mapStateToProps, null)(Login);
