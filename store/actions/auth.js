@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 import { AsyncStorage } from 'react-native';
-import  { authAxios } from '../../util';
+import  authAxios  from '../../util';
 
 // import React from 'react';
 // // import  { authAxios } from '../../components/util';
@@ -20,6 +20,13 @@ export const authSuccess = (token) => {
   }
 }
 
+export const authFail = error => {
+  return {
+    type: actionTypes.AUTH_FAIL,
+    error: error
+  };
+};
+
 export const authLogin = (username, password) => {
   // This function will be used to login in
 
@@ -33,9 +40,10 @@ export const authLogin = (username, password) => {
     .then(res => {
 
       const token = res.data.key
+      AsyncStorage.setItem('token', token)
+
       // This auth axios will run and get the token and then you will
       // add the token into the local storage
-      AsyncStorage.setItem('token', token)
 
       // This is to add the token into redux
       dispatch(authSuccess(token))
@@ -46,17 +54,9 @@ export const authLogin = (username, password) => {
       // return axios.get(`${global.IP_CHANGE}/userprofile/current-user`)
 
     })
-    // .then(res => {
-    //   console.log(res.data)
-    //   const username = res.data.username;
-    //   const id = res.data.id;
-    //
-    //
-    //   console.log(username, id)
-    // })
 
     .catch(err => {
-      console.log(err)
+      dispatch(authFail(err));
     })
 
 
@@ -74,25 +74,29 @@ export const logout = () => {
 
 // This is where we check if you are login already or not
 export const authCheckState = () => {
-  console.log('auth check state hit')
   return dispatch => {
-    const token = AsyncStorage.getItem("token");
-    if(token === undefined){
-      // Check if there is token already existing,
-      // if not you will log out
-      dispatch(logout());
-    } else {
-      console.log('here is the token')
-      console.log(token)
-      // if you have a token stored then you will put it into the redux
-      dispatch(authSuccess(token))
-      dispatch(grabUserCredentials())
-      // dispatch()
 
-    }
+    const token = AsyncStorage.getItem("token")
+
+    // since this is async storage and is a promise  you have to
+    // do a . then  in order to get the value
+  AsyncStorage.getItem('token')
+  .then(res => {
+      // res here will return the token
+
+      if(res === undefined){
+        // Check if there is token already existing,
+        // if not you will log out
+        dispatch(logout());
+      } else {
 
 
+        // if you have a token stored then you will put it into the redux
+        dispatch(authSuccess(res))
+        dispatch(grabUserCredentials())
 
+      }
+  })
   }
 }
 
@@ -102,7 +106,77 @@ export const grabUserCredentials = () => {
   return dispatch => {
     authAxios.get(`${global.IP_CHANGE}/userprofile/current-user`)
     .then(res => {
-      console.log(res.data)
+
+      // AsyncStorage.setItem("username", username);
+      // AsyncStorage.setItem("id", id);
+      // AsyncStorage.setItem('firstName', firstName);
+      // AsyncStorage.setItem('lastName', lastName);
+      // AsyncStorage.setItem('profilePic', profilePic);
+      // AsyncStorage.setItem('following', following);
+      // AsyncStorage.setItem('followers', followers);
+      // AsyncStorage.setItem('email', email);
+      // AsyncStorage.setItem('dob', dob);
+      // AsyncStorage.setItem('private', privatePro)
+      // AsyncStorage.setItem('sentRequestList', sentRequestList)
+      // AsyncStorage.setItem('requestList', requestList)
+      // AsyncStorage.setItem('showIntialInstructions', showIntialInstructions)
+      // AsyncStorage.setItem('notificationSeen', notificationSeen)
+
+      dispatch(addCredentials(
+        res.data.username,
+         res.data.id,
+         res.data.first_name,
+         res.data.last_name,
+         res.data.profile_picture,
+         res.data.get_following,
+         res.data.get_followers,
+         res.data.email,
+         res.data.dob,
+         res.data.private,
+         res.data.get_sent_follow_request,
+         res.data.get_follow_request,
+         res.data.showIntialInstructions,
+         res.data.notificationSeen
+      ))
+    })
+    .catch(err => {
+      dispatch(authFail(err));
     })
   }
 }
+
+export const addCredentials = (
+   username,
+   id,
+   firstName,
+   lastName,
+   profilePic,
+   following,
+   followers,
+   email,
+   dob,
+   privatePro,
+   sentRequestList,
+   requestList,
+   showIntialInstructions,
+   notificationSeen
+ ) => {
+
+  return {
+    type: actionTypes.ADD_CREDENTIALS,
+    username: username,
+    id: id,
+    firstName: firstName,
+    lastName: lastName,
+    profilePic: profilePic,
+    following: following,
+    followers: followers,
+    email:email,
+    dob: dob,
+    private: privatePro,
+    sentRequestList: sentRequestList,
+    requestList:requestList,
+    showIntialInstructions: showIntialInstructions,
+    notificationSeen: notificationSeen
+  };
+};

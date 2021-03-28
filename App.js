@@ -26,7 +26,16 @@ class App extends Component{
   }
 
   componentDidUpdate(prevProps){
-    
+    console.log(prevProps)
+    console.log(this.props)
+    if(this.props.isAuthenticated){
+      // This one is when you have an update of the props, especially whne you
+      // login... check if you are authenticated and then
+      // grab the userinfromation
+
+      this.props.grabUserCredentials()
+    }
+
   }
 
   render(){
@@ -45,6 +54,7 @@ class App extends Component{
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
+    token: state.auth.token,
     username: state.auth.username,
     id: state.auth.id,
 
@@ -55,6 +65,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onTryAutoSignup: () => dispatch(authActions.authCheckState()),
+    grabUserCredentials: () => dispatch(authActions.grabUserCredentials()),
 
   }
 }
