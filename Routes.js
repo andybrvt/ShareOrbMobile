@@ -3,7 +3,8 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import React from 'react';
 import Home from './Home';
 import Friends from './Friends';
-import Login from './Login/Login'
+import Login from './Login/Login';
+import Signup from './Signup/Signup';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -14,6 +15,7 @@ class Routes extends React.Component{
     return(
       <Stack.Navigator screenOptions={{headerShown: false,}}>
         <Stack.Screen name = "Login" component = {Login} />
+        <Stack.Screen name = "Signup" component = {Signup} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Friends" component={Friends} />
 

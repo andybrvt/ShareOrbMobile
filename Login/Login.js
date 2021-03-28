@@ -20,6 +20,7 @@ import styles from './LoginStyle';
 import SvgUri from 'react-native-svg-uri';
 import { List, InputItem } from 'antd-mobile';
 import { connect } from "react-redux";
+import { authLogin } from "../store/actions/auth";
 
 
 
@@ -36,6 +37,7 @@ class Login extends React.Component{
   }
 
   handleUserName = e => {
+    // onChange for the username
     const tempVal = e
     this.setState({
       username: tempVal
@@ -43,11 +45,21 @@ class Login extends React.Component{
   }
 
   handlePasword = e => {
+    // onchange for the password
    const tempVal = e;
   this.setState({
     password: tempVal
   });
 };
+
+  handleSubmit = () => {
+    // This function will be used to submit for the login
+    const {username, password} = this.state;
+    console.log(username)
+    console.log(password)
+    this.props.login(username, password)
+
+  }
 
 
 
@@ -93,7 +105,9 @@ class Login extends React.Component{
 
           </View>
 
-          <TouchableOpacity style = {styles.loginBtn}>
+          <TouchableOpacity
+            onPress = {this.handleSubmit}
+             style = {styles.loginBtn}>
             <Text style = {styles.loginText}> Login</Text>
           </TouchableOpacity>
 
@@ -128,4 +142,14 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(Login);
+const mapDispatchToProps = dispatch => {
+  // the actual login in function is in here and this is from redux (store)
+  return {
+    login: (username, password) => dispatch(authLogin(username, password))
+  };
+};
+
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

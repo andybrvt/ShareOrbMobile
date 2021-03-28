@@ -8,6 +8,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import axios from "axios";
 // import * as dateFns from 'date-fns';
 // import './global.js';
+import * as authActions from './store/actions/auth';
+import { connect } from 'react-redux';
+
 
 
 
@@ -18,17 +21,17 @@ class App extends Component{
 
 
   componentDidMount(){
-      axios.get(`${global.IP_CHANGE}/userprofile/all-users`)
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err =>{
-        console.log(err)
-      })
+    this.props.onTryAutoSignup();
+
+  }
+
+  componentDidUpdate(prevProps){
+    
   }
 
   render(){
 
+    console.log(this.props)
     return(
       <NavigationContainer>
         <Routes />
@@ -39,9 +42,24 @@ class App extends Component{
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+    username: state.auth.username,
+    id: state.auth.id,
 
 
-export default App;
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(authActions.authCheckState()),
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 const styles = StyleSheet.create({
   container: {
