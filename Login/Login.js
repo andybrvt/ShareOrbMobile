@@ -18,7 +18,6 @@ import {
 } from "react-native";
 import styles from './LoginStyle';
 import SvgUri from 'react-native-svg-uri';
-import { List, InputItem } from 'antd-mobile';
 import { connect } from "react-redux";
 import { authLogin } from "../store/actions/auth";
 
@@ -77,9 +76,7 @@ class Login extends React.Component{
            <StatusBar style="auto" />
            <View style = {styles.logo}>
              <MainLogo height = {100}  width = {200} />
-             <Text
-               style = {styles.titleText}
-               >Connecting People Through Calendars</Text>
+  
 
            </View>
 
