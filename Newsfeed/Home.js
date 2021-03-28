@@ -25,7 +25,6 @@ class Home extends React.Component{
 
   render(){
 
-    console.log(this.props)
     return(
       <View>
         <Text style = {{
@@ -43,7 +42,7 @@ class Home extends React.Component{
 
         <Button
           title = "Logout"
-          onPress = {this.handleLogOut}
+          onPress = {() => this.handleLogOut()}
         />
 
 

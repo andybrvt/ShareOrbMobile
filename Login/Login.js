@@ -58,6 +58,13 @@ class Login extends React.Component{
     console.log(username)
     console.log(password)
     this.props.login(username, password)
+    // Now clearn out the login
+    if(!this.props.error){
+      this.setState({
+        username: "",
+        password: "",
+      })
+    }
 
   }
 
@@ -70,7 +77,7 @@ class Login extends React.Component{
       this.props.navigation.navigate("Home")
     }
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
         <View
           style = {styles.background}>
 
@@ -109,7 +116,7 @@ class Login extends React.Component{
           </View>
 
           <TouchableOpacity
-            onPress = {this.handleSubmit}
+            onPress = {() => this.handleSubmit()}
              style = {styles.loginBtn}>
             <Text style = {styles.loginText}> Login</Text>
           </TouchableOpacity>

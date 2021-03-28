@@ -2,8 +2,9 @@ import axios from "axios";
 import { AsyncStorage } from 'react-native';
 
 
-let authAxios = axios.create({
+export const authAxios = axios.create({
   baseURL: `${global.IP_CHANGE}/userprofile/`,
+
 })
 
 authAxios.interceptors.request.use(
@@ -11,16 +12,27 @@ authAxios.interceptors.request.use(
   // For AsyncStorage
   async config => {
     const token = await AsyncStorage.getItem("token")
-
     if(token){
-      config.headers.Authorization = `Token ${token}`
+      config.headers['Authorization'] = `Token ${token}`
     }
+
     return config
   },
   error => {
     return Promise.reject(error)
   }
 )
+
+// export const setClientToken = token => {
+//   console.log(token, "it hits here")
+//   authAxios.interceptors.request.use(function(config) {
+//     config.headers.Authorization = `Token ${token}`;
+//
+//     console.log(config)
+//     return config;
+//   });
+// };
+
 
 export default authAxios;
 // export const authAxios = AsyncStorage.getItem("token")

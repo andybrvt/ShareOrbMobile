@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 import { AsyncStorage } from 'react-native';
-import  authAxios  from '../../util';
+import  authAxios from '../../util';
 
 // import React from 'react';
 // // import  { authAxios } from '../../components/util';
@@ -34,15 +34,16 @@ export const authLogin = (username, password) => {
     dispatch(authStart())
 
     console.log(username, password)
-    authAxios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
+    axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
         username: username,
         password: password
       })
-    .then(res => { 
+    .then(res => {
       console.log(res.data)
       const token = res.data.key
 
       AsyncStorage.setItem('token', token)
+
 
       // This auth axios will run and get the token and then you will
       // add the token into the local storage
@@ -108,7 +109,11 @@ export const grabUserCredentials = () => {
   // This function is the one that acutally grabs the users information
 
   return dispatch => {
-    authAxios.get(`${global.IP_CHANGE}/userprofile/current-user`)
+    authAxios.get(`${global.IP_CHANGE}/userprofile/grabCurrentUser/`,{
+      params:{
+        token: "40d2d26dbba5dec427711bd835f4a73b1d804fbd"
+      }
+    })
     .then(res => {
 
       // AsyncStorage.setItem("username", username);
