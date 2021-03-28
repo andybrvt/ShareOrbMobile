@@ -1,7 +1,7 @@
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import React from 'react';
-import Home from './Home';
+import Home from './Newsfeed/Home';
 import Friends from './Friends';
 import Login from './Login/Login';
 import Signup from './Signup/Signup';

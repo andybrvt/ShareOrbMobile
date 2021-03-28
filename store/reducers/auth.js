@@ -43,11 +43,29 @@ const authFail = (state, action) => {
     error: action.error,
     loading: false
   });
-};
+}; 
 
 const authLogout = (state, action) => {
   return updateObject(state, {
-    token: null
+    token: null,
+    error: null,
+    loading: false,
+    username: null,
+    id: null,
+    firstName: '',
+    lastName: '',
+    profilePic: '',
+    following: [],
+    followers: [],
+    sharedList: [],
+    phone_number: "",
+    email: "",
+    dob: "",
+    private: false,
+    sentRequestList: [],
+    requestList: [],
+    showIntialInstructions: false,
+    notificationSeen: 0
   });
 };
 

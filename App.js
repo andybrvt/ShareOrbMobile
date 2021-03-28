@@ -26,8 +26,7 @@ class App extends Component{
   }
 
   componentDidUpdate(prevProps){
-    console.log(prevProps)
-    console.log(this.props)
+
     if(this.props.isAuthenticated){
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
@@ -40,7 +39,6 @@ class App extends Component{
 
   render(){
 
-    console.log(this.props)
     return(
       <NavigationContainer>
         <Routes />

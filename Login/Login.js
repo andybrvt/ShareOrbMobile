@@ -64,8 +64,11 @@ class Login extends React.Component{
 
 
   render(){
-    // console.log(this.props)
+    const { error, loading, token } = this.props;
 
+    if(token){
+      this.props.navigation.navigate("Home")
+    }
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View
@@ -118,7 +121,7 @@ class Login extends React.Component{
               alignItems: "center"}}>
 
             <Button
-
+              onPress = {() =>this.props.navigation.navigate('Signup')}
                title = "Sign up" />
           </View>
 
@@ -138,7 +141,7 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    test: state.auth.test,
+    token: state.auth.token
   };
 };
 
