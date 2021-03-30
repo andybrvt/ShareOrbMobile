@@ -4,16 +4,24 @@ import { StyleSheet, Text, View } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import Routes from './Routes'
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, createAppContainer } from '@react-navigation/native';
 import axios from "axios";
 import { Provider as PaperProvider } from 'react-native-paper';
-
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 // import * as dateFns from 'date-fns';
 // import './global.js';
 import * as authActions from './store/actions/auth';
 import { connect } from 'react-redux';
+import NewsfeedView from './Newsfeed/NewsfeedView';
+import Explore from './Explore/Explore';
+import SocialCalendar from './SocialCalendar/SocialCalendar';
+import Friends from './Friends';
+import Login from './Login/Login';
+import Signup from './Signup/Signup';
+// import BottomNavigation from './BottomNavigation';
 
+const Tab = createMaterialBottomTabNavigator();
 
 
 
@@ -45,7 +53,13 @@ class App extends Component{
     return(
       <PaperProvider>
         <NavigationContainer>
-          <Routes />
+          <Tab.Navigator>
+            <Tab.Screen name="NewsfeedView" component={NewsfeedView} />
+            <Tab.Screen name="Explore" component={Explore} />
+            <Tab.Screen name="SocialCalendar" component={SocialCalendar} />
+            <Tab.Screen name="Friends" component={Friends} />
+
+          </Tab.Navigator>
         </NavigationContainer>
 
       </PaperProvider>

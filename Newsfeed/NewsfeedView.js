@@ -5,12 +5,13 @@ import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import Header from './Header';
 
+import { Avatar, BottomNavigation } from 'react-native-paper';
 
 
 
 class NewsfeedView extends React.Component{
 
-
+  
   // componentDidMount(){
   //     axios.get("http://127.0.0.1:8000/userprofile/testMobileView")
   //     .then(res => {
@@ -46,6 +47,7 @@ class NewsfeedView extends React.Component{
           title = "Logout"
           onPress = {() => this.handleLogOut()}
         />
+
 
 
 
