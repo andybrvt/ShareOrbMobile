@@ -27,10 +27,11 @@ class NewsfeedView extends React.Component{
 
   render(){
 
+    console.log(this.props)
     return(
       <View style = {styles.container}>
 
-      <Header />
+      <Header {...this.props} />
         <Text style = {{
             position: "relative",
             left: "50%",
@@ -66,6 +67,7 @@ const mapStateToProps = state => {
     token: state.auth.token,
     username: state.auth.username,
     id: state.auth.id,
+    profilePic: state.auth.profilePic
 
 
   }

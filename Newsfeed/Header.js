@@ -7,7 +7,7 @@ import Constant from 'expo-constants';
 import MainLogo from '../logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch, faBell, faUserCircle } from '@fortawesome/free-solid-svg-icons'
-
+import { Avatar } from 'react-native-paper';
 
 
 class Header extends React.Component{
@@ -19,6 +19,13 @@ class Header extends React.Component{
   }
 
   render(){
+
+    console.log(this.props)
+    let profilePic = ""
+
+    if(this.props.profilePic){
+      profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+    }
 
     return(
       <View style = {styles.container}>
@@ -34,9 +41,12 @@ class Header extends React.Component{
             size = {25}
             icon={faBell} />
 
-          <FontAwesomeIcon
+          <Avatar.Image
+            source = {{
+              url: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+            }}
             size = {25}
-            icon={faUserCircle} />
+             />
         </View>
 
       </View>
