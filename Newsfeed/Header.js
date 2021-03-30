@@ -5,6 +5,8 @@ import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import Constant from 'expo-constants';
 import MainLogo from '../logo.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faSearch, faBell, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -21,10 +23,20 @@ class Header extends React.Component{
     return(
       <View style = {styles.container}>
         <View style = {styles.logoContainer}>
-           <MainLogo height = {50}/>
+           <MainLogo width = {150}/>
         </View>
         <View style = {styles.searchProfileContainer}>
-          <Text> this will be the search and the profile</Text>
+          <FontAwesomeIcon
+            size = {25}
+            icon={faSearch} />
+
+          <FontAwesomeIcon
+            size = {25}
+            icon={faBell} />
+
+          <FontAwesomeIcon
+            size = {25}
+            icon={faUserCircle} />
         </View>
 
       </View>
@@ -36,20 +48,26 @@ const styles = StyleSheet.create({
   container: {
     marginTop: Constant.statusBarHeight,
     height: 60,
-    backgroundColor:"blue",
-    flexDirection: "row"
+    flexDirection: "row",
+    backgroundColor:"white"
   },
   logoContainer: {
     flex: 1,
-    backgroundColor: "pink",
     justifyContent: "center",
-    alignItems: "center"
+    // alignItems: ,
+    // backgroundColor: "red",
+    paddingLeft: "2%"
   },
   logo: {
     position: "relative"
   },
   searchProfileContainer: {
-    flex: 1,
+    // flex: 1,
+    justifyContent: "center",
+    justifyContent: "space-around",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "30%",
   }
 })
 //
