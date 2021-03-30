@@ -49,7 +49,10 @@ const styles = StyleSheet.create({
     marginTop: Constant.statusBarHeight,
     height: 60,
     flexDirection: "row",
-    backgroundColor:"white"
+    backgroundColor:"white",
+    shadowOffset:{  width: 0,  height: 2,  },
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
   },
   logoContainer: {
     flex: 1,
