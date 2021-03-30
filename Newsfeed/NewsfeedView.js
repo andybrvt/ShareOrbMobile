@@ -1,12 +1,14 @@
 import React from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button,StyleSheet } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
+import Header from './Header';
 
 
 
-class Home extends React.Component{
+
+class NewsfeedView extends React.Component{
 
 
   // componentDidMount(){
@@ -26,7 +28,9 @@ class Home extends React.Component{
   render(){
 
     return(
-      <View>
+      <View style = {styles.container}>
+
+      <Header />
         <Text style = {{
             position: "relative",
             left: "50%",
@@ -35,10 +39,7 @@ class Home extends React.Component{
         Hello, {this.props.username}
 
         </Text>
-        <Button
-          title = "Friends"
-          onPress = {() =>this.props.navigation.navigate('Friends')}
-        />
+
 
         <Button
           title = "Logout"
@@ -51,6 +52,13 @@ class Home extends React.Component{
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor:"gainsboro"
+  }
+})
 
 const mapStateToProps = state => {
   return {
@@ -70,4 +78,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsfeedView);

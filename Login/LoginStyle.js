@@ -10,8 +10,8 @@ export default StyleSheet.create({
   background: {
     position: 'relative',
     backgroundColor: '#fafafa',
-    height: "100%",
-    width: "100%",
+    flex: 1,
+
     alignItems: 'center'
   },
 
@@ -23,9 +23,7 @@ export default StyleSheet.create({
   inputHolders:{
     alignItems: "center",
     // flex: 1,
-    position: "relative",
     // top: "30%",
-    height: "10%",
     width: "80%",
     // backgroundColor:'red'
   },
@@ -41,7 +39,9 @@ export default StyleSheet.create({
     alignItems: "center",
     position: "relative",
     top: "10%",
-    height: "35%"
+    height: "35%",
+    // flex: 1,
+    // backgroundColor: 'red'
   },
 
   loginBtn: {

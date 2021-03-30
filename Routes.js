@@ -1,7 +1,7 @@
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import React from 'react';
-import Home from './Newsfeed/Home';
+import NewsfeedView from './Newsfeed/NewsfeedView';
 import Friends from './Friends';
 import Login from './Login/Login';
 import Signup from './Signup/Signup';
@@ -16,7 +16,7 @@ class Routes extends React.Component{
       <Stack.Navigator screenOptions={{headerShown: false,}}>
         <Stack.Screen name = "Login" component = {Login} />
         <Stack.Screen name = "Signup" component = {Signup} />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="NewsfeedView" component={NewsfeedView} />
         <Stack.Screen name="Friends" component={Friends} />
 
       </Stack.Navigator>
