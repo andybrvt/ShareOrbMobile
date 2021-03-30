@@ -8,6 +8,7 @@ import { NavigationContainer, createAppContainer } from '@react-navigation/nativ
 import axios from "axios";
 import { Provider as PaperProvider } from 'react-native-paper';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // import * as dateFns from 'date-fns';
 // import './global.js';
@@ -19,6 +20,16 @@ import SocialCalendar from './SocialCalendar/SocialCalendar';
 import Friends from './Friends';
 import Login from './Login/Login';
 import Signup from './Signup/Signup';
+import Chats from './Chats/Chats';
+
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faSearch,
+   faBell,
+   faUserCircle,
+   faHome,
+   faMapSigns,
+   faUser,
+   faComment } from '@fortawesome/free-solid-svg-icons'
 // import BottomNavigation from './BottomNavigation';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -50,16 +61,89 @@ class App extends Component{
 
   render(){
 
+    // pretty much how this works is that you will have a nativgation for the
+    // login page and one for the other when authetnicated, when you are not auth
+    // you will get a serpate navigation for the login and sign up but hwne you are
+    // auth you get the bottom bar
+
     return(
       <PaperProvider>
         <NavigationContainer>
-          <Tab.Navigator>
-            <Tab.Screen name="NewsfeedView" component={NewsfeedView} />
-            <Tab.Screen name="Explore" component={Explore} />
-            <Tab.Screen name="SocialCalendar" component={SocialCalendar} />
-            <Tab.Screen name="Friends" component={Friends} />
 
-          </Tab.Navigator>
+          {
+            this.props.isAuthenticated ?
+              <Tab.Navigator
+                initialRouteName = "Home"
+                barStyle = {{
+                  backgroundColor: "#1890ff",
+
+                }}
+                >
+                <Tab.Screen
+                  name="Home"
+                  component={NewsfeedView}
+                  options={{
+                     tabBarLabel: 'Home',
+                     tabBarIcon: ({ color }) => (
+                       <FontAwesomeIcon
+                         size = {25}
+                         color = {color}
+                         icon={faHome} />
+                     ),
+                   }}
+                   />
+                <Tab.Screen
+                  name="Explore"
+                  component={Explore}
+                  options={{
+                     tabBarLabel: 'Explore',
+                     tabBarIcon: ({ color }) => (
+                       <FontAwesomeIcon
+                         size = {25}
+                         color = {color}
+                         icon={faMapSigns} />
+                     ),
+                   }}
+                   />
+                 <Tab.Screen
+                   name="Chats"
+                   component={Chats}
+                   options={{
+                      tabBarLabel: 'Messages',
+                      tabBarIcon: ({ color }) => (
+                        <FontAwesomeIcon
+                          size = {25}
+                          color = {color}
+                          icon={faComment} />
+                      ),
+                    }}
+                    />
+
+
+              <Tab.Screen
+                 name="SocialCalendar"
+                 component={SocialCalendar}
+                 options={{
+                    tabBarLabel: 'Profile',
+                    tabBarIcon: ({ color }) => (
+                      <FontAwesomeIcon
+                        size = {25}
+                        color = {color}
+                        icon={faUser} />
+                    ),
+                  }}
+                  />
+
+
+              </Tab.Navigator>
+
+              :
+
+              <Routes />
+
+
+          }
+
         </NavigationContainer>
 
       </PaperProvider>

@@ -11,7 +11,7 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
 
 class NewsfeedView extends React.Component{
 
-  
+
   // componentDidMount(){
   //     axios.get("http://127.0.0.1:8000/userprofile/testMobileView")
   //     .then(res => {
@@ -23,7 +23,7 @@ class NewsfeedView extends React.Component{
   // }
   handleLogOut = () => {
     this.props.logout()
-    this.props.navigation.navigate("Login")
+    // this.props.navigation.navigate("Login")
   }
 
   render(){
