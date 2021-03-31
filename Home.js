@@ -9,15 +9,15 @@ class Home extends React.Component{
   // componentDidMount(){
   //     axios.get("http://127.0.0.1:8000/userprofile/testMobileView")
   //     .then(res => {
-  //       console.log(res)
+  //       (res)
   //     })
   //     .catch(err =>{
-  //       console.log(err)
+  //       (err)
   //     })
   // }
 
   render(){
-    console.log(this.props)
+  
     return(
       <View>
         <Text>

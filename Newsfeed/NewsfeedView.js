@@ -1,11 +1,19 @@
 import React from 'react';
-import { Text, View, Button,StyleSheet } from 'react-native';
+import {
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  ScrollView
+ } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import Header from './Header';
-
+import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+import InfiniteScroll from './InfiniteScroll';
 import { Avatar, BottomNavigation } from 'react-native-paper';
+import * as dateFns from 'date-fns';
 
 
 
@@ -26,17 +34,57 @@ class NewsfeedView extends React.Component{
     // this.props.navigation.navigate("Login")
   }
 
+  constructor(props){
+    super(props)
+    this.initialiseSocialNewsfeed()
+
+
+
+  }
+
+  initialiseSocialNewsfeed(){
+
+    console.log(dateFns.format(new Date(), "yyyy-MM-dd"))
+    const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+    // use to initialize the social newsfeed
+    this.waitForSocialNewsfeedSocketConnection(() => {
+      // You will fetch the social cotnent type here
+      WebSocketSocialNewsfeedInstance.fetchSocialPost(
+        this.props.id,
+        curDate,
+        this.state.upperStart
+      )
+    })
+    WebSocketSocialNewsfeedInstance.connect()
+
+  }
+
+  waitForSocialNewsfeedSocketConnection(callback){
+  const component = this
+  setTimeout(
+    function(){
+      if(WebSocketSocialNewsfeedInstance.state() === 1){
+        callback()
+        return;
+      } else {
+        component.waitForSocialNewsfeedSocketConnection(callback);
+      }
+    }, 100)
+}
+
   render(){
 
-    console.log(this.props)
+  
     return(
       <View style = {styles.container}>
 
       <Header {...this.props} />
+
+      <ScrollView>
+
+        <InfiniteScroll />
         <Text style = {{
-            position: "relative",
-            left: "50%",
-            top: 100
+
           }}>
         Hello, {this.props.username}
 
@@ -47,6 +95,8 @@ class NewsfeedView extends React.Component{
           title = "Logout"
           onPress = {() => this.handleLogOut()}
         />
+      </ScrollView>
+
 
 
 

@@ -22,6 +22,9 @@ import Login from './Login/Login';
 import Signup from './Signup/Signup';
 import Chats from './Chats/Chats';
 
+import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocket';
+
+
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch,
    faBell,
@@ -39,6 +42,14 @@ const Tab = createMaterialBottomTabNavigator();
 class App extends Component{
   constructor(props){
     super(props)
+
+    WebSocketSocialNewsfeedInstance.addCallbacks(
+      this.props.id,
+      this.props.loadSocialPosts.bind(this),
+
+
+    )
+
   }
 
 
@@ -168,6 +179,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onTryAutoSignup: () => dispatch(authActions.authCheckState()),
     grabUserCredentials: () => dispatch(authActions.grabUserCredentials()),
+
+    loadSocialPosts: post => dispatch(socialNewsfeedActions.loadSocialPosts(post)),
 
   }
 }

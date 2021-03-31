@@ -20,7 +20,7 @@ class Header extends React.Component{
 
   render(){
 
-    console.log(this.props)
+    
     let profilePic = ""
 
     if(this.props.profilePic){

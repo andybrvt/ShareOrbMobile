@@ -24,11 +24,11 @@ authAxios.interceptors.request.use(
 )
 
 // export const setClientToken = token => {
-//   console.log(token, "it hits here")
+//   (token, "it hits here")
 //   authAxios.interceptors.request.use(function(config) {
 //     config.headers.Authorization = `Token ${token}`;
 //
-//     console.log(config)
+//     (config)
 //     return config;
 //   });
 // };

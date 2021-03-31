@@ -33,13 +33,13 @@ export const authLogin = (username, password) => {
   return dispatch => {
     dispatch(authStart())
 
-    console.log(username, password)
+    (username, password)
     axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
         username: username,
         password: password
       })
     .then(res => {
-      console.log(res.data)
+      (res.data)
       const token = res.data.key
 
       AsyncStorage.setItem('token', token)
@@ -59,7 +59,7 @@ export const authLogin = (username, password) => {
     })
 
     .catch(err => {
-      console.log(err)
+      (err)
       // dispatch(authFail(err));
     })
 
@@ -70,7 +70,6 @@ export const authLogin = (username, password) => {
 }
 
 export const logout = () => {
-  console.log('logout hit')
   AsyncStorage.removeItem("token")
   return {
     type: actionTypes.AUTH_LOGOUT
