@@ -73,7 +73,7 @@ class Login extends React.Component{
     const { error, loading, token } = this.props;
 
     if(token){
-      this.props.navigation.navigate("Home")
+      this.props.navigation.navigate("NewsfeedView")
     }
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
@@ -83,7 +83,7 @@ class Login extends React.Component{
            <StatusBar style="auto" />
            <View style = {styles.logo}>
              <MainLogo height = {100}  width = {200} />
-  
+
 
            </View>
 
@@ -112,21 +112,28 @@ class Login extends React.Component{
 
           </View>
 
-          <TouchableOpacity
-            onPress = {() => this.handleSubmit()}
-             style = {styles.loginBtn}>
-            <Text style = {styles.loginText}> Login</Text>
-          </TouchableOpacity>
+          <View style ={{
+              flex: 1,
+              width: "100%",
+              alignItems: "center"
+            }}>
+            <TouchableOpacity
+              onPress = {() => this.handleSubmit()}
+               style = {styles.loginBtn}>
+              <Text style = {styles.loginText}> Login</Text>
+            </TouchableOpacity>
 
-          <View style= {{
-              marginTop: 20,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center"}}>
+            <View style= {{
+                marginTop: 20,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"}}>
 
-            <Button
-              onPress = {() =>this.props.navigation.navigate('Signup')}
-               title = "Sign up" />
+              <Button
+                onPress = {() =>this.props.navigation.navigate('Signup')}
+                 title = "Sign up" />
+            </View>
+
           </View>
 
 

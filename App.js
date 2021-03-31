@@ -4,14 +4,35 @@ import { StyleSheet, Text, View } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import Routes from './Routes'
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, createAppContainer } from '@react-navigation/native';
 import axios from "axios";
+import { Provider as PaperProvider } from 'react-native-paper';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // import * as dateFns from 'date-fns';
 // import './global.js';
 import * as authActions from './store/actions/auth';
 import { connect } from 'react-redux';
+import NewsfeedView from './Newsfeed/NewsfeedView';
+import Explore from './Explore/Explore';
+import SocialCalendar from './SocialCalendar/SocialCalendar';
+import Friends from './Friends';
+import Login from './Login/Login';
+import Signup from './Signup/Signup';
+import Chats from './Chats/Chats';
 
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faSearch,
+   faBell,
+   faUserCircle,
+   faHome,
+   faMapSigns,
+   faUser,
+   faComment } from '@fortawesome/free-solid-svg-icons'
+// import BottomNavigation from './BottomNavigation';
+
+const Tab = createMaterialBottomTabNavigator();
 
 
 
@@ -40,10 +61,92 @@ class App extends Component{
 
   render(){
 
+    // pretty much how this works is that you will have a nativgation for the
+    // login page and one for the other when authetnicated, when you are not auth
+    // you will get a serpate navigation for the login and sign up but hwne you are
+    // auth you get the bottom bar
+
     return(
-      <NavigationContainer>
-        <Routes />
-      </NavigationContainer>
+      <PaperProvider>
+        <NavigationContainer>
+
+          {
+            this.props.isAuthenticated ?
+              <Tab.Navigator
+                initialRouteName = "Home"
+                barStyle = {{
+                  backgroundColor: "#1890ff",
+
+                }}
+                >
+                <Tab.Screen
+                  name="Home"
+                  component={NewsfeedView}
+                  options={{
+                     tabBarLabel: 'Home',
+                     tabBarIcon: ({ color }) => (
+                       <FontAwesomeIcon
+                         size = {25}
+                         color = {color}
+                         icon={faHome} />
+                     ),
+                   }}
+                   />
+                <Tab.Screen
+                  name="Explore"
+                  component={Explore}
+                  options={{
+                     tabBarLabel: 'Explore',
+                     tabBarIcon: ({ color }) => (
+                       <FontAwesomeIcon
+                         size = {25}
+                         color = {color}
+                         icon={faMapSigns} />
+                     ),
+                   }}
+                   />
+                 <Tab.Screen
+                   name="Chats"
+                   component={Chats}
+                   options={{
+                      tabBarLabel: 'Messages',
+                      tabBarIcon: ({ color }) => (
+                        <FontAwesomeIcon
+                          size = {25}
+                          color = {color}
+                          icon={faComment} />
+                      ),
+                    }}
+                    />
+
+
+              <Tab.Screen
+                 name="SocialCalendar"
+                 component={SocialCalendar}
+                 options={{
+                    tabBarLabel: 'Profile',
+                    tabBarIcon: ({ color }) => (
+                      <FontAwesomeIcon
+                        size = {25}
+                        color = {color}
+                        icon={faUser} />
+                    ),
+                  }}
+                  />
+
+
+              </Tab.Navigator>
+
+              :
+
+              <Routes />
+
+
+          }
+
+        </NavigationContainer>
+
+      </PaperProvider>
 
 
     )

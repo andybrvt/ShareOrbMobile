@@ -1,12 +1,15 @@
 import React from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button,StyleSheet } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
+import Header from './Header';
+
+import { Avatar, BottomNavigation } from 'react-native-paper';
 
 
 
-class Home extends React.Component{
+class NewsfeedView extends React.Component{
 
 
   // componentDidMount(){
@@ -20,13 +23,16 @@ class Home extends React.Component{
   // }
   handleLogOut = () => {
     this.props.logout()
-    this.props.navigation.navigate("Login")
+    // this.props.navigation.navigate("Login")
   }
 
   render(){
 
+    console.log(this.props)
     return(
-      <View>
+      <View style = {styles.container}>
+
+      <Header {...this.props} />
         <Text style = {{
             position: "relative",
             left: "50%",
@@ -35,10 +41,7 @@ class Home extends React.Component{
         Hello, {this.props.username}
 
         </Text>
-        <Button
-          title = "Friends"
-          onPress = {() =>this.props.navigation.navigate('Friends')}
-        />
+
 
         <Button
           title = "Logout"
@@ -47,10 +50,18 @@ class Home extends React.Component{
 
 
 
+
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor:"whitesmoke"
+  }
+})
 
 const mapStateToProps = state => {
   return {
@@ -58,6 +69,7 @@ const mapStateToProps = state => {
     token: state.auth.token,
     username: state.auth.username,
     id: state.auth.id,
+    profilePic: state.auth.profilePic
 
 
   }
@@ -70,4 +82,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsfeedView);
