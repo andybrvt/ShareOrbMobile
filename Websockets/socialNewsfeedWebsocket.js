@@ -23,6 +23,7 @@ class WebSocketSocialNewsfeed{
     console.log('websocket open')
   }
   this.socketRef.onmessage = (e) => {
+    // console.log(e.data)
     this.socketNewSocialPost(e.data)
   }
 
@@ -66,7 +67,7 @@ class WebSocketSocialNewsfeed{
     // probally just gonna include it in the soical newsfeed bc it will
     // be used mostly there
 
-    this.callbacks['fetch_cur_social_cell'](curSocialCell)
+    // this.callbacks['fetch_cur_social_cell'](curSocialCell)
 
 
   } else if (command === "send_social_post_like"){
@@ -98,11 +99,7 @@ class WebSocketSocialNewsfeed{
     const socialPostObj = parsedData.socialPostObj
     const curId = parsedData.curId
     const created = parsedData.created
-    console.log(curId)
-    console.log(socialPostObj)
-    console.log(parseInt(this.callbacks['curId']) === socialPostObj.owner.id)
     if(parseInt(this.callbacks['curId']) === socialPostObj.owner.id){
-      console.log('this is true')
       // Put call back for updating the cursocialcalcell
       // just load up the cur social cal cell
       this.callbacks['fetch_cur_social_cell'](socialPostObj.post)
@@ -157,17 +154,17 @@ class WebSocketSocialNewsfeed{
   addCallbacks(
       curId,
       loadSocialPostCallback,
-      addSocialLikeCallback,
-      loadCurSocialCellCallback,
-      addFirstSocialCellPost,
-      updateSocialCellPost
+      // addSocialLikeCallback,
+      // loadCurSocialCellCallback,
+      // addFirstSocialCellPost,
+      // updateSocialCellPost
     ){
       this.callbacks['curId'] = curId
       this.callbacks['fetch_social_posts'] = loadSocialPostCallback
-      this.callbacks['add_social_post_like'] = addSocialLikeCallback
-      this.callbacks['fetch_cur_social_cell'] = loadCurSocialCellCallback
-      this.callbacks['add_first_social_cell_post'] = addFirstSocialCellPost
-      this.callbacks['update_social_cell_post'] = updateSocialCellPost
+      // this.callbacks['add_social_post_like'] = addSocialLikeCallback
+      // this.callbacks['fetch_cur_social_cell'] = loadCurSocialCellCallback
+      // this.callbacks['add_first_social_cell_post'] = addFirstSocialCellPost
+      // this.callbacks['update_social_cell_post'] = updateSocialCellPost
     }
 
     fetchSocialPost(userId, curDate, startIndex){

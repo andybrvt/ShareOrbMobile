@@ -13,6 +13,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // import * as dateFns from 'date-fns';
 // import './global.js';
 import * as authActions from './store/actions/auth';
+import * as socialNewsfeedActions from './store/actions/socialNewsfeed';
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import Explore from './Explore/Explore';
@@ -46,7 +47,7 @@ class App extends Component{
     WebSocketSocialNewsfeedInstance.addCallbacks(
       this.props.id,
       this.props.loadSocialPosts.bind(this),
-
+      
 
     )
 

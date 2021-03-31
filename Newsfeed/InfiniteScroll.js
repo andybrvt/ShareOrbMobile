@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 class InfiniteScroll extends React.Component{
 
   render(){
-  
+    
     return (
       <View>
         <Text> This will be the InfiniteScroll </Text>

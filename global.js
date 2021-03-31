@@ -6,4 +6,4 @@ global.WS_HEADER = "ws"
 
 
 // global.IP_CHANGE = "http://192.168.1.24:8000"
-global.IP_CHANGE = "http://192.168.1.200:19003"
+// global.IP_CHANGE = "http://192.168.1.200:19003"

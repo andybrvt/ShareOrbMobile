@@ -8,9 +8,8 @@ const initialState = {
 }
 
 const loadSocialPosts = (state, action) => {
-
   return updateObject(state, {
-    // socialPosts: action.post
+    socialPosts: action.post
   })
 }
 

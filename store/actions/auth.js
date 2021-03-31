@@ -32,16 +32,12 @@ export const authLogin = (username, password) => {
 
   return dispatch => {
     dispatch(authStart())
-
-    (username, password)
     axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
         username: username,
         password: password
       })
     .then(res => {
-      (res.data)
       const token = res.data.key
-
       AsyncStorage.setItem('token', token)
 
 
@@ -59,7 +55,7 @@ export const authLogin = (username, password) => {
     })
 
     .catch(err => {
-      (err)
+      console.log(err)
       // dispatch(authFail(err));
     })
 
@@ -100,7 +96,7 @@ export const authCheckState = () => {
         dispatch(grabUserCredentials())
 
       }
-  })
+  }) 
   }
 }
 
@@ -108,11 +104,7 @@ export const grabUserCredentials = () => {
   // This function is the one that acutally grabs the users information
 
   return dispatch => {
-    authAxios.get(`${global.IP_CHANGE}/userprofile/grabCurrentUser/`,{
-      params:{
-        token: "40d2d26dbba5dec427711bd835f4a73b1d804fbd"
-      }
-    })
+    authAxios.get(`${global.IP_CHANGE}/userprofile/grabCurrentUser/`)
     .then(res => {
 
       // AsyncStorage.setItem("username", username);

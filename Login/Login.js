@@ -54,8 +54,7 @@ class Login extends React.Component{
   handleSubmit = () => {
     // This function will be used to submit for the login
     const {username, password} = this.state;
-    (username)
-    (password)
+    
     this.props.login(username, password)
     // Now clearn out the login
     if(!this.props.error){

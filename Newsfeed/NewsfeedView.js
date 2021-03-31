@@ -20,15 +20,15 @@ import * as dateFns from 'date-fns';
 class NewsfeedView extends React.Component{
 
 
-  // componentDidMount(){
-  //     axios.get("http://127.0.0.1:8000/userprofile/testMobileView")
-  //     .then(res => {
-  //       console.log(res)
-  //     })
-  //     .catch(err =>{
-  //       console.log(err)
-  //     })
-  // }
+  state={
+    username: '',
+    id: '',
+    postShow:false,
+    eventShow:false,
+
+    upperStart: 6
+  }
+
   handleLogOut = () => {
     this.props.logout()
     // this.props.navigation.navigate("Login")
@@ -36,7 +36,10 @@ class NewsfeedView extends React.Component{
 
   constructor(props){
     super(props)
-    this.initialiseSocialNewsfeed()
+    if(this.props.isAuthenticated){
+      this.initialiseSocialNewsfeed()
+
+    }
 
 
 
@@ -44,7 +47,6 @@ class NewsfeedView extends React.Component{
 
   initialiseSocialNewsfeed(){
 
-    console.log(dateFns.format(new Date(), "yyyy-MM-dd"))
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
     // use to initialize the social newsfeed
     this.waitForSocialNewsfeedSocketConnection(() => {
@@ -72,9 +74,27 @@ class NewsfeedView extends React.Component{
     }, 100)
 }
 
+  componentDidUpdate(prevProps){
+
+    const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+    WebSocketSocialNewsfeedInstance.disconnect()
+    if(this.props.isAuthenticated){
+      this.waitForSocialNewsfeedSocketConnection(() => {
+            // Fetch stuff here
+        WebSocketSocialNewsfeedInstance.fetchSocialPost(
+          this.props.id,
+          curDate,
+          this.state.upperStart)
+
+      })
+      WebSocketSocialNewsfeedInstance.connect()
+    }
+
+  }
+
   render(){
 
-  
+
     return(
       <View style = {styles.container}>
 
