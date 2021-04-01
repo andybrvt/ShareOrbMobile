@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button,StyleSheet, Image } from 'react-native';
+import { Text, View, Button,StyleSheet, Image, Dimensions } from 'react-native';
 import { Avatar, Card } from 'react-native-paper';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 
@@ -52,10 +52,10 @@ class SocialNewsfeedPost extends React.Component{
     if(userPostImages.length === 1){
 
       return (
-        <View>
+        <View style = {styles.imageHolder}>
           <Image
-            style = {{width: 200, height: 200}}
-            resizeMode = "contain"
+            style = {{ flex: 1, height: 400}}
+            resizeMode = "cover"
             source = {{
               url: `${global.IMAGE_ENDPOINT}`+userPostImages[0].itemImage
             }}
@@ -71,7 +71,7 @@ class SocialNewsfeedPost extends React.Component{
       <View>
         <NewsfeedSpecCarousel
           items = {userPostImages}
-    
+
           />
 
       </View>
@@ -155,7 +155,7 @@ class SocialNewsfeedPost extends React.Component{
            <Text> {global.RENDER_TIMESTAMP(postCreatedAt)}</Text>
         </View>
 
-        <View>
+        <View style = {styles.imageContainer}>
             {this.revealPhoto()}
 
         </View>
@@ -174,7 +174,21 @@ export default SocialNewsfeedPost;
 const styles = StyleSheet.create({
   card: {
     // backgroundColor: "red"
+    position: 'relative',
+
     marginBottom: 5
+  },
+  imageContainer: {
+    flex: 1,
+
+    // backgroundColor: 'red',
+    position: "relative",
+  },
+  imageHolder: {
+    width: Math.round(Dimensions.get('window').width),
+    // height: 400,
+    position: "relative"
+    // backgroundColor: 'blue'
   }
 
 })

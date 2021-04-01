@@ -30,13 +30,12 @@ class InfiniteScroll extends React.Component{
 
                          <SocialNewsfeedPost
                            data = {j}
-                           key = {index}
+
                            />
 
                        :
 
                        <Text
-                         key = {index}
                          > There is no post here</Text>
                       }
                     </View>
