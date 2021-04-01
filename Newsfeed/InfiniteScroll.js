@@ -3,6 +3,7 @@ import { Text, View, Button,StyleSheet } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
+import SocialNewsfeedPost from './SocialNewsfeedPost';
 
 class InfiniteScroll extends React.Component{
 
@@ -27,10 +28,13 @@ class InfiniteScroll extends React.Component{
                       {
                         j.post.get_socialCalItems ?
 
-                         <Text>There is a post here </Text>
+                         <SocialNewsfeedPost
+                           data = {j}
+                           key = {index}
+                           />
 
                        :
-                       
+
                        <Text> There is no post here</Text>
                       }
                     </View>

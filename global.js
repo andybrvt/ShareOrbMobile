@@ -4,6 +4,29 @@ global.IMAGE_ENDPOINT = "http://10.3.0.116:19000"
 global.WS_ENDPOINT = "10.3.0.116:19000"
 global.WS_HEADER = "ws"
 
+global.CAPITALIZE = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+global.RENDER_TIMESTAMP = (timestamp) => {
+
+    let prefix = '';
+    const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+    if (timeDiff < 1 ) {
+      prefix = `Just now`;
+    } else if (timeDiff < 60 && timeDiff >= 1 ) {
+      prefix = `${timeDiff} minutes ago`;
+    }else if (timeDiff < 24*60 && timeDiff > 60) {
+      prefix = `${Math.round(timeDiff/60)} hours ago`;
+    } else if (timeDiff < 31*24*60 && timeDiff > 24*60) {
+      prefix = `${Math.round(timeDiff/(60*24))} days ago`;
+    } else {
+        prefix = `${new Date(timestamp)}`;
+    }
+
+    return prefix;
+}
+
 
 // global.IP_CHANGE = "http://192.168.1.24:8000"
 // global.IP_CHANGE = "http://192.168.1.200:19003"
