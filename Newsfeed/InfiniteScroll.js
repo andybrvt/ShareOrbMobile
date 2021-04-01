@@ -35,7 +35,9 @@ class InfiniteScroll extends React.Component{
 
                        :
 
-                       <Text> There is no post here</Text>
+                       <Text
+                         key = {index}
+                         > There is no post here</Text>
                       }
                     </View>
                   )

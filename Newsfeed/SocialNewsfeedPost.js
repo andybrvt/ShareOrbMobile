@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, Button,StyleSheet, Image } from 'react-native';
-import { Avatar } from 'react-native-paper';
-
+import { Avatar, Card } from 'react-native-paper';
+import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 
 
 class SocialNewsfeedPost extends React.Component{
@@ -47,7 +47,9 @@ class SocialNewsfeedPost extends React.Component{
       // location = this.props.history.location.pathname
 
     }
-    if(userPostImages.length == 1){
+
+    console.log(userPostImages.length)
+    if(userPostImages.length === 1){
 
       return (
         <View>
@@ -65,26 +67,23 @@ class SocialNewsfeedPost extends React.Component{
         </View>
       )
     } else {
+    return(
       <View>
-        <Image
-          style = {{width: 200, height: 200}}
-          resizeMode = "contain"
-          source = {{
-            url: `${global.IMAGE_ENDPOINT}`+userPostImages[0].itemImage
-          }}
-
+        <NewsfeedSpecCarousel
+          items = {userPostImages}
+    
           />
 
       </View>
+
+    )
 
     }
 
   }
 
   render(){
-    console.log("here is social post")
-    // console.log(this.props.data)
-    console.log(this.props.data)
+
 
     let like_people = []
     let profilePic = ''
@@ -140,7 +139,7 @@ class SocialNewsfeedPost extends React.Component{
 
     }
     return (
-      <View style = {styles.card}>
+      <Card style = {styles.card}>
 
         <View>
           <Avatar.Image
@@ -165,7 +164,7 @@ class SocialNewsfeedPost extends React.Component{
 
         </View>
 
-      </View>
+      </Card>
     )
   }
 }
@@ -174,7 +173,8 @@ export default SocialNewsfeedPost;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "red"
+    // backgroundColor: "red"
+    marginBottom: 5
   }
 
 })
