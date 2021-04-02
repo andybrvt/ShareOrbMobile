@@ -2,6 +2,8 @@ import React from "react";
 import { Text, View, Button,StyleSheet, Image, Dimensions } from 'react-native';
 import { Avatar, Card } from 'react-native-paper';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
+import * as dateFns from 'date-fns';
+
 
 
 class SocialNewsfeedPost extends React.Component{
@@ -48,7 +50,6 @@ class SocialNewsfeedPost extends React.Component{
 
     }
 
-    console.log(userPostImages.length)
     if(userPostImages.length === 1){
 
       return (
@@ -80,6 +81,109 @@ class SocialNewsfeedPost extends React.Component{
 
     }
 
+  }
+
+  bottomLikeCommentPost = () => {
+    // This function will be use to use to show the buttons
+    // and captions in the bottom of the newsfeed post
+    // It will include liking, commeting and cliping
+
+    let like_people = [];
+    let profilePic = '';
+    let peopleLikeId = [];
+    let postId = 0;
+    let userUsername = '';
+    let ownerId = "";
+    let caption = "";
+    let commentList = [];
+    let cellDate = "";
+    let cellYear = ""
+    let cellMonth = ""
+    let cellDay = ""
+    let location = ""
+    let contentTypeId = ""
+
+
+    if(this.props.data){
+
+      contentTypeId = this.props.data.id
+
+      if(this.props.data.post){
+
+        if(this.props.data.post.people_like){
+          like_people = this.props.data.post.people_like
+        }
+
+        if(this.props.data.post.get_socialCalComment){
+          commentList = this.props.data.post.get_socialCalComment
+        }
+
+        if(this.props.data.post.id){
+          postId = this.props.data.post.id
+        }
+
+        if(this.props.data.post.dayCaption){
+          caption = this.props.data.post.dayCaption
+        }
+
+        if(this.props.data.post.socialCaldate){
+          cellDate = this.props.data.post.socialCaldate
+          const date = this.props.data.post.socialCaldate.split("-")
+          cellYear = date[0]
+          cellMonth = date[1]
+          cellDay = date[2]
+        }
+
+      }
+      if(this.props.data.owner){
+        if(this.props.data.owner.username){
+          userUsername = this.props.data.owner.username
+        }
+        if(this.props.data.owner.id){
+          ownerId = this.props.data.owner.id
+        }
+
+        if(this.props.data.owner.profile_picture){
+          profilePic = this.props.data.owner.profile_picture
+        }
+
+
+      }
+
+    }
+
+
+
+    if(like_people.length > 0){
+      for(let i = 0; i< like_people.length; i++){
+        peopleLikeId.push(like_people[i].id)
+      }
+    }
+
+    return (
+
+      <View>
+        <Text> Likes {like_people.length}</Text>
+        <Text> Comments {commentList.length}</Text>
+
+        <Text> {caption.substring(0,140)}</Text>
+
+        <View>
+          <View>
+            <Text>Like</Text>
+          </View>
+
+          <View>
+            <Text>Comment</Text>
+          </View>
+
+          <View>
+            <Text>Clip</Text>
+          </View>
+
+        </View>
+      </View>
+    )
   }
 
   render(){
@@ -137,22 +241,31 @@ class SocialNewsfeedPost extends React.Component{
         postCreatedAt = this.props.data.post_date
       }
 
+      console.log(postCreatedAt)
+
     }
     return (
       <Card style = {styles.card}>
 
-        <View>
+        <View style = {styles.header}>
           <Avatar.Image
             source = {{
               url: `${global.IMAGE_ENDPOINT}`+profilePic
             }}
             size = {40}
              />
-           <Text> {global.CAPITALIZE(userFirstName) +" "+ global.CAPITALIZE(userLastName) } </Text>
-           <Text>{actionText} </Text>
+           <View style = {styles.name}>
+             <Text> {global.CAPITALIZE(userFirstName) +" "+ global.CAPITALIZE(userLastName) + actionText } </Text>
+             <Text style = {{
+                 fontSize: 12
+               }}> @{userUsername}</Text>
 
-           <Text> @{userUsername}</Text>
-           <Text> {global.RENDER_TIMESTAMP(postCreatedAt)}</Text>
+           </View>
+
+           <View style = {styles.date}>
+             <Text> {global.RENDER_TIMESTAMP(postCreatedAt)}</Text>
+           </View>
+
         </View>
 
         <View style = {styles.imageContainer}>
@@ -161,7 +274,7 @@ class SocialNewsfeedPost extends React.Component{
         </View>
 
         <View>
-
+          {this.bottomLikeCommentPost()}
         </View>
 
       </Card>
@@ -175,7 +288,7 @@ const styles = StyleSheet.create({
   card: {
     // backgroundColor: "red"
     position: 'relative',
-
+    // height: 600,
     marginBottom: 5
   },
   imageContainer: {
@@ -189,6 +302,21 @@ const styles = StyleSheet.create({
     // height: 400,
     position: "relative"
     // backgroundColor: 'blue'
+  },
+  header: {
+    // backgroundColor: "red",
+    flexDirection: "row",
+    padding: 10,
+  },
+  name: {
+    flex: 1,
+    // backgroundColor: 'blue',
+    justifyContent: "center",
+
+  },
+  date: {
+    justifyContent: "center",
+    // backgroundColor: 'pink'
   }
 
 })

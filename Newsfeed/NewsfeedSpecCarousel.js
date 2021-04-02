@@ -3,6 +3,8 @@ import { Text, View, Button,StyleSheet, Image, FlatList, Dimensions } from 'reac
 
 
 
+const width = Math.round(Dimensions.get('window').width);
+const height = width
 
 class NewsfeedSpecCarousel extends React.Component{
 
@@ -53,13 +55,9 @@ class NewsfeedSpecCarousel extends React.Component{
     // too
 
     return (
-      <View style = {{
-          width: Math.round(Dimensions.get('window').width),
-          height: 400,
-          position: "relative"
-        }}>
+      <View style = {styles.imageContainer}>
         <Image
-          style = {{ flex: 1,  width: undefined, height: undefined}}
+          style = {styles.image}
           resizeMode = "cover"
           source = {{
             url: `${global.IMAGE_ENDPOINT}`+picture.itemImage
@@ -71,6 +69,16 @@ class NewsfeedSpecCarousel extends React.Component{
     )
   }
 
+
+  renderIndex = () => {
+    // This function will be in charge of rendering the indexes of the
+    // carousel
+    // Pretty much take the index and display the color when it is on it
+
+
+
+
+  }
 
 
 
@@ -98,14 +106,10 @@ class NewsfeedSpecCarousel extends React.Component{
     }
 
     return (
-
-
+    <View>
       <FlatList
         data = {this.props.items}
-        style= {{
-          flex: 1,
-          position: "relative"
-        }}
+        style= {styles.flatList}
         pagingEnabled = {true}
         horizontal = {true}
         showsHorizontalScrollIndicator = {false}
@@ -115,10 +119,61 @@ class NewsfeedSpecCarousel extends React.Component{
         onScroll= {this.onScrollChange}
         />
 
+      <View style = {styles.dotContainer}>
+        {this.props.items.map((i, k) => (
+            k === this.state.index  ?
+              <Text key= {k} style = {styles.activeDot}> ⬤ </Text>
+                :
+              <Text key= {k} style = {styles.dots}> ⬤  </Text>
+
+
+        ))
+      }
+
+
+      </View>
+    </View>
+
+
 
 
     )
   }
 }
+
+const styles = StyleSheet.create({
+  flatList: {
+    flex: 1,
+    position: "relative"
+  },
+  imageContainer: {
+      width: width,
+      height: height,
+      position: "relative"
+    },
+  dotContainer: {
+      flexDirection: "row",
+      position: 'absolute',
+      bottom: 0,
+      alignSelf: "center",
+      justifyContent: "center"
+    },
+  image: {
+    flex: 1,
+    width: undefined,
+    height: undefined
+  },
+  dots: {
+    color: "#888",
+    margin: 3,
+    fontSize: 8
+  },
+  activeDot: {
+    color: "white",
+    margin: 3,
+    fontSize: 8
+  }
+
+})
 
 export default NewsfeedSpecCarousel;
