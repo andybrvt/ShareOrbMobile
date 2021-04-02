@@ -3,6 +3,9 @@ import { Text, View, Button,StyleSheet, Image, Dimensions } from 'react-native';
 import { Avatar, Card } from 'react-native-paper';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
+import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faHeart, faComments, faPaperclip } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -163,21 +166,58 @@ class SocialNewsfeedPost extends React.Component{
     return (
 
       <View>
-        <Text> Likes {like_people.length}</Text>
-        <Text> Comments {commentList.length}</Text>
 
-        <Text> {caption.substring(0,140)}</Text>
+        <View style = {styles.likeCapHolder}>
+          <View style = {styles.miniLikeCommCon}>
+            <FontAwesomeIcon
+              size = {15}
+              icon={faHeart} />
+            <Text> {like_people.length}</Text>
+            <Text> | </Text>
+              <FontAwesomeIcon
+                size = {15}
+                icon={faComments} />
+            <Text>  {commentList.length} Comments</Text>
 
-        <View>
-          <View>
+          </View>
+
+          <View style = {styles.captionHolder}>
+            <Text> @{userUsername+" "}</Text>
+            <Text> {caption.substring(0,140)}</Text>
+
+          </View>
+
+        </View>
+
+        <View style = {styles.bottomButtons}>
+          <View style = {styles.buttons}>
+            <FontAwesomeIcon
+              style = {{
+                marginRight: 10
+              }}
+              size = {15}
+              icon={faHeart} />
             <Text>Like</Text>
           </View>
 
-          <View>
+          <View style = {styles.buttons}>
+            <FontAwesomeIcon
+              style = {{
+                marginRight: 10
+              }}
+              size = {15}
+              icon={faComments} />
             <Text>Comment</Text>
           </View>
 
-          <View>
+          <View style = {styles.buttons}>
+
+            <FontAwesomeIcon
+              style = {{
+                marginRight: 10
+              }}
+              size = {15}
+              icon={faPaperclip} />
             <Text>Clip</Text>
           </View>
 
@@ -282,7 +322,18 @@ class SocialNewsfeedPost extends React.Component{
   }
 }
 
-export default SocialNewsfeedPost;
+
+
+const mapStateToProps = state => {
+  return {
+    userId: state.auth.id,
+    currentUser: state.auth.username,
+    profilepic: state.auth.profilePic
+  }
+}
+
+
+export default connect(mapStateToProps)(SocialNewsfeedPost);
 
 const styles = StyleSheet.create({
   card: {
@@ -307,6 +358,9 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
     flexDirection: "row",
     padding: 10,
+    paddingTop: 20,
+    paddingBottom: 20
+
   },
   name: {
     flex: 1,
@@ -317,6 +371,33 @@ const styles = StyleSheet.create({
   date: {
     justifyContent: "center",
     // backgroundColor: 'pink'
+  },
+  miniLikeCommCon: {
+    flexDirection: "row",
+    marginBottom: 10
+  },
+  bottomButtons: {
+    marginTop: 10,
+    flexDirection: "row",
+    borderTopWidth: 0.5,
+    borderColor: "gainsboro"
+  },
+  buttons: {
+    height: 40,
+    flex: 1,
+    // backgroundColor: 'red',
+    alignItems: "center",
+    justifyContent: "center",
+    borderLeftWidth: 0.5,
+    borderColor: 'gainsboro',
+    flexDirection: "row"
+  },
+  captionHolder: {
+    flexDirection: "row"
+  },
+  likeCapHolder: {
+    padding: 10,
   }
+
 
 })

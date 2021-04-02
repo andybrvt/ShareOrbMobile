@@ -24,7 +24,7 @@ class InfiniteScroll extends React.Component{
               <View>
                 {post.map((j,index) => {
                   return(
-                    <View>
+                    <View key = {index}>
                       {
                         j.post.get_socialCalItems ?
 
