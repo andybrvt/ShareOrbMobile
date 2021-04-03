@@ -4,7 +4,7 @@ import { updateObject } from "../utility";
 const initialState ={
   token: null,
   error: null,
-  loading: false,
+  loading: true,
   username: null,
   id: null,
   firstName: '',
@@ -30,9 +30,9 @@ const authStart = (state, action) => {
   });
 };
 
-const addDoneLoading =(state, action) => {
+const authDoneLoading = (state, action) => {
   return updateObject(state, {
-    loading: true
+    loading: false
   })
 }
 
@@ -111,8 +111,8 @@ const reducer = (state = initialState, action) => {
       return authLogout(state, action);
     case actionTypes.ADD_CREDENTIALS:
       return addCredentials(state, action);
-    case actionTypes.ADD_DONE_LOADING:
-      return addDoneLoading(state, action);
+    case actionTypes.AUTH_DONE_LOADING:
+      return authDoneLoading(state, action);
     default:
       return state;
   }

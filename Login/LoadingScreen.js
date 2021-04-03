@@ -2,6 +2,7 @@ import React from 'react';
 import MainLogo from '../logo.svg';
 import Frame from '../Frame.svg';
 import { connect } from "react-redux";
+import * as authActions from '../store/actions/auth';
 
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -14,13 +15,19 @@ class LoadingScreen extends React.Component{
 
 
   render(){
+    console.log('loading page')
+    console.log(this.props)
 
   // The funciton here will be pretty much use to render the info
   // so what happens here is that when you login and authenticated
   // it will lead you here and then you would check if loading is good
   // and then lead to the home page
-    if(this.props.username){
-      // This function here will turn off the loading
+    if(this.props.username !== null){
+      // This function here will turn off the loading when the
+      // username is there
+
+      setTimeout(() => {this.props.authDoneLoading()}, 2000)
+
     }
 
     return (
@@ -43,7 +50,14 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(LoadingScreen);
+const mapDispatchToProps = dispatch => {
+  return {
+    authDoneLoading: () => dispatch(authActions.authDoneLoading())
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoadingScreen);
 
 const styles = StyleSheet.create({
   container: {
