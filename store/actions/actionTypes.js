@@ -4,7 +4,7 @@ export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
 export const ADD_CREDENTIALS = "ADD_CREDENTIALS";
-
+export const AUTH_DONE_LOADING = "AUTH_DONE_LOADING";
 
 // This is for the newsfeed
 export const LOAD_SOCIAL_POSTS = "LOAD_SOCIAL_POSTS";

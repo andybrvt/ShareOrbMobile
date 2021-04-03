@@ -31,6 +31,7 @@ import { faSearch,
    faUser,
    faComment } from '@fortawesome/free-solid-svg-icons'
 // import BottomNavigation from './BottomNavigation';
+import { TabActions } from '@react-navigation/native';
 
 
 
@@ -58,6 +59,7 @@ class App extends Component{
 
 
   componentDidMount(){
+
     this.props.onTryAutoSignup();
 
   }
@@ -81,15 +83,14 @@ class App extends Component{
     // you will get a serpate navigation for the login and sign up but hwne you are
     // auth you get the bottom bar
 
-    const username = this.props.username
-    console.log(username)
+    console.log(this.props)
 
     return(
       <PaperProvider>
         <NavigationContainer>
 
           {
-            this.props.isAuthenticated ?
+            !this.props.loading && this.props.username ?
               <Tab.Navigator
                 initialRouteName = "Home"
                 barStyle = {{
@@ -123,6 +124,7 @@ class App extends Component{
                      ),
                    }}
                    />
+
                  <Tab.Screen
                    name="Chats"
                    component={Chats}
@@ -138,29 +140,47 @@ class App extends Component{
                     />
 
 
-              <Tab.Screen
-                 name="Profile"
-                 component={Profile}
-                 options={{
-                    tabBarLabel: 'Profile',
-                    tabBarIcon: ({ color }) => (
-                      <FontAwesomeIcon
-                        size = {25}
-                        color = {color}
-                        icon={faUser} />
-                    ),
-                  }}
-                  initialParams = {{
-                    username: username
-                  }}
-                  />
+
+
+
+                    <Tab.Screen
+                       name="Profile"
+                       component={Profile}
+                       options={{
+                          tabBarLabel: 'Profile',
+                          tabBarIcon: ({ color }) => (
+                            <FontAwesomeIcon
+                              size = {25}
+                              color = {color}
+                              icon={faUser} />
+                          ),
+                        }}
+                        initialParams = {{
+                          username: this.props.username
+                        }}
+
+                        listeners={{
+                           tabPress: e => {
+                             // Prevent default action
+                             if(this.props.username === null){
+                               e.preventDefault();
+
+
+                             }
+                           },
+                         }}
+                        />
+
+
+
+
 
 
               </Tab.Navigator>
 
               :
 
-              <Routes />
+              <Routes {...this.props} />
 
 
           }
@@ -180,6 +200,7 @@ const mapStateToProps = state => {
     token: state.auth.token,
     username: state.auth.username,
     id: state.auth.id,
+    loading: state.auth.loading
 
 
   }

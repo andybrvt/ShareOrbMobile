@@ -4,6 +4,7 @@ import React from 'react';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import Friends from './Friends';
 import Login from './Login/Login';
+import LoadingScreen from './Login/LoadingScreen';
 import Signup from './Signup/Signup';
 import Explore from './Explore/Explore';
 import SocialCalendar from './ProfilePage/SocialCalendar';
@@ -19,10 +20,22 @@ const Stack = createNativeStackNavigator();
 class Routes extends React.Component{
 
   render(){
+
     return(
       <Stack.Navigator screenOptions={{headerShown: false,}}>
-        <Stack.Screen name = "Login" component = {Login} />
+        {
+          this.props.isAuthenticated ?
+
+          <Stack.Screen name = "LoadingScreen" component = {LoadingScreen} />
+
+          :
+
+          <Stack.Screen name = "Login" component = {Login} />
+
+        }
+
         <Stack.Screen name = "Signup" component = {Signup} />
+        <Stack.Screen name = "Explore" component = {Explore} />
 
       </Stack.Navigator>
     )

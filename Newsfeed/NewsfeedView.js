@@ -92,6 +92,11 @@ class NewsfeedView extends React.Component{
 
   }
 
+  ComponentWillUnmount(){
+    // WebSocketSocialNewsfeedInstance.disconnect()
+
+  }
+
   render(){
 
 
@@ -101,6 +106,7 @@ class NewsfeedView extends React.Component{
       <Header {...this.props} />
 
       <ScrollView>
+
 
         <InfiniteScroll />
         <Text style = {{

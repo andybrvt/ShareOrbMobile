@@ -20,6 +20,12 @@ export const authSuccess = (token) => {
   }
 }
 
+export const authDoneLoading = () => {
+  return {
+    type: actionTypes.AUTH_DONE_LOADING
+  }
+}
+
 export const authFail = error => {
   return {
     type: actionTypes.AUTH_FAIL,
@@ -96,7 +102,7 @@ export const authCheckState = () => {
         dispatch(grabUserCredentials())
 
       }
-  }) 
+  })
   }
 }
 

@@ -54,7 +54,7 @@ class Login extends React.Component{
   handleSubmit = () => {
     // This function will be used to submit for the login
     const {username, password} = this.state;
-    
+
     this.props.login(username, password)
     // Now clearn out the login
     if(!this.props.error){
@@ -72,7 +72,7 @@ class Login extends React.Component{
     const { error, loading, token } = this.props;
 
     if(token){
-      this.props.navigation.navigate("NewsfeedView")
+      this.props.navigation.navigate("LoadingScreen")
     }
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>

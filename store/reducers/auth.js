@@ -30,20 +30,30 @@ const authStart = (state, action) => {
   });
 };
 
+const addDoneLoading =(state, action) => {
+  return updateObject(state, {
+    loading: true
+  })
+}
+
 const authSuccess = (state, action) => {
   return updateObject(state, {
     token: action.token,
     error: null,
-    loading: false,
+    // loading: false,
   });
 };
+
+
+
+
 
 const authFail = (state, action) => {
   return updateObject(state, {
     error: action.error,
     loading: false
   });
-}; 
+};
 
 const authLogout = (state, action) => {
   return updateObject(state, {
@@ -101,6 +111,8 @@ const reducer = (state = initialState, action) => {
       return authLogout(state, action);
     case actionTypes.ADD_CREDENTIALS:
       return addCredentials(state, action);
+    case actionTypes.ADD_DONE_LOADING:
+      return addDoneLoading(state, action);
     default:
       return state;
   }
