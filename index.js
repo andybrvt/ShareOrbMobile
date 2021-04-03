@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import authReducer from './store/reducers/auth';
 import socialNewsfeedReducer from './store/reducers/socialNewsfeed';
+import exploreReducer from './store/reducers/explore';
 import App from './App';
 import React, {Component} from 'react';
 import { AppRegistry } from 'react-native';
@@ -15,8 +16,8 @@ const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  socialNewsfeed: socialNewsfeedReducer
-
+  socialNewsfeed: socialNewsfeedReducer,
+  explore: exploreReducer,
 })
 
 const store = createStore(

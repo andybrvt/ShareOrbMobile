@@ -86,7 +86,6 @@ class NewsfeedSpecCarousel extends React.Component{
 
 
   render(){
-    console.log(this.props)
 
     const flatListOptimizaitonProps = {
       initialNumToRender: 0,

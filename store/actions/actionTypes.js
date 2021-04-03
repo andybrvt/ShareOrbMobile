@@ -8,3 +8,8 @@ export const ADD_CREDENTIALS = "ADD_CREDENTIALS";
 
 // This is for the newsfeed
 export const LOAD_SOCIAL_POSTS = "LOAD_SOCIAL_POSTS";
+
+
+
+// This will be for the profile page
+export const LOAD_PROFILE = "LOAD_PROFILE";

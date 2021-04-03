@@ -6,7 +6,7 @@ import Friends from './Friends';
 import Login from './Login/Login';
 import Signup from './Signup/Signup';
 import Explore from './Explore/Explore';
-import SocialCalendar from './SocialCalendar/SocialCalendar';
+import SocialCalendar from './ProfilePage/SocialCalendar';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 
@@ -23,7 +23,7 @@ class Routes extends React.Component{
       <Stack.Navigator screenOptions={{headerShown: false,}}>
         <Stack.Screen name = "Login" component = {Login} />
         <Stack.Screen name = "Signup" component = {Signup} />
-        
+
       </Stack.Navigator>
     )
 

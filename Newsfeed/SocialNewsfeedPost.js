@@ -281,7 +281,6 @@ class SocialNewsfeedPost extends React.Component{
         postCreatedAt = this.props.data.post_date
       }
 
-      console.log(postCreatedAt)
 
     }
     return (
