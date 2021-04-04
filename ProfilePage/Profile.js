@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, View, Button,StyleSheet } from 'react-native';
+import { Text, View, Button,StyleSheet, ScrollView } from 'react-native';
 import ProfileHeader from './ProfileHeader';
 import { connect } from "react-redux";
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
-
+import SocialCalendar from '../SocialCalendar/SocialCalendar';
 
 // This will be the bulk of the profile page
 class Profile extends React.Component{
@@ -84,10 +84,18 @@ class Profile extends React.Component{
     console.log(this.props)
     return (
       <View>
-        <Text>{this.props.route.params.username}</Text>
+
         <ProfileHeader
           {...this.props}
           />
+
+        <ScrollView>
+          <View>
+            <SocialCalendar />
+          </View>
+
+
+        </ScrollView>
 
       </View>
     )
@@ -107,5 +115,12 @@ const mapStateToProps = state => {
     // chats: state.message.chats
   }
 }
+
+const styles = StyleSheet.create({
+  socialCalContainer: {
+    flex: 1,
+    backgroundColor: "blue"
+  }
+})
 
 export default connect(mapStateToProps)(Profile);
