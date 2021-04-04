@@ -7,7 +7,6 @@ import Login from './Login/Login';
 import LoadingScreen from './Login/LoadingScreen';
 import Signup from './Signup/Signup';
 import Explore from './Explore/Explore';
-import SocialCalendar from './ProfilePage/SocialCalendar';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 
