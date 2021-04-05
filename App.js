@@ -24,16 +24,15 @@ import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocke
 import Profile from './ProfilePage/Profile';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch,
-   faBell,
    faUserCircle,
    faHome,
    faMapSigns,
-   faUser,
-   faComment } from '@fortawesome/free-solid-svg-icons'
+
+ } from '@fortawesome/free-solid-svg-icons'
 // import BottomNavigation from './BottomNavigation';
 import { TabActions } from '@react-navigation/native';
 
-
+import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -134,7 +133,7 @@ class App extends Component{
                         <FontAwesomeIcon
                           size = {25}
                           color = {color}
-                          icon={faComment} />
+                          icon={faComments} />
                       ),
                     }}
                     />

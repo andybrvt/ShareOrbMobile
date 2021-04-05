@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import Constant from 'expo-constants';
 import MainLogo from '../logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faSearch, faBell, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
-
+import { faBell } from '@fortawesome/free-regular-svg-icons'
 
 class Header extends React.Component{
 
@@ -20,7 +20,7 @@ class Header extends React.Component{
 
   render(){
 
-    
+
     let profilePic = ""
 
     if(this.props.profilePic){

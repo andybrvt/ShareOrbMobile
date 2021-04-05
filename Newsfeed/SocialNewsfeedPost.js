@@ -5,7 +5,7 @@ import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHeart, faComments, faPaperclip } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faComment, faPaperclip } from '@fortawesome/free-regular-svg-icons'
 
 
 
@@ -176,13 +176,13 @@ class SocialNewsfeedPost extends React.Component{
             <Text> | </Text>
               <FontAwesomeIcon
                 size = {15}
-                icon={faComments} />
+                icon={faComment} />
             <Text>  {commentList.length} Comments</Text>
 
           </View>
 
           <View style = {styles.captionHolder}>
-            <Text> @{userUsername+" "}</Text>
+            <Text style = {styles.captionUsername}> @{userUsername+" "}</Text>
             <Text> {caption.substring(0,140)}</Text>
 
           </View>
@@ -206,7 +206,7 @@ class SocialNewsfeedPost extends React.Component{
                 marginRight: 10
               }}
               size = {15}
-              icon={faComments} />
+              icon={faComment} />
             <Text>Comment</Text>
           </View>
 
@@ -392,8 +392,16 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   captionHolder: {
-    flexDirection: "row"
+    flexDirection: "row",
+
   },
+  captionUsername:{
+    color:'black',
+    fontSize:14,
+    fontWeight:'bold',
+  },
+
+
   likeCapHolder: {
     padding: 10,
   }
