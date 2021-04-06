@@ -20,7 +20,8 @@ const initialState ={
   sentRequestList: [],
   requestList: [],
   showIntialInstructions: false,
-  notificationSeen: 0
+  notificationSeen: 0,
+  date_joined: null,
 }
 
 const authStart = (state, action) => {
@@ -75,7 +76,8 @@ const authLogout = (state, action) => {
     sentRequestList: [],
     requestList: [],
     showIntialInstructions: false,
-    notificationSeen: 0
+    notificationSeen: 0,
+    date_joined: null
   });
 };
 
@@ -95,7 +97,8 @@ const addCredentials = (state, action) => {
     sentRequestList: action.sentRequestList,
     requestList: action.requestList,
     showIntialInstructions: action.showIntialInstructions,
-    notificationSeen: action.notificationSeen
+    notificationSeen: action.notificationSeen,
+    date_joined: action.date_joined
   });
 };
 

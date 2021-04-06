@@ -5,9 +5,14 @@
 global.WS_HEADER = "ws"
 
 
-global.IP_CHANGE="http://192.168.1.200:19003"
-global.WS_ENDPOINT = "192.168.1.200:19003"
-global.IMAGE_ENDPOINT = "http://192.168.1.200:19003"
+// global.IP_CHANGE="http://192.168.1.200:19003"
+// global.WS_ENDPOINT = "192.168.1.200:19003"
+// global.IMAGE_ENDPOINT = "http://192.168.1.200:19003"
+
+
+global.IP_CHANGE = "http://192.168.1.24:19000"
+global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
+global.WS_ENDPOINT = "192.168.1.24:19000"
 
 global.CAPITALIZE = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1)
