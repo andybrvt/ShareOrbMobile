@@ -83,15 +83,9 @@ class Profile extends React.Component{
   render(){
     console.log(this.props)
     return (
-      <View style = {{
-          flex: 1,
-          // backgroundColor: "yellow",
-        }}>
+      <View style = {styles.container} >
 
-        <View style = {{
-            flex: 1,
-            backgroundColor: 'pink'
-          }}>
+        <View style = {styles.profileHeader}>
           <ProfileHeader
             {...this.props}
             />
@@ -99,9 +93,7 @@ class Profile extends React.Component{
 
 
         <View
-          style = {{
-            flex: 2,
-          }}
+          style = {styles.socialCalContainer}
           >
           <SocialCalendar />
 
@@ -128,10 +120,17 @@ const mapStateToProps = state => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   socialCalContainer: {
-    flex: 1,
-    backgroundColor: "blue"
+    flex: 2,
+
+  },
+  profileHeader: {
+    flex: 1
   }
+
 })
 
 export default connect(mapStateToProps)(Profile);
