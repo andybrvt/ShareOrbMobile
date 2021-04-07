@@ -61,6 +61,64 @@ class SocialCalendar extends React.Component{
     const dateFormat = "d";
     const rows = []
 
+    let toDoStuff = []
+    let days = []
+    // so you watn to start the day off on the start date
+    // which will be the start of the month
+    let day = startDate;
+    let formattedDate = ""
+
+    // Now you will start loop through the days and start making the months
+
+    while(day <= endDate){
+      //Now you will loop throug each day of the week end then
+      // add them to days and then add the days to the rows
+      for(let i = 0; i< 7; i++){
+
+
+        // you want a cloneDay for each loop so that you can
+        // actually get the date or else it will be the final date
+        formattedDate = dateFns.format(day, dateFormat);
+        const cloneDay = day;
+
+        if(toDoStuff.length > 0){
+          //  do some stuff here wher you fill in the cover pic
+
+        } else {
+          // This is if there are no pictures at that current
+          // day
+          days.push(
+            <View>
+              <Text> {formattedDate}</Text>
+            </View>
+          )
+
+        }
+        // Once the day has ended you would clear out the
+        // events that land on this date
+        toDoStuff = []
+        day = dateFns.addDays(day, 1);
+      }
+
+      // Now this is where the week has finished because it went
+      // through 7 days, now you have a week saved in a list
+      // now you put them in rows now
+      rows.push(
+        <View>
+            <Text>{days}</Text>
+        </View>
+      )
+      // Now clear out the days to start the next week
+      days = []
+
+    }
+
+
+    return (
+        <View>
+          <Text> {rows}</Text>
+        </View>
+    )
   }
 
   renderAllCells(events){
@@ -78,20 +136,52 @@ class SocialCalendar extends React.Component{
 
     const curMonthStart = dateFns.startOfMonth(currentMonth);
     const curMonthEnd = dateFns.endOfMonth(curMonthStart)
-    // Now youw ould wnat to grab the start and previous
+    // // Now youw ould wnat to grab the start and previous
     // months of the current so that you can render them
 
-    const prevMonth = dateFns.subMonths(curMonthStart)
-    const startPrevMonth = dateFns.startOfMonth(prevMonth)
-    const endPrevMonth = dateFns.endOfMonth(prevMonth)
+    const repCur = dateFns.format(currentMonth, "MMMM")
+    const repPrev = dateFns.format(
+      dateFns.subMonths(currentMonth, 1), "MMMM")
+    const repNext = dateFns.format(
+      dateFns.addMonths(currentMonth, 1), "MMMM")
 
 
-    const nextMonth = dateFns.addMonths(curMonthStart)
-    const startNextMonth = dateFns.startOfMonth(nextMonth)
-    const endNextMonth = dateFns.endOfMonth(nextMonth)
+    const prevMonth = dateFns.subMonths(curMonthStart,1)
+    // const startPrevMonth = dateFns.startOfMonth(prevMonth)
+    // const endPrevMonth = dateFns.endOfMonth(prevMonth)
+
+
+    const nextMonth = dateFns.addMonths(curMonthStart, 1)
+    // const startNextMonth = dateFns.startOfMonth(nextMonth)
+    // const endNextMonth = dateFns.endOfMonth(nextMonth)
 
     // So you can make a function that handles making the cells
     // here and just pass in the current month
+
+    // now that I have the create cell funciton created
+    // you now want to put then together here
+
+    return (
+      <View>
+        <View>
+          <Text> {repPrev}</Text>
+          {this.renderCell(prevMonth)}
+        </View>
+
+
+        <View>
+          <Text>{repCur}</Text>
+          {this.renderCell(currentMonth)}
+        </View>
+
+
+        <View>
+          <Text>{repNext}</Text>
+          {this.renderCell(nextMonth)}
+        </View>
+
+      </View>
+    )
 
 
   }
@@ -102,6 +192,7 @@ class SocialCalendar extends React.Component{
       <View>
         <View>{this.renderDays()}</View>
 
+        <View>{this.renderAllCells()}</View>
       </View>
 
     )
