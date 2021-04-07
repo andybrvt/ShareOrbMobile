@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button,StyleSheet, ScrollView } from 'react-native';
+import { Text, View, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
 
@@ -88,8 +88,16 @@ class SocialCalendar extends React.Component{
           // This is if there are no pictures at that current
           // day
           days.push(
-            <View>
-              <Text> {formattedDate}</Text>
+            <View style = {styles.monthCell}>
+              {
+                dateFns.isSameMonth(day, curMonth) ?
+
+                <Text> {formattedDate}</Text>
+
+                :
+
+                <Text></Text>
+              }
             </View>
           )
 
@@ -104,8 +112,8 @@ class SocialCalendar extends React.Component{
       // through 7 days, now you have a week saved in a list
       // now you put them in rows now
       rows.push(
-        <View>
-            <Text>{days}</Text>
+        <View style = {styles.monthRow}>
+            {days}
         </View>
       )
       // Now clear out the days to start the next week
@@ -116,7 +124,7 @@ class SocialCalendar extends React.Component{
 
     return (
         <View>
-          <Text> {rows}</Text>
+          <Text style = {styles.monthContainer}> {rows}</Text>
         </View>
     )
   }
@@ -205,5 +213,32 @@ const mapStateToProps = state => {
     date_joined: state.auth.date_joined
   }
 }
+
+const styles = StyleSheet.create({
+  // This will be holding the rows
+  monthContainer: {
+    flexDirection: "column",
+    flex: 1,
+    borderBottomWidth: 0.2
+  },
+  // This is for the cell
+  // So you want the cells to be square so that you
+  // divde the full with by 7 to get the wdith of each cell
+  // and then make it the height
+  monthCell: {
+    flex: 1,
+    height: Math.round(Dimensions.get('window').width/7),
+    alignItems: "center",
+    justifyContent: "center",
+    // borderLeftWidth:0.2,
+    // borderTopWidth: 0.2,
+
+  },
+  monthRow: {
+    width: Math.round(Dimensions.get('window').width),
+    // height: 100,
+    flexDirection: "row"
+  }
+})
 
 export default connect(mapStateToProps)(SocialCalendar);
