@@ -83,19 +83,30 @@ class Profile extends React.Component{
   render(){
     console.log(this.props)
     return (
-      <View>
+      <View style = {{
+          flex: 1,
+          // backgroundColor: "yellow",
+        }}>
 
-        <ProfileHeader
-          {...this.props}
-          />
+        <View style = {{
+            flex: 1,
+            backgroundColor: 'pink'
+          }}>
+          <ProfileHeader
+            {...this.props}
+            />
+        </View>
 
-        <ScrollView>
-          <View>
-            <SocialCalendar />
-          </View>
 
+        <View
+          style = {{
+            flex: 2,
+          }}
+          >
+          <SocialCalendar />
 
-        </ScrollView>
+        </View>
+
 
       </View>
     )

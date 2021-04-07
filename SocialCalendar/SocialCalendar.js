@@ -88,7 +88,9 @@ class SocialCalendar extends React.Component{
           // This is if there are no pictures at that current
           // day
           days.push(
-            <View style = {styles.monthCell}>
+            <View
+              key = {i}
+              style = {styles.monthCell}>
               {
                 dateFns.isSameMonth(day, curMonth) ?
 
@@ -112,7 +114,9 @@ class SocialCalendar extends React.Component{
       // through 7 days, now you have a week saved in a list
       // now you put them in rows now
       rows.push(
-        <View style = {styles.monthRow}>
+        <View
+          key = {day}
+           style = {styles.monthRow}>
             {days}
         </View>
       )
@@ -123,9 +127,9 @@ class SocialCalendar extends React.Component{
 
 
     return (
-        <View>
+
           <Text style = {styles.monthContainer}> {rows}</Text>
-        </View>
+
     )
   }
 
@@ -170,7 +174,7 @@ class SocialCalendar extends React.Component{
     // you now want to put then together here
 
     return (
-      <View>
+      <ScrollView>
         <View>
           <Text> {repPrev}</Text>
           {this.renderCell(prevMonth)}
@@ -188,7 +192,7 @@ class SocialCalendar extends React.Component{
           {this.renderCell(nextMonth)}
         </View>
 
-      </View>
+      </ScrollView>
     )
 
 
@@ -200,7 +204,9 @@ class SocialCalendar extends React.Component{
       <View>
         <View>{this.renderDays()}</View>
 
-        <View>{this.renderAllCells()}</View>
+
+        {this.renderAllCells()}
+
       </View>
 
     )
@@ -215,6 +221,9 @@ const mapStateToProps = state => {
 }
 
 const styles = StyleSheet.create({
+  allCellContainer: {
+
+  },
   // This will be holding the rows
   monthContainer: {
     flexDirection: "column",
