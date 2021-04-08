@@ -208,12 +208,10 @@ class SocialCalendar extends React.Component{
 
     const repPrev = dateFns.format(prevMonth, "MMMM yyyy")
 
-    const month = (
-      <View>
-        <Text> {repPrev}</Text>
-        {this.renderCell(prevMonth)}
-      </View>
-    )
+    const month = {
+      rep: repPrev,
+      month: prevMonth
+    }
 
     const upList = [month, ...this.state.monthList]
     this.setState({
