@@ -1,27 +1,61 @@
 import React from 'react';
-import { Text, View, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { Text,
+   View,
+   Button,
+   StyleSheet,
+   ScrollView,
+   FlatList,
+   Dimensions } from 'react-native';
 import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
 
+let {hieght, width} = Dimensions.get('window')
 
 class SocialCalendar extends React.Component{
 
-  state = {
+  constructor(props){
+    super(props)
 
-    currentDate: new Date(),
-    curTop: new Date(),
-    // curBottom will be for when you hit near the bottom
-    curBottom: new Date(),
-    showSocialEventPostModal: false,
-    showSocialPicPostModal: false,
-    events: [],
-    animate:true,
-    fade:false,
-    monthList: [],
-  }
+    this.state = {
+
+      currentDate: new Date(),
+      curTop: new Date(),
+      // curBottom will be for when you hit near the bottom
+      curBottom: new Date(),
+      showSocialEventPostModal: false,
+      showSocialPicPostModal: false,
+      events: [],
+      animate:true,
+      fade:false,
+      monthList: [],
+    }
+
+    this.contentOffsetY = 0;
+    this.pageOffsetY = 0;
+    this.contentHeight = 0;
+
+
+
+    }
 
   componentDidMount(){
+    // This fucntion will be use to update scroll list
+    // for the intial render
     this.renderAllCells(null)
+
+  }
+
+  renderItem = ({item}) => {
+    // this can be use to render your specific months, so what
+    // we cna do is put the dates inside the list and then
+    // render the months in this list
+    console.log(item)
+    return(
+      <View>
+        <Text> {item.rep}</Text>
+        {this.renderCell(item.month)}
+      </View>
+    )
   }
 
   renderDays(){
@@ -141,6 +175,13 @@ class SocialCalendar extends React.Component{
     )
   }
 
+  isCloseToTop = ({layoutMeasurement, contentOffset, contentSize}) => {
+    // This funciton will check if you hit the top yet
+    const paddingToTop = 250;
+
+    return contentOffset.y < paddingToTop;
+  }
+
   isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     // This will check if the scroll hits a certain point
     const paddingToBottom = 250;
@@ -149,6 +190,34 @@ class SocialCalendar extends React.Component{
     // content size would be the size of the whole content
     return layoutMeasurement.height + contentOffset.y >=
     contentSize.height - paddingToBottom;
+  }
+
+  onTopHit = () => {
+    // this will be use to add more dates to the top of the calendar
+    // whenever you hit the top of the list it will render more
+
+    // similar to onBottomHit but opposite
+    const curDate = this.state.curTop
+
+    const startCur = dateFns.startOfMonth(curDate)
+
+    const prevMonth = dateFns.subMonths(startCur, 1)
+
+    const repPrev = dateFns.format(prevMonth, "MMMM yyyy")
+
+    const month = (
+      <View>
+        <Text> {repPrev}</Text>
+        {this.renderCell(prevMonth)}
+      </View>
+    )
+
+    const upList = [month, ...this.state.monthList]
+    this.setState({
+
+      curTop: prevMonth,
+      monthList: upList
+    })
   }
 
   onBottomHit = () => {
@@ -178,6 +247,19 @@ class SocialCalendar extends React.Component{
       curBottom: nextMonth,
       monthList: upList
     })
+
+  }
+
+  onScroll(e){
+    // gotta check out myself
+    let contentOffset = e.nativeEvent.contentOffset.y;
+    this.contentOffsetY < contentOffset ? this.onBottomHit() : this.onTopHit()
+    this.contentOffsetY = contentOffset;
+  }
+
+  scrollToOffset = (offset) => {
+
+    this.flatListRef ? this.flatListRef.scrollToOffset({animated: false, offset}): null;
 
   }
 
@@ -229,27 +311,42 @@ class SocialCalendar extends React.Component{
     // now that I have the create cell funciton created
     // you now want to put then together here
 
-    let initialList = []
-    initialList.push(
-      <View>
-        <Text> {repPrev}</Text>
-        {this.renderCell(prevMonth)}
-      </View>
-    )
+    let initialList = [
+      {
+          rep: repPrev,
+          month: prevMonth
+      },{
+          rep: repCur,
+          month: currentMonth
+      },{
+          rep: repNext,
+          month: nextMonth
+      }
 
-    initialList.push(
-      <View>
-        <Text>{repCur}</Text>
-        {this.renderCell(currentMonth)}
-      </View>
-    )
+    ]
 
-    initialList.push(
-      <View>
-        <Text>{repNext}</Text>
-        {this.renderCell(nextMonth)}
-      </View>
-    )
+    // initialList.push(currentMonth)
+    // initialList.push(nextMonth)
+    // initialList.push(
+    //   <View>
+    //     <Text> {repPrev}</Text>
+    //     {this.renderCell(prevMonth)}
+    //   </View>
+    // )
+    //
+    // initialList.push(
+    //   <View>
+    //     <Text>{repCur}</Text>
+    //     {this.renderCell(currentMonth)}
+    //   </View>
+    // )
+    //
+    // initialList.push(
+    //   <View>
+    //     <Text>{repNext}</Text>
+    //     {this.renderCell(nextMonth)}
+    //   </View>
+    // )
 
 
     this.setState({
@@ -281,16 +378,45 @@ class SocialCalendar extends React.Component{
   }
 
   render(){
+    const listData = this.state.monthList
+    if(this.pageOffsetY < 600){
+      // this.onTopHit()
+    } else if((this.contentHeight - this.pageOffsetY) < (height * 1.5)){
+      // this.onBottomHit()
+    }
+
     return (
       <View>
         <View>{this.renderDays()}</View>
 
-
+        <FlatList
+          // onScroll = {(e) => {
+          //   this.pageOffsetY = e.nativateEvent.contentOffset.y;
+          //   this.contentHeight = e.nativeEvent.contentSize.height;
+          //   return null;
+          // }}
+          // onMomentumScrollEnd={this.onScroll}
+          // automaticallyAdjustContentInsets={false}
+          // itemShouldUpdate={false}
+          renderItem={this.renderItem}
+          data={listData}
+          // refreshing={false}
+          // onRefresh={() => this.onTopHit()}
+          // onEndReachedThreshold={0.3}
+          // onEndReached={() => this.onBottomHit()}
+          keyExtractor={(item) => item.rep}
+          // ref={(ref) => { this.flatListRef = ref; }}
+          // animated={false}
+          />
+        {/*
           <ScrollView
             showsVerticalScrollIndicator={false}
             onScroll = {({nativeEvent})  => {
               if(this.isCloseToBottom(nativeEvent)){
                 this.onBottomHit()
+              }
+              if(this.isCloseToTop(nativeEvent)){
+                this.onTopHit()
               }
             }}
             scrollEventThrottle = {400}
@@ -298,6 +424,9 @@ class SocialCalendar extends React.Component{
 
             {this.state.monthList}
           </ScrollView>
+
+          */}
+
 
       </View>
 
