@@ -13,6 +13,9 @@ let {hieght, width} = Dimensions.get('window')
 
 class SocialCalendar extends React.Component{
 
+
+  // When adding values in the monthList it will be in the format of
+  //  { rep: <stuff here>, month: <stuff here>}
   constructor(props){
     super(props)
 
@@ -236,11 +239,12 @@ class SocialCalendar extends React.Component{
 
     let upList =[...this.state.monthList]
 
+    // user the same indicator here
     upList.push(
-      <View>
-        <Text> {repNext}</Text>
-        {this.renderCell(nextMonth)}
-      </View>
+      {
+        rep: repNext,
+        month: nextMonth
+      }
     )
 
     this.setState({
@@ -400,10 +404,10 @@ class SocialCalendar extends React.Component{
           // itemShouldUpdate={false}
           renderItem={this.renderItem}
           data={listData}
-          // refreshing={false}
-          // onRefresh={() => this.onTopHit()}
-          // onEndReachedThreshold={0.3}
-          // onEndReached={() => this.onBottomHit()}
+          refreshing={false}
+          onRefresh={() => this.onTopHit()}
+          onEndReachedThreshold={0.3}
+          onEndReached={() => this.onBottomHit()}
           keyExtractor={(item) => item.rep}
           // ref={(ref) => { this.flatListRef = ref; }}
           // animated={false}
