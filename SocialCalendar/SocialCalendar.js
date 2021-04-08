@@ -9,11 +9,19 @@ class SocialCalendar extends React.Component{
   state = {
 
     currentDate: new Date(),
+    curTop: new Date(),
+    // curBottom will be for when you hit near the bottom
+    curBottom: new Date(),
     showSocialEventPostModal: false,
     showSocialPicPostModal: false,
     events: [],
     animate:true,
     fade:false,
+    monthList: [],
+  }
+
+  componentDidMount(){
+    this.renderAllCells(null)
   }
 
   renderDays(){
@@ -133,7 +141,49 @@ class SocialCalendar extends React.Component{
     )
   }
 
+  isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    // This will check if the scroll hits a certain point
+    const paddingToBottom = 250;
+    // layoutMeasurement will be th eheight of the whole layout
+    // contentoffset will be how much is it off by from the start
+    // content size would be the size of the whole content
+    return layoutMeasurement.height + contentOffset.y >=
+    contentSize.height - paddingToBottom;
+  }
+
+  onBottomHit = () => {
+    // This function will be use to add in more dates at teh bottom of the
+    // calendar whenever you hit the bottom of the list
+    // so you want to get the bottom month indicator and add one month to it
+    // and set it as the bottm and add a new month to it as well
+
+    const curDate = this.state.curBottom
+
+
+    const startCur = dateFns.startOfMonth(curDate)
+    const nextMonth = dateFns.addMonths(startCur, 1)
+
+    const repNext = dateFns.format( nextMonth, "MMMM yyyy")
+
+    let upList =[...this.state.monthList]
+
+    upList.push(
+      <View>
+        <Text> {repNext}</Text>
+        {this.renderCell(nextMonth)}
+      </View>
+    )
+
+    this.setState({
+      curBottom: nextMonth,
+      monthList: upList
+    })
+
+  }
+
+
   renderAllCells(events){
+
     // So the way the months is gonna work is that it will be a
     // bi directional list where the first date will be the date
     // that you joined in from ... so that will be the limit when you
@@ -144,18 +194,17 @@ class SocialCalendar extends React.Component{
 
 
     // So you want to grab the current month first
-    const currentMonth = this.state.currentDate;
-
+    let currentMonth = this.state.currentDate;
     const curMonthStart = dateFns.startOfMonth(currentMonth);
     const curMonthEnd = dateFns.endOfMonth(curMonthStart)
     // // Now youw ould wnat to grab the start and previous
     // months of the current so that you can render them
 
-    const repCur = dateFns.format(currentMonth, "MMMM")
+    const repCur = dateFns.format(currentMonth, "MMMM yyyy")
     const repPrev = dateFns.format(
-      dateFns.subMonths(currentMonth, 1), "MMMM")
+      dateFns.subMonths(currentMonth, 1), "MMMM yyyy")
     const repNext = dateFns.format(
-      dateFns.addMonths(currentMonth, 1), "MMMM")
+      dateFns.addMonths(currentMonth, 1), "MMMM yyyy")
 
 
     const prevMonth = dateFns.subMonths(curMonthStart,1)
@@ -164,6 +213,13 @@ class SocialCalendar extends React.Component{
 
 
     const nextMonth = dateFns.addMonths(curMonthStart, 1)
+
+
+    // So you will set the boundries for the infinite scroll
+    this.setState({
+      curTop: prevMonth,
+      curBottom: nextMonth
+    })
     // const startNextMonth = dateFns.startOfMonth(nextMonth)
     // const endNextMonth = dateFns.endOfMonth(nextMonth)
 
@@ -173,39 +229,75 @@ class SocialCalendar extends React.Component{
     // now that I have the create cell funciton created
     // you now want to put then together here
 
-    return (
-      <ScrollView>
-        <View>
-          <Text> {repPrev}</Text>
-          {this.renderCell(prevMonth)}
-        </View>
-
-
-        <View>
-          <Text>{repCur}</Text>
-          {this.renderCell(currentMonth)}
-        </View>
-
-
-        <View>
-          <Text>{repNext}</Text>
-          {this.renderCell(nextMonth)}
-        </View>
-
-      </ScrollView>
+    let initialList = []
+    initialList.push(
+      <View>
+        <Text> {repPrev}</Text>
+        {this.renderCell(prevMonth)}
+      </View>
     )
+
+    initialList.push(
+      <View>
+        <Text>{repCur}</Text>
+        {this.renderCell(currentMonth)}
+      </View>
+    )
+
+    initialList.push(
+      <View>
+        <Text>{repNext}</Text>
+        {this.renderCell(nextMonth)}
+      </View>
+    )
+
+
+    this.setState({
+      monthList: initialList
+    })
+
+    // return (
+    //   <ScrollView
+    //     showsVerticalScrollIndicator={false}
+    //     onScroll = {({nativeEvent})  => {
+    //       if(this.isCloseToBottom(nativeEvent)){
+    //
+    //       }
+    //     }}
+    //     scrollEventThrottle = {400}
+    //     >
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //   </ScrollView>
+    // )
 
 
   }
 
   render(){
-
     return (
       <View>
         <View>{this.renderDays()}</View>
 
 
-        {this.renderAllCells()}
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            onScroll = {({nativeEvent})  => {
+              if(this.isCloseToBottom(nativeEvent)){
+                this.onBottomHit()
+              }
+            }}
+            scrollEventThrottle = {400}
+            >
+
+            {this.state.monthList}
+          </ScrollView>
 
       </View>
 

@@ -15,8 +15,7 @@ class LoadingScreen extends React.Component{
 
 
   render(){
-    console.log('loading page')
-    console.log(this.props)
+  
 
   // The funciton here will be pretty much use to render the info
   // so what happens here is that when you login and authenticated

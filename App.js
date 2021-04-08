@@ -82,7 +82,6 @@ class App extends Component{
     // you will get a serpate navigation for the login and sign up but hwne you are
     // auth you get the bottom bar
 
-    console.log(this.props)
 
     return(
       <PaperProvider>

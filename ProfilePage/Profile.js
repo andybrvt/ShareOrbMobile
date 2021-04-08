@@ -44,7 +44,6 @@ class Profile extends React.Component{
 	}
 
   componentDidMount(){
-    console.log('hits here')
     if(this.props.route.params.username !== null){
         this.initialiseProfile()
     }
@@ -52,9 +51,6 @@ class Profile extends React.Component{
   }
 
   componentDidUpdate(prevProps){
-    console.log('update')
-    console.log(this.props.route.params.username)
-
     if(prevProps.route.params.username !== this.props.route.params.username){
 
     // this.props.closeProfile()
@@ -81,7 +77,6 @@ class Profile extends React.Component{
   }
 
   render(){
-    console.log(this.props)
     return (
       <View style = {styles.container} >
 
