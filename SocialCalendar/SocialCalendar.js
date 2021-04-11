@@ -237,7 +237,7 @@ class SocialCalendar extends React.Component{
 
     // so I would need to know the exact height of my object so that it can scroll smoothly
 
-    newOffSet = this.pageOffsetY + 700;
+    newOffSet = this.pageOffsetY + 300;
     this.pageOffsetY = newOffSet;
     this.contentOffsetY = newOffSet;
     this.scrollToOffset(newOffSet)
@@ -434,9 +434,9 @@ class SocialCalendar extends React.Component{
 
     const listData = this.state.monthList
 
-    this.scrollToOffset(500)
+    // this.scrollToOffset(500)
     if(this.pageOffsetY < 600){
-      // this.onTopHit()
+      this.onTopHit()
 
     } else if((this.contentHeight - this.pageOffsetY) < (height * 1.5)){
       // this.onBottomHit()
