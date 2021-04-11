@@ -199,13 +199,11 @@ class SocialCalendar extends React.Component{
 
   onTopHit = () => {
 
-    console.log('hits here for more tap loading')
     // this will be use to add more dates to the top of the calendar
     // whenever you hit the top of the list it will render more
 
     // similar to onBottomHit but opposite
     const curDate = this.state.curTop
-
     const startCur = dateFns.startOfMonth(curDate)
 
     const prevMonth = dateFns.subMonths(startCur, 1)
@@ -217,7 +215,9 @@ class SocialCalendar extends React.Component{
       month: prevMonth
     }
 
+
     const upList = [month, ...this.state.monthList]
+
     this.setState({
       curTop: prevMonth,
       monthList: upList
@@ -240,7 +240,7 @@ class SocialCalendar extends React.Component{
     newOffSet = this.pageOffsetY + 700;
     this.pageOffsetY = newOffSet;
     this.contentOffsetY = newOffSet;
-    // this.scrollToOffset(newOffSet)
+    this.scrollToOffset(newOffSet)
 
   }
 
@@ -303,9 +303,11 @@ class SocialCalendar extends React.Component{
     // will scroll teh whole view ot the current offset, pretty much you load up more stuff
     // it will scroll down ward to accomdate for the extra heigh on top. Has to be
     //exact
-    console.log(offset)
-    this.flatListRef ? this.flatListRef.scrollToOffset({animated: false, offset}): null;
+    // this.flatListRef ? this.flatListRef.scrollToOffset({animated: false, offset}): null;
 
+    setTimeout(() => {
+      this.flatListRef.scrollToOffset({ offset: offset, animated: false })
+    }, 0)
   }
 
 
@@ -398,6 +400,8 @@ class SocialCalendar extends React.Component{
       monthList: initialList
     })
 
+
+
     // return (
     //   <ScrollView
     //     showsVerticalScrollIndicator={false}
@@ -429,10 +433,10 @@ class SocialCalendar extends React.Component{
 
 
     const listData = this.state.monthList
-    console.log(this.pageOffsetY)
-    console.log(listData.length)
+
+    this.scrollToOffset(500)
     if(this.pageOffsetY < 600){
-      this.onTopHit()
+      // this.onTopHit()
 
     } else if((this.contentHeight - this.pageOffsetY) < (height * 1.5)){
       // this.onBottomHit()
@@ -444,20 +448,20 @@ class SocialCalendar extends React.Component{
 
         <FlatList
           onScroll = {(e) => {
-            console.log(e.nativeEvent.contentOffset.y)
             this.pageOffsetY = e.nativeEvent.contentOffset.y;
             this.contentHeight = e.nativeEvent.contentSize.height;
             return null;
           }}
-          onMomentumScrollEnd={this.onScroll}
+          scrollToOffset = {{x: 0, y:700}}
+          // onMomentumScrollEnd={this.onScroll}
           automaticallyAdjustContentInsets={false}
           itemShouldUpdate={false}
           renderItem={this.renderItem}
           data={listData}
           refreshing={false}
-          onRefresh={() => this.onTopHit()}
+          // onRefresh={() => this.onTopHit()}
           onEndReachedThreshold={0.3}
-          onEndReached={() => this.onBottomHit()}
+          // onEndReached={() => this.onBottomHit()}
           keyExtractor={(item) => item.rep}
           ref={(ref) => { this.flatListRef = ref; }}
           animated={false}
