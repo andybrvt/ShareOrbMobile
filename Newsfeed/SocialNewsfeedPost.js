@@ -294,7 +294,7 @@ class SocialNewsfeedPost extends React.Component{
             size = {40}
              />
            <View style = {styles.name}>
-             <Text> {global.CAPITALIZE(userFirstName) +" "+ global.CAPITALIZE(userLastName) + actionText } </Text>
+             <Text> {global.CAPITALIZE(userFirstName) +" "+ global.CAPITALIZE(userLastName) } </Text>
              <Text style = {{
                  fontSize: 12
                }}> @{userUsername}</Text>
