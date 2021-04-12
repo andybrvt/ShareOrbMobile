@@ -9,7 +9,7 @@ import { Text,
 import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
 
-let {hieght, width} = Dimensions.get('window')
+let {height, width} = Dimensions.get('window')
 
 class SocialCalendar extends React.Component{
 
@@ -37,6 +37,9 @@ class SocialCalendar extends React.Component{
     this.pageOffsetY = 0;
     this.contentHeight = 0;
 
+    this.onScroll = this.onScroll.bind(this)
+    this.onTopHit = this.onTopHit.bind(this);
+    this.onBottomHit = this.onBottomHit.bind(this);
 
 
     }
@@ -52,7 +55,6 @@ class SocialCalendar extends React.Component{
     // this can be use to render your specific months, so what
     // we cna do is put the dates inside the list and then
     // render the months in this list
-    console.log(item)
     return(
       <View>
         <Text> {item.rep}</Text>
@@ -196,12 +198,12 @@ class SocialCalendar extends React.Component{
   }
 
   onTopHit = () => {
+
     // this will be use to add more dates to the top of the calendar
     // whenever you hit the top of the list it will render more
 
     // similar to onBottomHit but opposite
     const curDate = this.state.curTop
-
     const startCur = dateFns.startOfMonth(curDate)
 
     const prevMonth = dateFns.subMonths(startCur, 1)
@@ -213,12 +215,33 @@ class SocialCalendar extends React.Component{
       month: prevMonth
     }
 
-    const upList = [month, ...this.state.monthList]
-    this.setState({
 
+    const upList = [month, ...this.state.monthList]
+
+    this.setState({
       curTop: prevMonth,
       monthList: upList
     })
+
+
+    let newOffSet;
+
+    // so page offset would be your view currently on the who scorll
+
+    // So when you render the information on top you will
+    // need to see what your need offset y woudl be because when you render it
+    // it will grow on top and by default it will scroll to the 0 point when you
+    // have more information. but inorder to have smooth scrolling you need to
+    // know the exact hieght of the item and then  in order to properly scroll
+    // correctly
+
+    // so I would need to know the exact height of my object so that it can scroll smoothly
+
+    newOffSet = this.pageOffsetY + 300;
+    this.pageOffsetY = newOffSet;
+    this.contentOffsetY = newOffSet;
+    this.scrollToOffset(newOffSet)
+
   }
 
   onBottomHit = () => {
@@ -253,16 +276,38 @@ class SocialCalendar extends React.Component{
   }
 
   onScroll(e){
-    // gotta check out myself
+    // Pretty much this is here if you hit really hard
+
+    // This function will be used to handle the hard scroll
+    // whenver you scroll uphard or below hard it will be the
+    // on momentum scroll
+    // so the contentOffset pretty much is how far the value or screen
+    // is from the to of the list
+    // Remember that this only its whne you hit the bottom
     let contentOffset = e.nativeEvent.contentOffset.y;
+
+    // So this checks against our contentoffsetY field and the it checks to see
+    // if you are below it or above it, if the conttentffset is larger then
+    // that would mena you hit the bottom if it is smaller then that means you
+    // hit the top
     this.contentOffsetY < contentOffset ? this.onBottomHit() : this.onTopHit()
+    // Once you hit that off set at the end it will render more and then the
+    // off set that you hit will now be that of the value you had hit orignally
+
     this.contentOffsetY = contentOffset;
+
   }
 
   scrollToOffset = (offset) => {
+    // so appreantly flatlist has a scroll to offset function where pretty mcuh it
+    // will scroll teh whole view ot the current offset, pretty much you load up more stuff
+    // it will scroll down ward to accomdate for the extra heigh on top. Has to be
+    //exact
+    // this.flatListRef ? this.flatListRef.scrollToOffset({animated: false, offset}): null;
 
-    this.flatListRef ? this.flatListRef.scrollToOffset({animated: false, offset}): null;
-
+    setTimeout(() => {
+      this.flatListRef.scrollToOffset({ offset: offset, animated: false })
+    }, 0)
   }
 
 
@@ -355,6 +400,8 @@ class SocialCalendar extends React.Component{
       monthList: initialList
     })
 
+
+
     // return (
     //   <ScrollView
     //     showsVerticalScrollIndicator={false}
@@ -380,9 +427,17 @@ class SocialCalendar extends React.Component{
   }
 
   render(){
+
+    // Notes; onMomentumScrollEnd is when you scroll really fast
+    // or hard to the end of the list
+
+
     const listData = this.state.monthList
+
+    // this.scrollToOffset(500)
     if(this.pageOffsetY < 600){
-      // this.onTopHit()
+      this.onTopHit()
+
     } else if((this.contentHeight - this.pageOffsetY) < (height * 1.5)){
       // this.onBottomHit()
     }
@@ -392,23 +447,24 @@ class SocialCalendar extends React.Component{
         <View>{this.renderDays()}</View>
 
         <FlatList
-          // onScroll = {(e) => {
-          //   this.pageOffsetY = e.nativateEvent.contentOffset.y;
-          //   this.contentHeight = e.nativeEvent.contentSize.height;
-          //   return null;
-          // }}
+          onScroll = {(e) => {
+            this.pageOffsetY = e.nativeEvent.contentOffset.y;
+            this.contentHeight = e.nativeEvent.contentSize.height;
+            return null;
+          }}
+          scrollToOffset = {{x: 0, y:700}}
           // onMomentumScrollEnd={this.onScroll}
-          // automaticallyAdjustContentInsets={false}
-          // itemShouldUpdate={false}
+          automaticallyAdjustContentInsets={false}
+          itemShouldUpdate={false}
           renderItem={this.renderItem}
           data={listData}
           refreshing={false}
-          onRefresh={() => this.onTopHit()}
+          // onRefresh={() => this.onTopHit()}
           onEndReachedThreshold={0.3}
-          onEndReached={() => this.onBottomHit()}
+          // onEndReached={() => this.onBottomHit()}
           keyExtractor={(item) => item.rep}
-          // ref={(ref) => { this.flatListRef = ref; }}
-          // animated={false}
+          ref={(ref) => { this.flatListRef = ref; }}
+          animated={false}
           />
         {/*
           <ScrollView
