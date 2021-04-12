@@ -109,13 +109,7 @@ class NewsfeedView extends React.Component{
 
 
         <InfiniteScroll />
-        <Text style = {{
-
-          }}>
-        Hello, {this.props.username}
-
-        </Text>
-
+    
 
         <Button
           title = "Logout"
