@@ -27,11 +27,13 @@ import { faSearch,
    faUserCircle,
    faHome,
    faMapSigns,
+   faPlusSquare,
 
  } from '@fortawesome/free-solid-svg-icons'
 // import BottomNavigation from './BottomNavigation';
 import { TabActions } from '@react-navigation/native';
 
+import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 
 const Tab = createMaterialBottomTabNavigator();
@@ -39,8 +41,12 @@ const Tab = createMaterialBottomTabNavigator();
 
 
 class App extends Component{
+    state = {
+    fontsLoaded: true,
+  };
   constructor(props){
     super(props)
+
 
     WebSocketSocialNewsfeedInstance.addCallbacks(
       this.props.id,
@@ -56,11 +62,24 @@ class App extends Component{
 
   }
 
+  async loadFonts() {
+    await Font.loadAsync({
+      // Load a font `Montserrat` from a static resource
+      Montserrat: require('./assets/fonts/Montserrat.ttf'),
+
+      // Any string can be used as the fontFamily name. Here we use an object to provide more control
+      'Montserrat-SemiBold': {
+        uri: require('./assets/fonts/Montserrat-SemiBold.ttf'),
+        display: Font.FontDisplay.FALLBACK,
+      },
+    });
+    this.setState({ fontsLoaded: true });
+  }
 
   componentDidMount(){
 
     this.props.onTryAutoSignup();
-
+    //this.loadFonts();
   }
 
   componentDidUpdate(prevProps){
@@ -75,15 +94,21 @@ class App extends Component{
   }
 
   render(){
-
-
+    // <View style={styles.container}>
+    //       <Text style={{ fontSize: 20 }}>Default Font</Text>
+    //       <Text style={{ fontFamily: 'Montserrat', fontSize: 20 }}>Montserrat</Text>
+    //       <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: 20 }}>
+    //         Montserrat-SemiBold
+    //       </Text>
+    //     </View>
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth
     // you will get a serpate navigation for the login and sign up but hwne you are
     // auth you get the bottom bar
 
-
+    if (this.state.fontsLoaded) {
     return(
+
       <PaperProvider>
         <NavigationContainer>
 
@@ -92,17 +117,19 @@ class App extends Component{
               <Tab.Navigator
                 initialRouteName = "Home"
                 barStyle = {{
-                  backgroundColor: "#1890ff",
+                  backgroundColor: "white",
 
                 }}
                 >
                 <Tab.Screen
                   name="Home"
                   component={NewsfeedView}
+
                   options={{
                      tabBarLabel: 'Home',
                      tabBarIcon: ({ color }) => (
                        <FontAwesomeIcon
+
                          size = {25}
                          color = {color}
                          icon={faHome} />
@@ -123,6 +150,19 @@ class App extends Component{
                    }}
                    />
 
+                   <Tab.Screen
+                     name="Upload"
+                     component={Explore}
+                     options={{
+
+                        tabBarIcon: ({ color }) => (
+                          <FontAwesomeIcon
+                            size = {35}
+                            color = {'#1890ff'}
+                            icon={faPlusSquare} />
+                        ),
+                      }}
+                      />
                  <Tab.Screen
                    name="Chats"
                    component={Chats}
@@ -189,6 +229,10 @@ class App extends Component{
 
 
     )
+    }
+    else {
+      return null;
+    }
   }
 }
 
