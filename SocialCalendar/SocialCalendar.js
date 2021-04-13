@@ -31,6 +31,7 @@ class SocialCalendar extends React.Component{
       animate:true,
       fade:false,
       monthList: [],
+      pageOffsetY: 0
     }
 
     this.contentOffsetY = 0;
@@ -56,7 +57,9 @@ class SocialCalendar extends React.Component{
     // we cna do is put the dates inside the list and then
     // render the months in this list
     return(
-      <View>
+      <View style= {{
+          height: 345
+        }}>
         <Text> {item.rep}</Text>
         {this.renderCell(item.month)}
       </View>
@@ -237,7 +240,10 @@ class SocialCalendar extends React.Component{
 
     // so I would need to know the exact height of my object so that it can scroll smoothly
 
-    newOffSet = this.pageOffsetY + 300;
+    newOffSet = this.state.pageOffsetY+345;
+    this.setState({
+      pageOffsetY: newOffSet
+    })
     this.pageOffsetY = newOffSet;
     this.contentOffsetY = newOffSet;
     this.scrollToOffset(newOffSet)
@@ -358,20 +364,29 @@ class SocialCalendar extends React.Component{
     // now that I have the create cell funciton created
     // you now want to put then together here
 
+    // let initialList = [
+    //   {
+    //       rep: repPrev,
+    //       month: prevMonth
+    //   },
+    //   {
+    //       rep: repCur,
+    //       month: currentMonth
+    //   },{
+    //       rep: repNext,
+    //       month: nextMonth
+    //   }
+    //
+    // ]
+
     let initialList = [
+
       {
-          rep: repPrev,
-          month: prevMonth
-      },{
           rep: repCur,
           month: currentMonth
-      },{
-          rep: repNext,
-          month: nextMonth
       }
 
     ]
-
     // initialList.push(currentMonth)
     // initialList.push(nextMonth)
     // initialList.push(
@@ -426,6 +441,19 @@ class SocialCalendar extends React.Component{
 
   }
 
+  onUpdateOffSet = (e) => {
+    // this.pageOffsetY = e.nativeEvent.contentOffset.y
+    // this.contentHeight=e.nativeEvent.contentSize.height
+
+    this.setState({
+      pageOffsetY: e.nativeEvent.contentOffset.y
+    })
+  }
+
+  componentDidUpdate(oldProps){
+    console.log('does this update')
+  }
+
   render(){
 
     // Notes; onMomentumScrollEnd is when you scroll really fast
@@ -435,24 +463,22 @@ class SocialCalendar extends React.Component{
     const listData = this.state.monthList
 
     // this.scrollToOffset(500)
-    if(this.pageOffsetY < 600){
-      this.onTopHit()
-
-    } else if((this.contentHeight - this.pageOffsetY) < (height * 1.5)){
-      // this.onBottomHit()
-    }
+    console.log('here is the pageoffsety')
+    console.log(this.state.pageOffsetY)
+    // if(this.state.pageOffsetY < 346){
+    //   this.onTopHit()
+    //
+    // }
+    // else if((this.contentHeight - this.pageOffsetY) < (height * 1.5)){
+    //   // this.onBottomHit()
+    // }
 
     return (
       <View>
         <View>{this.renderDays()}</View>
 
         <FlatList
-          onScroll = {(e) => {
-            this.pageOffsetY = e.nativeEvent.contentOffset.y;
-            this.contentHeight = e.nativeEvent.contentSize.height;
-            return null;
-          }}
-          scrollToOffset = {{x: 0, y:700}}
+          onScroll = {(e) => this.onUpdateOffSet(e)}
           // onMomentumScrollEnd={this.onScroll}
           automaticallyAdjustContentInsets={false}
           itemShouldUpdate={false}
@@ -461,7 +487,7 @@ class SocialCalendar extends React.Component{
           refreshing={false}
           // onRefresh={() => this.onTopHit()}
           onEndReachedThreshold={0.3}
-          // onEndReached={() => this.onBottomHit()}
+          onEndReached={() => this.onBottomHit()}
           keyExtractor={(item) => item.rep}
           ref={(ref) => { this.flatListRef = ref; }}
           animated={false}
