@@ -183,7 +183,7 @@ class SocialNewsfeedPost extends React.Component{
 
           <View style = {styles.captionHolder}>
             <Text style = {styles.captionUsername}> @{userUsername+" "}</Text>
-            <Text style={{ fontFamily: 'Montserrat_400Regular' }}> {caption.substring(0,140)}</Text>
+            <Text> {caption.substring(0,140)}</Text>
 
           </View>
 

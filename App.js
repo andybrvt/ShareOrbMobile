@@ -42,7 +42,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 class App extends Component{
     state = {
-    fontsLoaded: false,
+    fontsLoaded: true,
   };
   constructor(props){
     super(props)
@@ -79,7 +79,7 @@ class App extends Component{
   componentDidMount(){
 
     this.props.onTryAutoSignup();
-    this.loadFonts();
+    //this.loadFonts();
   }
 
   componentDidUpdate(prevProps){
