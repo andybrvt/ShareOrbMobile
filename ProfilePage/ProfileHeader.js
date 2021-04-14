@@ -18,10 +18,10 @@ class ProfileHeader extends React.Component{
     }
 
     return (
-      <View>
+      <View style={styles.centerProfilePic}>
 
         <Avatar.Image
-          size = {75}
+          size = {100}
           source = {{
             url: `${global.IMAGE_ENDPOINT}`+profileImage
           }}
@@ -237,7 +237,7 @@ class ProfileHeader extends React.Component{
           }
 
         </View>
-      
+
       </View>
     )
   }
@@ -247,3 +247,18 @@ class ProfileHeader extends React.Component{
 
 
 export default ProfileHeader;
+
+const styles = StyleSheet.create({
+  centerProfilePic: {
+    position:'relative',
+    top:'5%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profileInfoContainer: {
+    flexDirection: "row",
+  },
+  followerCount: {
+    flex: 1,
+  },
+});

@@ -392,14 +392,13 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   captionHolder: {
-    fontFamily:'Montserrat',
     flexDirection: "row",
 
   },
   captionUsername:{
     color:'black',
     fontSize:14,
-    fontWeight:'bold',
+    // fontWeight:'bold',
   },
 
 
