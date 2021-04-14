@@ -4,10 +4,12 @@ import { Text,
    Button,
    StyleSheet,
    ScrollView,
-   FlatList,
+   SafeAreaView,
    Dimensions } from 'react-native';
 import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
+import { FlatList } from "react-native-bidirectional-infinite-scroll";
+
 
 let {height, width} = Dimensions.get('window')
 
@@ -58,7 +60,7 @@ class SocialCalendar extends React.Component{
     // render the months in this list
     return(
       <View style= {{
-          height: 345
+          height: 375
         }}>
         <Text> {item.rep}</Text>
         {this.renderCell(item.month)}
@@ -200,8 +202,70 @@ class SocialCalendar extends React.Component{
     contentSize.height - paddingToBottom;
   }
 
+  // This function will be used for writing a promise to send the next month in order
+  // to load in more months
+  // How many more months will there be here
+  loadMoreMonths = (numMonths) => (
+
+    // wiritng a promise
+    // so pretty much a promise consist of 2 parts, one for resolving and reject,
+    // resolve is for when the thing goes well and you can return the infomration
+    // where as reject is when there is an error
+    return new Promise((resolve) => {
+      // now you would write a function here an then wrap whatever you want to return
+      // inside a resolve
+
+      // this will be the months
+      const moreMonths = [];
+
+      // add 3 more monhts at a time
+
+      const curDate = this.state.curTop
+      let startCur = dateFns.startOfMonth(curDate)
+
+      for(let i = 0; i< n; i++){
+        // pretty much it will be like on top him but you will be adding more months
+        // in
+
+        // so we have a current month, a top month and a bottom month, the
+        // top month will be in charge of handling the month at the top edge
+        // end month will be in charge of handling the month at the bottom edge
+
+
+
+        // now you will get the prev month and represent it too
+        // as text
+
+        startCur = dateFns.subMonths(startCur, 1);
+
+        const repPrev = dateFns.format(startCur, "MMMM yyyy");
+
+        const month = {
+          repPrev: repPrev,
+          month: startCur
+        }
+
+        moreMonths.push(month)
+
+      }
+
+
+      // now set the state for the top edge
+      this.setState({
+        curTop: startCur
+      })
+
+      // Now wrap the more months around resolve
+      resolve(moreMonths)
+
+
+
+    })
+  )
+
   onTopHit = () => {
 
+    console.log('hit here')
     // this will be use to add more dates to the top of the calendar
     // whenever you hit the top of the list it will render more
 
@@ -218,7 +282,7 @@ class SocialCalendar extends React.Component{
       month: prevMonth
     }
 
-
+    console.log(prevMonth)
     const upList = [month, ...this.state.monthList]
 
     this.setState({
@@ -227,7 +291,7 @@ class SocialCalendar extends React.Component{
     })
 
 
-    let newOffSet;
+    // let newOffSet;
 
     // so page offset would be your view currently on the who scorll
 
@@ -240,13 +304,13 @@ class SocialCalendar extends React.Component{
 
     // so I would need to know the exact height of my object so that it can scroll smoothly
 
-    newOffSet = this.state.pageOffsetY+345;
-    this.setState({
-      pageOffsetY: newOffSet
-    })
-    this.pageOffsetY = newOffSet;
-    this.contentOffsetY = newOffSet;
-    this.scrollToOffset(newOffSet)
+    // newOffSet = this.pageOffsetY+375;
+    // this.setState({
+    //   pageOffsetY: newOffSet
+    // })
+    // this.pageOffsetY = newOffSet;
+    // this.contentOffsetY = newOffSet;
+    // this.scrollToOffset(newOffSet)
 
   }
 
@@ -309,11 +373,21 @@ class SocialCalendar extends React.Component{
     // will scroll teh whole view ot the current offset, pretty much you load up more stuff
     // it will scroll down ward to accomdate for the extra heigh on top. Has to be
     //exact
-    // this.flatListRef ? this.flatListRef.scrollToOffset({animated: false, offset}): null;
+    this.flatListRef ?
 
     setTimeout(() => {
-      this.flatListRef.scrollToOffset({ offset: offset, animated: false })
+      this.flatListRef.scrollToOffset({ animated: true, offset: 200})
     }, 0)
+
+    :
+
+    null;
+
+    console.log('scroll to offset')
+    console.log(offset)
+    // setTimeout(() => {
+      // this.flatListRef.scrollToOffset({ offset: offset, animated: true })
+    // }, 0)
   }
 
 
@@ -442,16 +516,15 @@ class SocialCalendar extends React.Component{
   }
 
   onUpdateOffSet = (e) => {
-    // this.pageOffsetY = e.nativeEvent.contentOffset.y
-    // this.contentHeight=e.nativeEvent.contentSize.height
-
-    this.setState({
-      pageOffsetY: e.nativeEvent.contentOffset.y
-    })
+    this.pageOffsetY = e.nativeEvent.contentOffset.y
+    this.contentHeight=e.nativeEvent.contentSize.height
+    console.log(e.nativeEvent.contentOffset)
+    // this.setState({
+    //   pageOffsetY: e.nativeEvent.contentOffset.y
+    // })
   }
 
   componentDidUpdate(oldProps){
-    console.log('does this update')
   }
 
   render(){
@@ -463,12 +536,12 @@ class SocialCalendar extends React.Component{
     const listData = this.state.monthList
 
     // this.scrollToOffset(500)
-    console.log('here is the pageoffsety')
-    console.log(this.state.pageOffsetY)
-    // if(this.state.pageOffsetY < 346){
-    //   this.onTopHit()
-    //
-    // }
+    console.log(this.pageOffsetY)
+    console.log(listData)
+    if(this.pageOffsetY < 380){
+      this.onTopHit()
+
+    }
     // else if((this.contentHeight - this.pageOffsetY) < (height * 1.5)){
     //   // this.onBottomHit()
     // }
@@ -477,8 +550,17 @@ class SocialCalendar extends React.Component{
       <View>
         <View>{this.renderDays()}</View>
 
+
         <FlatList
-          onScroll = {(e) => this.onUpdateOffSet(e)}
+          data = {listData}
+          renderItem={this.renderItem}
+          keyExtractor={(item) => item.rep}
+
+          />
+      {/*
+        <FlatList
+          style = {{backgroundColor: "red"}}
+          // onScroll = {(e) => this.onUpdateOffSet(e)}
           // onMomentumScrollEnd={this.onScroll}
           automaticallyAdjustContentInsets={false}
           itemShouldUpdate={false}
@@ -492,6 +574,8 @@ class SocialCalendar extends React.Component{
           ref={(ref) => { this.flatListRef = ref; }}
           animated={false}
           />
+        */}
+
         {/*
           <ScrollView
             showsVerticalScrollIndicator={false}
