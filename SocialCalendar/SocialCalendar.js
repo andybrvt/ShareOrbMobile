@@ -205,7 +205,7 @@ class SocialCalendar extends React.Component{
   // This function will be used for writing a promise to send the next month in order
   // to load in more months
   // How many more months will there be here
-  loadMoreMonths = (numMonths) => (
+  loadMoreMonths = (numMonths) => {
 
     // wiritng a promise
     // so pretty much a promise consist of 2 parts, one for resolving and reject,
@@ -261,7 +261,7 @@ class SocialCalendar extends React.Component{
 
 
     })
-  )
+  }
 
   onTopHit = () => {
 

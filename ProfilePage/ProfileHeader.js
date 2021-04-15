@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   profileInfoContainer: {
-    width:300,
+    width:150,
     margin:10,
     flexDirection: "row",
   },
