@@ -157,13 +157,16 @@ class ProfileHeader extends React.Component{
     return (
       <View>
         {this.renderProfilePic()}
-
-        <Text> Followers</Text>
-        <Text> {followers.length}</Text>
-
-        <Text> Following </Text>
-        <Text> {following.length}</Text>
-
+        <View style={styles.profileInfoContainer}>
+          <View style={styles.followerCount}>
+            <Text> Followers</Text>
+            <Text> {followers.length}</Text>
+          </View>
+          <View style={styles.followerCount}>
+            <Text> Following </Text>
+            <Text> {following.length}</Text>
+          </View>
+        </View>
 
         <Text> {global.CAPITALIZE(firstName)} {global.CAPITALIZE(lastName)}</Text>
         <Text> @{username}</Text>
@@ -256,9 +259,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   profileInfoContainer: {
+    width:300,
+    margin:10,
     flexDirection: "row",
   },
   followerCount: {
-    flex: 1,
+    flex:1,
+    backgroundColor:'red',
+  },
+  followingCount: {
+    flex:1,
+    backgroundColor:'blue',
   },
 });
