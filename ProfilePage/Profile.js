@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button,StyleSheet, ScrollView } from 'react-native';
+import { Text, SafeAreaView, View, Button,StyleSheet, ScrollView } from 'react-native';
 import ProfileHeader from './ProfileHeader';
 import { connect } from "react-redux";
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
@@ -78,6 +78,8 @@ class Profile extends React.Component{
 
   render(){
     return (
+
+      
       <View style = {styles.container} >
 
         <View style = {styles.profileHeader}>
