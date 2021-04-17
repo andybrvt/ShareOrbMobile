@@ -205,7 +205,7 @@ class SocialCalendar extends React.Component{
   // This function will be used for writing a promise to send the next month in order
   // to load in more months
   // How many more months will there be here
-  loadMoreMonths = (numMonths) => {
+  loadPrevMonths = (numMonths) => {
 
     // wiritng a promise
     // so pretty much a promise consist of 2 parts, one for resolving and reject,
@@ -242,7 +242,7 @@ class SocialCalendar extends React.Component{
         const repPrev = dateFns.format(startCur, "MMMM yyyy");
 
         const month = {
-          repPrev: repPrev,
+          rep: repPrev,
           month: startCur
         }
 
@@ -267,10 +267,50 @@ class SocialCalendar extends React.Component{
     })
   }
 
+  loadFutureMonths = (numMonths) => {
+    //This fucntion will load the future months comming up in the calendar
+    // this will also be a promise as well similar to that of the loadPrevMonths
+
+    return new Promise((resolve) => {
+      // so you want to get the future months using the curBottom
+
+
+      const moreMonths = []
+      const curDate = this.state.curBottom
+      let startCur = dateFns.startOfMonth(curDate)
+
+      // now add more months accordingly
+      for(let i = 0; i< numMonths; i++){
+
+        // similar to loadPrevMonths but now you are going forward into the
+        // months
+
+        startCur = dateFns.addMonths(startCur, 1);
+        const repPrev = dateFns.format(startCur, "MMMM yyyy");
+        const month = {
+          rep: repPrev,
+          month: startCur
+        }
+
+        moreMonths.push(month)
+      }
+
+
+      this.setState({
+        curBottom: startCur
+      })
+
+
+      // now resolve the list of future months
+      resolve(moreMonths)
+
+    })
+  }
+
   onTopHit = async() => {
     // we will turn this into an await async because now inorder to load more of
     // the data you have to wait for a promise
-    const moreMonths = await this.loadMoreMonths(3)
+    const moreMonths = await this.loadPrevMonths(3)
     const curMonths = this.state.monthList
     this.setState({
       monthList: moreMonths.concat(curMonths)
@@ -326,34 +366,41 @@ class SocialCalendar extends React.Component{
 
   }
 
-  onBottomHit = () => {
+  onBottomHit = async() => {
+    // pretty much similar to that of the onTopHit
+    const moreMonths = await this.loadFutureMonths(3)
+    const curMonths = this.state.monthList
+    this.setState({
+      monthList: curMonths.concat(moreMonths)
+    })
+
     // This function will be use to add in more dates at teh bottom of the
     // calendar whenever you hit the bottom of the list
     // so you want to get the bottom month indicator and add one month to it
     // and set it as the bottm and add a new month to it as well
 
-    const curDate = this.state.curBottom
-
-
-    const startCur = dateFns.startOfMonth(curDate)
-    const nextMonth = dateFns.addMonths(startCur, 1)
-
-    const repNext = dateFns.format( nextMonth, "MMMM yyyy")
-
-    let upList =[...this.state.monthList]
-
-    // user the same indicator here
-    upList.push(
-      {
-        rep: repNext,
-        month: nextMonth
-      }
-    )
-
-    this.setState({
-      curBottom: nextMonth,
-      monthList: upList
-    })
+    // const curDate = this.state.curBottom
+    //
+    //
+    // const startCur = dateFns.startOfMonth(curDate)
+    // const nextMonth = dateFns.addMonths(startCur, 1)
+    //
+    // const repNext = dateFns.format( nextMonth, "MMMM yyyy")
+    //
+    // let upList =[...this.state.monthList]
+    //
+    // // user the same indicator here
+    // upList.push(
+    //   {
+    //     rep: repNext,
+    //     month: nextMonth
+    //   }
+    // )
+    //
+    // this.setState({
+    //   curBottom: nextMonth,
+    //   monthList: upList
+    // })
 
   }
 
@@ -568,7 +615,9 @@ class SocialCalendar extends React.Component{
           renderItem={this.renderItem}
           keyExtractor={(item) => item.rep}
           onStartReached = {this.onTopHit}
-
+          // onEndReached = {this.onBottomHit}
+          onStartReachedThreshold={10} // optional
+          onEndReachedThreshold={10} // optional
           />
       {/*
         <FlatList
