@@ -227,7 +227,7 @@ class WebSocketExplore{
       console.log('this is for fetching the profile')
       console.log(username)
       this.sendExplore({
-        command: 'fetch_profile',
+        command: 'fetch_profile_mobile',
         username: username
       })
     }

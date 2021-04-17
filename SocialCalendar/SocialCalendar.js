@@ -41,7 +41,7 @@ class SocialCalendar extends React.Component{
   componentDidMount(){
     // This fucntion will be use to update scroll list
     // for the intial render
-    this.renderAllCells(null)
+    this.renderAllCells()
 
   }
 
@@ -298,7 +298,7 @@ class SocialCalendar extends React.Component{
   }
 
 
-  renderAllCells(events){
+  renderAllCells(){
 
     // So the way the months is gonna work is that it will be a
     // bi directional list where the first date will be the date
@@ -338,9 +338,16 @@ class SocialCalendar extends React.Component{
 
     // Notes; onMomentumScrollEnd is when you scroll really fast
     // or hard to the end of the list
-
+    console.log(this.props.profile)
 
     const listData = this.state.monthList
+
+    let socialCalCell = []
+    if(this.props.profile){
+      if(this.props.profile.get_socialCal){
+        socialCalCell = this.props.profile.get_socialCal
+      }
+    }
 
     return (
       <View style = {styles.allCellContainer}>

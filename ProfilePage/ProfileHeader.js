@@ -54,9 +54,6 @@ class ProfileHeader extends React.Component{
 
 
   render(){
-
-    console.log(this.props.profile)
-
     let username = ''
     let firstName = ''
     let lastName = ''

@@ -55,6 +55,11 @@ class Profile extends React.Component{
     if(prevProps.route.params.username !== this.props.route.params.username){
 
     // this.props.closeProfile()
+
+    // we will be fetching the profile however since we are gonna render the
+    // months a bit differently, we will pull the information a bit more differnet
+    // than that of the website. We will just get the profile stuff and then
+    // for the social cal we will get it seperatly
     ExploreWebSocketInstance.disconnect();
     this.waitForSocketConnection(() => {
       ExploreWebSocketInstance.fetchProfile(
@@ -63,17 +68,6 @@ class Profile extends React.Component{
     })
     ExploreWebSocketInstance.connect(String(this.props.route.params.username))
   }
-
-  // if(this.props.location.pathname !== newProps.location.pathname){
-  //   //To refetch the information
-  //   this.waitForSocketConnection(() => {
-  //     ExploreWebSocketInstance.fetchProfile(
-  //       String(newProps.parameter.username)
-  //     )
-  //   })
-  //   ExploreWebSocketInstance.connect(newProps.parameter.username)
-  //
-  // }
 
   }
 
@@ -92,7 +86,7 @@ class Profile extends React.Component{
           <View
             style = {styles.socialCalContainer}
             >
-            <SocialCalendar />
+            <SocialCalendar {...this.props} />
 
           </View>
 
