@@ -4,6 +4,7 @@ import ProfileHeader from './ProfileHeader';
 import { connect } from "react-redux";
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
+import Constant from 'expo-constants';
 
 // This will be the bulk of the profile page
 class Profile extends React.Component{
@@ -78,26 +79,28 @@ class Profile extends React.Component{
 
   render(){
     return (
+      <View style = {styles.backgroundColor}>
+        <View style = {styles.container} >
+
+          <View style = {styles.profileHeader}>
+            <ProfileHeader
+              {...this.props}
+              />
+          </View>
 
 
-      <View style = {styles.container} >
+          <View
+            style = {styles.socialCalContainer}
+            >
+            <SocialCalendar />
 
-        <View style = {styles.profileHeader}>
-          <ProfileHeader
-            {...this.props}
-            />
+          </View>
+
+
         </View>
-
-
-        <View
-          style = {styles.socialCalContainer}
-          >
-          <SocialCalendar />
-
-        </View>
-
-
       </View>
+
+
     )
   }
 }
@@ -117,11 +120,17 @@ const mapStateToProps = state => {
 }
 
 const styles = StyleSheet.create({
+  backgroundColor: {
+    flex:1,
+    backgroundColor:"#1890ff"
+  },
   container: {
-    flex: 1
+    flex: 1,
+    marginTop: Constant.statusBarHeight,
+    backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: 2,
+    flex: 1.5,
 
   },
   profileHeader: {

@@ -9,11 +9,25 @@ class ProfileHeader extends React.Component{
   renderProfilePic = () => {
 
     let profileImage = null
+    let username = ''
+    let name = ''
+    let bio = ""
 
 
     if(this.props.profile){
       if(this.props.profile.profile_picture){
         profileImage = this.props.profile.profile_picture
+      }
+      if(this.props.profile.first_name && this.props.profile.last_name){
+        const firstName = global.CAPITALIZE(this.props.profile.first_name)
+        const lastName = global.CAPITALIZE(this.props.profile.last_name)
+        name = firstName +' '+lastName
+      }
+      if(this.props.profile.username){
+        username = this.props.profile.username
+      }
+      if(this.props.profile.bio){
+        bio= this.props.profile.bio
       }
     }
 
@@ -26,6 +40,11 @@ class ProfileHeader extends React.Component{
             url: `${global.IMAGE_ENDPOINT}`+profileImage
           }}
          />
+       <View style = {styles.nameContainer}>
+         <Text style = {styles.name}>{name}</Text>
+         <Text style = {styles.username}>@{username}</Text>
+         <Text style = {styles.bio}> {bio}</Text>
+       </View>
 
      </View>
 
@@ -35,6 +54,8 @@ class ProfileHeader extends React.Component{
 
 
   render(){
+
+    console.log(this.props.profile)
 
     let username = ''
     let firstName = ''
@@ -155,8 +176,10 @@ class ProfileHeader extends React.Component{
 
 
     return (
-      <View>
+      <View style = {styles.container} >
         {this.renderProfilePic()}
+
+
         <View style={styles.profileInfoContainer}>
           <View style={styles.followerCount}>
             <Text> Followers</Text>
@@ -168,16 +191,15 @@ class ProfileHeader extends React.Component{
           </View>
         </View>
 
-        <Text> {global.CAPITALIZE(firstName)} {global.CAPITALIZE(lastName)}</Text>
-        <Text> @{username}</Text>
-        <Text> {bio}</Text>
+
+
 
         <View>
           {
             this.props.route.params.username === this.props.currentUser ?
 
             <View>
-              <Text> Edit Profile</Text>
+
             </View>
 
             :
@@ -231,8 +253,6 @@ class ProfileHeader extends React.Component{
 
                 </View>
 
-
-
               }
 
             </View>
@@ -252,6 +272,10 @@ class ProfileHeader extends React.Component{
 export default ProfileHeader;
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    alignItems: 'center'
+  },
   centerProfilePic: {
     position:'relative',
     top:'5%',
@@ -259,16 +283,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   profileInfoContainer: {
-    width:150,
-    margin:10,
+    width:'70%',
+    // backgroundColor: "blue",
+    marginTop: 25,
     flexDirection: "row",
   },
   followerCount: {
     flex:1,
-    backgroundColor:'red',
+    alignItems: "center"
   },
   followingCount: {
     flex:1,
-    backgroundColor:'blue',
+    alignItems: "center"
   },
+  nameContainer:{
+    marginTop: 5,
+    alignItems: 'center'
+  },
+  name:{
+    fontSize: 30,
+    color: "black",
+  },
+  bio: {
+    fontSize: 17
+  }
 });
