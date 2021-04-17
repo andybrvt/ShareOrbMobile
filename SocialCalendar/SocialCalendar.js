@@ -218,13 +218,14 @@ class SocialCalendar extends React.Component{
       // this will be the months
       const moreMonths = [];
 
-      // add 3 more monhts at a time
+      // add 3 more monhts at a time ( you will be changing the n to change number of
+    // months you want to add )
 
       const curDate = this.state.curTop
       let startCur = dateFns.startOfMonth(curDate)
 
-      for(let i = 0; i< n; i++){
-        // pretty much it will be like on top him but you will be adding more months
+      for(let i = 0; i< numMonths; i++){
+        // pretty much it will be like on top but you will be adding more months
         // in
 
         // so we have a current month, a top month and a bottom month, the
@@ -255,6 +256,9 @@ class SocialCalendar extends React.Component{
         curTop: startCur
       })
 
+
+      // so you want to use this as a way to grab the months when you try to
+      // load more on top that is why you want to return it
       // Now wrap the more months around resolve
       resolve(moreMonths)
 
@@ -263,32 +267,40 @@ class SocialCalendar extends React.Component{
     })
   }
 
-  onTopHit = () => {
-
-    console.log('hit here')
-    // this will be use to add more dates to the top of the calendar
-    // whenever you hit the top of the list it will render more
-
-    // similar to onBottomHit but opposite
-    const curDate = this.state.curTop
-    const startCur = dateFns.startOfMonth(curDate)
-
-    const prevMonth = dateFns.subMonths(startCur, 1)
-
-    const repPrev = dateFns.format(prevMonth, "MMMM yyyy")
-
-    const month = {
-      rep: repPrev,
-      month: prevMonth
-    }
-
-    console.log(prevMonth)
-    const upList = [month, ...this.state.monthList]
-
+  onTopHit = async() => {
+    // we will turn this into an await async because now inorder to load more of
+    // the data you have to wait for a promise
+    const moreMonths = await this.loadMoreMonths(3)
+    const curMonths = this.state.monthList
     this.setState({
-      curTop: prevMonth,
-      monthList: upList
+      monthList: moreMonths.concat(curMonths)
     })
+
+
+    // console.log('hit here')
+    // // this will be use to add more dates to the top of the calendar
+    // // whenever you hit the top of the list it will render more
+    //
+    // // similar to onBottomHit but opposite
+    // const curDate = this.state.curTop
+    // const startCur = dateFns.startOfMonth(curDate)
+    //
+    // const prevMonth = dateFns.subMonths(startCur, 1)
+    //
+    // const repPrev = dateFns.format(prevMonth, "MMMM yyyy")
+    //
+    // const month = {
+    //   rep: repPrev,
+    //   month: prevMonth
+    // }
+    //
+    // console.log(prevMonth)
+    // const upList = [month, ...this.state.monthList]
+    //
+    // this.setState({
+    //   curTop: prevMonth,
+    //   monthList: upList
+    // })
 
 
     // let newOffSet;
@@ -539,7 +551,7 @@ class SocialCalendar extends React.Component{
     console.log(this.pageOffsetY)
     console.log(listData)
     if(this.pageOffsetY < 380){
-      this.onTopHit()
+      // this.onTopHit()
 
     }
     // else if((this.contentHeight - this.pageOffsetY) < (height * 1.5)){
@@ -555,6 +567,7 @@ class SocialCalendar extends React.Component{
           data = {listData}
           renderItem={this.renderItem}
           keyExtractor={(item) => item.rep}
+          onStartReached = {this.onTopHit}
 
           />
       {/*
