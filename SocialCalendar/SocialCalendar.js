@@ -50,9 +50,7 @@ class SocialCalendar extends React.Component{
     // we cna do is put the dates inside the list and then
     // render the months in this list
     return(
-      <View style= {{
-          height: 400
-        }}>
+      <View style = {styles.monthTitle}>
         <Text> {item.rep}</Text>
         {this.renderCell(item.month)}
       </View>
@@ -62,7 +60,7 @@ class SocialCalendar extends React.Component{
   renderDays(){
     // This will just be used to render the days of the social
     // calendar. Example s m t w t f s
-    const dateFormat = "iiiii"
+    const dateFormat = "iii"
     const days = []
     let startDate = dateFns.startOfWeek(this.props.currentDate);
 
@@ -71,8 +69,10 @@ class SocialCalendar extends React.Component{
     // add the day of the week in
     for(let i = 0; i< 7; i++){
       days.push(
-        <View  key = {i}>
-          <Text>{dateFns.format(dateFns.addDays(startDate, i), dateFormat)}</Text>
+        <View
+          style = {styles.weekDay}
+          key = {i}>
+          <Text key = {i}>{dateFns.format(dateFns.addDays(startDate, i), dateFormat)}</Text>
         </View>
       )
     }
@@ -80,7 +80,9 @@ class SocialCalendar extends React.Component{
 
 
     return (
-        <Text> {days}</Text>
+        <Text
+          style = {styles.dayHeaders}
+          > {days}</Text>
     )
   }
 
@@ -341,19 +343,23 @@ class SocialCalendar extends React.Component{
     const listData = this.state.monthList
 
     return (
-      <View>
-        <View>{this.renderDays()}</View>
+      <View style = {styles.allCellContainer}>
+        <View style = {styles.dayContainer}>{this.renderDays()}</View>
+
+        <View style = {styles.monthsContainer}>
+          <FlatList
+            data = {listData}
+            renderItem={this.renderItem}
+            keyExtractor={(item) => item.rep}
+            onStartReached = {this.onTopHit}
+            onEndReached = {this.onBottomHit}
+            onStartReachedThreshold={10}
+            onEndReachedThreshold={10}
+            />
+
+        </View>
 
 
-        <FlatList
-          data = {listData}
-          renderItem={this.renderItem}
-          keyExtractor={(item) => item.rep}
-          onStartReached = {this.onTopHit}
-          onEndReached = {this.onBottomHit}
-          onStartReachedThreshold={10}
-          onEndReachedThreshold={10}
-          />
       </View>
 
     )
@@ -369,7 +375,10 @@ const mapStateToProps = state => {
 
 const styles = StyleSheet.create({
   allCellContainer: {
-
+    flex: 1,
+  },
+  monthsContainer: {
+    flex: 10,
   },
   // This will be holding the rows
   monthContainer: {
@@ -394,7 +403,33 @@ const styles = StyleSheet.create({
     width: Math.round(Dimensions.get('window').width),
     // height: 100,
     flexDirection: "row"
+  },
+
+  dayContainer:{
+    flex: 1,
+
+    width: Math.round(Dimensions.get('window').width)
+  },
+
+  dayHeaders: {
+    flexDirection: "row",
+    width: '102%',
+
+    // backgroundColor: 'red'
+  },
+
+  // this will be in charge of the day squares
+  weekDay: {
+    width: Math.round(Dimensions.get('window').width/7),
+    // backgroundColor: 'red',
+    alignItems: "center",
+  },
+
+  monthTitle: {
+    alignItems: 'center'
   }
+
+
 })
 
 export default connect(mapStateToProps)(SocialCalendar);
