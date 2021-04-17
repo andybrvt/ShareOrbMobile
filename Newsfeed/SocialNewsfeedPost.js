@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
   captionUsername:{
     color:'black',
     fontSize:14,
-    // fontWeight:'bold',
+    fontWeight:'bold',
   },
 
 
