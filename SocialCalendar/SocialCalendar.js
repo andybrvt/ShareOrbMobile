@@ -60,7 +60,7 @@ class SocialCalendar extends React.Component{
     // render the months in this list
     return(
       <View style= {{
-          height: 375
+          height: 400
         }}>
         <Text> {item.rep}</Text>
         {this.renderCell(item.month)}
@@ -206,7 +206,7 @@ class SocialCalendar extends React.Component{
   // to load in more months
   // How many more months will there be here
   loadPrevMonths = (numMonths) => {
-
+    console.log('loading the prev months')
     // wiritng a promise
     // so pretty much a promise consist of 2 parts, one for resolving and reject,
     // resolve is for when the thing goes well and you can return the infomration
@@ -222,8 +222,11 @@ class SocialCalendar extends React.Component{
     // months you want to add )
 
       const curDate = this.state.curTop
+      console.log('this is the cur date')
+      console.log(curDate)
       let startCur = dateFns.startOfMonth(curDate)
 
+      console.log(startCur)
       for(let i = 0; i< numMonths; i++){
         // pretty much it will be like on top but you will be adding more months
         // in
@@ -287,6 +290,8 @@ class SocialCalendar extends React.Component{
 
         startCur = dateFns.addMonths(startCur, 1);
         const repPrev = dateFns.format(startCur, "MMMM yyyy");
+
+
         const month = {
           rep: repPrev,
           month: startCur
@@ -310,7 +315,7 @@ class SocialCalendar extends React.Component{
   onTopHit = async() => {
     // we will turn this into an await async because now inorder to load more of
     // the data you have to wait for a promise
-    const moreMonths = await this.loadPrevMonths(3)
+    const moreMonths = await this.loadPrevMonths(1)
     const curMonths = this.state.monthList
     this.setState({
       monthList: moreMonths.concat(curMonths)
@@ -368,7 +373,7 @@ class SocialCalendar extends React.Component{
 
   onBottomHit = async() => {
     // pretty much similar to that of the onTopHit
-    const moreMonths = await this.loadFutureMonths(3)
+    const moreMonths = await this.loadFutureMonths(1)
     const curMonths = this.state.monthList
     this.setState({
       monthList: curMonths.concat(moreMonths)
@@ -484,10 +489,10 @@ class SocialCalendar extends React.Component{
 
 
     // So you will set the boundries for the infinite scroll
-    this.setState({
-      curTop: prevMonth,
-      curBottom: nextMonth
-    })
+    // this.setState({
+    //   curTop: prevMonth,
+    //   curBottom: nextMonth
+    // })
     // const startNextMonth = dateFns.startOfMonth(nextMonth)
     // const endNextMonth = dateFns.endOfMonth(nextMonth)
 
@@ -615,9 +620,9 @@ class SocialCalendar extends React.Component{
           renderItem={this.renderItem}
           keyExtractor={(item) => item.rep}
           onStartReached = {this.onTopHit}
-          // onEndReached = {this.onBottomHit}
-          onStartReachedThreshold={10} // optional
-          onEndReachedThreshold={10} // optional
+          onEndReached = {this.onBottomHit}
+          onStartReachedThreshold={10}
+          onEndReachedThreshold={10}
           />
       {/*
         <FlatList
