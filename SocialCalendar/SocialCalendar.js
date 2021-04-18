@@ -9,6 +9,7 @@ import { Text,
 import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
+import  authAxios from '../util';
 
 
 let {height, width} = Dimensions.get('window')
@@ -49,6 +50,8 @@ class SocialCalendar extends React.Component{
     // this can be use to render your specific months, so what
     // we cna do is put the dates inside the list and then
     // render the months in this list
+
+
     return(
       <View style = {styles.monthTitle}>
         <Text> {item.rep}</Text>
@@ -87,6 +90,29 @@ class SocialCalendar extends React.Component{
   }
 
   renderCell(curMonth){
+
+    // now this is where you will start trying to get the month
+    // along with the social cal events
+
+    // since this will not be real time, in the sense that it will just be
+    // rendering the picture then we cna just use authaxios use a get fucntion
+    console.log(curMonth)
+    // Gotta grab the month and month range and then do axios call to grab the
+    // user information
+
+    const start = dateFns.startOfMonth(curMonth)
+    const end = dateFns.endOfMonth(curMonth)
+
+    const formatStart = dateFns.format(start, "yyyy-MM-dd")
+    const formatEnd = dateFns.format(end, 'yyyy-MM-dd')
+    console.log(start, end)
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/filterCells/`+ formatStart+`/`+formatEnd)
+    .then(res => {
+      console.log(res.data)
+    })
+
+
+
     // this function will render the month and then you will
     // just combine the months when you make them
 
