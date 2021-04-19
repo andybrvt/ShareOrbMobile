@@ -3,7 +3,8 @@ import { Text,
    View,
    Button,
    StyleSheet,
-   Dimensions
+   Dimensions,
+   Image
     } from 'react-native';
 import * as dateFns from 'date-fns';
 
@@ -19,7 +20,12 @@ import * as dateFns from 'date-fns';
 // you items PureComponent so that it wont rerender every time
 class SocialMonth extends React.PureComponent{
 
-  renderCell(curMonth){
+  renderCell(curMonth, cells){
+
+    console.log('here is cells')
+    console.log(cells)
+    // cells will be all the cells taht go in that certain month, now you will need
+    // to figure out how you are gonna organize all these pictures
 
     // now this is where you will start trying to get the month
     // along with the social cal events
@@ -29,13 +35,13 @@ class SocialMonth extends React.PureComponent{
     // Gotta grab the month and month range and then do axios call to grab the
     // user information
 
+
     const start = dateFns.startOfMonth(curMonth)
     const end = dateFns.endOfMonth(curMonth)
 
     const formatStart = dateFns.format(start, "yyyy-MM-dd")
     const formatEnd = dateFns.format(end, 'yyyy-MM-dd')
 
-    let events = []
 
 
 
@@ -78,6 +84,21 @@ class SocialMonth extends React.PureComponent{
 
           // Now we will try to render in the soical cal cell according to the right
           // date
+          for(let item = 0; item< cells.length; item++){
+            // so the time that you save in the backend will be UTC time but when y ou
+            // do date fns it will do your time so that is why we have to
+            // convert it back to utc time
+            const date = new Date(cells[item].socialCaldate)
+            const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
+
+            // now you check if the values hit on the day that you are looking for
+            if(dateFns.isSameDay(utc, day)){
+              // now you add it to todostuff
+              toDoStuff.push(
+                cells[item]
+              )
+            }
+          }
 
 
           // you want a cloneDay for each loop so that you can
@@ -88,13 +109,60 @@ class SocialMonth extends React.PureComponent{
           if(toDoStuff.length > 0){
             //  do some stuff here wher you fill in the cover pic
 
+            // set some constants so that you dont run into issues
+            // NOw in here you will be taking care of where you will be showing the
+            // pic or not the thing is is that if there is a social cal cell there
+            // might not be a cover pics so you have to handle that
+
+            days.push(
+              <View
+                key = {i}
+                style = {[styles.monthPicCell, dateFns.isSameDay(day, new Date()) ?
+                  styles.selected : null
+                ]}>
+                {
+                  dateFns.isSameMonth(day, curMonth) ?
+
+                  <View style = {{
+                      flex: 1,
+                      height: Math.round(Dimensions.get('window').width/7),
+                      backgroundColor: 'red'
+                    }}>
+                    {
+                      toDoStuff[0].coverPic ?
+
+
+                          <Image
+                            style = {styles.smallImage}
+                            resizeMode = "cover"
+                            source={{ url: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
+                            />
+
+
+
+                      :
+
+                      <Text> {formattedDate}</Text>
+
+                      }
+                  </View>
+
+
+                  :
+
+                  <Text></Text>
+                }
+              </View>
+            )
           } else {
             // This is if there are no pictures at that current
             // day
             days.push(
               <View
                 key = {i}
-                style = {styles.monthCell}>
+                style = {[styles.monthCell, dateFns.isSameDay(day, new Date()) ?
+                  styles.selected : null
+                ]}>
                 {
                   dateFns.isSameMonth(day, curMonth) ?
 
@@ -144,10 +212,18 @@ class SocialMonth extends React.PureComponent{
   render(){
     console.log('itmes in social month')
     console.log(this.props.item)
+    let cells = []
+    if(this.props.item){
+      if(this.props.item.cells){
+        cells = this.props.item.cells
+      }
+    }
+
+    console.log(cells)
     return (
       <View style = {styles.monthTitle}>
         <Text> {this.props.item.rep}</Text>
-        {this.renderCell(this.props.item.month)}
+        {this.renderCell(this.props.item.month, cells)}
       </View>
     )
   }
@@ -178,9 +254,27 @@ const styles = StyleSheet.create({
     // borderTopWidth: 0.2,
 
   },
+  monthPicCell: {
+    flex: 1,
+    height: Math.round(Dimensions.get('window').width/7),
+    alignItems: "center",
+    justifyContent: "center",
+    // borderLeftWidth:0.2,
+    // borderTopWidth: 0.2,
+  },
   monthRow: {
     width: Math.round(Dimensions.get('window').width),
     // height: 100,
     flexDirection: "row"
   },
+  selected: {
+    borderWidth: 1,
+    // backgroundColor: 'blue'
+  },
+  smallImage: {
+    width: Math.round(Dimensions.get('window').width/7),
+    height: Math.round(Dimensions.get('window').width/7)
+  }
+
+
 })
