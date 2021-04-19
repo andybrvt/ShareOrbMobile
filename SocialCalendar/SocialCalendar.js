@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import  authAxios from '../util';
-
+import SocialMonth from './SocialMonth';
 
 let {height, width} = Dimensions.get('window')
 
@@ -34,7 +34,8 @@ class SocialCalendar extends React.Component{
       animate:true,
       fade:false,
       monthList: [],
-      pageOffsetY: 0
+      pageOffsetY: 0,
+      curMonthCells: []
     }
 
   }
@@ -52,11 +53,16 @@ class SocialCalendar extends React.Component{
     // render the months in this list
 
 
-    return(
-      <View style = {styles.monthTitle}>
-        <Text> {item.rep}</Text>
-        {this.renderCell(item.month)}
-      </View>
+    // return(
+    //   <View style = {styles.monthTitle}>
+    //     <Text> {item.rep}</Text>
+    //     {this.renderCell(item.month)}
+    //   </View>
+    // )
+
+
+    return (
+      <SocialMonth item = {item}/>
     )
   }
 
@@ -96,7 +102,6 @@ class SocialCalendar extends React.Component{
 
     // since this will not be real time, in the sense that it will just be
     // rendering the picture then we cna just use authaxios use a get fucntion
-    console.log(curMonth)
     // Gotta grab the month and month range and then do axios call to grab the
     // user information
 
@@ -105,103 +110,111 @@ class SocialCalendar extends React.Component{
 
     const formatStart = dateFns.format(start, "yyyy-MM-dd")
     const formatEnd = dateFns.format(end, 'yyyy-MM-dd')
-    console.log(start, end)
-    authAxios.get(`${global.IP_CHANGE}/mySocialCal/filterCells/`+ formatStart+`/`+formatEnd)
-    .then(res => {
-      console.log(res.data)
-    })
+
+    let events = []
 
 
 
-    // this function will render the month and then you will
-    // just combine the months when you make them
 
-    // Now you will get get the start of the month and the end of the
-    // month and then start rendering through each of the months
-    const startMonth = dateFns.startOfMonth(curMonth)
-    const endMonth = dateFns.endOfMonth(curMonth)
+      // Move everything in here, pretty much now when it comes to rendering the
+      // months it will be a promise
 
-    // Now get the start date and end date of the month
-    const startDate = dateFns.startOfWeek(startMonth)
-    const endDate = dateFns.endOfWeek(endMonth)
+      // this function will render the month and then you will
+      // just combine the months when you make them
 
+      // Now you will get get the start of the month and the end of the
+      // month and then start rendering through each of the months
+      const startMonth = dateFns.startOfMonth(curMonth)
+      const endMonth = dateFns.endOfMonth(curMonth)
 
-    // Now you will start going through your dates and make it into a
-    // calendar
-
-    const dateFormat = "d";
-    const rows = []
-
-    let toDoStuff = []
-    let days = []
-    // so you watn to start the day off on the start date
-    // which will be the start of the month
-    let day = startDate;
-    let formattedDate = ""
-
-    // Now you will start loop through the days and start making the months
-
-    while(day <= endDate){
-      //Now you will loop throug each day of the week end then
-      // add them to days and then add the days to the rows
-      for(let i = 0; i< 7; i++){
+      // Now get the start date and end date of the month
+      const startDate = dateFns.startOfWeek(startMonth)
+      const endDate = dateFns.endOfWeek(endMonth)
 
 
-        // you want a cloneDay for each loop so that you can
-        // actually get the date or else it will be the final date
-        formattedDate = dateFns.format(day, dateFormat);
-        const cloneDay = day;
+      // Now you will start going through your dates and make it into a
+      // calendar
 
-        if(toDoStuff.length > 0){
-          //  do some stuff here wher you fill in the cover pic
+      const dateFormat = "d";
+      const rows = []
 
-        } else {
-          // This is if there are no pictures at that current
-          // day
-          days.push(
-            <View
-              key = {i}
-              style = {styles.monthCell}>
-              {
-                dateFns.isSameMonth(day, curMonth) ?
+      let toDoStuff = []
+      let days = []
+      // so you watn to start the day off on the start date
+      // which will be the start of the month
+      let day = startDate;
+      let formattedDate = ""
 
-                <Text> {formattedDate}</Text>
+      // Now you will start loop through the days and start making the months
 
-                :
+      while(day <= endDate){
+        //Now you will loop throug each day of the week end then
+        // add them to days and then add the days to the rows
+        for(let i = 0; i< 7; i++){
 
-                <Text></Text>
-              }
-            </View>
-          )
+          // Now we will try to render in the soical cal cell according to the right
+          // date
 
+
+          // you want a cloneDay for each loop so that you can
+          // actually get the date or else it will be the final date
+          formattedDate = dateFns.format(day, dateFormat);
+          const cloneDay = day;
+
+          if(toDoStuff.length > 0){
+            //  do some stuff here wher you fill in the cover pic
+
+          } else {
+            // This is if there are no pictures at that current
+            // day
+            days.push(
+              <View
+                key = {i}
+                style = {styles.monthCell}>
+                {
+                  dateFns.isSameMonth(day, curMonth) ?
+
+                  <Text> {formattedDate}</Text>
+
+                  :
+
+                  <Text></Text>
+                }
+              </View>
+            )
+
+          }
+          // Once the day has ended you would clear out the
+          // events that land on this date
+          toDoStuff = []
+          day = dateFns.addDays(day, 1);
         }
-        // Once the day has ended you would clear out the
-        // events that land on this date
-        toDoStuff = []
-        day = dateFns.addDays(day, 1);
+
+        // Now this is where the week has finished because it went
+        // through 7 days, now you have a week saved in a list
+        // now you put them in rows now
+        rows.push(
+          <View
+            key = {day}
+             style = {styles.monthRow}>
+              {days}
+          </View>
+        )
+        // Now clear out the days to start the next week
+        days = []
+
       }
 
-      // Now this is where the week has finished because it went
-      // through 7 days, now you have a week saved in a list
-      // now you put them in rows now
-      rows.push(
-        <View
-          key = {day}
-           style = {styles.monthRow}>
-            {days}
-        </View>
+
+
+      return (
+
+            <Text style = {styles.monthContainer}> {rows}</Text>
+
       )
-      // Now clear out the days to start the next week
-      days = []
-
-    }
 
 
-    return (
 
-          <Text style = {styles.monthContainer}> {rows}</Text>
-
-    )
   }
 
   // This function will be used for writing a promise to send the next month in order
@@ -236,6 +249,9 @@ class SocialCalendar extends React.Component{
         // as text
 
         startCur = dateFns.subMonths(startCur, 1);
+
+        // sinc eyou can pull the date in here you can try to grab the date here and then push
+        // it out
 
         const repPrev = dateFns.format(startCur, "MMMM yyyy");
 
@@ -324,6 +340,13 @@ class SocialCalendar extends React.Component{
   }
 
 
+  getSocialCells(start, end){
+    return authAxios.get(`${global.IP_CHANGE}/mySocialCal/filterCells/`+ start+`/`+end)
+    .then(res => {
+        return res.data
+    })
+  }
+
   renderAllCells(){
 
     // So the way the months is gonna work is that it will be a
@@ -341,13 +364,42 @@ class SocialCalendar extends React.Component{
     // // Now youw ould wnat to grab the start and previous
     // months of the current so that you can render them
 
+    const formatStart = dateFns.format(curMonthStart, "yyyy-MM-dd")
+    const formatEnd = dateFns.format(curMonthEnd, 'yyyy-MM-dd')
+
+    // since this portion here only has a set state and dont need a return
+    // we cna try to pull it by months here
+
+    this.getSocialCells(formatStart, formatEnd)
+    .then( data => {
+      const repCur = dateFns.format(currentMonth, "MMMM yyyy")
+
+      let initialList = [
+
+        {
+            rep: repCur,
+            month: currentMonth,
+            cells: data
+        }
+
+      ]
+
+      this.setState({
+        monthList: initialList
+      })
+    })
+
+
+    // So in order to get the value initally you would wnat to
+    // first put in an empty one and then once the info loads
+    // in you will update it with the new stuff
     const repCur = dateFns.format(currentMonth, "MMMM yyyy")
 
     let initialList = [
 
       {
           rep: repCur,
-          month: currentMonth
+          month: currentMonth,
       }
 
     ]
@@ -355,6 +407,9 @@ class SocialCalendar extends React.Component{
     this.setState({
       monthList: initialList
     })
+
+
+
   }
 
   componentDidUpdate(oldProps){
@@ -364,7 +419,6 @@ class SocialCalendar extends React.Component{
 
     // Notes; onMomentumScrollEnd is when you scroll really fast
     // or hard to the end of the list
-    console.log(this.props.profile)
 
     const listData = this.state.monthList
 
@@ -384,8 +438,8 @@ class SocialCalendar extends React.Component{
             data = {listData}
             renderItem={this.renderItem}
             keyExtractor={(item) => item.rep}
-            onStartReached = {this.onTopHit}
-            onEndReached = {this.onBottomHit}
+            // onStartReached = {this.onTopHit}
+            // onEndReached = {this.onBottomHit}
             onStartReachedThreshold={10}
             onEndReachedThreshold={10}
             />
