@@ -54,20 +54,13 @@ class SocialNewsfeedPost extends React.Component{
     }
 
     if(userPostImages.length === 1){
-
       return (
         <View style = {styles.imageHolder}>
           <Image
             style = {{ flex: 1, height: 400}}
             resizeMode = "cover"
-            source = {{
-              url: `${global.IMAGE_ENDPOINT}`+userPostImages[0].itemImage
-            }}
-
+            source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
             />
-
-
-
         </View>
       )
     } else {
@@ -238,7 +231,8 @@ class SocialNewsfeedPost extends React.Component{
     let postCreatedAt = ""
 
     let actionText = ""
-
+    console.log("LOL")
+    console.log(this.props)
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post
@@ -258,6 +252,8 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.owner){
         if(this.props.data.owner.profile_picture){
           profilePic = this.props.data.owner.profile_picture
+          console.log("LOLOL")
+
         }
 
         if(this.props.data.owner.first_name){
@@ -283,13 +279,15 @@ class SocialNewsfeedPost extends React.Component{
 
 
     }
+
     return (
+
       <Card style = {styles.card}>
 
         <View style = {styles.header}>
           <Avatar.Image
             source = {{
-              url: `${global.IMAGE_ENDPOINT}`+profilePic
+              url: `${global.IMAGE_ENDPOINT}${profilePic}`
             }}
             size = {40}
              />
