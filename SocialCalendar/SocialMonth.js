@@ -123,11 +123,7 @@ class SocialMonth extends React.PureComponent{
                 {
                   dateFns.isSameMonth(day, curMonth) ?
 
-                  <View style = {{
-                      flex: 1,
-                      height: Math.round(Dimensions.get('window').width/7),
-                      backgroundColor: 'red'
-                    }}>
+                  <View style = {styles.imageHolder}>
                     {
                       toDoStuff[0].coverPic ?
 
@@ -274,6 +270,9 @@ const styles = StyleSheet.create({
   smallImage: {
     width: Math.round(Dimensions.get('window').width/7),
     height: Math.round(Dimensions.get('window').width/7)
+  },
+  imageHolder: {
+
   }
 
 

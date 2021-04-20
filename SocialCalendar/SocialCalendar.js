@@ -250,6 +250,42 @@ class SocialCalendar extends React.Component{
 
         startCur = dateFns.subMonths(startCur, 1);
 
+
+        // now you want to run the api in order to get the cells for the month
+        const curMonthStart = dateFns.startOfMonth(startCur)
+        const curMonthEnd = dateFns.endOfMonth(curMonthStart)
+        // Now format it for the backend
+
+        const formatStart = dateFns.format(curMonthStart, "yyyy-MM-dd")
+        const formatEnd = dateFns.format(curMonthEnd, 'yyyy-MM-dd')
+
+        this.getSocialCells(formatStart, formatEnd)
+        .then( data => {
+          // Now you can do a set state here since this one will
+          // lag behind a bit
+          const repCur = dateFns.format(startCur, "MMMM yyyy")
+          // Now you want to make a new object for the month, find the month
+          // that fits this one using the rep, and then replace it
+          const updateMonth = {
+            rep: repCur,
+            month: curMonthStart,
+            cells: data
+          }
+
+          // Now that you have the month object you want to pass in
+          // now when you set state make sure you replace it
+
+          console.log(this.state.monthList)
+          console.log(repCur)
+          const list = this.state.monthList.map(month =>
+            month.rep === repCur ? updateMonth : month
+          )
+          this.setState({
+            monthList: list
+          })
+
+
+        })
         // sinc eyou can pull the date in here you can try to grab the date here and then push
         // it out
 
@@ -293,6 +329,8 @@ class SocialCalendar extends React.Component{
 
         // similar to loadPrevMonths but now you are going forward into the
         // months
+        // Sicne it is for the future months you do not need to have the api
+        // call for the month because you cannot post on future dates
 
         startCur = dateFns.addMonths(startCur, 1);
         const repPrev = dateFns.format(startCur, "MMMM yyyy");
@@ -438,8 +476,8 @@ class SocialCalendar extends React.Component{
             data = {listData}
             renderItem={this.renderItem}
             keyExtractor={(item) => item.rep}
-            // onStartReached = {this.onTopHit}
-            // onEndReached = {this.onBottomHit}
+            onStartReached = {this.onTopHit}
+            onEndReached = {this.onBottomHit}
             onStartReachedThreshold={10}
             onEndReachedThreshold={10}
             />
