@@ -21,6 +21,7 @@ import Signup from './Signup/Signup';
 import Chats from './Chats/Chats';
 import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
 import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocket';
+import ChatSidePanelWebSocketInstance from './Websoockets/newChatSidePanelWebsocket';
 import Profile from './ProfilePage/Profile';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch,
@@ -46,6 +47,10 @@ class App extends Component{
   };
   constructor(props){
     super(props)
+
+    // Since you want to show chats at the beginning of your
+    // login because people might have unread messages so you
+    // wnat to render it along with notificaitons
 
 
     WebSocketSocialNewsfeedInstance.addCallbacks(
@@ -90,6 +95,35 @@ class App extends Component{
 
       this.props.grabUserCredentials()
     }
+
+  }
+
+  initialiseChats(){
+    this.waitForChatsSocketConnection(() => {
+      console.log(this.props.id)
+      ChatSidePanelWebSocketInstance.fetchChats(
+        this.props.id
+      )
+
+    })
+    ChatSidePanelWebSocketInstance.connect(this.props.id)
+
+  }
+
+  waitForChatsSocketConnection(callback) {
+    const component = this;
+    setTimeout(
+      function(){
+
+        if (ChatSidePanelWebSocketInstance.state() === 1){
+
+          callback();
+          return;
+        } else{
+
+            component.waitForChatsSocketConnection(callback);
+        }
+      }, 100)
 
   }
 
