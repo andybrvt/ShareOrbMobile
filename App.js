@@ -175,7 +175,7 @@ class App extends Component{
     return(
 
 
-      <PaperProvider>
+      <PaperProvider> 
 
         <SafeAreaProvider>
           <NavigationContainer>

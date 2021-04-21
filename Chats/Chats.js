@@ -1,5 +1,10 @@
 import React from 'react';
-import { Text, View, Button,StyleSheet } from 'react-native';
+import { Text,
+   View,
+  Button,
+  StyleSheet,
+  TextInput
+ } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
@@ -8,6 +13,7 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUsers, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { ArrowUpCircle, Search } from "react-native-feather";
 
 
 
@@ -155,38 +161,67 @@ class Chats extends React.Component{
     console.log(item)
     return (
 
-      <View>
+      <View style = {styles.chatBox}>
         {
           item.participants.length === 2 ?
 
-          <View>
+          <View style = {styles.chatInfoHolder} >
             <Avatar.Image
               source = {{
                 url: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants)
               }}
               size = {60}
                />
-             <Text> {this.getChatUserName(item.participants)}</Text>
-             <Text> {"@"+item.participants[1].username}</Text>
-             <Text>{this.chatDescription(item.recentMessage,
-                      item.recentSender,
-                      item.recentTime
-                    )} </Text>
+             <View style = {styles.chatInfo}>
+               <View style = {styles.chatNameContainer}>
+                 <Text style = {styles.chatName}>{this.getChatUserName(item.participants)}</Text>
+                 <Text style = {styles.chatUsername}> {"@"+item.participants[1].username}</Text>
+               </View>
+
+               <Text style = {styles.chatText}>{this.chatDescription(item.recentMessage,
+                        item.recentSender,
+                        item.recentTime
+                      )} </Text>
+             </View>
+
           </View>
 
           :
 
-          <View>
+          <View style = {styles.chatInfoHolder}>
             <FontAwesomeIcon
               size = {60}
               icon={faUsers} />
-            <Text>{this.getGroupChatName(item.participants)}</Text>
-            <Text>{this.chatDescription(item.recentMessage,
-                  item.recentSender,
-                  item.recentTime
-                  )}</Text>
+
+            <View style = {styles.chatInfo}>
+              <Text style = {styles.chatName}>{this.getGroupChatName(item.participants)}</Text>
+              <Text style = {styles.chatText}>{this.chatDescription(item.recentMessage,
+                    item.recentSender,
+                    item.recentTime
+                    )}</Text>
+
+            </View>
+
         </View>
         }
+
+      </View>
+    )
+  }
+
+  searchBox = () => {
+
+
+
+    return (
+      <View style ={styles.searchText}>
+        <Search
+
+          style = {styles.searchIcon}/>
+        <TextInput
+          underlineColorAndroid = "transparent"
+          icon = {<ArrowUpCircle />}
+          placeholder = "Search Chats" />
 
       </View>
     )
@@ -205,6 +240,8 @@ class Chats extends React.Component{
     return (
       <SafeAreaView style = {styles.safeArea}>
         <View style = {styles.container}>
+
+          {this.searchBox()}
 
           <FlatList
             data = {chatList}
@@ -230,10 +267,52 @@ const mapStateToProps = state => {
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: "#1890ff"
+    backgroundColor: "#1890ff",
+    flex: 1,
   },
   container: {
-    backgroundColor: "white"
+    backgroundColor: "white",
+    flex: 1,
+  },
+  chatBox: {
+    flex: 1,
+    height: 80,
+    justifyContent: 'center',
+    padding: 15
+  },
+  chatInfoHolder:{
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  chatInfo: {
+    justifyContent: "center",
+    marginLeft: 10
+  },
+  searchText: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    height: 60
+
+  },
+  searchIcon: {
+    flex: 1,
+    margin: 20,
+  },
+  chatNameContainer: {
+    flexDirection: "row"
+  },
+  chatName: {
+    fontSize: 15,
+    color: 'black',
+  },
+  chatUsername: {
+    fontSize: 10,
+    color: 'gray',
+    marginTop: 4,
+
+  },
+  chatText: {
+    marginTop: 8
   }
 })
 
