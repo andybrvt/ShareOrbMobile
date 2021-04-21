@@ -11,12 +11,12 @@ import { connect } from 'react-redux';
 // be simlar to the side menu in the chats of the website
 
 // First you want to link up your chat sidepanel with its own websocket
-// so that you can get incoming messages 
+// so that you can get incoming messages
 class Chats extends React.Component{
 
 
   render(){
-
+    console.log(this.props)
     return (
       <View>
         <Text> This will be the chats</Text>
@@ -27,4 +27,10 @@ class Chats extends React.Component{
   }
 }
 
-export default Chats;
+const mapStateToProps = state => {
+  return{
+    chats: state.message.chats,
+  }
+}
+
+export default connect(mapStateToProps, null)(Chats);

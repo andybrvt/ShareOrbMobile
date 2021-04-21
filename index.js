@@ -7,6 +7,7 @@ import authReducer from './store/reducers/auth';
 import socialNewsfeedReducer from './store/reducers/socialNewsfeed';
 import exploreReducer from './store/reducers/explore';
 import socialCalReducer from './store/reducers/socialCalendar';
+import messageReducer from './store/reducers/messages';
 import App from './App';
 import React, {Component} from 'react';
 import { AppRegistry } from 'react-native';
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   socialNewsfeed: socialNewsfeedReducer,
   explore: exploreReducer,
-  socialCal: socialCalReducer
+  socialCal: socialCalReducer,
+  message: messageReducer
 })
 
 const store = createStore(

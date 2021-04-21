@@ -12,6 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import * as authActions from './store/actions/auth';
 import * as socialNewsfeedActions from './store/actions/socialNewsfeed';
 import * as exploreActions from './store/actions/explore';
+import * as messageActions from './store/actions/messages';
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import Explore from './Explore/Explore';
@@ -67,6 +68,11 @@ class App extends Component{
       this.props.loadProfile.bind(this)
     )
 
+    ChatSidePanelWebSocketInstance.addCallbacks(
+      // These function is to set the chats in
+      this.props.setChats.bind(this)
+    )
+
   }
 
   async loadFonts() {
@@ -102,6 +108,7 @@ class App extends Component{
 
   initialiseChats(){
     this.waitForChatsSocketConnection(() => {
+      console.log('initla chats')
       console.log(this.props.id)
       ChatSidePanelWebSocketInstance.fetchChats(
         this.props.id
@@ -292,6 +299,8 @@ const mapDispatchToProps = dispatch => {
     loadSocialPosts: post => dispatch(socialNewsfeedActions.loadSocialPosts(post)),
 
     loadProfile: profile => dispatch(exploreActions.loadProfile(profile)),
+
+    setChats: chats => dispatch(messageActions.setChats(chats)),
 
   }
 }

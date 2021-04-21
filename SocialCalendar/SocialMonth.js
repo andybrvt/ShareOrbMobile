@@ -22,8 +22,6 @@ class SocialMonth extends React.PureComponent{
 
   renderCell(curMonth, cells){
 
-    console.log('here is cells')
-    console.log(cells)
     // cells will be all the cells taht go in that certain month, now you will need
     // to figure out how you are gonna organize all these pictures
 
@@ -206,8 +204,7 @@ class SocialMonth extends React.PureComponent{
   }
 
   render(){
-    console.log('itmes in social month')
-    console.log(this.props.item)
+
     let cells = []
     if(this.props.item){
       if(this.props.item.cells){

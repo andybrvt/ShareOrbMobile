@@ -56,8 +56,7 @@ class WebSocketExplore{
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
     console.log(parsedData)
-    console.log(command === 'user_profile_page')
-
+    
     if (command === "user_profile"){
       //STATUS REDONE
 

@@ -275,8 +275,7 @@ class SocialCalendar extends React.Component{
           // Now that you have the month object you want to pass in
           // now when you set state make sure you replace it
 
-          console.log(this.state.monthList)
-          console.log(repCur)
+      
           const list = this.state.monthList.map(month =>
             month.rep === repCur ? updateMonth : month
           )
