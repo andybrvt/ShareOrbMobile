@@ -231,8 +231,7 @@ class SocialNewsfeedPost extends React.Component{
     let postCreatedAt = ""
 
     let actionText = ""
-    console.log("LOL")
-    console.log(this.props)
+
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post
@@ -252,7 +251,7 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.owner){
         if(this.props.data.owner.profile_picture){
           profilePic = this.props.data.owner.profile_picture
-          console.log("LOLOL")
+    
 
         }
 

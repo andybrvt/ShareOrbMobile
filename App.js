@@ -21,7 +21,7 @@ import Signup from './Signup/Signup';
 import Chats from './Chats/Chats';
 import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
 import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocket';
-import ChatSidePanelWebSocketInstance from './Websoockets/newChatSidePanelWebsocket';
+import ChatSidePanelWebSocketInstance from './Websockets/newChatSidePanelWebsocket';
 import Profile from './ProfilePage/Profile';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch,
@@ -51,6 +51,8 @@ class App extends Component{
     // Since you want to show chats at the beginning of your
     // login because people might have unread messages so you
     // wnat to render it along with notificaitons
+
+    this.initialiseChats()
 
 
     WebSocketSocialNewsfeedInstance.addCallbacks(
