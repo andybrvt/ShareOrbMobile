@@ -96,20 +96,40 @@ class App extends Component{
   }
 
   componentDidUpdate(prevProps){
+    console.log('these are some previous props')
+    console.log(prevProps)
     if(this.props.isAuthenticated){
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
       // grab the userinfromation
 
       this.props.grabUserCredentials()
+
+      if(parseInt(this.props.id) !== parseInt(prevProps.id) && this.props.id !== null){
+        // Now this will see if there is a person logged in
+
+        // Now if you want to connect to the chat,
+        // since there is an inital connection you have to disconnect it
+        ChatSidePanelWebSocketInstance.disconnect();
+        this.waitForChatsSocketConnection(() =>{
+          ChatSidePanelWebSocketInstance.fetchChats(
+            this.props.id
+          )
+
+        })
+
+
+        // Now you can try to connect
+        ChatSidePanelWebSocketInstance.connect(this.props.id)
+
+      }
     }
 
   }
 
   initialiseChats(){
     this.waitForChatsSocketConnection(() => {
-      console.log('initla chats')
-      console.log(this.props.id)
+
       ChatSidePanelWebSocketInstance.fetchChats(
         this.props.id
       )
