@@ -56,7 +56,6 @@ class Header extends React.Component{
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constant.statusBarHeight,
     height: 60,
     flexDirection: "row",
     backgroundColor:"white",

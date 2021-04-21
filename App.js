@@ -34,6 +34,8 @@ import { faSearch,
  } from '@fortawesome/free-solid-svg-icons'
 // import BottomNavigation from './BottomNavigation';
 import { TabActions } from '@react-navigation/native';
+import Constant from 'expo-constants';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
@@ -172,121 +174,126 @@ class App extends Component{
     if (this.state.fontsLoaded) {
     return(
 
+
       <PaperProvider>
-        <NavigationContainer>
 
-          {
-            !this.props.loading && this.props.username ?
-              <Tab.Navigator
-                initialRouteName = "Home"
-                barStyle = {{
-                  backgroundColor: "white",
+        <SafeAreaProvider>
+          <NavigationContainer>
 
-                }}
-                >
-                <Tab.Screen
-                  name="Home"
-                  component={NewsfeedView}
+            {
+              !this.props.loading && this.props.username ?
+                <Tab.Navigator
+                  initialRouteName = "Home"
+                  barStyle = {{
+                    backgroundColor: "white",
 
-                  options={{
-                     tabBarLabel: 'Home',
-                     tabBarIcon: ({ color }) => (
-                       <FontAwesomeIcon
+                  }}
+                  >
+                  <Tab.Screen
+                    name="Home"
+                    component={NewsfeedView}
 
-                         size = {25}
-                         color = {color}
-                         icon={faHome} />
-                     ),
-                   }}
-                   />
-                <Tab.Screen
-                  name="Explore"
-                  component={Explore}
-                  options={{
-                     tabBarLabel: 'Explore',
-                     tabBarIcon: ({ color }) => (
-                       <FontAwesomeIcon
-                         size = {25}
-                         color = {color}
-                         icon={faMapSigns} />
-                     ),
-                   }}
-                   />
+                    options={{
+                       tabBarLabel: 'Home',
+                       tabBarIcon: ({ color }) => (
+                         <FontAwesomeIcon
 
+                           size = {25}
+                           color = {color}
+                           icon={faHome} />
+                       ),
+                     }}
+                     />
+                  <Tab.Screen
+                    name="Explore"
+                    component={Explore}
+                    options={{
+                       tabBarLabel: 'Explore',
+                       tabBarIcon: ({ color }) => (
+                         <FontAwesomeIcon
+                           size = {25}
+                           color = {color}
+                           icon={faMapSigns} />
+                       ),
+                     }}
+                     />
+
+                     <Tab.Screen
+                       name="Upload"
+                       component={Explore}
+                       options={{
+
+                          tabBarIcon: ({ color }) => (
+                            <FontAwesomeIcon
+                              size = {35}
+                              color = {'#1890ff'}
+                              icon={faPlusSquare} />
+                          ),
+                        }}
+                        />
                    <Tab.Screen
-                     name="Upload"
-                     component={Explore}
+                     name="Chats"
+                     component={Chats}
                      options={{
-
+                        tabBarLabel: 'Messages',
                         tabBarIcon: ({ color }) => (
                           <FontAwesomeIcon
-                            size = {35}
-                            color = {'#1890ff'}
-                            icon={faPlusSquare} />
+                            size = {25}
+                            color = {color}
+                            icon={faComments} />
                         ),
                       }}
                       />
-                 <Tab.Screen
-                   name="Chats"
-                   component={Chats}
-                   options={{
-                      tabBarLabel: 'Messages',
-                      tabBarIcon: ({ color }) => (
-                        <FontAwesomeIcon
-                          size = {25}
-                          color = {color}
-                          icon={faComments} />
-                      ),
-                    }}
-                    />
 
 
 
 
 
-                    <Tab.Screen
-                       name="Profile"
-                       component={Profile}
-                       options={{
-                          tabBarLabel: 'Profile',
-                          tabBarIcon: ({ color }) => (
-                            <FontAwesomeIcon
-                              size = {25}
-                              color = {color}
-                              icon={faUser} />
-                          ),
-                        }}
-                        initialParams = {{
-                          username: this.props.username
-                        }}
+                      <Tab.Screen
+                         name="Profile"
+                         component={Profile}
+                         options={{
+                            tabBarLabel: 'Profile',
+                            tabBarIcon: ({ color }) => (
+                              <FontAwesomeIcon
+                                size = {25}
+                                color = {color}
+                                icon={faUser} />
+                            ),
+                          }}
+                          initialParams = {{
+                            username: this.props.username
+                          }}
 
-                        listeners={{
-                           tabPress: e => {
-                             // Prevent default action
-                             if(this.props.username === null){
-                               e.preventDefault();
+                          listeners={{
+                             tabPress: e => {
+                               // Prevent default action
+                               if(this.props.username === null){
+                                 e.preventDefault();
 
 
-                             }
-                           },
-                         }}
-                        />
+                               }
+                             },
+                           }}
+                          />
 
 
 
 
 
 
-              </Tab.Navigator>
+                </Tab.Navigator>
 
-              :
-
-              <Routes {...this.props} />
+                :
 
 
-          }
+                <Routes {...this.props} />
 
-        </NavigationContainer>
+
+            }
+
+          </NavigationContainer>
+        </SafeAreaProvider>
 
       </PaperProvider>
 

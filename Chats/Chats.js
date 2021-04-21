@@ -7,6 +7,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { Avatar, BottomNavigation } from 'react-native-paper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUsers, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -153,6 +154,7 @@ class Chats extends React.Component{
     console.log('these are individual items')
     console.log(item)
     return (
+
       <View>
         {
           item.participants.length === 2 ?
@@ -201,17 +203,20 @@ class Chats extends React.Component{
 
     // You are gonna use a flat list for this chat
     return (
-      <View>
+      <SafeAreaView style = {styles.safeArea}>
+        <View style = {styles.container}>
 
-        <FlatList
-          data = {chatList}
-          renderItem = {this.renderItem}
-          keyExtractor={(item) => item.id}
+          <FlatList
+            data = {chatList}
+            renderItem = {this.renderItem}
+            keyExtractor={(item) => item.id}
 
 
-          />
-      </View>
+            />
+        </View>
 
+
+      </SafeAreaView>
 
     )
   }
@@ -222,5 +227,14 @@ const mapStateToProps = state => {
     chats: state.message.chats,
   }
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: "#1890ff"
+  },
+  container: {
+    backgroundColor: "white"
+  }
+})
 
 export default connect(mapStateToProps, null)(Chats);

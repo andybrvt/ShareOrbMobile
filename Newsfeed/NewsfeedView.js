@@ -14,6 +14,7 @@ import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsock
 import InfiniteScroll from './InfiniteScroll';
 import { Avatar, BottomNavigation } from 'react-native-paper';
 import * as dateFns from 'date-fns';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -101,27 +102,31 @@ class NewsfeedView extends React.Component{
 
 
     return(
-      <View style = {styles.container}>
 
-      <Header {...this.props} />
+      <SafeAreaView style = {styles.safeArea}>
+        <View style = {styles.container}>
 
-      <ScrollView>
+        <Header {...this.props} />
 
-
-        <InfiniteScroll />
-    
-
-        <Button
-          title = "Logout"
-          onPress = {() => this.handleLogOut()}
-        />
-      </ScrollView>
+        <ScrollView>
 
 
+          <InfiniteScroll />
+
+
+          <Button
+            title = "Logout"
+            onPress = {() => this.handleLogOut()}
+          />
+        </ScrollView>
 
 
 
-      </View>
+
+
+        </View>
+      </SafeAreaView>
+
     )
   }
 }
@@ -130,6 +135,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor:"whitesmoke"
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#1890ff"
   }
 })
 
