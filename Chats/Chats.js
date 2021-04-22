@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   },
   chatBox: {
     flex: 1,
-    height: 80,
+    height: 70,
     justifyContent: 'center',
     padding: 15
   },
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
   searchText: {
     flexDirection: 'row',
     backgroundColor: '#fff',
-    height: 50,
+    height: 45,
     backgroundColor: 'whitesmoke',
     borderRadius: 25,
     shadowOffset:{  width: 0,  height: 2,  },
