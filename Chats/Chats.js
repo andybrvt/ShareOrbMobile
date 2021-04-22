@@ -13,7 +13,7 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUsers, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowUpCircle, Search } from "react-native-feather";
+import { ArrowUpCircle, Search, Plus, Menu } from "react-native-feather";
 
 
 
@@ -55,6 +55,10 @@ class Chats extends React.Component{
           name = global.CAPITALIZE(participantList[i].first_name)+ ' '
           +global.CAPITALIZE(participantList[i].last_name)
         }
+      }
+
+      if(name.length > 30){
+        name = name.substring(0,30)+ "..."
       }
       return name;
 
@@ -170,7 +174,7 @@ class Chats extends React.Component{
               source = {{
                 url: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants)
               }}
-              size = {60}
+              size = {50}
                />
              <View style = {styles.chatInfo}>
                <View style = {styles.chatNameContainer}>
@@ -190,7 +194,7 @@ class Chats extends React.Component{
 
           <View style = {styles.chatInfoHolder}>
             <FontAwesomeIcon
-              size = {60}
+              size = {50}
               icon={faUsers} />
 
             <View style = {styles.chatInfo}>
@@ -209,19 +213,51 @@ class Chats extends React.Component{
     )
   }
 
-  searchBox = () => {
 
+  searchHeader = () => {
+    // this function will be used to render the headers of the
+    // chats
+
+    return (
+      <View style = {styles.chatHeaderContainer}>
+        <View style = {styles.chatAvatar}>
+          <Avatar.Image
+            source = {{
+              url: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+            }}
+            size = {40}
+             />
+        </View>
+        <View style = {styles.chatChatText}>
+          <Text style = {styles.chatWordText} >Chats</Text>
+        </View>
+
+        <View style = {styles.chatNew}>
+          <Plus width= {30} height = {30} />
+        </View>
+
+      </View>
+    )
+  }
+
+  searchBox = () => {
+    // This function will be used to render the search of the chats
 
 
     return (
       <View style ={styles.searchText}>
-        <Search
+        <View style = {styles.searchIcon}>
+          <Search />
 
-          style = {styles.searchIcon}/>
-        <TextInput
+        </View>
+
+        <View style = {styles.searchInput}>
+          <TextInput
           underlineColorAndroid = "transparent"
-          icon = {<ArrowUpCircle />}
+
           placeholder = "Search Chats" />
+
+        </View>
 
       </View>
     )
@@ -241,7 +277,15 @@ class Chats extends React.Component{
       <SafeAreaView style = {styles.safeArea}>
         <View style = {styles.container}>
 
-          {this.searchBox()}
+          <View style = {styles.chatHeaderHeader}>
+            {this.searchHeader()}
+
+            <View style = {styles.searchTextContainer}>
+              {this.searchBox()}
+
+            </View>
+
+          </View>
 
           <FlatList
             data = {chatList}
@@ -262,6 +306,7 @@ class Chats extends React.Component{
 const mapStateToProps = state => {
   return{
     chats: state.message.chats,
+    profilePic: state.auth.profilePic
   }
 }
 
@@ -288,15 +333,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: 10
   },
+  searchTextContainer:{
+    padding: 10,
+  },
   searchText: {
     flexDirection: 'row',
     backgroundColor: '#fff',
-    height: 60
-
+    height: 50,
+    backgroundColor: 'whitesmoke',
+    borderRadius: 25,
+    shadowOffset:{  width: 0,  height: 2,  },
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
   },
   searchIcon: {
     flex: 1,
-    margin: 20,
+    // backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: "center"
   },
   chatNameContainer: {
     flexDirection: "row"
@@ -304,6 +358,7 @@ const styles = StyleSheet.create({
   chatName: {
     fontSize: 15,
     color: 'black',
+    fontWeight: "600"
   },
   chatUsername: {
     fontSize: 10,
@@ -312,7 +367,39 @@ const styles = StyleSheet.create({
 
   },
   chatText: {
-    marginTop: 8
+    marginTop: 8,
+    color: 'gray',
+    fontWeight: '400'
+  },
+  chatHeaderContainer: {
+    height: 60,
+    flexDirection: 'row'
+  },
+  chatAvatar: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: "center"
+  },
+  chatChatText: {
+    flex: 4,
+    justifyContent: 'center',
+  },
+  chatWordText: {
+    fontSize: 30,
+    fontWeight: "bold"
+  },
+  chatNew: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: "center"
+  },
+  searchInput: {
+    flex: 5,
+    justifyContent: "center"
+  },
+  chatHeaderHeader: {
+    // backgroundColor: "white",
+
   }
 })
 
