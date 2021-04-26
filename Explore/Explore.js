@@ -1,11 +1,18 @@
 import React from 'react';
-import { Text, View, Button,StyleSheet } from 'react-native';
+import { Text,
+   View,
+   Button,
+   StyleSheet,
+   ScrollView,
+   Dimensions,
+  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../RandomComponents/SearchBar';
 
+const {width, height} = Dimensions.get('screen')
 // This class will be in charge of managing the explore page,
 // the end goal is to show people and a way to find people
 // or just browse through cool stuff that happens through out
@@ -26,15 +33,42 @@ class Explore extends React.Component{
     return  (
       <SafeAreaView style = {styles.safeArea}>
 
-        <View style = {styles.container}>
+        <ScrollView style = {styles.container}>
+
+          <View style = {styles.topTextContianer}>
+            <Text style = {styles.topText}> What's everyone doing?</Text>
+          </View>
 
           <View style = {styles.searchHeader}>
             <SearchBar />
           </View>
 
+          <View style = {styles.trendingContainer}>
+            <View style = {styles.trendingTextContainer}>
+                <Text style = {styles.trendingText}>Trending Days</Text>
+            </View>
+
+            <View style = {styles.trendingDaysContainer}>
+              <ScrollView
+                horizontal = {true}
+                style = {{height: "100%"}}>
+
+                <View style = {styles.picBoxContainer}>
+                  <View>
+
+                  </View>
+
+                  <View>
+                    <Text> some text here</Text>
+                  </View>
+                </View>
+              </ScrollView>
+
+            </View>
+          </View>
 
           <Text> This will be the explore page</Text>
-        </View>
+        </ScrollView>
 
       </SafeAreaView>
 
@@ -54,6 +88,40 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchHeader:{
-    padding: 10,
+    padding: 20,
+  },
+  topText: {
+    color: 'black',
+    fontSize: 45,
+    fontWeight: "bold"
+  },
+  topTextContianer:{
+    backgroundColor: "white",
+    padding: 20
+  },
+  trendingContainer:{
+    flex: 1,
+    backgroundColor: "pink",
+    height: height * 0.57,
+
+  },
+  trendingTextContainer:{
+     padding: 20,
+
+  },
+  trendingText: {
+    color: "black",
+    fontSize: 17,
+    fontWeight: 'bold'
+  },
+  trendingDaysContainer: {
+    height: "75%",
+    backgroundColor: 'orange'
+  },
+  picBoxContainer: {
+    height: 250,
+    width: 170,
+    backgroundColor: "red"
   }
+
 })
