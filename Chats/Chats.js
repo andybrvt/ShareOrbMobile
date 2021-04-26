@@ -14,7 +14,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUsers, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowUpCircle, Search, Plus, Menu } from "react-native-feather";
-
+import * as dateFns from 'date-fns';
+import SearchBar from '../RandomComponents/SearchBar';
 
 
 // The first thing you want to do in making the chat is
@@ -240,28 +241,7 @@ class Chats extends React.Component{
     )
   }
 
-  searchBox = () => {
-    // This function will be used to render the search of the chats
 
-
-    return (
-      <View style ={styles.searchText}>
-        <View style = {styles.searchIcon}>
-          <Search />
-
-        </View>
-
-        <View style = {styles.searchInput}>
-          <TextInput
-          underlineColorAndroid = "transparent"
-
-          placeholder = "Search Chats" />
-
-        </View>
-
-      </View>
-    )
-  }
 
   render(){
 
@@ -281,7 +261,7 @@ class Chats extends React.Component{
             {this.searchHeader()}
 
             <View style = {styles.searchTextContainer}>
-              {this.searchBox()}
+              <SearchBar />
 
             </View>
 
@@ -336,22 +316,7 @@ const styles = StyleSheet.create({
   searchTextContainer:{
     padding: 10,
   },
-  searchText: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    height: 45,
-    backgroundColor: 'whitesmoke',
-    borderRadius: 25,
-    shadowOffset:{  width: 0,  height: 2,  },
-    shadowColor: 'black',
-    shadowOpacity: 0.2,
-  },
-  searchIcon: {
-    flex: 1,
-    // backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: "center"
-  },
+
   chatNameContainer: {
     flexDirection: "row"
   },
@@ -393,10 +358,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: "center"
   },
-  searchInput: {
-    flex: 5,
-    justifyContent: "center"
-  },
+
   chatHeaderHeader: {
     // backgroundColor: "white",
 
