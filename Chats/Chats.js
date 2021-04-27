@@ -70,7 +70,6 @@ class Chats extends React.Component{
       // This fucntion will take in a string and check how long it is, if it is
       // passed a certain lenght you would just put ... at the end of it
       let finalStr = str
-      console.log(recentTime)
       if(str.length > 20){
         finalStr = finalStr.substring(0,20)
         finalStr = finalStr+"..."
@@ -88,12 +87,8 @@ class Chats extends React.Component{
     }
 
     renderTimestamp = timestamp =>{
-      console.log(timestamp)
       let prefix = '';
-      console.log(new Date().getTime())
-      console.log(new Date(timestamp).getTime())
       const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
-      console.log(timeDiff)
       if (timeDiff < 1 ) {
         prefix = `now`;
       } else if (timeDiff < 60 && timeDiff >= 1 ) {
@@ -114,7 +109,6 @@ class Chats extends React.Component{
       var names = ""
       let noCurUserList = []
       for(let i = 0; i < participantList.length; i++){
-        console.log(participantList[i].first_name)
         if(participantList[i].id !== this.props.curId){
           const name = global.CAPITALIZE(participantList[i].first_name)+ ' '
           +global.CAPITALIZE(participantList[i].last_name)
@@ -155,15 +149,12 @@ class Chats extends React.Component{
 
 
 
-      console.log(noCurUserList)
 
 
       return names;
     }
 
   renderItem = ({item}) => {
-    console.log('these are individual items')
-    console.log(item)
     return (
 
       <View style = {styles.chatBox}>

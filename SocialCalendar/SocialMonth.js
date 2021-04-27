@@ -212,7 +212,6 @@ class SocialMonth extends React.PureComponent{
       }
     }
 
-    console.log(cells)
     return (
       <View style = {styles.monthTitle}>
         <Text> {this.props.item.rep}</Text>

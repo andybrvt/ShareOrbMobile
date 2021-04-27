@@ -98,8 +98,7 @@ class App extends Component{
   }
 
   componentDidUpdate(prevProps){
-    console.log('these are some previous props')
-    console.log(prevProps)
+    
     if(this.props.isAuthenticated){
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
@@ -175,7 +174,7 @@ class App extends Component{
     return(
 
 
-      <PaperProvider> 
+      <PaperProvider>
 
         <SafeAreaProvider>
           <NavigationContainer>

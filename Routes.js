@@ -19,11 +19,11 @@ const Stack = createNativeStackNavigator();
 class Routes extends React.Component{
 
   render(){
-
+    console.log(this.props.isAuthenticated)
     return(
       <Stack.Navigator screenOptions={{headerShown: false,}}>
         {
-          this.props.isAuthenticated ?
+          this.props.isAuthenticated === true ?
 
           <Stack.Screen name = "LoadingScreen" component = {LoadingScreen} />
 
