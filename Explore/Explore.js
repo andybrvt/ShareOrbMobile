@@ -5,6 +5,7 @@ import { Text,
    StyleSheet,
    ScrollView,
    Dimensions,
+   FlatList
   } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -33,7 +34,8 @@ class Explore extends React.Component{
   }
 
   state = {
-    trendingCells: []
+    trendingCells: [],
+    exploreCells: []
   }
   // So you would need a search here to search up people
   // So you want to render the people's day here and since
@@ -54,6 +56,14 @@ class Explore extends React.Component{
         trendingCells: res.data
       })
     })
+
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/exploreDay`)
+    .then( res => {
+      this.setState({
+          exploreCells: res.data
+      })
+
+    })
   }
 
   render(){
@@ -73,7 +83,7 @@ class Explore extends React.Component{
 
           <View style = {styles.trendingContainer}>
             <View style = {styles.trendingTextContainer}>
-                <Text style = {styles.trendingText}>Trending Days</Text>
+                <Text style = {styles.trendingText}>Trending Days Today</Text>
             </View>
 
             <View style = {styles.trendingDaysContainer}>
@@ -96,9 +106,29 @@ class Explore extends React.Component{
               </ScrollView>
 
             </View>
+
           </View>
 
-          <Text> This will be the explore page</Text>
+          <View style = {styles.exploreTheDayContainer}>
+            <View style = {styles.topTextContianer}>
+              <Text style = {styles.trendingText}> Explore the Day</Text>
+            </View>
+
+            <View style = {styles.twoColContainer}>
+              {this.state.exploreCells.map((cell, key) => {
+                return(
+                  <View style = {styles.spacedSpace}>
+                    <PictureBox cell = {cell} index = {key}/>
+                  </View>
+
+                )
+              })}
+
+            </View>
+
+          </View>
+
+
         </ScrollView>
 
       </SafeAreaView>
@@ -132,7 +162,7 @@ const styles = StyleSheet.create({
   },
   trendingContainer:{
     flex: 1,
-    height: height * 0.57,
+    height: height * 0.46,
 
   },
   trendingTextContainer:{
@@ -145,11 +175,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   trendingDaysContainer: {
-    height: "75%",
-
+    height: "82%",
   },
   spacedSpace:{
     padding: 10,
+  },
+  exploreTheDayContainer: {
+
+  },
+  twoColContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: "flex-start",
+    justifyContent:'center'
   }
 
 })
