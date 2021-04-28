@@ -77,6 +77,8 @@ class Explore extends React.Component{
           <View style = {styles.circle1} />
           <View style = {styles.circle2} />
           <View style = {styles.circle3} />
+          <View style = {styles.circle4} />
+          <View style = {styles.circle5} />
 
 
           <ScrollView style = {styles.container}>
@@ -233,7 +235,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     right: -50,
-    top: -50,
+    top: -150,
     borderRadius: 175,
     backgroundColor: '#1890ff',
     position: 'absolute',
@@ -246,7 +248,19 @@ const styles = StyleSheet.create({
     left: 20,
     top: 50,
     borderRadius: 75,
-    backgroundColor: '#1890ff',
+    backgroundColor: 'red',
+    position: 'absolute',
+    opacity: 0.1
+
+  },
+
+  circle5: {
+    width: 150,
+    height: 150,
+    right: -40,
+    top: 250,
+    borderRadius: 75,
+    backgroundColor: 'yellow',
     position: 'absolute',
     opacity: 0.1
 
