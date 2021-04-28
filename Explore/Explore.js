@@ -5,7 +5,8 @@ import { Text,
    StyleSheet,
    ScrollView,
    Dimensions,
-   FlatList
+   FlatList,
+   TouchableHighlight
   } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -71,65 +72,77 @@ class Explore extends React.Component{
     return  (
       <SafeAreaView style = {styles.safeArea}>
 
-        <ScrollView style = {styles.container}>
+        <View style = {styles.containerContainer}>
 
-          <View style = {styles.topTextContianer}>
-            <Text style = {styles.topText}> What's everyone doing?</Text>
-          </View>
-
-          <View style = {styles.searchHeader}>
-            <SearchBar />
-          </View>
-
-          <View style = {styles.trendingContainer}>
-            <View style = {styles.trendingTextContainer}>
-                <Text style = {styles.trendingText}>Trending Days Today</Text>
-            </View>
-
-            <View style = {styles.trendingDaysContainer}>
-              <ScrollView
-                showsHorizontalScrollIndicator={false}
-
-                horizontal = {true}
-                style = {{height: "100%"}}>
-
-              {this.state.trendingCells.map((cell, key) => {
-                return(
-                  <View style = {styles.spacedSpace}>
-                    <PictureBox cell = {cell} index = {key}/>
-                  </View>
-
-                )
-              })}
+          <View style = {styles.circle1} />
+          <View style = {styles.circle2} />
+          <View style = {styles.circle3} />
 
 
-              </ScrollView>
+          <ScrollView style = {styles.container}>
 
-            </View>
 
-          </View>
-
-          <View style = {styles.exploreTheDayContainer}>
             <View style = {styles.topTextContianer}>
-              <Text style = {styles.trendingText}> Explore the Day</Text>
+              <Text style = {styles.topText}> What's everyone doing?</Text>
             </View>
 
-            <View style = {styles.twoColContainer}>
-              {this.state.exploreCells.map((cell, key) => {
-                return(
-                  <View style = {styles.spacedSpace}>
-                    <PictureBox cell = {cell} index = {key}/>
-                  </View>
+            <View style = {styles.searchHeader}>
+              <SearchBar />
+            </View>
 
-                )
-              })}
+            <View style = {styles.trendingContainer}>
+              <View style = {styles.trendingTextContainer}>
+                  <Text style = {styles.trendingText}>Trending Days Today</Text>
+              </View>
+
+              <View style = {styles.trendingDaysContainer}>
+                <ScrollView
+                  showsHorizontalScrollIndicator={false}
+
+                  horizontal = {true}
+                  style = {{height: "100%"}}>
+
+                {this.state.trendingCells.map((cell, key) => {
+                  return(
+                    <View style = {styles.spacedSpace}>
+                      <PictureBox cell = {cell} index = {key}/>
+                    </View>
+
+                  )
+                })}
+
+
+                </ScrollView>
+
+              </View>
 
             </View>
 
-          </View>
+            <View style = {styles.exploreTheDayContainer}>
+              <View style = {styles.topTextContianer}>
+                <Text style = {styles.trendingText}> Explore the Day</Text>
+              </View>
+
+              <View style = {styles.twoColContainer}>
+                {this.state.exploreCells.map((cell, key) => {
+                  return(
+                    <View style = {styles.spacedSpace}>
+                      <PictureBox cell = {cell} index = {key}/>
+                    </View>
+
+                  )
+                })}
+
+              </View>
+
+            </View>
 
 
-        </ScrollView>
+          </ScrollView>
+
+        </View>
+
+
 
       </SafeAreaView>
 
@@ -144,8 +157,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#1890ff",
     flex: 1,
   },
+  containerContainer: {
+    flex:1,
+    backgroundColor: 'white'
+  },
   container:{
-    backgroundColor: "white",
+    // backgroundColor: "white",
     flex: 1,
   },
   searchHeader:{
@@ -157,7 +174,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   topTextContianer:{
-    backgroundColor: "white",
+    // backgroundColor: "white",
     padding: 20
   },
   trendingContainer:{
@@ -189,6 +206,50 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: "flex-start",
     justifyContent:'center'
+  },
+  circle1: {
+    width: 400,
+    height: 400,
+    borderRadius: 200,
+    backgroundColor: '#1890ff',
+    left: -150,
+    bottom: 40,
+    position: 'absolute',
+    opacity: 0.1
+
+  },
+  circle2: {
+    width: 100,
+    height: 100,
+    right: 10,
+    bottom: 0,
+    borderRadius: 50,
+    backgroundColor: '#1890ff',
+    position: 'absolute',
+    opacity: 0.1
+
+  },
+  circle3: {
+    width: 250,
+    height: 250,
+    right: -50,
+    top: -50,
+    borderRadius: 175,
+    backgroundColor: '#1890ff',
+    position: 'absolute',
+    opacity: 0.1
+
+  },
+  circle4: {
+    width: 150,
+    height: 150,
+    left: 20,
+    top: 50,
+    borderRadius: 75,
+    backgroundColor: '#1890ff',
+    position: 'absolute',
+    opacity: 0.1
+
   }
 
 })
