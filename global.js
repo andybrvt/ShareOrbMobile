@@ -32,6 +32,20 @@ global.CAPITALIZE = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
+global.NAMEMAKE = (firstName, lastName, length) => {
+
+  first = global.CAPITALIZE(firstName)
+  last = global.CAPITALIZE(lastName)
+
+  let name = first + " "+ last
+
+  if(name.length > length){
+    name = name.substring(0, length)
+  }
+
+  return name
+}
+
 global.RENDER_TIMESTAMP = (timestamp) => {
 
     let prefix = '';
