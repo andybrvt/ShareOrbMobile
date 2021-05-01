@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, Button,StyleSheet } from 'react-native';
-import { Avatar } from 'react-native-paper';
 
-
+import { Appbar } from 'react-native-paper';
+import { Avatar } from 'react-native-elements';
 class ProfileHeader extends React.Component{
 
 
@@ -19,7 +19,7 @@ class ProfileHeader extends React.Component{
 
     if(this.props.profile){
       if(this.props.profile.profile_picture){
-        profileImage = this.props.profile.profile_picture
+        profileImage = `${global.IMAGE_ENDPOINT}`+this.props.profile.profile_picture
       }
       if(this.props.profile.first_name && this.props.profile.last_name){
         const firstName = global.CAPITALIZE(this.props.profile.first_name)
@@ -73,13 +73,15 @@ class ProfileHeader extends React.Component{
 
     return (
       <View style={styles.centerProfilePic}>
-
-        <Avatar.Image
-          size = {100}
-          source = {{
-            url: `${global.IMAGE_ENDPOINT}`+profileImage
+        <Avatar
+          size={100}
+          rounded
+          source={{
+            uri:
+              profileImage,
           }}
-         />
+        />
+
        <View style = {styles.nameContainer}>
          <Text style = {styles.name}>{name}</Text>
          <Text style = {styles.username}>@{username}</Text>

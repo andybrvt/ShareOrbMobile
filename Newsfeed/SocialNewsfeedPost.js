@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View, Button,StyleSheet, Image, Dimensions } from 'react-native';
-import { Avatar, Card } from 'react-native-paper';
+import { Card } from 'react-native-paper';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeart, faComment, faBookmark } from '@fortawesome/free-regular-svg-icons'
-
+import { Avatar } from 'react-native-elements';
 
 
 class SocialNewsfeedPost extends React.Component{
@@ -140,7 +140,8 @@ class SocialNewsfeedPost extends React.Component{
         }
 
         if(this.props.data.owner.profile_picture){
-          profilePic = this.props.data.owner.profile_picture
+          profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
+          console.log(profilePic)
         }
 
 
@@ -250,7 +251,7 @@ class SocialNewsfeedPost extends React.Component{
 
       if(this.props.data.owner){
         if(this.props.data.owner.profile_picture){
-          profilePic = this.props.data.owner.profile_picture
+          profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
 
 
         }
@@ -284,12 +285,15 @@ class SocialNewsfeedPost extends React.Component{
       <Card style = {styles.card}>
 
         <View style = {styles.header}>
-          <Avatar.Image
+          <Avatar
+            size={40}
+            rounded
             source = {{
-              url: `${global.IMAGE_ENDPOINT}${profilePic}`
+              uri: profilePic
             }}
-            size = {40}
-             />
+          />
+
+
            <View style = {styles.name}>
              <Text> {global.CAPITALIZE(userFirstName) +" "+ global.CAPITALIZE(userLastName) } </Text>
              <Text style = {{

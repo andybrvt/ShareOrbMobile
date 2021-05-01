@@ -18,7 +18,6 @@ class InfiniteScroll extends React.Component{
 
     return (
       <View>
-        <Text>  Welcome, {this.props.userName}. Here's what's going on today! </Text>
           {
               (post.length!=0) ?
               <View>
