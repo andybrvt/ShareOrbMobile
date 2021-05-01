@@ -251,7 +251,7 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.owner){
         if(this.props.data.owner.profile_picture){
           profilePic = this.props.data.owner.profile_picture
-    
+
 
         }
 

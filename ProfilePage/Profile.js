@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
+    marginTop: Constant.statusBarHeight,
     flex: 1.5,
 
   },

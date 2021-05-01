@@ -12,7 +12,10 @@ class ProfileHeader extends React.Component{
     let username = ''
     let name = ''
     let bio = ""
-
+    let followers = []
+    let fulFollowers = []
+    let following = []
+    let fulfollowing = []
 
     if(this.props.profile){
       if(this.props.profile.profile_picture){
@@ -29,6 +32,43 @@ class ProfileHeader extends React.Component{
       if(this.props.profile.bio){
         bio= this.props.profile.bio
       }
+      if(this.props.profile.get_following){
+        if(this.props.profile.id === this.props.currentId){
+          // This one is to change the following list to be same as the auth if
+          // you are on your own page
+
+          following = this.props.following
+        } else {
+          // This is for everyone else
+          following = this.props.profile.get_following
+        }
+
+      }
+      if(this.props.profile.get_followers){
+        if(this.props.profile.id === this.props.currentId){
+          // Same deal as teh followers
+          for(let i =0; i<this.props.followers.length; i++){
+            followers.push(
+              this.props.followers[i].username
+            )
+          }
+        } else {
+          for(let i =0; i<this.props.profile.get_followers.length; i++){
+            followers.push(
+              this.props.profile.get_followers[i].username
+            )
+          }
+        }
+
+      }
+
+      if(this.props.profile.get_followers){
+        if(this.props.profile.id === this.props.currentId){
+          fulFollowers = this.props.followers
+        } else {
+          fulFollowers = this.props.profile.get_followers
+        }
+      }
     }
 
     return (
@@ -43,8 +83,27 @@ class ProfileHeader extends React.Component{
        <View style = {styles.nameContainer}>
          <Text style = {styles.name}>{name}</Text>
          <Text style = {styles.username}>@{username}</Text>
-         <Text style = {styles.bio}> {bio}</Text>
+           <View style={styles.profileInfoContainer}>
+
+             <View style={styles.followerCount}>
+               <Text style={styles.followerFollowingNum}>
+                 {following.length}
+               </Text>
+               <Text style={styles.followerFollowingHeader}> Following </Text>
+             </View>
+             <View style={styles.followerCount}>
+               <Text style={styles.followerFollowingNum}> {followers.length}</Text>
+               <Text style={styles.followerFollowingHeader}> Followers</Text>
+             </View>
+
+           </View>
+
+
        </View>
+       <View style = {styles.bioContainer}>
+         <Text style = {styles.bio}> {bio}</Text>
+         </View>
+
 
      </View>
 
@@ -173,20 +232,12 @@ class ProfileHeader extends React.Component{
 
 
     return (
+
       <View style = {styles.container} >
         {this.renderProfilePic()}
 
 
-        <View style={styles.profileInfoContainer}>
-          <View style={styles.followerCount}>
-            <Text> Followers</Text>
-            <Text> {followers.length}</Text>
-          </View>
-          <View style={styles.followerCount}>
-            <Text> Following </Text>
-            <Text> {following.length}</Text>
-          </View>
-        </View>
+
 
 
 
@@ -227,7 +278,7 @@ class ProfileHeader extends React.Component{
                   </View>
 
                   <View>
-                    <Text> Message </Text>
+                    <Text> Message</Text>
                   </View>
                 </View>
 
@@ -273,6 +324,20 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: 'center'
   },
+  followerFollowingHeader: {
+    color: "grey",
+    alignItems: 'center',
+    fontSize:14
+  },
+
+  followerFollowingNum: {
+    color: "black",
+    alignItems: 'center',
+    fontSize:18,
+    fontWeight: 'bold'
+  },
+
+
   centerProfilePic: {
     position:'relative',
     top:'5%',
@@ -282,7 +347,7 @@ const styles = StyleSheet.create({
   profileInfoContainer: {
     width:'70%',
     // backgroundColor: "blue",
-    marginTop: 25,
+
     flexDirection: "row",
   },
   followerCount: {
@@ -295,13 +360,23 @@ const styles = StyleSheet.create({
   },
   nameContainer:{
     marginTop: 5,
+
+    width:'90%',
+    alignItems: 'center'
+  },
+  bioContainer:{
+    marginTop: 5,
+    // backgroundColor: "red",
+
     alignItems: 'center'
   },
   name:{
-    fontSize: 30,
+    fontSize: 25,
     color: "black",
   },
   bio: {
+    width:'100%',
+    // backgroundColor: "blue",
     fontSize: 17
   }
 });
