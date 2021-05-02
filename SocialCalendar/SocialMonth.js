@@ -154,7 +154,8 @@ class SocialMonth extends React.PureComponent{
             days.push(
               <View
                 key = {i}
-                style = {[styles.monthCell, dateFns.isSameDay(day, new Date()) ?
+                style = {[styles.monthCell, dateFns.isSameDay(day, new Date())
+                  && dateFns.isSameMonth(day, curMonth) ?
                   styles.selected : null
                 ]}>
                 {

@@ -41,12 +41,7 @@ class Header extends React.Component{
             size = {25}
             icon={faBell} />
 
-          <Avatar.Image
-            source = {{
-              url: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
-            }}
-            size = {25}
-             />
+
         </View>
 
       </View>

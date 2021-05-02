@@ -4,6 +4,10 @@ import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
+import NewsfeedButtonContainer from './NewsfeedButtonContainer';
+
+// This will be the list of all the newsfeed items
+// Everyone's day
 
 class InfiniteScroll extends React.Component{
 
@@ -18,6 +22,8 @@ class InfiniteScroll extends React.Component{
 
     return (
       <View>
+
+        <NewsfeedButtonContainer />
         <Text>  Welcome, {this.props.userName}. Here's what's going on today! </Text>
           {
               (post.length!=0) ?

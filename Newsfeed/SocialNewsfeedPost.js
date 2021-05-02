@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeart, faComment, faBookmark } from '@fortawesome/free-regular-svg-icons'
 
 
-
 class SocialNewsfeedPost extends React.Component{
 
   constructor(props){
@@ -251,7 +250,7 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.owner){
         if(this.props.data.owner.profile_picture){
           profilePic = this.props.data.owner.profile_picture
-    
+
 
         }
 
