@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import Constant from 'expo-constants';
-
+import { Appbar } from 'react-native-paper';
 // This will be the bulk of the profile page
 class Profile extends React.Component{
 
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
+    marginTop: Constant.statusBarHeight,
     flex: 1.5,
 
   },
