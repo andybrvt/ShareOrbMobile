@@ -8,7 +8,7 @@ import LoadingScreen from './Login/LoadingScreen';
 import Signup from './Signup/Signup';
 import Explore from './Explore/Explore';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
+import ViewProfile from './ProfilePage/ViewProfile';
 const Tab = createMaterialBottomTabNavigator();
 
 
@@ -34,7 +34,7 @@ class Routes extends React.Component{
 
         <Stack.Screen name = "Signup" component = {Signup} />
         <Stack.Screen name = "Explore" component = {Explore} />
-
+        <Stack.Screen name = 'ViewProfile' component = {ViewProfile}/>
       </Stack.Navigator>
     )
 

@@ -40,7 +40,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 import PostingPage from './Newsfeed/PostingPage';
-
+import ViewProfile from './ProfilePage/ViewProfile';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -53,19 +53,14 @@ class App extends Component{
   };
   constructor(props){
     super(props)
-
     // Since you want to show chats at the beginning of your
     // login because people might have unread messages so you
     // wnat to render it along with notificaitons
 
     this.initialiseChats()
-
-
     WebSocketSocialNewsfeedInstance.addCallbacks(
       this.props.id,
       this.props.loadSocialPosts.bind(this),
-
-
     )
 
     ExploreWebSocketInstance.addCallbacks(
@@ -77,14 +72,12 @@ class App extends Component{
       // These function is to set the chats in
       this.props.setChats.bind(this)
     )
-
   }
 
   async loadFonts() {
     await Font.loadAsync({
       // Load a font `Montserrat` from a static resource
       Montserrat: require('./assets/fonts/Montserrat.ttf'),
-
       // Any string can be used as the fontFamily name. Here we use an object to provide more control
       'Montserrat-SemiBold': {
         uri: require('./assets/fonts/Montserrat-SemiBold.ttf'),
@@ -95,23 +88,18 @@ class App extends Component{
   }
 
   componentDidMount(){
-
     this.props.onTryAutoSignup();
     //this.loadFonts();
   }
 
   componentDidUpdate(prevProps){
-
     if(this.props.isAuthenticated){
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
       // grab the userinfromation
-
       this.props.grabUserCredentials()
-
       if(parseInt(this.props.id) !== parseInt(prevProps.id) && this.props.id !== null){
         // Now this will see if there is a person logged in
-
         // Now if you want to connect to the chat,
         // since there is an inital connection you have to disconnect it
         ChatSidePanelWebSocketInstance.disconnect();
@@ -119,7 +107,6 @@ class App extends Component{
           ChatSidePanelWebSocketInstance.fetchChats(
             this.props.id
           )
-
         })
 
 
@@ -128,19 +115,15 @@ class App extends Component{
 
       }
     }
-
   }
 
   initialiseChats(){
     this.waitForChatsSocketConnection(() => {
-
       ChatSidePanelWebSocketInstance.fetchChats(
         this.props.id
       )
-
     })
     ChatSidePanelWebSocketInstance.connect(this.props.id)
-
   }
 
   waitForChatsSocketConnection(callback) {
@@ -153,7 +136,6 @@ class App extends Component{
           callback();
           return;
         } else{
-
             component.waitForChatsSocketConnection(callback);
         }
       }, 100)
@@ -166,7 +148,7 @@ class App extends Component{
     return (
       <Stack.Navigator screenOptions={{headerShown: false,}}>
         <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
-        <Stack.Screen name = 'postPage' component = {PostingPage}/>
+        <Stack.Screen name = 'PostingPage' component = {PostingPage}/>
       </Stack.Navigator>
 
     )
@@ -241,10 +223,6 @@ class App extends Component{
             }}
             />
 
-
-
-
-
             <Tab.Screen
                name="Profile"
                component={Profile}
@@ -279,7 +257,7 @@ class App extends Component{
 
   render(){
     // <View style={styles.container}>
-    //       <Text style={{ fontSize: 20 }}>Default Font</Text>
+    //       <Text style={{ fontSize: 200 }}>Default Font</Text>
     //       <Text style={{ fontFamily: 'Montserrat', fontSize: 20 }}>Montserrat</Text>
     //       <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: 20 }}>
     //         Montserrat-SemiBold
@@ -292,37 +270,25 @@ class App extends Component{
 
     if (this.state.fontsLoaded) {
     return(
-
-
       <PaperProvider>
-
         <SafeAreaProvider>
           <NavigationContainer>
-
             {
               !this.props.loading && this.props.username ?
-
                 <Stack.Navigator screenOptions={{headerShown: false,}}>
                   <Stack.Screen name = "newsfeed" component= {this.createTabStack}/>
-                  <Stack.Screen name = 'postPage' component = {PostingPage}/>
+                  <Stack.Screen name = 'PostingPage' component = {PostingPage}/>
+                  <Stack.Screen name = 'ViewProfile' component = {ViewProfile}/>
+
+
                 </Stack.Navigator>
-
-
                 :
-
-
                 <Routes {...this.props} />
-
-
             }
-
           </NavigationContainer>
         </SafeAreaProvider>
-
       </PaperProvider>
-
-
-    )
+      )
     }
     else {
       return null;

@@ -14,6 +14,13 @@ class SocialNewsfeedPost extends React.Component{
     super(props);
   }
 
+  ViewProfile = () => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+
+    this.props.navigation.navigate("ViewProfile")
+  }
+
   revealPhoto = () =>{
     // This function will be use to render the pictures
     // within thew newsfeed post. If there are only one photo
@@ -286,6 +293,7 @@ class SocialNewsfeedPost extends React.Component{
 
         <View style = {styles.header}>
           <Avatar
+            onPress = {()=> this.ViewProfile()}
             size={40}
             rounded
             source = {{
