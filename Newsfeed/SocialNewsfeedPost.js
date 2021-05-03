@@ -250,11 +250,8 @@ class SocialNewsfeedPost extends React.Component{
 
       if(this.props.data.owner){
         if(this.props.data.owner.profile_picture){
-<<<<<<< HEAD
-          profilePic = this.props.data.owner.profile_picture
-=======
+
           profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
->>>>>>> 97750d4785838b31d8a7d54a1120a5d4b8bc1706
 
 
         }

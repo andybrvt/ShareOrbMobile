@@ -9,7 +9,6 @@ import Signup from './Signup/Signup';
 import Explore from './Explore/Explore';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-
 const Tab = createMaterialBottomTabNavigator();
 
 
@@ -36,6 +35,7 @@ class Routes extends React.Component{
         <Stack.Screen name = "Signup" component = {Signup} />
         <Stack.Screen name = "Explore" component = {Explore} />
 
+        <Stack.Screen name = "Post" component = {PostingPage} />
       </Stack.Navigator>
     )
 

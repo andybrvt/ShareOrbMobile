@@ -39,9 +39,12 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
+import PostingPage from './Newsfeed/PostingPage';
+
+
 
 const Tab = createMaterialBottomTabNavigator();
-
+const Stack = createNativeStackNavigator();
 
 
 class App extends Component{
@@ -98,7 +101,7 @@ class App extends Component{
   }
 
   componentDidUpdate(prevProps){
-    
+
     if(this.props.isAuthenticated){
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
@@ -157,6 +160,18 @@ class App extends Component{
 
   }
 
+  // This will be the navigation inside the home component ,
+  // you are pretty much making a stack navigation in side a tab navigation
+  createHomeStack = () =>{
+    return (
+      <Stack.Navigator screenOptions={{headerShown: false,}}>
+        <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
+        <Stack.Screen name = 'postPage' component = {PostingPage}/>
+      </Stack.Navigator>
+
+    )
+  }
+
   render(){
     // <View style={styles.container}>
     //       <Text style={{ fontSize: 20 }}>Default Font</Text>
@@ -190,8 +205,8 @@ class App extends Component{
                   >
                   <Tab.Screen
                     name="Home"
-                    component={NewsfeedView}
-
+                    // component={NewsfeedView}
+                    children = {this.createHomeStack}
                     options={{
                        tabBarLabel: 'Home',
                        tabBarIcon: ({ color }) => (

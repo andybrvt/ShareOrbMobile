@@ -5,7 +5,8 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
  } from 'react-native';
 
 
@@ -13,12 +14,23 @@ import {
 
 
    render(){
-
-
+     console.log("fake")
+     console.log(this.props)
      return (
-       <View style = {styles.inputContainer}>
-         <Text style = {styles.postInputText}> Write a post...</Text>
-       </View>
+       <TouchableHighlight
+         onPress = {() => this.props.onPagePost()}
+         style = {{
+           borderRadius: 20
+         }}
+         underlayColor = "gray"
+         >
+         <View
+            style = {styles.inputContainer}>
+
+           <Text style = {styles.postInputText}> Write a post...</Text>
+         </View>
+       </TouchableHighlight>
+
      )
    }
  }

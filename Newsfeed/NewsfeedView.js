@@ -35,6 +35,13 @@ class NewsfeedView extends React.Component{
     // this.props.navigation.navigate("Login")
   }
 
+  onPagePost = () => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+
+    this.props.navigation.navigate("postPage")
+  }
+
   constructor(props){
     super(props)
     if(this.props.isAuthenticated){
@@ -99,7 +106,8 @@ class NewsfeedView extends React.Component{
   }
 
   render(){
-
+    console.log('here are the props')
+    console.log(this.props)
 
     return(
 
@@ -111,9 +119,14 @@ class NewsfeedView extends React.Component{
         <ScrollView>
 
 
-          <InfiniteScroll />
+          <InfiniteScroll
+            onPagePost = {this.onPagePost}
+            />
 
-
+          <Button
+            title = "navigate"
+            onPress = {()=> this.onPagePost()}
+            />
           <Button
             title = "Logout"
             onPress = {() => this.handleLogOut()}

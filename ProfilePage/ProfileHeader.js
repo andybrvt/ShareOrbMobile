@@ -3,6 +3,8 @@ import { Text, View, Button,StyleSheet } from 'react-native';
 
 import { Appbar } from 'react-native-paper';
 import { Avatar } from 'react-native-elements';
+
+
 class ProfileHeader extends React.Component{
 
 

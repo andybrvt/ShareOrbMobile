@@ -5,7 +5,8 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
  } from 'react-native';
  import { Avatar } from 'react-native-paper';
  import { connect } from "react-redux";
@@ -20,7 +21,8 @@ class NewsfeedButtonContainer extends React.Component{
 
 
   render(){
-
+    console.log('this is the props')
+    console.log(this.props)
 
     let profilePic = ""
 
@@ -28,7 +30,9 @@ class NewsfeedButtonContainer extends React.Component{
       profilePic = this.props.profilePic
     }
     return(
-      <View style = {styles.container}>
+      <View
+
+        style = {styles.container}>
 
         <View style = {styles.leftContainer}>
           <Avatar.Image
@@ -42,7 +46,9 @@ class NewsfeedButtonContainer extends React.Component{
 
        <View style = {styles.rightContainer}>
 
-         <FakeRoundedInput />
+         <FakeRoundedInput
+           onPagePost = {this.props.onPagePost}
+            />
        </View>
 
 
