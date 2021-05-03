@@ -6,6 +6,8 @@ import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import Constant from 'expo-constants';
 import { Appbar } from 'react-native-paper';
+import BackgroundContainer from "../RandomComponents/BackgroundContainer";
+
 // This will be the bulk of the profile page
 class Profile extends React.Component{
 
@@ -73,26 +75,25 @@ class Profile extends React.Component{
 
   render(){
     return (
-      <View style = {styles.backgroundColor}>
-        <View style = {styles.container} >
 
-          <View style = {styles.profileHeader}>
-            <ProfileHeader
-              {...this.props}
-              />
-          </View>
+      <BackgroundContainer>
+        <View style = {styles.profileHeader}>
+          <ProfileHeader
+            {...this.props}
+            />
+        </View>
 
 
-          <View
-            style = {styles.socialCalContainer}
-            >
-            <SocialCalendar {...this.props} />
-
-          </View>
-
+        <View
+          style = {styles.socialCalContainer}
+          >
+          <SocialCalendar {...this.props} />
 
         </View>
-      </View>
+      </BackgroundContainer>
+
+
+
 
 
     )

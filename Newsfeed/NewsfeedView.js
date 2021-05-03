@@ -15,7 +15,7 @@ import InfiniteScroll from './InfiniteScroll';
 import { Avatar, BottomNavigation } from 'react-native-paper';
 import * as dateFns from 'date-fns';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-
+import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 
 class NewsfeedView extends React.Component{
@@ -111,9 +111,7 @@ class NewsfeedView extends React.Component{
 
     return(
 
-      <SafeAreaView style = {styles.safeArea}>
-        <View style = {styles.container}>
-
+      <BackgroundContainer>
         <Header {...this.props} />
 
         <ScrollView>
@@ -134,11 +132,13 @@ class NewsfeedView extends React.Component{
         </ScrollView>
 
 
+      </BackgroundContainer>
 
 
 
-        </View>
-      </SafeAreaView>
+
+
+
 
     )
   }

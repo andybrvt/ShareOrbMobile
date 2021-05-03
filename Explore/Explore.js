@@ -15,7 +15,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../RandomComponents/SearchBar';
 import  authAxios from '../util';
 import PictureBox from './PictureBox';
-
+import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 const {width, height} = Dimensions.get('screen')
 // This class will be in charge of managing the explore page,
@@ -70,83 +70,79 @@ class Explore extends React.Component{
   render(){
 
     return  (
-      <SafeAreaView style = {styles.safeArea}>
 
-        <View style = {styles.containerContainer}>
-
-          <View style = {styles.circle1} />
-          <View style = {styles.circle2} />
-          <View style = {styles.circle3} />
-          <View style = {styles.circle4} />
-          <View style = {styles.circle5} />
+      <BackgroundContainer>
+        <View style = {styles.circle1} />
+        <View style = {styles.circle2} />
+        <View style = {styles.circle3} />
+        <View style = {styles.circle4} />
+        <View style = {styles.circle5} />
 
 
-          <ScrollView style = {styles.container}>
+        <ScrollView style = {styles.container}>
 
 
+          <View style = {styles.topTextContianer}>
+            <Text style = {styles.topText}> What's everyone doing?</Text>
+          </View>
+
+          <View style = {styles.searchHeader}>
+            <SearchBar />
+          </View>
+
+          <View style = {styles.trendingContainer}>
+            <View style = {styles.trendingTextContainer}>
+                <Text style = {styles.trendingText}>Trending Days Today</Text>
+            </View>
+
+            <View style = {styles.trendingDaysContainer}>
+              <ScrollView
+                showsHorizontalScrollIndicator={false}
+
+                horizontal = {true}
+                style = {{height: "100%"}}>
+
+              {this.state.trendingCells.map((cell, key) => {
+                return(
+                  <View style = {styles.spacedSpace}>
+                    <PictureBox cell = {cell} index = {key}/>
+                  </View>
+
+                )
+              })}
+
+
+              </ScrollView>
+
+            </View>
+
+          </View>
+
+          <View style = {styles.exploreTheDayContainer}>
             <View style = {styles.topTextContianer}>
-              <Text style = {styles.topText}> What's everyone doing?</Text>
+              <Text style = {styles.trendingText}> Explore the Day</Text>
             </View>
 
-            <View style = {styles.searchHeader}>
-              <SearchBar />
-            </View>
+            <View style = {styles.twoColContainer}>
+              {this.state.exploreCells.map((cell, key) => {
+                return(
+                  <View style = {styles.spacedSpace}>
+                    <PictureBox cell = {cell} index = {key}/>
+                  </View>
 
-            <View style = {styles.trendingContainer}>
-              <View style = {styles.trendingTextContainer}>
-                  <Text style = {styles.trendingText}>Trending Days Today</Text>
-              </View>
-
-              <View style = {styles.trendingDaysContainer}>
-                <ScrollView
-                  showsHorizontalScrollIndicator={false}
-
-                  horizontal = {true}
-                  style = {{height: "100%"}}>
-
-                {this.state.trendingCells.map((cell, key) => {
-                  return(
-                    <View style = {styles.spacedSpace}>
-                      <PictureBox cell = {cell} index = {key}/>
-                    </View>
-
-                  )
-                })}
-
-
-                </ScrollView>
-
-              </View>
+                )
+              })}
 
             </View>
 
-            <View style = {styles.exploreTheDayContainer}>
-              <View style = {styles.topTextContianer}>
-                <Text style = {styles.trendingText}> Explore the Day</Text>
-              </View>
-
-              <View style = {styles.twoColContainer}>
-                {this.state.exploreCells.map((cell, key) => {
-                  return(
-                    <View style = {styles.spacedSpace}>
-                      <PictureBox cell = {cell} index = {key}/>
-                    </View>
-
-                  )
-                })}
-
-              </View>
-
-            </View>
+          </View>
 
 
-          </ScrollView>
+        </ScrollView>
 
-        </View>
+      </BackgroundContainer>
 
 
-
-      </SafeAreaView>
 
     )
   }

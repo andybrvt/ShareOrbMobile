@@ -16,7 +16,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowUpCircle, Search, Plus, Menu } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import SearchBar from '../RandomComponents/SearchBar';
-
+import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 // The first thing you want to do in making the chat is
 // that you need to have a chat side panel which will show
@@ -245,30 +245,25 @@ class Chats extends React.Component{
 
     // You are gonna use a flat list for this chat
     return (
-      <SafeAreaView style = {styles.safeArea}>
-        <View style = {styles.container}>
+      <BackgroundContainer>
+        <View style = {styles.chatHeaderHeader}>
+          {this.searchHeader()}
 
-          <View style = {styles.chatHeaderHeader}>
-            {this.searchHeader()}
-
-            <View style = {styles.searchTextContainer}>
-              <SearchBar />
-
-            </View>
+          <View style = {styles.searchTextContainer}>
+            <SearchBar />
 
           </View>
 
-          <FlatList
-            data = {chatList}
-            renderItem = {this.renderItem}
-            keyExtractor={(item) => item.id}
-
-
-            />
         </View>
 
+        <FlatList
+          data = {chatList}
+          renderItem = {this.renderItem}
+          keyExtractor={(item) => item.id}
+          />
 
-      </SafeAreaView>
+
+      </BackgroundContainer>
 
     )
   }
