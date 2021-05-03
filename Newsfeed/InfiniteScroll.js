@@ -12,7 +12,8 @@ import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 class InfiniteScroll extends React.Component{
 
   render(){
-    console.log('page post')
+
+    console.log('InfiniteScroll')
     console.log(this.props)
     let post = []
 
@@ -24,7 +25,9 @@ class InfiniteScroll extends React.Component{
     return (
       <View>
 
-        <NewsfeedButtonContainer />
+        <NewsfeedButtonContainer
+          onPagePost = {this.props.onPagePost}
+          />
           {
               (post.length!=0) ?
               <View>

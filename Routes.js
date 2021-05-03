@@ -35,7 +35,6 @@ class Routes extends React.Component{
         <Stack.Screen name = "Signup" component = {Signup} />
         <Stack.Screen name = "Explore" component = {Explore} />
 
-        <Stack.Screen name = "Post" component = {PostingPage} />
       </Stack.Navigator>
     )
 

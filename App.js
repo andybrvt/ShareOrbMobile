@@ -172,6 +172,111 @@ class App extends Component{
     )
   }
 
+
+  // This function will be used as the tab navigator, because there are certain
+  // pages you dont wnat to have the bottom bar on  so you would wnat to render
+  // the home page first and then start rendering the tab stack seperatly
+  createTabStack = () =>{
+    return (
+      <Tab.Navigator
+        initialRouteName = "Home"
+        barStyle = {{
+          backgroundColor: "white",
+
+        }}
+        >
+        <Tab.Screen
+          name="Home"
+          component={NewsfeedView}
+          // children = {this.createHomeStack}
+          options={{
+             tabBarLabel: 'Home',
+             tabBarIcon: ({ color }) => (
+               <FontAwesomeIcon
+
+                 size = {25}
+                 color = {color}
+                 icon={faHome} />
+             ),
+           }}
+           />
+        <Tab.Screen
+          name="Explore"
+          component={Explore}
+          options={{
+             tabBarLabel: 'Explore',
+             tabBarIcon: ({ color }) => (
+               <FontAwesomeIcon
+                 size = {25}
+                 color = {color}
+                 icon={faMapSigns} />
+             ),
+           }}
+           />
+
+           <Tab.Screen
+             name="Upload"
+             component={Explore}
+             options={{
+
+                tabBarIcon: ({ color }) => (
+                  <FontAwesomeIcon
+                    size = {35}
+                    color = {'#1890ff'}
+                    icon={faPlusSquare} />
+                ),
+              }}
+              />
+         <Tab.Screen
+           name="Chats"
+           component={Chats}
+           options={{
+              tabBarLabel: 'Messages',
+              tabBarIcon: ({ color }) => (
+                <FontAwesomeIcon
+                  size = {25}
+                  color = {color}
+                  icon={faComments} />
+              ),
+            }}
+            />
+
+
+
+
+
+            <Tab.Screen
+               name="Profile"
+               component={Profile}
+               options={{
+                  tabBarLabel: 'Profile',
+                  tabBarIcon: ({ color }) => (
+                    <FontAwesomeIcon
+                      size = {25}
+                      color = {color}
+                      icon={faUser} />
+                  ),
+                }}
+                initialParams = {{
+                  username: this.props.username
+                }}
+
+                listeners={{
+                   tabPress: e => {
+                     // Prevent default action
+                     if(this.props.username === null){
+                       e.preventDefault();
+
+
+                     }
+                   },
+                 }}
+                />
+
+      </Tab.Navigator>
+    )
+  }
+
   render(){
     // <View style={styles.container}>
     //       <Text style={{ fontSize: 20 }}>Default Font</Text>
@@ -196,107 +301,12 @@ class App extends Component{
 
             {
               !this.props.loading && this.props.username ?
-                <Tab.Navigator
-                  initialRouteName = "Home"
-                  barStyle = {{
-                    backgroundColor: "white",
 
-                  }}
-                  >
-                  <Tab.Screen
-                    name="Home"
-                    // component={NewsfeedView}
-                    children = {this.createHomeStack}
-                    options={{
-                       tabBarLabel: 'Home',
-                       tabBarIcon: ({ color }) => (
-                         <FontAwesomeIcon
+                <Stack.Navigator screenOptions={{headerShown: false,}}>
+                  <Stack.Screen name = "newsfeed" component= {this.createTabStack}/>
+                  <Stack.Screen name = 'postPage' component = {PostingPage}/>
+                </Stack.Navigator>
 
-                           size = {25}
-                           color = {color}
-                           icon={faHome} />
-                       ),
-                     }}
-                     />
-                  <Tab.Screen
-                    name="Explore"
-                    component={Explore}
-                    options={{
-                       tabBarLabel: 'Explore',
-                       tabBarIcon: ({ color }) => (
-                         <FontAwesomeIcon
-                           size = {25}
-                           color = {color}
-                           icon={faMapSigns} />
-                       ),
-                     }}
-                     />
-
-                     <Tab.Screen
-                       name="Upload"
-                       component={Explore}
-                       options={{
-
-                          tabBarIcon: ({ color }) => (
-                            <FontAwesomeIcon
-                              size = {35}
-                              color = {'#1890ff'}
-                              icon={faPlusSquare} />
-                          ),
-                        }}
-                        />
-                   <Tab.Screen
-                     name="Chats"
-                     component={Chats}
-                     options={{
-                        tabBarLabel: 'Messages',
-                        tabBarIcon: ({ color }) => (
-                          <FontAwesomeIcon
-                            size = {25}
-                            color = {color}
-                            icon={faComments} />
-                        ),
-                      }}
-                      />
-
-
-
-
-
-                      <Tab.Screen
-                         name="Profile"
-                         component={Profile}
-                         options={{
-                            tabBarLabel: 'Profile',
-                            tabBarIcon: ({ color }) => (
-                              <FontAwesomeIcon
-                                size = {25}
-                                color = {color}
-                                icon={faUser} />
-                            ),
-                          }}
-                          initialParams = {{
-                            username: this.props.username
-                          }}
-
-                          listeners={{
-                             tabPress: e => {
-                               // Prevent default action
-                               if(this.props.username === null){
-                                 e.preventDefault();
-
-
-                               }
-                             },
-                           }}
-                          />
-
-
-
-
-
-
-                </Tab.Navigator>
 
                 :
 

@@ -14,8 +14,7 @@ import {
 
 
    render(){
-     console.log("fake")
-     console.log(this.props)
+
      return (
        <TouchableHighlight
          onPress = {() => this.props.onPagePost()}

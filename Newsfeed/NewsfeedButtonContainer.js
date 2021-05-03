@@ -21,8 +21,7 @@ class NewsfeedButtonContainer extends React.Component{
 
 
   render(){
-    console.log('this is the props')
-    console.log(this.props)
+    
 
     let profilePic = ""
 
