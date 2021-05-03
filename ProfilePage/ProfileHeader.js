@@ -370,9 +370,9 @@ const styles = StyleSheet.create({
   },
   bioContainer:{
     marginTop: 5,
+    flex:1,
     // backgroundColor: "red",
-
-    alignItems: 'center'
+    alignItems: 'center',
   },
   name:{
     fontSize: 25,
@@ -381,6 +381,6 @@ const styles = StyleSheet.create({
   bio: {
     width:'100%',
     // backgroundColor: "blue",
-    fontSize: 17
+    fontSize: 15
   }
 });
