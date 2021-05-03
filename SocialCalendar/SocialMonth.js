@@ -125,18 +125,17 @@ class SocialMonth extends React.PureComponent{
                     {
                       toDoStuff[0].coverPic ?
 
-
+                        <View>
                           <Image
                             style = {styles.smallImage}
                             resizeMode = "cover"
-                            source={{ url: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
+                            source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
                             />
 
-
-
+                        </View>
                       :
 
-                      <Text> {formattedDate}</Text>
+                        <Text> {formattedDate}</Text>
 
                       }
                   </View>
@@ -243,6 +242,7 @@ const styles = StyleSheet.create({
     height: Math.round(Dimensions.get('window').width/7),
     alignItems: "center",
     justifyContent: "center",
+
     // borderLeftWidth:0.2,
     // borderTopWidth: 0.2,
 
@@ -264,9 +264,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     // backgroundColor: 'blue'
   },
+  noImageCell: {
+    width: Math.round(Dimensions.get('window').width/8),
+    height: Math.round(Dimensions.get('window').width/8),
+    backgroundColor:'red',
+    borderRadius:10,
+  },
   smallImage: {
-    width: Math.round(Dimensions.get('window').width/7),
-    height: Math.round(Dimensions.get('window').width/7)
+    width: Math.round(Dimensions.get('window').width/8),
+    height: Math.round(Dimensions.get('window').width/8),
+    borderRadius: 10,
   },
   imageHolder: {
 
