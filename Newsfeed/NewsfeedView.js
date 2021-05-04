@@ -26,7 +26,6 @@ class NewsfeedView extends React.Component{
     id: '',
     postShow:false,
     eventShow:false,
-
     upperStart: 6
   }
 
@@ -40,6 +39,13 @@ class NewsfeedView extends React.Component{
     // that you can use to post pictures and write caption
 
     this.props.navigation.navigate("PostingPage")
+  }
+
+  ViewProfile = () => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+
+    this.props.navigation.navigate("ViewProfile")
   }
 
   constructor(props){
@@ -119,6 +125,7 @@ class NewsfeedView extends React.Component{
 
           <InfiniteScroll
             onPagePost = {this.onPagePost}
+            ViewProfile={this.ViewProfile}
             />
 
           <Button

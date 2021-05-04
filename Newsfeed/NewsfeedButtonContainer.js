@@ -21,7 +21,7 @@ class NewsfeedButtonContainer extends React.Component{
 
 
   render(){
-    
+
 
     let profilePic = ""
 
@@ -30,14 +30,12 @@ class NewsfeedButtonContainer extends React.Component{
     }
     return(
       <View
-
         style = {styles.container}>
-
         <View style = {styles.leftContainer}>
           <Avatar.Image
-            size = {40}
+            size = {35}
             source = {{
-              url: `${global.IMAGE_ENDPOINT}`+profilePic
+              uri: `${global.IMAGE_ENDPOINT}`+profilePic
             }}
            />
 

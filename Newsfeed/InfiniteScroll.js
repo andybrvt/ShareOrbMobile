@@ -22,6 +22,7 @@ class InfiniteScroll extends React.Component{
     }
 
 
+
     return (
       <View>
 
@@ -38,6 +39,7 @@ class InfiniteScroll extends React.Component{
                         j.post.get_socialCalItems ?
 
                          <SocialNewsfeedPost
+                           ViewProfile = {this.props.ViewProfile}
                            data = {j}
 
                            />

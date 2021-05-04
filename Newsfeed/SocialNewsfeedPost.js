@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button,StyleSheet, Image, Dimensions } from 'react-native';
+import { Text, View, Button,StyleSheet, Image, Dimensions, ImageBackground} from 'react-native';
 import { Card } from 'react-native-paper';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
@@ -14,12 +14,7 @@ class SocialNewsfeedPost extends React.Component{
     super(props);
   }
 
-  ViewProfile = () => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
 
-    this.props.navigation.navigate("ViewProfile")
-  }
 
   revealPhoto = () =>{
     // This function will be use to render the pictures
@@ -36,11 +31,16 @@ class SocialNewsfeedPost extends React.Component{
     // THESE ARE FOR THE SOCIAL CAL PICTURES
     // YOU ARE GONNA NEED THE CONTENT TYPE ID
     // THE USER WITH USER NAME
-
+    let profilePic="";
     // IF IT IS SOCIAL CAL CELL THEN IT WILL HOLD PHOTOS
     let userPostImages = []
 
     if(this.props.data) {
+      if(this.props.data.owner.profile_picture){
+        profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
+
+      }
+
       if(this.props.data.post) {
         if(this.props.data.post.get_socialCalItems) {
           userPostImages = this.props.data.post.get_socialCalItems;
@@ -61,12 +61,23 @@ class SocialNewsfeedPost extends React.Component{
 
     if(userPostImages.length === 1){
       return (
-        <View style = {styles.imageHolder}>
+        <View style = {styles.container}>
           <Image
-            style = {{ flex: 1, height: 400}}
+            style={styles.cover}
             resizeMode = "cover"
             source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
             />
+
+              <Avatar
+                style={styles.close}
+                onPress = {() => this.props.ViewProfile()}
+                size={40}
+                rounded
+                source = {{
+                  uri: profilePic
+                }}
+              />
+
         </View>
       )
     } else {
@@ -293,7 +304,7 @@ class SocialNewsfeedPost extends React.Component{
 
         <View style = {styles.header}>
           <Avatar
-            onPress = {()=> this.ViewProfile()}
+            onPress = {() => this.props.ViewProfile()}
             size={40}
             rounded
             source = {{
@@ -344,6 +355,33 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(SocialNewsfeedPost);
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 5,
+    width: Math.round(Dimensions.get('window').width-10),
+    height: 325
+  },
+  cover: {
+    flex: 1,
+    borderRadius: 5,
+    position: "relative"
+  },
+  close: {
+    margin: 5,
+    position: "absolute",
+    top: 5,
+    left: 5,
+    width: 35,
+    height: 35,
+    color: "tomato"
+  },
+
+  imageHolder: {
+    width: Math.round(Dimensions.get('window').width),
+    // height: 400,
+    position: "relative"
+    // backgroundColor: 'blue'
+  },
+
   card: {
     // backgroundColor: "red"
     position: 'relative',
@@ -356,12 +394,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     position: "relative",
   },
-  imageHolder: {
-    width: Math.round(Dimensions.get('window').width),
-    // height: 400,
-    position: "relative"
-    // backgroundColor: 'blue'
-  },
+
   header: {
     // backgroundColor: "red",
     flexDirection: "row",

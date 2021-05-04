@@ -76,7 +76,7 @@ class ProfileHeader extends React.Component{
     return (
       <View style={styles.centerProfilePic}>
         <Avatar
-          size={100}
+          size={75}
           rounded
           source={{
             uri:

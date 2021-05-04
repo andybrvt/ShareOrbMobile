@@ -19,7 +19,7 @@ import {
        <TouchableHighlight
          onPress = {() => this.props.onPagePost()}
          style = {{
-           borderRadius: 20
+           borderRadius: 15
          }}
          underlayColor = "gray"
          >
@@ -38,9 +38,10 @@ const styles = StyleSheet.create({
   inputContainer: {
     // borderWidth: 1,
     color: "gray",
+    width:"95%",
     backgroundColor: "#f0f0f0",
-    borderRadius: 20,
-    height: 40,
+    borderRadius: 15,
+    height: 35,
     justifyContent: "center"
   },
   postInputText: {
