@@ -22,9 +22,14 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
    render(){
 
+     console.log(this.props)
      return (
        <BackgroundContainer>
          <View >
+           <Button
+             title = "Go back"
+             onPress = {() => this.props.navigation.goBack()}
+             />
            <Text> this will be the page where people be posting</Text>
          </View>
        </BackgroundContainer>

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import Routes from './Routes'
 import { NavigationContainer, createAppContainer } from '@react-navigation/native';
 import axios from "axios";
@@ -44,7 +46,7 @@ import ViewProfile from './ProfilePage/ViewProfile';
 
 
 const Tab = createMaterialBottomTabNavigator();
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 
 class App extends Component{
@@ -142,17 +144,17 @@ class App extends Component{
 
   }
 
-  // This will be the navigation inside the home component ,
-  // you are pretty much making a stack navigation in side a tab navigation
-  createHomeStack = () =>{
-    return (
-      <Stack.Navigator screenOptions={{headerShown: false,}}>
-        <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
-        <Stack.Screen name = 'PostingPage' component = {PostingPage}/>
-      </Stack.Navigator>
-
-    )
-  }
+  // // This will be the navigation inside the home component ,
+  // // you are pretty much making a stack navigation in side a tab navigation
+  // createHomeStack = () =>{
+  //   return (
+  //     <Stack.Navigator screenOptions={{headerShown: false,}} >
+  //       <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
+  //       <Stack.Screen name = 'PostingPage' component = {PostingPage}/>
+  //     </Stack.Navigator>
+  //
+  //   )
+  // }
 
 
   // This function will be used as the tab navigator, because there are certain
@@ -275,7 +277,12 @@ class App extends Component{
           <NavigationContainer>
             {
               !this.props.loading && this.props.username ?
-                <Stack.Navigator screenOptions={{headerShown: false,}}>
+                <Stack.Navigator
+                  mode = "modal"
+                  headerMode ="none"
+                  initialRouteName = "newsfeed"
+                   screenOptions={{headerShown: false, }}
+                    >
                   <Stack.Screen name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen name = 'PostingPage' component = {PostingPage}/>
                   <Stack.Screen name = 'ViewProfile' component = {ViewProfile}/>
