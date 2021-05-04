@@ -9,6 +9,7 @@ import {
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
+import ModalBackgroundContainer from '../RandomComponents/ModalBackgroundContainer';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -24,7 +25,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
      console.log(this.props)
      return (
-       <BackgroundContainer>
+       <ModalBackgroundContainer>
          <View >
            <Button
              title = "Go back"
@@ -32,7 +33,9 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
              />
            <Text> this will be the page where people be posting</Text>
          </View>
-       </BackgroundContainer>
+
+       </ModalBackgroundContainer>
+
 
      )
    }

@@ -54,9 +54,9 @@ const styles = StyleSheet.create({
     height: 60,
     flexDirection: "row",
     backgroundColor:"white",
-    shadowOffset:{  width: 0,  height: 2,  },
-    shadowColor: 'black',
-    shadowOpacity: 0.2,
+    // shadowOffset:{  width: 0,  height: 2,  },
+    // shadowColor: 'black',
+    // shadowOpacity: 0.2,
   },
   logoContainer: {
     flex: 1,
