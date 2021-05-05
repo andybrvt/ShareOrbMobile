@@ -164,7 +164,7 @@ class Chats extends React.Component{
           <View style = {styles.chatInfoHolder} >
             <Avatar.Image
               source = {{
-                url: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants)
+                uri: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants)
               }}
               size = {50}
                />
@@ -213,12 +213,7 @@ class Chats extends React.Component{
     return (
       <View style = {styles.chatHeaderContainer}>
         <View style = {styles.chatAvatar}>
-          <Avatar.Image
-            source = {{
-              url: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
-            }}
-            size = {40}
-             />
+
         </View>
         <View style = {styles.chatChatText}>
           <Text style = {styles.chatWordText} >Chats</Text>
@@ -231,6 +226,56 @@ class Chats extends React.Component{
       </View>
     )
   }
+
+  frequentChatPeople = () => {
+    // this function will be used to render the headers of the
+    // chats
+
+    return (
+      <View style = {styles.chatHeaderContainer}>
+        <View style={[styles.column, {width:70, justifyContent:'center', backgroundColor:'red'}]}>
+        <Avatar.Image
+          source = {{
+            uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+          }}
+          size = {40}
+        />
+        <Text >Hamzah</Text>
+      </View>
+
+      <View style={[styles.column, {width:70, justifyContent:'center'}]}>
+         <Avatar.Image
+           source = {{
+             uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+           }}
+           size = {40}
+         />
+        <Text >Julia</Text>
+      </View>
+      <View style={[styles.column, {width:70, justifyContent:'center'}]}>
+        <Avatar.Image
+          source = {{
+            uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+          }}
+          size = {40}
+         />
+        <Text >Julia</Text>
+      </View>
+
+      <View style={[styles.column, {width:70, justifyContent:'center'}]}>
+         <Avatar.Image
+           source = {{
+             uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+           }}
+           size = {40}
+         />
+        <Text >Sam</Text>
+       </View>
+
+      </View>
+    )
+  }
+
 
 
 
@@ -253,6 +298,7 @@ class Chats extends React.Component{
             <SearchBar />
 
           </View>
+          {this.frequentChatPeople()}
 
         </View>
 
@@ -336,7 +382,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   chatWordText: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "bold"
   },
   chatNew: {

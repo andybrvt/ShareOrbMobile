@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   searchText: {
     flexDirection: 'row',
     backgroundColor: '#fff',
-    height: 45,
+    height: 40,
     backgroundColor: 'whitesmoke',
     borderRadius: 25,
     shadowOffset:{  width: 0,  height: 2,  },
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
 
   searchInput: {
-    flex: 5,
+    flex: 8,
     justifyContent: "center"
   },
 })
