@@ -34,11 +34,11 @@ class Header extends React.Component{
         </View>
         <View style = {styles.searchProfileContainer}>
           <FontAwesomeIcon
-            size = {25}
+            size = {20}
             icon={faSearch} />
 
           <FontAwesomeIcon
-            size = {25}
+            size = {20}
             icon={faBell} />
 
 

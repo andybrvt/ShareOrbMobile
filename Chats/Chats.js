@@ -232,45 +232,47 @@ class Chats extends React.Component{
     // chats
 
     return (
-      <View style = {styles.chatHeaderContainer}>
-        <View style={[styles.column, {width:70, justifyContent:'center', backgroundColor:'red'}]}>
-        <Avatar.Image
-          source = {{
-            uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
-          }}
-          size = {40}
-        />
-        <Text >Hamzah</Text>
-      </View>
+      <View style = {styles.frequentPeopleContainer}>
+        <View style={[styles.column]}>
+          <Avatar.Image
+            source = {{
+              uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+            }}
+            size = {45}
+          />
+          <Text >Hamz</Text>
+        </View>
 
-      <View style={[styles.column, {width:70, justifyContent:'center'}]}>
-         <Avatar.Image
-           source = {{
-             uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
-           }}
-           size = {40}
-         />
-        <Text >Julia</Text>
-      </View>
-      <View style={[styles.column, {width:70, justifyContent:'center'}]}>
-        <Avatar.Image
-          source = {{
-            uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
-          }}
-          size = {40}
-         />
-        <Text >Julia</Text>
-      </View>
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+          <Text >Julia</Text>
+        </View>
 
-      <View style={[styles.column, {width:70, justifyContent:'center'}]}>
-         <Avatar.Image
-           source = {{
-             uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
-           }}
-           size = {40}
-         />
-        <Text >Sam</Text>
-       </View>
+        <View style={[styles.column]}>
+          <Avatar.Image
+            source = {{
+              uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+            }}
+            size = {45}
+           />
+          <Text >Julia</Text>
+        </View>
+
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+          <Text >Sam</Text>
+        </View>
+
 
       </View>
     )
@@ -303,6 +305,7 @@ class Chats extends React.Component{
         </View>
 
         <FlatList
+          style = {{marginTop:10}}
           data = {chatList}
           renderItem = {this.renderItem}
           keyExtractor={(item) => item.id}
@@ -323,6 +326,14 @@ const mapStateToProps = state => {
 }
 
 const styles = StyleSheet.create({
+  column:{
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',       //THIS LINE HAS CHANGED
+    paddingLeft: 10,
+    justifyContent:'center',
+
+},
   safeArea: {
     backgroundColor: "#1890ff",
     flex: 1,
@@ -346,6 +357,8 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   searchTextContainer:{
+    marginTop:10,
+    marginLeft:10,
     padding: 10,
   },
 
@@ -369,6 +382,12 @@ const styles = StyleSheet.create({
     fontWeight: '400'
   },
   chatHeaderContainer: {
+
+    height: 60,
+    flexDirection: 'row'
+  },
+  frequentPeopleContainer: {
+    marginTop:30,
     height: 60,
     flexDirection: 'row'
   },
