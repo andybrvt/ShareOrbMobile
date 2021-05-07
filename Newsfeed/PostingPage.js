@@ -18,6 +18,11 @@ import { Avatar, Divider } from 'react-native-paper';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
+ // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
+ import * as ImagePicker from 'expo-image-picker';
+
+
 
  class PostingPage extends React.Component{
 
@@ -26,7 +31,28 @@ import { Avatar, Divider } from 'react-native-paper';
      // to the home page
    }
 
+   // handleChoosePhoto =() => {
+   //   const options = {}
+   //   launchImageLibrary(options, response => {
+   //     console.log("response", response)
+   //   })
+   // }
+
+
+
    render(){
+
+     let openImagePickerAsync = async () => {
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        if (permissionResult.granted === false) {
+          alert("Permission to access camera roll is required!");
+          return;
+        }
+
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        console.log(pickerResult);
+      }
 
      console.log(this.props)
      return (
@@ -57,6 +83,12 @@ import { Avatar, Divider } from 'react-native-paper';
                 </View>
               </TouchableHighlight>
 
+              <Button
+                title = "Choose Photo"
+                onPress = {openImagePickerAsync}
+                />
+              <Text> this will be the page where people be posting</Text>
+
          </View>
 
        </ModalBackgroundContainer>
@@ -79,7 +111,7 @@ import { Avatar, Divider } from 'react-native-paper';
        flex: 1,
        flexDirection: 'column',
        alignItems: 'center',       //THIS LINE HAS CHANGED
-  
+
 
    },
  })
