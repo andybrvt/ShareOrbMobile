@@ -83,7 +83,7 @@ class Explore extends React.Component{
 
 
           <View style = {styles.topTextContianer}>
-            <Text style = {styles.topText}> What's everyone doing?</Text>
+            <Text style = {styles.topText}> Explore</Text>
           </View>
 
           <View style = {styles.searchHeader}>
@@ -92,7 +92,7 @@ class Explore extends React.Component{
 
           <View style = {styles.trendingContainer}>
             <View style = {styles.trendingTextContainer}>
-                <Text style = {styles.trendingText}>Trending Days Today</Text>
+                <Text style = {styles.trendingText}>Trending Albums</Text>
             </View>
 
             <View style = {styles.trendingDaysContainer}>

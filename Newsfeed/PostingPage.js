@@ -5,11 +5,16 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  Dimensions
+  Dimensions,
+  TextInput,
+  TouchableHighlight,
+
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import ModalBackgroundContainer from '../RandomComponents/ModalBackgroundContainer';
+import { connect } from 'react-redux'
+import { Avatar, Divider } from 'react-native-paper';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -31,7 +36,27 @@ import ModalBackgroundContainer from '../RandomComponents/ModalBackgroundContain
              title = "Go back"
              onPress = {() => this.props.navigation.goBack()}
              />
-           <Text> this will be the page where people be posting</Text>
+             <Avatar.Image
+               source = {{
+                 uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               }}
+               size = {75}
+             />
+           <Divider/>
+             <TextInput
+
+
+               placeholder = "What's going on today?"
+
+               />
+             <Text> Your pictures todayf</Text>
+
+              <TouchableHighlight>
+                <View style={styles.button}>
+                  <Text>Touch Here</Text>
+                </View>
+              </TouchableHighlight>
+
          </View>
 
        </ModalBackgroundContainer>
@@ -41,4 +66,22 @@ import ModalBackgroundContainer from '../RandomComponents/ModalBackgroundContain
    }
  }
 
- export default PostingPage;
+
+ const mapStateToProps = state => {
+   return{
+     profilePic: state.auth.profilePic
+   }
+ }
+
+
+ const styles = StyleSheet.create({
+     button:{
+       flex: 1,
+       flexDirection: 'column',
+       alignItems: 'center',       //THIS LINE HAS CHANGED
+  
+
+   },
+ })
+
+export default connect(mapStateToProps, null)(PostingPage);
