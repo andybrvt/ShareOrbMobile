@@ -43,7 +43,7 @@ import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 import PostingPage from './Newsfeed/PostingPage';
 import ViewProfile from './ProfilePage/ViewProfile';
-
+import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -279,14 +279,24 @@ class App extends Component{
               !this.props.loading && this.props.username ?
                 <Stack.Navigator
                   mode = "modal"
-                  headerMode ="none"
+                  // headerMode ="none"
                   initialRouteName = "newsfeed"
-                   screenOptions={{headerShown: false, }}
+                  // screenOptions={{headerShown: false, }}
                     >
-                  <Stack.Screen name = "newsfeed" component= {this.createTabStack}/>
-                  <Stack.Screen name = 'PostingPage' component = {PostingPage}/>
-                  <Stack.Screen name = 'ViewProfile' component = {ViewProfile}/>
-
+                  <Stack.Screen
+                    options={{headerShown: false, }}
+                    name = "newsfeed" component= {this.createTabStack}/>
+                  <Stack.Screen
+                    name = 'PostingPage' component = {PostingPage}/>
+                  <Stack.Screen
+                    options={{headerShown: false, }}
+                     name = 'ViewProfile' component = {ViewProfile}/>
+                  <Stack.Screen
+                    name = "ImageBrowserScreen"
+                    options={{
+                      title: 'Selected 0 files',
+                    }}
+                    component = {ImageBrowserScreen} />
 
                 </Stack.Navigator>
                 :

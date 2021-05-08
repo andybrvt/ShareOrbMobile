@@ -5,49 +5,143 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Image,
+  TextInput,
+  ActivityIndicator,
+  TouchableOpacity
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import ModalBackgroundContainer from '../RandomComponents/ModalBackgroundContainer';
+import { connect } from "react-redux";
+
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
  // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
  import * as ImagePicker from 'expo-image-picker';
+ // import { ImageBrowser } from 'expo-image-picker-multiple';
 
 
 
  class PostingPage extends React.Component{
 
-   onHomeNav = () => {
-     // this function will be use to navigate back
-     // to the home page
+   state = {
+     imageList: [],
+     caption: "",
    }
 
-   // handleChoosePhoto =() => {
-   //   const options = {}
-   //   launchImageLibrary(options, response => {
-   //     console.log("response", response)
-   //   })
-   // }
+
+   getHeaderLoader = () => {
+     <ActivityIndicator size = "small" color = {"#0580FF"} />
+   }
+
+   /*
+   This function will be used to upload the pictures that are saved
+   into a formadata and then submit it through authaxios and send to the
+   backend
+   */
+   handleImageUpload = () => {
+
+
+     const ownerId = this.props.curUserId;
+     const caption = this.state.caption;
+     const fileList = this.state.imageList;
+
+
+     const formData = new FormData()
+     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+
+     formData.append("curDate", curDate)
+     formData.append("dayCaption", caption)
+
+     formData.append("fileListLength", fileList.length);
+
+     // Loop through the list of images and then add them to the
+     for(let i = 0; i<fileList.length; i++){
+
+       if(fileList[i]){
+         formData.append("image["+i+"]", fileList[i])
+         formData.append("socialItemType["+i+"]", "picture")
+
+       } else {
+         // this is for when the picture is already tehre
+
+       }
+
+       }
+
+   }
+
+
+   /*
+   This function is to handle choosing the photo when you pick a photo from
+   image picker
+   */
+   handleChoosePhoto = async() => {
+     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+     if(permissionResult.granted == false){
+       alert("Permission to access camera roll is required!");
+       return;
+     }
+
+     let  pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+
+    console.log(pickerResult)
+    if(!pickerResult.cancelled){
+      const list = [...this.state.imageList, pickerResult.uri]
+      this.setState({
+        imageList: list
+      })
+
+      if(list.length > 0){
+        this.props.navigation.setOptions({
+          title: `Seclected ${list.length} images`,
+          headerRight: () => this.renderDone()
+        })
+      }
+
+    }
+
+
+   }
+
+   renderDone = () => {
+
+     return (
+       <TouchableOpacity>
+         <Button
+           title = "Save"
+            />
+       </TouchableOpacity>
+     )
+   }
+
+
+   /*
+   This function is used to handle the on change of the caption
+   */
+   handleCaptionChange = e => {
+
+     this.setState({
+       caption: e,
+     })
+   }
 
 
 
    render(){
 
-     let openImagePickerAsync = async () => {
-        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-        if (permissionResult.granted === false) {
-          alert("Permission to access camera roll is required!");
-          return;
-        }
-
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
-      }
 
      console.log(this.props)
      return (
@@ -59,9 +153,33 @@ import ModalBackgroundContainer from '../RandomComponents/ModalBackgroundContain
              />
            <Button
              title = "Choose Photo"
-             onPress = {openImagePickerAsync}
+             onPress = {this.handleChoosePhoto}
              />
-           <Text> this will be the page where people be posting</Text>
+           {this.state.imageList.map((images, key) => {
+
+             return (
+              <Image
+                key = {key}
+                 source={{ uri: images }} style={{ width: 200, height: 200 }} />
+             )
+           })
+
+         }
+
+         <TextInput
+           onChangeText = {this.handleCaptionChange}
+           value = {this.state.caption}
+           placeholder = "Write a caption for the your wonderful day..."
+
+           />
+
+
+
+
+           <Button
+             title = "direct to image browser"
+             onPress = {() => this.props.navigation.navigate("ImageBrowserScreen")} />
+
          </View>
 
        </ModalBackgroundContainer>
@@ -71,4 +189,10 @@ import ModalBackgroundContainer from '../RandomComponents/ModalBackgroundContain
    }
  }
 
- export default PostingPage;
+ const mapStateToProps = state => {
+   return {
+     curUserId: state.auth.id
+   }
+ }
+
+ export default connect(mapStateToProps)(PostingPage);
