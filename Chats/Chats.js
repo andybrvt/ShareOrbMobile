@@ -216,7 +216,7 @@ class Chats extends React.Component{
 
         </View>
         <View style = {styles.chatChatText}>
-          <Text style = {styles.chatWordText} >Chats</Text>
+          <Text style = {styles.chatWordText} >Messages</Text>
         </View>
 
         <View style = {styles.chatNew}>
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   chatChatText: {
-    flex: 4,
+    flex: 1,
     justifyContent: 'center',
   },
   chatWordText: {
