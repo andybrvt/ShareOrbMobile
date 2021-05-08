@@ -17,6 +17,10 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import ModalBackgroundContainer from '../RandomComponents/ModalBackgroundContainer';
 import { connect } from 'react-redux'
 import { Avatar, Divider } from 'react-native-paper';
+import  authAxios from '../util';
+import * as dateFns from 'date-fns';
+
+
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -64,7 +68,20 @@ import { Avatar, Divider } from 'react-native-paper';
      for(let i = 0; i<fileList.length; i++){
 
        if(fileList[i]){
-         formData.append("image["+i+"]", fileList[i])
+         const fileName = fileList[i].split("/").pop()
+
+         let match = /\.(\w+)$/.exec(fileName);
+         let type = match ? `image/${match[1]}` : `image`;
+
+
+         console.log(match, type)
+
+         formData.append("image["+i+"]",{
+           uri: fileList[i].uri,
+           type: type,
+           name: fileName,
+
+         })
          formData.append("socialItemType["+i+"]", "picture")
 
        } else {
@@ -73,6 +90,16 @@ import { Avatar, Divider } from 'react-native-paper';
        }
 
        }
+
+       authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCurSocialCell/`+ownerId,
+         formData,
+         {headers: {
+           'Accept': 'application/json',
+           "content-type": "multipart/form-data"
+         }}
+       ).then(res => {
+         console.log(res.data)
+       })
 
    }
 
@@ -94,6 +121,8 @@ import { Avatar, Divider } from 'react-native-paper';
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      allowsMultipleSelection: true,
+      // base64: true,
     });
 
 
@@ -122,6 +151,7 @@ import { Avatar, Divider } from 'react-native-paper';
        <TouchableOpacity>
          <Button
            title = "Save"
+           onPress = {() => this.handleImageUpload()}
             />
        </TouchableOpacity>
      )

@@ -50,12 +50,12 @@ class PictureBox extends React.Component{
           <Image
             style = {styles.image}
             resizeMode = "cover"
-            source={{ url: `${global.IMAGE_ENDPOINT}${coverPic}` }}
+            source={{ uri: `${global.IMAGE_ENDPOINT}${coverPic}` }}
              />
            <View style = {styles.ownerContainer}>
              <Avatar.Image
                source = {{
-                 url: `${global.IMAGE_ENDPOINT}${profilePic}`
+                 uri: `${global.IMAGE_ENDPOINT}${profilePic}`
                }}
                size = {35}
                 />
