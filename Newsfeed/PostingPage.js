@@ -70,18 +70,18 @@ import * as dateFns from 'date-fns';
        if(fileList[i]){
          const fileName = fileList[i].split("/").pop()
 
-         let match = /\.(\w+)$/.exec(fileName);
-         let type = match ? `image/${match[1]}` : `image`;
+           let match = /\.(\w+)$/.exec(fileName);
+           let type = match ? `image/${match[1]}` : `image`;
 
 
-         console.log(match, type)
+           console.log(fileList[i].uri, match, type)
 
-         formData.append("image["+i+"]",{
-           uri: fileList[i].uri,
-           type: type,
-           name: fileName,
+           formData.append("image["+i+"]",{
+             uri: fileList[i],
+             type: type,
+             name: fileName,
 
-         })
+           })
          formData.append("socialItemType["+i+"]", "picture")
 
        } else {
@@ -93,10 +93,7 @@ import * as dateFns from 'date-fns';
 
        authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCurSocialCell/`+ownerId,
          formData,
-         {headers: {
-           'Accept': 'application/json',
-           "content-type": "multipart/form-data"
-         }}
+         {headers: {"content-type": "multipart/form-data"}}
        ).then(res => {
          console.log(res.data)
        })
@@ -122,7 +119,7 @@ import * as dateFns from 'date-fns';
       aspect: [4, 3],
       quality: 1,
       allowsMultipleSelection: true,
-      // base64: true,
+      base64: true,
     });
 
 
@@ -174,7 +171,7 @@ import * as dateFns from 'date-fns';
 
 
 
-     console.log(this.props)
+     console.log(this.state)
      return (
        <ModalBackgroundContainer>
          <View >
