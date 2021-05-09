@@ -3,7 +3,8 @@ import { Text,
    View,
   Button,
   StyleSheet,
-  TextInput
+  TextInput,
+  ScrollView,
  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -232,6 +233,7 @@ class Chats extends React.Component{
     // chats
 
     return (
+
       <View style = {styles.frequentPeopleContainer}>
         <View style={[styles.column]}>
           <Avatar.Image
@@ -272,6 +274,42 @@ class Chats extends React.Component{
            />
           <Text >Sam</Text>
         </View>
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+         <Text >Francis </Text>
+        </View>
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+         <Text >Joe </Text>
+        </View>
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+         <Text >Ping </Text>
+        </View>
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+         <Text >Andy </Text>
+        </View>
 
 
       </View>
@@ -300,8 +338,11 @@ class Chats extends React.Component{
             <SearchBar />
 
           </View>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            horizontal = {true}>
           {this.frequentChatPeople()}
-
+          </ScrollView>
         </View>
 
         <FlatList
@@ -330,7 +371,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',       //THIS LINE HAS CHANGED
-    paddingLeft: 10,
+    paddingLeft: 30,
     justifyContent:'center',
 
 },
@@ -388,7 +429,7 @@ const styles = StyleSheet.create({
   },
   frequentPeopleContainer: {
     marginTop:30,
-    height: 60,
+    height: 65,
     flexDirection: 'row'
   },
   chatAvatar: {

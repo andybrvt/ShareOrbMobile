@@ -228,8 +228,9 @@ class App extends Component{
             <Tab.Screen
                name="Profile"
                component={Profile}
+
                options={{
-                  tabBarLabel: 'Profile',
+              
                   tabBarIcon: ({ color }) => (
                     <FontAwesomeIcon
                       size = {25}
@@ -288,8 +289,11 @@ class App extends Component{
                     name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen
                     name = 'PostingPage' component = {PostingPage}/>
+
                   <Stack.Screen
-                    options={{headerShown: false, }}
+                    options={{
+                      title: 'Your Name',
+                    }}
                      name = 'ViewProfile' component = {ViewProfile}/>
                   <Stack.Screen
                     name = "ImageBrowserScreen"

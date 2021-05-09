@@ -178,10 +178,7 @@ import * as dateFns from 'date-fns';
      return (
        <ModalBackgroundContainer>
          <View >
-           <Button
-             title = "Go back"
-             onPress = {() => this.props.navigation.goBack()}
-             />
+
 
              <Avatar.Image
                source = {{
@@ -191,7 +188,8 @@ import * as dateFns from 'date-fns';
              />
            <Divider/>
              <TextInput
-
+               onChangeText = {this.handleCaptionChange}
+               value = {this.state.caption}
 
                placeholder = "What's going on today?"
 
@@ -220,12 +218,6 @@ import * as dateFns from 'date-fns';
 
          }
 
-         <TextInput
-           onChangeText = {this.handleCaptionChange}
-           value = {this.state.caption}
-           placeholder = "Write a caption for the your wonderful day..."
-
-           />
 
 
 
