@@ -5,6 +5,7 @@ import { Text,
   StyleSheet,
   TextInput,
   ScrollView,
+  TouchableOpacity,
  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -29,7 +30,9 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 // this will be used to show the list of chats
 class Chats extends React.Component{
-
+  selectItem(item) {
+   this.props.navigation.navigate("MessageFriend");
+  }
     getChatUserProfile(participantList){
       // This function will show the correct userProfile that you are chatting
       // with
@@ -157,8 +160,8 @@ class Chats extends React.Component{
 
   renderItem = ({item}) => {
     return (
-
-      <View style = {styles.chatBox}>
+      <TouchableOpacity onPress={() => this.selectItem(item)}>
+        <View style = {styles.chatBox}>
         {
           item.participants.length === 2 ?
 
@@ -203,6 +206,7 @@ class Chats extends React.Component{
         }
 
       </View>
+      </TouchableOpacity>
     )
   }
 
