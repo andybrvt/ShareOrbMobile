@@ -293,8 +293,7 @@ class App extends Component{
 
                     <Stack.Screen
                       options={{
-                        title: 'Friend Name',
-                      }}
+                        title: 'Chat With',                     }}
                        name = 'MessageFriend' component = {MessageFriend}/>
                   <Stack.Screen
                     options={{

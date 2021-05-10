@@ -36,6 +36,7 @@ class Chats extends React.Component{
     this.props.navigation.navigate("MessageFriend",
       {
         chatPersonName:this.getChatUserName(item.participants),
+        chatUserName:item.participants[1].username,
         chatPersonProfilePic: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants),
         }
     );

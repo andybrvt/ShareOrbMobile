@@ -21,10 +21,13 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
    }
 
    render(){
+     this.props.navigation.setOptions({headerTitle:
+
+       this.props.route.params.chatPersonName+" @"+this.props.route.params.chatUserName})
      return (
          <View >
            <Text> Chat with {this.props.route.params.chatPersonName}</Text>
-           <Text> Chat with {this.props.route.params.chatPersonProfilePic}</Text>
+
            <Avatar.Image
              source = {{
                uri: this.props.route.params.chatPersonProfilePic
