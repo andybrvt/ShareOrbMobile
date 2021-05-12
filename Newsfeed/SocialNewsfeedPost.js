@@ -32,6 +32,7 @@ class SocialNewsfeedPost extends React.Component{
     // YOU ARE GONNA NEED THE CONTENT TYPE ID
     // THE USER WITH USER NAME
     let profilePic="";
+    let caption="";
     // IF IT IS SOCIAL CAL CELL THEN IT WILL HOLD PHOTOS
     let userPostImages = []
 
@@ -55,6 +56,9 @@ class SocialNewsfeedPost extends React.Component{
         cellMonth = date[1]
         cellDay = date[2]
       }
+      if(this.props.data.post.dayCaption){
+        caption = this.props.data.post.dayCaption
+      }
       // location = this.props.history.location.pathname
 
     }
@@ -77,6 +81,10 @@ class SocialNewsfeedPost extends React.Component{
                   uri: profilePic
                 }}
               />
+
+            <Text style = {styles.videoFooter}>@{userUsername+" "}{caption.substring(0,140)}</Text>
+            <Text style = {styles.tagCSS1}>Food</Text>
+            <Text style = {styles.tagCSS2}>Music</Text>
 
         </View>
       )
@@ -303,20 +311,14 @@ class SocialNewsfeedPost extends React.Component{
       <Card style = {styles.card}>
 
         <View style = {styles.header}>
-          <Avatar
-            onPress = {() => this.props.ViewProfile()}
-            size={40}
-            rounded
-            source = {{
-              uri: profilePic
-            }}
-          />
+
 
 
            <View style = {styles.name}>
              <Text> {global.CAPITALIZE(userFirstName) +" "+ global.CAPITALIZE(userLastName) } </Text>
+
              <Text style = {{
-                 fontSize: 12
+                 fontSize: 15
                }}> @{userUsername}</Text>
 
            </View>
@@ -355,10 +357,54 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(SocialNewsfeedPost);
 
 const styles = StyleSheet.create({
+  videoFooter: {
+    position:'absolute',
+
+    padding:10,
+
+    color:'white',
+    bottom:25,
+    left:5,
+    fontSize:13,
+
+    // fontWeight:'bold',
+
+  },
+  tagCSS1: {
+    position:'absolute',
+    backgroundColor: 'rgba(0,0,0,.6)',
+    padding:7.5,
+    borderRadius:25,
+    color:'white',
+    bottom:25,
+
+    fontSize:13,
+    right:5,
+    // fontWeight:'bold',
+
+  },
+  tagCSS2: {
+    position:'absolute',
+    backgroundColor: 'rgba(0,0,0,.6)',
+    padding:7.5,
+    borderRadius:25,
+    color:'white',
+    bottom:25,
+
+    fontSize:13,
+    right:55,
+    textAlign:'right',
+    // fontWeight:'bold',
+
+  },
+
+  videoText: {
+    flex:1,
+  },
   container: {
     margin: 5,
     width: Math.round(Dimensions.get('window').width-10),
-    height: 325
+    height: 475
   },
   cover: {
     flex: 1,
@@ -398,9 +444,9 @@ const styles = StyleSheet.create({
   header: {
     // backgroundColor: "red",
     flexDirection: "row",
-    padding: 10,
+    padding:10,
     paddingTop: 20,
-    paddingBottom: 20
+
 
   },
   name: {
