@@ -13,6 +13,48 @@ const loadSocialPosts = (state, action) => {
   })
 }
 
+const loadMoreSocialPost = (state, action) =>{
+  console.log(action)
+  return updateObject(state, {
+    socialPosts: [...state.socialPosts, ...action.post]
+  })
+}
+
+const addSocialPostLike = (state, action) => {
+  return updateObject(state, {
+    socialPosts: state.socialPosts.map(
+      socialPost => socialPost.id === action.postObj.contentTypeId ? {
+        ...socialPost,
+        post: action.postObj.socialCalCellObj
+      } : socialPost
+    )
+  })
+}
+
+const loadCurSocialCell = (state, action) => {
+
+  return updateObject(state, {
+    curSocialCell: action.socialCell
+  })
+}
+
+const addFirstSocialCellPost = (state, action) => {
+  console.log(action)
+  return updateObject(state, {
+    socialPosts: [action.socialCell, ...state.socialPosts]
+  })
+}
+
+const updateSocialCellPost = (state, action) => {
+  return updateObject(state, {
+    socialPosts: state.socialPosts.map(
+      socialPost => socialPost.id === action.socialCell.id ?
+        action.socialCell : socialPost
+    )
+  })
+}
+
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.LOAD_SOCIAL_POSTS:

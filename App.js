@@ -63,6 +63,10 @@ class App extends Component{
     WebSocketSocialNewsfeedInstance.addCallbacks(
       this.props.id,
       this.props.loadSocialPosts.bind(this),
+      this.props.addSocialPostLike.bind(this),
+      this.props.loadCurSocialCell.bind(this),
+      this.props.addFirstSocialCellPost.bind(this),
+      this.props.updateSocialCellPost.bind(this)
     )
 
     ExploreWebSocketInstance.addCallbacks(
@@ -331,6 +335,12 @@ const mapDispatchToProps = dispatch => {
     grabUserCredentials: () => dispatch(authActions.grabUserCredentials()),
 
     loadSocialPosts: post => dispatch(socialNewsfeedActions.loadSocialPosts(post)),
+    addSocialPostLike: postObj => dispatch(socialNewsfeedActions.addSocialPostLike(postObj)),
+    loadCurSocialCell: socialCell => dispatch(socialNewsfeedActions.loadCurSocialCell(socialCell)),
+    addFirstSocialCellPost: socialCell => dispatch(socialNewsfeedActions.addFirstSocialCellPost(socialCell)),
+    updateSocialCellPost: socialCell => dispatch(socialNewsfeedActions.updateSocialCellPost(socialCell)),
+
+
 
     loadProfile: profile => dispatch(exploreActions.loadProfile(profile)),
 
