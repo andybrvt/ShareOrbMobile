@@ -35,6 +35,8 @@ class SocialNewsfeedPost extends React.Component{
     let caption="";
     // IF IT IS SOCIAL CAL CELL THEN IT WILL HOLD PHOTOS
     let userPostImages = []
+    let like_people = [];
+    let commentList = [];
 
     if(this.props.data) {
       if(this.props.data.owner.profile_picture){
@@ -59,6 +61,12 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.post.dayCaption){
         caption = this.props.data.post.dayCaption
       }
+      if(this.props.data.post.people_like){
+        like_people = this.props.data.post.people_like
+      }
+      if(this.props.data.post.get_socialCalComment){
+        commentList = this.props.data.post.get_socialCalComment
+      }
       // location = this.props.history.location.pathname
 
     }
@@ -82,9 +90,41 @@ class SocialNewsfeedPost extends React.Component{
                 }}
               />
 
-            <Text style = {styles.videoFooter}>@{userUsername+" "}{caption.substring(0,140)}</Text>
-            <Text style = {styles.tagCSS1}>Food</Text>
-            <Text style = {styles.tagCSS2}>Music</Text>
+            {/*
+            <View style = {styles.videoFooter}>
+              <Text  style = {styles.videoFooterUserName}>@{userUsername+" "}
+                <Text  style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
+              </Text>
+
+            </View>
+            */}
+            <Text style = {styles.tagCSS1}>
+
+              <FontAwesomeIcon
+              style = {{
+                color:'white',
+              }}
+              size = {20}
+              icon={faHeart} /> {like_people.length}</Text>
+
+            <Text style = {styles.tagCSS2}>
+
+              <FontAwesomeIcon
+              style = {{
+                color:'white',
+              }}
+              size = {20}
+              icon={faComment} />  {commentList.length}
+            </Text>
+            <Text style = {styles.tagCSS3}>
+
+              <FontAwesomeIcon
+              style = {{
+                color:'white',
+              }}
+              size = {20}
+              icon={faBookmark} />  0
+            </Text>
 
         </View>
       )
@@ -188,15 +228,8 @@ class SocialNewsfeedPost extends React.Component{
 
         <View style = {styles.likeCapHolder}>
           <View style = {styles.miniLikeCommCon}>
-            <FontAwesomeIcon
-              size = {15}
-              icon={faHeart} />
-            <Text> {like_people.length}</Text>
-            <Text> | </Text>
-              <FontAwesomeIcon
-                size = {15}
-                icon={faComment} />
-            <Text>  {commentList.length} Comments</Text>
+
+            <Text style = {styles.taggedNames}>#food #music</Text>
 
           </View>
 
@@ -357,6 +390,18 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(SocialNewsfeedPost);
 
 const styles = StyleSheet.create({
+
+  videoFooterUserName: {
+
+    color:'white',
+    fontSize:13,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+
+    textShadowRadius: 5
+
+    // fontWeight:'bold',
+
+  },
   videoFooter: {
     position:'absolute',
 
@@ -364,8 +409,9 @@ const styles = StyleSheet.create({
 
     color:'white',
     bottom:25,
-    left:5,
-    fontSize:13,
+    width:'75%',
+    padding:10,
+
 
     // fontWeight:'bold',
 
@@ -376,10 +422,10 @@ const styles = StyleSheet.create({
     padding:7.5,
     borderRadius:25,
     color:'white',
-    bottom:25,
+    bottom:175,
 
     fontSize:13,
-    right:5,
+    right:10,
     // fontWeight:'bold',
 
   },
@@ -389,12 +435,37 @@ const styles = StyleSheet.create({
     padding:7.5,
     borderRadius:25,
     color:'white',
-    bottom:25,
+    bottom:130,
 
     fontSize:13,
-    right:55,
+    right:10,
     textAlign:'right',
     // fontWeight:'bold',
+
+  },
+
+  tagCSS3: {
+    position:'absolute',
+    backgroundColor: 'rgba(0,0,0,.6)',
+    padding:7.5,
+    borderRadius:25,
+    color:'white',
+    bottom:85,
+
+    fontSize:13,
+    right:10,
+    textAlign:'right',
+    // fontWeight:'bold',
+
+  },
+
+  close2: {
+    margin: 10,
+    position: "absolute",
+    bottom: 15,
+    right: 5,
+    width: 35,
+    height: 35,
 
   },
 
@@ -402,9 +473,10 @@ const styles = StyleSheet.create({
     flex:1,
   },
   container: {
+    // backgroundColor:'red',
     margin: 5,
     width: Math.round(Dimensions.get('window').width-10),
-    height: 475
+    height: 450
   },
   cover: {
     flex: 1,
@@ -460,11 +532,16 @@ const styles = StyleSheet.create({
     // backgroundColor: 'pink'
   },
   miniLikeCommCon: {
+    // backgroundColor:'red'
     flexDirection: "row",
-    marginBottom: 10
+
+  },
+
+  taggedNames: {
+    color:'blue',
   },
   bottomButtons: {
-    marginTop: 10,
+
     flexDirection: "row",
     borderTopWidth: 0.5,
     borderColor: "gainsboro"
@@ -491,7 +568,7 @@ const styles = StyleSheet.create({
 
 
   likeCapHolder: {
-    padding: 10,
+    left:10,
   }
 
 
