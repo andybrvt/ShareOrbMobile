@@ -50,7 +50,7 @@ class Explore extends React.Component{
   componentDidMount(){
     // so you want to pull the information here like all the trending
     // social cal cell and people
-    authAxios.get(`${global.IP_CHANGE}/mySocialCal/trendingDay`)
+    axios.get(`${global.IP_CHANGE}`+'/mySocialCal/trendingDay')
     .then( res => {
       this.setState({
 
@@ -58,7 +58,7 @@ class Explore extends React.Component{
       })
     })
 
-    authAxios.get(`${global.IP_CHANGE}/mySocialCal/exploreDay`)
+    axios.get(`${global.IP_CHANGE}/mySocialCal/exploreDay`)
     .then( res => {
       this.setState({
           exploreCells: res.data
