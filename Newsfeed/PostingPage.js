@@ -63,6 +63,24 @@ import FlashMessage from '../RandomComponents/FlashMessage';
      <ActivityIndicator size = "small" color = {"#0580FF"} />
    }
 
+   fileNameGetter = (fileURI) => {
+     // this function will be used to return the packaged file
+     // containing uri, type, and name
+
+     const fileName = fileURI.split("/").pop()
+
+     let match = /\.(\w+)$/.exec(fileName);
+     let type = match ? `image/${match[1]}` : `image`;
+
+
+     return {
+       uri: fileURI,
+       type: type,
+       name: fileName,
+     }
+   }
+
+
    /*
    This function will be used to upload the pictures that are saved
    into a formadata and then submit it through authaxios and send to the
@@ -88,16 +106,8 @@ import FlashMessage from '../RandomComponents/FlashMessage';
      for(let i = 0; i<fileList.length; i++){
 
        if(fileList[i]){
-         const fileName = fileList[i].split("/").pop()
-
-           let match = /\.(\w+)$/.exec(fileName);
-           let type = match ? `image/${match[1]}` : `image`;
-           formData.append("image["+i+"]",{
-             uri: fileList[i],
-             type: type,
-             name: fileName,
-
-           })
+         const filePackage = this.fileNameGetter(fileList[i])
+         formData.append("image["+i+"]",filePackage)
          formData.append("socialItemType["+i+"]", "picture")
 
        } else {
@@ -140,33 +150,38 @@ import FlashMessage from '../RandomComponents/FlashMessage';
             coverPicForm.append('cellId', res.data.cell.id)
             coverPicForm.append("createdCell", res.data.created)
          //
-            if(fileList[fileList.length -1].url.includes(global.POSTLIST_SPEC)){
-         //
-         //      // PROBALLY GONNA HAVE TO FIX THIS
-         //      coverPicForm.append("coverImage", fileList[fileList.length-1].url.replace(global.POSTLIST_SPEC, ""))
+         console.log('here is the file list')
+          console.log(fileList)
+            if(fileList[fileList.length -1].includes(global.POSTLIST_SPEC)){
+
+              // PROBALLY GONNA HAVE TO FIX THIS
+              // coverPicForm.append("coverImage", fileList[fileList.length-1].url.replace(global.POSTLIST_SPEC, ""))
             }
-          // else {
-         //      coverPicForm.append("coverImage", fileList[fileList.length-1])
-         //    }
-         //
-         //
-         //    // Now change the cover picture
-         //    authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
-         //      coverPicForm,
-         //      {headers: {"content-type": "multipart/form-data"}}
-         //    )
-         //
+          else {
+
+            const coverPackage = this.fileNameGetter(fileList[fileList.length-1]);
+
+              coverPicForm.append("coverImage", coverPackage)
+            }
+
+
+            // Now change the cover picture
+            authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
+              coverPicForm,
+              {headers: {"content-type": "multipart/form-data"}}
+            )
+
            }
-         //
-         //   WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
-         //     ownerId,
-         //     res.data.cell.id,
-         //     res.data.created
-         //   )
-         //
-         //
-         //
-         //
+         
+           WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
+             ownerId,
+             res.data.cell.id,
+             res.data.created
+           )
+
+
+
+
          }
 
        })
