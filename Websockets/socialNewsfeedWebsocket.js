@@ -151,20 +151,33 @@ class WebSocketSocialNewsfeed{
 
 }
 
+  /*
+  This function is used to remove all the pictures and the social cal
+  cell from the newsfeed
+  */
+  removeAllPhotoSocialPost(curId, curDate){
+
+    this.sendPostsInfo({
+      curDate: curDate,
+      userId: curId,
+      command: "remove_all_photo_social_post"
+    })
+  }
+
   addCallbacks(
       curId,
       loadSocialPostCallback,
-      // addSocialLikeCallback,
-      // loadCurSocialCellCallback,
-      // addFirstSocialCellPost,
-      // updateSocialCellPost
+      addSocialLikeCallback,
+      loadCurSocialCellCallback,
+      addFirstSocialCellPost,
+      updateSocialCellPost
     ){
       this.callbacks['curId'] = curId
       this.callbacks['fetch_social_posts'] = loadSocialPostCallback
-      // this.callbacks['add_social_post_like'] = addSocialLikeCallback
-      // this.callbacks['fetch_cur_social_cell'] = loadCurSocialCellCallback
-      // this.callbacks['add_first_social_cell_post'] = addFirstSocialCellPost
-      // this.callbacks['update_social_cell_post'] = updateSocialCellPost
+      this.callbacks['add_social_post_like'] = addSocialLikeCallback
+      this.callbacks['fetch_cur_social_cell'] = loadCurSocialCellCallback
+      this.callbacks['add_first_social_cell_post'] = addFirstSocialCellPost
+      this.callbacks['update_social_cell_post'] = updateSocialCellPost
     }
 
     fetchSocialPost(userId, curDate, startIndex){

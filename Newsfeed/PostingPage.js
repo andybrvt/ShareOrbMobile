@@ -19,7 +19,8 @@ import { connect } from 'react-redux'
 import { Avatar, Divider } from 'react-native-paper';
 import  authAxios from '../util';
 import * as dateFns from 'date-fns';
-
+import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+import FlashMessage from '../RandomComponents/FlashMessage';
 
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
@@ -36,8 +37,27 @@ import * as dateFns from 'date-fns';
    state = {
      imageList: [],
      caption: "",
+     flashMessage: false,
    }
 
+
+   /*
+   This function will be in charge of opening the indicator message
+   */
+   onShowMessage(){
+     this.setState({
+       flashMessage: true,
+     }, () => setTimeout(() => this.onCloseMessage(), 3000))
+   }
+
+   /*
+   This function will close the flash message
+   */
+   onCloseMessage (){
+     this.setState({
+       flashMessage: false
+     })
+   }
 
    getHeaderLoader = () => {
      <ActivityIndicator size = "small" color = {"#0580FF"} />
@@ -72,10 +92,6 @@ import * as dateFns from 'date-fns';
 
            let match = /\.(\w+)$/.exec(fileName);
            let type = match ? `image/${match[1]}` : `image`;
-
-
-           console.log(fileList[i].uri, match, type)
-
            formData.append("image["+i+"]",{
              uri: fileList[i],
              type: type,
@@ -95,7 +111,55 @@ import * as dateFns from 'date-fns';
          formData,
          {headers: {"content-type": "multipart/form-data"}}
        ).then(res => {
+
+         console.log("This will be the return values")
          console.log(res.data)
+
+
+         // have a condition where if there are not social cal
+         // then delete and remove the content type post
+         if(res.data.cell.get_socialCalItems.length === 0 ){
+            const curDate = dataFns.format(new Date(), "yyyy-MM-dd")
+            WebSocketSocialNewsfeedInstance.removeAllPhotoSocialPost(
+              ownerId,
+              curDate
+            )
+
+            // Now you wil direct to the newsfeed again
+            this.props.navigation.navigate("newsfeed")
+
+         } else {
+           // This condition is for when you have pictures that you wnat to
+           // post and it pass through
+
+           if(res.data.coverPicChange){
+
+            const coverPicForm = new FormData()
+            coverPicForm.append('cellId', res.data.cell.id)
+            coverPicForm.append("createdCell", res.data.created)
+
+            if(fileList[fileList.length -1].url.includes(global.POSTLIST_SPEC)){
+
+              // PROBALLY GONNA HAVE TO FIX THIS
+              coverPicForm.append("coverImage", fileList[fileList.length-1].url.replace(global.POSTLIST_SPEC, ""))
+            } else {
+              coverPicForm.append("coverImage", fileList[fileList.length-1])
+            }
+
+
+            // Now change the cover picture
+            authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
+              coverPicForm,
+              {headers: {"content-type": "multipart/form-data"}}
+            )
+
+           }
+
+
+
+
+         }
+
        })
 
    }
@@ -123,7 +187,6 @@ import * as dateFns from 'date-fns';
     });
 
 
-    console.log(pickerResult)
     if(!pickerResult.cancelled){
       const list = [...this.state.imageList, pickerResult.uri]
       this.setState({
@@ -171,9 +234,22 @@ import * as dateFns from 'date-fns';
 
 
 
-     console.log(this.state)
      return (
        <ModalBackgroundContainer>
+<<<<<<< HEAD
+         <FlashMessage  showMessage = {this.state.flashMessage} message = {"Image Posted"}>
+           <View >
+
+
+               <Avatar.Image
+                 source = {{
+                   uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+                 }}
+                 size = {75}
+               />
+             <Divider/>
+               <TextInput
+=======
          <View >
 
 
@@ -187,43 +263,56 @@ import * as dateFns from 'date-fns';
              <TextInput
                onChangeText = {this.handleCaptionChange}
                value = {this.state.caption}
+>>>>>>> 1fc447716930bbec2ac334356e5afdfd7e6cd44a
 
-               placeholder = "What's going on today?"
 
+                 placeholder = "What's going on today?"
+
+                 />
+               <Text> Your pictures todayf</Text>
+
+                <TouchableHighlight>
+                  <View style={styles.button}>
+                    <Text>Touch Here</Text>
+                  </View>
+                </TouchableHighlight>
+
+
+             <Button
+               title = "Choose Photo"
+               onPress = {this.handleChoosePhoto}
                />
-             <Text> Your pictures todayf</Text>
+             {this.state.imageList.map((images, key) => {
 
-              <TouchableHighlight>
-                <View style={styles.button}>
-                  <Text>Touch Here</Text>
-                </View>
-              </TouchableHighlight>
+               return (
+                <Image
+                  key = {key}
+                   source={{ uri: images }} style={{ width: 200, height: 200 }} />
+               )
+             })
 
+           }
 
-           <Button
-             title = "Choose Photo"
-             onPress = {this.handleChoosePhoto}
+<<<<<<< HEAD
+           <TextInput
+             onChangeText = {this.handleCaptionChange}
+             value = {this.state.caption}
+             placeholder = "Write a caption for the your wonderful day..."
+
              />
-           {this.state.imageList.map((images, key) => {
 
-             return (
-              <Image
-                key = {key}
-                 source={{ uri: images }} style={{ width: 200, height: 200 }} />
-             )
-           })
-
-         }
+=======
+>>>>>>> 1fc447716930bbec2ac334356e5afdfd7e6cd44a
 
 
 
+             <Button
+               title = "direct to image browser"
+               onPress = {() => this.props.navigation.navigate("ImageBrowserScreen")} />
 
+           </View>
+         </FlashMessage>
 
-           <Button
-             title = "direct to image browser"
-             onPress = {() => this.props.navigation.navigate("ImageBrowserScreen")} />
-
-         </View>
 
        </ModalBackgroundContainer>
 

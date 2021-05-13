@@ -2,7 +2,12 @@
 // global.IP_CHANGE = "http://10.3.0.116:19000"
 // global.IMAGE_ENDPOINT = "http://10.3.0.116:19000"
 // global.WS_ENDPOINT = "10.3.0.116:19000"
+<<<<<<< HEAD
+// global.POSTLIST_SPEC = 'http://10.3.0.116:19000/media/'
+global.WS_HEADER = "ws"
+=======
 // global.WS_HEADER = "ws"
+>>>>>>> 1fc447716930bbec2ac334356e5afdfd7e6cd44a
 
 //
 global.IP_CHANGE="http://192.168.1.200:19002"
@@ -24,9 +29,12 @@ global.WS_HEADER = "ws"
 // global.WS_ENDPOINT = "10.20.100.62:19000"
 
 // This is for ua guest
-// global.IP_CHANGE = "http://10.143.167.43:19000"
-// global.IMAGE_ENDPOINT = "http://10.143.167.43:19000"
-// global.WS_ENDPOINT = "10.143.167.43:19000"
+global.IP_CHANGE = "http://10.143.167.43:19000"
+global.IMAGE_ENDPOINT = "http://10.143.167.43:19000"
+global.WS_ENDPOINT = "10.143.167.43:19000"
+global.POSTLIST_SPEC = 'http://10.143.167.43:19000/media/'
+
+
 
 global.CAPITALIZE = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1)
