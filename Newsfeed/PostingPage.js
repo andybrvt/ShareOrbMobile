@@ -128,36 +128,45 @@ import FlashMessage from '../RandomComponents/FlashMessage';
             // Now you wil direct to the newsfeed again
             this.props.navigation.navigate("newsfeed")
 
-         } else {
-           // This condition is for when you have pictures that you wnat to
-           // post and it pass through
-
+         }
+         else {
+         //   // This condition is for when you have pictures that you wnat to
+         //   // post and it pass through
+         //
            if(res.data.coverPicChange){
+
 
             const coverPicForm = new FormData()
             coverPicForm.append('cellId', res.data.cell.id)
             coverPicForm.append("createdCell", res.data.created)
-
+         //
             if(fileList[fileList.length -1].url.includes(global.POSTLIST_SPEC)){
-
-              // PROBALLY GONNA HAVE TO FIX THIS
-              coverPicForm.append("coverImage", fileList[fileList.length-1].url.replace(global.POSTLIST_SPEC, ""))
-            } else {
-              coverPicForm.append("coverImage", fileList[fileList.length-1])
+         //
+         //      // PROBALLY GONNA HAVE TO FIX THIS
+         //      coverPicForm.append("coverImage", fileList[fileList.length-1].url.replace(global.POSTLIST_SPEC, ""))
             }
-
-
-            // Now change the cover picture
-            authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
-              coverPicForm,
-              {headers: {"content-type": "multipart/form-data"}}
-            )
-
+          // else {
+         //      coverPicForm.append("coverImage", fileList[fileList.length-1])
+         //    }
+         //
+         //
+         //    // Now change the cover picture
+         //    authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
+         //      coverPicForm,
+         //      {headers: {"content-type": "multipart/form-data"}}
+         //    )
+         //
            }
-
-
-
-
+         //
+         //   WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
+         //     ownerId,
+         //     res.data.cell.id,
+         //     res.data.created
+         //   )
+         //
+         //
+         //
+         //
          }
 
        })
@@ -236,20 +245,8 @@ import FlashMessage from '../RandomComponents/FlashMessage';
 
      return (
        <ModalBackgroundContainer>
-<<<<<<< HEAD
          <FlashMessage  showMessage = {this.state.flashMessage} message = {"Image Posted"}>
-           <View >
 
-
-               <Avatar.Image
-                 source = {{
-                   uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
-                 }}
-                 size = {75}
-               />
-             <Divider/>
-               <TextInput
-=======
          <View >
 
 
@@ -263,7 +260,6 @@ import FlashMessage from '../RandomComponents/FlashMessage';
              <TextInput
                onChangeText = {this.handleCaptionChange}
                value = {this.state.caption}
->>>>>>> 1fc447716930bbec2ac334356e5afdfd7e6cd44a
 
 
                  placeholder = "What's going on today?"
@@ -293,17 +289,12 @@ import FlashMessage from '../RandomComponents/FlashMessage';
 
            }
 
-<<<<<<< HEAD
            <TextInput
              onChangeText = {this.handleCaptionChange}
              value = {this.state.caption}
              placeholder = "Write a caption for the your wonderful day..."
 
              />
-
-=======
->>>>>>> 1fc447716930bbec2ac334356e5afdfd7e6cd44a
-
 
 
              <Button

@@ -49,6 +49,8 @@ class WebSocketSocialNewsfeed{
   const parsedData = JSON.parse(data);
   const command = parsedData.command;
 
+  console.log('returned backed data')
+  console.log(parsedData)
   // Make the different calls here
   if(command === "fetch_social_posts"){
     // pull data and add callbacks here
@@ -70,84 +72,85 @@ class WebSocketSocialNewsfeed{
     // this.callbacks['fetch_cur_social_cell'](curSocialCell)
 
 
-  } else if (command === "send_social_post_like"){
-    const contentTypeId = parsedData.contentTypeId
-    const socialCalCellObj = parsedData.socialCalCellObj
-
-    const content = {
-      contentTypeId: contentTypeId,
-      socialCalCellObj: socialCalCellObj
-    }
-
-    // put the call back here
-    this.callbacks['add_social_post_like'](content)
-
-  } else if( command === "send_social_post_unlike"){
-    const contentTypeId = parsedData.contentTypeId
-    const socialCalCellObj = parsedData.socialCalCellObj
-
-    const content = {
-      contentTypeId: contentTypeId,
-      socialCalCellObj: socialCalCellObj
-    }
-
-    // put the call back here
-    this.callbacks['add_social_post_like'](content)
-  } else if (command === "update_new_cell_social_newsfeed"){
-    // path to update the newsfeed
-    // You grab the postObj
-    const socialPostObj = parsedData.socialPostObj
-    const curId = parsedData.curId
-    const created = parsedData.created
-    if(parseInt(this.callbacks['curId']) === socialPostObj.owner.id){
-      // Put call back for updating the cursocialcalcell
-      // just load up the cur social cal cell
-      this.callbacks['fetch_cur_social_cell'](socialPostObj.post)
-    }
-
-    if(created === true){
-      // this is if this is a new social cal cell so you just add it to the top
-      // of the newsfeed
-      this.callbacks['add_first_social_cell_post'](socialPostObj)
-
-    } else if(created === false){
-      // if its a old newsfeed cell and needs to be updated
-
-      this.callbacks['update_social_cell_post'](socialPostObj)
-
-    }
-
-
-    // Now check if the currentId equals to taht of the user in the social postobj
-    // if it is equal then that means you should update the curSocialCal
-
-
-  } else if(command === "remove_all_photo_social_post"){
-    // This will be use to update the soical cal cell of the curUser and update the
-    // newsfeed when you remove all your pics
-
-    // so you would need one that updates just your social cal cell
-    const curId = parsedData.curId
-
-    const curSocialCalCellList = parsedData.curSocialCalCell
-
-    let curSocialCell = {}
-    if(curSocialCalCellList.length > 0){
-      curSocialCell = curSocialCalCellList[0];
-    }
-
-    if(parseInt(this.callbacks['curId']) === curId){
-      this.callbacks['fetch_cur_social_cell'](curSocialCell)
-
-    }
-
-    const socialPost = parsedData.social_posts
-    this.callbacks['fetch_social_posts'](socialPost)
-
-
-
-
   }
+   // else if (command === "send_social_post_like"){
+  //   const contentTypeId = parsedData.contentTypeId
+  //   const socialCalCellObj = parsedData.socialCalCellObj
+  //
+  //   const content = {
+  //     contentTypeId: contentTypeId,
+  //     socialCalCellObj: socialCalCellObj
+  //   }
+  //
+  //   // put the call back here
+  //   this.callbacks['add_social_post_like'](content)
+  //
+  // } else if( command === "send_social_post_unlike"){
+  //   const contentTypeId = parsedData.contentTypeId
+  //   const socialCalCellObj = parsedData.socialCalCellObj
+  //
+  //   const content = {
+  //     contentTypeId: contentTypeId,
+  //     socialCalCellObj: socialCalCellObj
+  //   }
+  //
+  //   // put the call back here
+  //   this.callbacks['add_social_post_like'](content)
+  // } else if (command === "update_new_cell_social_newsfeed"){
+  //   // path to update the newsfeed
+  //   // You grab the postObj
+  //   const socialPostObj = parsedData.socialPostObj
+  //   const curId = parsedData.curId
+  //   const created = parsedData.created
+  //   if(parseInt(this.callbacks['curId']) === socialPostObj.owner.id){
+  //     // Put call back for updating the cursocialcalcell
+  //     // just load up the cur social cal cell
+  //     this.callbacks['fetch_cur_social_cell'](socialPostObj.post)
+  //   }
+  //
+  //   if(created === true){
+  //     // this is if this is a new social cal cell so you just add it to the top
+  //     // of the newsfeed
+  //     this.callbacks['add_first_social_cell_post'](socialPostObj)
+  //
+  //   } else if(created === false){
+  //     // if its a old newsfeed cell and needs to be updated
+  //
+  //     this.callbacks['update_social_cell_post'](socialPostObj)
+  //
+  //   }
+  //
+  //
+  //   // Now check if the currentId equals to taht of the user in the social postobj
+  //   // if it is equal then that means you should update the curSocialCal
+  //
+  //
+  // } else if(command === "remove_all_photo_social_post"){
+  //   // This will be use to update the soical cal cell of the curUser and update the
+  //   // newsfeed when you remove all your pics
+  //
+  //   // so you would need one that updates just your social cal cell
+  //   const curId = parsedData.curId
+  //
+  //   const curSocialCalCellList = parsedData.curSocialCalCell
+  //
+  //   let curSocialCell = {}
+  //   if(curSocialCalCellList.length > 0){
+  //     curSocialCell = curSocialCalCellList[0];
+  //   }
+  //
+  //   if(parseInt(this.callbacks['curId']) === curId){
+  //     this.callbacks['fetch_cur_social_cell'](curSocialCell)
+  //
+  //   }
+  //
+  //   const socialPost = parsedData.social_posts
+  //   this.callbacks['fetch_social_posts'](socialPost)
+  //
+  //
+  //
+  //
+  // }
 
 }
 
@@ -180,16 +183,36 @@ class WebSocketSocialNewsfeed{
       this.callbacks['update_social_cell_post'] = updateSocialCellPost
     }
 
-    fetchSocialPost(userId, curDate, startIndex){
-    // Because of the timezone issue we need to get timezone from front end
-    this.sendPostsInfo({
-      userId: userId,
-      curDate: curDate,
-      startIndex: startIndex,
-      command: "fetch_social_posts"
-    })
+  fetchSocialPost(userId, curDate, startIndex){
+  // Because of the timezone issue we need to get timezone from front end
+  this.sendPostsInfo({
+    userId: userId,
+    curDate: curDate,
+    startIndex: startIndex,
+    command: "fetch_social_posts"
+  })
 
   }
+
+  addUpdateSocialPost(curId, cellId, created){
+  // The curId will be used later to check if the social cal cell belongs to that
+  // of the current user, if it is then you would update it
+
+  // The cellid will be used to grab the actual cell
+
+  // Craeted will check if it is new or not so that for the redux
+  // you can either add to the top of the list of update an existing one
+
+  // This will run when you have already made a cell and everything is updated
+  // make an axios call and then send it through the here
+  this.sendPostsInfo({
+    curId: curId,
+    socialCalCellId: cellId,
+    created: created,
+    command: "grab_new_updated_social_cell"
+  })
+
+}
 
   sendPostsInfo(data){
   // This is to send it to the backend
