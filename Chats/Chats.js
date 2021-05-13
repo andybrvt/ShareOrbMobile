@@ -3,7 +3,9 @@ import { Text,
    View,
   Button,
   StyleSheet,
-  TextInput
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -28,7 +30,17 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 // this will be used to show the list of chats
 class Chats extends React.Component{
-
+  selectItem(item) {
+    console.log("HELOOOO")
+    console.log(item[1])
+    this.props.navigation.navigate("MessageFriend",
+      {
+        chatPersonName:this.getChatUserName(item.participants),
+        chatUserName:item.participants[1].username,
+        chatPersonProfilePic: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants),
+        }
+    );
+  }
     getChatUserProfile(participantList){
       // This function will show the correct userProfile that you are chatting
       // with
@@ -156,8 +168,8 @@ class Chats extends React.Component{
 
   renderItem = ({item}) => {
     return (
-
-      <View style = {styles.chatBox}>
+      <TouchableOpacity onPress={() => this.selectItem(item)}>
+        <View style = {styles.chatBox}>
         {
           item.participants.length === 2 ?
 
@@ -202,6 +214,7 @@ class Chats extends React.Component{
         }
 
       </View>
+      </TouchableOpacity>
     )
   }
 
@@ -232,6 +245,7 @@ class Chats extends React.Component{
     // chats
 
     return (
+
       <View style = {styles.frequentPeopleContainer}>
         <View style={[styles.column]}>
           <Avatar.Image
@@ -272,6 +286,42 @@ class Chats extends React.Component{
            />
           <Text >Sam</Text>
         </View>
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+         <Text >Francis </Text>
+        </View>
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+         <Text >Joe </Text>
+        </View>
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+         <Text >Ping </Text>
+        </View>
+        <View style={[styles.column]}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {45}
+           />
+         <Text >Andy </Text>
+        </View>
 
 
       </View>
@@ -300,8 +350,11 @@ class Chats extends React.Component{
             <SearchBar />
 
           </View>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            horizontal = {true}>
           {this.frequentChatPeople()}
-
+          </ScrollView>
         </View>
 
         <FlatList
@@ -330,7 +383,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',       //THIS LINE HAS CHANGED
-    paddingLeft: 10,
+    paddingLeft: 30,
     justifyContent:'center',
 
 },
@@ -388,7 +441,7 @@ const styles = StyleSheet.create({
   },
   frequentPeopleContainer: {
     marginTop:30,
-    height: 60,
+    height: 65,
     flexDirection: 'row'
   },
   chatAvatar: {

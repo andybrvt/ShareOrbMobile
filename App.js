@@ -44,6 +44,7 @@ import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 import PostingPage from './Newsfeed/PostingPage';
 import ViewProfile from './ProfilePage/ViewProfile';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
+import MessageFriend from './Chats/MessageFriend';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -232,8 +233,9 @@ class App extends Component{
             <Tab.Screen
                name="Profile"
                component={Profile}
+
                options={{
-                  tabBarLabel: 'Profile',
+
                   tabBarIcon: ({ color }) => (
                     <FontAwesomeIcon
                       size = {25}
@@ -292,8 +294,15 @@ class App extends Component{
                     name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen
                     name = 'PostingPage' component = {PostingPage}/>
+
+                    <Stack.Screen
+                      options={{
+                        title: 'Chat With',                     }}
+                       name = 'MessageFriend' component = {MessageFriend}/>
                   <Stack.Screen
-                    options={{headerShown: false, }}
+                    options={{
+                      title: 'Your Name',
+                    }}
                      name = 'ViewProfile' component = {ViewProfile}/>
                   <Stack.Screen
                     name = "ImageBrowserScreen"

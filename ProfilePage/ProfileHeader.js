@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button,StyleSheet } from 'react-native';
+import { Text, View, Button,StyleSheet,} from 'react-native';
 
 import { Appbar } from 'react-native-paper';
 import { Avatar } from 'react-native-elements';
@@ -76,7 +76,7 @@ class ProfileHeader extends React.Component{
     return (
       <View style={styles.centerProfilePic}>
         <Avatar
-          size={75}
+          size={100}
           rounded
           source={{
             uri:
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
 
   centerProfilePic: {
     position:'relative',
-    top:'5%',
+    top:'10%',
     alignItems: 'center',
     justifyContent: 'center',
   },

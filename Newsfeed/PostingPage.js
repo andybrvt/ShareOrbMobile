@@ -236,6 +236,7 @@ import FlashMessage from '../RandomComponents/FlashMessage';
 
      return (
        <ModalBackgroundContainer>
+<<<<<<< HEAD
          <FlashMessage  showMessage = {this.state.flashMessage} message = {"Image Posted"}>
            <View >
 
@@ -248,6 +249,21 @@ import FlashMessage from '../RandomComponents/FlashMessage';
                />
              <Divider/>
                <TextInput
+=======
+         <View >
+
+
+             <Avatar.Image
+               source = {{
+                 uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               }}
+               size = {75}
+             />
+           <Divider/>
+             <TextInput
+               onChangeText = {this.handleCaptionChange}
+               value = {this.state.caption}
+>>>>>>> 1fc447716930bbec2ac334356e5afdfd7e6cd44a
 
 
                  placeholder = "What's going on today?"
@@ -277,6 +293,7 @@ import FlashMessage from '../RandomComponents/FlashMessage';
 
            }
 
+<<<<<<< HEAD
            <TextInput
              onChangeText = {this.handleCaptionChange}
              value = {this.state.caption}
@@ -284,6 +301,8 @@ import FlashMessage from '../RandomComponents/FlashMessage';
 
              />
 
+=======
+>>>>>>> 1fc447716930bbec2ac334356e5afdfd7e6cd44a
 
 
 
