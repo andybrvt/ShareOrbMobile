@@ -34,12 +34,7 @@ class NewsfeedView extends React.Component{
     // this.props.navigation.navigate("Login")
   }
 
-  onPagePost = () => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
 
-    this.props.navigation.navigate("PostingPage")
-  }
 
   ViewProfile = () => {
     // This fucntion will be used to navigate to the post page
@@ -128,10 +123,7 @@ class NewsfeedView extends React.Component{
             ViewProfile={this.ViewProfile}
             />
 
-          <Button
-            title = "navigate"
-            onPress = {()=> this.onPagePost()}
-            />
+
           <Button
             title = "Logout"
             onPress = {() => this.handleLogOut()}
