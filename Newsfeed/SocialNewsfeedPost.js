@@ -474,9 +474,9 @@ const styles = StyleSheet.create({
   },
   container: {
     // backgroundColor:'red',
-    margin: 5,
+    margin: 3,
     width: Math.round(Dimensions.get('window').width-10),
-    height: 450
+    height: 475
   },
   cover: {
     flex: 1,

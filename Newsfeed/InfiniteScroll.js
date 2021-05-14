@@ -26,9 +26,7 @@ class InfiniteScroll extends React.Component{
     return (
       <View>
 
-        <NewsfeedButtonContainer
-          onPagePost = {this.props.onPagePost}
-          />
+    
           {
               (post.length!=0) ?
               <View>
