@@ -114,7 +114,7 @@ class NewsfeedView extends React.Component{
 
       <BackgroundContainer>
         <LoadingBar
-          step = {1}
+          step = {4}
           steps = {10}
           height = {20} />
         <Header {...this.props} />

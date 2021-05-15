@@ -35,9 +35,14 @@ class LoadingBar extends React.Component{
   }
 
   componentDidUpdate(prevProps){
+    console.log('here are the props')
+    console.log(prevProps)
     // -width + width * step/steps
     // this.reactive.setValue()
-    this.reactive.setValue(1)
+    const width = this.state.width
+    const step = this.props.step
+    const steps = this.props.steps
+    this.reactive.setValue(-width + width * step/steps)
   }
 
 
@@ -45,7 +50,8 @@ class LoadingBar extends React.Component{
   render(){
 
 
-
+    console.log('here is the states')
+    console.log(this.state.width)
     return (
       <View
         onLayout = { e => {
