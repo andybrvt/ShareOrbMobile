@@ -26,19 +26,18 @@ class InfiniteScroll extends React.Component{
     return (
       <View>
 
-        <NewsfeedButtonContainer
-          onPagePost = {this.props.onPagePost}
-          />
+
           {
               (post.length!=0) ?
               <View>
                 {post.map((j,index) => {
                   return(
-                    <View key = {index}>
+                    <View style={{top:25}} key = {index}>
                       {
                         j.post.get_socialCalItems ?
 
                          <SocialNewsfeedPost
+
                            ViewProfile = {this.props.ViewProfile}
                            data = {j}
 

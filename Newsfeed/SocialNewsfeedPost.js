@@ -241,39 +241,7 @@ class SocialNewsfeedPost extends React.Component{
 
         </View>
 
-        <View style = {styles.bottomButtons}>
-          <View style = {styles.buttons}>
-            <FontAwesomeIcon
-              style = {{
-                marginRight: 10
-              }}
-              size = {15}
-              icon={faHeart} />
-            <Text>Like</Text>
-          </View>
 
-          <View style = {styles.buttons}>
-            <FontAwesomeIcon
-              style = {{
-                marginRight: 10
-              }}
-              size = {15}
-              icon={faComment} />
-            <Text>Comment</Text>
-          </View>
-
-          <View style = {styles.buttons}>
-
-            <FontAwesomeIcon
-              style = {{
-                marginRight: 10
-              }}
-              size = {15}
-              icon={faBookmark} />
-            <Text>Clip</Text>
-          </View>
-
-        </View>
       </View>
     )
   }
@@ -340,7 +308,7 @@ class SocialNewsfeedPost extends React.Component{
     }
 
     return (
-
+      <View>
       <Card style = {styles.card}>
 
         <View style = {styles.header}>
@@ -348,12 +316,16 @@ class SocialNewsfeedPost extends React.Component{
 
 
            <View style = {styles.name}>
-             <Text> {global.CAPITALIZE(userFirstName) +" "+ global.CAPITALIZE(userLastName) } </Text>
 
-             <Text style = {{
-                 fontSize: 15
-               }}> @{userUsername}</Text>
-
+             <Text
+               style = {{
+                   fontSize: 14,
+                   fontWeight:'bold'
+                 }}
+               > {global.CAPITALIZE(userFirstName) +" "+ global.CAPITALIZE(userLastName) } </Text>
+            {/*
+             <Text> @{userUsername}</Text>
+             */}
            </View>
 
            <View style = {styles.date}>
@@ -367,11 +339,12 @@ class SocialNewsfeedPost extends React.Component{
 
         </View>
 
-        <View>
+        <View style = {styles.bottomLikeCommentContainer}>
           {this.bottomLikeCommentPost()}
         </View>
 
       </Card>
+      </View>
     )
   }
 }
@@ -474,9 +447,9 @@ const styles = StyleSheet.create({
   },
   container: {
     // backgroundColor:'red',
-    margin: 5,
+    margin: 3,
     width: Math.round(Dimensions.get('window').width-10),
-    height: 450
+    height: 600
   },
   cover: {
     flex: 1,
@@ -501,10 +474,14 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    // backgroundColor: "red"
+    // backgroundColor: "red",
+    width:392,
+    borderRadius:20,
     position: 'relative',
     // height: 600,
-    marginBottom: 5
+    marginBottom: 5,
+    borderColor: '#f0f0f0', borderWidth: 1,
+
   },
   imageContainer: {
     flex: 1,
@@ -514,10 +491,10 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    // backgroundColor: "red",
+    // backgroundColor: "blue",
     flexDirection: "row",
     padding:10,
-    paddingTop: 20,
+
 
 
   },
@@ -559,6 +536,7 @@ const styles = StyleSheet.create({
   captionHolder: {
     flexDirection: "row",
 
+
   },
   captionUsername:{
     color:'black',
@@ -569,6 +547,10 @@ const styles = StyleSheet.create({
 
   likeCapHolder: {
     left:10,
+  },
+
+  bottomLikeCommentContainer: {
+    padding:10,
   }
 
 

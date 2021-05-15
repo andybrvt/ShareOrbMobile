@@ -1,15 +1,18 @@
+import * as dateFns from 'date-fns';
+
+
 // For IP adress
-global.IP_CHANGE = "http://10.3.0.116:19000"
-global.IMAGE_ENDPOINT = "http://10.3.0.116:19000"
-global.WS_ENDPOINT = "10.3.0.116:19000"
-global.POSTLIST_SPEC = 'http://10.3.0.116:19000/media/'
-global.WS_HEADER = "ws"
+// global.IP_CHANGE = "http://10.3.0.116:19000"
+// global.IMAGE_ENDPOINT = "http://10.3.0.116:19000"
+// global.WS_ENDPOINT = "10.3.0.116:19000"
+// global.POSTLIST_SPEC = 'http://10.3.0.116:19000/media/'
+// global.WS_HEADER = "ws"
 
 //
-// global.IP_CHANGE="http://192.168.1.200:19002"
-// global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
-// global.WS_ENDPOINT = "192.168.1.200:19002"
-// global.WS_HEADER = "ws"
+global.IP_CHANGE="http://192.168.1.200:19002"
+global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
+global.WS_ENDPOINT = "192.168.1.200:19002"
+global.WS_HEADER = "ws"
 
 // global.IP_CHANGE = "http://192.168.1.24:19000"
 // global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
@@ -63,7 +66,7 @@ global.RENDER_TIMESTAMP = (timestamp) => {
     } else if (timeDiff < 31*24*60 && timeDiff > 24*60) {
       prefix = `${Math.round(timeDiff/(60*24))} days ago`;
     } else {
-        prefix = `${new Date(timestamp)}`;
+        prefix = `${dateFns.format(new Date(timestamp), "MMMM d, yyyy")}`;
     }
 
     return prefix;

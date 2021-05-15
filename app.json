@@ -1,9 +1,11 @@
 {
   "name": "ShareOrbMobile",
+
   "displayName": "ShareOrbMobile",
   "expo": {
     "name": "ShareOrbMobile",
     "slug": "ShareOrbMobile",
+    "orientation": "portrait",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

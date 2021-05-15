@@ -205,7 +205,7 @@ class App extends Component{
 
            <Tab.Screen
              name="Upload"
-             component={Explore}
+             component={PostingPage}
              options={{
 
                 tabBarIcon: ({ color }) => (
