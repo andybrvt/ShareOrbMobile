@@ -215,6 +215,13 @@ class App extends Component{
                     icon={faPlusSquare} />
                 ),
               }}
+
+            listeners = {({navigation}) => ({
+              tabPress: event => {
+                event.preventDefault();
+                navigation.navigate("PostingPage")
+              }
+            })}
               />
          <Tab.Screen
            name="Chats"
@@ -297,7 +304,8 @@ class App extends Component{
 
                     <Stack.Screen
                       options={{
-                        title: 'Chat With',                     }}
+                        title: 'Chat With',
+                                        }}
                        name = 'MessageFriend' component = {MessageFriend}/>
                   <Stack.Screen
                     options={{

@@ -63,6 +63,8 @@ import FlashMessage from '../RandomComponents/FlashMessage';
      <ActivityIndicator size = "small" color = {"#0580FF"} />
    }
 
+
+
    fileNameGetter = (fileURI) => {
      // this function will be used to return the packaged file
      // containing uri, type, and name
@@ -79,6 +81,7 @@ import FlashMessage from '../RandomComponents/FlashMessage';
        name: fileName,
      }
    }
+
 
 
    /*
@@ -102,6 +105,12 @@ import FlashMessage from '../RandomComponents/FlashMessage';
 
      formData.append("fileListLength", fileList.length);
 
+     var config = {
+       onUploadProgress: function(progressEvent){
+         var percentCompleted = Math.round((progressEvent.loaded * 100)/ progressEvent.total)
+       }
+     }
+
      // Loop through the list of images and then add them to the
      for(let i = 0; i<fileList.length; i++){
 
@@ -119,7 +128,13 @@ import FlashMessage from '../RandomComponents/FlashMessage';
 
        authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCurSocialCell/`+ownerId,
          formData,
-         {headers: {"content-type": "multipart/form-data"}}
+         {
+           headers: {"content-type": "multipart/form-data"},
+           onUploadProgress: function(progressEvent){
+             var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total )
+           }
+       },
+
        ).then(res => {
 
          console.log("This will be the return values")
