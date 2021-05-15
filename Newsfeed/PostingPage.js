@@ -172,12 +172,14 @@ import FlashMessage from '../RandomComponents/FlashMessage';
             )
 
            }
-         
+
            WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
              ownerId,
              res.data.cell.id,
              res.data.created
            )
+
+           this.props.navigation.navigate("newsfeed")
 
 
 

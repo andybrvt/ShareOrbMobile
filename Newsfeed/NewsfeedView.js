@@ -16,7 +16,7 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
 import * as dateFns from 'date-fns';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-
+import LoadingBar from '../RandomComponents/LoadingBar';
 
 class NewsfeedView extends React.Component{
 
@@ -118,6 +118,10 @@ class NewsfeedView extends React.Component{
     return(
 
       <BackgroundContainer>
+        <LoadingBar
+          step = {1}
+          steps = {10}
+          height = {20} />
         <Header {...this.props} />
 
         <ScrollView>
