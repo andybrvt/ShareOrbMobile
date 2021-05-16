@@ -134,6 +134,9 @@ import * as authActions from '../store/actions/auth';
            }
          };
 
+
+
+      this.props.authAddTotalLoad()
        authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCurSocialCell/`+ownerId,
          formData,
          {headers: {"content-type": "multipart/form-data"},
@@ -141,14 +144,16 @@ import * as authActions from '../store/actions/auth';
            var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
 
            // ADD AN LOADING HERE
+           console.log('percent here')
+           console.log(percentCompleted)
 
          }
        },
 
        ).then(res => {
 
-
-
+         this.props.authAddCurLoad()
+         // this hits when the call is done
 
          // have a condition where if there are not social cal
          // then delete and remove the content type post
@@ -156,10 +161,15 @@ import * as authActions from '../store/actions/auth';
             const curDate = dataFns.format(new Date(), "yyyy-MM-dd")
 
             // ADD A LOADING HERE
+
+            this.props.authAddTotalLoad()
+
             WebSocketSocialNewsfeedInstance.removeAllPhotoSocialPost(
               ownerId,
               curDate
             )
+
+            this.props.authAddCurLoad()
 
             // Now you wil direct to the newsfeed again
             this.props.navigation.navigate("newsfeed")
@@ -190,15 +200,23 @@ import * as authActions from '../store/actions/auth';
 
 
             // Now change the cover picture
+
+            this.props.authAddTotalLoad()
+
             authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
               coverPicForm,
               {headers: {"content-type": "multipart/form-data"}}
 
               // ADD A LOADING HERE
-            )
+            ).then( res => {
+
+              this.props.authAddCurLoad()
+            })
 
            }
 
+
+           this.props.authAddTotalLoad()
 
            // ADD ONE HERE TOO
            WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
@@ -206,6 +224,17 @@ import * as authActions from '../store/actions/auth';
              res.data.cell.id,
              res.data.created
            )
+
+           this.props.authAddCurLoad()
+
+
+
+           // if(this.props.curLoad >= this.props.totalLoad){
+             // if they are equal or larger you will just set it back to zero
+           // this.props.authZeroCurLoad()
+           // this.props.authZeroTotalLoad()
+
+           // }
 
            this.props.navigation.navigate("newsfeed")
 
@@ -367,10 +396,10 @@ import * as authActions from '../store/actions/auth';
 
  const mapDispatchToProps = dispatch => {
    return {
-     authAddCurLoad: () => dispatch(authActions.authAddCurLoad),
-     authAddTotalLoad: () => dispatch(authActions.authAddTotalLoad),
-     authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad),
-     authZeroTotalLoad: () => dispathc(authActions.authZeroTotalLoad)
+     authAddCurLoad: () => dispatch(authActions.authAddCurLoad()),
+     authAddTotalLoad: () => dispatch(authActions.authAddTotalLoad()),
+     authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
+     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad())
    }
  }
 
