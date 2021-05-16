@@ -14,7 +14,6 @@ const loadSocialPosts = (state, action) => {
 }
 
 const loadMoreSocialPost = (state, action) =>{
-  console.log(action)
   return updateObject(state, {
     socialPosts: [...state.socialPosts, ...action.post]
   })
@@ -39,7 +38,6 @@ const loadCurSocialCell = (state, action) => {
 }
 
 const addFirstSocialCellPost = (state, action) => {
-  console.log(action)
   return updateObject(state, {
     socialPosts: [action.socialCell, ...state.socialPosts]
   })

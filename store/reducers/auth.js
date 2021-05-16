@@ -22,6 +22,10 @@ const initialState ={
   showIntialInstructions: false,
   notificationSeen: 0,
   date_joined: null,
+
+
+  curLoad: 0,
+  totalLoad: 0,
 }
 
 const authStart = (state, action) => {
@@ -55,6 +59,32 @@ const authFail = (state, action) => {
     loading: false
   });
 };
+
+const authAddCurLoad = (state, action) => {
+  return updateObject(state, {
+    curLoad: state.curLoad + 1
+  })
+}
+
+const authAddTotalLoad = (state, action) => {
+  return updateObject(state, {
+    totalLoad: state.total + 1
+  })
+}
+
+const authZeroCurLoad = (state, action) => {
+  return updateObject(state, {
+    curLoad: 0
+  })
+}
+
+const authZeroTotalLoad = (state, action) => {
+  return updateObject(state, {
+    totalLoad: 0
+  })
+}
+
+
 
 const authLogout = (state, action) => {
   return updateObject(state, {
@@ -116,6 +146,14 @@ const reducer = (state = initialState, action) => {
       return addCredentials(state, action);
     case actionTypes.AUTH_DONE_LOADING:
       return authDoneLoading(state, action);
+    case actionTypes.AUTH_ADD_CUR_LOAD:
+      return authAddCurLoad(state, action);
+    case actionTypes.AUTH_ADD_TOTAL_LOAD:
+      return authAddTotalLoad(state, action);
+    case actionTypes.AUTH_ZERO_CUR_LOAD:
+      return authZeroCurLoad(state, action);
+    case actionTypes.AUTH_ZERO_TOTAL_LOAD:
+      return authZeroTotalLoad(state, action);
     default:
       return state;
   }

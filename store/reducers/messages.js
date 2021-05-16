@@ -13,7 +13,6 @@ const initialState = {
 
 const setChats = (state, action) => {
   let curChat = ""
-  console.log(action.chats)
   if(action.chats.chatList.length === 0){
     curChat = 0
   } else {

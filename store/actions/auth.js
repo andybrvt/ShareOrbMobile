@@ -33,6 +33,34 @@ export const authFail = error => {
   };
 };
 
+export const authAddCurLoad = () => {
+  // increment the cur load by 1
+  return(
+    type: actionTypes.AUTH_ADD_CUR_LOAD
+  )
+}
+
+export const authAddTotalLoad = () => {
+  // increment the total load by 1
+  return (
+    type: actionTypes.AUTH_ADD_TOTAL_LOAD
+  )
+}
+
+export const authZeroCurLoad = () => {
+  // zero out the curLoad
+  return(
+    type: actionTypes.AUTH_ZERO_CUR_LOAD
+  )
+}
+
+export const authZeroTotalLoad = () => {
+  // zero out the totalLoad
+  return(
+    type: actionTypes.AUTH_ZERO_TOTAL_LOAD
+  )
+}
+
 export const authLogin = (username, password) => {
   // This function will be used to login in
 

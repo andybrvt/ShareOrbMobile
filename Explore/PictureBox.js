@@ -41,7 +41,6 @@ class PictureBox extends React.Component{
       }
 
     }
-    console.log(this.props)
     return(
       <View
         key = {this.props.index}

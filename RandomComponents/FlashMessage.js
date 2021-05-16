@@ -33,7 +33,6 @@ class FlashMessage extends React.Component{
   }
 
   render(){
-    console.log(height-Constants.statusBarHeight-40)
     return(
       <View style={styles.container}>
         {this.props.children}

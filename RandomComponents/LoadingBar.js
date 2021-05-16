@@ -25,7 +25,6 @@ class LoadingBar extends React.Component{
   }
 
   componentDidMount(){
-    console.log(this.animatedValue)
     Animated.timing(this.animatedValue, {
       toValue: this.reactive,
       duration: 300,
@@ -35,8 +34,7 @@ class LoadingBar extends React.Component{
   }
 
   componentDidUpdate(prevProps){
-    console.log('here are the props')
-    console.log(prevProps)
+
     // -width + width * step/steps
     // this.reactive.setValue()
     const width = this.state.width
@@ -50,8 +48,7 @@ class LoadingBar extends React.Component{
   render(){
 
 
-    console.log('here is the states')
-    console.log(this.state.width)
+  
     return (
       <View
         onLayout = { e => {

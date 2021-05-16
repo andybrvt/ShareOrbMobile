@@ -18,7 +18,6 @@ const Stack = createNativeStackNavigator();
 class Routes extends React.Component{
 
   render(){
-    console.log(this.props.isAuthenticated)
     return(
       <Stack.Navigator screenOptions={{headerShown: false,}}>
         {

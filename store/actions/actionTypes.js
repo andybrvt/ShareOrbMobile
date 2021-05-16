@@ -6,6 +6,11 @@ export const AUTH_LOGOUT = "AUTH_LOGOUT";
 export const ADD_CREDENTIALS = "ADD_CREDENTIALS";
 export const AUTH_DONE_LOADING = "AUTH_DONE_LOADING";
 
+export const AUTH_ADD_CUR_LOAD = "AUTH_ADD_CUR_LOAD";
+export const AUTH_ADD_TOTAL_LOAD = "AUTH_ADD_TOTAL_LOAD";
+export const AUTH_ZERO_CUR_LOAD = "AUTH_ZERO_CUR_LOAD";
+export const AUTH_ZERO_TOTAL_LOAD = "AUTH_ZERO_TOTAL_LOAD";
+
 // This is for the newsfeed
 export const LOAD_SOCIAL_POSTS = "LOAD_SOCIAL_POSTS";
 export const ADD_SOCIAL_POST_LIKE = "ADD_SOCIAL_POST_LIKE";

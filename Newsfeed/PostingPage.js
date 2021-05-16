@@ -126,19 +126,24 @@ import FlashMessage from '../RandomComponents/FlashMessage';
 
        }
 
+       var config = {
+           onUploadProgress: function(progressEvent) {
+
+             var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+           }
+         };
+
        authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCurSocialCell/`+ownerId,
          formData,
-         {
-           headers: {"content-type": "multipart/form-data"},
-           onUploadProgress: function(progressEvent){
-             var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total )
-           }
+         {headers: {"content-type": "multipart/form-data"},
+         onUploadProgress: function(progressEvent){
+           var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+         }
        },
 
        ).then(res => {
 
-         console.log("This will be the return values")
-         console.log(res.data)
+
 
 
          // have a condition where if there are not social cal
@@ -164,9 +169,7 @@ import FlashMessage from '../RandomComponents/FlashMessage';
             const coverPicForm = new FormData()
             coverPicForm.append('cellId', res.data.cell.id)
             coverPicForm.append("createdCell", res.data.created)
-         //
-         console.log('here is the file list')
-          console.log(fileList)
+
             if(fileList[fileList.length -1].includes(global.POSTLIST_SPEC)){
 
               // PROBALLY GONNA HAVE TO FIX THIS
