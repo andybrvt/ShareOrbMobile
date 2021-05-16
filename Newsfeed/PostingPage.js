@@ -315,6 +315,8 @@ import * as authActions from '../store/actions/auth';
 
    render(){
 
+     console.log('here is the posting ')
+     console.log(this.props)
 
 
      return (
@@ -390,7 +392,8 @@ import * as authActions from '../store/actions/auth';
  const mapStateToProps = state => {
    return{
      profilePic: state.auth.profilePic,
-     curUserId: state.auth.id
+     curUserId: state.auth.id,
+     curSocialCell: state.socialNewsfeed.curSocialCell
    }
  }
 

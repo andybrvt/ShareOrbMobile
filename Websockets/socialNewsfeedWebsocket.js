@@ -68,7 +68,8 @@ class WebSocketSocialNewsfeed{
     // probally just gonna include it in the soical newsfeed bc it will
     // be used mostly there
 
-    // this.callbacks['fetch_cur_social_cell'](curSocialCell)
+
+    this.callbacks['fetch_cur_social_cell'](curSocialCell)
 
 
   }
