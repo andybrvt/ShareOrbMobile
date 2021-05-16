@@ -21,6 +21,7 @@ import  authAxios from '../util';
 import * as dateFns from 'date-fns';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import FlashMessage from '../RandomComponents/FlashMessage';
+import * as authActions from '../store/actions/auth';
 
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
@@ -138,6 +139,9 @@ import FlashMessage from '../RandomComponents/FlashMessage';
          {headers: {"content-type": "multipart/form-data"},
          onUploadProgress: function(progressEvent){
            var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+
+           // ADD AN LOADING HERE
+
          }
        },
 
@@ -150,6 +154,8 @@ import FlashMessage from '../RandomComponents/FlashMessage';
          // then delete and remove the content type post
          if(res.data.cell.get_socialCalItems.length === 0 ){
             const curDate = dataFns.format(new Date(), "yyyy-MM-dd")
+
+            // ADD A LOADING HERE
             WebSocketSocialNewsfeedInstance.removeAllPhotoSocialPost(
               ownerId,
               curDate
@@ -187,10 +193,14 @@ import FlashMessage from '../RandomComponents/FlashMessage';
             authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
               coverPicForm,
               {headers: {"content-type": "multipart/form-data"}}
+
+              // ADD A LOADING HERE
             )
 
            }
 
+
+           // ADD ONE HERE TOO
            WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
              ownerId,
              res.data.cell.id,
@@ -355,6 +365,15 @@ import FlashMessage from '../RandomComponents/FlashMessage';
    }
  }
 
+ const mapDispatchToProps = dispatch => {
+   return {
+     authAddCurLoad: () => dispatch(authActions.authAddCurLoad),
+     authAddTotalLoad: () => dispatch(authActions.authAddTotalLoad),
+     authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad),
+     authZeroTotalLoad: () => dispathc(authActions.authZeroTotalLoad)
+   }
+ }
+
 
  const styles = StyleSheet.create({
      button:{
@@ -366,4 +385,4 @@ import FlashMessage from '../RandomComponents/FlashMessage';
    },
  })
 
-export default connect(mapStateToProps, null)(PostingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PostingPage);
