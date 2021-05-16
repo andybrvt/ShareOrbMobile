@@ -90,22 +90,25 @@ class SocialNewsfeedPost extends React.Component{
                 }}
               />
 
-            {/*
+
             <View style = {styles.videoFooter}>
               <Text  style = {styles.videoFooterUserName}>@{userUsername+" "}
                 <Text  style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
               </Text>
 
             </View>
-            */}
-            <Text style = {styles.tagCSS1}>
 
-              <FontAwesomeIcon
-              style = {{
-                color:'white',
-              }}
-              size = {20}
-              icon={faHeart} /> {like_people.length}</Text>
+            <View style = {styles.tagCSS1}>
+              <Text style = {styles.justifyCenter}>
+                <FontAwesomeIcon
+                style = {{
+                  color:'white',
+                }}
+                size = {20}
+                icon={faHeart} />
+                {like_people.length}
+              </Text>
+          </View>
 
             <Text style = {styles.tagCSS2}>
 
@@ -225,7 +228,7 @@ class SocialNewsfeedPost extends React.Component{
     return (
 
       <View>
-
+        {/*
         <View style = {styles.likeCapHolder}>
           <View style = {styles.miniLikeCommCon}>
 
@@ -240,7 +243,7 @@ class SocialNewsfeedPost extends React.Component{
           </View>
 
         </View>
-
+        */}
 
       </View>
     )
@@ -368,7 +371,7 @@ const styles = StyleSheet.create({
 
     color:'white',
     fontSize:13,
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
 
     textShadowRadius: 5
 
@@ -396,12 +399,18 @@ const styles = StyleSheet.create({
     borderRadius:25,
     color:'white',
     bottom:175,
-
+    justifyContent: 'center',
     fontSize:13,
     right:10,
     // fontWeight:'bold',
 
   },
+
+  justifyCenter:{
+    color:'white',
+    justifyContent:'center'
+  },
+
   tagCSS2: {
     position:'absolute',
     backgroundColor: 'rgba(0,0,0,.6)',
@@ -448,8 +457,8 @@ const styles = StyleSheet.create({
   container: {
     // backgroundColor:'red',
     margin: 3,
-    width: Math.round(Dimensions.get('window').width-10),
-    height: 600
+
+    height: 550
   },
   cover: {
     flex: 1,
@@ -475,12 +484,13 @@ const styles = StyleSheet.create({
 
   card: {
     // backgroundColor: "red",
-    width:392,
+    width: Math.round(Dimensions.get('window').width)-10,
     borderRadius:20,
     position: 'relative',
     // height: 600,
-    marginBottom: 5,
-    borderColor: '#f0f0f0', borderWidth: 1,
+    marginBottom: 35,
+    borderColor: '#f0f0f0',
+    borderWidth: 3,
 
   },
   imageContainer: {
@@ -535,7 +545,9 @@ const styles = StyleSheet.create({
   },
   captionHolder: {
     flexDirection: "row",
-
+    textShadowColor: 'black',
+    textShadowOffset: {width: 0, height: 1},
+    textShadowRadius: 6
 
   },
   captionUsername:{
