@@ -3,7 +3,8 @@ import {
   Text,
   View,
   Button,
-  Animated
+  Animated,
+  StyleSheet
  } from 'react-native';
 
 class LoadingBar extends React.Component{
@@ -62,17 +63,16 @@ class LoadingBar extends React.Component{
         }}
          style = {{
           height: this.props.height,
-          backgroundColor: "rgba(0, 0, 0, 0.1)",
-          borderRadius: this.props.height,
-          overflow: "hidden"
+          // backgroundColor: "rgba(0, 0, 0, 0.1)",
+          overflow: "hidden",
+          // position: "absolute"
         }}>
         <Animated.View
 
           style = {{
             height: this.props.height,
             width: "100%",
-            borderRadius: this.props.height,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: '#1890ff',
             transform: [{
               translateX: this.animatedValue
             }]
@@ -86,5 +86,6 @@ class LoadingBar extends React.Component{
   }
 
 }
+
 
 export default LoadingBar;

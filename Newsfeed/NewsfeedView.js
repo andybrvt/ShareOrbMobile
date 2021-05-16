@@ -138,7 +138,7 @@ class NewsfeedView extends React.Component{
           <LoadingBar
             step = {curLoading}
             steps = {totalLoading}
-            height = {20} />
+            height = {5} />
 
         }
 
