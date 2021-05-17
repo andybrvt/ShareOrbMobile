@@ -67,8 +67,9 @@ const authAddCurLoad = (state, action) => {
 }
 
 const authAddTotalLoad = (state, action) => {
+  console.log('in the reducers')
   return updateObject(state, {
-    totalLoad: state.total + 1
+    totalLoad: state.totalLoad + 1
   })
 }
 

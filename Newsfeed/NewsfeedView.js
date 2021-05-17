@@ -99,6 +99,17 @@ class NewsfeedView extends React.Component{
       WebSocketSocialNewsfeedInstance.connect()
     }
 
+
+  if(this.props.curLoad >= this.props.totalLoad && this.props.totalLoad > 0){
+
+    setTimeout(() => {
+      this.props.authZeroTotalLoad()
+      this.props.authZeroCurLoad()
+    }, 2000)
+
+
+  }
+
   }
 
   ComponentWillUnmount(){
@@ -127,7 +138,7 @@ class NewsfeedView extends React.Component{
           <LoadingBar
             step = {curLoading}
             steps = {totalLoading}
-            height = {20} />
+            height = {5} />
 
         }
 
@@ -189,8 +200,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch(authActions.logout())
-
+    logout: () => dispatch(authActions.logout()),
+    authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
+    authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad())
   }
 }
 

@@ -49,8 +49,7 @@ class WebSocketSocialNewsfeed{
   const parsedData = JSON.parse(data);
   const command = parsedData.command;
 
-  console.log('returned backed data')
-  console.log(parsedData)
+
   // Make the different calls here
   if(command === "fetch_social_posts"){
     // pull data and add callbacks here
@@ -69,7 +68,8 @@ class WebSocketSocialNewsfeed{
     // probally just gonna include it in the soical newsfeed bc it will
     // be used mostly there
 
-    // this.callbacks['fetch_cur_social_cell'](curSocialCell)
+
+    this.callbacks['fetch_cur_social_cell'](curSocialCell)
 
 
   }
