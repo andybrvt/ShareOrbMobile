@@ -14,14 +14,21 @@ class SocialNewsfeedPost extends React.Component{
     super(props);
     this.state = {
       showComments: false,
+      showLike: false,
 
     }
   }
 
   changeShowComments = () => {
+
+    this.props.navigation.navigate("MessageFriend")
+
+  }
+
+  changeShowLike = () => {
     console.log(this.state.showComments)
     this.setState({
-      showComments:!this.state.showComments,
+      showLike:!this.state.showLike,
     });
     console.log(this.state.showComments)
   }
@@ -113,14 +120,26 @@ class SocialNewsfeedPost extends React.Component{
 
 
               <View style = {styles.tagCSS1}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.changeShowLike}>
                 <Text style = {styles.justifyCenter}>
-                  <FontAwesomeIcon
-                  style = {{
-                    color:'white',
-                  }}
-                  size = {20}
-                  icon={faHeart} />
+                  {
+                    (this.state.showLike) ?
+                    <FontAwesomeIcon
+                    style = {{
+                      color:'red',
+                    }}
+                    size = {20}
+                    icon={faHeart} />
+                    :
+                    <FontAwesomeIcon
+                    style = {{
+                      color:'white',
+                    }}
+                    size = {20}
+                    icon={faHeart} />
+
+                  }
+
                   {like_people.length}
                 </Text>
                 </TouchableOpacity>
@@ -130,7 +149,7 @@ class SocialNewsfeedPost extends React.Component{
 
               <View style = {styles.tagCSS2}>
                 <TouchableOpacity
-                  onPress={this.changeShowComments}
+
                   >
                 <Text style={{color:'white'}}>
                 {
@@ -166,9 +185,11 @@ class SocialNewsfeedPost extends React.Component{
               <FontAwesomeIcon
               style = {{
                 color:'white',
+
               }}
               size = {20}
-              icon={faBookmark} />  0
+              icon={faBookmark} />
+
             </Text>
 
         </View>
@@ -482,7 +503,7 @@ const styles = StyleSheet.create({
     bottom:85,
 
     fontSize:13,
-    right:10,
+    right:15,
     textAlign:'right',
     // fontWeight:'bold',
 
