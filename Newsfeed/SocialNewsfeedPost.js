@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button,StyleSheet, Image, Dimensions, ImageBackground} from 'react-native';
+import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity, ImageBackground} from 'react-native';
 import { Card } from 'react-native-paper';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
@@ -12,6 +12,18 @@ class SocialNewsfeedPost extends React.Component{
 
   constructor(props){
     super(props);
+    this.state = {
+      showComments: false,
+
+    }
+  }
+
+  changeShowComments = () => {
+    console.log(this.state.showComments)
+    this.setState({
+      showComments:!this.state.showComments,
+    });
+    console.log(this.state.showComments)
   }
 
 
@@ -92,33 +104,63 @@ class SocialNewsfeedPost extends React.Component{
 
 
             <View style = {styles.videoFooter}>
-              <Text  style = {styles.videoFooterUserName}>@{userUsername+" "}
+              <Text >
+                <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
                 <Text  style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
               </Text>
 
             </View>
 
-            <View style = {styles.tagCSS1}>
-              <Text style = {styles.justifyCenter}>
-                <FontAwesomeIcon
-                style = {{
-                  color:'white',
-                }}
-                size = {20}
-                icon={faHeart} />
-                {like_people.length}
+
+              <View style = {styles.tagCSS1}>
+                <TouchableOpacity>
+                <Text style = {styles.justifyCenter}>
+                  <FontAwesomeIcon
+                  style = {{
+                    color:'white',
+                  }}
+                  size = {20}
+                  icon={faHeart} />
+                  {like_people.length}
+                </Text>
+                </TouchableOpacity>
+              </View>
+
+
+
+              <View style = {styles.tagCSS2}>
+                <TouchableOpacity
+                  onPress={this.changeShowComments}
+                  >
+                <Text style={{color:'white'}}>
+                {
+                  (this.state.showComments) ?
+                  <FontAwesomeIcon
+                  style = {{
+                    color:'red',
+                  }}
+                  size = {20}
+                  icon={faComment} />
+                  :
+                  <FontAwesomeIcon
+                  style = {{
+                    color:'white',
+                  }}
+                  size = {20}
+                  icon={faComment} />
+
+                }
+
+
+
+                {commentList.length}
               </Text>
-          </View>
+              </TouchableOpacity>
+              </View>
 
-            <Text style = {styles.tagCSS2}>
 
-              <FontAwesomeIcon
-              style = {{
-                color:'white',
-              }}
-              size = {20}
-              icon={faComment} />  {commentList.length}
-            </Text>
+
+
             <Text style = {styles.tagCSS3}>
 
               <FontAwesomeIcon
@@ -370,10 +412,12 @@ const styles = StyleSheet.create({
   videoFooterUserName: {
 
     color:'white',
-    fontSize:13,
-    textShadowColor: 'rgba(0, 0, 0, 0.25)',
-
-    textShadowRadius: 5
+    fontSize:14,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
 
     // fontWeight:'bold',
 
@@ -387,8 +431,11 @@ const styles = StyleSheet.create({
     bottom:25,
     width:'75%',
     padding:10,
+    fontWeight:'600',
 
-
+    textShadowColor: 'black',
+  textShadowOffset: {width: -1, height: 1},
+  textShadowRadius: 10
     // fontWeight:'bold',
 
   },

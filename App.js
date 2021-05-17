@@ -45,7 +45,7 @@ import PostingPage from './Newsfeed/PostingPage';
 import ViewProfile from './ProfilePage/ViewProfile';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
-
+import Comments from './Newsfeed/Comments.js';
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -301,12 +301,14 @@ class App extends Component{
                     name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen
                     name = 'PostingPage' component = {PostingPage}/>
-
                     <Stack.Screen
-                      options={{
-                        title: 'Chat With',
-                                        }}
-                       name = 'MessageFriend' component = {MessageFriend}/>
+                      name = 'Comments' component = {Comments}/>
+
+                  <Stack.Screen
+                    options={{
+                      title: 'Chat With',
+                                      }}
+                     name = 'MessageFriend' component = {MessageFriend}/>
                   <Stack.Screen
                     options={{
                       title: 'Your Name',
