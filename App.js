@@ -46,6 +46,9 @@ import ViewProfile from './ProfilePage/ViewProfile';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
 import Comments from './Newsfeed/Comments.js';
+
+import { Ionicons } from '@expo/vector-icons';
+
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -180,6 +183,7 @@ class App extends Component{
           // children = {this.createHomeStack}
           options={{
              tabBarLabel: 'Home',
+
              tabBarIcon: ({ color }) => (
                <FontAwesomeIcon
 
@@ -195,10 +199,7 @@ class App extends Component{
           options={{
              tabBarLabel: 'Explore',
              tabBarIcon: ({ color }) => (
-               <FontAwesomeIcon
-                 size = {25}
-                 color = {color}
-                 icon={faMapSigns} />
+               <Ionicons name="md-home" color="black" size={25} />
              ),
            }}
            />
@@ -301,9 +302,8 @@ class App extends Component{
                     name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen
                     name = 'PostingPage' component = {PostingPage}/>
-                    <Stack.Screen
+                  <Stack.Screen
                       name = 'Comments' component = {Comments}/>
-
                   <Stack.Screen
                     options={{
                       title: 'Chat With',
@@ -313,14 +313,13 @@ class App extends Component{
                     options={{
                       title: 'Your Name',
                     }}
-                     name = 'ViewProfile' component = {ViewProfile}/>
+                    name = 'ViewProfile' component = {ViewProfile}/>
                   <Stack.Screen
                     name = "ImageBrowserScreen"
                     options={{
                       title: 'Selected 0 files',
                     }}
                     component = {ImageBrowserScreen} />
-
                 </Stack.Navigator>
                 :
                 <Routes {...this.props} />
