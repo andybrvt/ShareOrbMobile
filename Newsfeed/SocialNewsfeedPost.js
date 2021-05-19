@@ -9,8 +9,7 @@ import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-ico
 import { Avatar } from 'react-native-elements';
 
 import FeatherIcon from 'feather-icons-react';
-import { Camera } from 'react-feather';
-import { ArrowUpCircle } from "react-native-feather";
+import { Tag } from 'react-feather';
 class SocialNewsfeedPost extends React.Component{
 
   constructor(props){
@@ -163,8 +162,12 @@ class SocialNewsfeedPost extends React.Component{
                   icon={faComment} />
                   :
 
-                  <ArrowUpCircle stroke="red" width={32} height={32} />
-
+                  <FontAwesomeIcon
+                  style = {{
+                    color:'white',
+                  }}
+                  size = {20}
+                  icon={faComment} />
                 }
 
 
@@ -178,14 +181,18 @@ class SocialNewsfeedPost extends React.Component{
 
 
             <Text style = {styles.tagCSS3}>
+              <View>
 
-              <FontAwesomeIcon
-              style = {{
-                color:'white',
+                <FontAwesomeIcon
+                style = {{
+                  color:'white',
 
-              }}
-              size = {20}
-              icon={faBookmark} />
+                }}
+                size = {20}
+                icon={faBookmark} />
+
+              </View>
+
 
             </Text>
 

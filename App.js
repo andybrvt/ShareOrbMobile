@@ -48,6 +48,7 @@ import MessageFriend from './Chats/MessageFriend';
 import Comments from './Newsfeed/Comments.js';
 
 import { Ionicons } from '@expo/vector-icons';
+import { ArrowUpCircle, Search, Home, Disc, User, MessageCircle} from "react-native-feather";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -174,22 +175,21 @@ class App extends Component{
         initialRouteName = "Home"
         barStyle = {{
           backgroundColor: "white",
-
+          height:45,
         }}
+
+
+
         >
         <Tab.Screen
           name="Home"
           component={NewsfeedView}
           // children = {this.createHomeStack}
           options={{
-             tabBarLabel: 'Home',
+             tabBarLabel: false,
 
              tabBarIcon: ({ color }) => (
-               <FontAwesomeIcon
-
-                 size = {25}
-                 color = {color}
-                 icon={faHome} />
+               <Home stroke={color} strokeWidth={2} width={25} height={25} />
              ),
            }}
            />
@@ -197,9 +197,9 @@ class App extends Component{
           name="Explore"
           component={Explore}
           options={{
-             tabBarLabel: 'Explore',
+             tabBarLabel: false,
              tabBarIcon: ({ color }) => (
-               <Ionicons name="md-home" color="black" size={25} />
+                <Search stroke={color} strokeWidth={2} width={25} height={25} />
              ),
            }}
            />
@@ -208,12 +208,10 @@ class App extends Component{
              name="Upload"
              component={PostingPage}
              options={{
-
+               tabBarLabel: false,
                 tabBarIcon: ({ color }) => (
-                  <FontAwesomeIcon
-                    size = {35}
-                    color = {'#1890ff'}
-                    icon={faPlusSquare} />
+                    <Disc
+                      stle={{bottom:10}} stroke="white" fill="#1890ff" strokeWidth={2} width={40} height={40} />
                 ),
               }}
 
@@ -229,11 +227,9 @@ class App extends Component{
            component={Chats}
            options={{
               tabBarLabel: 'Messages',
+              tabBarLabel: false,
               tabBarIcon: ({ color }) => (
-                <FontAwesomeIcon
-                  size = {25}
-                  color = {color}
-                  icon={faComments} />
+                  <MessageCircle stroke={color} strokeWidth={2} width={25} height={25} />
               ),
             }}
             />
@@ -243,12 +239,9 @@ class App extends Component{
                component={Profile}
 
                options={{
-
+                 tabBarLabel: false,
                   tabBarIcon: ({ color }) => (
-                    <FontAwesomeIcon
-                      size = {25}
-                      color = {color}
-                      icon={faUser} />
+                    <User stroke={color} strokeWidth={2} width={25} height={25} />
                   ),
                 }}
                 initialParams = {{
@@ -292,10 +285,12 @@ class App extends Component{
             {
               !this.props.loading && this.props.username ?
                 <Stack.Navigator
+
                   mode = "modal"
+
                   // headerMode ="none"
                   initialRouteName = "newsfeed"
-                  // screenOptions={{headerShown: false, }}
+                  screenOptions={{headerShown: false, }}
                     >
                   <Stack.Screen
                     options={{headerShown: false, }}
