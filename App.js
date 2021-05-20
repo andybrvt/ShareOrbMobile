@@ -48,7 +48,7 @@ import MessageFriend from './Chats/MessageFriend';
 import Comments from './Newsfeed/Comments.js';
 
 import { Ionicons } from '@expo/vector-icons';
-import { ArrowUpCircle, Search, Home, Disc, User, MessageCircle} from "react-native-feather";
+import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle} from "react-native-feather";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -175,7 +175,7 @@ class App extends Component{
         initialRouteName = "Home"
         barStyle = {{
           backgroundColor: "white",
-          height:45,
+          height:50,
         }}
 
 
@@ -199,7 +199,7 @@ class App extends Component{
           options={{
              tabBarLabel: false,
              tabBarIcon: ({ color }) => (
-                <Search stroke={color} strokeWidth={2} width={25} height={25} />
+                <Aperture stroke={color} strokeWidth={2} width={25} height={25} />
              ),
            }}
            />
@@ -211,7 +211,7 @@ class App extends Component{
                tabBarLabel: false,
                 tabBarIcon: ({ color }) => (
                     <Disc
-                      stle={{bottom:10}} stroke="white" fill="#1890ff" strokeWidth={2} width={40} height={40} />
+                      style={{bottom:10}} stroke="white" fill="#1890ff" strokeWidth={2} width={40} height={40} />
                 ),
               }}
 

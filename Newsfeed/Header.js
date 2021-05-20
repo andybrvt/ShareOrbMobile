@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
 import { faBell } from '@fortawesome/free-regular-svg-icons'
+import { Search, Bell} from "react-native-feather";
 
 class Header extends React.Component{
 
@@ -30,17 +31,12 @@ class Header extends React.Component{
     return(
       <View style = {styles.container}>
         <View style = {styles.logoContainer}>
-           <MainLogo width = {150}/>
+           <MainLogo width = {125}/>
         </View>
         <View style = {styles.searchProfileContainer}>
-          <FontAwesomeIcon
-            size = {20}
-            icon={faSearch} />
+            <Search stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
 
-          <FontAwesomeIcon
-            size = {20}
-            icon={faBell} />
-
+            <Bell stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
 
         </View>
 
@@ -74,7 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
-    width: "30%",
+    width: "25%",
   }
 })
 //
