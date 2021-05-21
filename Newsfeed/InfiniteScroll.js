@@ -13,13 +13,13 @@ class InfiniteScroll extends React.Component{
 
   render(){
 
-  
+
     let post = []
 
     if(this.props.socialPosts){
       post = this.props.socialPosts
     }
-
+    console.log(this.props)
 
 
     return (

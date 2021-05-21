@@ -9,23 +9,28 @@ import axios from "axios";
 import { ArrowUpCircle, Search, Plus, Menu } from "react-native-feather";
 import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { Avatar, BottomNavigation } from 'react-native-paper';
+import { connect } from 'react-redux';
 class SearchBar extends React.Component{
-
-
-
 
     render(){
       return (
         <View style ={styles.searchText}>
-
+          <Avatar.Image
+            source = {{
+              uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic,
+            }}
+            size = {30}
+          />
           <View style = {styles.searchText}>
+
             <FontAwesomeIcon
               style={{marginRight:10, color: 'gray',left:20}}
               size = {12.5}
               icon={faSearch} />
 
             <TextInput
-              style={{left:25}}
+              style={{left:20}}
             underlineColorAndroid = "transparent"
             placeholder = "Search Chats"></TextInput>
 
@@ -37,7 +42,7 @@ class SearchBar extends React.Component{
 }
 
 
-export default SearchBar;
+
 
 const styles = StyleSheet.create({
   searchText: {
@@ -53,6 +58,7 @@ const styles = StyleSheet.create({
     width:'95%',
     flexDirection: 'row',
     alignItems: 'center',
+
 
   },
   searchIcon: {
@@ -79,3 +85,12 @@ const styles = StyleSheet.create({
       color: '#424242',
   },
 })
+
+const mapStateToProps = state => {
+  return{
+    chats: state.message.chats,
+    profilePic: state.auth.profilePic
+  }
+}
+
+export default connect(mapStateToProps, null)(SearchBar);
