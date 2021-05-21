@@ -9,7 +9,7 @@ import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-ico
 import { Avatar } from 'react-native-elements';
 
 import FeatherIcon from 'feather-icons-react';
-import { Tag } from 'react-feather';
+import { Tag, Heart } from 'react-feather';
 class SocialNewsfeedPost extends React.Component{
 
   constructor(props){
@@ -121,27 +121,33 @@ class SocialNewsfeedPost extends React.Component{
 
               <View style = {styles.tagCSS1}>
                 <TouchableOpacity onPress={this.changeShowLike}>
-                <Text style = {styles.justifyCenter}>
+                <View style = {styles.justifyCenter}>
                   {
                     (this.state.showLike) ?
                     <FontAwesomeIcon
                     style = {{
                       color:'red',
+                      right:3,
                     }}
                     size = {20}
                     icon={faHeart} />
                     :
                     <FontAwesomeIcon
-                    style = {{
-                      color:'white',
-                    }}
+                      style = {{
+                        color:'white',
+                        right:3,
+                      }}
+
                     size = {20}
-                    icon={faHeart} />
+                    icon={faHeart}>
+
+                  </FontAwesomeIcon>
 
                   }
-
+                  <Text  style = {styles.justifyCenter1}>
                   {like_people.length}
-                </Text>
+                  </Text>
+                </View>
                 </TouchableOpacity>
               </View>
 
@@ -151,12 +157,13 @@ class SocialNewsfeedPost extends React.Component{
                 <TouchableOpacity
 
                   >
-                <Text style={{color:'white'}}>
+                <View  style = {styles.justifyCenter}>
                 {
                   (this.state.showComments) ?
                   <FontAwesomeIcon
                   style = {{
                     color:'red',
+                    right:3,
                   }}
                   size = {20}
                   icon={faComment} />
@@ -165,15 +172,16 @@ class SocialNewsfeedPost extends React.Component{
                   <FontAwesomeIcon
                   style = {{
                     color:'white',
+                    right:3,
                   }}
                   size = {20}
                   icon={faComment} />
                 }
 
-
-
+                <Text  style = {styles.justifyCenter1}>
                 {commentList.length}
-              </Text>
+                </Text>
+              </View>
               </TouchableOpacity>
               </View>
 
@@ -467,7 +475,7 @@ const styles = StyleSheet.create({
   tagCSS1: {
     position:'absolute',
     backgroundColor: 'rgba(0,0,0,.6)',
-    padding:7.5,
+    padding:9,
     borderRadius:25,
     color:'white',
     bottom:175,
@@ -479,14 +487,26 @@ const styles = StyleSheet.create({
   },
 
   justifyCenter:{
+    flexDirection:'row',
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
     color:'white',
-    justifyContent:'center'
+
+    // backgroundColor:'red',
+  },
+  justifyCenter1:{
+    color:'white',
+    // top:2,
+    // flex: 1, flexDirection: 'row',
+    // justifyContent: 'center', alignItems: 'center',
+    // backgroundColor:'blue',
   },
 
   tagCSS2: {
     position:'absolute',
     backgroundColor: 'rgba(0,0,0,.6)',
-    padding:7.5,
+    padding:9,
     borderRadius:25,
     color:'white',
     bottom:130,
