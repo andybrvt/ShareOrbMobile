@@ -151,38 +151,33 @@ class SocialNewsfeedPost extends React.Component{
                 </TouchableOpacity>
               </View>
 
-
-
               <View style = {styles.tagCSS2}>
-                <TouchableOpacity
+                <TouchableOpacity  onPress={this.changeShowComments}>
+                  <View  style = {styles.justifyCenter}>
+                    {
+                      (this.state.showComments) ?
+                      <FontAwesomeIcon
+                      style = {{
+                        color:'red',
+                        right:3,
+                      }}
+                      size = {20}
+                      icon={faComment} />
+                      :
 
-                  >
-                <View  style = {styles.justifyCenter}>
-                {
-                  (this.state.showComments) ?
-                  <FontAwesomeIcon
-                  style = {{
-                    color:'red',
-                    right:3,
-                  }}
-                  size = {20}
-                  icon={faComment} />
-                  :
-
-                  <FontAwesomeIcon
-                  style = {{
-                    color:'white',
-                    right:3,
-                  }}
-                  size = {20}
-                  icon={faComment} />
-                }
-
-                <Text  style = {styles.justifyCenter1}>
-                {commentList.length}
-                </Text>
-              </View>
-              </TouchableOpacity>
+                      <FontAwesomeIcon
+                      style = {{
+                        color:'white',
+                        right:3,
+                      }}
+                      size = {20}
+                      icon={faComment} />
+                    }
+                    <Text  style = {styles.justifyCenter1}>
+                    {commentList.length}
+                  </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
 
 
@@ -190,18 +185,13 @@ class SocialNewsfeedPost extends React.Component{
 
             <Text style = {styles.tagCSS3}>
               <View>
-
                 <FontAwesomeIcon
                 style = {{
                   color:'white',
-
                 }}
                 size = {20}
                 icon={faBookmark} />
-
               </View>
-
-
             </Text>
 
         </View>

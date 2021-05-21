@@ -31,7 +31,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 // this will be used to show the list of chats
 class Chats extends React.Component{
   selectItem(item) {
-    
+
     this.props.navigation.navigate("MessageFriend",
       {
         chatPersonName:this.getChatUserName(item.participants),
@@ -227,9 +227,12 @@ class Chats extends React.Component{
         <View style = {styles.chatAvatar}>
 
         </View>
+        {/*
         <View style = {styles.chatChatText}>
           <Text style = {styles.chatWordText} >Messages</Text>
         </View>
+
+        */}
 
         <View style = {styles.chatNew}>
           <Plus width= {30} height = {30} />
@@ -346,6 +349,9 @@ class Chats extends React.Component{
           {this.searchHeader()}
 
           <View style = {styles.searchTextContainer}>
+
+
+
             <SearchBar />
 
           </View>
@@ -362,6 +368,8 @@ class Chats extends React.Component{
           renderItem = {this.renderItem}
           keyExtractor={(item) => item.id}
           />
+
+        <Button title="Learn More"/>
 
 
       </BackgroundContainer>
@@ -409,9 +417,10 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   searchTextContainer:{
-    marginTop:10,
+
     marginLeft:10,
     padding: 10,
+    // backgroundColor:'red',
   },
 
   chatNameContainer: {
@@ -435,8 +444,9 @@ const styles = StyleSheet.create({
   },
   chatHeaderContainer: {
 
-    height: 60,
-    flexDirection: 'row'
+    height: 30,
+    flexDirection: 'row',
+    // backgroundColor:'red',
   },
   frequentPeopleContainer: {
     marginTop:30,
