@@ -40,12 +40,28 @@ const width = Dimensions.get("window").width
 
  class PostingPage extends React.Component{
 
-   state = {
-     imageList: [],
-     caption: "",
-     flashMessage: false,
-     fileList: []
+   constructor(props){
+     super(props)
+
+     this.state = {
+       imageList: [],
+       caption: "",
+       flashMessage: false,
+       fileList: [],
+       pan: new Animated.ValueXY()
+     }
+
+     // this.panResponder = PanResponder.create({
+     //   onStartShouldSetPanResponder: () => true,
+     //   onPanResponderMove: Animated.event([null, {
+     //     dx: this.state.pan.x,
+     //     dy: this.state.pan.y
+     //   }]),
+     //   onPanResponderRelease: (e, gesture) => {}
+     // })
+
    }
+
 
 
    componentDidMount(){

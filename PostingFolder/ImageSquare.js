@@ -12,11 +12,15 @@ import {
 const height = Dimensions.get('window').height
 const width = Dimensions.get("window").width
 
+
+// this will be used for the images in the posting
+// whenever you want to have animation in your views
+// you will use animated.view
 class ImageSquare extends React.Component{
 
   render(){
     return(
-      <View
+      <Animated.View
         style = {styles.imageContainer}
         key= {this.props.index}
         >
@@ -27,7 +31,7 @@ class ImageSquare extends React.Component{
             uri: this.props.images
           }}
            />
-      </View>
+       </Animated.View>
     )
   }
 }
