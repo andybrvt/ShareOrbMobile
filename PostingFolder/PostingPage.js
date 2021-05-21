@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   PanResponder,
-
+  Animated
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -24,6 +24,7 @@ import * as dateFns from 'date-fns';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import FlashMessage from '../RandomComponents/FlashMessage';
 import * as authActions from '../store/actions/auth';
+import ImageSquare from './ImageSquare';
 
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
@@ -381,14 +382,10 @@ const width = Dimensions.get("window").width
              {this.state.imageList.map((images, key) => {
 
                return (
-                 <View
-                   style = {styles.imageContainer}
-                   key = {key}>
-                   <Image
-                    style = {styles.smallImage}
-                    resizeMode = "cover"
-                    source={{ uri: images }}  />
-                 </View>
+                <ImageSquare
+                  index = {key}
+                  images = {images}
+                   />
 
                )
              })
