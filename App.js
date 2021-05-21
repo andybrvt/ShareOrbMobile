@@ -290,7 +290,7 @@ class App extends Component{
 
                   // headerMode ="none"
                   initialRouteName = "newsfeed"
-                  screenOptions={{headerShown: false, }}
+                  // screenOptions={{headerShown: false, }}
                     >
                   <Stack.Screen
                     options={{headerShown: false, }}

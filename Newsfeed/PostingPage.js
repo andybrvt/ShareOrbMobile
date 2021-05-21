@@ -39,8 +39,48 @@ import * as authActions from '../store/actions/auth';
      imageList: [],
      caption: "",
      flashMessage: false,
+     fileList: []
    }
 
+
+   componentDidMount(){
+     let caption = "";
+     let fileList = [];
+
+
+
+     if(this.props.curSocialCalCell){
+       if(this.props.curSocialCalCell.dayCaption){
+         caption = this.props.curSocialCalCell.dayCaption
+       }
+
+       if(this.props.curSocialCalCell.get_socialCalItems){
+
+         // Now you will push the pictures into the file list here
+         // in this case you might not need to but rather put
+         // it into the file Listin states (imagelist specifically)
+
+         console.log('here are some pictures')
+         console.log(this.props.curSocialCalCell.get_socialCalItems)
+
+
+         for(let i = 0; i< this.props.curSocialCalCell.get_socialCalItems.length; i++){
+           // You want to push an object into the fileLis
+            fileList.push(
+              `${global.IMAGE_ENDPOINT}`+this.props.curSocialCalCell.get_socialCalItems[i].itemImage
+            )
+         }
+
+
+       }
+     }
+
+     this.setState({
+       caption: caption,
+       imageList: fileList
+     })
+
+   }
 
    /*
    This function will be in charge of opening the indicator message
@@ -316,7 +356,8 @@ import * as authActions from '../store/actions/auth';
    render(){
 
      console.log('here is the posting ')
-     console.log(this.props)
+     console.log(this.state)
+
 
 
      return (
@@ -324,6 +365,11 @@ import * as authActions from '../store/actions/auth';
          <FlashMessage  showMessage = {this.state.flashMessage} message = {"Image Posted"}>
 
          <View >
+
+           <View>
+
+
+           </View>
 
 
              <Avatar.Image
@@ -393,7 +439,7 @@ import * as authActions from '../store/actions/auth';
    return{
      profilePic: state.auth.profilePic,
      curUserId: state.auth.id,
-     curSocialCell: state.socialNewsfeed.curSocialCell
+     curSocialCalCell: state.socialNewsfeed.curSocialCell
    }
  }
 
