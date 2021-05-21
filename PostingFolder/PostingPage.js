@@ -10,7 +10,9 @@ import {
   TextInput,
   ActivityIndicator,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  PanResponder,
+
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -31,6 +33,8 @@ import * as authActions from '../store/actions/auth';
  import * as ImagePicker from 'expo-image-picker';
  // import { ImageBrowser } from 'expo-image-picker-multiple';
 
+const height = Dimensions.get('window').height
+const width = Dimensions.get("window").width
 
 
  class PostingPage extends React.Component{
@@ -358,72 +362,48 @@ import * as authActions from '../store/actions/auth';
      console.log('here is the posting ')
      console.log(this.state)
 
+     // Remember, if you ever want to animate an element you will have to use
+     // animated.view
 
 
      return (
        <ModalBackgroundContainer>
          <FlashMessage  showMessage = {this.state.flashMessage} message = {"Image Posted"}>
 
-         <View >
-
-           <View>
+         <ScrollView>
 
 
-           </View>
+           <Text> Current Photos </Text>
+           <View style = {styles.imageContainerContainer}>
 
 
-             <Avatar.Image
-               source = {{
-                 uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
-               }}
-               size = {75}
-             />
-           <Divider/>
-             <TextInput
-               onChangeText = {this.handleCaptionChange}
-               value = {this.state.caption}
 
-
-                 placeholder = "What's going on today?"
-
-                 />
-               <Text> Your pictures todayf</Text>
-
-                <TouchableHighlight>
-                  <View style={styles.button}>
-                    <Text>Touch Here</Text>
-                  </View>
-                </TouchableHighlight>
-
-
-             <Button
-               title = "Choose Photo"
-               onPress = {this.handleChoosePhoto}
-               />
              {this.state.imageList.map((images, key) => {
 
                return (
-                <Image
-                  key = {key}
-                   source={{ uri: images }} style={{ width: 200, height: 200 }} />
+                 <View
+                   style = {styles.imageContainer}
+                   key = {key}>
+                   <Image
+                    style = {styles.smallImage}
+                    resizeMode = "cover"
+                    source={{ uri: images }}  />
+                 </View>
+
                )
              })
 
            }
 
-           <TextInput
-             onChangeText = {this.handleCaptionChange}
-             value = {this.state.caption}
-             placeholder = "Write a caption for the your wonderful day..."
+          </View>
 
+
+           <Button
+             title = "Choose Photo"
+             onPress = {this.handleChoosePhoto}
              />
 
-
-             <Button
-               title = "direct to image browser"
-               onPress = {() => this.props.navigation.navigate("ImageBrowserScreen")} />
-
-           </View>
+           </ScrollView>
          </FlashMessage>
 
 
@@ -458,9 +438,32 @@ import * as authActions from '../store/actions/auth';
        flex: 1,
        flexDirection: 'column',
        alignItems: 'center',       //THIS LINE HAS CHANGED
+     },
+     imageContainerContainer: {
+       flex: 1,
+       flexDirection: "row",
+       width: width,
+       flexWrap: 'wrap',
+     },
+     imageContainer: {
+       width: Math.round(width/3),
+       height: Math.round(width/3),
+       overflow:"hidden",
+       alignItems: 'center',
+       justifyContent: "center",
 
+      // padding: 10,
+     },
+     imageHolder: {
 
-   },
+     },
+     smallImage: {
+       width: "80%",
+       height: "80%",
+       borderRadius: 15
+
+     }
+
  })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostingPage);
