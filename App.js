@@ -42,6 +42,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 import PostingPage from './PostingFolder/PostingPage';
+import TestDrag from './PostingFolder/TestDrag';
 import ViewProfile from './ProfilePage/ViewProfile';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
@@ -296,7 +297,9 @@ class App extends Component{
                     options={{headerShown: false, }}
                     name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen
-                    name = 'PostingPage' component = {PostingPage}/>
+                    options={{headerShown: false, }}
+
+                    name = 'PostingPage' component = {TestDrag}/>
                   <Stack.Screen
                       name = 'Comments' component = {Comments}/>
                   <Stack.Screen

@@ -48,21 +48,42 @@ const width = Dimensions.get("window").width
        caption: "",
        flashMessage: false,
        fileList: [],
-       pan: new Animated.ValueXY()
+       pan: new Animated.ValueXY(),
+       showDraggable: true,
+       dropZoneValues: null
      }
 
-     // this.panResponder = PanResponder.create({
-     //   onStartShouldSetPanResponder: () => true,
-     //   onPanResponderMove: Animated.event([null, {
-     //     dx: this.state.pan.x,
-     //     dy: this.state.pan.y
-     //   }]),
-     //   onPanResponderRelease: (e, gesture) => {}
-     // })
+     this.panResponder = PanResponder.create({
+       onStartShouldSetPanResponder: () => true,
+       onPanResponderMove: Animated.event([null, {
+         dx: this.state.pan.x,
+         dy: this.state.pan.y
+       }]),
+       onPanResponderRelease: (e, gesture) => {
+         Animated.spring(
+           // spring back into this place
+           this.state.pan,
+           {toValue:{x:0, y: 0}}
+         ).start();
+       }
+     })
 
    }
 
+   setDropZoneValues(event){
+     this.setState({
+       dropZoneValues: event.nativeEvent.layout
+     })
+   }
 
+   renderDraggable(){
+     if(this.state.showDraggable){
+       return(
+         <View>
+         </View>
+       )
+     }
+   }
 
    componentDidMount(){
      let caption = "";
@@ -377,7 +398,7 @@ const width = Dimensions.get("window").width
    render(){
 
      console.log('here is the posting ')
-     console.log(this.state)
+     console.log(this.state.pan.getLayout)
 
      // Remember, if you ever want to animate an element you will have to use
      // animated.view
@@ -385,9 +406,11 @@ const width = Dimensions.get("window").width
 
      return (
        <ModalBackgroundContainer>
-         <FlashMessage  showMessage = {this.state.flashMessage} message = {"Image Posted"}>
+         <FlashMessage  showMessage = {this.state.flashMessage} message = {"Image Posted"} />
 
-         <ScrollView>
+         <View
+           style = {styles.wholeContainer}
+           >
 
 
            <Text> Current Photos </Text>
@@ -398,10 +421,19 @@ const width = Dimensions.get("window").width
              {this.state.imageList.map((images, key) => {
 
                return (
-                <ImageSquare
-                  index = {key}
-                  images = {images}
-                   />
+                 <Animated.View
+                   {...this.panResponder.panHandlers}
+                   style = {[this.state.pan.getLayout(),styles.imageContainer]}
+                   key= {key}
+                   >
+                   <Image
+                     style = {styles.smallImage}
+                     resizeMode = "cover"
+                     source = {{
+                       uri: images
+                     }}
+                      />
+                  </Animated.View>
 
                )
              })
@@ -416,8 +448,7 @@ const width = Dimensions.get("window").width
              onPress = {this.handleChoosePhoto}
              />
 
-           </ScrollView>
-         </FlashMessage>
+           </View>
 
 
        </ModalBackgroundContainer>
@@ -452,11 +483,15 @@ const width = Dimensions.get("window").width
        flexDirection: 'column',
        alignItems: 'center',       //THIS LINE HAS CHANGED
      },
+     wholeContainer: {
+        flex:1,
+     },
      imageContainerContainer: {
        flex: 1,
-       flexDirection: "row",
+       // flexDirection: "row",
        width: width,
-       flexWrap: 'wrap',
+       // flexWrap: 'wrap',
+       backgroundColor: 'red'
      },
      imageContainer: {
        width: Math.round(width/3),
