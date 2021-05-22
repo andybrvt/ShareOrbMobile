@@ -14,14 +14,14 @@ global.WS_HEADER = "ws"
 // global.WS_ENDPOINT = "192.168.1.200:19002"
 // global.WS_HEADER = "ws"
 
-global.IP_CHANGE = "http://192.168.1.24:19000"
-global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
-global.WS_ENDPOINT = "192.168.1.24:19000"
+// global.IP_CHANGE = "http://192.168.1.24:19000"
+// global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
+// global.WS_ENDPOINT = "192.168.1.24:19000"
 
 // Andy hot spoot
-// global.IP_CHANGE = "http://172.20.10.2:19000"
-// global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
-// global.WS_ENDPOINT = "172.20.10.2:19000"
+global.IP_CHANGE = "http://172.20.10.2:19000"
+global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
+global.WS_ENDPOINT = "172.20.10.2:19000"
 
 // global.IP_CHANGE = "http://10.20.100.62:19000"
 // global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
@@ -33,7 +33,11 @@ global.WS_ENDPOINT = "192.168.1.24:19000"
 // global.WS_ENDPOINT = "10.143.167.43:19000"
 // global.POSTLIST_SPEC = 'http://10.143.167.43:19000/media/'
 
-
+// This is library wifi
+// global.IP_CHANGE = "http://172.16.101.129:19000"
+// global.IMAGE_ENDPOINT = "http://172.16.101.129:19000"
+// global.WS_ENDPOINT = "172.16.101.129:19000"
+// global.POSTLIST_SPEC = 'http://172.16.101.129:19000/media/'
 
 global.CAPITALIZE = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1)
