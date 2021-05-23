@@ -51,6 +51,7 @@ import Comments from './Newsfeed/Comments.js';
 
 import { Ionicons } from '@expo/vector-icons';
 import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle} from "react-native-feather";
+import TestReanimated from './PostingFolder/TestReanimated';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -300,7 +301,7 @@ class App extends Component{
                   <Stack.Screen
                     options={{headerShown: false, }}
 
-                    name = 'PostingPage' component = {TestDrag}/>
+                    name = 'PostingPage' component = {TestReanimated}/>
                   <Stack.Screen
                       name = 'Comments' component = {Comments}/>
                   <Stack.Screen
