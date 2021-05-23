@@ -15,11 +15,10 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUsers, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowUpCircle, Search, Plus, Menu } from "react-native-feather";
+import { ArrowUpCircle, Plus, Mail, UserPlus } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import SearchBar from '../RandomComponents/SearchBar';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-
 // The first thing you want to do in making the chat is
 // that you need to have a chat side panel which will show
 // you all the chats that are avaliable, so this chats here will
@@ -31,7 +30,8 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 // this will be used to show the list of chats
 class Chats extends React.Component{
   selectItem(item) {
-
+    console.log("hi")
+    console.log(item)
     this.props.navigation.navigate("MessageFriend",
       {
         chatPersonName:this.getChatUserName(item.participants),
@@ -40,6 +40,26 @@ class Chats extends React.Component{
         }
     );
   }
+
+  FlatListItemSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "100%",
+          backgroundColor: "#f0f0f0",
+        }}
+      />
+    );
+  }
+
+  searchPeople() {
+
+    this.props.navigation.navigate("ChatSearch",
+
+    );
+  }
+
     getChatUserProfile(participantList){
       // This function will show the correct userProfile that you are chatting
       // with
@@ -252,7 +272,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
           <Avatar.Image
             source = {{
-              uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+              uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
             }}
             size = {45}
           />
@@ -262,7 +282,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1610555248279-adea4c523fb3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
              }}
              size = {45}
            />
@@ -272,26 +292,26 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
           <Avatar.Image
             source = {{
-              uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+              uri: 'https://images.unsplash.com/photo-1558339136-19ee57afe7a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
             }}
             size = {45}
            />
-          <Text >Julia</Text>
+         <Text >Emily</Text>
         </View>
 
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1610490689129-26c48e3cb975?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=80',
              }}
              size = {45}
            />
-          <Text >Sam</Text>
+         <Text >Christina</Text>
         </View>
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1618125857227-df2ded76ec2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
              }}
              size = {45}
            />
@@ -300,7 +320,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80'
              }}
              size = {45}
            />
@@ -309,7 +329,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
              }}
              size = {45}
            />
@@ -318,7 +338,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
              }}
              size = {45}
            />
@@ -347,18 +367,13 @@ class Chats extends React.Component{
       <BackgroundContainer>
         <View style = {styles.chatHeaderHeader}>
           {this.searchHeader()}
-
           <View style = {styles.searchTextContainer}>
-
-
-
             <SearchBar />
-
           </View>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             horizontal = {true}>
-          {this.frequentChatPeople()}
+            {this.frequentChatPeople()}
           </ScrollView>
         </View>
 
@@ -366,11 +381,25 @@ class Chats extends React.Component{
           style = {{marginTop:10}}
           data = {chatList}
           renderItem = {this.renderItem}
+          ItemSeparatorComponent = { this.FlatListItemSeparator }
           keyExtractor={(item) => item.id}
-          />
+        >
+        <Text>hi</Text>
+        </FlatList>
 
-        <Button title="Learn More"/>
-
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            padding:15,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => this.searchPeople()}
+            style={styles.roundButton1}>
+            <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+          </TouchableOpacity>
+        </View>
 
       </BackgroundContainer>
 
@@ -386,6 +415,17 @@ const mapStateToProps = state => {
 }
 
 const styles = StyleSheet.create({
+  roundButton1: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100,
+    right:10,
+    bottom:10,
+    backgroundColor: '#1890ff',
+  },
   column:{
     flex: 1,
     flexDirection: 'column',
@@ -432,9 +472,10 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   },
   chatUsername: {
-    fontSize: 10,
+    fontSize: 14,
     color: 'gray',
-    marginTop: 4,
+    marginTop: 1,
+    left:4,
 
   },
   chatText: {

@@ -7,10 +7,11 @@ import { Text,
  } from 'react-native';
 import axios from "axios";
 import { ArrowUpCircle, Search, Plus, Menu } from "react-native-feather";
-import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Avatar, BottomNavigation } from 'react-native-paper';
 import { connect } from 'react-redux';
+import { Settings } from "react-native-feather";
 class SearchBar extends React.Component{
 
     render(){
@@ -20,6 +21,7 @@ class SearchBar extends React.Component{
             source = {{
               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic,
             }}
+            style={{right:10}}
             size = {30}
           />
           <View style = {styles.searchText}>
@@ -35,6 +37,12 @@ class SearchBar extends React.Component{
             placeholder = "Search Chats"></TextInput>
 
           </View>
+
+            <Settings style={{marginLeft:10}} stroke="#1890ff"
+               strokeWidth={2.5}
+               width={22.5}
+               height={22.5}
+            />
 
         </View>
       )
@@ -55,7 +63,7 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.2,
     flex: 2,
-    width:'95%',
+    width:'100%',
     flexDirection: 'row',
     alignItems: 'center',
 
