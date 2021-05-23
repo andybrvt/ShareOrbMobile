@@ -35,7 +35,7 @@ class TestDrag extends React.Component{
   state = {
     // New type of format inorder to put 200 values
     // into an array
-    data: Array.from(Array(200), (_,i) => {
+    data: Array.from(Array(10), (_,i) => {
       colorMap[i] = this.getRandomColor()
       return i
     }),
@@ -50,12 +50,14 @@ class TestDrag extends React.Component{
     this.setState({
       dragging: false,
       draggingIndex: -1,
-      active: false
+
     })
+    this.active = false
   }
   constructor(props){
     super(props)
 
+    this.flatListHeight = 0;
     this.flatList  = createRef(),
     this.active = false
     this.currentY = 0;
@@ -185,6 +187,24 @@ class TestDrag extends React.Component{
     // request the browser toe xecute the code during the next
     // repaint cycle
     requestAnimationFrame(() => {
+      // check if near the bottom or top
+      // this is +100 because you want to get that extra space to indicate
+      // that there is a part moving on (the current y will just be the y of the
+      // screen )
+      // so this is just to indicate that you are close to the bottom
+      if(this.currentY + 100 > this.flatListHeight){
+        this.flatList.current.scrollToOffset({
+          offset: this.scrollOffset + 5,
+          animated: false
+        })
+      } else if(this.currentY < 100) {
+        this.flatList.current.scrollToOffset({
+          offset: this.scrollOffset - 20,
+          animated: false
+        })
+      }
+
+
       // check y value if you need to reorder
       // check to see if the new y value is in a new index
       const newIndex = this.yToIndex(this.currentY)
@@ -287,6 +307,9 @@ class TestDrag extends React.Component{
 
     // if you want a reference to any itme, like you want to have functions call from that object
     // you would use new createref
+
+    // ListHeaderComponent will be use to render stuff in the header of the
+    // flatlist
     return(
       <SafeAreaView style = {styles.container}>
 
@@ -313,6 +336,7 @@ class TestDrag extends React.Component{
           renderItem = {renderItem}
           onScroll = {e =>{
             // this is to see how far down it is
+            // to get the current scroll off set
             this.scrollOffset = e.nativeEvent.contentOffset.y
           }}
           onLayout = {e =>{
@@ -322,6 +346,7 @@ class TestDrag extends React.Component{
 
             // just remember native events, they are important
               this.flatListTopOffset = e.nativeEvent.layout.y
+              this.flatListHeight = e.nativeEvent.layout.height
           }}
           scrollEventThrottle = {16}
           keyExtractor = {item => ""+item}
