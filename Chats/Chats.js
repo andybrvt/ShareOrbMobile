@@ -30,7 +30,8 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 // this will be used to show the list of chats
 class Chats extends React.Component{
   selectItem(item) {
-
+    console.log("hi")
+    console.log(item)
     this.props.navigation.navigate("MessageFriend",
       {
         chatPersonName:this.getChatUserName(item.participants),
@@ -271,7 +272,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
           <Avatar.Image
             source = {{
-              uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+              uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
             }}
             size = {45}
           />
@@ -281,7 +282,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1610555248279-adea4c523fb3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
              }}
              size = {45}
            />
@@ -291,26 +292,26 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
           <Avatar.Image
             source = {{
-              uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+              uri: 'https://images.unsplash.com/photo-1558339136-19ee57afe7a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
             }}
             size = {45}
            />
-          <Text >Julia</Text>
+         <Text >Emily</Text>
         </View>
 
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1610490689129-26c48e3cb975?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=80',
              }}
              size = {45}
            />
-          <Text >Sam</Text>
+         <Text >Christina</Text>
         </View>
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1618125857227-df2ded76ec2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
              }}
              size = {45}
            />
@@ -319,7 +320,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80'
              }}
              size = {45}
            />
@@ -328,7 +329,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
              }}
              size = {45}
            />
@@ -337,7 +338,7 @@ class Chats extends React.Component{
         <View style={[styles.column]}>
            <Avatar.Image
              source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+               uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
              }}
              size = {45}
            />
@@ -471,9 +472,10 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   },
   chatUsername: {
-    fontSize: 10,
+    fontSize: 14,
     color: 'gray',
-    marginTop: 4,
+    marginTop: 1,
+    left:4,
 
   },
   chatText: {

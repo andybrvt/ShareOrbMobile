@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Text,
+  TextInput,
   View,
   Button,
   StyleSheet,
@@ -23,7 +24,7 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
    render(){
      this.props.navigation.setOptions({headerTitle:
 
-       this.props.route.params.chatPersonName+" @"+this.props.route.params.chatUserName})
+       this.props.route.params.chatPersonName+" @f"+this.props.route.params.chatUserName})
      return (
          <View >
            <Text> Chat with {this.props.route.params.chatPersonName}</Text>
@@ -35,6 +36,7 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
              size = {50}
               />
          </View>
+
 
      )
    }
