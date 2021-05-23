@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createRef} from 'react';
 import {
   Text,
   View,
@@ -40,19 +40,29 @@ class TestDrag extends React.Component{
       return i
     }),
 
-    point: new Animated.ValueXY(),
-    dragging: false
+    // point: new Animated.ValueXY(),
+    dragging: false,
+    draggingIndex: -1,
   }
 
 
   reset = () => {
     this.setState({
-      dragging: false
+      dragging: false,
+      draggingIndex: -1,
+      active: false
     })
   }
   constructor(props){
     super(props)
 
+    this.flatList  = createRef(),
+    this.active = false
+    this.currentY = 0;
+    this.point = new Animated.ValueXY()
+    this.currentIndex = -1;
+    this.rowHeight = 0;
+    this.flatListTopOffset = 0;
     this.scrollOffset= 0;
     this.panResponder =  PanResponder.create({
       // Ask to be the responder:
@@ -70,17 +80,39 @@ class TestDrag extends React.Component{
         // what is happening!
         // gestureState.d{x,y} will be set to zero now
 
-        console.log(gestureState.y0)
         // y0 is the starting position of the y, you can have an x0 as well
+
+
+        // how much you scroll (assuming it start from the top of the container)
+        // then afterwards you will then add to how much of the screen you are on to
+        // which is the y0 value or the value that you clicked on, then substract
+        // any offset from the top
+
+        this.currentIndex = this.yToIndex(gestureState.y0) ;
+        this.currentY = gestureState.y0; // remember y0 is the intial starting position
+        Animated.event(
+          [{y:this.point.y}],
+          {useNativeDriver: false}
+        )({y:gestureState.y0 - this.rowHeight/2})
+        this.active = true
         this.setState({
-          dragging: true
+          dragging: true,
+          draggingIndex: this.currentIndex
+        }, () => {
+          this.animateList()
         })
+
+        // YOu can add a call back to a set state, so wehnever the state changes, that funciton
+        // will run
       },
 
       // for the gesture move, get updates on the objects location
       onPanResponderMove: (evt, gestureState) => {
-        console.log(gestureState.moveY)
-        Animated.event([{y:this.state.point.y}])({y:gestureState.moveY})
+        this.currentY = gestureState.moveY; // remember moveY is the new y position
+        Animated.event(
+          [{y:this.point.y}],
+          {useNativeDriver: false}
+        )({y:gestureState.moveY})
         // in the gestureState, x and y 0 are the intial value
         // d x and y are the distnace from the origianl
 
@@ -115,6 +147,86 @@ class TestDrag extends React.Component{
 
   }
 
+  // function that will reorder the list
+  immutableMove = (arr, from, to) => {
+    return arr.reduce((prev, current, idx, self) => {
+      if (from === to) {
+        prev.push(current);
+      }
+      if (idx === from) {
+        return prev;
+      }
+      if (from < to) {
+        prev.push(current);
+      }
+      if (idx === to) {
+        prev.push(self[from]);
+      }
+      if (from > to) {
+        prev.push(current);
+      }
+      return prev;
+    }, []);
+  }
+
+
+  animateList = () => {
+    // since this is recursive, we would need a base case and a
+    // recusive case
+    if(!this.active){
+      // pretty much when you are not touching or dragging
+      return;
+    }
+
+    // fucntion used to recursively call it self inorder ot check
+    // if everything in the list is ordered correctly
+
+    // the requestAnimationFrame will help with the lag
+    // request the browser toe xecute the code during the next
+    // repaint cycle
+    requestAnimationFrame(() => {
+      // check y value if you need to reorder
+      // check to see if the new y value is in a new index
+      const newIndex = this.yToIndex(this.currentY)
+      // The current index, since it is a floor value, it will
+      //stay on one index long enough to check and compare
+      if(this.currentIndex != newIndex ){
+        // Now you will call a reorder function
+        console.log('reordering')
+        // move the old index to the new spot and the new spot tot he old spot
+
+        // it will be a new index is because you are switching with the one
+        // you are moving towards
+        this.setState({
+          data: this.immutableMove(this.state.data,this.currentIndex, newIndex),
+          draggingIndex: newIndex
+        })
+
+        this.currentIndex = newIndex
+
+      }
+
+      this.animateList()
+    })
+  }
+
+  // to get the index of the numbers
+  yToIndex = (y: number) => {
+    // since this value is a floor there will be times that the value will be zero or larger
+    // so to cover all the edge cases you will need to put conditionals on
+    const value =  Math.floor((this.scrollOffset+ y - this.flatListTopOffset) / this.rowHeight)
+
+    if(value < 0 ){
+      return 0;
+    }
+
+    if(value > this.state.data.length -1){
+      return this.state.data.length -1;
+    }
+
+    return value;
+  }
+
   getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -139,18 +251,26 @@ class TestDrag extends React.Component{
     // this is all the area you want the animation to happen
 
 
-    const {data, dragging} = this.state;
+    const {data, dragging, draggingIndex} = this.state;
     console.log('here in the test')
 
-    const renderItem = ({item}) =>(
+
+    // for render times for the parameter that gets passed in, it will be an object
+    // and you can get specfic values from the object based on its position
+    const renderItem = ({item, index}, noPanResponder = false) =>(
       <View
+        onLayout = {e => {
+          this.rowHeight = e.nativeEvent.layout.height
+        }}
         style = {{
           padding: 22,
           backgroundColor: colorMap[item],
-          flexDirection: "row"
+          flexDirection: "row",
+          opacity: draggingIndex === index ? 0 : 1,
+
         }}>
           <View
-            {...this.panResponder.panHandlers}
+            {...(noPanResponder ? {} : this.panResponder.panHandlers)}
             >
             <Text style = {{fontSize: 24}}>@</Text>
           </View>
@@ -162,8 +282,13 @@ class TestDrag extends React.Component{
       </View>
     )
 
+    // so you get the one on the list becaus that is the actual value, the dragging
+    // index is jsut the index
+
+    // if you want a reference to any itme, like you want to have functions call from that object
+    // you would use new createref
     return(
-      <View style = {styles.container}>
+      <SafeAreaView style = {styles.container}>
 
         {this.state.dragging &&
           <Animated.View style = {{
@@ -171,26 +296,37 @@ class TestDrag extends React.Component{
               backgroundColor: "black",
               zIndex: 2,
               width: "100%",
-              top: this.state.point.getLayout().top
+              top: this.point.getLayout().top,
             }}>
-            {renderItem({item: 3})}
+
+            {renderItem({item: data[draggingIndex], index: -1}, true)}
           </Animated.View>
         }
 
         <FlatList
+          ref = {this.flatList}
           scrollEnabled = {!dragging}
           style = {{width: "100%"}}
           data = {data}
+
+          // has 3 paramters that gets passed in, item, index, separators
           renderItem = {renderItem}
           onScroll = {e =>{
             // this is to see how far down it is
             this.scrollOffset = e.nativeEvent.contentOffset.y
           }}
-          onLayout = {e => console.log(e)}
+          onLayout = {e =>{
+            // layout helps manage the position of the
+            // flat list, helps you get where the object is placed
+            // and what not
+
+            // just remember native events, they are important
+              this.flatListTopOffset = e.nativeEvent.layout.y
+          }}
           scrollEventThrottle = {16}
           keyExtractor = {item => ""+item}
            />
-      </View>
+      </SafeAreaView>
     )
   }
 }
