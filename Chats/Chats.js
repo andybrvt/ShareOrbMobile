@@ -15,7 +15,7 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUsers, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowUpCircle, Plus, Mail } from "react-native-feather";
+import { ArrowUpCircle, Plus, Mail, UserPlus } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import SearchBar from '../RandomComponents/SearchBar';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -37,6 +37,18 @@ class Chats extends React.Component{
         chatUserName:item.participants[1].username,
         chatPersonProfilePic: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants),
         }
+    );
+  }
+
+  FlatListItemSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "100%",
+          backgroundColor: "#f0f0f0",
+        }}
+      />
     );
   }
 
@@ -368,6 +380,7 @@ class Chats extends React.Component{
           style = {{marginTop:10}}
           data = {chatList}
           renderItem = {this.renderItem}
+          ItemSeparatorComponent = { this.FlatListItemSeparator }
           keyExtractor={(item) => item.id}
         >
         <Text>hi</Text>
@@ -383,7 +396,7 @@ class Chats extends React.Component{
           <TouchableOpacity
             onPress={() => this.searchPeople()}
             style={styles.roundButton1}>
-            <Mail stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+            <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
           </TouchableOpacity>
         </View>
 
