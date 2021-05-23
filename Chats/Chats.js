@@ -15,11 +15,10 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUsers, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowUpCircle, Search, Plus, Menu } from "react-native-feather";
+import { ArrowUpCircle, Plus, Mail } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import SearchBar from '../RandomComponents/SearchBar';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-
 // The first thing you want to do in making the chat is
 // that you need to have a chat side panel which will show
 // you all the chats that are avaliable, so this chats here will
@@ -40,6 +39,14 @@ class Chats extends React.Component{
         }
     );
   }
+
+  searchPeople() {
+
+    this.props.navigation.navigate("ChatSearch",
+
+    );
+  }
+
     getChatUserProfile(participantList){
       // This function will show the correct userProfile that you are chatting
       // with
@@ -347,18 +354,13 @@ class Chats extends React.Component{
       <BackgroundContainer>
         <View style = {styles.chatHeaderHeader}>
           {this.searchHeader()}
-
           <View style = {styles.searchTextContainer}>
-
-
-
             <SearchBar />
-
           </View>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             horizontal = {true}>
-          {this.frequentChatPeople()}
+            {this.frequentChatPeople()}
           </ScrollView>
         </View>
 
@@ -367,10 +369,23 @@ class Chats extends React.Component{
           data = {chatList}
           renderItem = {this.renderItem}
           keyExtractor={(item) => item.id}
-          />
+        >
+        <Text>hi</Text>
+        </FlatList>
 
-        <Button title="Learn More"/>
-
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            padding:15,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => this.searchPeople()}
+            style={styles.roundButton1}>
+            <Mail stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+          </TouchableOpacity>
+        </View>
 
       </BackgroundContainer>
 
@@ -386,6 +401,17 @@ const mapStateToProps = state => {
 }
 
 const styles = StyleSheet.create({
+  roundButton1: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100,
+    right:10,
+    bottom:10,
+    backgroundColor: '#1890ff',
+  },
   column:{
     flex: 1,
     flexDirection: 'column',

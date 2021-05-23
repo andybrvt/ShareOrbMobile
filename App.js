@@ -46,6 +46,7 @@ import TestDrag from './PostingFolder/TestDrag';
 import ViewProfile from './ProfilePage/ViewProfile';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
+import ChatSearch from './Chats/ChatSearch';
 import Comments from './Newsfeed/Comments.js';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -307,6 +308,11 @@ class App extends Component{
                       title: 'Chat With',
                                       }}
                      name = 'MessageFriend' component = {MessageFriend}/>
+                 <Stack.Screen
+                   options={{
+                     title: 'Search Friends',
+                                     }}
+                    name = 'ChatSearch' component = {ChatSearch}/>
                   <Stack.Screen
                     options={{
                       title: 'Your Name',
