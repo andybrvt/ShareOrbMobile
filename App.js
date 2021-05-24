@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 
 import Routes from './Routes'
 import { NavigationContainer, createAppContainer } from '@react-navigation/native';
@@ -299,7 +299,7 @@ class App extends Component{
                     options={{headerShown: false, }}
                     name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen
-                    options={{headerShown: false, }}
+                    options={{headerShown: false, ...TransitionPresets.SlideFromRightIOS}}
 
                     name = 'PostingPage' component = {TestReanimated}/>
                   <Stack.Screen
@@ -307,6 +307,7 @@ class App extends Component{
                   <Stack.Screen
                     options={{
                       title: 'Chat With',
+                       ...TransitionPresets.SlideFromRightIOS,
                                       }}
                      name = 'MessageFriend' component = {MessageFriend}/>
                  <Stack.Screen
@@ -318,6 +319,7 @@ class App extends Component{
                     options={{
                       title: 'Your Name',
                     }}
+
                     name = 'ViewProfile' component = {ViewProfile}/>
                   <Stack.Screen
                     name = "ImageBrowserScreen"
