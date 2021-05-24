@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',       //THIS LINE HAS CHANGED
-    paddingLeft: 30,
+    paddingLeft: 35,
     justifyContent:'center',
 
 },
