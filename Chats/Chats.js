@@ -378,14 +378,14 @@ class Chats extends React.Component{
         </View>
 
         <FlatList
-          style = {{marginTop:10}}
+          style = {{marginTop:5}}
           data = {chatList}
           renderItem = {this.renderItem}
           ItemSeparatorComponent = { this.FlatListItemSeparator }
-          keyExtractor={(item) => item.id}
-        >
-        <Text>hi</Text>
-        </FlatList>
+
+        />
+
+
 
         <View
           style={{

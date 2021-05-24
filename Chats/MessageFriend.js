@@ -24,17 +24,14 @@ import {
      // to the home page
    }
 
-   updateMessageState(text){
-    this.setState({newMessage: text});
-  }
 
    render(){
-     this.props.navigation.setOptions({headerTitle:
-
-       this.props.route.params.chatPersonName+" @"+this.props.route.params.chatUserName})
+     this.props.navigation.setOptions({
+       headerTitle:this.props.route.params.chatPersonName+" @"+this.props.route.params.chatUserName
+     })
      return (
        <BackgroundContainer>
-         <View >
+         <View style={{height:'92%'}}>
            <Text> Chat with {this.props.route.params.chatPersonName}</Text>
 
            <Avatar.Image
@@ -43,20 +40,26 @@ import {
              }}
              size = {50}
               />
-            <View style = {styles.writeMessageContainer}>
 
-              <Image stroke="#1890ff" strokeWidth={2.5} width={22.5} height={22.5} />
-              <TextInput
-                placeholder="Send a message!"
-                style = {styles.whiteMessage}
-                placeholder="Message..."
-                returnKeyType="send"
-                ref="newMessage"
-                onBlur={() => {this.refs.scrollView.scrollTo(0,0)}}
-                onChangeText={this.updateMessageState}>
-              </TextInput>
-              <Send stroke="#1890ff" strokeWidth={2.5} width={22.5} height={22.5} />
-            </View>
+
+         </View>
+         <View style = {styles.writeMessageContainer}>
+
+           <Image stroke="#1890ff" strokeWidth={2.5} width={22.5} height={22.5} />
+             {/*
+             onBlur={() => {this.refs.scrollView.scrollTo(0,0)}}
+             onChangeText={this.updateMessageState}
+             */}
+           <TextInput
+             placeholder="Send a message!"
+             style = {styles.whiteMessage}
+             placeholder="Message..."
+             returnKeyType="send"
+             ref="newMessage"
+
+             />
+
+           <Send stroke="#1890ff" strokeWidth={2.5} width={22.5} height={22.5} />
          </View>
       </BackgroundContainer>
 
@@ -66,6 +69,8 @@ import {
 
  const styles = StyleSheet.create({
    writeMessageContainer:{
+
+
       padding:10,
       // backgroundColor:'red',
       flexDirection:'row',
@@ -75,10 +80,11 @@ import {
       justifyContent: 'center',
    },
    whiteMessage: {
-     width:'85%',
+
+     width:'82.5%',
      padding:2,
      paddingLeft:10,
-     backgroundColor: 'white',
+     backgroundColor: '#f0f0f0',
      borderRadius:10,
      left:10,
      right:20,
