@@ -9,6 +9,7 @@ import {
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Avatar, BottomNavigation } from 'react-native-paper';
+import { connect } from 'react-redux';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -21,23 +22,31 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
    }
 
    render(){
-     this.props.navigation.setOptions({headerTitle:
 
-       this.props.route.params.chatPersonName+" @"+this.props.route.params.chatUserName})
+     this.props.navigation.setOptions({
+        comments:this.props.route.params.comments
+     })
+     console.log("BLAHBLAHBLAH")
+     console.log(this.props.route.params.comments)
+     let commentList = [];
+
      return (
          <View >
-           <Text> Chat with {this.props.route.params.chatPersonName}</Text>
+           <Text> Comments {this.props.route.params.comments.length}</Text>
 
-           <Avatar.Image
-             source = {{
-               uri: this.props.route.params.chatPersonProfilePic
-             }}
-             size = {50}
-              />
+
          </View>
 
      )
    }
  }
+ const mapStateToProps = state => {
+   return {
+     userId: state.auth.id,
+     currentUser: state.auth.username,
+     profilepic: state.auth.profilePic,
+   }
+ }
 
- export default Comments;
+
+ export default connect(mapStateToProps)(Comments);

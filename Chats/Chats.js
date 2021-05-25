@@ -408,7 +408,7 @@ class Chats extends React.Component{
 }
 
 const mapStateToProps = state => {
-  return{
+  return {
     chats: state.message.chats,
     profilePic: state.auth.profilePic
   }

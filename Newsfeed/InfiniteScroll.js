@@ -19,7 +19,8 @@ class InfiniteScroll extends React.Component{
     if(this.props.socialPosts){
       post = this.props.socialPosts
     }
-    console.log(this.props)
+    console.log("INFINITE SCROLL")
+    console.log(this.props.navigation)
 
 
     return (
@@ -36,7 +37,7 @@ class InfiniteScroll extends React.Component{
                         j.post.get_socialCalItems ?
 
                          <SocialNewsfeedPost
-
+                           navigation={this.props.navigation}
                            ViewProfile = {this.props.ViewProfile}
                            data = {j}
 

@@ -119,8 +119,6 @@ class NewsfeedView extends React.Component{
 
   render(){
 
-    console.log('here in the newsfeed view')
-    console.log(this.props)
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
 
@@ -148,6 +146,7 @@ class NewsfeedView extends React.Component{
 
 
           <InfiniteScroll
+            navigation={this.props.navigation}
             onPagePost = {this.onPagePost}
             ViewProfile={this.ViewProfile}
             />

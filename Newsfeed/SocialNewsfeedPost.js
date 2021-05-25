@@ -22,7 +22,12 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   changeShowComments = () => {
-    this.props.navigation.navigate("Comments")
+    this.props.navigation.navigate("Comments",
+    {
+        comments: this.props.data.post.get_socialCalComment,
+    }
+
+    )
   }
 
   changeShowLike = () => {
@@ -326,6 +331,8 @@ class SocialNewsfeedPost extends React.Component{
     let postCreatedAt = ""
 
     let actionText = ""
+
+    console.log(this.props.data.commentList)
 
     if(this.props.data) {
       if(this.props.data.post){

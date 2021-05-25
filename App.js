@@ -300,10 +300,14 @@ class App extends Component{
                     name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen
                     options={{headerShown: false, ...TransitionPresets.SlideFromRightIOS}}
-
                     name = 'PostingPage' component = {TestReanimated}/>
                   <Stack.Screen
-                      name = 'Comments' component = {Comments}/>
+                      name = 'Comments'
+                      options={{
+                        title: 'Comments',
+                         ...TransitionPresets.SlideFromRightIOS,
+                                        }}
+                      component = {Comments}/>
                   <Stack.Screen
                     options={{
                       title: 'Chat With',
