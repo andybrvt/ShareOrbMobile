@@ -1,63 +1,188 @@
-import React, {createRef} from 'react';
+draggingIndeximport React, { createRef } from "react";
+import { View, Text, Dimensions, SafeAreaView } from "react-native";
+import { PanGestureHandler, State } from "react-native-gesture-handler";
 import {
-  Text,
-  View,
-  Button,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-  Image,
-  TextInput,
-  ActivityIndicator,
-  TouchableOpacity,
-  TouchableHighlight,
-  PanResponder,
-  Animated,
-  FlatList
- } from 'react-native';
- import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import ModalBackgroundContainer from '../RandomComponents/ModalBackgroundContainer';
-import { connect } from 'react-redux'
-import { Avatar, Divider } from 'react-native-paper';
-import  authAxios from '../util';
-import * as dateFns from 'date-fns';
-import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
-import FlashMessage from '../RandomComponents/FlashMessage';
-import * as authActions from '../store/actions/auth';
-import ImageSquare from './ImageSquare';
+  RecyclerListView,
+  DataProvider,
+  LayoutProvider
+} from "recyclerlistview";
+import Animated from "react-native-reanimated";
 
+import {
+  RecyclerListView,
+  DataProvider,
+  LayoutProvider
+} from "recyclerlistview";
+
+
+// DRAG AND DROP USING REANIMATED AND RECYCLERLISTVIEW
+
+// So reanimited pretty much is the other version of animiated from react native
+// so you will be using it instead
+
+// PanGestureHandler is simlar to that of the panresponder
 
 const colorMap = {}
 
+
+// This will be used for the recyclerlistview to handle the different types
+// of rows
+const ViewTypes = {
+  FULL: 0,
+  HALF_LEFT: 1,
+  HALF_RIGHT: 2
+}
+
+const { width } = Dimensions.get("window");
+
+// in this casse you can use reanimted to handle some of the functions
+// instead of jsx, this will help incrase efficency
+const { cond, eq, add, call, set, Value, event, or } = Animated;
+
 class TestDrag extends React.Component{
 
-  state = {
-    // New type of format inorder to put 200 values
-    // into an array
-    data: Array.from(Array(10), (_,i) => {
-      colorMap[i] = this.getRandomColor()
-      return i
-    }),
 
-    // point: new Animated.ValueXY(),
-    dragging: false,
-    draggingIndex: -1,
-  }
+
 
 
   reset = () => {
+    // similar to this reset, since the data is now a dataProvider
+    // you need to do some new methods to update the values (cloneWithRows)
     this.setState({
-      dragging: false,
-      draggingIndex: -1,
-
-    })
-    this.active = false
+       dataProvider: this.state.dataProvider.cloneWithRows(
+         this.state.dataProvider.getAllData()
+       ),
+       dragging: false,
+       draggingIndex: -1
+     });
+     this.scrolling = false;
   }
+
+  // when you do the reanimted call, you have to pass in an array, so you have
+  // to declear it as a variable of the content inside
+  start = ([y]) => {
+    this.currIdx = this.yToIndex(y);
+    this.setState({ dragging: true, draggingIndex: this.currIdx });
+  };
+
+  updateOrder = y => {
+    const newIdx = this.yToIndex(y);
+
+    // Pretty much just update the data provider with
+    // stuff switched around in the list
+    if (this.currIdx !== newIdx) {
+      this.setState({
+        dataProvider: this.state.dataProvider.cloneWithRows(
+          immutableMove(
+            this.state.dataProvider.getAllData(),
+            this.currIdx,
+            newIdx
+          )
+        ),
+        draggingIndex: newIdx
+      });
+      this.currIdx = newIdx;
+    }
+
+
+  }
+
+  moveList = amount => {
+    if (!this.scrolling) {
+      return;
+    }
+
+    this.list.current.scrollToOffset(
+      this.scrollOffset + amount,
+      this.scrollOffset + amount,
+      false
+    );
+
+    requestAnimationFrame(() => {
+      this.moveList(amount);
+    });
+  };
+
+  move = ([y]) => {
+    // this is used scroll the list down whne you get to a certain point
+    if (y + 100 > this.flatlistHeight) {
+      if (!this.scrolling) {
+        this.scrolling = true;
+        this.moveList(20);
+      }
+    } else if (y < 100) {
+      if (!this.scrolling) {
+        this.scrolling = true;
+        this.moveList(-20);
+      }
+    } else {
+      this.scrolling = false;
+    }
+    this.updateOrder(y);
+  };
+
   constructor(props){
     super(props)
 
-    this.flatListHeight = 0;
+    // this will be used as reference to the recyleListview
+    this.recyleList = createRef();
+    // In order to get recycle list view working, you will need a layoutprovider
+    // dataprovider and the rowprovider
+    // the layoutprovider is used to set the height and width of each element (probally
+    // just returns the number)
+    // dataprovider checks if to rows are equal or not, you have to use clonewiht rows
+    // to fill in the data with an array
+    // rowRender, returns the actual react component to be render
+
+
+    // LayoutProvider will have two methods
+    // First method: given an index, return the type of the item
+    // Second method: given the type and object set the height and widht of that object
+    // For complex data your layoutprovider will also be complex so use another file
+    this.layoutProvider = new LayoutProvider(
+      index => {
+        // since there is only one type
+        return ViewTypes.FULL;
+      },
+      (type, dim) => {
+        // Here is the place that you will be be updaing the
+        // dim of the object
+        dim.width = width;
+        dim.height = 70;
+      }
+    )
+
+    // this will be used as a reference to the overall list container
+    this.listContainer = createRef();
+
+    // the value is also set in reanimated
+    this.offY = new Value(0);
+
+    // this add funciton is done in the reanimation
+    // this will be the y that you click on
+    this.y = add(this.offY, new Value(-this.rowHeight/2));
+
+    // so gestureState --> pretty much similar to that of the gestureState
+    // of the panREsponder but now it is seperated
+    this.gestureState = new Value(-1);
+
+    // Pretty much when you are dong the event of the reanimiated, you are pretty much
+    // maping the value form the native given by the gesture state tot he
+    // values you that you map it to
+    //In this case we will be storing the absoluteY in offY and
+    // state in gestureState
+    this.onGestureEvent = event([
+      {
+        nativeEvent: {
+          absoluteY: this.offY,
+          state: this.gestureState
+        }
+      }
+    ])
+
+
+
+    this.flatListHeight = -1;
     this.flatList  = createRef(),
     this.active = false
     this.currentY = 0;
@@ -66,88 +191,87 @@ class TestDrag extends React.Component{
     this.rowHeight = 0;
     this.flatListTopOffset = 0;
     this.scrollOffset= 0;
-    this.panResponder =  PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onStartShouldSetPanResponderCapture: (evt, gestureState) =>
-        true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) =>
-        true,
+
+    this.lastScrollOffset = -1;
+    this.scrolling = false;
 
 
-      // this is important, helps with starting the the gesture
-      onPanResponderGrant: (evt, gestureState) => {
-        // The gesture has started. Show visual feedback so the user knows
-        // what is happening!
-        // gestureState.d{x,y} will be set to zero now
-
-        // y0 is the starting position of the y, you can have an x0 as well
-
-
-        // how much you scroll (assuming it start from the top of the container)
-        // then afterwards you will then add to how much of the screen you are on to
-        // which is the y0 value or the value that you clicked on, then substract
-        // any offset from the top
-
-        this.currentIndex = this.yToIndex(gestureState.y0) ;
-        this.currentY = gestureState.y0; // remember y0 is the intial starting position
-        Animated.event(
-          [{y:this.point.y}],
-          {useNativeDriver: false}
-        )({y:gestureState.y0 - this.rowHeight/2})
-        this.active = true
-        this.setState({
-          dragging: true,
-          draggingIndex: this.currentIndex
-        }, () => {
-          this.animateList()
-        })
-
-        // YOu can add a call back to a set state, so wehnever the state changes, that funciton
-        // will run
-      },
-
-      // for the gesture move, get updates on the objects location
-      onPanResponderMove: (evt, gestureState) => {
-        this.currentY = gestureState.moveY; // remember moveY is the new y position
-        Animated.event(
-          [{y:this.point.y}],
-          {useNativeDriver: false}
-        )({y:gestureState.moveY})
-        // in the gestureState, x and y 0 are the intial value
-        // d x and y are the distnace from the origianl
-
-        // The most recent move distance is gestureState.move{X,Y}
-        // The accumulated gesture distance since becoming responder is
-        // gestureState.d{x,y}
-      },
-      onPanResponderTerminationRequest: (evt, gestureState) =>
-        false,
-
-      // for release and terminate you will use to restart the states
-      // once everything is done
-      onPanResponderRelease: (evt, gestureState) => {
-        // The user has released all touches while this view is the
-        // responder. This typically means a gesture has succeeded
-        this.reset()
-      },
-      onPanResponderTerminate: (evt, gestureState) => {
-        // Another component has become the responder, so this gesture
-        // should be cancelled
-        this.reset()
-      },
-
-
-      onShouldBlockNativeResponder: (evt, gestureState) => {
-        // Returns whether this component should block native components from becoming the JS
-        // responder. Returns true by default. Is currently only supported on android.
-        return true;
-      }
+    // this helps bind the rowRender to the current object
+    this.rowRender = this.rowRender.bind(this);
+    // so in addition to row render and layoutprovider, you will
+    // need data provider, so you will need to make a data provider object
+    // and then add data into it, just to differentiate the rows from each other
+    let dataProvider = new DataProvider((r1, r2) => {
+      return r1 !== r2
     })
+
+    const arr = this.generateArray(20);
+
+
+
+    this.state = {
+      // So inorder to add stuff into a dataprovider you will
+      // need to do cloneWithRows (both for update and add new)
+      dataProvider: dataProvider.cloneWithRows(arr) ,
+
+      // point: new Animated.ValueXY(),
+      dragging: false,
+      draggingIndex: -1,
+    }
 
 
   }
+
+  generateArray(n){
+    return Array.from(Array(n), (_,i) => {
+      colorMap[i] = this.getRandomColor()
+      return i
+    })
+  }
+
+  // so you can get passed in the type, data, index, the other two idk
+  // This will reder the react copoent for each row
+  rowRender(type,data, index, _, nope){
+
+    // Now is when you pick it up, whne you holding it or not
+    nope = !!nope;
+
+    return(
+      <View
+        style = {{
+          padding: 16,
+         backgroundColor: nope ? "#f2f2f2" : colorMap[data],
+         display: "flex",
+         flexDirection: "row",
+         alignItems: "center",
+         opacity: !nope && index === this.state.draggingIndex ? 0 : 1
+        }}
+        >
+        {nope ? (
+          <View>
+            <Text style = {{fontSize: 32}}>@</Text>
+          </View>
+        ): (
+          <PanGestureHandler
+            maxPointer = {1}
+            onGestureEvent = {this.onGestureEvent}
+            onHandlerStateChange = {this.onGestureEvent}
+            >
+            <Animated.View>
+
+              <Text style = {{fontSize: 32}}>@</Text>
+            </Animated.View>
+
+          </PanGestureHandler>
+        )}
+        <Text style={{ fontSize: 18, textAlign: "center", flex: 1 }}>
+          {data}
+        </Text>
+      </View>
+    )
+  }
+
+
 
   // function that will reorder the list
   immutableMove = (arr, from, to) => {
@@ -171,81 +295,16 @@ class TestDrag extends React.Component{
     }, []);
   }
 
-
-  animateList = () => {
-    // since this is recursive, we would need a base case and a
-    // recusive case
-    if(!this.active){
-      // pretty much when you are not touching or dragging
-      return;
-    }
-
-    // fucntion used to recursively call it self inorder ot check
-    // if everything in the list is ordered correctly
-
-    // the requestAnimationFrame will help with the lag
-    // request the browser toe xecute the code during the next
-    // repaint cycle
-    requestAnimationFrame(() => {
-      // check if near the bottom or top
-      // this is +100 because you want to get that extra space to indicate
-      // that there is a part moving on (the current y will just be the y of the
-      // screen )
-      // so this is just to indicate that you are close to the bottom
-      if(this.currentY + 100 > this.flatListHeight){
-        this.flatList.current.scrollToOffset({
-          offset: this.scrollOffset + 5,
-          animated: false
-        })
-      } else if(this.currentY < 100) {
-        this.flatList.current.scrollToOffset({
-          offset: this.scrollOffset - 20,
-          animated: false
-        })
-      }
-
-
-      // check y value if you need to reorder
-      // check to see if the new y value is in a new index
-      const newIndex = this.yToIndex(this.currentY)
-      // The current index, since it is a floor value, it will
-      //stay on one index long enough to check and compare
-      if(this.currentIndex != newIndex ){
-        // Now you will call a reorder function
-        console.log('reordering')
-        // move the old index to the new spot and the new spot tot he old spot
-
-        // it will be a new index is because you are switching with the one
-        // you are moving towards
-        this.setState({
-          data: this.immutableMove(this.state.data,this.currentIndex, newIndex),
-          draggingIndex: newIndex
-        })
-
-        this.currentIndex = newIndex
-
-      }
-
-      this.animateList()
-    })
-  }
-
   // to get the index of the numbers
-  yToIndex = (y: number) => {
-    // since this value is a floor there will be times that the value will be zero or larger
-    // so to cover all the edge cases you will need to put conditionals on
-    const value =  Math.floor((this.scrollOffset+ y - this.flatListTopOffset) / this.rowHeight)
-
-    if(value < 0 ){
-      return 0;
-    }
-
-    if(value > this.state.data.length -1){
-      return this.state.data.length -1;
-    }
-
-    return value;
-  }
+  // gotta switch it up a bit because there is no data.length becuase you have
+  // dataProvider now
+  yToIndex = (y: number) =>  Math.min(
+      this.state.dataProvider.getSize() - 1,
+      Math.max(
+        0,
+        Math.floor((y + this.scrollOffset - this.topOffset) / this.rowHeight)
+      )
+    );
 
   getRandomColor() {
     var letters = '0123456789ABCDEF';
@@ -257,74 +316,45 @@ class TestDrag extends React.Component{
   }
 
   render(){
-    // Step 1: of getting the panResponder to work
-    // first you have to make it a field in the constructor
-    // Step 2: then call its panHandler inside the view you want to
-    // have the gesture have affect {...this.panResponder.panHandlers}
-    // Step 3: You will make a new Animated.ValueXY, this will be the point where
-    // the person finger is on
-    // Step 4: You would then want to update the value of point based on the
-    // onPanResponderMove funcion
-
-
-    // WHEN TO USE ANIMATED.VIEW
-    // this is all the area you want the animation to happen
-
+    // You wont need the renderItem any more because
+    // you have the render rows, it should take care of rendering
+    // the items
 
     const {data, dragging, draggingIndex} = this.state;
     console.log('here in the test')
 
+    // You can put code into the tags that will be run to set up
+    // the begin, start, end cancel, etc
+    // You would do it in animited.code
 
-    // for render times for the parameter that gets passed in, it will be an object
-    // and you can get specfic values from the object based on its position
-    const renderItem = ({item, index}, noPanResponder = false) =>(
-      <View
-        onLayout = {e => {
-          this.rowHeight = e.nativeEvent.layout.height
-        }}
-        style = {{
-          padding: 22,
-          backgroundColor: colorMap[item],
-          flexDirection: "row",
-          opacity: draggingIndex === index ? 0 : 1,
 
-        }}>
-          <View
-            {...(noPanResponder ? {} : this.panResponder.panHandlers)}
-            >
-            <Text style = {{fontSize: 24}}>@</Text>
-          </View>
-        <Text style = {{
-            fontSize: 22,
-            textAlign: 'center',
-            flex:1
-          }}>{item}</Text>
-      </View>
-    )
-
-    // so you get the one on the list becaus that is the actual value, the dragging
-    // index is jsut the index
-
-    // if you want a reference to any itme, like you want to have functions call from that object
-    // you would use new createref
-
-    // ListHeaderComponent will be use to render stuff in the header of the
-    // flatlist
     return(
       <SafeAreaView style = {styles.container}>
 
-        {this.state.dragging &&
-          <Animated.View style = {{
-              position: "absolute",
-              backgroundColor: "black",
-              zIndex: 2,
-              width: "100%",
-              top: this.point.getLayout().top,
-            }}>
+        <Animated.Code>
+          { () => cond (
+            eq(this.gestureState, State.BEGAN),
+            call([this.offY], this.start)
+          )}
+        </Animated.Code>
 
-            {renderItem({item: data[draggingIndex], index: -1}, true)}
-          </Animated.View>
-        }
+        <Animated.Code>
+          {() => cod(
+            or(
+              eq(this.gestureState, State.END),
+              eq(this.gestureState, State.CANCELLED),
+              eq(this.gestureState, State.FAILED),
+              eq(this.gestureState, State.UNDETERMINED)
+            ),
+            call([], this.reset)
+          )}
+        </Animated.Code>
+
+        <Animated.Code>
+          {() => cond(
+            eq(this.gestureState, State.ACTIVE),
+          )}
+        </Animated.Code>
 
         <FlatList
           ref = {this.flatList}
