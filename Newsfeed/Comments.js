@@ -28,29 +28,36 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
      console.log(item)
 
      return (
-       <BackgroundContainer>
-         <View>
+
+         <View style={styles.container}>
 
 
+           <Avatar.Image
+             style={styles.image}
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
+             }}
+             size = {40}
+              />
+           <View style={styles.content}>
 
-           <View>
-             <Avatar.Image
-               source = {{
-                 uri: `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
-               }}
-               size = {45}
-                />
+             <View style={styles.contentHeader}>
+                  <Text  style={styles.name}>  {item.commentUser.first_name+" "+item.commentUser.last_name}</Text>
+                  <Text style={styles.time}>
+                    9:58 am
+                  </Text>
+              </View>
+
               <Text>
-                {item.commentUser.first_name+" "+item.commentUser.last_name}
-              {item.body}
-            </Text>
+                {item.body}
+              </Text>
            </View>
 
 
 
 
          </View>
-        </BackgroundContainer>
+
 
      )
    }
@@ -60,15 +67,15 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
      this.props.navigation.setOptions({
         comments:this.props.route.params.comments
      })
-     console.log("BLAHBLAHBLAH")
      console.log(this.props.route.params.comments)
      let commentList = [];
 
      return (
+       <BackgroundContainer>
          <View >
            <Text> Comments {this.props.route.params.comments.length}</Text>
              <FlatList
-               style = {{marginTop:5}}
+               style = {{marginTop:100}}
                data = {this.props.route.params.comments}
                renderItem = {this.renderItem}
                ItemSeparatorComponent = { this.FlatListItemSeparator }
@@ -76,6 +83,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
              />
 
          </View>
+       </BackgroundContainer>
 
      )
    }
@@ -87,6 +95,44 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
      profilepic: state.auth.profilePic,
    }
  }
+
+ const styles = StyleSheet.create({
+   container: {
+
+   paddingLeft: 15,
+   paddingRight: 16,
+   paddingVertical: 12,
+   flexDirection: 'row',
+   alignItems: 'flex-start'
+ },
+ content: {
+   marginLeft: 16,
+   flex: 1,
+ },
+ contentHeader: {
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   // backgroundColor:'red',
+ },
+ separator: {
+   height: 1,
+   backgroundColor: "#CCCCCC"
+ },
+ image:{
+
+
+   marginLeft:1
+ },
+ time:{
+   fontSize:11,
+   color:"#808080",
+ },
+ name:{
+   fontSize:16,
+   fontWeight:"bold",
+ },
+ })
+
 
 
  export default connect(mapStateToProps)(Comments);
