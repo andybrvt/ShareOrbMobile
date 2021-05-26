@@ -24,21 +24,20 @@ import * as dateFns from 'date-fns';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import FlashMessage from '../RandomComponents/FlashMessage';
 import * as authActions from '../store/actions/auth';
-import ImageSquare from './ImageSquare';
-
+import ImageSquare from '../RandomComponents/ImageSquare';
+import DragDrop from '../RandomComponents/DragDrop';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
- // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+// import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
- import * as ImagePicker from 'expo-image-picker';
- // import { ImageBrowser } from 'expo-image-picker-multiple';
+import * as ImagePicker from 'expo-image-picker';
+// import { ImageBrowser } from 'expo-image-picker-multiple';
 
-const height = Dimensions.get('window').height
+
 const width = Dimensions.get("window").width
 
-
- class PostingPage extends React.Component{
+class PostingPage extends React.Component{
 
    constructor(props){
      super(props)
@@ -52,6 +51,8 @@ const width = Dimensions.get("window").width
        showDraggable: true,
        dropZoneValues: null
      }
+
+
 
      this.panResponder = PanResponder.create({
        onStartShouldSetPanResponder: () => true,
@@ -67,6 +68,8 @@ const width = Dimensions.get("window").width
          ).start();
        }
      })
+
+
 
    }
 
@@ -398,11 +401,16 @@ const width = Dimensions.get("window").width
    render(){
 
      console.log('here is the posting ')
-     console.log(this.state.pan.getLayout)
 
      // Remember, if you ever want to animate an element you will have to use
      // animated.view
 
+     // THIS WILL MAKE A MAP THAT HAS THE OBJECT AS THE KEY AND THE INDEX
+     // AS THE VALUE
+     // const positions = Object.assign(
+     //   {},
+     //   ...this.state.imageList.map((child, index) => ({[child]: index}))
+     // )
 
      return (
        <ModalBackgroundContainer>
@@ -413,34 +421,7 @@ const width = Dimensions.get("window").width
            >
 
 
-           <Text> Current Photos </Text>
-           <View style = {styles.imageContainerContainer}>
-
-
-
-             {this.state.imageList.map((images, key) => {
-
-               return (
-                 <Animated.View
-                   {...this.panResponder.panHandlers}
-                   style = {[this.state.pan.getLayout(),styles.imageContainer]}
-                   key= {key}
-                   >
-                   <Image
-                     style = {styles.smallImage}
-                     resizeMode = "cover"
-                     source = {{
-                       uri: images
-                     }}
-                      />
-                  </Animated.View>
-
-               )
-             })
-
-           }
-
-          </View>
+          <DragDrop itemList = {this.state.imageList}/>
 
 
            <Button
@@ -485,13 +466,14 @@ const width = Dimensions.get("window").width
      },
      wholeContainer: {
         flex:1,
+        alignItems: "center"
      },
      imageContainerContainer: {
        flex: 1,
        // flexDirection: "row",
        width: width,
        // flexWrap: 'wrap',
-       backgroundColor: 'red'
+       // backgroundColor: 'red'
      },
      imageContainer: {
        width: Math.round(width/3),
