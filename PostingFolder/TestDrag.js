@@ -1,4 +1,4 @@
-draggingIndeximport React, { createRef } from "react";
+import React, { createRef } from "react";
 import { View, Text, Dimensions, SafeAreaView } from "react-native";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import {

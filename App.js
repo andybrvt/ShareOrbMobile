@@ -42,6 +42,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 import PostingPage from './PostingFolder/PostingPage';
+import NewPostingPage from './PostingFolder/NewPostingPage';
 // import TestDrag from './PostingFolder/TestDrag';
 import ViewProfile from './ProfilePage/ViewProfile';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
@@ -209,7 +210,7 @@ class App extends Component{
 
            <Tab.Screen
              name="Upload"
-             component={PostingPage}
+             component={NewPostingPage}
              options={{
                tabBarLabel: false,
                 tabBarIcon: ({ color }) => (
@@ -299,8 +300,8 @@ class App extends Component{
                     options={{headerShown: false, }}
                     name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen
-                    options={{headerShown: false, ...TransitionPresets.SlideFromRightIOS}}
-                    name = 'PostingPage' component = {TestReanimated}/>
+                    // options={{headerShown: false, ...TransitionPresets.SlideFromRightIOS}}
+                    name = 'PostingPage' component = {PostingPage}/>
                   <Stack.Screen
                       name = 'Comments'
                       options={{
