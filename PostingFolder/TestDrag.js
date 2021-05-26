@@ -1,4 +1,4 @@
-draggingIndeximport React, { createRef } from "react";
+import React, { createRef } from "react";
 import { View, Text, Dimensions, SafeAreaView } from "react-native";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import {
@@ -7,12 +7,6 @@ import {
   LayoutProvider
 } from "recyclerlistview";
 import Animated from "react-native-reanimated";
-
-import {
-  RecyclerListView,
-  DataProvider,
-  LayoutProvider
-} from "recyclerlistview";
 
 
 // DRAG AND DROP USING REANIMATED AND RECYCLERLISTVIEW
