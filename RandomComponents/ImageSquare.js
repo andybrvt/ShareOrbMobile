@@ -20,6 +20,29 @@ const { cond, eq, add, call, set, Value, event, or } = Animated;
 // you will use animated.view
 class ImageSquare extends React.Component{
 
+  // ** the PanGestureHandler has to be in the same file as the file variable
+
+  constructor(props){
+    super(props)
+
+    // this.y = new Value(this.getPosition(this.props.index).y)
+    // this.x = new Value(this.getPosition(this.props.index).x)
+
+    this.absY = new Value(this.getPosition(this.props.index).x)
+    this.absX = new Value(this.getPosition(this.props.index).y)
+
+    this.onGestureEvent = event([
+      {
+        nativeEvent:{
+          absoluteY: this.absY,
+          absoluteX: this.absX,
+          state: this.gestureState
+        }
+      }
+    ])
+
+
+  }
   // So when you are doing the simple calls you will need
   // to do the values in the ui reanimated. You will do it
   // in the jsx for now but whne you start moving stuff around
@@ -58,31 +81,37 @@ class ImageSquare extends React.Component{
   // to id that you are in another square and then switch places, should be an infinite loop
   render(){
 
+
     const index = this.props.index
     return(
-      <PanGestureHandler
-        maxPointers = {1}
-        onGestureEvent = {this.props.onGestureEvent}
-        onHandlerStateChange = {this.props.onGestureEvent}
+      <Animated.View
+        style = {{
+          transform: [
+            {translateX: this.absX},
+            {translateY: this.absY}
+          ]
+        }}
         >
-        <Animated.View
-          style = {[{
-            transform: [
-              {translateX: this.getPosition(index).x},
-              {translateY: this.getPosition(index).y}
-            ]
-          },styles.imageContainer]}
-          key = {this.props.index}
+        <PanGestureHandler
+          maxPointers = {1}
+          onGestureEvent = {this.onGestureEvent}
+          onHandlerStateChange = {this.onGestureEvent}
           >
-          <Image
-            style = {styles.smallImage}
-            resizeMode = "cover"
-            source = {{
-              uri: this.props.images
-            }}
-             />
-         </Animated.View>
-      </PanGestureHandler>
+          <Animated.View
+            style = {styles.imageContainer}
+            key = {this.props.index}
+            >
+            <Image
+              style = {styles.smallImage}
+              resizeMode = "cover"
+              source = {{
+                uri: this.props.images
+              }}
+               />
+           </Animated.View>
+        </PanGestureHandler>
+
+      </Animated.View>
 
     )
   }

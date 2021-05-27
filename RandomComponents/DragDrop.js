@@ -39,22 +39,7 @@ class DragDrop extends React.Component{
     // determines what the current state is (ie 2 for BEGIN)
     this.gestureState = new Value(-1);
 
-    // These value are saved in UI for reanimited
-    this.absY = new Value(0);
-    this.absX = new Value(0);
-    // onGestureEvent will handle setting the values taken from the
-    // PanGestureHandler
 
-    // absoluteY and X will be its location on the screen
-    this.onGestureEvent = event([
-      {
-        nativeEvent:{
-          absoluteY: this.absY,
-          absoluteX: this.absX,
-          state: this.gestureState
-        }
-      }
-    ])
 
   }
 
@@ -65,8 +50,7 @@ class DragDrop extends React.Component{
 
 
   render(){
-    console.log('right here boy')
-    console.log(this.absY)
+
 
     return(
       <ScrollView style = {styles.imageContainerContainer}>
@@ -82,7 +66,6 @@ class DragDrop extends React.Component{
               size = {size}
               images = {images}
               index = {key}
-              onGestureEvent = {this.onGestureEvent}
               />
           )
         })
