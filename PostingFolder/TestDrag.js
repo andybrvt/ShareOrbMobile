@@ -1,5 +1,5 @@
 import React, { createRef } from "react";
-import { View, Text, Dimensions, SafeAreaView } from "react-native";
+import { View, Text, Dimensions, SafeAreaView, StyleSheet } from "react-native";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import {
   RecyclerListView,
@@ -155,7 +155,7 @@ class TestDrag extends React.Component{
     // this add funciton is done in the reanimation
     // this will be the y that you click on
     this.y = add(this.offY, new Value(-this.rowHeight/2));
-
+    console.log(this.y)
     // so gestureState --> pretty much similar to that of the gestureState
     // of the panREsponder but now it is seperated
     this.gestureState = new Value(-1);

@@ -43,7 +43,7 @@ import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 import PostingPage from './PostingFolder/PostingPage';
 import NewPostingPage from './PostingFolder/NewPostingPage';
-// import TestDrag from './PostingFolder/TestDrag';
+import TestDrag from './PostingFolder/TestDrag';
 import ViewProfile from './ProfilePage/ViewProfile';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';

@@ -5,19 +5,20 @@ import {
   Dimensions,
   Image,
   PanResponder,
-  Animated,
   StyleSheet
 } from 'react-native'
+import Animated from "react-native-reanimated";
+import { PanGestureHandler, State } from "react-native-gesture-handler";
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get("window").width
+const { cond, eq, add, call, set, Value, event, or } = Animated;
 
 
 // this will be used for the images in the posting
 // whenever you want to have animation in your views
 // you will use animated.view
 class ImageSquare extends React.Component{
-
 
   // So when you are doing the simple calls you will need
   // to do the values in the ui reanimated. You will do it
@@ -29,6 +30,7 @@ class ImageSquare extends React.Component{
 
     const col = this.props.col
     const size = this.props.size
+
     // so you want to return the x and y of the images
     return{
       x: (order % col) * size, // pretty much if 0 or 1, row would be 0
@@ -36,27 +38,52 @@ class ImageSquare extends React.Component{
     }
   }
 
-  render(){
+  // given the x and y of the items you can then get the order of the function back
 
+  // pretty much just return the index order that the values are in
+  getOrder = (x: number, y: number)=> {
+
+    const col = Math.round(x/this.props.size)
+    const row = Math.round(y/this.props.size)
+
+    return row * this.props.col + col
+  }
+
+  // remember the PanGestureHandler is wrapped around any place you
+  // want it to dectect gestrue movement. This is simlar to taht of the
+  // panResponder
+
+  // You will have to handle when you first click on it you have to id what the location
+  // of that box is, and then you when you start moving it around you gotta find a way
+  // to id that you are in another square and then switch places, should be an infinite loop
+  render(){
 
     const index = this.props.index
     return(
-      <View
-        style = {[{
-          transform: [
-            {translateX: this.getPosition(index).x}
-          ]
-        },styles.imageContainer]}
-        key = {this.props.index}
+      <PanGestureHandler
+        maxPointers = {1}
+        onGestureEvent = {this.props.onGestureEvent}
+        onHandlerStateChange = {this.props.onGestureEvent}
         >
-        <Image
-          style = {styles.smallImage}
-          resizeMode = "cover"
-          source = {{
-            uri: this.props.images
-          }}
-           />
-       </View>
+        <Animated.View
+          style = {[{
+            transform: [
+              {translateX: this.getPosition(index).x},
+              {translateY: this.getPosition(index).y}
+            ]
+          },styles.imageContainer]}
+          key = {this.props.index}
+          >
+          <Image
+            style = {styles.smallImage}
+            resizeMode = "cover"
+            source = {{
+              uri: this.props.images
+            }}
+             />
+         </Animated.View>
+      </PanGestureHandler>
+
     )
   }
 }
@@ -70,15 +97,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: "center",
     position: "absolute",
-    backgroundColor: 'red'
+    // backgroundColor: 'red'
    // padding: 10,
   },
   imageHolder: {
 
   },
   smallImage: {
-    width: "80%",
-    height: "80%",
+    width: "90%",
+    height: "90%",
     borderRadius: 15
 
   }
