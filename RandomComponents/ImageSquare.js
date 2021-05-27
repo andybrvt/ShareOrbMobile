@@ -28,18 +28,52 @@ class ImageSquare extends React.Component{
     // this.y = new Value(this.getPosition(this.props.index).y)
     // this.x = new Value(this.getPosition(this.props.index).x)
 
-    this.absY = new Value(this.getPosition(this.props.index).x)
-    this.absX = new Value(this.getPosition(this.props.index).y)
+    this.picHeight = 0
+    this.picWidth = 0
+    this.gestureState = new Value(-1)
+
+    // Helps capture the correctly location of the object
+
+    // remember that when you make a value, the startin value will be
+    // at zero, you have to get it right the first time
+
+    this.dragY = new Value(0)
+    this.dragX = new Value(0)
+
+    // this offset probally has to be the getposition
+    this.offSetX = new Value(this.getPosition(this.props.index).x);
+    this.offSetY = new Value(this.getPosition(this.props.index).y);
+
+
 
     this.onGestureEvent = event([
       {
         nativeEvent:{
-          absoluteY: this.absY,
-          absoluteX: this.absX,
+          translationY: this.dragY,
+          translationX: this.dragX,
           state: this.gestureState
         }
       }
     ])
+
+    // this conditional will make sure that you get the right value at the right
+    // position, this conditional will check if the gestureState is active and
+    // if it is it will add dragX to offset, if not true then it will just set
+    // the offset as thew new value
+    this.transX = cond(
+      eq(this.gestureState, State.ACTIVE),
+      add(this.offSetX, this.dragX),
+      set(this.offSetX, add(this.offSetX, this.dragX))
+    )
+
+    this.transY = cond(
+      eq(this.gestureState, State.ACTIVE),
+      add(this.offSetY, this.dragY),
+      set(this.offSetY, add(this.offSetY, this.dragY))
+    )
+
+    // this.y = add(this.absY,
+    // this.x = this.absX
 
 
   }
@@ -87,8 +121,8 @@ class ImageSquare extends React.Component{
       <Animated.View
         style = {{
           transform: [
-            {translateX: this.absX},
-            {translateY: this.absY}
+            {translateX: this.transX},
+            {translateY: this.transY}
           ]
         }}
         >
@@ -98,6 +132,12 @@ class ImageSquare extends React.Component{
           onHandlerStateChange = {this.onGestureEvent}
           >
           <Animated.View
+            onLayout = {e => {
+              const height = e.nativeEvent.layout.height
+              this.picHeight = height
+              this.picWidth = height
+
+            }}
             style = {styles.imageContainer}
             key = {this.props.index}
             >
