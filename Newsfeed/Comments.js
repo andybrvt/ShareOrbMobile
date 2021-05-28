@@ -24,6 +24,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    // renderItem = {this.renderItem}
    // ItemSeparatorComponent = { this.FlatListItemSeparator }
 
+
    renderItem = ({item}) => {
      console.log(item)
 
@@ -44,7 +45,9 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
              <View style={styles.contentHeader}>
                   <Text  style={styles.name}>  {item.commentUser.first_name+" "+item.commentUser.last_name}</Text>
                   <Text style={styles.time}>
-                    9:58 am
+
+                      {global.RENDER_TIMESTAMP(item.created_on)}
+
                   </Text>
               </View>
 
@@ -73,7 +76,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
      return (
        <BackgroundContainer>
          <View >
-           <Text> Comments {this.props.route.params.comments.length}</Text>
+           <Text> {this.props.route.params.comments.length}</Text>
              <FlatList
                style = {{marginTop:100}}
                data = {this.props.route.params.comments}
