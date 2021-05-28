@@ -12,7 +12,7 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get("window").width
-const { cond, eq, add, call, set, Value, event, or } = Animated;
+const { cond, eq, add, call, set, Value, event, or, spring } = Animated;
 
 
 // this will be used for the images in the posting
@@ -63,15 +63,18 @@ class ImageSquare extends React.Component{
     this.transX = cond(
       eq(this.gestureState, State.ACTIVE),
       add(this.offSetX, this.dragX),
-      set(this.offSetX, add(this.offSetX, this.dragX))
+      set(this.offSetX, this.getPosition(this.props.index).x)
     )
 
+    // this.transX = add(this.offSetX, this.dragX)
+    //
     this.transY = cond(
       eq(this.gestureState, State.ACTIVE),
       add(this.offSetY, this.dragY),
-      set(this.offSetY, add(this.offSetY, this.dragY))
+      set(this.offSetY, this.getPosition(this.props.index).y)
     )
 
+    // this.transY = add(this.offSetY, this.dragY)
     // this.y = add(this.absY,
     // this.x = this.absX
 
@@ -106,6 +109,28 @@ class ImageSquare extends React.Component{
     return row * this.props.col + col
   }
 
+
+  start = () => {
+    console.log('hit the start')
+  }
+
+  // this will be run when you let go of the item
+  reset = () => {
+    // so for now you want the pictures to run to its original place
+    console.log('hits here')
+    // this.dragX = set(this.dragX, 0)
+    // this.offSetX = set(this.offSetX, this.getPosition(this.props.index).x)
+    // this.transX = set(this.transX, add(this.offSetX, this.dragX))
+    //
+
+
+
+
+    // this.offSetX = new Value(this.getPosition(this.props.index).x);
+
+    // this.transX = new Value(0)
+  }
+
   // remember the PanGestureHandler is wrapped around any place you
   // want it to dectect gestrue movement. This is simlar to taht of the
   // panResponder
@@ -126,6 +151,28 @@ class ImageSquare extends React.Component{
           ]
         }}
         >
+
+        <Animated.Code>
+          {() =>
+            cond(
+              eq(this.gestureState, State.ACTIVE),
+              call([], this.start)
+            )
+          }
+        </Animated.Code>
+        <Animated.Code>
+          {() =>
+            cond(
+              or(
+                eq(this.gestureState, State.END),
+                eq(this.gestureState, State.CANCELLED),
+                eq(this.gestureState, State.FAILED),
+                eq(this.gestureState, State.UNDETERMINED)
+              ),
+              call([], this.reset)
+            )
+          }
+        </Animated.Code>
         <PanGestureHandler
           maxPointers = {1}
           onGestureEvent = {this.onGestureEvent}
