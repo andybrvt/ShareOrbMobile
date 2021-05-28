@@ -22,6 +22,10 @@ class ImageSquare extends React.Component{
 
   // ** the PanGestureHandler has to be in the same file as the file variable
 
+  state = {
+    dragging: false
+  }
+
   constructor(props){
     super(props)
 
@@ -43,8 +47,6 @@ class ImageSquare extends React.Component{
     // this offset probally has to be the getposition
     this.offSetX = new Value(this.getPosition(this.props.index).x);
     this.offSetY = new Value(this.getPosition(this.props.index).y);
-
-
 
     this.onGestureEvent = event([
       {
@@ -111,7 +113,9 @@ class ImageSquare extends React.Component{
 
 
   start = () => {
-    console.log('hit the start')
+    this.setState({
+      dragging: true
+    })
   }
 
   // this will be run when you let go of the item
@@ -122,6 +126,10 @@ class ImageSquare extends React.Component{
     // this.offSetX = set(this.offSetX, this.getPosition(this.props.index).x)
     // this.transX = set(this.transX, add(this.offSetX, this.dragX))
     //
+
+    this.setState({
+      dragging: false
+    })
 
 
 
@@ -139,12 +147,16 @@ class ImageSquare extends React.Component{
   // of that box is, and then you when you start moving it around you gotta find a way
   // to id that you are in another square and then switch places, should be an infinite loop
   render(){
-
+    const{dragging} = this.state
 
     const index = this.props.index
+
+
+
     return(
       <Animated.View
         style = {{
+          zIndex: dragging ? 10 : 0,
           transform: [
             {translateX: this.transX},
             {translateY: this.transY}
