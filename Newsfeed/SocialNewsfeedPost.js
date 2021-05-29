@@ -26,6 +26,8 @@ class SocialNewsfeedPost extends React.Component{
     this.props.navigation.navigate("Comments",
     {
         comments: this.props.data.post.get_socialCalComment,
+        profilePic:`${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture,
+        caption:this.props.data.post.dayCaption,
     }
 
     )
