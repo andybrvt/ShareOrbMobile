@@ -417,10 +417,9 @@ class PostingPage extends React.Component{
    rearrange = (order: number) => {
      // Make sure when you get the order you know when the order is out of
      // range
-
-
-
      console.log(order)
+
+
    }
 
 

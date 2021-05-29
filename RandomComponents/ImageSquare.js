@@ -138,10 +138,16 @@ class ImageSquare extends React.Component{
 
   move = ([x, y]) => {
 
-    const order = this.getOrder(x, y)
-  
 
-    this.props.rearrange(order)
+
+    if(x > 0 && x < width && y > 0 && y < height){
+
+      const order = this.getOrder(x, y)
+      this.props.rearrange(order)
+
+    }
+
+
   }
 
 
