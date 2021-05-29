@@ -40,6 +40,7 @@ class ImageSquare extends React.Component{
 
     // remember that when you make a value, the startin value will be
     // at zero, you have to get it right the first time
+    this.index = new Value(this.props.index)
 
     this.dragY = new Value(0)
     this.dragX = new Value(0)
@@ -112,16 +113,19 @@ class ImageSquare extends React.Component{
   }
 
 
-  start = () => {
+  // handle the start of the guesture
+  // parameter will be the index of the imagesquare
+  start = ([order]) => {
     this.setState({
       dragging: true
     })
+
+    this.props.start(order)
   }
 
   // this will be run when you let go of the item
   reset = () => {
     // so for now you want the pictures to run to its original place
-    console.log('hits here')
     // this.dragX = set(this.dragX, 0)
     // this.offSetX = set(this.offSetX, this.getPosition(this.props.index).x)
     // this.transX = set(this.transX, add(this.offSetX, this.dragX))
@@ -147,6 +151,8 @@ class ImageSquare extends React.Component{
   // of that box is, and then you when you start moving it around you gotta find a way
   // to id that you are in another square and then switch places, should be an infinite loop
   render(){
+
+
     const{dragging} = this.state
 
     const index = this.props.index
@@ -168,7 +174,7 @@ class ImageSquare extends React.Component{
           {() =>
             cond(
               eq(this.gestureState, State.ACTIVE),
-              call([], this.start)
+              call([this.index], this.start)
             )
           }
         </Animated.Code>

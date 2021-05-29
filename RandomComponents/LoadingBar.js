@@ -47,8 +47,7 @@ class LoadingBar extends React.Component{
 
 
   render(){
-    console.log('in the loading bar')
-    console.log(this.props)
+
 
 
 

@@ -26,7 +26,6 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 
    renderItem = ({item}) => {
-     console.log(item)
 
      return (
 
@@ -70,7 +69,6 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
      this.props.navigation.setOptions({
         comments:this.props.route.params.comments
      })
-     console.log(this.props.route.params.comments)
      let commentList = [];
 
      return (

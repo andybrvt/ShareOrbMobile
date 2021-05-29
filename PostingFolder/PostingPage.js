@@ -105,8 +105,6 @@ class PostingPage extends React.Component{
          // in this case you might not need to but rather put
          // it into the file Listin states (imagelist specifically)
 
-         console.log('here are some pictures')
-         console.log(this.props.curSocialCalCell.get_socialCalItems)
 
 
          for(let i = 0; i< this.props.curSocialCalCell.get_socialCalItems.length; i++){
@@ -229,8 +227,7 @@ class PostingPage extends React.Component{
            var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
 
            // ADD AN LOADING HERE
-           console.log('percent here')
-           console.log(percentCompleted)
+
 
          }
        },
@@ -397,10 +394,45 @@ class PostingPage extends React.Component{
    }
 
 
+   // This start will be used to get the inital index of the
+   // image
+   // the parameter order will be the index of the image
+   start = (order) => {
+     console.log(order)
+   }
+
+   // this function will be used to rearrange the list of pictures
+   // whenever you change the order of the pictures
+   rearrange = () => {
+
+     console.log('this will be for rearranging')
+   }
+
+
+   // Pretty much what is gonna happen is that you will start the move of the
+   // drag and then set the current image index, once you set the current index
+   // you wanna track the the movement and then check if the value will have an order
+   // that is different from the current index, if it is them you will
+   // rearrange the list again
+
+   // given the x and y of the items you can then get the order of the function back
+   // pretty much just return the index order that the values are in
+   getOrder = (x: number, y: number)=> {
+
+     const col = Math.round(x/this.props.size)
+     const row = Math.round(y/this.props.size)
+
+     return row * this.props.col + col
+   }
+
+
+
+
+
+
 
    render(){
 
-     console.log('here is the posting ')
 
      // Remember, if you ever want to animate an element you will have to use
      // animated.view
@@ -412,6 +444,10 @@ class PostingPage extends React.Component{
      //   ...this.state.imageList.map((child, index) => ({[child]: index}))
      // )
 
+     // for the drag you are gonna need a function to handle the start
+     // the rearrange when you are moving it
+     // and the drop when you are done moving it around
+
      return (
        <ModalBackgroundContainer>
          <FlashMessage  showMessage = {this.state.flashMessage} message = {"Image Posted"} />
@@ -421,7 +457,10 @@ class PostingPage extends React.Component{
            >
 
 
-          <DragDrop itemList = {this.state.imageList}/>
+          <DragDrop
+            start = {this.start}
+            rearrange = {this.rearrange}
+             itemList = {this.state.imageList}/>
 
 
            <Button

@@ -39,18 +39,17 @@ class DragDrop extends React.Component{
     // determines what the current state is (ie 2 for BEGIN)
     this.gestureState = new Value(-1);
 
-
-
+    this.state = {
+      data: this.props.itemList
+    }
   }
 
-  // This fucntion will handle the inital start of the gesture
-  start = ([x, y]) => {
-    console.log(x, y)
-  }
 
 
   render(){
 
+    console.log('hits ')
+    console.log(this.props)
 
     return(
       <ScrollView style = {styles.imageContainerContainer}>
@@ -61,6 +60,8 @@ class DragDrop extends React.Component{
 
           return (
             <ImageSquare
+              start = {this.props.start}
+              rearrange = {this.props.rearrange}
               col = {col}
               margin = {margin}
               size = {size}

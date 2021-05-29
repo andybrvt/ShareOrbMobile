@@ -32,11 +32,9 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   changeShowLike = () => {
-    console.log(this.state.showComments)
     this.setState({
       showLike:!this.state.showLike,
     });
-    console.log(this.state.showComments)
   }
 
 
@@ -280,7 +278,6 @@ class SocialNewsfeedPost extends React.Component{
 
         if(this.props.data.owner.profile_picture){
           profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
-          console.log(profilePic)
         }
 
 
@@ -333,7 +330,6 @@ class SocialNewsfeedPost extends React.Component{
 
     let actionText = ""
 
-    console.log(this.props.data.commentList)
 
     if(this.props.data) {
       if(this.props.data.post){

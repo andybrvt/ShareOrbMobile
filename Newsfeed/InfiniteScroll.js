@@ -19,9 +19,7 @@ class InfiniteScroll extends React.Component{
     if(this.props.socialPosts){
       post = this.props.socialPosts
     }
-    console.log("INFINITE SCROLL")
-    console.log(this.props.navigation)
-
+    
 
     return (
       <View>

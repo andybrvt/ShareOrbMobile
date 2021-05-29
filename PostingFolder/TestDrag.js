@@ -155,7 +155,6 @@ class TestDrag extends React.Component{
     // this add funciton is done in the reanimation
     // this will be the y that you click on
     this.y = add(this.offY, new Value(-this.rowHeight/2));
-    console.log(this.y)
     // so gestureState --> pretty much similar to that of the gestureState
     // of the panREsponder but now it is seperated
     this.gestureState = new Value(-1);
@@ -315,7 +314,6 @@ class TestDrag extends React.Component{
     // the items
 
     const {data, dragging, draggingIndex} = this.state;
-    console.log('here in the test')
 
     // You can put code into the tags that will be run to set up
     // the begin, start, end cancel, etc

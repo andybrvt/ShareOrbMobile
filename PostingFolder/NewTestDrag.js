@@ -258,7 +258,6 @@ class OldTestDrag extends React.Component{
       //stay on one index long enough to check and compare
       if(this.currentIndex != newIndex ){
         // Now you will call a reorder function
-        console.log('reordering')
         // move the old index to the new spot and the new spot tot he old spot
 
         // it will be a new index is because you are switching with the one
@@ -318,7 +317,6 @@ class OldTestDrag extends React.Component{
 
 
     const {data, dragging, draggingIndex} = this.state;
-    console.log('here in the test')
 
 
     // for render times for the parameter that gets passed in, it will be an object

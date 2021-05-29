@@ -30,8 +30,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 // this will be used to show the list of chats
 class Chats extends React.Component{
   selectItem(item) {
-    console.log("hi")
-    console.log(item)
+  
     this.props.navigation.navigate("MessageFriend",
       {
         chatPersonName:this.getChatUserName(item.participants),
