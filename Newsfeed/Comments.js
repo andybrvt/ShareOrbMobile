@@ -75,6 +75,14 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
      return (
        <BackgroundContainer>
+         <Avatar.Image
+           style={styles.image}
+           source = {{
+             uri: this.props.route.params.profilePic
+           }}
+           size = {40}
+            />
+           <Text> {this.props.route.params.caption}</Text>
          <View >
            <Text> {this.props.route.params.comments.length}</Text>
              <FlatList
