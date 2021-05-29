@@ -42,6 +42,9 @@ class PostingPage extends React.Component{
    constructor(props){
      super(props)
 
+
+     // The draggingIndex in states will keep track of the current index
+     // of the image
      this.state = {
        imageList: [],
        caption: "",
@@ -49,7 +52,8 @@ class PostingPage extends React.Component{
        fileList: [],
        pan: new Animated.ValueXY(),
        showDraggable: true,
-       dropZoneValues: null
+       dropZoneValues: null,
+       draggingIndex: -1,
      }
 
 
@@ -398,14 +402,25 @@ class PostingPage extends React.Component{
    // image
    // the parameter order will be the index of the image
    start = (order) => {
+
      console.log(order)
+     this.setState({
+       draggingIndex: order
+     })
    }
 
    // this function will be used to rearrange the list of pictures
    // whenever you change the order of the pictures
-   rearrange = () => {
 
-     console.log('this will be for rearranging')
+   // You have the dragging index now, now you have to pass the order of
+   // you dragging into the rearrange so you can know which index you are in
+   rearrange = (order: number) => {
+     // Make sure when you get the order you know when the order is out of
+     // range
+
+
+
+     console.log(order)
    }
 
 

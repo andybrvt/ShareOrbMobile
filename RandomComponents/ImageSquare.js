@@ -134,14 +134,17 @@ class ImageSquare extends React.Component{
     this.setState({
       dragging: false
     })
-
-
-
-
-    // this.offSetX = new Value(this.getPosition(this.props.index).x);
-
-    // this.transX = new Value(0)
   }
+
+  move = ([x, y]) => {
+
+    const order = this.getOrder(x, y)
+  
+
+    this.props.rearrange(order)
+  }
+
+
 
   // remember the PanGestureHandler is wrapped around any place you
   // want it to dectect gestrue movement. This is simlar to taht of the
@@ -173,11 +176,20 @@ class ImageSquare extends React.Component{
         <Animated.Code>
           {() =>
             cond(
-              eq(this.gestureState, State.ACTIVE),
+              eq(this.gestureState, State.BEGAN),
               call([this.index], this.start)
             )
           }
         </Animated.Code>
+        <Animated.Code>
+          {() =>
+            cond(
+              eq(this.gestureState, State.ACTIVE),
+              call([this.transX, this.transY], this.move)
+            )
+          }
+        </Animated.Code>
+
         <Animated.Code>
           {() =>
             cond(

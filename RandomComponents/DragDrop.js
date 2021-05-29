@@ -48,9 +48,6 @@ class DragDrop extends React.Component{
 
   render(){
 
-    console.log('hits ')
-    console.log(this.props)
-
     return(
       <ScrollView style = {styles.imageContainerContainer}>
 
