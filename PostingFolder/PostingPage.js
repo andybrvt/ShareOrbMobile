@@ -324,9 +324,6 @@ class PostingPage extends React.Component{
 
            this.props.navigation.navigate("newsfeed")
 
-
-
-
          }
 
        })
@@ -370,8 +367,6 @@ class PostingPage extends React.Component{
       }
 
     }
-
-
    }
 
    renderDone = () => {
@@ -418,9 +413,14 @@ class PostingPage extends React.Component{
      // Make sure when you get the order you know when the order is out of
      // range
      console.log(order)
-
-
    }
+
+
+   reset = () => {
+
+     console.log('reset here')
+   }
+
 
 
    // Pretty much what is gonna happen is that you will start the move of the
@@ -474,7 +474,8 @@ class PostingPage extends React.Component{
           <DragDrop
             start = {this.start}
             rearrange = {this.rearrange}
-             itemList = {this.state.imageList}/>
+            reset = {this.reset}
+            itemList = {this.state.imageList}/>
 
 
            <Button

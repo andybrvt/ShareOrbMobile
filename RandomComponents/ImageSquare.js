@@ -134,6 +134,10 @@ class ImageSquare extends React.Component{
     this.setState({
       dragging: false
     })
+
+    this.props.reset()
+
+
   }
 
   move = ([x, y]) => {

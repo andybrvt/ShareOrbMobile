@@ -59,6 +59,7 @@ class DragDrop extends React.Component{
             <ImageSquare
               start = {this.props.start}
               rearrange = {this.props.rearrange}
+              reset = {this.props.reset}
               col = {col}
               margin = {margin}
               size = {size}
