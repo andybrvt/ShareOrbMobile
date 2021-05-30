@@ -74,6 +74,27 @@ class ProfileHeader extends React.Component{
     }
 
     return (
+    <View>
+
+      <View style={styles.centerProfilePic}>
+          <View style={{flex:1, alignItems: 'center', justifyContent:'center'}}>
+            <Avatar
+
+              size={100}
+              rounded
+              source={{
+                uri:
+                  profileImage,
+              }}
+            />
+          </View>
+          <View style={{flex:1,alignItems: 'center', justifyContent:'center'}}>
+            <Text style = {styles.name}>{name}</Text>
+            <Text style = {styles.username}>@{username}</Text>
+          </View>
+
+
+      {/*
       <View style={styles.centerProfilePic}>
         <Avatar
           size={100}
@@ -83,7 +104,7 @@ class ProfileHeader extends React.Component{
               profileImage,
           }}
         />
-
+      {/*
        <View style = {styles.nameContainer}>
          <Text style = {styles.name}>{name}</Text>
          <Text style = {styles.username}>@{username}</Text>
@@ -106,10 +127,35 @@ class ProfileHeader extends React.Component{
        </View>
        <View style = {styles.bioContainer}>
          <Text style = {styles.bio}> {bio}</Text>
+        </View>
+
+
+        */}
+     </View>
+     <View style = {styles.nameContainer}>
+
+         <View style={styles.profileInfoContainer}>
+
+           <View style={styles.followerCount}>
+             <Text style={styles.followerFollowingNum}>
+               {following.length}
+             </Text>
+             <Text style={styles.followerFollowingHeader}> Following </Text>
+           </View>
+           <View style={styles.followerCount}>
+             <Text style={styles.followerFollowingNum}> {followers.length}</Text>
+             <Text style={styles.followerFollowingHeader}> Followers</Text>
+           </View>
+
          </View>
 
 
      </View>
+     <View style = {styles.bioContainer}>
+       <Text style = {styles.bio}> {bio}</Text>
+      </View>
+
+   </View>
 
     )
   }
@@ -345,8 +391,9 @@ const styles = StyleSheet.create({
   centerProfilePic: {
     position:'relative',
     top:'10%',
-    alignItems: 'center',
+    // backgroundColor:'blue',
     justifyContent: 'center',
+    flexDirection:'row',
   },
   profileInfoContainer: {
     width:'80%',
@@ -367,16 +414,18 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   nameContainer:{
-    marginTop: 5,
 
+    // backgroundColor:'red',
+    top:'25%',
     width:'90%',
     alignItems: 'center'
   },
   bioContainer:{
-    marginTop: 12,
+
     flex:1,
     // backgroundColor: "red",
-    alignItems: 'center',
+    top:'35%',
+    alignItems: 'center'
   },
   name:{
     fontSize: 25,
