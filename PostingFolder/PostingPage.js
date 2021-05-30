@@ -417,14 +417,12 @@ class PostingPage extends React.Component{
    move = (order: number) => {
      // Make sure when you get the order you know when the order is out of
      // range
-     console.log(order)
 
      this.updateOrder(order)
    }
 
    reset = () => {
 
-     console.log('reset here')
    }
 
 
