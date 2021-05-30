@@ -147,7 +147,7 @@ class ImageSquare extends React.Component{
     if(x > 0 && x < width && y > 0 && y < height){
 
       const order = this.getOrder(x, y)
-      this.props.rearrange(order)
+      this.props.move(order)
 
     }
 
@@ -178,7 +178,8 @@ class ImageSquare extends React.Component{
           zIndex: dragging ? 10 : 0,
           transform: [
             {translateX: this.transX},
-            {translateY: this.transY}
+            {translateY: this.transY},
+            {scale: dragging ? 1.1 : 1 }
           ]
         }}
         >
@@ -253,6 +254,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: "center",
     position: "absolute",
+
     // backgroundColor: 'red'
    // padding: 10,
   },
