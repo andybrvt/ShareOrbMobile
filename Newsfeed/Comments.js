@@ -50,7 +50,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
                   </Text>
               </View>
 
-              <Text>
+              <Text style={styles.commentBody}>
                 {item.body}
               </Text>
            </View>
@@ -80,11 +80,11 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
            }}
            size = {40}
             />
-           <Text> {this.props.route.params.caption}</Text>
-         <View >
+           <Text style={styles.captionBody}> {this.props.route.params.caption}</Text>
+         <View  >
            <Text> {this.props.route.params.comments.length}</Text>
              <FlatList
-               style = {{marginTop:100}}
+               style = {{marginTop:20}}
                data = {this.props.route.params.comments}
                renderItem = {this.renderItem}
                ItemSeparatorComponent = { this.FlatListItemSeparator }
@@ -112,7 +112,14 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    paddingRight: 16,
    paddingVertical: 12,
    flexDirection: 'row',
-   alignItems: 'flex-start'
+   alignItems: 'flex-start',
+   // backgroundColor:'red',
+ },
+ captionBody: {
+   fontSize:20,
+ },
+ commentBody: {
+   fontSize:12,
  },
  content: {
    marginLeft: 16,
