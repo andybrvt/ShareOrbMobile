@@ -349,10 +349,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   profileInfoContainer: {
-    width:'70%',
+    width:'80%',
+    padding:7.5,
     // backgroundColor: "blue",
-
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "gainsboro",
     flexDirection: "row",
+
   },
   followerCount: {
     flex:1,
@@ -369,7 +373,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   bioContainer:{
-    marginTop: 5,
+    marginTop: 12,
     flex:1,
     // backgroundColor: "red",
     alignItems: 'center',
