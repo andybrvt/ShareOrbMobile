@@ -5,9 +5,9 @@ import {
   Dimensions,
   Image,
   PanResponder,
-  StyleSheet
+  StyleSheet,
 } from 'react-native'
-import Animated from "react-native-reanimated";
+import Animated, {Easing} from "react-native-reanimated";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 
 const height = Dimensions.get('window').height
@@ -22,7 +22,6 @@ const { cond,
    or,
    spring,
    Clock,
-   Easing,
    block,
    timing,
    stopClock,
@@ -30,7 +29,7 @@ const { cond,
    Extrapolate,
    and,
    neq,
-   startClock
+   startClock,
   } = Animated;
 
 
@@ -58,9 +57,9 @@ class ImageSquare extends React.Component{
     };
 
     const config = {
-      duration: 300,
+      duration: 3000,
       toValue: new Value(-1),
-      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      easing: Easing.inOut(Easing.ease),
     };
 
     // For blocking, the last value of the block will be the
@@ -129,7 +128,7 @@ class ImageSquare extends React.Component{
       }
     ])
 
-    // this.opacity = this.runPositionTimer(this.clock,this.gestureState)
+    this.opacity = this.runPositionTimer(this.clock,this.gestureState)
 
     // this conditional will make sure that you get the right value at the right
     // position, this conditional will check if the gestureState is active and
@@ -237,7 +236,6 @@ class ImageSquare extends React.Component{
   // to id that you are in another square and then switch places, should be an infinite loop
   render(){
 
-
     const{dragging} = this.state
 
     const index = this.props.index
@@ -248,6 +246,7 @@ class ImageSquare extends React.Component{
       <Animated.View
         style = {{
           zIndex: dragging ? 10 : 0,
+          opacity: this.opacity,
           transform: [
             {translateX: this.transX},
             {translateY: this.transY},
