@@ -42,6 +42,11 @@ class PostingPage extends React.Component{
    constructor(props){
      super(props)
 
+
+     this.curPicIndex = -1;
+
+     // The draggingIndex in states will keep track of the current index
+     // of the image
      this.state = {
        imageList: [],
        caption: "",
@@ -49,7 +54,9 @@ class PostingPage extends React.Component{
        fileList: [],
        pan: new Animated.ValueXY(),
        showDraggable: true,
-       dropZoneValues: null
+       dropZoneValues: null,
+       draggingIndex: -1,
+
      }
 
 
@@ -68,6 +75,8 @@ class PostingPage extends React.Component{
          ).start();
        }
      })
+
+
 
 
 
@@ -320,9 +329,6 @@ class PostingPage extends React.Component{
 
            this.props.navigation.navigate("newsfeed")
 
-
-
-
          }
 
        })
@@ -366,8 +372,6 @@ class PostingPage extends React.Component{
       }
 
     }
-
-
    }
 
    renderDone = () => {
@@ -398,16 +402,81 @@ class PostingPage extends React.Component{
    // image
    // the parameter order will be the index of the image
    start = (order) => {
-     console.log(order)
+
+    this.curPicIndex = order;
+    this.setState({
+       draggingIndex: this.curPicIndex
+     })
    }
 
    // this function will be used to rearrange the list of pictures
    // whenever you change the order of the pictures
-   rearrange = () => {
 
-     console.log('this will be for rearranging')
+   // You have the dragging index now, now you have to pass the order of
+   // you dragging into the rearrange so you can know which index you are in
+   move = (order: number) => {
+     // Make sure when you get the order you know when the order is out of
+     // range
+     console.log(order)
+
+     this.updateOrder(order)
    }
 
+   reset = () => {
+
+     console.log('reset here')
+   }
+
+
+
+   updateOrder = order => {
+
+     if(this.curPicIndex !== order
+       && order >= 0
+       && order <= this.state.imageList.length -1
+     ){
+       // You also have to check that the index falls within range
+
+
+       // if they are not equal you would wnat to switch spots with
+       // the pictures
+
+       // Now you will update the imagelist of the new order of the
+       // state lits of the pictures
+       this.setState({
+         imageList: this.immutableMove(
+           this.state.imageList,
+           this.curPicIndex,
+           order,
+         ),
+         draggingIndex: order
+       })
+
+       this.curPicIndex = order
+     }
+
+   }
+
+  immutableMove(arr, from, to) {
+    return arr.reduce((prev, current, idx, self) => {
+      if (from === to) {
+        prev.push(current);
+      }
+      if (idx === from) {
+        return prev;
+      }
+      if (from < to) {
+        prev.push(current);
+      }
+      if (idx === to) {
+        prev.push(self[from]);
+      }
+      if (from > to) {
+        prev.push(current);
+      }
+      return prev;
+    }, []);
+  }
 
    // Pretty much what is gonna happen is that you will start the move of the
    // drag and then set the current image index, once you set the current index
@@ -424,12 +493,6 @@ class PostingPage extends React.Component{
 
      return row * this.props.col + col
    }
-
-
-
-
-
-
 
    render(){
 
@@ -459,8 +522,9 @@ class PostingPage extends React.Component{
 
           <DragDrop
             start = {this.start}
-            rearrange = {this.rearrange}
-             itemList = {this.state.imageList}/>
+            move = {this.move}
+            reset = {this.reset}
+            itemList = {this.state.imageList}/>
 
 
            <Button

@@ -48,9 +48,6 @@ class DragDrop extends React.Component{
 
   render(){
 
-    console.log('hits ')
-    console.log(this.props)
-
     return(
       <ScrollView style = {styles.imageContainerContainer}>
 
@@ -61,7 +58,8 @@ class DragDrop extends React.Component{
           return (
             <ImageSquare
               start = {this.props.start}
-              rearrange = {this.props.rearrange}
+              move = {this.props.move}
+              reset = {this.props.reset}
               col = {col}
               margin = {margin}
               size = {size}

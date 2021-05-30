@@ -135,13 +135,26 @@ class ImageSquare extends React.Component{
       dragging: false
     })
 
+    this.props.reset()
 
 
-
-    // this.offSetX = new Value(this.getPosition(this.props.index).x);
-
-    // this.transX = new Value(0)
   }
+
+  move = ([x, y]) => {
+
+
+
+    if(x > 0 && x < width && y > 0 && y < height){
+
+      const order = this.getOrder(x, y)
+      this.props.move(order)
+
+    }
+
+
+  }
+
+
 
   // remember the PanGestureHandler is wrapped around any place you
   // want it to dectect gestrue movement. This is simlar to taht of the
@@ -165,7 +178,8 @@ class ImageSquare extends React.Component{
           zIndex: dragging ? 10 : 0,
           transform: [
             {translateX: this.transX},
-            {translateY: this.transY}
+            {translateY: this.transY},
+            {scale: dragging ? 1.1 : 1 }
           ]
         }}
         >
@@ -173,11 +187,20 @@ class ImageSquare extends React.Component{
         <Animated.Code>
           {() =>
             cond(
-              eq(this.gestureState, State.ACTIVE),
+              eq(this.gestureState, State.BEGAN),
               call([this.index], this.start)
             )
           }
         </Animated.Code>
+        <Animated.Code>
+          {() =>
+            cond(
+              eq(this.gestureState, State.ACTIVE),
+              call([this.transX, this.transY], this.move)
+            )
+          }
+        </Animated.Code>
+
         <Animated.Code>
           {() =>
             cond(
@@ -231,6 +254,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: "center",
     position: "absolute",
+
     // backgroundColor: 'red'
    // padding: 10,
   },
