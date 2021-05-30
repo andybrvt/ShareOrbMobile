@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
 
   },
   profileHeader: {
-    flex: 1
+    flex: 1,
+    
   }
 
 })
