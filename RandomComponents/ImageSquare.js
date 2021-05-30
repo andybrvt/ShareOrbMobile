@@ -12,7 +12,28 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get("window").width
-const { cond, eq, add, call, set, Value, event, or, spring } = Animated;
+const { cond,
+   eq,
+   add,
+   call,
+   set,
+   Value,
+   event,
+   or,
+   spring,
+   Clock,
+   Easing,
+   block,
+   timing,
+   stopClock,
+   interpolate,
+   Extrapolate,
+   and,
+   neq,
+   startClock
+  } = Animated;
+
+
 
 
 // this will be used for the images in the posting
@@ -26,15 +47,64 @@ class ImageSquare extends React.Component{
     dragging: false
   }
 
+  runPositionTimer = (clock, gestureState) => {
+
+    // the timing is gonna need a clock, state, and config
+    const state = {
+      finished: new Value(0), // st once animation has completed
+      position: new Value(0), // hold on to transition to value to the current position
+      time: new Value(0),
+      frameTime: new Value(0) // is the current frame of time over the process of the animation
+    };
+
+    const config = {
+      duration: 300,
+      toValue: new Value(-1),
+      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+    };
+
+    // For blocking, the last value of the block will be the
+    // value that is gonna be returned, this this case it will
+    // be the interpolate value
+    return block([
+      cond(and(eq(gestureState, State.BEGAN), neq(config.toValue, 1)), [
+         set(state.finished, 0),
+         set(state.time, 0),
+         set(state.frameTime, 0),
+         set(config.toValue, 1),
+         startClock(clock),
+       ]),
+       cond(and(eq(gestureState, State.END), neq(config.toValue, 0)), [
+         set(state.finished, 0),
+         set(state.time, 0),
+         set(state.frameTime, 0),
+         set(config.toValue, 0),
+         startClock(clock),
+       ]),
+      timing(clock, state, config),
+      cond(state.finished, stopClock(clock)),
+      interpolate(state.position, { // maps a specific value to another
+        inputRange: [0, 1],
+        outputRange: [1, 0],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    ])
+  }
+
+
   constructor(props){
     super(props)
 
     // this.y = new Value(this.getPosition(this.props.index).y)
     // this.x = new Value(this.getPosition(this.props.index).x)
 
+    this.clock = new Clock()
+
+
     this.picHeight = 0
     this.picWidth = 0
     this.gestureState = new Value(-1)
+
 
     // Helps capture the correctly location of the object
 
@@ -58,6 +128,8 @@ class ImageSquare extends React.Component{
         }
       }
     ])
+
+    // this.opacity = this.runPositionTimer(this.clock,this.gestureState)
 
     // this conditional will make sure that you get the right value at the right
     // position, this conditional will check if the gestureState is active and
