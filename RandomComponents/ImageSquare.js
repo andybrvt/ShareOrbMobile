@@ -59,7 +59,7 @@ class ImageSquare extends React.Component{
   interaction(initial, gestureTranslation, gestureState){
     const start = new Value(0)
     const dragging = new Value(0)
-    const position = new Value(300);
+    const position = new Value(0);
     const velocity = new Value(0);
 
     // Use clock for all the velocity stuff
@@ -84,11 +84,11 @@ class ImageSquare extends React.Component{
           set(position, add(start, gestureTranslation)),
         ],
         [set(dragging, 0),
-          set(position, initial),
           startClock(clock),
           this.force(dt, position, velocity),
           cond(lessThan(abs(velocity), VELOCITY_THRESHOLD), stopClock(clock)),
           set(position, add(position, multiply(velocity,dt))),
+          // set(position, initial),
         ]
       );
 
@@ -334,6 +334,8 @@ class ImageSquare extends React.Component{
       <Animated.View
         style = {{
           zIndex: dragging ? 10 : 0,
+          top: this.offSetY,
+          left: this.offSetX,
           // opacity: this.opacity,
           transform: [
             {translateX: this.transX},
@@ -413,7 +415,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: "center",
     position: "absolute",
-
     // backgroundColor: 'red'
    // padding: 10,
   },
