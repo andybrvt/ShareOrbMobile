@@ -74,68 +74,29 @@ class ProfileHeader extends React.Component{
     }
 
     return (
-    <View>
-
-      <View style={styles.centerProfilePic}>
-          <View style={{flex:1, alignItems: 'center', justifyContent:'center'}}>
-            <Avatar
-
-              size={100}
-              rounded
-              source={{
-                uri:
-                  profileImage,
-              }}
-            />
-          </View>
-          <View style={{flex:1,alignItems: 'center', justifyContent:'center'}}>
-            <Text style = {styles.name}>{name}</Text>
-            <Text style = {styles.username}>@{username}</Text>
-          </View>
-
-
-      {/*
-      <View style={styles.centerProfilePic}>
-        <Avatar
-          size={100}
-          rounded
-          source={{
-            uri:
-              profileImage,
-          }}
-        />
-      {/*
-       <View style = {styles.nameContainer}>
-         <Text style = {styles.name}>{name}</Text>
-         <Text style = {styles.username}>@{username}</Text>
-           <View style={styles.profileInfoContainer}>
-
-             <View style={styles.followerCount}>
-               <Text style={styles.followerFollowingNum}>
-                 {following.length}
-               </Text>
-               <Text style={styles.followerFollowingHeader}> Following </Text>
-             </View>
-             <View style={styles.followerCount}>
-               <Text style={styles.followerFollowingNum}> {followers.length}</Text>
-               <Text style={styles.followerFollowingHeader}> Followers</Text>
-             </View>
-
-           </View>
-
-
-       </View>
-       <View style = {styles.bioContainer}>
-         <Text style = {styles.bio}> {bio}</Text>
+    <View style={{flexDirection:'column', top:'5%'}}>
+      <View style={{flex:1.5}}>
+        <View style={styles.profileInfoHeader}>
+            <View style={{flex:1, alignItems: 'center',
+               justifyContent:'center'}}>
+              <Avatar
+                size={80}
+                rounded
+                source={{
+                  uri:
+                    profileImage,
+                }}
+              />
+            </View>
+            <View style={{flex:1,justifyContent:'center'}}>
+              <Text style = {styles.name}>{name}</Text>
+              <Text style = {styles.username}>@{username}</Text>
+            </View>
         </View>
-
-
-        */}
      </View>
-     <View style = {styles.nameContainer}>
-
+     <View style={{flex:1.5}}>
+       <View style = {styles.profileMidContainer}>
          <View style={styles.profileInfoContainer}>
-
            <View style={styles.followerCount}>
              <Text style={styles.followerFollowingNum}>
                {following.length}
@@ -146,13 +107,13 @@ class ProfileHeader extends React.Component{
              <Text style={styles.followerFollowingNum}> {followers.length}</Text>
              <Text style={styles.followerFollowingHeader}> Followers</Text>
            </View>
-
          </View>
-
-
      </View>
+     </View>
+     <View style={{flex:1}}>
      <View style = {styles.bioContainer}>
        <Text style = {styles.bio}> {bio}</Text>
+      </View>
       </View>
 
    </View>
@@ -370,6 +331,14 @@ class ProfileHeader extends React.Component{
 export default ProfileHeader;
 
 const styles = StyleSheet.create({
+
+  shadowAvatar:{
+
+    shadowColor: '#470000',
+        shadowOffset: {width: 0, height: 1},
+        shadowOpacity: 0.2,
+        elevation: 1,
+  },
   container: {
     backgroundColor: "white",
     alignItems: 'center'
@@ -388,22 +357,32 @@ const styles = StyleSheet.create({
   },
 
 
-  centerProfilePic: {
+  profileInfoHeader: {
     position:'relative',
     top:'10%',
-    // backgroundColor:'blue',
+    // backgroundColor:'red',
     justifyContent: 'center',
     flexDirection:'row',
   },
+  profileMidContainer:{
+    top:'25%',
+    width:'90%',
+    alignItems: 'center'
+  },
+  bioContainer:{
+    flex:1,
+    // backgroundColor: "red",
+    top:'35%',
+    alignItems: 'center'
+  },
   profileInfoContainer: {
-    width:'80%',
-    padding:7.5,
+    width:'100%',
+    padding:10,
     // backgroundColor: "blue",
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: "gainsboro",
     flexDirection: "row",
-
   },
   followerCount: {
     flex:1,
@@ -413,26 +392,19 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: "center"
   },
-  nameContainer:{
 
-    // backgroundColor:'red',
-    top:'25%',
-    width:'90%',
-    alignItems: 'center'
-  },
-  bioContainer:{
 
-    flex:1,
-    // backgroundColor: "red",
-    top:'35%',
-    alignItems: 'center'
-  },
   name:{
-    fontSize: 25,
+    fontSize: 20,
     color: "black",
+  },
+  username:{
+    fontSize: 14,
+    color: "gray",
   },
   bio: {
     width:'100%',
+
     // backgroundColor: "blue",
     fontSize: 15
   }
