@@ -74,12 +74,13 @@ class ProfileHeader extends React.Component{
     }
 
     return (
-    <View style={{flexDirection:'column', top:'5%'}}>
-      <View style={{flex:1.5}}>
+    <View style={{flexDirection:'column', top:'5%',}}>
+      <View style={{flex:1, }}>
         <View style={styles.profileInfoHeader}>
             <View style={{flex:1, alignItems: 'center',
                justifyContent:'center'}}>
               <Avatar
+
                 size={80}
                 rounded
                 source={{
@@ -94,7 +95,7 @@ class ProfileHeader extends React.Component{
             </View>
         </View>
      </View>
-     <View style={{flex:1.5}}>
+     <View style={{flex:1, }}>
        <View style = {styles.profileMidContainer}>
          <View style={styles.profileInfoContainer}>
            <View style={styles.followerCount}>
@@ -107,14 +108,20 @@ class ProfileHeader extends React.Component{
              <Text style={styles.followerFollowingNum}> {followers.length}</Text>
              <Text style={styles.followerFollowingHeader}> Followers</Text>
            </View>
+
          </View>
      </View>
      </View>
+
      <View style={{flex:1}}>
-     <View style = {styles.bioContainer}>
-       <Text style = {styles.bio}> {bio}</Text>
+       <View style = {styles.bioContainer}>
+         <Text style = {styles.bio}> {bio}</Text>
+        </View>
+        <View style={styles.editButton}>
+           <Text style={{color:'white',}}>Edit Profile</Text>
+         </View>
       </View>
-      </View>
+
 
    </View>
 
@@ -248,78 +255,6 @@ class ProfileHeader extends React.Component{
         {this.renderProfilePic()}
 
 
-
-
-
-
-
-        <View>
-          {
-            this.props.route.params.username === this.props.currentUser ?
-
-            <View>
-
-            </View>
-
-            :
-
-            <View>
-              {
-                this.state.followLoading ?
-
-                <View>
-                  <Text> Loading </Text>
-                </View>
-
-                :
-
-                curRequested.includes(profileId) ?
-
-                <View>
-                  <Text> Accept</Text>
-                </View>
-
-                :
-
-                followers.includes(this.props.currentUser.toString()) ?
-
-                <View>
-                  <View>
-                    <Text> Unfollow </Text>
-                  </View>
-
-                  <View>
-                    <Text> Message</Text>
-                  </View>
-                </View>
-
-                :
-                <View>
-                  {
-                    requested.includes(this.props.currentId) ?
-
-                    <View>
-                      <Text>Requested</Text>
-                    </View>
-
-                    :
-
-                    <View>
-                      <Text> Follow</Text>
-                    </View>
-
-                  }
-
-                </View>
-
-              }
-
-            </View>
-
-          }
-
-        </View>
-
       </View>
     )
   }
@@ -331,6 +266,16 @@ class ProfileHeader extends React.Component{
 export default ProfileHeader;
 
 const styles = StyleSheet.create({
+  editButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 7.5,
+    paddingHorizontal: 30,
+    borderRadius: 4,
+    elevation: 5,
+
+    backgroundColor: '#1890ff',
+  },
 
   shadowAvatar:{
 
@@ -366,13 +311,15 @@ const styles = StyleSheet.create({
   },
   profileMidContainer:{
     top:'25%',
-    width:'90%',
-    alignItems: 'center'
+    width:'125%',
+    alignItems: 'center',
+    // backgroundColor:'red'
+
   },
   bioContainer:{
     flex:1,
     // backgroundColor: "red",
-    top:'35%',
+    top:'15%',
     alignItems: 'center'
   },
   profileInfoContainer: {
@@ -383,6 +330,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "gainsboro",
     flexDirection: "row",
+
+
   },
   followerCount: {
     flex:1,

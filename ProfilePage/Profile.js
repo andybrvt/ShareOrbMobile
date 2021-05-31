@@ -77,6 +77,11 @@ class Profile extends React.Component{
     return (
 
       <BackgroundContainer>
+
+
+        <View style={styles.viewStyle}>
+          <Text style={styles.textStyle}>pinghsu520</Text>
+        </View>
         <View style = {styles.profileHeader}>
           <ProfileHeader
             {...this.props}
@@ -125,15 +130,34 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    top:'4%',
+    top:'3%',
     marginTop: Constant.statusBarHeight,
     flex: 1.5,
 
   },
   profileHeader: {
-    flex: 1,
+    flex: 1.5,
+    alignItems:'flex-start',
+    left:'12.5%',
 
-  }
+
+  },
+  viewStyle: {
+    backgroundColor:'white',
+    justifyContent:'center',
+    paddingLeft:25,
+    height:50,
+    paddingTop:0,
+    shadowColor:'black',
+    shadowOffset:{width:0,height:2},
+    shadowOpacity:0.2,
+    elevation:5,
+    position:'relative'
+  },
+  textStyle:{
+    fontSize:20,
+    fontWeight:'bold',
+  },
 
 })
 
