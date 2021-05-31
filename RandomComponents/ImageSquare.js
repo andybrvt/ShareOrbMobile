@@ -34,10 +34,11 @@ const { cond,
    diff,
    lessThan,
    abs,
-   multiply
+   multiply,
+   greaterThan
   } = Animated;
-const POSITION_THRESHOLD = 1; // threshold where the clock will stop
-const VELOCITY = 10;
+const POSITION_THRESHOLD = 3.5; // threshold where the clock will stop
+const VELOCITY = 350;
 const VELOCITY_THRESHOLD = 0;
 
 
@@ -55,10 +56,10 @@ class ImageSquare extends React.Component{
 
 
   // get called everytime gestureTranslation or gestureState gets updated
-  interaction(gestureTranslation, gestureState){
+  interaction(initial, gestureTranslation, gestureState){
     const start = new Value(0)
     const dragging = new Value(0)
-    const position = new Value(0);
+    const position = new Value(300);
     const velocity = new Value(0);
 
     // Use clock for all the velocity stuff
@@ -66,9 +67,14 @@ class ImageSquare extends React.Component{
     // change in time
     // diff will get the difference in tiem from orignal to end
     const dt = divide(diff(clock), 1000)
-
     // remember the first part of the condition is a block
     // where it will all be run if the first condition is correct
+
+    // set will return the first value getting set
+
+
+    // The start clock will run and anything that comes after wards
+    // will return to its orignal position after the stop clock is over
     return cond(
       eq(gestureState, State.ACTIVE),
         [
@@ -78,11 +84,12 @@ class ImageSquare extends React.Component{
           set(position, add(start, gestureTranslation)),
         ],
         [set(dragging, 0),
+          set(position, initial),
           startClock(clock),
           this.force(dt, position, velocity),
           cond(lessThan(abs(velocity), VELOCITY_THRESHOLD), stopClock(clock)),
           set(position, add(position, multiply(velocity,dt))),
-          ]
+        ]
       );
 
   }
@@ -100,58 +107,69 @@ class ImageSquare extends React.Component{
     )
   }
 
+
+  // This function will be in charge of setting the velocity that will be
+  // used within the interactions
+  // Pretty much, you will set the velocity to be 350 when the position of the
+  // picture is to the left so that it can move to the right and the opposite
+  // is true for the right side, velocity will be negative
   force(dt, position, velocity){
-    return set(velocity, cond(lessThan(position, 0), VELOCITY, -VELOCITY))
+    return set(velocity,
+       cond(lessThan(position, -POSITION_THRESHOLD),
+        VELOCITY,
+        cond(greaterThan(position, POSITION_THRESHOLD), -VELOCITY, 0)
+      )
+    )
   }
 
 
   // this will run things on a timer, after a certain amout of time it will
   // run on its own
-  runPositionTimer = (clock, gestureState) => {
-
-    // the timing is gonna need a clock, state, and config
-    const state = {
-      finished: new Value(0), // st once animation has completed
-      position: new Value(0), // hold on to transition to value to the current position
-      time: new Value(0),
-      frameTime: new Value(0) // is the current frame of time over the process of the animation
-    };
-
-    console.log(state)
-
-    const config = {
-      duration: 3000,
-      toValue: new Value(-1),
-      easing: Easing.inOut(Easing.ease),
-    };
-
-    // For blocking, the last value of the block will be the
-    // value that is gonna be returned, this this case it will
-    // be the interpolate value
-    return block([
-      cond(and(eq(gestureState, State.BEGAN), neq(config.toValue, 1)), [
-         set(state.finished, 0),
-         set(state.time, 0),
-         set(state.frameTime, 0),
-         set(config.toValue, 1),
-         startClock(clock),
-       ]),
-       cond(and(eq(gestureState, State.END), neq(config.toValue, 0)), [
-         set(state.finished, 0),
-         set(state.time, 0),
-         set(state.frameTime, 0),
-         set(config.toValue, 0),
-         startClock(clock),
-       ]),
-      timing(clock, state, config),
-      cond(state.finished, stopClock(clock)),
-      cond(
-        eq(this.gestureState, State.ACTIVE),
-        add(this.offSetX, this.dragX),
-        set(this.offSetX, this.getPosition(this.props.index).x)
-      ),
-    ])
-  }
+  // runPositionTimer = (clock, gestureState) => {
+  //
+  //   // the timing is gonna need a clock, state, and config
+  //   const state = {
+  //     finished: new Value(0), // st once animation has completed
+  //     position: new Value(0), // hold on to transition to value to the current position
+  //     time: new Value(0),
+  //     frameTime: new Value(0) // is the current frame of time over the process of the animation
+  //   };
+  //
+  //   console.log(state)
+  //
+  //   const config = {
+  //     duration: 3000,
+  //     toValue: new Value(-1),
+  //     easing: Easing.inOut(Easing.ease),
+  //   };
+  //
+  //   // For blocking, the last value of the block will be the
+  //   // value that is gonna be returned, this this case it will
+  //   // be the interpolate value
+  //   return block([
+  //     cond(and(eq(gestureState, State.BEGAN), neq(config.toValue, 1)), [
+  //        set(state.finished, 0),
+  //        set(state.time, 0),
+  //        set(state.frameTime, 0),
+  //        set(config.toValue, 1),
+  //        startClock(clock),
+  //      ]),
+  //      cond(and(eq(gestureState, State.END), neq(config.toValue, 0)), [
+  //        set(state.finished, 0),
+  //        set(state.time, 0),
+  //        set(state.frameTime, 0),
+  //        set(config.toValue, 0),
+  //        startClock(clock),
+  //      ]),
+  //     timing(clock, state, config),
+  //     cond(state.finished, stopClock(clock)),
+  //     cond(
+  //       eq(this.gestureState, State.ACTIVE),
+  //       add(this.offSetX, this.dragX),
+  //       set(this.offSetX, this.getPosition(this.props.index).x)
+  //     ),
+  //   ])
+  // }
 
 
   constructor(props){
@@ -203,18 +221,24 @@ class ImageSquare extends React.Component{
     //   set(this.offSetX, this.getPosition(this.props.index).x)
     // )
 
-    this.transX = this.interaction(this.dragX, this.gestureState)
+
+    this.transX = this.interaction(
+      this.getPosition(this.props.index).x,
+      this.dragX,
+      this.gestureState)
 
 
-    this.transY = cond(
-      eq(this.gestureState, State.ACTIVE),
-      add(this.offSetY, this.dragY),
-      set(this.offSetY, this.getPosition(this.props.index).y)
-    )
+    // this.transY = cond(
+    //   eq(this.gestureState, State.ACTIVE),
+    //   add(this.offSetY, this.dragY),
+    //   set(this.offSetY, this.getPosition(this.props.index).y)
+    // )
 
-    // this.transY = add(this.offSetY, this.dragY)
-    // this.y = add(this.absY,
-    // this.x = this.absX
+    this.transY = this.interaction(
+      this.getPosition(this.props.index).y,
+      this.dragY,
+      this.gestureState)
+
 
 
   }
