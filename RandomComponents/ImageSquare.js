@@ -37,8 +37,8 @@ const { cond,
    multiply,
    greaterThan
   } = Animated;
-const POSITION_THRESHOLD = 3.5; // threshold where the clock will stop
-const VELOCITY = 350;
+const POSITION_THRESHOLD = 5; // threshold where the clock will stop
+const VELOCITY = 450;
 const VELOCITY_THRESHOLD = 0;
 
 
@@ -306,7 +306,7 @@ class ImageSquare extends React.Component{
     if(x > 0 && x < width && y > 0 && y < height){
 
       const order = this.getOrder(x, y)
-      this.props.move(order)
+      // this.props.move(order)
 
     }
 
