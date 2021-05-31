@@ -37,8 +37,8 @@ const { cond,
    multiply,
    greaterThan
   } = Animated;
-const POSITION_THRESHOLD = 5; // threshold where the clock will stop
-const VELOCITY = 450;
+const POSITION_THRESHOLD = 3.5; // threshold where the clock will stop
+const VELOCITY = 350;
 const VELOCITY_THRESHOLD = 0;
 
 
@@ -185,19 +185,14 @@ class ImageSquare extends React.Component{
     this.picWidth = 0
     this.gestureState = new Value(-1)
 
+    // index of the object
+    this.index = new Value(this.props.index);
+    this.dragY = new Value(0);
+    this.dragX = new Value(0);
 
-    // Helps capture the correctly location of the object
-
-    // remember that when you make a value, the startin value will be
-    // at zero, you have to get it right the first time
-    this.index = new Value(this.props.index)
-
-    this.dragY = new Value(0)
-    this.dragX = new Value(0)
-
-    // this offset probally has to be the getposition
-    this.offSetX = new Value(this.getPosition(this.props.index).x);
-    this.offSetY = new Value(this.getPosition(this.props.index).y);
+    // absX and Y used to get values relative to page
+    this.absX = new Value(0);
+    this.absY = new Value(0);
 
     this.onGestureEvent = event([
       {
@@ -211,34 +206,22 @@ class ImageSquare extends React.Component{
 
     // this.opacity = this.runPositionTimer(this.clock,this.gestureState)
 
-    // this conditional will make sure that you get the right value at the right
-    // position, this conditional will check if the gestureState is active and
-    // if it is it will add dragX to offset, if not true then it will just set
-    // the offset as thew new value
-    // this.transX = cond(
-    //   eq(this.gestureState, State.ACTIVE),
-    //   add(this.offSetX, this.dragX),
-    //   set(this.offSetX, this.getPosition(this.props.index).x)
-    // )
-
-
     this.transX = this.interaction(
       this.getPosition(this.props.index).x,
       this.dragX,
       this.gestureState)
 
 
-    // this.transY = cond(
-    //   eq(this.gestureState, State.ACTIVE),
-    //   add(this.offSetY, this.dragY),
-    //   set(this.offSetY, this.getPosition(this.props.index).y)
-    // )
-
     this.transY = this.interaction(
       this.getPosition(this.props.index).y,
       this.dragY,
       this.gestureState)
 
+
+    this.offSetX = new Value(this.getPosition(this.props.index).x);
+    this.offSetY = new Value(this.getPosition(this.props.index).y);
+
+    // this.indiX =
 
 
   }
@@ -280,6 +263,7 @@ class ImageSquare extends React.Component{
     })
 
     this.props.start(order)
+
   }
 
   // this will be run when you let go of the item
@@ -301,12 +285,13 @@ class ImageSquare extends React.Component{
 
   move = ([x, y]) => {
 
-
-
-    if(x > 0 && x < width && y > 0 && y < height){
+    // get the translated positions
+    console.log(x, y)
+    if(x >= 0 && x < width && y >= 0 && y < height){
 
       const order = this.getOrder(x, y)
-      // this.props.move(order)
+      console.log(order)
+      this.props.move(order)
 
     }
 
@@ -357,7 +342,9 @@ class ImageSquare extends React.Component{
           {() =>
             cond(
               eq(this.gestureState, State.ACTIVE),
-              call([this.transX, this.transY], this.move)
+              call([
+                add(this.offSetX, this.transX),
+                add(this.offSetY, this.transY)], this.move)
             )
           }
         </Animated.Code>
