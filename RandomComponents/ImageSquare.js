@@ -30,9 +30,15 @@ const { cond,
    and,
    neq,
    startClock,
+   divide,
+   diff,
+   lessThan,
+   abs,
+   multiply
   } = Animated;
-
-
+const POSITION_THRESHOLD = 1; // threshold where the clock will stop
+const VELOCITY = 10;
+const VELOCITY_THRESHOLD = 0;
 
 
 // this will be used for the images in the posting
@@ -46,6 +52,61 @@ class ImageSquare extends React.Component{
     dragging: false
   }
 
+
+
+  // get called everytime gestureTranslation or gestureState gets updated
+  interaction(gestureTranslation, gestureState){
+    const start = new Value(0)
+    const dragging = new Value(0)
+    const position = new Value(0);
+    const velocity = new Value(0);
+
+    // Use clock for all the velocity stuff
+    const clock = new Clock()
+    // change in time
+    // diff will get the difference in tiem from orignal to end
+    const dt = divide(diff(clock), 1000)
+
+    // remember the first part of the condition is a block
+    // where it will all be run if the first condition is correct
+    return cond(
+      eq(gestureState, State.ACTIVE),
+        [
+          cond(eq(dragging, 0), [set(dragging, 1), set(start, position)]),
+          stopClock(clock),
+          dt,
+          set(position, add(start, gestureTranslation)),
+        ],
+        [set(dragging, 0),
+          startClock(clock),
+          this.force(dt, position, velocity),
+          cond(lessThan(abs(velocity), VELOCITY_THRESHOLD), stopClock(clock)),
+          set(position, add(position, multiply(velocity,dt))),
+          ]
+      );
+
+  }
+
+
+  // this will stop the clock whenever a certain condition is met
+  stopWhenNeeded(dt, position, velocity , clock){
+    // if the position is within a certian range
+    return cond(
+      and(
+        lessThan(position, POSITION_THRESHOLD),
+        lessThan(-POSITION_THRESHOLD, position)
+      ),
+      [stopClock(clock), set(velocity, 0), set(position, 0)]
+    )
+  }
+
+  force(dt, position, velocity){
+    return set(velocity, cond(lessThan(position, 0), VELOCITY, -VELOCITY))
+  }
+
+
+  // this will run things on a timer, after a certain amout of time it will
+  // run on its own
   runPositionTimer = (clock, gestureState) => {
 
     // the timing is gonna need a clock, state, and config
@@ -55,6 +116,8 @@ class ImageSquare extends React.Component{
       time: new Value(0),
       frameTime: new Value(0) // is the current frame of time over the process of the animation
     };
+
+    console.log(state)
 
     const config = {
       duration: 3000,
@@ -82,11 +145,11 @@ class ImageSquare extends React.Component{
        ]),
       timing(clock, state, config),
       cond(state.finished, stopClock(clock)),
-      interpolate(state.position, { // maps a specific value to another
-        inputRange: [0, 1],
-        outputRange: [1, 0],
-        extrapolate: Extrapolate.CLAMP,
-      }),
+      cond(
+        eq(this.gestureState, State.ACTIVE),
+        add(this.offSetX, this.dragX),
+        set(this.offSetX, this.getPosition(this.props.index).x)
+      ),
     ])
   }
 
@@ -128,20 +191,21 @@ class ImageSquare extends React.Component{
       }
     ])
 
-    this.opacity = this.runPositionTimer(this.clock,this.gestureState)
+    // this.opacity = this.runPositionTimer(this.clock,this.gestureState)
 
     // this conditional will make sure that you get the right value at the right
     // position, this conditional will check if the gestureState is active and
     // if it is it will add dragX to offset, if not true then it will just set
     // the offset as thew new value
-    this.transX = cond(
-      eq(this.gestureState, State.ACTIVE),
-      add(this.offSetX, this.dragX),
-      set(this.offSetX, this.getPosition(this.props.index).x)
-    )
+    // this.transX = cond(
+    //   eq(this.gestureState, State.ACTIVE),
+    //   add(this.offSetX, this.dragX),
+    //   set(this.offSetX, this.getPosition(this.props.index).x)
+    // )
 
-    // this.transX = add(this.offSetX, this.dragX)
-    //
+    this.transX = this.interaction(this.dragX, this.gestureState)
+
+
     this.transY = cond(
       eq(this.gestureState, State.ACTIVE),
       add(this.offSetY, this.dragY),
@@ -246,7 +310,7 @@ class ImageSquare extends React.Component{
       <Animated.View
         style = {{
           zIndex: dragging ? 10 : 0,
-          opacity: this.opacity,
+          // opacity: this.opacity,
           transform: [
             {translateX: this.transX},
             {translateY: this.transY},
