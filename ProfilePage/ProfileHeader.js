@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button,StyleSheet,} from 'react-native';
+import { Text, View, Button,StyleSheet,TouchableOpacity, TouchableHighlight} from 'react-native';
 
 import { Appbar } from 'react-native-paper';
 import { Avatar } from 'react-native-elements';
@@ -74,14 +74,13 @@ class ProfileHeader extends React.Component{
     }
 
     return (
-    <View style={{flexDirection:'column', top:'5%',}}>
+    <View style={{flexDirection:'column', top:'3%',}}>
       <View style={{flex:1, }}>
         <View style={styles.profileInfoHeader}>
             <View style={{flex:1, alignItems: 'center',
                justifyContent:'center'}}>
               <Avatar
-
-                size={80}
+                size={95}
                 rounded
                 source={{
                   uri:
@@ -89,13 +88,18 @@ class ProfileHeader extends React.Component{
                 }}
               />
             </View>
-            <View style={{flex:1,justifyContent:'center'}}>
+            <View style={{flex:2,justifyContent:'center', marginLeft:30}}>
               <Text style = {styles.name}>{name}</Text>
               <Text style = {styles.username}>@{username}</Text>
+                <TouchableHighlight>
+                  <View style={styles.editButton}>
+                     <Text style={{color:'white',}}>Edit Profile</Text>
+                   </View>
+               </TouchableHighlight>
             </View>
         </View>
      </View>
-     <View style={{flex:1, }}>
+     <View style={{flex:1, top:'22.5%',}}>
        <View style = {styles.profileMidContainer}>
          <View style={styles.profileInfoContainer}>
            <View style={styles.followerCount}>
@@ -113,13 +117,11 @@ class ProfileHeader extends React.Component{
      </View>
      </View>
 
-     <View style={{flex:1}}>
+     <View style={{flex:1, top:'25%',}}>
        <View style = {styles.bioContainer}>
          <Text style = {styles.bio}> {bio}</Text>
         </View>
-        <View style={styles.editButton}>
-           <Text style={{color:'white',}}>Edit Profile</Text>
-         </View>
+
       </View>
 
 
@@ -269,11 +271,11 @@ const styles = StyleSheet.create({
   editButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 7.5,
-    paddingHorizontal: 30,
+    paddingVertical: 5,
+    paddingHorizontal: 20,
     borderRadius: 4,
     elevation: 5,
-
+    top:5,
     backgroundColor: '#1890ff',
   },
 
@@ -305,12 +307,12 @@ const styles = StyleSheet.create({
   profileInfoHeader: {
     position:'relative',
     top:'10%',
-    // backgroundColor:'red',
+    // background1Color:'red',
     justifyContent: 'center',
     flexDirection:'row',
   },
   profileMidContainer:{
-    top:'25%',
+
     width:'125%',
     alignItems: 'center',
     // backgroundColor:'red'
@@ -319,7 +321,7 @@ const styles = StyleSheet.create({
   bioContainer:{
     flex:1,
     // backgroundColor: "red",
-    top:'15%',
+
     alignItems: 'center'
   },
   profileInfoContainer: {
