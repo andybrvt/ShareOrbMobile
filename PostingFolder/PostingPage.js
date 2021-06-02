@@ -44,7 +44,7 @@ class PostingPage extends React.Component{
 
 
      this.curPicIndex = -1;
-
+     this.active = false;
      // The draggingIndex in states will keep track of the current index
      // of the image
      this.state = {
@@ -56,7 +56,7 @@ class PostingPage extends React.Component{
        showDraggable: true,
        dropZoneValues: null,
        draggingIndex: -1,
-
+       dragging: false
      }
 
 
@@ -401,10 +401,13 @@ class PostingPage extends React.Component{
    // This start will be used to get the inital index of the
    // image
    // the parameter order will be the index of the image
+   // set dragging equals true
    start = (order) => {
 
     this.curPicIndex = order;
+    this.active = true;
     this.setState({
+       dragging: true,
        draggingIndex: this.curPicIndex
      })
    }
@@ -418,12 +421,41 @@ class PostingPage extends React.Component{
      // Make sure when you get the order you know when the order is out of
      // range
 
-     this.updateOrder(order)
+
+
+     console.log('move stuff here')
    }
 
+
+   // This function will get called when you are done with your dragging
    reset = () => {
 
+     this.active = false;
+     this.setState({
+       dragging: false,
+       draggingIndex: -1
+     })
    }
+
+
+   // This function will be used to rearrange the list
+   // when you move stuff around
+   // It will be a recursive function that will call itself
+   // its base case would be when this state is not active any
+   // more
+   animateList = () => {
+
+     // base case
+     if(!this.state.dragging){
+       console.log('not true')
+       return
+     }
+
+
+
+
+   }
+
 
 
 
