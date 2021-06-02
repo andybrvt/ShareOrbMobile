@@ -175,6 +175,8 @@ class ImageSquare extends React.Component{
   constructor(props){
     super(props)
 
+    this.test = -1;
+
     // this.y = new Value(this.getPosition(this.props.index).y)
     // this.x = new Value(this.getPosition(this.props.index).x)
 
@@ -285,7 +287,7 @@ class ImageSquare extends React.Component{
 
   move = ([x, y]) => {
 
-    console.log(this.props.index)
+    console.log(this.test)
     // get the translated positions
     if(x >= 0 && x < width && y >= 0 && y < height){
 
@@ -297,6 +299,10 @@ class ImageSquare extends React.Component{
 
   }
 
+
+  componentDidUpdate = (prevProps) => {
+    this.test = this.props.index
+  }
 
 
   // remember the PanGestureHandler is wrapped around any place you

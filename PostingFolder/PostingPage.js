@@ -11,8 +11,6 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   TouchableHighlight,
-  PanResponder,
-  Animated
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -26,16 +24,18 @@ import FlashMessage from '../RandomComponents/FlashMessage';
 import * as authActions from '../store/actions/auth';
 import ImageSquare from '../RandomComponents/ImageSquare';
 import DragDrop from '../RandomComponents/DragDrop';
- // this class will be a page on its own where
- // you can upload pictures and write a caption after uploaidng
- // pictures
-// import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-
 import * as ImagePicker from 'expo-image-picker';
-// import { ImageBrowser } from 'expo-image-picker-multiple';
+import Animated from "react-native-reanimated";
+
 
 
 const width = Dimensions.get("window").width
+const height = Dimensions.get('window').height
+const margin = 0;
+const col = 3;
+const size = width/col + margin;
+
+const { cond, eq, add, call, set, Value, event, or } = Animated;
 
 class PostingPage extends React.Component{
 
@@ -51,58 +51,25 @@ class PostingPage extends React.Component{
      // of the image
      this.state = {
        imageList: [],
+       imageObjList: [],
        caption: "",
        flashMessage: false,
        fileList: [],
-       pan: new Animated.ValueXY(),
        showDraggable: true,
        dropZoneValues: null,
        draggingIndex: -1,
        dragging: false
      }
 
-
-
-     this.panResponder = PanResponder.create({
-       onStartShouldSetPanResponder: () => true,
-       onPanResponderMove: Animated.event([null, {
-         dx: this.state.pan.x,
-         dy: this.state.pan.y
-       }]),
-       onPanResponderRelease: (e, gesture) => {
-         Animated.spring(
-           // spring back into this place
-           this.state.pan,
-           {toValue:{x:0, y: 0}}
-         ).start();
-       }
-     })
-
-
-
-
-
    }
 
-   setDropZoneValues(event){
-     this.setState({
-       dropZoneValues: event.nativeEvent.layout
-     })
-   }
 
-   renderDraggable(){
-     if(this.state.showDraggable){
-       return(
-         <View>
-         </View>
-       )
-     }
-   }
 
    componentDidMount(){
      let caption = "";
      let fileList = [];
 
+     let fileObjList = [];
 
 
      if(this.props.curSocialCalCell){
@@ -123,15 +90,28 @@ class PostingPage extends React.Component{
             fileList.push(
               `${global.IMAGE_ENDPOINT}`+this.props.curSocialCalCell.get_socialCalItems[i].itemImage
             )
+
+            // When pushing here you want to push the imageSquare in
+            fileObjList.push(
+              <ImageSquare
+                start = {this.start}
+                move = {this.move}
+                reset = {this.reset}
+                col = {col}
+                margin = {margin}
+                size = {size}
+                images = {`${global.IMAGE_ENDPOINT}`+this.props.curSocialCalCell.get_socialCalItems[i].itemImage}
+                index = {i}
+                />
+            )
          }
-
-
        }
      }
 
      this.setState({
        caption: caption,
-       imageList: fileList
+       imageList: fileList,
+       imageObjList: fileObjList
      })
 
    }
@@ -549,6 +529,7 @@ class PostingPage extends React.Component{
    render(){
 
 
+     console.log(this.state)
      // Remember, if you ever want to animate an element you will have to use
      // animated.view
 
@@ -570,15 +551,10 @@ class PostingPage extends React.Component{
          <View
            style = {styles.wholeContainer}
            >
+           <ScrollView  style = {styles.imageContainerContainer}>
+             {this.state.imageObjList}
 
-
-          <DragDrop
-            start = {this.start}
-            move = {this.move}
-            reset = {this.reset}
-            itemList = {this.state.imageList}/>
-
-
+           </ScrollView>
            <Button
              title = "Choose Photo"
              onPress = {this.handleChoosePhoto}
