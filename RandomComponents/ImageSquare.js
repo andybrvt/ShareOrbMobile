@@ -285,12 +285,11 @@ class ImageSquare extends React.Component{
 
   move = ([x, y]) => {
 
+    console.log(this.props.index)
     // get the translated positions
-    console.log(x, y)
     if(x >= 0 && x < width && y >= 0 && y < height){
 
       const order = this.getOrder(x, y)
-      console.log(order)
       this.props.move(order)
 
     }

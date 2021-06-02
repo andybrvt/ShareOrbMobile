@@ -43,7 +43,9 @@ class PostingPage extends React.Component{
      super(props)
 
 
-     this.curPicIndex = -1;
+     this.curLoc = -1; // index of where you are on the screen
+     this.curPicIndex = -1; // index of the pic you are holding
+
      this.active = false;
      // The draggingIndex in states will keep track of the current index
      // of the image
@@ -398,37 +400,36 @@ class PostingPage extends React.Component{
    }
 
 
-   // This start will be used to get the inital index of the
-   // image
-   // the parameter order will be the index of the image
-   // set dragging equals true
+   // START OF DRAGGING
    start = (order) => {
 
     this.curPicIndex = order;
-    this.active = true;
+    // this.active = true;
     this.setState({
-       dragging: true,
+       // dragging: true,
        draggingIndex: this.curPicIndex
      })
    }
 
-   // this function will be used to rearrange the list of pictures
-   // whenever you change the order of the pictures
-
-   // You have the dragging index now, now you have to pass the order of
-   // you dragging into the rearrange so you can know which index you are in
+   // WHILE DRAGGING
    move = (order: number) => {
-     // Make sure when you get the order you know when the order is out of
-     // range
 
+     // as you move around you want to get the currentLoc (when dragging)
 
+     this.curLoc = order;
+     this.active = true;
+     this.setState({
+       dragging: true,
+     }, () => {
+       // add a callback
+       this.animateList()
+     })
 
-     console.log('move stuff here')
    }
 
-
-   // This function will get called when you are done with your dragging
+   // END OF DRAGGING
    reset = () => {
+
 
      this.active = false;
      this.setState({
@@ -447,11 +448,32 @@ class PostingPage extends React.Component{
 
      // base case
      if(!this.state.dragging){
-       console.log('not true')
        return
      }
 
+     // this will help with run time a bit
+     requestAnimationFrame(() => {
+       // Now do some switch
 
+       if(this.curPicIndex !== this.curLoc
+         && this.curLoc >= 0
+         && this.curLoc <= this.state.imageList.length -1
+       ){
+         this.setState({
+          imageList: this.immutableMove(
+            this.state.imageList,
+            this.curPicIndex,
+            this.curLoc,
+          ),
+          draggingIndex: this.curLoc
+        })
+
+        this.curPicIndex = this.curLoc
+       }
+
+
+       this.animateList()
+     })
 
 
    }
@@ -473,7 +495,7 @@ class PostingPage extends React.Component{
 
        // Now you will update the imagelist of the new order of the
        // state lits of the pictures
-       this.setState({
+        this.setState({
          imageList: this.immutableMove(
            this.state.imageList,
            this.curPicIndex,
