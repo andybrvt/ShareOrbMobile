@@ -130,9 +130,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    top:'3%',
     marginTop: Constant.statusBarHeight,
-    flex: 1.5,
+    flex: 1.75,
 
   },
   profileHeader: {
