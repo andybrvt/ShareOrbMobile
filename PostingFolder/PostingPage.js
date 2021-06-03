@@ -30,7 +30,6 @@ import Animated from "react-native-reanimated";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 
 
-
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
 const margin = 0;
@@ -46,8 +45,15 @@ class PostingPage extends React.Component{
 
 
 
-     this.curX = new Value(0);
-     this.curY = new Value(0);
+     this.absX = new Value(0);
+     this.absY = new Value(0);
+
+
+     this.transX = new Value(0);
+     this.transY = new Value(0);
+
+
+
      this.gestureState = new Value(-1);
 
      this.curLoc = -1; // index of where you are on the screen
@@ -74,12 +80,17 @@ class PostingPage extends React.Component{
      this.onGestureEvent = event([
        {
          nativeEvent:{
-           absoluteX: this.curX,
-           absoluteY: this.curY,
+           absoluteX: this.absX,
+           absoluteY: this.absY,
+           translationX: this.transX,
+           translationY: this.transY,
            state: this.gestureState
          }
        }
      ])
+
+
+
 
    }
 
@@ -400,9 +411,27 @@ class PostingPage extends React.Component{
    }
 
 
+   // This function will be used to adjust the absolute location
+   // by subtracting off a set number to match that of the pictures
+   adjustLoc = (num: number) =>{
+
+     let value = num - (width/col)
+     if(value <= 0){
+       return 0
+     }
+     else {
+       return value;
+     }
+   }
+
    // START OF DRAGGING
-   start = ([]) => {
-    // this.curPicIndex = order;
+   start = ([x, y]) => {
+
+    const adjX = this.adjustLoc(x)
+    const adjY = this.adjustLoc(y)
+
+    this.curPicIndex = this.getOrder(x,adjY);
+    console.log(this.curPicIndex)
     // // this.active = true;
     this.setState({
        dragging: true,
@@ -547,9 +576,18 @@ class PostingPage extends React.Component{
    // pretty much just return the index order that the values are in
    getOrder = (x: number, y: number)=> {
 
+     const curCol = Math.floor(x/size)
+     const row = Math.round(y/size)
+
+     return row * col + curCol
+   }
+
+   oldGetOrder = (x: number, y: number)=> {
+
      const curCol = Math.round(x/size)
      const row = Math.round(y/size)
 
+     console.log(curCol, row)
      return row * col + curCol
    }
 
@@ -566,7 +604,7 @@ class PostingPage extends React.Component{
 
    render(){
 
-     const {dragging} = this.state
+     const {dragging, draggingIndex} = this.state
 
 
      // Remember, if you ever want to animate an element you will have to use
@@ -589,6 +627,7 @@ class PostingPage extends React.Component{
 
          <View
            style = {styles.wholeContainer}
+           onLayout = {e => console.log(e.nativeEvent)}
            >
 
            <ScrollView  style = {styles.imageContainerContainer}>
@@ -596,7 +635,7 @@ class PostingPage extends React.Component{
                {() =>
                cond(
                  eq(this.gestureState, State.BEGAN),
-                 call([], this.start)
+                 call([this.absX, this.absY], this.start)
                )}
              </Animated.Code>
              <Animated.Code>
@@ -626,19 +665,24 @@ class PostingPage extends React.Component{
                dragging ? (
                  <Animated.View
 
-                   style = {{
+                   style = {[{
                      transform: [
-                       {translateX: this.curX},
-                       {translateY: this.curY}
+                       {translateX: add(this.transX ,this.getPosition(draggingIndex).x)},
+                       {translateY: add(this.transY ,this.getPosition(draggingIndex).y)}
                      ],
                      position: "absolute",
-                     width: 100,
-                     backgroundColor: 'red',
                      zIndex: 99
-                   }}
+                   }, styles.imageContainer]}
                    >
 
-                   <Text> some text here</Text>
+                     <Image
+                       style = {styles.smallImage}
+                       resizeMode = "cover"
+                       source = {{
+                         uri: this.state.imageList[this.state.draggingIndex]
+                       }}
+                        />
+
                  </Animated.View>
                ) : null
              }
@@ -649,7 +693,7 @@ class PostingPage extends React.Component{
               return(
                 <Animated.View
                   style = {{
-                    opacity: dragging ? 0 : 1
+                    opacity: key === this.state.draggingIndex ? 0 : 1
                   }}
                   >
 
@@ -659,6 +703,8 @@ class PostingPage extends React.Component{
                     maxPointers = {1}
                     onGestureEvent = {this.onGestureEvent}
                     onHandlerStateChange = {this.onGestureEvent}
+
+
                     >
                     <Animated.View
                       key = {key}
