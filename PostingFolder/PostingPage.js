@@ -653,19 +653,24 @@ class PostingPage extends React.Component{
                dragging ? (
                  <Animated.View
 
-                   style = {{
+                   style = {[{
                      transform: [
                        {translateX: this.curX},
                        {translateY: this.curY}
                      ],
                      position: "absolute",
-                     width: 100,
-                     backgroundColor: 'red',
                      zIndex: 99
-                   }}
+                   }, styles.imageContainer]}
                    >
 
-                   <Text> some text here</Text>
+                     <Image
+                       style = {styles.smallImage}
+                       resizeMode = "cover"
+                       source = {{
+                         uri: this.state.imageList[this.state.draggingIndex]
+                       }}
+                        />
+
                  </Animated.View>
                ) : null
              }
@@ -676,7 +681,7 @@ class PostingPage extends React.Component{
               return(
                 <Animated.View
                   style = {{
-                    opacity: dragging ? 0 : 1
+                    opacity: key === this.state.draggingIndex ? 0 : 1
                   }}
                   >
 
@@ -691,7 +696,6 @@ class PostingPage extends React.Component{
                     >
                     <Animated.View
                       key = {key}
-                      onPress = {e => console.log(key)}
                       style = {[{
                         transform:[
                           {translateX: this.getPosition(key).x},
