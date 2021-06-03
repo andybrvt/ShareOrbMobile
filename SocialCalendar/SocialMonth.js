@@ -4,9 +4,11 @@ import { Text,
    Button,
    StyleSheet,
    Dimensions,
-   Image
+   Image,
+   TouchableOpacity,
     } from 'react-native';
 import * as dateFns from 'date-fns';
+import DayAlbum from './DayAlbum';
 
 // this class will be use to render the month of the flat list
 // the reason fro this is becasue each month needs to be a pure
@@ -19,6 +21,16 @@ import * as dateFns from 'date-fns';
 // list to rerender and because of that you would need to make
 // you items PureComponent so that it wont rerender every time
 class SocialMonth extends React.PureComponent{
+
+
+  ViewDay = (toDoStuff) => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+    this.props.navigation.navigate("DayAlbum",
+  {
+    entireDay:toDoStuff,
+  });
+  }
 
   renderCell(curMonth, cells){
 
@@ -112,6 +124,7 @@ class SocialMonth extends React.PureComponent{
             // pic or not the thing is is that if there is a social cal cell there
             // might not be a cover pics so you have to handle that
 
+            let test1=toDoStuff
             days.push(
               <View
                 key = {i}
@@ -124,14 +137,14 @@ class SocialMonth extends React.PureComponent{
                   <View style = {styles.imageHolder}>
                     {
                       toDoStuff[0].coverPic ?
-
                         <View>
-                          <Image
-                            style = {styles.smallImage}
-                            resizeMode = "cover"
-                            source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
-                            />
-
+                          <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
+                            <Image
+                              style = {styles.smallImage}
+                              resizeMode = "cover"
+                              source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
+                              />
+                          </TouchableOpacity>
                         </View>
                       :
 

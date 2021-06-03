@@ -3,10 +3,10 @@ import { Text, SafeAreaView, View, Button,StyleSheet, ScrollView } from 'react-n
 import ProfileHeader from './ProfileHeader';
 import { connect } from "react-redux";
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
-import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import Constant from 'expo-constants';
 import { Appbar } from 'react-native-paper';
 import BackgroundContainer from "../RandomComponents/BackgroundContainer";
+import SocialCalendar from '../SocialCalendar/SocialCalendar';
 
 // This will be the bulk of the profile page
 class Profile extends React.Component{
@@ -92,7 +92,9 @@ class Profile extends React.Component{
         <View
           style = {styles.socialCalContainer}
           >
-          <SocialCalendar {...this.props} />
+          <SocialCalendar
+            navigation={this.props.navigation}
+            {...this.props} />
 
         </View>
       </BackgroundContainer>

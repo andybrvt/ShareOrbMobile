@@ -53,6 +53,7 @@ import Comments from './Newsfeed/Comments.js';
 import { Ionicons } from '@expo/vector-icons';
 import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle} from "react-native-feather";
 import TestReanimated from './PostingFolder/TestReanimated';
+import DayAlbum from './SocialCalendar/DayAlbum.js';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -315,6 +316,12 @@ class App extends Component{
                        ...TransitionPresets.SlideFromRightIOS,
                                       }}
                      name = 'MessageFriend' component = {MessageFriend}/>
+                     <Stack.Screen
+                       options={{
+                         title: 'Show Day',
+                          ...TransitionPresets.SlideFromRightIOS,
+                                         }}
+                        name = 'DayAlbum' component = {DayAlbum}/>
                  <Stack.Screen
                    options={{
                      title: 'Search Friends',
