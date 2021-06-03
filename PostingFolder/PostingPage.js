@@ -23,6 +23,7 @@ import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsock
 import FlashMessage from '../RandomComponents/FlashMessage';
 import * as authActions from '../store/actions/auth';
 import ImageSquare from '../RandomComponents/ImageSquare';
+import NormImageSquare from '../RandomComponents/NormImageSquare';
 import DragDrop from '../RandomComponents/DragDrop';
 import * as ImagePicker from 'expo-image-picker';
 import Animated from "react-native-reanimated";
@@ -383,12 +384,12 @@ class PostingPage extends React.Component{
    // START OF DRAGGING
    start = (order) => {
 
-    this.curPicIndex = order;
-    // this.active = true;
-    this.setState({
-       // dragging: true,
-       draggingIndex: this.curPicIndex
-     })
+    // this.curPicIndex = order;
+    // // this.active = true;
+    // this.setState({
+    //    // dragging: true,
+    //    draggingIndex: this.curPicIndex
+    //  })
    }
 
    // WHILE DRAGGING
@@ -396,26 +397,27 @@ class PostingPage extends React.Component{
 
      // as you move around you want to get the currentLoc (when dragging)
 
-     this.curLoc = order;
-     this.active = true;
-     this.setState({
-       dragging: true,
-     }, () => {
-       // add a callback
-       this.animateList()
-     })
+
+     // this.curLoc = order;
+     // this.active = true;
+     // this.setState({
+     //   dragging: true,
+     // }, () => {
+     //   // add a callback
+     //   this.animateList()
+     // })
 
    }
 
    // END OF DRAGGING
    reset = () => {
+     console.log('does it hit')
 
-
-     this.active = false;
-     this.setState({
-       dragging: false,
-       draggingIndex: -1
-     })
+     // this.active = false;
+     // this.setState({
+     //   dragging: false,
+     //   draggingIndex: -1
+     // })
    }
 
 
@@ -444,6 +446,11 @@ class PostingPage extends React.Component{
             this.state.imageList,
             this.curPicIndex,
             this.curLoc,
+          ),
+          imageObjList: this.immutableMove(
+            this.state.imageObjList,
+            this.curPicIndex,
+            this.curLoc
           ),
           draggingIndex: this.curLoc
         })
@@ -528,8 +535,8 @@ class PostingPage extends React.Component{
 
    render(){
 
+     const {dragging} = this.state
 
-     console.log(this.state)
      // Remember, if you ever want to animate an element you will have to use
      // animated.view
 
@@ -551,8 +558,36 @@ class PostingPage extends React.Component{
          <View
            style = {styles.wholeContainer}
            >
+           {
+             dragging && (
+               <ImageSquare
+                 start = {this.start}
+                 move = {this.move}
+                 reset = {this.reset}
+                 col = {col}
+                 margin = {margin}
+                 size = {size}
+                 images = {`${global.IMAGE_ENDPOINT}`+this.props.curSocialCalCell.get_socialCalItems[i].itemImage}
+                 index = {i}
+                  />
+             )
+           }
+
+
            <ScrollView  style = {styles.imageContainerContainer}>
-             {this.state.imageObjList}
+             {this.state.imageList.map((images, key) => {
+               return(
+                 <NormImageSquare
+                   col = {col}
+                   margin = {margin}
+                   size = {size}
+                   images = {images}
+                   index = {key}
+                    />
+               )
+             })}
+
+
 
            </ScrollView>
            <Button

@@ -196,6 +196,11 @@ class ImageSquare extends React.Component{
     this.absX = new Value(0);
     this.absY = new Value(0);
 
+    this.offSetX = new Value(this.getPosition(this.props.index).x);
+    this.offSetY = new Value(this.getPosition(this.props.index).y);
+
+
+
     this.onGestureEvent = event([
       {
         nativeEvent:{
@@ -208,20 +213,31 @@ class ImageSquare extends React.Component{
 
     // this.opacity = this.runPositionTimer(this.clock,this.gestureState)
 
-    this.transX = this.interaction(
-      this.getPosition(this.props.index).x,
-      this.dragX,
-      this.gestureState)
+    // this.transX = this.interaction(
+    //   this.getPosition(this.props.index).x,
+    //   this.dragX,
+    //   this.gestureState)
 
+    this.transX = cond(
+      eq(this.gestureState, State.ACTIVE),
+      add(this.offSetX, this.dragX),
+      set(this.offSetX, this.getPosition(this.props.index).x)
+    )
 
-    this.transY = this.interaction(
-      this.getPosition(this.props.index).y,
-      this.dragY,
-      this.gestureState)
+    //
+    // this.transY = this.interaction(
+    //   this.getPosition(this.props.index).y,
+    //   this.dragY,
+    //   this.gestureState)
 
+    this.transY = cond(
+      eq(this.gestureState, State.ACTIVE),
+      add(this.offSetY, this.dragY),
+      set(this.offSetY, this.getPosition(this.props.index).y)
+    )
 
-    this.offSetX = new Value(this.getPosition(this.props.index).x);
-    this.offSetY = new Value(this.getPosition(this.props.index).y);
+    // this.offSetX = new Value(this.getPosition(this.props.index).x);
+    // this.offSetY = new Value(this.getPosition(this.props.index).y);
 
     // this.indiX =
 
@@ -287,23 +303,28 @@ class ImageSquare extends React.Component{
 
   move = ([x, y]) => {
 
-    console.log(this.test)
+
     // get the translated positions
-    if(x >= 0 && x < width && y >= 0 && y < height){
+    // if(x >= 0 && x < width && y >= 0 && y < height){
+
 
       const order = this.getOrder(x, y)
-      this.props.move(order)
 
-    }
+      if(order >= 0){
+        this.props.move(order)
+
+      }
+
+    // }
 
 
   }
-
 
   componentDidUpdate = (prevProps) => {
-    this.test = this.props.index
-  }
+    // this.offSetX = new Value(this.getPosition(this.props.index).x);
+    // this.offSetY = new Value(this.getPosition(this.props.index).y);
 
+  }
 
   // remember the PanGestureHandler is wrapped around any place you
   // want it to dectect gestrue movement. This is simlar to taht of the
@@ -324,8 +345,8 @@ class ImageSquare extends React.Component{
       <Animated.View
         style = {{
           zIndex: dragging ? 10 : 0,
-          top: this.offSetY,
-          left: this.offSetX,
+          // top: this.offSetY,
+          // left: this.offSetX,
           // opacity: this.opacity,
           transform: [
             {translateX: this.transX},
