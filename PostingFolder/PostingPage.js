@@ -56,7 +56,6 @@ class PostingPage extends React.Component{
 
      this.gestureState = new Value(-1);
 
-     this.curLoc = -1; // index of where you are on the screen
      this.curPicIndex = -1; // index of the pic you are holding
 
      this.active = false;
@@ -431,7 +430,6 @@ class PostingPage extends React.Component{
     const adjY = this.adjustLoc(y)
 
     this.curPicIndex = this.getOrder(x,adjY);
-    console.log(this.curPicIndex)
     // // this.active = true;
     this.setState({
        dragging: true,
@@ -440,12 +438,13 @@ class PostingPage extends React.Component{
    }
 
    // WHILE DRAGGING
-   move = ([]) => {
+   move = ([x, y]) => {
 
 
-     // as you move around you want to get the currentLoc (when dragging)
+     const adjY = this.adjustLoc(y)
 
 
+     this.updateList(x, adjY)
      // this.curLoc = order;
      // this.active = true;
      // this.setState({
@@ -461,7 +460,6 @@ class PostingPage extends React.Component{
    // END OF DRAGGING
    reset = () => {
 
-     console.log('end')
      // this.active = false;
      this.setState({
        dragging: false,
@@ -469,81 +467,28 @@ class PostingPage extends React.Component{
      })
    }
 
+  updateList = (x,y) => {
 
-   // This function will be used to rearrange the list
-   // when you move stuff around
-   // It will be a recursive function that will call itself
-   // its base case would be when this state is not active any
-   // more
-   animateList = () => {
-
-     // base case
-     if(!this.state.dragging){
-       return
-     }
-
-     // this will help with run time a bit
-     requestAnimationFrame(() => {
-       // Now do some switch
-
-       if(this.curPicIndex !== this.curLoc
-         && this.curLoc >= 0
-         && this.curLoc <= this.state.imageList.length -1
-       ){
-         this.setState({
-          imageList: this.immutableMove(
-            this.state.imageList,
-            this.curPicIndex,
-            this.curLoc,
-          ),
-          imageObjList: this.immutableMove(
-            this.state.imageObjList,
-            this.curPicIndex,
-            this.curLoc
-          ),
-          draggingIndex: this.curLoc
-        })
-
-        this.curPicIndex = this.curLoc
-       }
-
-
-       this.animateList()
-     })
-
-
-   }
-
-
-
-
-   updateOrder = order => {
-
-     if(this.curPicIndex !== order
-       && order >= 0
-       && order <= this.state.imageList.length -1
+    const newIndex = this.getOrder(x, y)
+    if(this.curPicIndex !== newIndex
+      && newIndex >= 0
+      && newIndex <= this.state.imageList.length - 1
      ){
-       // You also have to check that the index falls within range
-
-
-       // if they are not equal you would wnat to switch spots with
-       // the pictures
-
-       // Now you will update the imagelist of the new order of the
-       // state lits of the pictures
-        this.setState({
+       this.setState({
          imageList: this.immutableMove(
            this.state.imageList,
            this.curPicIndex,
-           order,
+           newIndex
          ),
-         draggingIndex: order
+         draggingIndex: newIndex
        })
 
-       this.curPicIndex = order
-     }
+       this.curPicIndex = newIndex
 
-   }
+    }
+
+  }
+
 
   immutableMove(arr, from, to) {
     return arr.reduce((prev, current, idx, self) => {
@@ -586,8 +531,6 @@ class PostingPage extends React.Component{
 
      const curCol = Math.round(x/size)
      const row = Math.round(y/size)
-
-     console.log(curCol, row)
      return row * col + curCol
    }
 
@@ -627,7 +570,6 @@ class PostingPage extends React.Component{
 
          <View
            style = {styles.wholeContainer}
-           onLayout = {e => console.log(e.nativeEvent)}
            >
 
            <ScrollView  style = {styles.imageContainerContainer}>
@@ -642,7 +584,7 @@ class PostingPage extends React.Component{
                {() =>
                  cond(
                    eq(this.gestureState, State.ACTIVE),
-                   call([], this.move)
+                   call([this.absX, this.absY], this.move)
                  )
                }
              </Animated.Code>
@@ -703,8 +645,6 @@ class PostingPage extends React.Component{
                     maxPointers = {1}
                     onGestureEvent = {this.onGestureEvent}
                     onHandlerStateChange = {this.onGestureEvent}
-
-
                     >
                     <Animated.View
                       key = {key}
