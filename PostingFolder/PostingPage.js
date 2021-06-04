@@ -28,6 +28,7 @@ import DragDrop from '../RandomComponents/DragDrop';
 import * as ImagePicker from 'expo-image-picker';
 import Animated from "react-native-reanimated";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
+import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle } from "react-native-feather";
 
 
 const width = Dimensions.get("window").width
@@ -47,12 +48,8 @@ class PostingPage extends React.Component{
 
      this.absX = new Value(0);
      this.absY = new Value(0);
-
-
      this.transX = new Value(0);
      this.transY = new Value(0);
-
-
 
      this.gestureState = new Value(-1);
 
@@ -63,14 +60,9 @@ class PostingPage extends React.Component{
      // of the image
      this.state = {
        imageList: [],
-       imageObjList: [],
        caption: "",
        flashMessage: false,
        fileList: [],
-       showDraggable: true,
-       dropZoneValues: null,
-
-
        draggingIndex: -1,
        dragging: false
      }
@@ -87,8 +79,6 @@ class PostingPage extends React.Component{
          }
        }
      ])
-
-
 
 
    }
@@ -113,26 +103,10 @@ class PostingPage extends React.Component{
          // in this case you might not need to but rather put
          // it into the file Listin states (imagelist specifically)
 
-
-
          for(let i = 0; i< this.props.curSocialCalCell.get_socialCalItems.length; i++){
            // You want to push an object into the fileLis
             fileList.push(
               `${global.IMAGE_ENDPOINT}`+this.props.curSocialCalCell.get_socialCalItems[i].itemImage
-            )
-
-            // When pushing here you want to push the imageSquare in
-            fileObjList.push(
-              <ImageSquare
-                start = {this.start}
-                move = {this.move}
-                reset = {this.reset}
-                col = {col}
-                margin = {margin}
-                size = {size}
-                images = {`${global.IMAGE_ENDPOINT}`+this.props.curSocialCalCell.get_socialCalItems[i].itemImage}
-                index = {i}
-                />
             )
          }
        }
@@ -141,7 +115,6 @@ class PostingPage extends React.Component{
      this.setState({
        caption: caption,
        imageList: fileList,
-       imageObjList: fileObjList
      })
 
    }
@@ -423,11 +396,6 @@ class PostingPage extends React.Component{
      }
    }
 
-
-   UIAdjustLoc = (num) => {
-
-   }
-
    // START OF DRAGGING
    start = ([x, y]) => {
 
@@ -435,7 +403,6 @@ class PostingPage extends React.Component{
     const adjY = this.adjustLoc(y)
 
     this.curPicIndex = this.getOrder(x,adjY);
-    // // this.active = true;
     this.setState({
        dragging: true,
        draggingIndex: this.curPicIndex
@@ -450,14 +417,6 @@ class PostingPage extends React.Component{
 
 
      this.updateList(x, adjY)
-     // this.curLoc = order;
-     // this.active = true;
-     // this.setState({
-     //   dragging: true,
-     // }, () => {
-     //   // add a callback
-     //   this.animateList()
-     // })
 
    }
 
@@ -532,13 +491,6 @@ class PostingPage extends React.Component{
      return row * col + curCol
    }
 
-   oldGetOrder = (x: number, y: number)=> {
-
-     const curCol = Math.round(x/size)
-     const row = Math.round(y/size)
-     return row * col + curCol
-   }
-
    getPosition = (order: number) => {
 
 
@@ -548,6 +500,14 @@ class PostingPage extends React.Component{
        x: (order % col) * size, // pretty much if 0 or 1, row would be 0
        y: Math.floor(order / col) * size
      }
+   }
+
+
+   /*
+   Function to delete the picture
+   */
+   deletePicture = (order) => {
+
    }
 
    render(){
@@ -644,11 +604,32 @@ class PostingPage extends React.Component{
               return(
                 <Animated.View
                   style = {{
-                    opacity: key === this.state.draggingIndex ? 0 : 1
+                    opacity: key === this.state.draggingIndex ? 0 : 1,
+                    position: "relative",
+                    transform:[
+                      {translateX: this.getPosition(key).x},
+                      {translateY: this.getPosition(key).y}
+                    ]
                   }}
                   >
 
+                  {
+                    !dragging ? (
+                      <XCircle
+                        style = {{
+                          position: 'absolute',
+                          left: (width/col)*0.85,
+                          zIndex: 9,
+                          shadowColor: '#470000',
+                          shadowOffset: {width: 0, height: 1},
+                          shadowOpacity: 0.2,
+                        }}
+                        stroke = "#1890ff" fill= "white"/>
 
+                    ) : null
+
+
+                  }
 
                   <PanGestureHandler
                     maxPointers = {1}
@@ -658,12 +639,14 @@ class PostingPage extends React.Component{
                     <Animated.View
                       key = {key}
                       style = {[{
-                        transform:[
-                          {translateX: this.getPosition(key).x},
-                          {translateY: this.getPosition(key).y}
-                        ]
+                        // transform:[
+                        //   {translateX: this.getPosition(key).x},
+                        //   {translateY: this.getPosition(key).y}
+                        // ]
                       },
                         styles.imageContainer]}>
+
+
                       <Image
                         style = {styles.smallImage}
                         resizeMode = "cover"
@@ -751,7 +734,12 @@ class PostingPage extends React.Component{
      smallImage: {
        width: "90%",
        height: "90%",
-       borderRadius: 15
+       borderRadius: 15,
+       backgroundColor: 'lightgray'
+
+     },
+     xButton: {
+       position: 'relative',
 
      }
 
