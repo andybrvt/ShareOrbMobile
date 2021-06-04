@@ -14,6 +14,7 @@ import SocialMonth from './SocialMonth';
 
 let {height, width} = Dimensions.get('window')
 
+
 class SocialCalendar extends React.Component{
 
 
@@ -62,7 +63,9 @@ class SocialCalendar extends React.Component{
 
 
     return (
-      <SocialMonth item = {item}/>
+      <SocialMonth
+        navigation={this.props.navigation}
+        item = {item}/>
     )
   }
 
@@ -275,7 +278,7 @@ class SocialCalendar extends React.Component{
           // Now that you have the month object you want to pass in
           // now when you set state make sure you replace it
 
-      
+
           const list = this.state.monthList.map(month =>
             month.rep === repCur ? updateMonth : month
           )
