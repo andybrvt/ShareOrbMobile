@@ -36,7 +36,7 @@ const margin = 0;
 const col = 3;
 const size = width/col + margin;
 
-const { cond, eq, add, call, set, Value, event, or } = Animated;
+const { cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 class PostingPage extends React.Component{
 
@@ -423,6 +423,11 @@ class PostingPage extends React.Component{
      }
    }
 
+
+   UIAdjustLoc = (num) => {
+
+   }
+
    // START OF DRAGGING
    start = ([x, y]) => {
 
@@ -609,8 +614,12 @@ class PostingPage extends React.Component{
 
                    style = {[{
                      transform: [
-                       {translateX: add(this.transX ,this.getPosition(draggingIndex).x)},
-                       {translateY: add(this.transY ,this.getPosition(draggingIndex).y)}
+                       // {translateX: add(this.transX ,this.getPosition(draggingIndex).x)},
+                       // {translateY: add(this.transY ,this.getPosition(draggingIndex).y)}
+                       // {translateX: this.absX},
+                       // {translateY: this.absY}
+                       {translateX: sub(this.absX, new Value((2*width)/(3*col)))},
+                       {translateY: sub(this.absY, new Value(width/col))}
                      ],
                      position: "absolute",
                      zIndex: 99
