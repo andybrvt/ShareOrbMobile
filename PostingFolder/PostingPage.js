@@ -23,9 +23,7 @@ import * as dateFns from 'date-fns';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import FlashMessage from '../RandomComponents/FlashMessage';
 import * as authActions from '../store/actions/auth';
-import ImageSquare from '../RandomComponents/ImageSquare';
-import NormImageSquare from '../RandomComponents/NormImageSquare';
-import DragDrop from '../RandomComponents/DragDrop';
+import AdjModal from '../RandomComponents/AdjModal';
 import * as ImagePicker from 'expo-image-picker';
 import Animated from "react-native-reanimated";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
@@ -55,8 +53,6 @@ class PostingPage extends React.Component{
      this.gestureState = new Value(-1);
 
      this.curPicIndex = -1; // index of the pic you are holding
-
-     this.active = false;
      // The draggingIndex in states will keep track of the current index
      // of the image
      this.state = {
@@ -675,36 +671,14 @@ class PostingPage extends React.Component{
 
            </ScrollView>
 
-           <View>
-             <Modal
-               transparent = {true}
-               visible = {true}
-               >
-               <View style = {{
-                   backgroundColor: "#000000aa",
-                   flex: "1"
-                 }}>
-                 <View style = {{
-                     backgroundColor: "#ffffff",
-                     margin: 50
-                   }}>
-                   <Text style = {{fontSize: 80}}> Modal Text</Text>
+           <AdjModal />
 
-                 </View>
-
-               </View>
-
-             </Modal>
-           </View>
 
            <Button
              title = "Choose Photo"
              onPress = {this.handleChoosePhoto}
              />
-
            </View>
-
-
        </ModalBackgroundContainer>
 
 
@@ -771,7 +745,8 @@ class PostingPage extends React.Component{
      xButton: {
        position: 'relative',
 
-     }
+     },
+
 
  })
 
