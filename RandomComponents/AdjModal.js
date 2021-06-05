@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   TouchableHighlight,
+  TouchableWithoutFeedback,
   Modal
  } from 'react-native';
 
@@ -19,48 +20,63 @@ import {
 
 
 
+   onCancel = () => {
+     this.props.onCancel()
+   }
+
    render(){
      return(
        <View>
          <Modal
            transparent = {true}
-           visible = {true}
+           visible = {this.props.visible}
            >
-           <View style = {{
-               backgroundColor: "#000000aa",
-               flex: "1",
-               alignItems: 'center',
-               justifyContent: 'center'
-             }}>
-             <View style = {{
-                 backgroundColor: "#ffffff",
-                 // margin: 50,
-                 padding: 30,
-                 borderRadius: 10,
-                 height: 230,
-                 width: 300,
-                 alignItems: 'center'
-                 // flex: 1
+           <TouchableWithoutFeedback
+              onPress = {() =>this.onCancel()}>
+             <View
+               onPress = {() => this.onCancel()}
+               style = {{
+                 backgroundColor: "#000000aa",
+                 flex: "1",
+                 alignItems: 'center',
+                 justifyContent: 'center'
                }}>
-               <Text style = {{
-                  textAlign: "center",
-                  fontSize: 20}}>
-                 Are you sure you want to delete this photo?
-               </Text>
-               <TouchableOpacity
-                 style = {styles.button}
-                 >
-                 <Text
-                   style = {styles.buttonText}
-                   >Accept</Text>
-               </TouchableOpacity>
+               <View style = {{
+                   backgroundColor: "#ffffff",
+                   // margin: 50,
+                   padding: 30,
+                   borderRadius: 10,
+                   height: this.props.height,
+                   width: this.props.width,
+                   alignItems: 'center'
+                   // flex: 1
+                 }}>
+                 <Text style = {{
+                    textAlign: "center",
+                    fontSize: 20}}>
+                   Are you sure you want to delete this photo?
+                 </Text>
+                 <TouchableOpacity
+                   onPress = {() => this.props.onAction()}
+                   style = {styles.button}
+                   >
+                   <Text
+                     style = {styles.buttonText}
+                     >Accept</Text>
+                 </TouchableOpacity>
 
-               <View style = {styles.cancelText}>
-                 <Text> Nope, I'm good </Text>
+                 <View
+                   style = {styles.cancelText}>
+                   <Text
+                     onPress = {() => this.onCancel()}
+
+                     > Nope, I'm good </Text>
+                 </View>
+
                </View>
-
              </View>
-           </View>
+           </TouchableWithoutFeedback>
+
          </Modal>
        </View>
      )

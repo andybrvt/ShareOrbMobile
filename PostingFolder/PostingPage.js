@@ -61,7 +61,9 @@ class PostingPage extends React.Component{
        flashMessage: false,
        fileList: [],
        draggingIndex: -1,
-       dragging: false
+       dragging: false,
+       showDeleteModal: false,
+       deleteIndex: -1
      }
 
 
@@ -499,16 +501,35 @@ class PostingPage extends React.Component{
      }
    }
 
+   // Used to open deleted modal
+   openDeleteModal = (index: number) => {
+
+     console.log(index)
+     this.setState({
+       deleteIndex: index,
+       showDeleteModal: true
+     })
+   }
+
+   onCloseDelete = () => {
+     console.log('it hits here')
+     this.setState({
+       deleteIndex: -1,
+       showDeleteModal: false
+     })
+   }
+
 
    /*
    Function to delete the picture
    */
-   deletePicture = (order) => {
+   deletePicture = () => {
      const curList = this.state.imageList
 
-     this.setState ({
-       imageList: curList.splice(order, 1)
-     })
+     console.log('here boy')
+     // this.setState ({
+     //   imageList: curList.splice(order, 1)
+     // })
 
    }
 
@@ -618,7 +639,7 @@ class PostingPage extends React.Component{
                   {
                     !dragging ? (
                       <XCircle
-                        onPress = {() => console.log('click here')}
+                        onPress = {() => this.openDeleteModal(key)}
                         style = {{
                           position: 'absolute',
                           left: (width/col)*0.85,
@@ -671,7 +692,13 @@ class PostingPage extends React.Component{
 
            </ScrollView>
 
-           <AdjModal />
+           <AdjModal
+             visible = {this.state.showDeleteModal}
+             height = {230}
+             width = {300}
+             onAction = {this.deletePicture}
+             onCancel = {this.onCloseDelete}
+             />
 
 
            <Button
