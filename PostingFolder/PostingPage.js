@@ -527,6 +527,18 @@ class PostingPage extends React.Component{
      const curList = this.state.imageList
 
      console.log('here boy')
+     if(this.state.deleteIndex >= 0 ){
+       const curIndex = this.state.deleteIndex
+
+       curList.splice(curIndex, 1)
+
+       this.setState({
+         imageList:  curList,
+         deleteIndex: -1,
+         showDeleteModal: false
+       })
+
+     }
      // this.setState ({
      //   imageList: curList.splice(order, 1)
      // })

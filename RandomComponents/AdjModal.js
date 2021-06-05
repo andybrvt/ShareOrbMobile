@@ -24,6 +24,10 @@ import {
      this.props.onCancel()
    }
 
+   onAction = () => {
+     this.props.onAction()
+   }
+
    render(){
      return(
        <View>
@@ -57,7 +61,7 @@ import {
                    Are you sure you want to delete this photo?
                  </Text>
                  <TouchableOpacity
-                   onPress = {() => this.props.onAction()}
+                   onPress = {() => this.onAction()}
                    style = {styles.button}
                    >
                    <Text
