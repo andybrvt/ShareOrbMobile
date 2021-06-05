@@ -22,6 +22,7 @@ import  authAxios from '../util';
 import * as dateFns from 'date-fns';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import FlashMessage from '../RandomComponents/FlashMessage';
+import FinalPostingPage from './FinalPostingPage';
 import * as authActions from '../store/actions/auth';
 import AdjModal from '../RandomComponents/AdjModal';
 import * as ImagePicker from 'expo-image-picker';
@@ -40,6 +41,19 @@ const { cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 class PostingPage extends React.Component{
 
+  state = {
+    imageList: [],
+    caption: "",
+    flashMessage: false,
+    fileList: [],
+    draggingIndex: -1,
+    dragging: false,
+    showDeleteModal: false,
+    deleteIndex: -1,
+    showFinal: false,
+  }
+
+
    constructor(props){
      super(props)
 
@@ -55,16 +69,7 @@ class PostingPage extends React.Component{
      this.curPicIndex = -1; // index of the pic you are holding
      // The draggingIndex in states will keep track of the current index
      // of the image
-     this.state = {
-       imageList: [],
-       caption: "",
-       flashMessage: false,
-       fileList: [],
-       draggingIndex: -1,
-       dragging: false,
-       showDeleteModal: false,
-       deleteIndex: -1
-     }
+
 
 
      this.onGestureEvent = event([
@@ -88,7 +93,6 @@ class PostingPage extends React.Component{
      let caption = "";
      let fileList = [];
 
-     let fileObjList = [];
 
 
      if(this.props.curSocialCalCell){
@@ -115,6 +119,13 @@ class PostingPage extends React.Component{
        caption: caption,
        imageList: fileList,
      })
+
+     if(fileList.length > 1){
+       this.props.navigation.setOptions({
+         title: `Seclected ${fileList.length} images`,
+         headerRight: () => this.renderDone()
+       })
+     }
 
    }
 
@@ -160,6 +171,22 @@ class PostingPage extends React.Component{
    }
 
 
+   /*
+   Function to open the final page of the posting process
+   */
+   openFinalPage = () => {
+
+     this.setState({
+       showFinal: true
+     })
+   }
+
+
+   closeFinalPage = () => {
+     this.setState({
+       showFinal: false
+     })
+   }
 
    /*
    This function will be used to upload the pictures that are saved
@@ -363,8 +390,8 @@ class PostingPage extends React.Component{
      return (
        <TouchableOpacity>
          <Button
-           title = "Save"
-           onPress = {() => this.handleImageUpload()}
+           title = "Next"
+           onPress = {() => this.openFinalPage()}
             />
        </TouchableOpacity>
      )
@@ -398,6 +425,7 @@ class PostingPage extends React.Component{
    // START OF DRAGGING
    start = ([x, y]) => {
 
+     console.log('at the start')
     const adjX = this.adjustLoc(x)
     const adjY = this.adjustLoc(y)
 
@@ -411,7 +439,7 @@ class PostingPage extends React.Component{
    // WHILE DRAGGING
    move = ([x, y]) => {
 
-
+     console.log('at the move')
      const adjY = this.adjustLoc(y)
 
 
@@ -423,6 +451,7 @@ class PostingPage extends React.Component{
    // END OF DRAGGING
    reset = () => {
 
+     console.log('at the reset')
      // this.active = false;
      this.setState({
        dragging: false,
@@ -513,10 +542,31 @@ class PostingPage extends React.Component{
 
    onCloseDelete = () => {
      console.log('it hits here')
+
      this.setState({
        deleteIndex: -1,
        showDeleteModal: false
      })
+   }
+
+   whenNotTrue = ([]) => {
+     console.log('when things not true')
+   }
+
+   removeIndex = (list, index) => {
+
+     const newList = []
+
+     for(let i = 0; i<list.length; i++){
+       if(i !== index){
+         newList.push(
+           list[i]
+         )
+       }
+
+     }
+
+     return newList;
    }
 
 
@@ -531,11 +581,16 @@ class PostingPage extends React.Component{
        const curIndex = this.state.deleteIndex
 
        curList.splice(curIndex, 1)
-
+       // const newList = this.removeIndex(curList, curIndex)
        this.setState({
-         imageList:  curList,
+         imageList: curList ,
          deleteIndex: -1,
          showDeleteModal: false
+       })
+
+       this.props.navigation.setOptions({
+         title: `Seclected ${curList.length} images`,
+         headerRight: () => this.renderDone()
        })
 
      }
@@ -547,7 +602,7 @@ class PostingPage extends React.Component{
 
    render(){
 
-     const {dragging, draggingIndex} = this.state
+    const {dragging, draggingIndex} = this.state
 
 
      // Remember, if you ever want to animate an element you will have to use
@@ -571,37 +626,40 @@ class PostingPage extends React.Component{
          <View
            style = {styles.wholeContainer}
            >
+           <Animated.Code>
+             {() =>
+             cond(
+               eq(this.gestureState, State.BEGAN),
+               call([this.absX, this.absY], this.start),
+               call([], this.whenNotTrue)
+             )}
+           </Animated.Code>
+           <Animated.Code>
+             {() =>
+               cond(
+                 eq(this.gestureState, State.ACTIVE),
+                 call([this.absX, this.absY], this.move),
+                 call([], this.whenNotTrue)
+               )
+             }
+           </Animated.Code>
+
+           <Animated.Code>
+             {() =>
+               cond(
+                 or(
+                   eq(this.gestureState, State.END),
+                   eq(this.gestureState, State.CANCELLED),
+                   eq(this.gestureState, State.FAILED),
+                   eq(this.gestureState, State.UNDETERMINED)
+                 ),
+                 call([], this.reset)
+               )
+             }
+           </Animated.Code>
 
            <ScrollView  style = {styles.imageContainerContainer}>
-             <Animated.Code>
-               {() =>
-               cond(
-                 eq(this.gestureState, State.BEGAN),
-                 call([this.absX, this.absY], this.start)
-               )}
-             </Animated.Code>
-             <Animated.Code>
-               {() =>
-                 cond(
-                   eq(this.gestureState, State.ACTIVE),
-                   call([this.absX, this.absY], this.move)
-                 )
-               }
-             </Animated.Code>
 
-             <Animated.Code>
-               {() =>
-                 cond(
-                   or(
-                     eq(this.gestureState, State.END),
-                     eq(this.gestureState, State.CANCELLED),
-                     eq(this.gestureState, State.FAILED),
-                     eq(this.gestureState, State.UNDETERMINED)
-                   ),
-                   call([], this.reset)
-                 )
-               }
-             </Animated.Code>
 
              {
                dragging ? (
@@ -670,6 +728,7 @@ class PostingPage extends React.Component{
                   <PanGestureHandler
                     maxPointers = {1}
                     onGestureEvent = {this.onGestureEvent}
+                    // onGestureEvent = {e => console.log(e.nativeEvent)}
                     onHandlerStateChange = {this.onGestureEvent}
                     >
                     <Animated.View
@@ -711,6 +770,12 @@ class PostingPage extends React.Component{
              onAction = {this.deletePicture}
              onCancel = {this.onCloseDelete}
              />
+
+           <FinalPostingPage
+             visible = {this.state.showFinal}
+             onCancel = {this.closeFinalPage}
+             navigation = {this.props.navigation}
+              />
 
 
            <Button
