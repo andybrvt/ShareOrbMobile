@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   TouchableHighlight,
+  Modal
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -507,6 +508,11 @@ class PostingPage extends React.Component{
    Function to delete the picture
    */
    deletePicture = (order) => {
+     const curList = this.state.imageList
+
+     this.setState ({
+       imageList: curList.splice(order, 1)
+     })
 
    }
 
@@ -616,6 +622,7 @@ class PostingPage extends React.Component{
                   {
                     !dragging ? (
                       <XCircle
+                        onPress = {() => console.log('click here')}
                         style = {{
                           position: 'absolute',
                           left: (width/col)*0.85,
@@ -667,6 +674,29 @@ class PostingPage extends React.Component{
 
 
            </ScrollView>
+
+           <View>
+             <Modal
+               transparent = {true}
+               visible = {true}
+               >
+               <View style = {{
+                   backgroundColor: "#000000aa",
+                   flex: "1"
+                 }}>
+                 <View style = {{
+                     backgroundColor: "#ffffff",
+                     margin: 50
+                   }}>
+                   <Text style = {{fontSize: 80}}> Modal Text</Text>
+
+                 </View>
+
+               </View>
+
+             </Modal>
+           </View>
+
            <Button
              title = "Choose Photo"
              onPress = {this.handleChoosePhoto}
