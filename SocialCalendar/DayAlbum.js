@@ -12,9 +12,32 @@ import {
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
+import FacePile from 'react-native-face-pile'
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
+ const FACES = [
+   {
+     id: 0,
+     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+   },
+   {
+     id: 1,
+     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+   },
+   {
+     id: 2,
+     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+   },
+   {
+     id: 3,
+     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+   },
+   {
+     id: 4,
+     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+   }
+ ];
 
  class DayAlbum extends React.Component{
 
@@ -51,7 +74,7 @@ import { Avatar } from 'react-native-elements';
            <Avatar
              style={styles.close}
              onPress = {() => this.props.ViewProfile()}
-             size={40}
+             size={35}
              rounded
              source = {{
                uri: `${global.IMAGE_ENDPOINT}`+profilePic,
@@ -61,11 +84,27 @@ import { Avatar } from 'react-native-elements';
            {userName}
         </Text>
 
-         </ImageBackground>
-         <View style={styles.DayCaption} >
-           <Text style = {styles.videoFooterUserName}> {firstName+" "+lastName}</Text>
-           <Text  style = {styles.videoFooter}>This is the test caption</Text>
+
+
+
+        <View  style={styles.openContainer}>
+
+
+          <View style={styles.firstContainer}>
+              <Text style = {styles.bottomDayAlbumName}> {firstName+" "+lastName}</Text>
+              <Text  style = {styles.DayCaption}>This is the test caption this is the test1
+              caption this is the test caption</Text>
           </View>
+          <View style={styles.secondContainer}>
+            <FacePile numFaces={3} faces={FACES} />
+          </View>
+        </View>
+         </ImageBackground>
+
+
+
+
+
        </BackgroundContainer>
 
      )
@@ -73,37 +112,65 @@ import { Avatar } from 'react-native-elements';
  }
 
  const styles = StyleSheet.create({
-
-   DayCaption:{
+   openContainer:{
      flexDirection:'row',
-     left:'5%',
-     bottom:'10%',
+     bottom:'5.5%',
      position:'absolute',
+     left:'5%',
+   },
+   firstContainer:{
+     flex:2,
+     // backgroundColor:'red',
+   },
+   secondContainer:{
+     flex:1,
+     // backgroundColor:'blue',
+   },
+   DayCaptionContainer:{
+     width:'70%',
+     left:'5%',
+     bottom:'12.5%',
+     position:'absolute',
+     // backgroundColor:'red',
 
    },
    DayAlbumUserName: {
 
      color:'white',
-     fontSize:16,
+     fontSize:14,
      // textShadowColor: 'rgba(0, 0, 0, 0.75)',
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
      fontWeight:'bold',
      top:'9%',
-     left:'20%',
+     left:'17.5%',
      position: "absolute",
      // fontWeight:'bold',
 
    },
-   videoFooter: {
+   bottomDayAlbumName: {
+
+     color:'white',
+     fontSize:14,
+     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 5,
+     fontWeight:'bold',
+     bottom:'100%',
+
+     position: "absolute",
+     // fontWeight:'bold',
+
+   },
+   DayCaption: {
      position:'absolute',
 
 
      // backgroundColor:'red',
      color:'white',
 
-     top:15,
 
      fontWeight:'600',
 
@@ -117,7 +184,7 @@ import { Avatar } from 'react-native-elements';
      margin: 5,
      position: "absolute",
      top:'7.5%',
-     left:'7.5%',
+     left:'5%',
      width: 35,
      height: 35,
      color: "tomato"
