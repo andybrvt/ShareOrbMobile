@@ -318,6 +318,7 @@ class App extends Component{
                      name = 'MessageFriend' component = {MessageFriend}/>
                      <Stack.Screen
                        options={{
+                         headerShown: false,
                          title: 'Show Day',
                           ...TransitionPresets.SlideFromRightIOS,
                                          }}
