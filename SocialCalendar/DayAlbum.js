@@ -19,11 +19,11 @@ import FacePile from 'react-native-face-pile'
  const FACES = [
    {
      id: 0,
-     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+     imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
    },
    {
      id: 1,
-     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+     imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
    },
    {
      id: 2,
@@ -31,11 +31,15 @@ import FacePile from 'react-native-face-pile'
    },
    {
      id: 3,
-     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+     imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
    },
    {
      id: 4,
-     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+     imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
+   },
+   {
+     id: 5,
+     imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
    }
  ];
 
@@ -81,7 +85,8 @@ import FacePile from 'react-native-face-pile'
              }}
            />
          <Text style = {styles.DayAlbumUserName}>
-           {userName}
+           {firstName+" "+lastName}
+
         </Text>
 
 
@@ -91,12 +96,19 @@ import FacePile from 'react-native-face-pile'
 
 
           <View style={styles.firstContainer}>
-              <Text style = {styles.bottomDayAlbumName}> {firstName+" "+lastName}</Text>
-              <Text  style = {styles.DayCaption}>This is the test caption this is the test1
+            <View>
+              {/*<Text style = {styles.bottomDayAlbumName}> {firstName+" "+lastName}</Text>*/}
+              <Text  style = {styles.DayCaption}>
+                <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
+                &nbsp; This is the test caption this is the test1
               caption this is the test caption</Text>
+            </View>
           </View>
           <View style={styles.secondContainer}>
-            <FacePile numFaces={3} faces={FACES} />
+            {/* https://openbase.com/js/react-native-face-pile*/}
+            <FacePile size={3} numFaces={3} faces={FACES} circleSize={17.5}
+              containerStyle={{height:40}}
+               overlap={0.1} />
           </View>
         </View>
          </ImageBackground>
@@ -114,16 +126,18 @@ import FacePile from 'react-native-face-pile'
  const styles = StyleSheet.create({
    openContainer:{
      flexDirection:'row',
-     bottom:'5.5%',
+     bottom:'6.5%',
      position:'absolute',
      left:'5%',
    },
    firstContainer:{
-     flex:2,
+     flex:1.5,
+
      // backgroundColor:'red',
    },
    secondContainer:{
      flex:1,
+    
      // backgroundColor:'blue',
    },
    DayCaptionContainer:{
@@ -152,14 +166,14 @@ import FacePile from 'react-native-face-pile'
    bottomDayAlbumName: {
 
      color:'white',
-     fontSize:14,
+     fontSize:15,
      // textShadowColor: 'rgba(0, 0, 0, 0.75)',
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
      fontWeight:'bold',
      bottom:'100%',
-
+     padding:10,
      position: "absolute",
      // fontWeight:'bold',
 
@@ -173,7 +187,7 @@ import FacePile from 'react-native-face-pile'
 
 
      fontWeight:'600',
-
+     fontSize:15,
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 10
