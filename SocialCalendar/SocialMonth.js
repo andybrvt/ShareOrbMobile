@@ -29,6 +29,7 @@ class SocialMonth extends React.PureComponent{
     this.props.navigation.navigate("DayAlbum",
   {
     entireDay:toDoStuff,
+  
   });
   }
 

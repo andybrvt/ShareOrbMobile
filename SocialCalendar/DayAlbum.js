@@ -24,7 +24,14 @@ import { Avatar } from 'react-native-elements';
    }
 
    render(){
+
       let entireDay= (this.props.route.params.entireDay)
+      console.log(entireDay[0])
+      let profilePic=entireDay[0].socialCalUser.profile_picture
+      let firstName=entireDay[0].socialCalUser.first_name
+      let lastName=entireDay[0].socialCalUser.last_name
+      let userName=entireDay[0].socialCalUser.username
+
      return (
        <BackgroundContainer>
          <ImageBackground
@@ -33,7 +40,7 @@ import { Avatar } from 'react-native-elements';
             style={styles.albumOuterContainer}>
 
            <Image
-           key={'blurryImage'}
+             key={'blurryImage'}
              size={300}
              style={styles.albumLook}
              // blurRadius={10}
@@ -41,11 +48,24 @@ import { Avatar } from 'react-native-elements';
                uri: `${global.IMAGE_ENDPOINT}`+entireDay[0].coverPic,
              }}
            />
-          <View>
-           <Text style = {styles.videoFooterUserName}> @pinghsu520</Text>
-           <Text  style = {styles.videoFooter}>This is a test</Text>
-          </View>
+           <Avatar
+             style={styles.close}
+             onPress = {() => this.props.ViewProfile()}
+             size={40}
+             rounded
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+profilePic,
+             }}
+           />
+         <Text style = {styles.DayAlbumUserName}>
+           {userName}
+        </Text>
+
          </ImageBackground>
+         <View style={styles.DayCaption} >
+           <Text style = {styles.videoFooterUserName}> {firstName+" "+lastName}</Text>
+           <Text  style = {styles.videoFooter}>This is the test caption</Text>
+          </View>
        </BackgroundContainer>
 
      )
@@ -53,11 +73,61 @@ import { Avatar } from 'react-native-elements';
  }
 
  const styles = StyleSheet.create({
+
+   DayCaption:{
+     flexDirection:'row',
+     left:'5%',
+     bottom:'10%',
+     position:'absolute',
+
+   },
+   DayAlbumUserName: {
+
+     color:'white',
+     fontSize:16,
+     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 5,
+     fontWeight:'bold',
+     top:'9%',
+     left:'20%',
+     position: "absolute",
+     // fontWeight:'bold',
+
+   },
+   videoFooter: {
+     position:'absolute',
+
+
+     // backgroundColor:'red',
+     color:'white',
+
+     top:15,
+
+     fontWeight:'600',
+
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 10
+     // fontWeight:'bold',
+
+   },
+   close: {
+     margin: 5,
+     position: "absolute",
+     top:'7.5%',
+     left:'7.5%',
+     width: 35,
+     height: 35,
+     color: "tomato"
+   },
    albumLook:{
      borderRadius: 10,
-     width: '90%',
+     width: '95%',
      height: '80%',
-
+     position:'absolute',
+     top:'5%',
 
    },
    albumLook2:{
@@ -72,38 +142,10 @@ import { Avatar } from 'react-native-elements';
      height:'100%',
      flexDirection:'column',
 
-   },
-
-   videoFooterUserName: {
-
-     color:'white',
-     fontSize:14,
-     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
-     textShadowColor: 'black',
-     textShadowOffset: {width: -1, height: 1},
-     textShadowRadius: 5,
-     fontWeight:'bold',
-
-     // fontWeight:'bold',
 
    },
-   videoFooter: {
-     position:'absolute',
 
-     padding:10,
 
-     color:'white',
-     bottom:25,
-     width:'75%',
-     padding:10,
-     fontWeight:'600',
-
-     textShadowColor: 'black',
-   textShadowOffset: {width: -1, height: 1},
-   textShadowRadius: 10
-     // fontWeight:'bold',
-
-   },
 
  })
 
