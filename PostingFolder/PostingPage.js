@@ -28,7 +28,7 @@ import AdjModal from '../RandomComponents/AdjModal';
 import * as ImagePicker from 'expo-image-picker';
 import Animated from "react-native-reanimated";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle } from "react-native-feather";
+import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle } from "react-native-feather";
 
 
 const width = Dimensions.get("window").width
@@ -41,23 +41,23 @@ const { cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 class PostingPage extends React.Component{
 
-  state = {
-    imageList: [],
-    caption: "",
-    flashMessage: false,
-    fileList: [],
-    draggingIndex: -1,
-    dragging: false,
-    showDeleteModal: false,
-    deleteIndex: -1,
-    showFinal: false,
-  }
+
 
 
    constructor(props){
      super(props)
 
-
+     this.state = {
+       imageList: [],
+       caption: "",
+       flashMessage: false,
+       fileList: [],
+       draggingIndex: -1,
+       dragging: false,
+       showDeleteModal: false,
+       deleteIndex: -1,
+       showFinal: false,
+     }
 
      this.absX = new Value(0);
      this.absY = new Value(0);
@@ -600,9 +600,24 @@ class PostingPage extends React.Component{
 
    }
 
+   /*
+   Calculate the height of the image holder
+   */
+   picHolderHeight = () => {
+
+     const imageLength = this.state.imageList.length
+     const numRows = Math.round(imageLength/col)
+     console.log(imageLength)
+     if(imageLength === 0 ){
+       return (width/col)
+     }
+
+     return (width/col)* numRows
+   }
+
    render(){
 
-    const {dragging, draggingIndex} = this.state
+    const {dragging, draggingIndex, imageList} = this.state
 
 
      // Remember, if you ever want to animate an element you will have to use
@@ -631,7 +646,6 @@ class PostingPage extends React.Component{
              cond(
                eq(this.gestureState, State.BEGAN),
                call([this.absX, this.absY], this.start),
-               call([], this.whenNotTrue)
              )}
            </Animated.Code>
            <Animated.Code>
@@ -639,7 +653,6 @@ class PostingPage extends React.Component{
                cond(
                  eq(this.gestureState, State.ACTIVE),
                  call([this.absX, this.absY], this.move),
-                 call([], this.whenNotTrue)
                )
              }
            </Animated.Code>
@@ -661,103 +674,140 @@ class PostingPage extends React.Component{
            <ScrollView  style = {styles.imageContainerContainer}>
 
 
-             {
-               dragging ? (
-                 <Animated.View
+             <View
 
-                   style = {[{
-                     transform: [
-                       // {translateX: add(this.transX ,this.getPosition(draggingIndex).x)},
-                       // {translateY: add(this.transY ,this.getPosition(draggingIndex).y)}
-                       // {translateX: this.absX},
-                       // {translateY: this.absY}
-                       {translateX: sub(this.absX, new Value((2*width)/(3*col)))},
-                       {translateY: sub(this.absY, new Value(width/col))}
-                     ],
-                     position: "absolute",
-                     zIndex: 99
-                   }, styles.imageContainer]}
-                   >
+               style = {{
+                 height: this.picHolderHeight()
+               }}
+               >
+               {
+                 dragging ? (
+                   <Animated.View
 
-                     <Image
-                       style = {styles.smallImage}
-                       resizeMode = "cover"
-                       source = {{
-                         uri: this.state.imageList[this.state.draggingIndex]
-                       }}
-                        />
+                     style = {[{
+                       transform: [
+                         // {translateX: add(this.transX ,this.getPosition(draggingIndex).x)},
+                         // {translateY: add(this.transY ,this.getPosition(draggingIndex).y)}
+                         // {translateX: this.absX},
+                         // {translateY: this.absY}
+                         {translateX: sub(this.absX, new Value((2*width)/(3*col)))},
+                         {translateY: sub(this.absY, new Value(width/col))}
+                       ],
+                       position: "absolute",
+                       zIndex: 99
+                     }, styles.imageContainer]}
+                     >
 
-                 </Animated.View>
-               ) : null
-             }
+                       <Image
+                         style = {styles.smallImage}
+                         resizeMode = "cover"
+                         source = {{
+                           uri: this.state.imageList[this.state.draggingIndex]
+                         }}
+                          />
 
-
-
-            {this.state.imageList.map((images, key) => {
-              return(
-                <Animated.View
-                  style = {{
-                    opacity: key === this.state.draggingIndex ? 0 : 1,
-                    position: "relative",
-                    transform:[
-                      {translateX: this.getPosition(key).x},
-                      {translateY: this.getPosition(key).y}
-                    ]
-                  }}
-                  >
-
-                  {
-                    !dragging ? (
-                      <XCircle
-                        onPress = {() => this.openDeleteModal(key)}
-                        style = {{
-                          position: 'absolute',
-                          left: (width/col)*0.85,
-                          zIndex: 9,
-                          shadowColor: '#470000',
-                          shadowOffset: {width: 0, height: 1},
-                          shadowOpacity: 0.2,
-                        }}
-                        stroke = "#1890ff" fill= "white"/>
-
-                    ) : null
+                   </Animated.View>
+                 ) : null
+               }
 
 
-                  }
 
-                  <PanGestureHandler
-                    maxPointers = {1}
-                    onGestureEvent = {this.onGestureEvent}
-                    // onGestureEvent = {e => console.log(e.nativeEvent)}
-                    onHandlerStateChange = {this.onGestureEvent}
+              {this.state.imageList.map((images, key) => {
+                return(
+                  <Animated.View
+                    style = {{
+                      opacity: key === this.state.draggingIndex ? 0 : 1,
+                      position: "relative",
+                      transform:[
+                        {translateX: this.getPosition(key).x},
+                        {translateY: this.getPosition(key).y}
+                      ]
+                    }}
                     >
-                    <Animated.View
-                      key = {key}
-                      style = {[{
-                        // transform:[
-                        //   {translateX: this.getPosition(key).x},
-                        //   {translateY: this.getPosition(key).y}
-                        // ]
-                      },
-                        styles.imageContainer]}>
+
+                    {
+                      !dragging ? (
+                        <XCircle
+                          onPress = {() => this.openDeleteModal(key)}
+                          style = {{
+                            position: 'absolute',
+                            left: (width/col)*0.85,
+                            zIndex: 9,
+                            shadowColor: '#470000',
+                            shadowOffset: {width: 0, height: 1},
+                            shadowOpacity: 0.2,
+                          }}
+                          stroke = "#1890ff" fill= "white"/>
+
+                      ) : null
 
 
-                      <Image
-                        style = {styles.smallImage}
-                        resizeMode = "cover"
-                        source = {{
-                          uri: images
-                        }}
-                         />
-                    </Animated.View>
-                  </PanGestureHandler>
+                    }
 
-                </Animated.View>
-              )
-            })}
+                    <PanGestureHandler
+                      maxPointers = {1}
+                      onGestureEvent = {this.onGestureEvent}
+                      // onGestureEvent = {e => console.log(e.nativeEvent)}
+                      onHandlerStateChange = {this.onGestureEvent}
+                      >
+                      <Animated.View
+                        key = {key}
+                        style = {[{
+                          // transform:[
+                          //   {translateX: this.getPosition(key).x},
+                          //   {translateY: this.getPosition(key).y}
+                          // ]
+                        },
+                          styles.imageContainer]}>
 
 
+                        <Image
+                          style = {styles.smallImage}
+                          resizeMode = "cover"
+                          source = {{
+                            uri: images
+                          }}
+                           />
+                      </Animated.View>
+                    </PanGestureHandler>
 
+                  </Animated.View>
+                )
+              })}
+
+              <Animated.View
+
+                style = {[{
+                  transform:[
+                    {translateX: this.getPosition(imageList.length).x},
+                    {translateY: this.getPosition(imageList.length).y}
+                  ]
+                },
+                  styles.normImageContainer]}>
+
+
+              <TouchableOpacity
+                onPress = {this.handleChoosePhoto}
+                style = {styles.addSmallImage}>
+                <PlusCircle
+                  height = {50}
+                  width = {50}
+                  stroke = "lightgray"
+                  fill= "white" />
+
+              </TouchableOpacity>
+
+              </Animated.View>
+
+             </View>
+
+             <View style = {styles.dayTextContainer}>
+               <Text style = {styles.smallText}> Images above will be saved in your daily album </Text>
+             </View>
+
+             <View style = {styles.dayTextContainer}>
+               <Text style = {styles.dayText}> National Days </Text>
+             </View>
 
 
 
@@ -778,10 +828,7 @@ class PostingPage extends React.Component{
               />
 
 
-           <Button
-             title = "Choose Photo"
-             onPress = {this.handleChoosePhoto}
-             />
+
            </View>
        </ModalBackgroundContainer>
 
@@ -833,8 +880,19 @@ class PostingPage extends React.Component{
        alignItems: 'center',
        justifyContent: "center",
        position: "absolute",
-
+       shadowColor:'black',
+       shadowOffset:{width:0,height:2},
+       shadowOpacity:0.2,
       // padding: 10,
+     },
+     normImageContainer: {
+       width: Math.round(width/3),
+       height: Math.round(width/3),
+       overflow:"hidden",
+       alignItems: 'center',
+       justifyContent: "center",
+       position: "absolute",
+
      },
      imageHolder: {
 
@@ -843,13 +901,39 @@ class PostingPage extends React.Component{
        width: "90%",
        height: "90%",
        borderRadius: 15,
-       backgroundColor: 'lightgray'
+       backgroundColor: 'lightgray',
+
+     },
+     addSmallImage: {
+       width: "90%",
+       height: "90%",
+       borderWidth: 5,
+       borderRadius: 15,
+       borderStyle: 'dashed',
+       borderColor: 'lightgray',
+       alignItems: "center",
+       justifyContent: "center"
+       // backgroundColor: 'lightgray'
 
      },
      xButton: {
        position: 'relative',
 
      },
+     dayTextContainer: {
+       // margin: 20
+       textAlign: 'center',
+       marginBottom: 10,
+     },
+     dayText: {
+       fontSize: 20,
+       textAlign:'center'
+     },
+     smallText: {
+       fontSize: 14,
+       textAlign: "center"
+     }
+
 
 
  })
