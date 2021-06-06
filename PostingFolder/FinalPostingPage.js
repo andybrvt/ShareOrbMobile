@@ -11,10 +11,13 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   TouchableHighlight,
-  Modal
+  Modal,
+  Keyboard,
+  TouchableWithoutFeedback
  } from 'react-native';
  import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+ import { ChevronLeft } from "react-native-feather";
 
 
  class FinalPostingPage extends React.Component{
@@ -23,6 +26,13 @@ import {
      this.props.navigation.setOptions({
        title: "Some stuff"
      })
+   }
+
+   /*
+   return back to posting page
+   */
+   onBack = () => {
+     this.props.onCancel()
    }
 
    render(){
@@ -34,27 +44,45 @@ import {
            visible = {this.props.visible}
            >
 
-           <SafeAreaView
-             style = {styles.container}
-             >
-             <View
-               style = {styles.topContainer}>
-               <Text> Arrange pictures here </Text>
-             </View>
-             <View
-               style = {styles.bottomContainer}
+
+           <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
+
+             <SafeAreaView
+               style = {styles.container}
                >
-               <TextInput
+               <TouchableOpacity
+                 onPress = {() => this.onBack()}
                  style = {{
-                   fontSize: 25
+                   width: "10%",
                  }}
-                placeholder="Write something about your day..."
-                placeholderTextColor="lightgray"
+                 >
+                 <ChevronLeft height ={38} width = {38}/>
 
-              />
-             </View>
+               </TouchableOpacity>
 
-           </SafeAreaView>
+
+               <View
+                 style = {styles.bottomContainer}
+                 >
+                 <TextInput
+                   style = {{
+                     width: "100%",
+                     fontSize: 30
+                   }}
+                  placeholder="Write something about your day..."
+                  placeholderTextColor="lightgray"
+                  multiline = {true}
+                />
+               </View>
+
+               <View
+                 style = {styles.topContainer}>
+                 <Text> Arrange pictures here </Text>
+               </View>
+
+             </SafeAreaView>
+           </TouchableWithoutFeedback>
+
 
          </Modal>
 
@@ -71,12 +99,13 @@ const styles = StyleSheet.create({
     flex: 1
   },
   topContainer: {
-    flex: 2,
+    flex: 3,
     backgroundColor: 'green'
   },
   bottomContainer: {
     flex: 1,
-    backgroundColor: 'pink'
+    // backgroundColor: 'pink',
+    padding:20
   }
 
 
