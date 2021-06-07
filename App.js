@@ -292,16 +292,22 @@ class App extends Component{
                 <Stack.Navigator
 
                   mode = "modal"
-
                   // headerMode ="none"
                   initialRouteName = "newsfeed"
-                  // screenOptions={{headerShown: false, }}
+                  screenOptions={{
+                    gestureEnabled: true
+                    // headerShown: false,
+                  }}
                     >
                   <Stack.Screen
                     options={{headerShown: false, }}
                     name = "newsfeed" component= {this.createTabStack}/>
                   <Stack.Screen
-                    // options={{headerShown: false, ...TransitionPresets.SlideFromRightIOS}}
+                    options={{
+                      headerShown: true,
+                      gestureEnabled: true,
+                      gestureDirection: "vertical-inverted",
+                    }}
                     name = 'PostingPage' component = {PostingPage}/>
                   <Stack.Screen
                       name = 'Comments'

@@ -18,6 +18,8 @@ import {
  import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
  import { ChevronLeft } from "react-native-feather";
+ import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
+ import { Transition } from 'react-native-reanimated';
 
 
  class FinalPostingPage extends React.Component{
@@ -72,13 +74,15 @@ import {
                   placeholder="Write something about your day..."
                   placeholderTextColor="lightgray"
                   multiline = {true}
+                  value = {this.props.caption}
+                  onChangeText = {this.props.onChange}
                 />
                </View>
 
-               <View
-                 style = {styles.topContainer}>
-                 <Text> Arrange pictures here </Text>
-               </View>
+              <Button
+                title = "click to go to newsfeed"
+                onPress = {() => this.props.navigation.navigate("newsfeed")}
+                 />
 
              </SafeAreaView>
            </TouchableWithoutFeedback>

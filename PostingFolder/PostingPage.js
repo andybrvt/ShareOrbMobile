@@ -26,7 +26,7 @@ import FinalPostingPage from './FinalPostingPage';
 import * as authActions from '../store/actions/auth';
 import AdjModal from '../RandomComponents/AdjModal';
 import * as ImagePicker from 'expo-image-picker';
-import Animated from "react-native-reanimated";
+import Animated from 'react-native-reanimated';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle } from "react-native-feather";
 
@@ -86,6 +86,7 @@ class PostingPage extends React.Component{
 
 
    }
+
 
 
 
@@ -402,7 +403,6 @@ class PostingPage extends React.Component{
    This function is used to handle the on change of the caption
    */
    handleCaptionChange = e => {
-
      this.setState({
        caption: e,
      })
@@ -605,9 +605,8 @@ class PostingPage extends React.Component{
    */
    picHolderHeight = () => {
 
-     const imageLength = this.state.imageList.length
-     const numRows = Math.round(imageLength/col)
-     console.log(imageLength)
+     const imageLength = this.state.imageList.length +1
+     const numRows = Math.ceil(imageLength/col)
      if(imageLength === 0 ){
        return (width/col)
      }
@@ -617,6 +616,7 @@ class PostingPage extends React.Component{
 
    render(){
 
+     console.log(this.state.caption)
     const {dragging, draggingIndex, imageList} = this.state
 
 
@@ -811,6 +811,8 @@ class PostingPage extends React.Component{
 
 
 
+
+
            </ScrollView>
 
            <AdjModal
@@ -825,6 +827,8 @@ class PostingPage extends React.Component{
              visible = {this.state.showFinal}
              onCancel = {this.closeFinalPage}
              navigation = {this.props.navigation}
+             onChange = {this.handleCaptionChange}
+             caption = {this.state.caption}
               />
 
 
