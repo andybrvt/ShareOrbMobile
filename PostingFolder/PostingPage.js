@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   TouchableHighlight,
-  Modal
+  Modal,
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -29,6 +29,8 @@ import * as ImagePicker from 'expo-image-picker';
 import Animated from 'react-native-reanimated';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle } from "react-native-feather";
+import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
+import {withTimingTransition} from 'react-native-redash/lib/module/v1';
 
 
 const width = Dimensions.get("window").width
@@ -37,7 +39,9 @@ const margin = 0;
 const col = 3;
 const size = width/col + margin;
 
-const { cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
+const { useCode, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
+
+const isHidden = true;
 
 class PostingPage extends React.Component{
 
@@ -57,7 +61,10 @@ class PostingPage extends React.Component{
        showDeleteModal: false,
        deleteIndex: -1,
        showFinal: false,
+       bounceValue: new Animated.Value(100),
      }
+
+
 
      this.absX = new Value(0);
      this.absY = new Value(0);
@@ -71,6 +78,8 @@ class PostingPage extends React.Component{
      // of the image
 
 
+     this.scale = new Value(0);
+     this.scaleAnimation = withTimingTransition(this.scale, {duration: 1000});
 
      this.onGestureEvent = event([
        {
@@ -88,9 +97,15 @@ class PostingPage extends React.Component{
    }
 
 
+   test = () =>{
+    console.log('it hits here')
+     set(this.scale, 1)
+   }
 
 
    componentDidMount(){
+
+
      let caption = "";
      let fileList = [];
 
@@ -642,6 +657,9 @@ class PostingPage extends React.Component{
            style = {styles.wholeContainer}
            >
            <Animated.Code>
+             {() => cond(eq(this.scale, 0), set(this.scale, 1))}
+           </Animated.Code>
+           <Animated.Code>
              {() =>
              cond(
                eq(this.gestureState, State.BEGAN),
@@ -821,6 +839,26 @@ class PostingPage extends React.Component{
              width = {300}
              onAction = {this.deletePicture}
              onCancel = {this.onCloseDelete}
+             />
+
+
+           <Animated.View style = {{
+               position: 'absolute',
+               backgroundColor: "black",
+               height: 300,
+
+               // ...StyleSheet.absoluteFill,
+               transform: [
+                 {translateY: 10},
+                 {scale: this.scaleAnimation}
+               ]
+             }}>
+             <Text> Modal here </Text>
+          </Animated.View>
+
+          <Button
+            title = "click to test"
+            onPress = {() => this.test()}
              />
 
            <FinalPostingPage

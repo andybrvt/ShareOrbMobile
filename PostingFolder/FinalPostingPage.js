@@ -40,11 +40,11 @@ import {
    render(){
 
      return (
-       <View>
-         <Modal
-           animationType = "slide"
-           visible = {this.props.visible}
-           >
+       <View
+         style = {!this.props.visible ? {
+           display: 'none'
+         } : {}}>
+
 
 
            <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
@@ -88,7 +88,6 @@ import {
            </TouchableWithoutFeedback>
 
 
-         </Modal>
 
        </View>
 
@@ -100,7 +99,8 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+
   },
   topContainer: {
     flex: 3,
