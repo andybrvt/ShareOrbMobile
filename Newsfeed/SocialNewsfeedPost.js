@@ -119,7 +119,7 @@ class SocialNewsfeedPost extends React.Component{
             <View style = {styles.videoFooter}>
               <Text >
                 <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
-                <Text  style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
+                <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
               </Text>
 
             </View>

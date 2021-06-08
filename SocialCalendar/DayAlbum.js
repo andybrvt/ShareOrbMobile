@@ -88,6 +88,7 @@ import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-ico
       console.log("hoho")
       console.log(entireDay[0])
       let profilePic=entireDay[0].socialCalUser.profile_picture
+
       let firstName=entireDay[0].socialCalUser.first_name
       let lastName=entireDay[0].socialCalUser.last_name
       let userName=entireDay[0].socialCalUser.username

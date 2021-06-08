@@ -31,7 +31,7 @@ import Animated from 'react-native-reanimated';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle, ChevronLeft } from "react-native-feather";
 import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
-import {withTimingTransition} from 'react-native-redash/lib/module/v1';
+import {withTimingTransition} from 'react-native-redash';
 
 
 const width = Dimensions.get("window").width
