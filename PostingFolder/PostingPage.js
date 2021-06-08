@@ -64,9 +64,11 @@ class PostingPage extends React.Component{
        showDeleteModal: false,
        deleteIndex: -1,
        showFinal: false,
+
      }
 
 
+     this.submit = false;
 
      this.absX = new Value(0);
      this.absY = new Value(0);
@@ -93,12 +95,10 @@ class PostingPage extends React.Component{
 
      this.showFinal = new Value(false)
 
-
    }
 
 
    componentDidMount(){
-
 
      let caption = "";
      let fileList = [];
@@ -143,6 +143,19 @@ class PostingPage extends React.Component{
      }
 
    }
+
+   componentWillUnmount(){
+     //This will be run when the transition starts, from the animation
+
+     console.log("unmount here")
+     if(this.submit === true){
+       console.log('submit')
+
+     }
+
+   }
+
+
 
 
    /*
@@ -452,6 +465,7 @@ class PostingPage extends React.Component{
 
    // Handle opening modal
    nextPress = () => {
+     this.submit = true
      this.props.finalPostModal()
      this.props.navigation.setOptions({
        headerLeft: () => this.renderCloseModal()
@@ -461,7 +475,6 @@ class PostingPage extends React.Component{
 
    // Handle closing Modal
    backPress = () => {
-     console.log('back press')
      this.props.finalPostModal()
      this.showFinal.setValue(false)
    }
@@ -493,7 +506,6 @@ class PostingPage extends React.Component{
    // START OF DRAGGING
    start = ([x, y]) => {
 
-     console.log('at the start')
     const adjX = this.adjustLoc(x)
     const adjY = this.adjustLoc(y)
 
@@ -507,7 +519,6 @@ class PostingPage extends React.Component{
    // WHILE DRAGGING
    move = ([x, y]) => {
 
-     console.log('at the move')
      const adjY = this.adjustLoc(y)
 
 
@@ -519,7 +530,6 @@ class PostingPage extends React.Component{
    // END OF DRAGGING
    reset = () => {
 
-     console.log('at the reset')
      // this.active = false;
      this.setState({
        dragging: false,
@@ -601,7 +611,6 @@ class PostingPage extends React.Component{
    // Used to open deleted modal
    openDeleteModal = (index: number) => {
 
-     console.log(index)
      this.setState({
        deleteIndex: index,
        showDeleteModal: true
@@ -609,16 +618,11 @@ class PostingPage extends React.Component{
    }
 
    onCloseDelete = () => {
-     console.log('it hits here')
 
      this.setState({
        deleteIndex: -1,
        showDeleteModal: false
      })
-   }
-
-   whenNotTrue = ([]) => {
-     console.log('when things not true')
    }
 
    removeIndex = (list, index) => {
@@ -679,8 +683,6 @@ class PostingPage extends React.Component{
    }
 
    render(){
-     console.log('show final modal')
-     console.log(this.props.showFinalModal)
     const {dragging, draggingIndex, imageList} = this.state
 
 
@@ -788,6 +790,7 @@ class PostingPage extends React.Component{
               {this.state.imageList.map((images, key) => {
                 return(
                   <Animated.View
+                    key = {key}
                     style = {{
                       opacity: key === this.state.draggingIndex ? 0 : 1,
                       position: "relative",
@@ -820,7 +823,6 @@ class PostingPage extends React.Component{
                     <PanGestureHandler
                       maxPointers = {1}
                       onGestureEvent = {this.onGestureEvent}
-                      // onGestureEvent = {e => console.log(e.nativeEvent)}
                       onHandlerStateChange = {this.onGestureEvent}
                       >
                       <Animated.View
