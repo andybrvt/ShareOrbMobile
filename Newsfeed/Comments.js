@@ -42,7 +42,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
            <View style={styles.content}>
 
              <View style={styles.contentHeader}>
-                  <Text  style={styles.name}>  {item.commentUser.first_name+" "+item.commentUser.last_name}</Text>
+                  <Text  style={styles.name}>  {item.commentUser.username}</Text>
                   <Text style={styles.time}>
 
                       {global.RENDER_TIMESTAMP(item.created_on)}
@@ -75,7 +75,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
          <Avatar.Image
            style={styles.image}
            source = {{
-             uri: this.props.route.params.profilePic
+             uri: `${global.IMAGE_ENDPOINT}`+this.props.route.params.profilePic
            }}
            size = {40}
             />
@@ -109,7 +109,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
    paddingLeft: 15,
    paddingRight: 16,
-   paddingVertical: 12,
+   paddingVertical: 14,
    flexDirection: 'row',
    alignItems: 'flex-start',
    // backgroundColor:'red',
