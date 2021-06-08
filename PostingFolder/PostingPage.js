@@ -29,7 +29,7 @@ import AdjModal from '../RandomComponents/AdjModal';
 import * as ImagePicker from 'expo-image-picker';
 import Animated from 'react-native-reanimated';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle } from "react-native-feather";
+import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle, ChevronLeft } from "react-native-feather";
 import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
 import {withTimingTransition} from 'react-native-redash';
 
@@ -143,6 +143,7 @@ class PostingPage extends React.Component{
      }
 
    }
+
 
    /*
    This function will be in charge of opening the indicator message
@@ -400,6 +401,8 @@ class PostingPage extends React.Component{
     }
    }
 
+
+   // Next button that opens the finalpostmodal
    renderDone = () => {
 
      return (
@@ -414,24 +417,53 @@ class PostingPage extends React.Component{
      )
    }
 
+   // This will render the back button to the newsfeed
    renderBack = () => {
      return (
        <TouchableOpacity
-         onPress = {() => this.props.navigation.goBack(0)}
-         >
+       onPress = {() => this.props.navigation.goBack(0)}
+       >
          <X
            height = {40}
            width = {40}
            stroke = "#1890ff"
            />
 
-       </TouchableOpacity>
+      </TouchableOpacity>
+
      )
    }
 
+   renderCloseModal =() => {
+     return (
+        <TouchableOpacity
+          onPress = {() => this.backPress()}
+          >
+          <ChevronLeft
+            height = {40}
+            width = {40}
+            stroke = "#1890ff"
+             />
+
+        </TouchableOpacity>
+     )
+   }
+
+
+   // Handle opening modal
    nextPress = () => {
      this.props.finalPostModal()
+     this.props.navigation.setOptions({
+       headerLeft: () => this.renderCloseModal()
+     })
      this.showFinal.setValue(true)
+   }
+
+   // Handle closing Modal
+   backPress = () => {
+     console.log('back press')
+     this.props.finalPostModal()
+     this.showFinal.setValue(false)
    }
 
 
@@ -706,7 +738,7 @@ class PostingPage extends React.Component{
            </Animated.Code>
 
            <Animated.Code>
-             {() => cond(this.showFinal, set(this.slide, 0))}
+             {() => cond(this.showFinal, set(this.slide, 0), set(this.slide,SCREEN_HEIGHT))}
            </Animated.Code>
 
 
