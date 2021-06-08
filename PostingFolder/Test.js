@@ -44,7 +44,7 @@ const { cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 const isHidden = true;
 
 
-class PostingPage extends React.Component{
+class Test extends React.Component{
 
     scale = new Value(0);
     scaleAnimation = withTimingTransition(this.scale, {duration: 2000})
@@ -128,9 +128,10 @@ class PostingPage extends React.Component{
        }
      }
 
+
      this.setState({
-       caption: caption,
-       imageList: fileList,
+       caption: caption ,
+       imageList:fileList
      })
 
      if(fileList.length > 1){
@@ -404,14 +405,10 @@ class PostingPage extends React.Component{
        <TouchableOpacity>
          <Button
            title = "Next"
-           onPress = {() => this.testPress()}
+           onPress = {() => this.openFinalPage()}
             />
        </TouchableOpacity>
      )
-   }
-
-   testPress = () => {
-     this.testTrue.setValue(true)
    }
 
 
@@ -630,6 +627,10 @@ class PostingPage extends React.Component{
      return (width/col)* numRows
    }
 
+   testPress = () => {
+     this.testTrue.setValue(true)
+   }
+
    render(){
 
     const {dragging, draggingIndex, imageList} = this.state
@@ -650,231 +651,33 @@ class PostingPage extends React.Component{
      // and the drop when you are done moving it around
 
      return (
-       <ModalBackgroundContainer>
-         <FlashMessage  showMessage = {this.state.flashMessage} message = {"Image Posted"} />
 
          <View
            style = {styles.wholeContainer}
            >
-
-
-           <Animated.Code>
-             {() =>
-             cond(
-               eq(this.gestureState, State.BEGAN),
-               call([this.absX, this.absY], this.start),
-             )}
-           </Animated.Code>
-           <Animated.Code>
-             {() =>
-               cond(
-                 eq(this.gestureState, State.ACTIVE),
-                 call([this.absX, this.absY], this.move),
-               )
-             }
-           </Animated.Code>
-
-           <Animated.Code>
-             {() =>
-               cond(
-                 or(
-                   eq(this.gestureState, State.END),
-                   eq(this.gestureState, State.CANCELLED),
-                   eq(this.gestureState, State.FAILED),
-                   eq(this.gestureState, State.UNDETERMINED)
-                 ),
-                 call([], this.reset)
-               )
-             }
-           </Animated.Code>
-
            <Animated.Code>
              {() => cond(this.testTrue, set(this.scale, 1))}
            </Animated.Code>
 
+           <Animated.View  style = {{
+               height: 100,
+               width: 100,
+               backgroundColor: "black",
+               transform: [
+                 {scale: this.scaleAnimation}
+               ]
+             }}>
 
+           </Animated.View>
 
+           <Button
+             title = "press here "
 
-           <ScrollView  style = {styles.imageContainerContainer}>
-
-             <Animated.View  style = {{
-                 height: 100,
-                 width: 100,
-                 backgroundColor: "black",
-                 transform: [
-                   {scale: this.scaleAnimation}
-                 ]
-               }}>
-
-             </Animated.View>
-
-
-             <View
-
-               style = {{
-                 height: this.picHolderHeight()
-               }}
-               >
-               {
-                 dragging ? (
-                   <Animated.View
-
-                     style = {[{
-                       transform: [
-                         // {translateX: add(this.transX ,this.getPosition(draggingIndex).x)},
-                         // {translateY: add(this.transY ,this.getPosition(draggingIndex).y)}
-                         // {translateX: this.absX},
-                         // {translateY: this.absY}
-                         {translateX: sub(this.absX, new Value((2*width)/(3*col)))},
-                         {translateY: sub(this.absY, new Value(width/col))}
-                       ],
-                       position: "absolute",
-                       zIndex: 99
-                     }, styles.imageContainer]}
-                     >
-
-                       <Image
-                         style = {styles.smallImage}
-                         resizeMode = "cover"
-                         source = {{
-                           uri: this.state.imageList[this.state.draggingIndex]
-                         }}
-                          />
-
-                   </Animated.View>
-                 ) : null
-               }
-
-
-
-              {this.state.imageList.map((images, key) => {
-                return(
-                  <Animated.View
-                    style = {{
-                      opacity: key === this.state.draggingIndex ? 0 : 1,
-                      position: "relative",
-                      transform:[
-                        {translateX: this.getPosition(key).x},
-                        {translateY: this.getPosition(key).y}
-                      ]
-                    }}
-                    >
-
-                    {
-                      !dragging ? (
-                        <XCircle
-                          onPress = {() => this.openDeleteModal(key)}
-                          style = {{
-                            position: 'absolute',
-                            left: (width/col)*0.85,
-                            zIndex: 9,
-                            shadowColor: '#470000',
-                            shadowOffset: {width: 0, height: 1},
-                            shadowOpacity: 0.2,
-                          }}
-                          stroke = "#1890ff" fill= "white"/>
-
-                      ) : null
-
-
-                    }
-
-                    <PanGestureHandler
-                      maxPointers = {1}
-                      onGestureEvent = {this.onGestureEvent}
-                      // onGestureEvent = {e => console.log(e.nativeEvent)}
-                      onHandlerStateChange = {this.onGestureEvent}
-                      >
-                      <Animated.View
-                        key = {key}
-                        style = {[{
-                          // transform:[
-                          //   {translateX: this.getPosition(key).x},
-                          //   {translateY: this.getPosition(key).y}
-                          // ]
-                        },
-                          styles.imageContainer]}>
-
-
-                        <Image
-                          style = {styles.smallImage}
-                          resizeMode = "cover"
-                          source = {{
-                            uri: images
-                          }}
-                           />
-                      </Animated.View>
-                    </PanGestureHandler>
-
-                  </Animated.View>
-                )
-              })}
-
-              <Animated.View
-
-                style = {[{
-                  transform:[
-                    {translateX: this.getPosition(imageList.length).x},
-                    {translateY: this.getPosition(imageList.length).y}
-                  ]
-                },
-                  styles.normImageContainer]}>
-
-
-              <TouchableOpacity
-                onPress = {this.handleChoosePhoto}
-                style = {styles.addSmallImage}>
-                <PlusCircle
-                  height = {50}
-                  width = {50}
-                  stroke = "lightgray"
-                  fill= "white" />
-
-              </TouchableOpacity>
-
-              </Animated.View>
-
-             </View>
-
-             <View style = {styles.dayTextContainer}>
-               <Text style = {styles.smallText}> Images above will be saved in your daily album </Text>
-             </View>
-
-             <View style = {styles.dayTextContainer}>
-               <Text style = {styles.dayText}> National Days </Text>
-             </View>
-
-
-
-
-
-           </ScrollView>
-
-           <AdjModal
-             visible = {this.state.showDeleteModal}
-             height = {230}
-             width = {300}
-             onAction = {this.deletePicture}
-             onCancel = {this.onCloseDelete}
+             onPress = {() => this.testPress()}
              />
-
-          <Button
-            title = "click to test"
-            onPress = {() => this.test()}
-             />
-
-           <FinalPostingPage
-             visible = {this.state.showFinal}
-             onCancel = {this.closeFinalPage}
-             navigation = {this.props.navigation}
-             onChange = {this.handleCaptionChange}
-             caption = {this.state.caption}
-              />
-
 
 
            </View>
-       </ModalBackgroundContainer>
 
 
      )
@@ -982,4 +785,4 @@ class PostingPage extends React.Component{
 
  })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Test);

@@ -54,7 +54,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle} from "react-native-feather";
 import TestReanimated from './PostingFolder/TestReanimated';
 import DayAlbum from './SocialCalendar/DayAlbum.js';
-import Test from './Test';
+import Test from './PostingFolder/Test';
 
 
 const Tab = createMaterialBottomTabNavigator();
