@@ -55,16 +55,6 @@ import {
 
 
              <View>
-               <TouchableOpacity
-                 onPress = {() => this.onBack()}
-                 style = {{
-                   width: "10%",
-                 }}
-                 >
-                 <ChevronLeft height ={38} width = {38}/>
-
-               </TouchableOpacity>
-
 
                <View
                  style = {styles.bottomContainer}
