@@ -20,15 +20,11 @@ import {
  import { ChevronLeft } from "react-native-feather";
  import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
  import { Transition } from 'react-native-reanimated';
+ import Animated from 'react-native-reanimated';
+ import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
 
 
  class FinalPostingPage extends React.Component{
-
-   componentDidMount(){
-     this.props.navigation.setOptions({
-       title: "Some stuff"
-     })
-   }
 
    /*
    return back to posting page
@@ -40,18 +36,25 @@ import {
    render(){
 
      return (
-       <View
-         style = {!this.props.visible ? {
-           display: 'none'
-         } : {}}>
+       <Animated.View
+         style = {{
+           backgroundColor: "blue",
+           position: "absolute",
+           ...StyleSheet.absoluteFill,
+           transform: [
+             {translateY: this.props.slide}
+           ]
+         }}
+
+         >
+
 
 
 
            <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
 
-             <SafeAreaView
-               style = {styles.container}
-               >
+
+             <View>
                <TouchableOpacity
                  onPress = {() => this.onBack()}
                  style = {{
@@ -84,12 +87,13 @@ import {
                 onPress = {() => this.props.navigation.navigate("newsfeed")}
                  />
 
-             </SafeAreaView>
+             </View>
+
            </TouchableWithoutFeedback>
 
 
 
-       </View>
+       </Animated.View>
 
 
      )

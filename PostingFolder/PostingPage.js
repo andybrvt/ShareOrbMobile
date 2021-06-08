@@ -24,6 +24,7 @@ import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsock
 import FlashMessage from '../RandomComponents/FlashMessage';
 import FinalPostingPage from './FinalPostingPage';
 import * as authActions from '../store/actions/auth';
+import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import AdjModal from '../RandomComponents/AdjModal';
 import * as ImagePicker from 'expo-image-picker';
 import Animated from 'react-native-reanimated';
@@ -46,8 +47,8 @@ const isHidden = true;
 
 class PostingPage extends React.Component{
 
-    scale = new Value(0);
-    scaleAnimation = withTimingTransition(this.scale, {duration: 2000})
+    slide = new Value(SCREEN_HEIGHT);
+    slideAnimation = withTimingTransition(this.slide, {duration: 300})
 
 
    constructor(props){
@@ -78,10 +79,6 @@ class PostingPage extends React.Component{
      // The draggingIndex in states will keep track of the current index
      // of the image
 
-
-     // this.scale = new Value(0);
-     // this.scaleAnimation = withTimingTransition(this.scale, {duration: 1000});
-
      this.onGestureEvent = event([
        {
          nativeEvent:{
@@ -94,7 +91,7 @@ class PostingPage extends React.Component{
        }
      ])
 
-     this.testTrue = new Value(false)
+     this.showFinal = new Value(false)
 
 
    }
@@ -137,6 +134,11 @@ class PostingPage extends React.Component{
        this.props.navigation.setOptions({
          title: `Seclected ${fileList.length} images`,
          headerRight: () => this.renderDone()
+       })
+     } else {
+       this.props.navigation.setOptions({
+         title: 'Add Day',
+         headerLeft: () => this.renderBack()
        })
      }
 
@@ -401,17 +403,35 @@ class PostingPage extends React.Component{
    renderDone = () => {
 
      return (
-       <TouchableOpacity>
+       <TouchableOpacity
+         >
          <Button
            title = "Next"
-           onPress = {() => this.testPress()}
+           onPress = {() => this.nextPress()}
+
             />
        </TouchableOpacity>
      )
    }
 
-   testPress = () => {
-     this.testTrue.setValue(true)
+   renderBack = () => {
+     return (
+       <TouchableOpacity
+         onPress = {() => this.props.navigation.goBack(0)}
+         >
+         <X
+           height = {40}
+           width = {40}
+           stroke = "#1890ff"
+           />
+
+       </TouchableOpacity>
+     )
+   }
+
+   nextPress = () => {
+     this.props.finalPostModal()
+     this.showFinal.setValue(true)
    }
 
 
@@ -591,8 +611,6 @@ class PostingPage extends React.Component{
    */
    deletePicture = () => {
      const curList = this.state.imageList
-
-     console.log('here boy')
      if(this.state.deleteIndex >= 0 ){
        const curIndex = this.state.deleteIndex
 
@@ -610,9 +628,7 @@ class PostingPage extends React.Component{
        })
 
      }
-     // this.setState ({
-     //   imageList: curList.splice(order, 1)
-     // })
+
 
    }
 
@@ -631,7 +647,8 @@ class PostingPage extends React.Component{
    }
 
    render(){
-
+     console.log('show final modal')
+     console.log(this.props.showFinalModal)
     const {dragging, draggingIndex, imageList} = this.state
 
 
@@ -689,24 +706,13 @@ class PostingPage extends React.Component{
            </Animated.Code>
 
            <Animated.Code>
-             {() => cond(this.testTrue, set(this.scale, 1))}
+             {() => cond(this.showFinal, set(this.slide, 0))}
            </Animated.Code>
 
 
 
 
            <ScrollView  style = {styles.imageContainerContainer}>
-
-             <Animated.View  style = {{
-                 height: 100,
-                 width: 100,
-                 backgroundColor: "black",
-                 transform: [
-                   {scale: this.scaleAnimation}
-                 ]
-               }}>
-
-             </Animated.View>
 
 
              <View
@@ -858,12 +864,8 @@ class PostingPage extends React.Component{
              onCancel = {this.onCloseDelete}
              />
 
-          <Button
-            title = "click to test"
-            onPress = {() => this.test()}
-             />
-
            <FinalPostingPage
+             slide = {this.slideAnimation}
              visible = {this.state.showFinal}
              onCancel = {this.closeFinalPage}
              navigation = {this.props.navigation}
@@ -886,7 +888,8 @@ class PostingPage extends React.Component{
    return{
      profilePic: state.auth.profilePic,
      curUserId: state.auth.id,
-     curSocialCalCell: state.socialNewsfeed.curSocialCell
+     curSocialCalCell: state.socialNewsfeed.curSocialCell,
+     showFinalModal: state.socialNewsfeed.showFinalModal
    }
  }
 
@@ -895,7 +898,8 @@ class PostingPage extends React.Component{
      authAddCurLoad: () => dispatch(authActions.authAddCurLoad()),
      authAddTotalLoad: () => dispatch(authActions.authAddTotalLoad()),
      authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
-     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad())
+     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
+     finalPostModal: () => dispatch(socialNewsfeedActions.finalPostModal())
    }
  }
 
@@ -915,7 +919,6 @@ class PostingPage extends React.Component{
        // flexDirection: "row",
        width: width,
        // flexWrap: 'wrap',
-       // backgroundColor: 'red'
      },
      imageContainer: {
        width: Math.round(width/3),

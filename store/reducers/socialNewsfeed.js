@@ -4,7 +4,8 @@ import { updateObject } from "../utility";
 const initialState = {
 
   socialPosts: [],
-  curSocialCell: {}
+  curSocialCell: {},
+  showFinalModal: false,
 }
 
 const loadSocialPosts = (state, action) => {
@@ -52,6 +53,12 @@ const updateSocialCellPost = (state, action) => {
   })
 }
 
+const finalPostModal = (state, action) => {
+  return updateObject(state,{
+    showFinalModal: !state.showFinalModal
+  })
+}
+
 
 const reducer = (state = initialState, action) => {
   switch(action.type){
@@ -67,6 +74,8 @@ const reducer = (state = initialState, action) => {
       return addFirstSocialCellPost(state, action)
     case actionTypes.UPDATE_SOCIAL_CELL_POST:
       return updateSocialCellPost(state, action)
+    case actionTypes.FINAL_POST_MODAL:
+      return finalPostModal(state, action);
     default:
       return state;
 

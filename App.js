@@ -272,13 +272,9 @@ class App extends Component{
   }
 
   render(){
-    // <View style={styles.container}>
-    //       <Text style={{ fontSize: 200 }}>Default Font</Text>
-    //       <Text style={{ fontFamily: 'Montserrat', fontSize: 20 }}>Montserrat</Text>
-    //       <Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: 20 }}>
-    //         Montserrat-SemiBold
-    //       </Text>
-    //     </View>
+
+    console.log('here at app', this.props.showFinalModal)
+    const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth
     // you will get a serpate navigation for the login and sign up but hwne you are
@@ -308,7 +304,7 @@ class App extends Component{
                     options={{
                       headerShown: true,
                       gestureEnabled: true,
-                      gestureDirection: "vertical-inverted",
+                      gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
                     }}
                     name = 'PostingPage' component = {PostingPage}/>
                   <Stack.Screen
@@ -369,7 +365,8 @@ const mapStateToProps = state => {
     token: state.auth.token,
     username: state.auth.username,
     id: state.auth.id,
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    showFinalModal: state.socialNewsfeed.showFinalModal
 
 
   }

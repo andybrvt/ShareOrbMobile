@@ -48,3 +48,10 @@ export const updateSocialCellPost = socialCell => {
     socialCell: socialCell
   }
 }
+
+export const finalPostModal = () => {
+  // indicate that you open the final modal
+  return{
+    type: actionTypes.FINAL_POST_MODAL
+  }
+}
