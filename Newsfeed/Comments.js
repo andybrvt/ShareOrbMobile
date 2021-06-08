@@ -70,7 +70,6 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
         comments:this.props.route.params.comments
      })
      let commentList = [];
-
      return (
        <BackgroundContainer>
          <Avatar.Image

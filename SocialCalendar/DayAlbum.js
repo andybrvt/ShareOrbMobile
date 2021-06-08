@@ -7,12 +7,15 @@ import {
   ScrollView,
   Dimensions,
   Image,
-  ImageBackground
+  ImageBackground,
+  TouchableOpacity,
  } from 'react-native';
- import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
-import FacePile from 'react-native-face-pile'
+import FacePile from 'react-native-face-pile';
+import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -45,6 +48,35 @@ import FacePile from 'react-native-face-pile'
 
  class DayAlbum extends React.Component{
 
+   constructor(props){
+     super(props);
+     this.state = {
+       showComments: false,
+       showLike: false,
+
+     }
+   }
+
+   changeShowComments = () => {
+     let entireDay= (this.props.route.params.entireDay)
+     let dayCaption=entireDay[0].dayCaption
+     let socialComments=entireDay[0].get_socialCalComment
+     let profilePic=entireDay[0].socialCalUser.profile_picture
+     this.props.navigation.navigate("Comments",
+     {
+         comments: socialComments,
+         caption: dayCaption,
+         profilePic:profilePic,
+     }
+     )
+   }
+
+   changeShowLike = () => {
+     this.setState({
+       showLike:!this.state.showLike,
+     });
+   }
+
    onHomeNav = () => {
      // this function will be use to navigate back
      // to the home page
@@ -53,11 +85,15 @@ import FacePile from 'react-native-face-pile'
    render(){
 
       let entireDay= (this.props.route.params.entireDay)
+      console.log("hoho")
       console.log(entireDay[0])
       let profilePic=entireDay[0].socialCalUser.profile_picture
       let firstName=entireDay[0].socialCalUser.first_name
       let lastName=entireDay[0].socialCalUser.last_name
       let userName=entireDay[0].socialCalUser.username
+      let dayCaption=entireDay[0].dayCaption
+      let socialComments=entireDay[0].get_socialCalComment
+      let likePost=entireDay[0].people_like
 
      return (
        <BackgroundContainer>
@@ -84,6 +120,75 @@ import FacePile from 'react-native-face-pile'
                uri: `${global.IMAGE_ENDPOINT}`+profilePic,
              }}
            />
+           <View style = {styles.tagCSS1}>
+             <TouchableOpacity onPress={this.changeShowLike}>
+             <View style = {styles.justifyCenter}>
+               {
+                 (this.state.showLike==true) ?
+                 <FontAwesomeIcon
+                 style = {{
+                   color:'red',
+                   right:3,
+                 }}
+                 size = {20}
+                 icon={faHeart} />
+                 :
+                 <FontAwesomeIcon
+                   style = {{
+                     color:'white',
+                     right:3,
+                   }}
+
+                 size = {20}
+                 icon={faHeart}>
+
+               </FontAwesomeIcon>
+
+               }
+               <Text  style = {styles.justifyCenter1}>
+               {likePost.length}
+               </Text>
+             </View>
+             </TouchableOpacity>
+           </View>
+           <View style = {styles.tagCSS2}>
+             <TouchableOpacity  onPress={this.changeShowComments}>
+               <View  style = {styles.justifyCenter}>
+                 {
+                   (socialComments) ?
+                   <FontAwesomeIcon
+                   style = {{
+                     color:'white',
+                     right:3,
+                   }}
+                   size = {20}
+                   icon={faComment} />
+                   :
+
+                   <FontAwesomeIcon
+                   style = {{
+                     color:'red',
+                     right:3,
+                   }}
+                   size = {20}
+                   icon={faComment} />
+                 }
+                 <Text  style = {styles.justifyCenter1}>
+                 {socialComments.length}
+               </Text>
+               </View>
+             </TouchableOpacity>
+           </View>
+           <Text style = {styles.tagCSS3}>
+             <View>
+               <FontAwesomeIcon
+               style = {{
+                 color:'white',
+               }}
+               size = {20}
+               icon={faBookmark} />
+             </View>
+           </Text>
          <Text style = {styles.DayAlbumUserName}>
            {firstName+" "+lastName}
 
@@ -100,8 +205,7 @@ import FacePile from 'react-native-face-pile'
               {/*<Text style = {styles.bottomDayAlbumName}> {firstName+" "+lastName}</Text>*/}
               <Text  style = {styles.DayCaption}>
                 <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
-                &nbsp; This is the test caption this is the test1
-              caption this is the test caption</Text>
+                &nbsp; {dayCaption}</Text>
             </View>
           </View>
           <View style={styles.secondContainer}>
@@ -124,6 +228,62 @@ import FacePile from 'react-native-face-pile'
  }
 
  const styles = StyleSheet.create({
+   justifyCenter:{
+     flexDirection:'row',
+     alignItems: 'center',
+     flex: 1,
+     justifyContent: 'center',
+     color:'white',
+
+     // backgroundColor:'red',
+   },
+   justifyCenter1:{
+     color:'white',
+     // top:2,
+     // flex: 1, flexDirection: 'row',
+     // justifyContent: 'center', alignItems: 'center',
+     // backgroundColor:'blue',
+   },
+   tagCSS1: {
+     position:'absolute',
+     backgroundColor: 'rgba(0,0,0,.6)',
+     padding:9,
+     borderRadius:25,
+     color:'white',
+     bottom:225,
+     justifyContent: 'center',
+     fontSize:13,
+     right:10,
+     // fontWeight:'bold',
+
+   },
+   tagCSS2: {
+     position:'absolute',
+     backgroundColor: 'rgba(0,0,0,.6)',
+     padding:9,
+     borderRadius:25,
+     color:'white',
+     bottom:180,
+     fontSize:13,
+     right:10,
+     textAlign:'right',
+     // fontWeight:'bold',
+   },
+
+   tagCSS3: {
+     position:'absolute',
+     backgroundColor: 'rgba(0,0,0,.6)',
+     padding:7.5,
+     borderRadius:25,
+     color:'white',
+     bottom:135,
+     fontSize:13,
+     right:15,
+     textAlign:'right',
+     // fontWeight:'bold',
+
+   },
+
    openContainer:{
      flexDirection:'row',
      bottom:'6.5%',
@@ -137,7 +297,7 @@ import FacePile from 'react-native-face-pile'
    },
    secondContainer:{
      flex:1,
-    
+
      // backgroundColor:'blue',
    },
    DayCaptionContainer:{
