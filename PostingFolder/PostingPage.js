@@ -523,6 +523,7 @@ class PostingPage extends React.Component{
     const adjY = this.adjustLoc(y)
 
     this.curPicIndex = this.getOrder(x,adjY);
+    console.log(this.getOrder(x,adjY))
     this.setState({
        dragging: true,
        draggingIndex: this.curPicIndex
@@ -532,10 +533,10 @@ class PostingPage extends React.Component{
    // WHILE DRAGGING
    move = ([x, y]) => {
 
-     const adjY = this.adjustLoc(y)
+     // const adjY = this.adjustLoc(y)
 
 
-     this.updateList(x, adjY)
+     // this.updateList(x, adjY)
 
    }
 
@@ -604,10 +605,15 @@ class PostingPage extends React.Component{
    // pretty much just return the index order that the values are in
    getOrder = (x: number, y: number)=> {
 
-     const curCol = Math.floor(x/size)
-     const row = Math.round(y/size)
+     const{bigPicSize} = this.state
+     if(y < bigPicSize){
+       return 0;
+     }
 
-     return row * col + curCol
+     const curCol = Math.floor(x/size)
+     const row = Math.round((y-bigPicSize)/size)
+
+     return (row * col + curCol)+1 
    }
 
    getPosition = (order: number) => {
@@ -713,7 +719,7 @@ class PostingPage extends React.Component{
    // for the start I will just try to render the stucture it self wihtout
    // the picture first
    renderPictures = () => {
-     const {imageList, dragging} = this.state
+     const {imageList, dragging, draggingIndex} = this.state
 
      let cards = []
      for( let i = 0; i < MAX_PIC; i++){
@@ -722,7 +728,7 @@ class PostingPage extends React.Component{
          <Animated.View
            key = {i}
            style = {{
-             opacity: i === this.state.draggingIndex ? 0 : 1,
+             opacity: i === draggingIndex ? 0 : 1,
              position: "absolute",
              transform:[
                {translateX: this.getPosition(i).x},
@@ -907,7 +913,7 @@ class PostingPage extends React.Component{
                          style = {styles.smallImage}
                          resizeMode = "cover"
                          source = {{
-                           uri: this.state.imageList[this.state.draggingIndex]
+                           uri: this.state.imageList[draggingIndex]
                          }}
                           />
 
