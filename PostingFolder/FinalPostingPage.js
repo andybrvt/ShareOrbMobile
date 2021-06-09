@@ -38,8 +38,8 @@ import {
      return (
        <Animated.View
          style = {{
-           backgroundColor: "blue",
            position: "absolute",
+           backgroundColor: "white",
            ...StyleSheet.absoluteFill,
            transform: [
              {translateY: this.props.slide}
@@ -54,7 +54,9 @@ import {
            <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
 
 
-             <View>
+             <View style = {{
+                 flex: 1
+               }}>
 
                <View
                  style = {styles.bottomContainer}
@@ -71,11 +73,6 @@ import {
                   onChangeText = {this.props.onChange}
                 />
                </View>
-
-              <Button
-                title = "click to go to newsfeed"
-                onPress = {() => this.props.navigation.navigate("newsfeed")}
-                 />
 
              </View>
 
