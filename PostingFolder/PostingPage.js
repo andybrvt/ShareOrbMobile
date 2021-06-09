@@ -921,6 +921,37 @@ class PostingPage extends React.Component{
                  ) : null
                }
 
+               {
+                 dragging && draggingIndex === 0 ?
+
+                 <Animated.View
+
+                   style = {[{
+                     transform:[
+                       {translateX: this.getPosition(0).x},
+                       {translateY: this.getPosition(0).y},
+
+                     ]
+                   },styles.bigNormImageContainer]}>
+
+
+                 <TouchableOpacity
+                   onPress = {this.handleChoosePhoto}
+                   style = {styles.addSmallImage}>
+                  <Text style ={{
+                      fontSize: 20
+                    }}>
+                    Cover
+                  </Text>
+
+                 </TouchableOpacity>
+
+                 </Animated.View>
+
+                 : null
+
+               }
+
 
                 {this.renderPictures()}
 
