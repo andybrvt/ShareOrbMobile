@@ -8,6 +8,9 @@ import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 
 // This will be the list of all the newsfeed items
 // Everyone's day
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
+
 
 class InfiniteScroll extends React.Component{
 
@@ -19,12 +22,10 @@ class InfiniteScroll extends React.Component{
     if(this.props.socialPosts){
       post = this.props.socialPosts
     }
-    
+
 
     return (
       <View>
-
-
           {
               (post.length!=0) ?
               <View>

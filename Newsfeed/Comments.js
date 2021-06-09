@@ -11,11 +11,25 @@ import {
 import { Avatar, BottomNavigation } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
+
+
+
+
  class Comments extends React.Component{
+   renderHeader = () => (
+    <View style={styles.header}>
+      <View style={styles.panelHeader}>
+        <View style={styles.panelHandle} />
+      </View>
+    </View>
+  );
+
 
    onHomeNav = () => {
      // this function will be use to navigate back
@@ -30,7 +44,6 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
      return (
 
          <View style={styles.container}>
-
 
            <Avatar.Image
              style={styles.image}
@@ -81,6 +94,31 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
             />
            <Text style={styles.captionBody}> {this.props.route.params.caption}</Text>
          <View  >
+
+      <BottomSheet
+        renderHeader={this.renderHeader}
+        snapPoints={[330, 0]}
+        initialSnap={1}
+
+        borderRadius={10}
+        renderContent = {() => (
+         <View
+           style={{
+             backgroundColor: 'red',
+             padding: 10,
+             height: 450,
+             
+           }}
+         >
+         <FlatList
+           style = {{marginTop:20}}
+           data = {this.props.route.params.comments}
+           renderItem = {this.renderItem}
+           ItemSeparatorComponent = { this.FlatListItemSeparator }
+
+         />
+         </View>
+       )}      />
            <Text> {this.props.route.params.comments.length}</Text>
              <FlatList
                style = {{marginTop:20}}
@@ -105,6 +143,27 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  }
 
  const styles = StyleSheet.create({
+   header: {
+   backgroundColor: '#FFFFFF',
+   shadowColor: '#333333',
+   shadowOffset: {width: -1, height: -3},
+   shadowRadius: 2,
+   shadowOpacity: 0.4,
+   // elevation: 5,
+   paddingTop: 20,
+   borderTopLeftRadius: 20,
+   borderTopRightRadius: 20,
+ },
+ panelHeader: {
+   alignItems: 'center',
+ },
+ panelHandle: {
+   width: 40,
+   height: 8,
+   borderRadius: 4,
+   backgroundColor: '#00000040',
+   marginBottom: 10,
+ },
    container: {
 
    paddingLeft: 15,

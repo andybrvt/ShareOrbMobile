@@ -6,7 +6,10 @@ import { Avatar } from 'react-native-elements';
 
 
 class ProfileHeader extends React.Component{
+  editPageClick() {
+    this.props.navigation.navigate("EditProfile");
 
+  }
 
   renderProfilePic = () => {
 
@@ -91,11 +94,11 @@ class ProfileHeader extends React.Component{
             <View style={{flex:2,justifyContent:'center', marginLeft:30}}>
               <Text style = {styles.name}>{name}</Text>
               <Text style = {styles.username}>@{username}</Text>
-                <TouchableHighlight>
+                <TouchableOpacity onPress={() => this.editPageClick()}>
                   <View style={styles.editButton}>
                      <Text style={{color:'white',}}>Edit Profile</Text>
                    </View>
-               </TouchableHighlight>
+               </TouchableOpacity>
             </View>
         </View>
      </View>
@@ -307,7 +310,7 @@ const styles = StyleSheet.create({
   profileInfoHeader: {
     position:'relative',
     top:'10%',
-    // background1Color:'red',
+    // backgroundColor:'red',
     justifyContent: 'center',
     flexDirection:'row',
   },

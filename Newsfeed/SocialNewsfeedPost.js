@@ -10,6 +10,9 @@ import { Avatar } from 'react-native-elements';
 
 import FeatherIcon from 'feather-icons-react';
 import { Tag, Heart } from 'react-feather';
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
+
 class SocialNewsfeedPost extends React.Component{
 
   constructor(props){
@@ -99,6 +102,7 @@ class SocialNewsfeedPost extends React.Component{
     if(userPostImages.length === 1){
       return (
         <View style = {styles.container}>
+          
           <Image
             style={styles.cover}
             resizeMode = "cover"

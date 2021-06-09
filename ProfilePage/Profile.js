@@ -84,6 +84,7 @@ class Profile extends React.Component{
         </View>
         <View style = {styles.profileHeader}>
           <ProfileHeader
+            navigation={this.props.navigation}
             {...this.props}
             />
         </View>
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     shadowColor:'black',
     shadowOffset:{width:0,height:2},
     shadowOpacity:0.2,
-    elevation:5,
+    elevation:4,
     position:'relative'
   },
   textStyle:{

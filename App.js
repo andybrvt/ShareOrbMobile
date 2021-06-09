@@ -45,6 +45,7 @@ import PostingPage from './PostingFolder/PostingPage';
 import NewPostingPage from './PostingFolder/NewPostingPage';
 import TestDrag from './PostingFolder/TestDrag';
 import ViewProfile from './ProfilePage/ViewProfile';
+import EditProfile from './ProfilePage/EditProfile';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
 import ChatSearch from './Chats/ChatSearch';
@@ -246,6 +247,7 @@ class App extends Component{
                component={Profile}
 
                options={{
+
                  tabBarLabel: false,
                   tabBarIcon: ({ color }) => (
                     <User stroke={color} strokeWidth={2} width={25} height={25} />
@@ -310,6 +312,10 @@ class App extends Component{
                   <Stack.Screen
                       name = 'Comments'
                       options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+                        },
                         title: 'Comments',
                          ...TransitionPresets.SlideFromRightIOS,
                                         }}
@@ -320,6 +326,12 @@ class App extends Component{
                        ...TransitionPresets.SlideFromRightIOS,
                                       }}
                      name = 'MessageFriend' component = {MessageFriend}/>
+                   <Stack.Screen
+                     options={{
+                       title: 'Edit Profile',
+                        ...TransitionPresets.SlideFromRightIOS,
+                                       }}
+                      name = 'EditProfile' component = {EditProfile}/>
                      <Stack.Screen
                        options={{
                          headerShown: false,

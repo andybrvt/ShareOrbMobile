@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     // shadowOffset:{  width: 0,  height: 2,  },
     // shadowColor: 'black',
     // shadowOpacity: 0.2,
+    elevation:1,
   },
   logoContainer: {
     flex: 1,

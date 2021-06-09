@@ -17,6 +17,8 @@ import * as dateFns from 'date-fns';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import LoadingBar from '../RandomComponents/LoadingBar';
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
 
 class NewsfeedView extends React.Component{
 
@@ -126,6 +128,7 @@ class NewsfeedView extends React.Component{
     return(
 
       <BackgroundContainer>
+        
         {this.props.totalLoad === 0 ?
 
 
