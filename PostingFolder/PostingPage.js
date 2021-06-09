@@ -39,6 +39,7 @@ const height = Dimensions.get('window').height
 const margin = 0;
 const col = 3;
 const size = width/col + margin;
+const coverScale = 1.7;
 
 const { cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
@@ -614,7 +615,7 @@ class PostingPage extends React.Component{
      const {bigPicSize} = this.state
      if(order === 0) {
        return{
-         x: 100,
+         x: (width/2)- bigPicSize/2,
          y: 0
        }
 
@@ -624,8 +625,8 @@ class PostingPage extends React.Component{
      else{
        // so you want to return the x and y of the images
        return{
-         x: (order % col) * size, // pretty much if 0 or 1, row would be 0
-         y: (Math.floor(order / col) * size)+ bigPicSize
+         x: ((order-1) % col) * size, // pretty much if 0 or 1, row would be 0
+         y: (Math.floor((order-1) / col) * size)+ bigPicSize
        }
      }
 
@@ -696,13 +697,14 @@ class PostingPage extends React.Component{
    */
    picHolderHeight = () => {
 
-     const imageLength = this.state.imageList.length +1
+     const {bigPicSize} = this.state
+     const imageLength = MAX_PIC
      const numRows = Math.ceil(imageLength/col)
      if(imageLength === 0 ){
        return (width/col)
      }
 
-     return (width/col)* numRows
+     return (width/col)* numRows + bigPicSize
    }
 
 
@@ -711,10 +713,73 @@ class PostingPage extends React.Component{
    // for the start I will just try to render the stucture it self wihtout
    // the picture first
    renderPictures = () => {
+     const {imageList, dragging} = this.state
 
      let cards = []
      for( let i = 0; i < MAX_PIC; i++){
        cards.push(
+         true ?
+         <Animated.View
+           key = {i}
+           style = {{
+             opacity: i === this.state.draggingIndex ? 0 : 1,
+             position: "relative",
+             transform:[
+               {translateX: this.getPosition(i).x},
+               {translateY: this.getPosition(i).y}
+             ]
+           }}
+           >
+
+           {
+             !dragging ? (
+               <XCircle
+                 onPress = {() => this.openDeleteModal(i)}
+                 style = {{
+                   position: 'absolute',
+                   left: (width/col)*0.85,
+                   zIndex: 9,
+                   shadowColor: '#470000',
+                   shadowOffset: {width: 0, height: 1},
+                   shadowOpacity: 0.2,
+                 }}
+                 stroke = "#1890ff" fill= "white"/>
+
+             ) : null
+
+
+           }
+
+           <PanGestureHandler
+             maxPointers = {1}
+             onGestureEvent = {this.onGestureEvent}
+             onHandlerStateChange = {this.onGestureEvent}
+             >
+             <Animated.View
+               key = {i}
+               style = {[{
+                 // transform:[
+                 //   {translateX: this.getPosition(key).x},
+                 //   {translateY: this.getPosition(key).y}
+                 // ]
+               },
+                 styles.imageContainer]}>
+
+
+               <Image
+                 style = {styles.smallImage}
+                 resizeMode = "cover"
+                 source = {{
+                   uri: imageList[i]
+                 }}
+                  />
+             </Animated.View>
+           </PanGestureHandler>
+
+         </Animated.View>
+
+         :
+
          <Animated.View
            onLayout = {e => {
              i === 0 ? this.onLayout(e) : null
@@ -827,10 +892,6 @@ class PostingPage extends React.Component{
 
                      style = {[{
                        transform: [
-                         // {translateX: add(this.transX ,this.getPosition(draggingIndex).x)},
-                         // {translateY: add(this.transY ,this.getPosition(draggingIndex).y)}
-                         // {translateX: this.absX},
-                         // {translateY: this.absY}
                          {translateX: sub(this.absX, new Value((2*width)/(3*col)))},
                          {translateY: sub(this.absY, new Value(width/col))}
                        ],
@@ -851,37 +912,6 @@ class PostingPage extends React.Component{
                  ) : null
                }
 
-
-               <View style = {{
-                   flex: 1,
-                   backgroundColor: "red"
-                 }}>
-                 <Animated.View
-
-                   style = {[{
-                     transform:[
-                       {translateX: this.getPosition(imageList.length).x},
-                       {translateY: this.getPosition(imageList.length).y}
-                     ]
-                   },
-                     styles.normImageContainer]}>
-
-
-                 <TouchableOpacity
-                   onPress = {this.handleChoosePhoto}
-                   style = {styles.addSmallImage}>
-                   <PlusCircle
-                     height = {50}
-                     width = {50}
-                     stroke = "lightgray"
-                     fill= "white" />
-
-                 </TouchableOpacity>
-
-                 </Animated.View>
-
-
-              </View>
 
                 {this.renderPictures()}
 
@@ -948,30 +978,6 @@ class PostingPage extends React.Component{
                   </Animated.View>
                 )
               }) */}
-
-              <Animated.View
-
-                style = {[{
-                  transform:[
-                    {translateX: this.getPosition(imageList.length).x},
-                    {translateY: this.getPosition(imageList.length).y}
-                  ]
-                },
-                  styles.normImageContainer]}>
-
-
-              <TouchableOpacity
-                onPress = {this.handleChoosePhoto}
-                style = {styles.addSmallImage}>
-                <PlusCircle
-                  height = {50}
-                  width = {50}
-                  stroke = "lightgray"
-                  fill= "white" />
-
-              </TouchableOpacity>
-
-              </Animated.View>
 
              </View>
 
@@ -1076,8 +1082,8 @@ class PostingPage extends React.Component{
 
      },
      bigImageContainer: {
-       width: Math.round(width/3)*1.7,
-       height: Math.round(width/3)*1.7,
+       width: Math.round(width/3)*coverScale,
+       height: Math.round(width/3)*coverScale,
        overflow:"hidden",
        alignItems: 'center',
        justifyContent: "center",
