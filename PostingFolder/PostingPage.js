@@ -533,10 +533,10 @@ class PostingPage extends React.Component{
    // WHILE DRAGGING
    move = ([x, y]) => {
 
-     // const adjY = this.adjustLoc(y)
+     const adjY = this.adjustLoc(y)
 
 
-     // this.updateList(x, adjY)
+     this.updateList(x, adjY)
 
    }
 
@@ -613,7 +613,7 @@ class PostingPage extends React.Component{
      const curCol = Math.floor(x/size)
      const row = Math.round((y-bigPicSize)/size)
 
-     return (row * col + curCol)+1 
+     return (row * col + curCol)+1
    }
 
    getPosition = (order: number) => {
