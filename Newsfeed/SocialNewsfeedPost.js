@@ -66,6 +66,7 @@ class SocialNewsfeedPost extends React.Component{
     let like_people = [];
     let commentList = [];
 
+    let postCreatedAt="";
     if(this.props.data) {
       if(this.props.data.owner.profile_picture){
         profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
@@ -95,6 +96,9 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.post.get_socialCalComment){
         commentList = this.props.data.post.get_socialCalComment
       }
+      if(this.props.data.post_date){
+        postCreatedAt = this.props.data.post_date
+      }
       // location = this.props.history.location.pathname
 
     }
@@ -102,7 +106,7 @@ class SocialNewsfeedPost extends React.Component{
     if(userPostImages.length === 1){
       return (
         <View style = {styles.container}>
-          
+
           <Image
             style={styles.cover}
             resizeMode = "cover"
@@ -118,6 +122,20 @@ class SocialNewsfeedPost extends React.Component{
                   uri: profilePic
                 }}
               />
+
+            <View style = {styles.testWhere}>
+              <Text style = {styles.videoFooterUserName}>Ping Hsu
+              </Text>
+
+
+            </View>
+
+            <View style = {styles.testWhere2}>
+                <Text style = {styles.videoFooterUserName}>{global.RENDER_TIMESTAMP(postCreatedAt)}</Text>
+
+
+
+            </View>
 
 
             <View style = {styles.videoFooter}>
@@ -332,7 +350,7 @@ class SocialNewsfeedPost extends React.Component{
     let userFirstName = ""
     let userLastName = ""
     let userId = ""
-    let postCreatedAt = ""
+
 
     let actionText = ""
 
@@ -378,41 +396,18 @@ class SocialNewsfeedPost extends React.Component{
 
       }
 
-      if(this.props.data.post_date){
-        postCreatedAt = this.props.data.post_date
-      }
+
 
 
     }
 
     return (
       <View>
-      <Card style = {styles.card}>
-
-        <View style = {styles.header}>
 
 
-
-           <View style = {styles.name}>
-
-             <Text
-               style = {{
-                   fontSize: 14,
-                   fontWeight:'bold'
-                 }}
-               > {global.CAPITALIZE(userFirstName) +" "+ global.CAPITALIZE(userLastName) } </Text>
-            {/*
-             <Text> @{userUsername}</Text>
-             */}
-           </View>
-
-           <View style = {styles.date}>
-             <Text> {global.RENDER_TIMESTAMP(postCreatedAt)}</Text>
-           </View>
-
-        </View>
 
         <View style = {styles.imageContainer}>
+
             {this.revealPhoto()}
 
         </View>
@@ -421,7 +416,7 @@ class SocialNewsfeedPost extends React.Component{
           {this.bottomLikeCommentPost()}
         </View>
 
-      </Card>
+
       </View>
     )
   }
@@ -442,10 +437,27 @@ export default connect(mapStateToProps)(SocialNewsfeedPost);
 
 const styles = StyleSheet.create({
 
-  videoFooterUserName: {
+  testWhere:{
+    position:'absolute',
+    top:'1%',
+    padding:10,
+    left:40,
+    width:'65%',
+     // backgroundColor:'red',
+  },
+  testWhere2:{
+    position:'absolute',
+    top:'1%',
+    padding:10,
+    right:0,
+    width:'35%',
+     // backgroundColor:'red',
+  },
+  timeStampPost: {
 
     color:'white',
     fontSize:14,
+    alignSelf:'flex-end',
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
@@ -455,20 +467,31 @@ const styles = StyleSheet.create({
     // fontWeight:'bold',
 
   },
+
+  videoFooterUserName: {
+
+    color:'white',
+    fontSize:14,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+    // fontWeight:'bold',
+
+  },
   videoFooter: {
     position:'absolute',
-
     padding:10,
-
     color:'white',
     bottom:25,
     width:'75%',
     padding:10,
     fontWeight:'600',
-
+    // backgroundColor:'red',
     textShadowColor: 'black',
-  textShadowOffset: {width: -1, height: 1},
-  textShadowRadius: 10
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10
     // fontWeight:'bold',
 
   },
