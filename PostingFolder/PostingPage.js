@@ -718,12 +718,12 @@ class PostingPage extends React.Component{
      let cards = []
      for( let i = 0; i < MAX_PIC; i++){
        cards.push(
-         true ?
+         i < imageList.length ?
          <Animated.View
            key = {i}
            style = {{
              opacity: i === this.state.draggingIndex ? 0 : 1,
-             position: "relative",
+             position: "absolute",
              transform:[
                {translateX: this.getPosition(i).x},
                {translateY: this.getPosition(i).y}
@@ -756,6 +756,9 @@ class PostingPage extends React.Component{
              onHandlerStateChange = {this.onGestureEvent}
              >
              <Animated.View
+               onLayout = {e => {
+                 i === 0 ? this.onLayout(e) : null
+               }}
                key = {i}
                style = {[{
                  // transform:[
@@ -763,7 +766,7 @@ class PostingPage extends React.Component{
                  //   {translateY: this.getPosition(key).y}
                  // ]
                },
-                 styles.imageContainer]}>
+                 i=== 0 ? styles.bigImageContainer : styles.imageContainer]}>
 
 
                <Image
@@ -790,7 +793,7 @@ class PostingPage extends React.Component{
                {translateY: this.getPosition(i).y},
 
              ]
-           },i === 0 ? styles.bigImageContainer : styles.normImageContainer]}>
+           },i === 0 ? styles.bigNormImageContainer : styles.normImageContainer]}>
 
 
          <TouchableOpacity
@@ -1071,6 +1074,17 @@ class PostingPage extends React.Component{
        shadowOpacity:0.2,
       // padding: 10,
      },
+     bigImageContainer:{
+       width: Math.round(width/3)*coverScale,
+       height: Math.round(width/3)*coverScale,
+       overflow:"hidden",
+       alignItems: 'center',
+       justifyContent: "center",
+       position: "absolute",
+       shadowColor:'black',
+       shadowOffset:{width:0,height:2},
+       shadowOpacity:0.2,
+     },
 
      normImageContainer: {
        width: Math.round(width/3),
@@ -1081,7 +1095,7 @@ class PostingPage extends React.Component{
        position: "absolute",
 
      },
-     bigImageContainer: {
+     bigNormImageContainer: {
        width: Math.round(width/3)*coverScale,
        height: Math.round(width/3)*coverScale,
        overflow:"hidden",
