@@ -30,7 +30,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Animated from 'react-native-reanimated';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle, ChevronLeft } from "react-native-feather";
-import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
+import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import {withTimingTransition} from 'react-native-redash/lib/module/v1';
 
 
@@ -50,7 +50,6 @@ class PostingPage extends React.Component{
     slide = new Value(SCREEN_HEIGHT);
     slideAnimation = withTimingTransition(this.slide, {duration: 300})
 
-
    constructor(props){
      super(props)
 
@@ -64,6 +63,7 @@ class PostingPage extends React.Component{
        showDeleteModal: false,
        deleteIndex: -1,
        showFinal: false,
+       bigPicSize: 0
 
      }
 
@@ -94,6 +94,7 @@ class PostingPage extends React.Component{
      ])
 
      this.showFinal = new Value(false)
+
 
    }
 
@@ -157,8 +158,11 @@ class PostingPage extends React.Component{
 
    }
 
-
-
+   onLayout = (e) => {
+     this.setState({
+       bigPicSize: e.nativeEvent.layout.height
+     })
+   }
 
    /*
    This function will be in charge of opening the indicator message
@@ -607,13 +611,24 @@ class PostingPage extends React.Component{
 
    getPosition = (order: number) => {
 
+     const {bigPicSize} = this.state
+     if(order === 0) {
+       return{
+         x: 100,
+         y: 0
+       }
 
-
-     // so you want to return the x and y of the images
-     return{
-       x: (order % col) * size, // pretty much if 0 or 1, row would be 0
-       y: Math.floor(order / col) * size
      }
+
+
+     else{
+       // so you want to return the x and y of the images
+       return{
+         x: (order % col) * size, // pretty much if 0 or 1, row would be 0
+         y: (Math.floor(order / col) * size)+ bigPicSize
+       }
+     }
+
    }
 
    // Used to open deleted modal
@@ -690,6 +705,50 @@ class PostingPage extends React.Component{
      return (width/col)* numRows
    }
 
+
+   // This function will render the pictures either when it has a picture
+   // or when it doesn't have a picture
+   // for the start I will just try to render the stucture it self wihtout
+   // the picture first
+   renderPictures = () => {
+
+     let cards = []
+     for( let i = 0; i < MAX_PIC; i++){
+       cards.push(
+         <Animated.View
+           onLayout = {e => {
+             i === 0 ? this.onLayout(e) : null
+           }}
+           style = {[{
+             transform:[
+               {translateX: this.getPosition(i).x},
+               {translateY: this.getPosition(i).y},
+
+             ]
+           },i === 0 ? styles.bigImageContainer : styles.normImageContainer]}>
+
+
+         <TouchableOpacity
+           onPress = {this.handleChoosePhoto}
+           style = {styles.addSmallImage}>
+           <PlusCircle
+             height = {50}
+             width = {50}
+             stroke = "lightgray"
+             fill= "white" />
+
+         </TouchableOpacity>
+
+         </Animated.View>
+
+       )
+     }
+
+     return cards;
+
+
+   }
+
    render(){
     const {dragging, draggingIndex, imageList} = this.state
 
@@ -758,7 +817,6 @@ class PostingPage extends React.Component{
 
 
              <View
-
                style = {{
                  height: this.picHolderHeight()
                }}
@@ -794,8 +852,41 @@ class PostingPage extends React.Component{
                }
 
 
+               <View style = {{
+                   flex: 1,
+                   backgroundColor: "red"
+                 }}>
+                 <Animated.View
 
-              {this.state.imageList.map((images, key) => {
+                   style = {[{
+                     transform:[
+                       {translateX: this.getPosition(imageList.length).x},
+                       {translateY: this.getPosition(imageList.length).y}
+                     ]
+                   },
+                     styles.normImageContainer]}>
+
+
+                 <TouchableOpacity
+                   onPress = {this.handleChoosePhoto}
+                   style = {styles.addSmallImage}>
+                   <PlusCircle
+                     height = {50}
+                     width = {50}
+                     stroke = "lightgray"
+                     fill= "white" />
+
+                 </TouchableOpacity>
+
+                 </Animated.View>
+
+
+              </View>
+
+                {this.renderPictures()}
+
+
+              {/*this.state.imageList.map((images, key) => {
                 return(
                   <Animated.View
                     key = {key}
@@ -856,7 +947,7 @@ class PostingPage extends React.Component{
 
                   </Animated.View>
                 )
-              })}
+              }) */}
 
               <Animated.View
 
@@ -974,6 +1065,7 @@ class PostingPage extends React.Component{
        shadowOpacity:0.2,
       // padding: 10,
      },
+
      normImageContainer: {
        width: Math.round(width/3),
        height: Math.round(width/3),
@@ -983,8 +1075,13 @@ class PostingPage extends React.Component{
        position: "absolute",
 
      },
-     imageHolder: {
-
+     bigImageContainer: {
+       width: Math.round(width/3)*1.7,
+       height: Math.round(width/3)*1.7,
+       overflow:"hidden",
+       alignItems: 'center',
+       justifyContent: "center",
+       position: "absolute",
      },
      smallImage: {
        width: "90%",
