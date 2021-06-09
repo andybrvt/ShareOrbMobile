@@ -149,7 +149,9 @@ class PostingPage extends React.Component{
 
      console.log("unmount here")
      if(this.submit === true){
-       console.log('submit')
+       this.props.finalPostModal()
+       // Now you will submit
+       this.handleImageUpload()
 
      }
 
@@ -367,7 +369,7 @@ class PostingPage extends React.Component{
 
            // }
 
-           this.props.navigation.navigate("newsfeed")
+           // this.props.navigation.navigate("newsfeed")
 
          }
 
@@ -465,19 +467,25 @@ class PostingPage extends React.Component{
 
    // Handle opening modal
    nextPress = () => {
-     this.submit = true
-     this.props.finalPostModal()
+     this.submit = true;
+     this.props.finalPostModal();
      this.props.navigation.setOptions({
-       headerLeft: () => this.renderCloseModal()
+       headerLeft: () => this.renderCloseModal(),
+       headerRight: null,
      })
-     this.showFinal.setValue(true)
+     this.showFinal.setValue(true);
    }
 
    // Handle closing Modal
    backPress = () => {
-     this.props.finalPostModal()
-     this.showFinal.setValue(false)
-   }
+
+     this.props.finalPostModal();
+     this.showFinal.setValue(false);
+     this.submit = false;
+     this.props.navigation.setOptions({
+       headerRight: () => this.renderDone()
+     })
+  }
 
 
    /*
