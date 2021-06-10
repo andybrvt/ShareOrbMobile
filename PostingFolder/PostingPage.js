@@ -32,6 +32,8 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle, ChevronLeft } from "react-native-feather";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import {withTimingTransition} from 'react-native-redash/lib/module/v1';
+import NationalDayPost from './NationalDayPost';
+import CurrentPicPost from './CurrentPicPost';
 
 
 const width = Dimensions.get("window").width
@@ -892,7 +894,7 @@ class PostingPage extends React.Component{
 
              <View
                style = {{
-                 height: this.picHolderHeight()
+                 height: this.picHolderHeight(),
                }}
                >
                {
@@ -955,70 +957,6 @@ class PostingPage extends React.Component{
 
                 {this.renderPictures()}
 
-
-              {/*this.state.imageList.map((images, key) => {
-                return(
-                  <Animated.View
-                    key = {key}
-                    style = {{
-                      opacity: key === this.state.draggingIndex ? 0 : 1,
-                      position: "relative",
-                      transform:[
-                        {translateX: this.getPosition(key).x},
-                        {translateY: this.getPosition(key).y}
-                      ]
-                    }}
-                    >
-
-                    {
-                      !dragging ? (
-                        <XCircle
-                          onPress = {() => this.openDeleteModal(key)}
-                          style = {{
-                            position: 'absolute',
-                            left: (width/col)*0.85,
-                            zIndex: 9,
-                            shadowColor: '#470000',
-                            shadowOffset: {width: 0, height: 1},
-                            shadowOpacity: 0.2,
-                          }}
-                          stroke = "#1890ff" fill= "white"/>
-
-                      ) : null
-
-
-                    }
-
-                    <PanGestureHandler
-                      maxPointers = {1}
-                      onGestureEvent = {this.onGestureEvent}
-                      onHandlerStateChange = {this.onGestureEvent}
-                      >
-                      <Animated.View
-                        key = {key}
-                        style = {[{
-                          // transform:[
-                          //   {translateX: this.getPosition(key).x},
-                          //   {translateY: this.getPosition(key).y}
-                          // ]
-                        },
-                          styles.imageContainer]}>
-
-
-                        <Image
-                          style = {styles.smallImage}
-                          resizeMode = "cover"
-                          source = {{
-                            uri: images
-                          }}
-                           />
-                      </Animated.View>
-                    </PanGestureHandler>
-
-                  </Animated.View>
-                )
-              }) */}
-
              </View>
 
              <View style = {styles.dayTextContainer}>
@@ -1027,7 +965,18 @@ class PostingPage extends React.Component{
 
              <View style = {styles.dayTextContainer}>
                <Text style = {styles.dayText}> National Days </Text>
+
+               <NationalDayPost />
+
              </View>
+
+
+             <View style = {styles.dayTextContainer}>
+               <Text style = {styles.dayText}> Pictures took today </Text>
+
+               <CurrentPicPost />
+             </View>
+
 
 
 
