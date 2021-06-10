@@ -32,6 +32,8 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle, ChevronLeft } from "react-native-feather";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import {withTimingTransition} from 'react-native-redash/lib/module/v1';
+import NationalDayPost from './NationalDayPost';
+import CurrentPicPost from './CurrentPicPost';
 
 
 const width = Dimensions.get("window").width
@@ -523,6 +525,7 @@ class PostingPage extends React.Component{
     const adjY = this.adjustLoc(y)
 
     this.curPicIndex = this.getOrder(x,adjY);
+    console.log(this.getOrder(x,adjY))
     this.setState({
        dragging: true,
        draggingIndex: this.curPicIndex
@@ -604,10 +607,15 @@ class PostingPage extends React.Component{
    // pretty much just return the index order that the values are in
    getOrder = (x: number, y: number)=> {
 
-     const curCol = Math.floor(x/size)
-     const row = Math.round(y/size)
+     const{bigPicSize} = this.state
+     if(y < bigPicSize){
+       return 0;
+     }
 
-     return row * col + curCol
+     const curCol = Math.floor(x/size)
+     const row = Math.round((y-bigPicSize)/size)
+
+     return (row * col + curCol)+1
    }
 
    getPosition = (order: number) => {
@@ -713,17 +721,17 @@ class PostingPage extends React.Component{
    // for the start I will just try to render the stucture it self wihtout
    // the picture first
    renderPictures = () => {
-     const {imageList, dragging} = this.state
+     const {imageList, dragging, draggingIndex} = this.state
 
      let cards = []
      for( let i = 0; i < MAX_PIC; i++){
        cards.push(
-         true ?
+         i < imageList.length ?
          <Animated.View
            key = {i}
            style = {{
-             opacity: i === this.state.draggingIndex ? 0 : 1,
-             position: "relative",
+             opacity: i === draggingIndex ? 0 : 1,
+             position: "absolute",
              transform:[
                {translateX: this.getPosition(i).x},
                {translateY: this.getPosition(i).y}
@@ -756,6 +764,9 @@ class PostingPage extends React.Component{
              onHandlerStateChange = {this.onGestureEvent}
              >
              <Animated.View
+               onLayout = {e => {
+                 i === 0 ? this.onLayout(e) : null
+               }}
                key = {i}
                style = {[{
                  // transform:[
@@ -763,7 +774,7 @@ class PostingPage extends React.Component{
                  //   {translateY: this.getPosition(key).y}
                  // ]
                },
-                 styles.imageContainer]}>
+                 i=== 0 ? styles.bigImageContainer : styles.imageContainer]}>
 
 
                <Image
@@ -790,7 +801,7 @@ class PostingPage extends React.Component{
                {translateY: this.getPosition(i).y},
 
              ]
-           },i === 0 ? styles.bigImageContainer : styles.normImageContainer]}>
+           },i === 0 ? styles.bigNormImageContainer : styles.normImageContainer]}>
 
 
          <TouchableOpacity
@@ -883,7 +894,7 @@ class PostingPage extends React.Component{
 
              <View
                style = {{
-                 height: this.picHolderHeight()
+                 height: this.picHolderHeight(),
                }}
                >
                {
@@ -904,7 +915,7 @@ class PostingPage extends React.Component{
                          style = {styles.smallImage}
                          resizeMode = "cover"
                          source = {{
-                           uri: this.state.imageList[this.state.draggingIndex]
+                           uri: this.state.imageList[draggingIndex]
                          }}
                           />
 
@@ -912,72 +923,39 @@ class PostingPage extends React.Component{
                  ) : null
                }
 
+               {
+                 dragging && draggingIndex === 0 ?
+
+                 <Animated.View
+
+                   style = {[{
+                     transform:[
+                       {translateX: this.getPosition(0).x},
+                       {translateY: this.getPosition(0).y},
+
+                     ]
+                   },styles.bigNormImageContainer]}>
+
+
+                 <TouchableOpacity
+                   onPress = {this.handleChoosePhoto}
+                   style = {styles.addSmallImage}>
+                  <Text style ={{
+                      fontSize: 20
+                    }}>
+                    Cover
+                  </Text>
+
+                 </TouchableOpacity>
+
+                 </Animated.View>
+
+                 : null
+
+               }
+
 
                 {this.renderPictures()}
-
-
-              {/*this.state.imageList.map((images, key) => {
-                return(
-                  <Animated.View
-                    key = {key}
-                    style = {{
-                      opacity: key === this.state.draggingIndex ? 0 : 1,
-                      position: "relative",
-                      transform:[
-                        {translateX: this.getPosition(key).x},
-                        {translateY: this.getPosition(key).y}
-                      ]
-                    }}
-                    >
-
-                    {
-                      !dragging ? (
-                        <XCircle
-                          onPress = {() => this.openDeleteModal(key)}
-                          style = {{
-                            position: 'absolute',
-                            left: (width/col)*0.85,
-                            zIndex: 9,
-                            shadowColor: '#470000',
-                            shadowOffset: {width: 0, height: 1},
-                            shadowOpacity: 0.2,
-                          }}
-                          stroke = "#1890ff" fill= "white"/>
-
-                      ) : null
-
-
-                    }
-
-                    <PanGestureHandler
-                      maxPointers = {1}
-                      onGestureEvent = {this.onGestureEvent}
-                      onHandlerStateChange = {this.onGestureEvent}
-                      >
-                      <Animated.View
-                        key = {key}
-                        style = {[{
-                          // transform:[
-                          //   {translateX: this.getPosition(key).x},
-                          //   {translateY: this.getPosition(key).y}
-                          // ]
-                        },
-                          styles.imageContainer]}>
-
-
-                        <Image
-                          style = {styles.smallImage}
-                          resizeMode = "cover"
-                          source = {{
-                            uri: images
-                          }}
-                           />
-                      </Animated.View>
-                    </PanGestureHandler>
-
-                  </Animated.View>
-                )
-              }) */}
 
              </View>
 
@@ -987,7 +965,18 @@ class PostingPage extends React.Component{
 
              <View style = {styles.dayTextContainer}>
                <Text style = {styles.dayText}> National Days </Text>
+
+               <NationalDayPost />
+
              </View>
+
+
+             <View style = {styles.dayTextContainer}>
+               <Text style = {styles.dayText}> Pictures took today </Text>
+
+               <CurrentPicPost />
+             </View>
+
 
 
 
@@ -1071,6 +1060,17 @@ class PostingPage extends React.Component{
        shadowOpacity:0.2,
       // padding: 10,
      },
+     bigImageContainer:{
+       width: Math.round(width/3)*coverScale,
+       height: Math.round(width/3)*coverScale,
+       overflow:"hidden",
+       alignItems: 'center',
+       justifyContent: "center",
+       position: "absolute",
+       shadowColor:'black',
+       shadowOffset:{width:0,height:2},
+       shadowOpacity:0.2,
+     },
 
      normImageContainer: {
        width: Math.round(width/3),
@@ -1081,7 +1081,7 @@ class PostingPage extends React.Component{
        position: "absolute",
 
      },
-     bigImageContainer: {
+     bigNormImageContainer: {
        width: Math.round(width/3)*coverScale,
        height: Math.round(width/3)*coverScale,
        overflow:"hidden",
