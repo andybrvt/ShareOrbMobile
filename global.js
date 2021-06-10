@@ -9,10 +9,10 @@ import * as dateFns from 'date-fns';
 global.WS_HEADER = "ws"
 
 //
-// global.IP_CHANGE="http://192.168.1.200:19002"
-// global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
-// global.WS_ENDPOINT = "192.168.1.200:19002"
-// global.WS_HEADER = "ws"
+global.IP_CHANGE="http://192.168.1.200:19002"
+global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
+global.WS_ENDPOINT = "192.168.1.200:19002"
+global.WS_HEADER = "ws"
 
 // andy house
 // global.IP_CHANGE = "http://192.168.1.24:19000"
@@ -26,9 +26,9 @@ global.WS_HEADER = "ws"
 // global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
 // global.WS_ENDPOINT = "172.20.10.2:19000"
 
-global.IP_CHANGE = "http://10.20.100.62:19000"
-global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
-global.WS_ENDPOINT = "10.20.100.62:19000"
+// global.IP_CHANGE = "http://10.20.100.62:19000"
+// global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
+// global.WS_ENDPOINT = "10.20.100.62:19000"
 
 // This is for ua guest
 // global.IP_CHANGE = "http://10.143.167.43:19000"
