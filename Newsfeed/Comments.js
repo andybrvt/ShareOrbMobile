@@ -21,7 +21,9 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 
 
+
  class Comments extends React.Component{
+   
    renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.panelHeader}>
@@ -107,7 +109,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
              backgroundColor: 'red',
              padding: 10,
              height: 450,
-             
+
            }}
          >
          <FlatList
