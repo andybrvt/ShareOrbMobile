@@ -909,10 +909,6 @@ class PostingPage extends React.Component{
 
 
            <ScrollView  style = {styles.imageContainerContainer}>
-
-             <Test />
-
-             <FadingUpArrow />
              <View
                style = {{
                  height: this.picHolderHeight(),
