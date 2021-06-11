@@ -34,6 +34,8 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import NationalDayPost from './NationalDayPost';
 import CurrentPicPost from './CurrentPicPost';
+import Test from './Test';
+import FadingUpArrow from './FadingUpArrow';
 
 
 const width = Dimensions.get("window").width
@@ -908,7 +910,9 @@ class PostingPage extends React.Component{
 
            <ScrollView  style = {styles.imageContainerContainer}>
 
+             <Test />
 
+             <FadingUpArrow />
              <View
                style = {{
                  height: this.picHolderHeight(),

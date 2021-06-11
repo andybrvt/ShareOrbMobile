@@ -48,67 +48,7 @@ const { cond, sub,divide, eq, add, call, set, Value, event, or, Clock, useCode, 
 const isHidden = true;
 
 
-// class Test extends React.Component{
-//
-//   state = {
-//     expanded: false
-//   }
-//
-//   expanded = false;
-//   animation = new Value(this.state.expanded ? 1 : 0)
-//   clock = new Clock()
-//
-//   componentDidMount(){
-//
-//   }
-//
-//   changeState = () => {
-//     const {expanded} = this.state
-//
-//     this.setState({
-//       expanded: !expanded
-//     })
-//
-//   }
-//
-//   scale = mix(this.animation, 0.1, 1);
-//   rotate = mix(this.animation, 0, 2*Math.PI *5)
-//
-//   render(){
-//     return(
-//       <View>
-//         <Animated.Code>
-//           {() =>
-//             set(this.animation, timing(this.clock,this.animation,{
-//                     toValue: 1,
-//                     duration: 4000,
-//                     easing: Easing.inOut(Easing.ease)
-//                   }))
-//             }
-//         </Animated.Code>
-//         <TouchableWithoutFeedback onPress = {() => this.changeState()}>
-//           <Animated.View style = {{
-//               height: 100,
-//               width: 100,
-//               backgroundColor: "black",
-//               transform: [
-//                 {scale: this.scale},
-//                 {rotate: this.rotate}
-//
-//               ]
-//             }}>
-//
-//
-//           </Animated.View>
-//
-//         </TouchableWithoutFeedback>
-//       </View>
-//
-//     )
-//   }
-// }
-//
-// export default Test;
+
 
 export default function Test(){
 
@@ -159,6 +99,7 @@ export default function Test(){
                height: 100,
                width: 100,
                backgroundColor: "black",
+               opacity: scale,
                transform: [
                  {scale: scale},
                  {rotate: rotate }

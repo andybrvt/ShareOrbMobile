@@ -1,28 +1,28 @@
 import React from 'react';
 import {
-  Text,
-  View,
-  Button,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-  Image,
-  TextInput,
-  ActivityIndicator,
-  TouchableOpacity,
-  TouchableHighlight,
-  Modal,
-  Keyboard,
-  TouchableWithoutFeedback
- } from 'react-native';
- import BackgroundContainer from '../RandomComponents/BackgroundContainer';
- import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
- import { ChevronLeft, ChevronsUp } from "react-native-feather";
- import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
- import { Transition } from 'react-native-reanimated';
- import Animated from 'react-native-reanimated';
- import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
-
+Text,
+View,
+Button,
+StyleSheet,
+ScrollView,
+Dimensions,
+Image,
+TextInput,
+ActivityIndicator,
+TouchableOpacity,
+TouchableHighlight,
+Modal,
+Keyboard,
+TouchableWithoutFeedback
+} from 'react-native';
+import BackgroundContainer from '../RandomComponents/BackgroundContainer';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { ChevronLeft, ChevronsUp } from "react-native-feather";
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
+import { Transition } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
+import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
+import FadingUpArrow from './FadingUpArrow';
 
  class FinalPostingPage extends React.Component{
 
@@ -58,7 +58,7 @@ import {
                  flex: 1
                }}>
 
-               
+
 
                <View
                  style = {styles.textContainer}
@@ -80,16 +80,9 @@ import {
 
            </TouchableWithoutFeedback>
 
-           <View style = {{
-               alignItems: "center",
-               margin: 20
-             }}>
-             <ChevronsUp height = {50} width = {50} />
-             <Text style = {{fontSize: 20}}> Swipe up to save</Text>
-
-           </View>
 
 
+           <FadingUpArrow />
 
 
        </Animated.View>

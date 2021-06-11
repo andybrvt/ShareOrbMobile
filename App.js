@@ -308,7 +308,7 @@ class App extends Component{
                       gestureEnabled: true,
                       gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
                     }}
-                    name = 'PostingPage' component = {Test}/>
+                    name = 'PostingPage' component = {PostingPage}/>
                   <Stack.Screen
                       name = 'Comments'
                       options={{
