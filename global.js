@@ -29,6 +29,8 @@ global.WS_HEADER = "ws"
 global.IP_CHANGE = "http://10.20.100.62:19000"
 global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
 global.WS_ENDPOINT = "10.20.100.62:19000"
+global.POSTLIST_SPEC = 'http://10.20.100.62:19000/media/'
+
 
 // This is for ua guest
 // global.IP_CHANGE = "http://10.143.167.43:19000"

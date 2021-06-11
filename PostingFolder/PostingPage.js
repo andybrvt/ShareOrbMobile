@@ -27,11 +27,11 @@ import * as authActions from '../store/actions/auth';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import AdjModal from '../RandomComponents/AdjModal';
 import * as ImagePicker from 'expo-image-picker';
-import Animated from 'react-native-reanimated';
+import Animated, {Easing} from 'react-native-reanimated';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle, ChevronLeft } from "react-native-feather";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
-import {withTimingTransition} from 'react-native-redash/lib/module/v1';
+import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import NationalDayPost from './NationalDayPost';
 import CurrentPicPost from './CurrentPicPost';
 
@@ -43,7 +43,7 @@ const col = 3;
 const size = width/col + margin;
 const coverScale = 1.7;
 
-const { cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
+const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 const isHidden = true;
 
@@ -52,6 +52,14 @@ class PostingPage extends React.Component{
 
     slide = new Value(SCREEN_HEIGHT);
     slideAnimation = withTimingTransition(this.slide, {duration: 300})
+
+
+   testtest = new Value(0);
+   clock = new Clock();
+
+   scale = mix(this.testtest, 0.4, 1);
+   rotate = mix(this.testtest, 0, 2* Math.PI *5)
+
 
    constructor(props){
      super(props)
@@ -851,6 +859,15 @@ class PostingPage extends React.Component{
            style = {styles.wholeContainer}
            >
 
+           <Animated.Code>
+             {() => {
+               set(this.testtest, loop({
+                 duration: 4000,
+                 easing: Easing.inOut(Easing.ease),
+                 boomerang: true
+               }))
+             }}
+           </Animated.Code>
 
            <Animated.Code>
              {() =>
@@ -967,6 +984,7 @@ class PostingPage extends React.Component{
                <Text style = {styles.dayText}> National Days </Text>
 
                <NationalDayPost />
+
 
              </View>
 

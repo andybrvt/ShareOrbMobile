@@ -17,7 +17,7 @@ import {
  } from 'react-native';
  import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
- import { ChevronLeft } from "react-native-feather";
+ import { ChevronLeft, ChevronsUp } from "react-native-feather";
  import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
  import { Transition } from 'react-native-reanimated';
  import Animated from 'react-native-reanimated';
@@ -25,6 +25,7 @@ import {
 
 
  class FinalPostingPage extends React.Component{
+
 
    /*
    return back to posting page
@@ -48,18 +49,19 @@ import {
 
          >
 
-
-
-
            <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
+
+
 
 
              <View style = {{
                  flex: 1
                }}>
 
+               
+
                <View
-                 style = {styles.bottomContainer}
+                 style = {styles.textContainer}
                  >
                  <TextInput
                    style = {{
@@ -77,6 +79,16 @@ import {
              </View>
 
            </TouchableWithoutFeedback>
+
+           <View style = {{
+               alignItems: "center",
+               margin: 20
+             }}>
+             <ChevronsUp height = {50} width = {50} />
+             <Text style = {{fontSize: 20}}> Swipe up to save</Text>
+
+           </View>
+
 
 
 
@@ -97,8 +109,8 @@ const styles = StyleSheet.create({
     flex: 3,
     backgroundColor: 'green'
   },
-  bottomContainer: {
-    flex: 1,
+  textContainer: {
+    flex: 3,
     // backgroundColor: 'pink',
     padding:20
   }

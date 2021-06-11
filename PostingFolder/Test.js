@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Modal,
+  TouchableWithoutFeedback
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -26,11 +27,11 @@ import FinalPostingPage from './FinalPostingPage';
 import * as authActions from '../store/actions/auth';
 import AdjModal from '../RandomComponents/AdjModal';
 import * as ImagePicker from 'expo-image-picker';
-import Animated from 'react-native-reanimated';
+import Animated, {Easing} from 'react-native-reanimated';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle } from "react-native-feather";
 import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
-import {withTimingTransition} from 'react-native-redash/lib/module/v1';
+import {loop, withTimingTransition, timing, mix} from 'react-native-redash/lib/module/v1';
 
 
 const width = Dimensions.get("window").width
@@ -39,750 +40,90 @@ const margin = 0;
 const col = 3;
 const size = width/col + margin;
 
-const { cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
+const { cond, sub,divide, eq, add, call, set, Value, event, or, Clock, useCode } = Animated;
 
 const isHidden = true;
 
 
-class Test extends React.Component{
-
-    scale = new Value(0);
-    scaleAnimation = withTimingTransition(this.scale, {duration: 2000})
-
-
-   constructor(props){
-     super(props)
-
-     this.state = {
-       imageList: [],
-       caption: "",
-       flashMessage: false,
-       fileList: [],
-       draggingIndex: -1,
-       dragging: false,
-       showDeleteModal: false,
-       deleteIndex: -1,
-       showFinal: false,
-     }
-
-
-
-     this.absX = new Value(0);
-     this.absY = new Value(0);
-     this.transX = new Value(0);
-     this.transY = new Value(0);
-
-     this.gestureState = new Value(-1);
-
-     this.curPicIndex = -1; // index of the pic you are holding
-     // The draggingIndex in states will keep track of the current index
-     // of the image
-
-
-     // this.scale = new Value(0);
-     // this.scaleAnimation = withTimingTransition(this.scale, {duration: 1000});
-
-     this.onGestureEvent = event([
-       {
-         nativeEvent:{
-           absoluteX: this.absX,
-           absoluteY: this.absY,
-           translationX: this.transX,
-           translationY: this.transY,
-           state: this.gestureState
-         }
-       }
-     ])
-
-     this.testTrue = new Value(false)
-
-
-   }
-
-
-   componentDidMount(){
-
-
-     let caption = "";
-     let fileList = [];
-
-
-
-     if(this.props.curSocialCalCell){
-       if(this.props.curSocialCalCell.dayCaption){
-         caption = this.props.curSocialCalCell.dayCaption
-       }
-
-       if(this.props.curSocialCalCell.get_socialCalItems){
-
-         // Now you will push the pictures into the file list here
-         // in this case you might not need to but rather put
-         // it into the file Listin states (imagelist specifically)
-
-         for(let i = 0; i< this.props.curSocialCalCell.get_socialCalItems.length; i++){
-           // You want to push an object into the fileLis
-            fileList.push(
-              `${global.IMAGE_ENDPOINT}`+this.props.curSocialCalCell.get_socialCalItems[i].itemImage
-            )
-         }
-       }
-     }
-
-
-     this.setState({
-       caption: caption ,
-       imageList:fileList
-     })
-
-     if(fileList.length > 1){
-       this.props.navigation.setOptions({
-         title: `Seclected ${fileList.length} images`,
-         headerRight: () => this.renderDone()
-       })
-     }
-
-   }
-
-   /*
-   This function will be in charge of opening the indicator message
-   */
-   onShowMessage(){
-     this.setState({
-       flashMessage: true,
-     }, () => setTimeout(() => this.onCloseMessage(), 3000))
-   }
-
-   /*
-   This function will close the flash message
-   */
-   onCloseMessage (){
-     this.setState({
-       flashMessage: false
-     })
-   }
-
-   getHeaderLoader = () => {
-     <ActivityIndicator size = "small" color = {"#0580FF"} />
-   }
-
-
-
-   fileNameGetter = (fileURI) => {
-     // this function will be used to return the packaged file
-     // containing uri, type, and name
-
-     const fileName = fileURI.split("/").pop()
-
-     let match = /\.(\w+)$/.exec(fileName);
-     let type = match ? `image/${match[1]}` : `image`;
-
-
-     return {
-       uri: fileURI,
-       type: type,
-       name: fileName,
-     }
-   }
-
-
-   /*
-   Function to open the final page of the posting process
-   */
-   openFinalPage = () => {
-
-     this.setState({
-       showFinal: true
-     })
-   }
-
-
-   closeFinalPage = () => {
-     this.setState({
-       showFinal: false
-     })
-   }
-
-   /*
-   This function will be used to upload the pictures that are saved
-   into a formadata and then submit it through authaxios and send to the
-   backend
-   */
-   handleImageUpload = () => {
-
-
-     const ownerId = this.props.curUserId;
-     const caption = this.state.caption;
-     const fileList = this.state.imageList;
-
-
-     const formData = new FormData()
-     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
-
-     formData.append("curDate", curDate)
-     formData.append("dayCaption", caption)
-
-     formData.append("fileListLength", fileList.length);
-
-     var config = {
-       onUploadProgress: function(progressEvent){
-         var percentCompleted = Math.round((progressEvent.loaded * 100)/ progressEvent.total)
-       }
-     }
-
-     // Loop through the list of images and then add them to the
-     for(let i = 0; i<fileList.length; i++){
-
-       if(fileList[i]){
-         const filePackage = this.fileNameGetter(fileList[i])
-         formData.append("image["+i+"]",filePackage)
-         formData.append("socialItemType["+i+"]", "picture")
-
-       } else {
-         // this is for when the picture is already tehre
-
-       }
-
-       }
-
-       var config = {
-           onUploadProgress: function(progressEvent) {
-
-             var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
-           }
-         };
-
-
-
-      this.props.authAddTotalLoad()
-       authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCurSocialCell/`+ownerId,
-         formData,
-         {headers: {"content-type": "multipart/form-data"},
-         onUploadProgress: function(progressEvent){
-           var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
-
-           // ADD AN LOADING HERE
-
-
-         }
-       },
-
-       ).then(res => {
-
-         this.props.authAddCurLoad()
-         // this hits when the call is done
-
-         // have a condition where if there are not social cal
-         // then delete and remove the content type post
-         if(res.data.cell.get_socialCalItems.length === 0 ){
-            const curDate = dataFns.format(new Date(), "yyyy-MM-dd")
-
-            // ADD A LOADING HERE
-
-            this.props.authAddTotalLoad()
-
-            WebSocketSocialNewsfeedInstance.removeAllPhotoSocialPost(
-              ownerId,
-              curDate
-            )
-
-            this.props.authAddCurLoad()
-
-            // Now you wil direct to the newsfeed again
-            this.props.navigation.navigate("newsfeed")
-
-         }
-         else {
-         //   // This condition is for when you have pictures that you wnat to
-         //   // post and it pass through
-         //
-           if(res.data.coverPicChange){
-
-
-            const coverPicForm = new FormData()
-            coverPicForm.append('cellId', res.data.cell.id)
-            coverPicForm.append("createdCell", res.data.created)
-
-            if(fileList[fileList.length -1].includes(global.POSTLIST_SPEC)){
-
-              // PROBALLY GONNA HAVE TO FIX THIS
-              // coverPicForm.append("coverImage", fileList[fileList.length-1].url.replace(global.POSTLIST_SPEC, ""))
-            }
-          else {
-
-            const coverPackage = this.fileNameGetter(fileList[fileList.length-1]);
-
-              coverPicForm.append("coverImage", coverPackage)
-            }
-
-
-            // Now change the cover picture
-
-            this.props.authAddTotalLoad()
-
-            authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
-              coverPicForm,
-              {headers: {"content-type": "multipart/form-data"}}
-
-              // ADD A LOADING HERE
-            ).then( res => {
-
-              this.props.authAddCurLoad()
-            })
-
-           }
-
-
-           this.props.authAddTotalLoad()
-
-           // ADD ONE HERE TOO
-           WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
-             ownerId,
-             res.data.cell.id,
-             res.data.created
-           )
-
-           this.props.authAddCurLoad()
-
-
-
-           // if(this.props.curLoad >= this.props.totalLoad){
-             // if they are equal or larger you will just set it back to zero
-           // this.props.authZeroCurLoad()
-           // this.props.authZeroTotalLoad()
-
-           // }
-
-           this.props.navigation.navigate("newsfeed")
-
-         }
-
-       })
-
-   }
-
-
-   /*
-   This function is to handle choosing the photo when you pick a photo from
-   image picker
-   */
-   handleChoosePhoto = async() => {
-     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-     if(permissionResult.granted == false){
-       alert("Permission to access camera roll is required!");
-       return;
-     }
-
-     let  pickerResult = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-      allowsMultipleSelection: true,
-      base64: true,
-    });
-
-
-    if(!pickerResult.cancelled){
-      const list = [...this.state.imageList, pickerResult.uri]
-      this.setState({
-        imageList: list
-      })
-
-      if(list.length > 0){
-        this.props.navigation.setOptions({
-          title: `Seclected ${list.length} images`,
-          headerRight: () => this.renderDone()
-        })
-      }
-
-    }
-   }
-
-   renderDone = () => {
-
-     return (
-       <TouchableOpacity>
-         <Button
-           title = "Next"
-           onPress = {() => this.openFinalPage()}
-            />
-       </TouchableOpacity>
-     )
-   }
-
-
-   /*
-   This function is used to handle the on change of the caption
-   */
-   handleCaptionChange = e => {
-     this.setState({
-       caption: e,
-     })
-   }
-
-
-   // This function will be used to adjust the absolute location
-   // by subtracting off a set number to match that of the pictures
-   adjustLoc = (num: number) =>{
-
-     let value = num - (width/col)
-     if(value <= 0){
-       return 0
-     }
-     else {
-       return value;
-     }
-   }
-
-   // START OF DRAGGING
-   start = ([x, y]) => {
-
-     console.log('at the start')
-    const adjX = this.adjustLoc(x)
-    const adjY = this.adjustLoc(y)
-
-    this.curPicIndex = this.getOrder(x,adjY);
-    this.setState({
-       dragging: true,
-       draggingIndex: this.curPicIndex
-     })
-   }
-
-   // WHILE DRAGGING
-   move = ([x, y]) => {
-
-     console.log('at the move')
-     const adjY = this.adjustLoc(y)
-
-
-     this.updateList(x, adjY)
-
-   }
-
-
-   // END OF DRAGGING
-   reset = () => {
-
-     console.log('at the reset')
-     // this.active = false;
-     this.setState({
-       dragging: false,
-       draggingIndex: -1
-     })
-   }
-
-  updateList = (x,y) => {
-
-    const newIndex = this.getOrder(x, y)
-    if(this.curPicIndex !== newIndex
-      && newIndex >= 0
-      && newIndex <= this.state.imageList.length - 1
-     ){
-       this.setState({
-         imageList: this.immutableMove(
-           this.state.imageList,
-           this.curPicIndex,
-           newIndex
-         ),
-         draggingIndex: newIndex
-       })
-
-       this.curPicIndex = newIndex
-
-    }
-
-  }
-
-
-  immutableMove(arr, from, to) {
-    return arr.reduce((prev, current, idx, self) => {
-      if (from === to) {
-        prev.push(current);
-      }
-      if (idx === from) {
-        return prev;
-      }
-      if (from < to) {
-        prev.push(current);
-      }
-      if (idx === to) {
-        prev.push(self[from]);
-      }
-      if (from > to) {
-        prev.push(current);
-      }
-      return prev;
-    }, []);
-  }
-
-   // Pretty much what is gonna happen is that you will start the move of the
-   // drag and then set the current image index, once you set the current index
-   // you wanna track the the movement and then check if the value will have an order
-   // that is different from the current index, if it is them you will
-   // rearrange the list again
-
-   // given the x and y of the items you can then get the order of the function back
-   // pretty much just return the index order that the values are in
-   getOrder = (x: number, y: number)=> {
-
-     const curCol = Math.floor(x/size)
-     const row = Math.round(y/size)
-
-     return row * col + curCol
-   }
-
-   getPosition = (order: number) => {
-
-
-
-     // so you want to return the x and y of the images
-     return{
-       x: (order % col) * size, // pretty much if 0 or 1, row would be 0
-       y: Math.floor(order / col) * size
-     }
-   }
-
-   // Used to open deleted modal
-   openDeleteModal = (index: number) => {
-
-     console.log(index)
-     this.setState({
-       deleteIndex: index,
-       showDeleteModal: true
-     })
-   }
-
-   onCloseDelete = () => {
-     console.log('it hits here')
-
-     this.setState({
-       deleteIndex: -1,
-       showDeleteModal: false
-     })
-   }
-
-   whenNotTrue = ([]) => {
-     console.log('when things not true')
-   }
-
-   removeIndex = (list, index) => {
-
-     const newList = []
-
-     for(let i = 0; i<list.length; i++){
-       if(i !== index){
-         newList.push(
-           list[i]
-         )
-       }
-
-     }
-
-     return newList;
-   }
-
-
-   /*
-   Function to delete the picture
-   */
-   deletePicture = () => {
-     const curList = this.state.imageList
-
-     console.log('here boy')
-     if(this.state.deleteIndex >= 0 ){
-       const curIndex = this.state.deleteIndex
-
-       curList.splice(curIndex, 1)
-       // const newList = this.removeIndex(curList, curIndex)
-       this.setState({
-         imageList: curList ,
-         deleteIndex: -1,
-         showDeleteModal: false
-       })
-
-       this.props.navigation.setOptions({
-         title: `Seclected ${curList.length} images`,
-         headerRight: () => this.renderDone()
-       })
-
-     }
-     // this.setState ({
-     //   imageList: curList.splice(order, 1)
-     // })
-
-   }
-
-   /*
-   Calculate the height of the image holder
-   */
-   picHolderHeight = () => {
-
-     const imageLength = this.state.imageList.length +1
-     const numRows = Math.ceil(imageLength/col)
-     if(imageLength === 0 ){
-       return (width/col)
-     }
-
-     return (width/col)* numRows
-   }
-
-   testPress = () => {
-     this.testTrue.setValue(true)
-   }
-
-   render(){
-
-    const {dragging, draggingIndex, imageList} = this.state
-
-
-     // Remember, if you ever want to animate an element you will have to use
-     // animated.view
-
-     // THIS WILL MAKE A MAP THAT HAS THE OBJECT AS THE KEY AND THE INDEX
-     // AS THE VALUE
-     // const positions = Object.assign(
-     //   {},
-     //   ...this.state.imageList.map((child, index) => ({[child]: index}))
-     // )
-
-     // for the drag you are gonna need a function to handle the start
-     // the rearrange when you are moving it
-     // and the drop when you are done moving it around
-
-     return (
-
-         <View
-           style = {styles.wholeContainer}
-           >
-           <Animated.Code>
-             {() => cond(this.testTrue, set(this.scale, 1))}
-           </Animated.Code>
-
-           <Animated.View  style = {{
+// class Test extends React.Component{
+//
+//   state = {
+//     expanded: false
+//   }
+//
+//   animation = new Value(this.state.expanded ? 1 : 0)
+//   clock = new Clock()
+//
+//   componentDidMount(){
+//     this.animation.setValue(
+//       timing(this.clock,this.animation,{
+//         toValue: this.state.expanded ? 0 : 1,
+//         duration: 4000,
+//         easing: Easing.inOut(Easing.ease)
+//       }))
+//   }
+//
+//   scale = mix(this.animation, 0.4, 1);
+//   rotate = mix(this.animation, 0, 2*3.15 *5)
+//
+//   render(){
+//     return(
+//       <TouchableWithoutFeedback onPress = {() => expand(!expanded)}>
+//         <Animated.View style = {{
+//             height: 100,
+//             width: 100,
+//             backgroundColor: "black",
+//             transform: [
+//               {scale: this.scale}
+//             ]
+//           }}>
+//
+//
+//         </Animated.View>
+//
+//       </TouchableWithoutFeedback>
+//     )
+//   }
+// }
+//
+// export default Test;
+
+export default function Test(){
+
+  const [expanded, expand] = useState(false);
+
+  const animation = new Value(expanded ? 1 : 0);
+  const clock = new Clock()
+
+  // useCode(set(animation, timing(clock,animation,{
+  //         toValue: expanded ? 0 : 1,
+  //         duration: 4000,
+  //         easing: Easing.inOut(Easing.ease)
+  //       })),[animation])
+
+  useCode(set(animation, new Value(0)),[animation])
+
+
+  const scale = mix(animation, 0, 1);
+  const rotate = mix(animation, 0, 2 * Math.PI* 5);
+
+
+
+  return (
+    <TouchableWithoutFeedback onPress = {() => expand(!expanded)}>
+           <Animated.View style = {{
                height: 100,
                width: 100,
                backgroundColor: "black",
-               transform: [
-                 {scale: this.scaleAnimation}
-               ]
              }}>
+
 
            </Animated.View>
 
-           <Button
-             title = "press here "
+         </TouchableWithoutFeedback>
 
-             onPress = {() => this.testPress()}
-             />
-
-
-           </View>
-
-
-     )
-   }
- }
-
-
- const mapStateToProps = state => {
-   return{
-     profilePic: state.auth.profilePic,
-     curUserId: state.auth.id,
-     curSocialCalCell: state.socialNewsfeed.curSocialCell
-   }
- }
-
- const mapDispatchToProps = dispatch => {
-   return {
-     authAddCurLoad: () => dispatch(authActions.authAddCurLoad()),
-     authAddTotalLoad: () => dispatch(authActions.authAddTotalLoad()),
-     authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
-     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad())
-   }
- }
-
-
- const styles = StyleSheet.create({
-     button:{
-       flex: 1,
-       flexDirection: 'column',
-       alignItems: 'center',       //THIS LINE HAS CHANGED
-     },
-     wholeContainer: {
-        flex:1,
-        alignItems: "center"
-     },
-     imageContainerContainer: {
-       flex: 1,
-       // flexDirection: "row",
-       width: width,
-       // flexWrap: 'wrap',
-       // backgroundColor: 'red'
-     },
-     imageContainer: {
-       width: Math.round(width/3),
-       height: Math.round(width/3),
-       overflow:"hidden",
-       alignItems: 'center',
-       justifyContent: "center",
-       position: "absolute",
-       shadowColor:'black',
-       shadowOffset:{width:0,height:2},
-       shadowOpacity:0.2,
-      // padding: 10,
-     },
-     normImageContainer: {
-       width: Math.round(width/3),
-       height: Math.round(width/3),
-       overflow:"hidden",
-       alignItems: 'center',
-       justifyContent: "center",
-       position: "absolute",
-
-     },
-     imageHolder: {
-
-     },
-     smallImage: {
-       width: "90%",
-       height: "90%",
-       borderRadius: 15,
-       backgroundColor: 'lightgray',
-
-     },
-     addSmallImage: {
-       width: "90%",
-       height: "90%",
-       borderWidth: 5,
-       borderRadius: 15,
-       borderStyle: 'dashed',
-       borderColor: 'lightgray',
-       alignItems: "center",
-       justifyContent: "center"
-       // backgroundColor: 'lightgray'
-
-     },
-     xButton: {
-       position: 'relative',
-
-     },
-     dayTextContainer: {
-       // margin: 20
-       textAlign: 'center',
-       marginBottom: 10,
-     },
-     dayText: {
-       fontSize: 20,
-       textAlign:'center'
-     },
-     smallText: {
-       fontSize: 14,
-       textAlign: "center"
-     }
+  )
 
 
 
- })
-
-export default connect(mapStateToProps, mapDispatchToProps)(Test);
+}
