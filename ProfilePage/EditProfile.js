@@ -90,7 +90,7 @@ import {
           </Text>
         </View>
            <BottomSheet
-            ref={this.bs}
+
             snapPoints={[330, 0]}
             renderContent={this.renderInner}
             renderHeader={this.renderHeader}
