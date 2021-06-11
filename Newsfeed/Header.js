@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet } from 'react-native';
+import { Text, View, Button, StyleSheet,TextInput } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
@@ -34,9 +34,9 @@ class Header extends React.Component{
            <MainLogo width = {125}/>
         </View>
         <View style = {styles.searchProfileContainer}>
-            <Search stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+            <Search stroke="black" strokeWidth={2.5} width={20} height={20} />
 
-            <Bell stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+            <Bell stroke="black" strokeWidth={2.5} width={20} height={20} />
 
         </View>
 
@@ -47,7 +47,7 @@ class Header extends React.Component{
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    height: 50,
     flexDirection: "row",
     backgroundColor:"white",
     // shadowOffset:{  width: 0,  height: 2,  },
