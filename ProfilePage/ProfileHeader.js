@@ -4,10 +4,19 @@ import { Text, View, Button,StyleSheet,TouchableOpacity, TouchableHighlight} fro
 import { Appbar } from 'react-native-paper';
 import { Avatar } from 'react-native-elements';
 
-
+import Followers from './Followers';
+import Following from './Following';
 class ProfileHeader extends React.Component{
   editPageClick() {
     this.props.navigation.navigate("EditProfile");
+
+  }
+  navigateFollowing() {
+    this.props.navigation.navigate("Following");
+
+  }
+  navigateFollowers() {
+    this.props.navigation.navigate("Followers");
 
   }
 
@@ -109,11 +118,15 @@ class ProfileHeader extends React.Component{
              <Text style={styles.followerFollowingNum}>
                {following.length}
              </Text>
-             <Text style={styles.followerFollowingHeader}> Following </Text>
+             <TouchableOpacity onPress={() => this.navigateFollowing()}>
+               <Text style={styles.followerFollowingHeader}> Following </Text>
+            </TouchableOpacity>
            </View>
            <View style={styles.followerCount}>
              <Text style={styles.followerFollowingNum}> {followers.length}</Text>
-             <Text style={styles.followerFollowingHeader}> Followers</Text>
+             <TouchableOpacity onPress={() => this.navigateFollowers()}>
+               <Text style={styles.followerFollowingHeader}> Followers</Text>
+            </TouchableOpacity>
            </View>
 
          </View>

@@ -25,7 +25,6 @@ import Chats from './Chats/Chats';
 import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
 import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocket';
 import ChatSidePanelWebSocketInstance from './Websockets/newChatSidePanelWebsocket';
-import Profile from './ProfilePage/Profile';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch,
    faUserCircle,
@@ -44,8 +43,11 @@ import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 import PostingPage from './PostingFolder/PostingPage';
 import NewPostingPage from './PostingFolder/NewPostingPage';
 import TestDrag from './PostingFolder/TestDrag';
+import Profile from './ProfilePage/Profile';
 import ViewProfile from './ProfilePage/ViewProfile';
 import EditProfile from './ProfilePage/EditProfile';
+import Followers from './ProfilePage/Followers';
+import Following from './ProfilePage/Following';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
 import ChatSearch from './Chats/ChatSearch';
@@ -334,8 +336,31 @@ class App extends Component{
                        },
                        title: 'Edit Profile',
                         ...TransitionPresets.SlideFromRightIOS,
-                                       }}
+                      }}
+
                       name = 'EditProfile' component = {EditProfile}/>
+                      <Stack.Screen
+                        options={{
+                          headerStyle:{
+                            shadowColor:'#fff', //ios
+                            elevation:0,        // android
+                          },
+                          title: 'Followers',
+                           ...TransitionPresets.SlideFromRightIOS,
+                         }}
+
+                         name = 'Followers' component = {Followers}/>
+                         <Stack.Screen
+                           options={{
+                             headerStyle:{
+                               shadowColor:'#fff', //ios
+                               elevation:0,        // android
+                             },
+                             title: 'Following',
+                              ...TransitionPresets.SlideFromRightIOS,
+                            }}
+
+                            name = 'Following' component = {Following}/>
                      <Stack.Screen
                        options={{
                          headerShown: false,

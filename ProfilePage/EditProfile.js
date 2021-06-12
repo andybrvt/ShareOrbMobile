@@ -20,13 +20,20 @@ import { Avatar } from 'react-native-elements';
  import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  import BottomSheet from 'reanimated-bottom-sheet';
  import Animated from 'react-native-reanimated';
- import { Bell} from "react-native-feather";
+ import { Bell, User} from "react-native-feather";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import * as dateFns from 'date-fns';
+
+
 
  class EditProfile extends React.Component{
    constructor(props){
      super(props);
      this.bs = React.createRef();
+     this.state = {
+       date:'',
+
+     }
    }
 
 
@@ -96,7 +103,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
                 borderRadius: 15,
                 justifyContent: 'center',
                 alignItems: 'center',
-      
+
               }}>
 
                 <Avatar
@@ -126,7 +133,10 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
             enabledGestureInteraction={true}
           />
         <View style={styles.action}>
-           <FontAwesome name="user-o" size={20} />
+          <User
+            style={{marginleft:10}}
+            stroke="black" strokeWidth={2.5} width={17.5} height={17.5} />
+
            <TextInput
             placeholder="First Name"
             placeholderTextColor="#666666"
@@ -135,7 +145,16 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
               styles.textInput,
 
             ]}
-          />
+          >
+          {
+              (firstName&&lastName)?
+              <Text>
+                {firstName+" "+lastName}
+              </Text>
+              :
+              ''
+          }
+        </TextInput>
         </View>
         <View style={styles.action}>
           <TextInput
@@ -145,13 +164,22 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
            style={[
              styles.textInput,
 
-           ]}
-         />
+             ]}>
+             {
+                 (username)?
+                 <Text style={{color:'black'}}>
+                   {username}
+                 </Text>
+                 :
+                 ''
+             }
+
+           </TextInput>
        </View>
 
        <View style={styles.action}>
          <TextInput
-          placeholder="Description"
+          placeholder="Bio"
           placeholderTextColor="#666666"
           autoCorrect={false}
           style={[
@@ -160,6 +188,10 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
           ]}
         />
       </View>
+
+
+
+
 
            {/*
            <Avatar.Image
@@ -213,9 +245,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
     },
    textInput: {
     flex: 1,
-    marginTop: Platform.OS === 'ios' ? 0 : -12,
+    marginTop: Platform.OS === 'ios' ? 0 : -5,
     paddingLeft: 10,
-    color: '#05375a',
+
   },
   header: {
     backgroundColor: '#FFFFFF',
