@@ -56,13 +56,6 @@ class PostingPage extends React.Component{
     slideAnimation = withTimingTransition(this.slide, {duration: 300})
 
 
-   testtest = new Value(0);
-   clock = new Clock();
-
-   scale = mix(this.testtest, 0.4, 1);
-   rotate = mix(this.testtest, 0, 2* Math.PI *5)
-
-
    constructor(props){
      super(props)
 
@@ -147,7 +140,9 @@ class PostingPage extends React.Component{
      if(fileList.length > 1){
        this.props.navigation.setOptions({
          title: `Seclected ${fileList.length} images`,
-         headerRight: () => this.renderDone()
+         headerRight: () => this.renderDone(),
+         headerLeft: () => this.renderBack()
+
        })
      } else {
        this.props.navigation.setOptions({
@@ -500,7 +495,9 @@ class PostingPage extends React.Component{
      this.showFinal.setValue(false);
      this.submit = false;
      this.props.navigation.setOptions({
-       headerRight: () => this.renderDone()
+       headerRight: () => this.renderDone(),
+       headerLeft: () => this.renderBack()
+
      })
   }
 
@@ -862,16 +859,6 @@ class PostingPage extends React.Component{
            >
 
            <Animated.Code>
-             {() => {
-               set(this.testtest, loop({
-                 duration: 4000,
-                 easing: Easing.inOut(Easing.ease),
-                 boomerang: true
-               }))
-             }}
-           </Animated.Code>
-
-           <Animated.Code>
              {() =>
              cond(
                eq(this.gestureState, State.BEGAN),
@@ -914,6 +901,7 @@ class PostingPage extends React.Component{
                  height: this.picHolderHeight(),
                }}
                >
+
                {
                  dragging ? (
                    <Animated.View
@@ -1133,7 +1121,8 @@ class PostingPage extends React.Component{
      dayTextContainer: {
        // margin: 20
        textAlign: 'center',
-       marginBottom: 10,
+
+       margin: 20,
      },
      dayText: {
        fontSize: 20,

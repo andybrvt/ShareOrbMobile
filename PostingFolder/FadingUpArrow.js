@@ -46,7 +46,7 @@ import {
          animation,
          loop({
            clock,
-           duration: 1000,
+           duration: 2000,
            easing: Easing.inOut(Easing.ease),
            boomerang: true,
            autoStart: true
@@ -59,12 +59,7 @@ import {
    const opacity = mix(animation, 0, 1.2);
 
    return (
-     <TouchableOpacity
-       onPress = {() => {
-         setPlay(!play);
-         isPlaying.setValue(play ? 0 : 1);
-       }}
-       >
+
        <Animated.View style = {{
            alignItems: "center",
            margin: 20,
@@ -75,6 +70,5 @@ import {
 
        </Animated.View>
 
-     </TouchableOpacity>
         )
  }
