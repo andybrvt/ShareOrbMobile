@@ -12,7 +12,7 @@ import {
   ImageBackground,
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
- import { Avatar, BottomNavigation } from 'react-native-paper';
+import { Avatar } from 'react-native-elements';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -65,12 +65,23 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
    render(){
+     let firstName='';
+     let lastName='';
+     let username='';
      let profilePic = '';
-     console.log("edit!!!")
-     console.log(this.props)
      if(this.props.profile_picture){
-       profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
+       profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profile_picture
      }
+     if(this.props.firstName){
+       firstName = this.props.firstName
+     }
+     if(this.props.lastName){
+       lastName = this.props.lastName
+     }
+     if(this.props.username){
+       username = this.props.username
+     }
+
 
      return (
        <BackgroundContainer>
@@ -80,29 +91,29 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
           <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
             <View
               style={{
-                height: 100,
-                width: 100,
+                top:10,
+
                 borderRadius: 15,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor:'red',
+      
               }}>
 
-              <Bell stroke="black" strokeWidth={2.5} width={20} height={20} />
-              {/*
-              <Avatar
-                style={styles.close}
-                size={40}
-                rounded
-                source = {{
-                  uri: profilePic
-                }}
-              />
-              */}
+                <Avatar
+                  size={95}
+                  rounded
+                  source={{
+                    uri:
+                      profilePic,
+                  }}
+                />
             </View>
           </TouchableOpacity>
           <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
-            John Doe
+            {firstName+" "+lastName}
+          </Text>
+          <Text style={{ fontSize: 15, color:'gray'}}>
+            @{username}
           </Text>
         </View>
            <BottomSheet
@@ -114,6 +125,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
             callbackNode={this.fall}
             enabledGestureInteraction={true}
           />
+        <View style={styles.action}>
+           <FontAwesome name="user-o" size={20} />
            <TextInput
             placeholder="First Name"
             placeholderTextColor="#666666"
@@ -123,6 +136,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
             ]}
           />
+        </View>
+        <View style={styles.action}>
           <TextInput
            placeholder="Username"
            placeholderTextColor="#666666"
@@ -132,6 +147,19 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
            ]}
          />
+       </View>
+
+       <View style={styles.action}>
+         <TextInput
+          placeholder="Description"
+          placeholderTextColor="#666666"
+          autoCorrect={false}
+          style={[
+            styles.textInput,
+
+          ]}
+        />
+      </View>
 
            {/*
            <Avatar.Image
@@ -151,20 +179,31 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
    }
  }
 
-export default EditProfile;
+// export default EditProfile;
   //
-  // const mapStateToProps = state => {
-  //   return {
-  //     userId: state.auth.id,
-  //     currentUser: state.auth.username,
-  //     profilepic: state.auth.profilePic
-  //   }
-  // }
-  //
-  //
-  // export default connect(mapStateToProps, null)(EditProfile);
+  const mapStateToProps = state => {
+    return {
+      firstName:state.auth.firstName,
+      lastName:state.auth.lastName,
+      username:state.auth.username,
+      userId: state.auth.id,
+      currentUser: state.auth.username,
+      profile_picture: state.auth.profilePic
+    }
+  }
+
+
+  export default connect(mapStateToProps, null)(EditProfile);
 
  const styles = StyleSheet.create({
+   action: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    paddingBottom: 5,
+  },
    panelButton: {
     padding: 13,
     borderRadius: 10,

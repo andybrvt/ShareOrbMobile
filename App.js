@@ -328,6 +328,10 @@ class App extends Component{
                      name = 'MessageFriend' component = {MessageFriend}/>
                    <Stack.Screen
                      options={{
+                       headerStyle:{
+                         shadowColor:'#fff', //ios
+                         elevation:0,        // android
+                       },
                        title: 'Edit Profile',
                         ...TransitionPresets.SlideFromRightIOS,
                                        }}
