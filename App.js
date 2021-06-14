@@ -58,8 +58,10 @@ import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle} from 
 import TestReanimated from './PostingFolder/TestReanimated';
 import DayAlbum from './SocialCalendar/DayAlbum.js';
 import Test from './PostingFolder/Test';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 
+const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -174,7 +176,24 @@ class App extends Component{
   //
   //   )
   // }
+  followerFollowingTab=()=>{
+    return(
 
+      <TopTab.Navigator
+        swipeEnabled={true}
+        tabBarPosition="top"
+        barStyle = {{
+          backgroundColor: "white",
+
+        }}>
+
+        <TopTab.Screen name="Following" component={Following} />
+        <TopTab.Screen name="Followers" component={Followers} />
+      </TopTab.Navigator>
+
+
+    )
+  }
 
   // This function will be used as the tab navigator, because there are certain
   // pages you dont wnat to have the bottom bar on  so you would wnat to render
@@ -293,7 +312,7 @@ class App extends Component{
               !this.props.loading && this.props.username ?
                 <Stack.Navigator
 
-                  mode = "modal"
+
                   // headerMode ="none"
                   initialRouteName = "newsfeed"
                   screenOptions={{
@@ -301,6 +320,9 @@ class App extends Component{
                     // headerShown: false,
                   }}
                     >
+                    <Stack.Screen
+
+                      name = "FollowTab" component= {this.followerFollowingTab}/>
                   <Stack.Screen
                     options={{headerShown: false, }}
                     name = "newsfeed" component= {this.createTabStack}/>

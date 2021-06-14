@@ -12,7 +12,7 @@ class ProfileHeader extends React.Component{
 
   }
   navigateFollowing() {
-    this.props.navigation.navigate("Following");
+    this.props.navigation.navigate("FollowTab");
 
   }
   navigateFollowers() {
@@ -114,14 +114,17 @@ class ProfileHeader extends React.Component{
      <View style={{flex:1, top:'22.5%',}}>
        <View style = {styles.profileMidContainer}>
          <View style={styles.profileInfoContainer}>
+           <TouchableOpacity onPress={() => this.navigateFollowing()}>
            <View style={styles.followerCount}>
+
              <Text style={styles.followerFollowingNum}>
                {following.length}
              </Text>
-             <TouchableOpacity onPress={() => this.navigateFollowing()}>
+
                <Text style={styles.followerFollowingHeader}> Following </Text>
-            </TouchableOpacity>
+
            </View>
+           </TouchableOpacity>
            <View style={styles.followerCount}>
              <Text style={styles.followerFollowingNum}> {followers.length}</Text>
              <TouchableOpacity onPress={() => this.navigateFollowers()}>
