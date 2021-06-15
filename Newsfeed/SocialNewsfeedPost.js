@@ -12,6 +12,9 @@ import FeatherIcon from 'feather-icons-react';
 import { Tag, Heart } from 'react-feather';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
+import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+
+
 
 class SocialNewsfeedPost extends React.Component{
 
@@ -42,6 +45,22 @@ class SocialNewsfeedPost extends React.Component{
     });
   }
 
+  onLike = (socialCalCellId, personLike, contentTypeId, ownerId, cellDate) => {
+    // send it through the websocket
+    // and then backend
+    // then back to the redux
+    WebSocketSocialNewsfeedInstance.sendOneLike(
+      socialCalCellId,
+      personLike,
+      contentTypeId
+    )
+
+  }
+
+
+  onUnlike = () => {
+    console.log('this is for unliking')
+  }
 
 
   revealPhoto = () =>{
@@ -56,18 +75,22 @@ class SocialNewsfeedPost extends React.Component{
     let cellDay = ""
     let location = ""
     let userUsername = '';
-    // THESE ARE FOR THE SOCIAL CAL PICTURES
-    // YOU ARE GONNA NEED THE CONTENT TYPE ID
-    // THE USER WITH USER NAME
+
     let profilePic="";
     let caption="";
-    // IF IT IS SOCIAL CAL CELL THEN IT WILL HOLD PHOTOS
     let userPostImages = []
     let like_people = [];
     let commentList = [];
+    let peopleLikeId = []
 
     let postCreatedAt="";
+    let contentTypeId="";
+    let ownerId = "";
+    let cellDate = "";
     if(this.props.data) {
+
+      contentTypeId = this.props.data.id
+
       if(this.props.data.owner.profile_picture){
         profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
 
@@ -77,11 +100,18 @@ class SocialNewsfeedPost extends React.Component{
         if(this.props.data.post.get_socialCalItems) {
           userPostImages = this.props.data.post.get_socialCalItems;
         }
+
+        if(this.props.data.post.id){
+          postId = this.props.data.post.id
+        }
+
+
       }
       if(this.props.data.owner.username) {
         userUsername = this.props.data.owner.username
       }
       if(this.props.data.post.socialCaldate) {
+        cellDate = this.props.data.post.socialCaldate
         const date = this.props.data.post.socialCaldate.split("-")
         cellYear = date[0]
         cellMonth = date[1]
@@ -99,8 +129,16 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.post_date){
         postCreatedAt = this.props.data.post_date
       }
-      // location = this.props.history.location.pathname
+      if(this.props.data.owner.id){
+        ownerId = this.props.data.owner.id
+      }
 
+    }
+
+    if(like_people.length > 0){
+      for(let i = 0; i< like_people.length; i++){
+        peopleLikeId.push(like_people[i].id)
+      }
     }
 
     if(userPostImages.length === 1){
@@ -148,35 +186,47 @@ class SocialNewsfeedPost extends React.Component{
 
 
               <View style = {styles.tagCSS1}>
-                <TouchableOpacity onPress={this.changeShowLike}>
                 <View style = {styles.justifyCenter}>
                   {
-                    (this.state.showLike) ?
-                    <FontAwesomeIcon
-                    style = {{
-                      color:'red',
-                      right:3,
-                    }}
-                    size = {20}
-                    icon={faHeart} />
-                    :
-                    <FontAwesomeIcon
+                    peopleLikeId.includes(this.props.userId ) ?
+                    <TouchableOpacity onPress = {() => this.onUnlike()}>
+                      <FontAwesomeIcon
                       style = {{
-                        color:'white',
+                        color:'red',
                         right:3,
                       }}
+                      size = {20}
+                      icon={faHeart} />
+                    </TouchableOpacity>
 
-                    size = {20}
-                    icon={faHeart}>
+                    :
 
-                  </FontAwesomeIcon>
+                    <TouchableOpacity
+                      onPress = {() => this.onLike(
+                        postId,
+                        this.props.userId,
+                        contentTypeId,
+                        ownerId,
+                        cellDate
+                      )}>
+                      <FontAwesomeIcon
+                        style = {{
+                          color:'white',
+                          right:3,
+                        }}
+
+                      size = {20}
+                      icon={faHeart}>
+
+                    </FontAwesomeIcon>
+
+                    </TouchableOpacity>
 
                   }
                   <Text  style = {styles.justifyCenter1}>
                   {like_people.length}
                   </Text>
                 </View>
-                </TouchableOpacity>
               </View>
 
               <View style = {styles.tagCSS2}>
@@ -240,106 +290,7 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
-  bottomLikeCommentPost = () => {
-    // This function will be use to use to show the buttons
-    // and captions in the bottom of the newsfeed post
-    // It will include liking, commeting and cliping
 
-    let like_people = [];
-    let profilePic = '';
-    let peopleLikeId = [];
-    let postId = 0;
-    let userUsername = '';
-    let ownerId = "";
-    let caption = "";
-    let commentList = [];
-    let cellDate = "";
-    let cellYear = ""
-    let cellMonth = ""
-    let cellDay = ""
-    let location = ""
-    let contentTypeId = ""
-
-
-    if(this.props.data){
-
-      contentTypeId = this.props.data.id
-
-      if(this.props.data.post){
-
-        if(this.props.data.post.people_like){
-          like_people = this.props.data.post.people_like
-        }
-
-        if(this.props.data.post.get_socialCalComment){
-          commentList = this.props.data.post.get_socialCalComment
-        }
-
-        if(this.props.data.post.id){
-          postId = this.props.data.post.id
-        }
-
-        if(this.props.data.post.dayCaption){
-          caption = this.props.data.post.dayCaption
-        }
-
-        if(this.props.data.post.socialCaldate){
-          cellDate = this.props.data.post.socialCaldate
-          const date = this.props.data.post.socialCaldate.split("-")
-          cellYear = date[0]
-          cellMonth = date[1]
-          cellDay = date[2]
-        }
-
-      }
-      if(this.props.data.owner){
-        if(this.props.data.owner.username){
-          userUsername = this.props.data.owner.username
-        }
-        if(this.props.data.owner.id){
-          ownerId = this.props.data.owner.id
-        }
-
-        if(this.props.data.owner.profile_picture){
-          profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
-        }
-
-
-      }
-
-    }
-
-
-
-    if(like_people.length > 0){
-      for(let i = 0; i< like_people.length; i++){
-        peopleLikeId.push(like_people[i].id)
-      }
-    }
-
-    return (
-
-      <View>
-        {/*
-        <View style = {styles.likeCapHolder}>
-          <View style = {styles.miniLikeCommCon}>
-
-            <Text style = {styles.taggedNames}>#food #music</Text>
-
-          </View>
-
-          <View style = {styles.captionHolder}>
-            <Text style = {styles.captionUsername}> @{userUsername+" "}</Text>
-            <Text> {caption.substring(0,140)}</Text>
-
-          </View>
-
-        </View>
-        */}
-
-      </View>
-    )
-  }
 
   render(){
 
@@ -410,10 +361,6 @@ class SocialNewsfeedPost extends React.Component{
 
             {this.revealPhoto()}
 
-        </View>
-
-        <View style = {styles.bottomLikeCommentContainer}>
-          {this.bottomLikeCommentPost()}
         </View>
 
 

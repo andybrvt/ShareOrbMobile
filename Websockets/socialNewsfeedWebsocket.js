@@ -73,19 +73,19 @@ class WebSocketSocialNewsfeed{
 
 
   }
-   // else if (command === "send_social_post_like"){
-  //   const contentTypeId = parsedData.contentTypeId
-  //   const socialCalCellObj = parsedData.socialCalCellObj
-  //
-  //   const content = {
-  //     contentTypeId: contentTypeId,
-  //     socialCalCellObj: socialCalCellObj
-  //   }
-  //
-  //   // put the call back here
-  //   this.callbacks['add_social_post_like'](content)
-  //
-  // } else if( command === "send_social_post_unlike"){
+   else if (command === "send_social_post_like"){
+    const contentTypeId = parsedData.contentTypeId
+    const socialCalCellObj = parsedData.socialCalCellObj
+
+    const content = {
+      contentTypeId: contentTypeId,
+      socialCalCellObj: socialCalCellObj
+    }
+
+    this.callbacks['add_social_post_like'](content)
+
+  }
+   // else if( command === "send_social_post_unlike"){
   //   const contentTypeId = parsedData.contentTypeId
   //   const socialCalCellObj = parsedData.socialCalCellObj
   //
@@ -98,33 +98,20 @@ class WebSocketSocialNewsfeed{
   //   this.callbacks['add_social_post_like'](content)
   // }
   else if (command === "update_new_cell_social_newsfeed"){
-    // path to update the newsfeed
-    // You grab the postObj
+
     const socialPostObj = parsedData.socialPostObj
     const curId = parsedData.curId
     const created = parsedData.created
     if(parseInt(this.callbacks['curId']) === socialPostObj.owner.id){
-      // Put call back for updating the cursocialcalcell
-      // just load up the cur social cal cell
       this.callbacks['fetch_cur_social_cell'](socialPostObj.post)
     }
 
     if(created === true){
-      // this is if this is a new social cal cell so you just add it to the top
-      // of the newsfeed
       this.callbacks['add_first_social_cell_post'](socialPostObj)
-
     } else if(created === false){
-      // if its a old newsfeed cell and needs to be updated
-
       this.callbacks['update_social_cell_post'](socialPostObj)
 
     }
-
-
-    // Now check if the currentId equals to taht of the user in the social postobj
-    // if it is equal then that means you should update the curSocialCal
-
 
   }
   // else if(command === "remove_all_photo_social_post"){
@@ -187,12 +174,12 @@ class WebSocketSocialNewsfeed{
 
   fetchSocialPost(userId, curDate, startIndex){
   // Because of the timezone issue we need to get timezone from front end
-  this.sendPostsInfo({
-    userId: userId,
-    curDate: curDate,
-    startIndex: startIndex,
-    command: "fetch_social_posts"
-  })
+    this.sendPostsInfo({
+      userId: userId,
+      curDate: curDate,
+      startIndex: startIndex,
+      command: "fetch_social_posts"
+    })
 
   }
 
@@ -215,6 +202,18 @@ class WebSocketSocialNewsfeed{
   })
 
 }
+
+  sendOneLike(socialCalCellId, personLike, contentTypeId){
+    // This is to send a like
+
+
+    this.sendPostsInfo({
+      socialCalCellId: socialCalCellId,
+      personLike: personLike,
+      contentTypeId: contentTypeId,
+      command: "send_social_post_like"
+    })
+  }
 
   sendPostsInfo(data){
   // This is to send it to the backend
