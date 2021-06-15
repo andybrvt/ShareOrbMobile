@@ -114,7 +114,14 @@ class ProfileHeader extends React.Component{
      <View style={{flex:1, top:'15%',}}>
        <View style = {styles.profileMidContainer}>
          <View style={styles.profileInfoContainer}>
-
+           <View style={styles.followerCount}>
+              <TouchableOpacity onPress={() => this.navigateFollowing()}>
+                <View style={{flexDirection:'column', alignItems:'center'}}>
+                 <Text style={styles.followerFollowingNum}> 5</Text>
+                 <Text style={styles.followerFollowingHeader}> Streak </Text>
+               </View>
+              </TouchableOpacity>
+           </View>
            <View style={styles.followerCount}>
               <TouchableOpacity onPress={() => this.navigateFollowing()}>
                 <View style={{flexDirection:'column', alignItems:'center'}}>

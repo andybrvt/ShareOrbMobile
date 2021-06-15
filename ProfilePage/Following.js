@@ -33,10 +33,9 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
    renderItem = ({item}) => {
      return (
-       <TouchableOpacity onPress={() => this.selectItem(item)}>
+       <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
-           <View style={{flexDirection:'row', backgroundColor:'blue'}}>
-
+           <View style={{flexDirection:'row'}}>
              <View style = {styles.chatInfoHolder} >
                <Avatar
                rounded
@@ -48,22 +47,18 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                 <View style = {styles.chatInfo}>
                   <View style = {styles.chatNameContainer}>
                     <Text style = {styles.chatName}>{item.username}</Text>
-
                   </View>
-
                   <Text style = {styles.chatText}> {item.first_name+" "+item.last_name} </Text>
                 </View>
-
              </View>
-             <View style={{flex:2}}>
-
-
+             <View style={{flex:0.5, justifyContent:"center"}}>
+               <View style={styles.editButton}>
+                  <Text style={{color:'white',}}>Follow</Text>
+                </View>
              </View>
           </View>
-
-
-       </View>
-       </TouchableOpacity>
+         </View>
+       </TouchableHighlight>
      )
    }
 
@@ -96,6 +91,16 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
  }
 
  const styles = StyleSheet.create({
+   editButton: {
+     alignItems: 'center',
+     paddingVertical: 7.5,
+     paddingHorizontal: 20,
+     borderRadius: 4,
+     top:5,
+     alignItems: "center",
+     backgroundColor: "#1890ff",
+     padding: 10
+   },
 
    column:{
      flex: 1,
@@ -125,7 +130,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
    chatInfo: {
      justifyContent: "center",
      marginLeft: 10,
-     backgroundColor:'red',
+     // backgroundColor:'red',
    },
    chatNameContainer: {
      flexDirection: "row"

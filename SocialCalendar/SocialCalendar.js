@@ -63,9 +63,11 @@ class SocialCalendar extends React.Component{
 
 
     return (
+      <View style={{ paddingTop:20,}}>
       <SocialMonth
         navigation={this.props.navigation}
         item = {item}/>
+      </View>
     )
   }
 
@@ -472,7 +474,6 @@ class SocialCalendar extends React.Component{
     return (
       <View style = {styles.allCellContainer}>
         <View style = {styles.dayContainer}>{this.renderDays()}</View>
-
         <View style = {styles.monthsContainer}>
           <FlatList
             data = {listData}
@@ -533,9 +534,11 @@ const styles = StyleSheet.create({
   },
 
   dayContainer:{
-    flex: 1,
-
-    width: Math.round(Dimensions.get('window').width)
+    // backgroundColor:'red',
+    width: Math.round(Dimensions.get('window').width),
+    height:20,
+    borderBottomWidth: 0.2,
+    borderBottomColor: '#000',
   },
 
   dayHeaders: {
@@ -552,9 +555,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  monthTitle: {
-    alignItems: 'center'
-  }
 
 
 })
