@@ -206,9 +206,8 @@ class App extends Component{
           backgroundColor: "white",
           height:50,
         }}
-
-
-
+        shifting={false}
+        labeled={true}
         >
         <Tab.Screen
           name="Home"
@@ -228,7 +227,7 @@ class App extends Component{
           options={{
              tabBarLabel: false,
              tabBarIcon: ({ color }) => (
-                <Aperture stroke={color} strokeWidth={2} width={25} height={25} />
+                <Search stroke={color} strokeWidth={2} width={25} height={25} />
              ),
            }}
            />
@@ -239,8 +238,7 @@ class App extends Component{
              options={{
                tabBarLabel: false,
                 tabBarIcon: ({ color }) => (
-                    <Disc
-                      style={{bottom:10}} stroke="white" fill="#1890ff" strokeWidth={2} width={40} height={40} />
+                  <Aperture style={{bottom:5}} stroke="white" fill="#1890ff" strokeWidth={2} width={40} height={40}  />
                 ),
               }}
 
