@@ -322,7 +322,17 @@ class App extends Component{
                     >
                     <Stack.Screen
 
-                      name = "FollowTab" component= {this.followerFollowingTab}/>
+                      name = "FollowTab" component= {this.followerFollowingTab}
+                      options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+
+                        },
+                        title: 'pinghsu520',
+                         ...TransitionPresets.SlideFromRightIOS,
+                                        }}
+                      />
                   <Stack.Screen
                     options={{headerShown: false, }}
                     name = "newsfeed" component= {this.createTabStack}/>

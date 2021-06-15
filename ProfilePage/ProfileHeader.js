@@ -87,7 +87,7 @@ class ProfileHeader extends React.Component{
 
     return (
     <View style={{flexDirection:'column', top:'3%',}}>
-      <View style={{flex:1, }}>
+
         <View style={styles.profileInfoHeader}>
             <View style={{flex:1, alignItems: 'center',
                justifyContent:'center'}}>
@@ -110,25 +110,27 @@ class ProfileHeader extends React.Component{
                </TouchableOpacity>
             </View>
         </View>
-     </View>
-     <View style={{flex:1, top:'22.5%',}}>
+
+     <View style={{flex:1, top:'15%',}}>
        <View style = {styles.profileMidContainer}>
          <View style={styles.profileInfoContainer}>
-           <TouchableOpacity onPress={() => this.navigateFollowing()}>
+
            <View style={styles.followerCount}>
-
-             <Text style={styles.followerFollowingNum}>
-               {following.length}
-             </Text>
-
-               <Text style={styles.followerFollowingHeader}> Following </Text>
-
+              <TouchableOpacity onPress={() => this.navigateFollowing()}>
+                <View style={{flexDirection:'column', alignItems:'center'}}>
+                 <Text style={styles.followerFollowingNum}> {following.length}</Text>
+                 <Text style={styles.followerFollowingHeader}> Following </Text>
+               </View>
+              </TouchableOpacity>
            </View>
-           </TouchableOpacity>
+
            <View style={styles.followerCount}>
-             <Text style={styles.followerFollowingNum}> {followers.length}</Text>
-             <TouchableOpacity onPress={() => this.navigateFollowers()}>
-               <Text style={styles.followerFollowingHeader}> Followers</Text>
+             <TouchableOpacity onPress={() => this.navigateFollowing()}>
+               <View style={{flexDirection:'column', alignItems:'center'}}>
+                 <Text style={styles.followerFollowingNum}> {followers.length}</Text>
+
+                <Text style={styles.followerFollowingHeader}> Followers</Text>
+               </View>
             </TouchableOpacity>
            </View>
 
@@ -136,7 +138,7 @@ class ProfileHeader extends React.Component{
      </View>
      </View>
 
-     <View style={{flex:1, top:'25%',}}>
+     <View style={{flex:1, top:'17.5%',}}>
        <View style = {styles.bioContainer}>
          <Text style = {styles.bio}> {bio}</Text>
         </View>
@@ -289,13 +291,15 @@ export default ProfileHeader;
 const styles = StyleSheet.create({
   editButton: {
     alignItems: 'center',
-    justifyContent: 'center',
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 4,
-    elevation: 5,
     top:5,
     backgroundColor: '#1890ff',
+
+    alignItems: "center",
+    backgroundColor: "#1890ff",
+    padding: 10
   },
 
   shadowAvatar:{
@@ -325,7 +329,8 @@ const styles = StyleSheet.create({
 
   profileInfoHeader: {
     position:'relative',
-    top:'10%',
+    top:'5%',
+    left:'5%',
     // backgroundColor:'red',
     justifyContent: 'center',
     flexDirection:'row',

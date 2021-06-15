@@ -35,26 +35,31 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
      return (
        <TouchableOpacity onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
+           <View style={{flexDirection:'row', backgroundColor:'blue'}}>
 
+             <View style = {styles.chatInfoHolder} >
+               <Avatar
+               rounded
+                 source = {{
+                   uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture
+                 }}
+                 size = {55}
+                  />
+                <View style = {styles.chatInfo}>
+                  <View style = {styles.chatNameContainer}>
+                    <Text style = {styles.chatName}>{item.username}</Text>
 
-           <View style = {styles.chatInfoHolder} >
-             <Avatar
-             rounded
-               source = {{
-                 uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture
-               }}
-               size = {55}
-                />
-              <View style = {styles.chatInfo}>
-                <View style = {styles.chatNameContainer}>
-                  <Text style = {styles.chatName}>{item.username}</Text>
+                  </View>
 
+                  <Text style = {styles.chatText}> {item.first_name+" "+item.last_name} </Text>
                 </View>
 
-                <Text style = {styles.chatText}> {item.first_name+" "+item.last_name} </Text>
-              </View>
+             </View>
+             <View style={{flex:2}}>
 
-           </View>
+
+             </View>
+          </View>
 
 
        </View>
@@ -109,15 +114,18 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
      flex: 1,
      height: 70,
      justifyContent: 'center',
-     padding: 15
+     padding: 15,
+     // backgroundColor:'green',
    },
    chatInfoHolder:{
      display: 'flex',
-     flexDirection: 'row'
+     flexDirection: 'row',
+     flex:1,
    },
    chatInfo: {
      justifyContent: "center",
-     marginLeft: 10
+     marginLeft: 10,
+     backgroundColor:'red',
    },
    chatNameContainer: {
      flexDirection: "row"
