@@ -85,18 +85,18 @@ class WebSocketSocialNewsfeed{
     this.callbacks['add_social_post_like'](content)
 
   }
-   // else if( command === "send_social_post_unlike"){
-  //   const contentTypeId = parsedData.contentTypeId
-  //   const socialCalCellObj = parsedData.socialCalCellObj
-  //
-  //   const content = {
-  //     contentTypeId: contentTypeId,
-  //     socialCalCellObj: socialCalCellObj
-  //   }
-  //
-  //   // put the call back here
-  //   this.callbacks['add_social_post_like'](content)
-  // }
+   else if( command === "send_social_post_unlike"){
+    const contentTypeId = parsedData.contentTypeId
+    const socialCalCellObj = parsedData.socialCalCellObj
+
+    const content = {
+      contentTypeId: contentTypeId,
+      socialCalCellObj: socialCalCellObj
+    }
+
+    // put the call back here
+    this.callbacks['add_social_post_like'](content)
+  }
   else if (command === "update_new_cell_social_newsfeed"){
 
     const socialPostObj = parsedData.socialPostObj
@@ -212,6 +212,17 @@ class WebSocketSocialNewsfeed{
       personLike: personLike,
       contentTypeId: contentTypeId,
       command: "send_social_post_like"
+    })
+  }
+
+  unSendOneUnlike(socialCalCellId, personUnlike, contentTypeId){
+  // This is to unsend a like
+
+    this.sendPostsInfo({
+      socialCalCellId: socialCalCellId,
+      personUnlike: personUnlike,
+      contentTypeId: contentTypeId,
+      command:"send_social_post_unlike"
     })
   }
 

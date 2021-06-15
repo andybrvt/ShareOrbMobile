@@ -58,8 +58,14 @@ class SocialNewsfeedPost extends React.Component{
   }
 
 
-  onUnlike = () => {
-    console.log('this is for unliking')
+  onUnlike = (socialCalCellId, personUnlike, contentTypeId) => {
+
+    WebSocketSocialNewsfeedInstance.unSendOneUnlike(
+      socialCalCellId,
+      personUnlike,
+      contentTypeId)
+
+
   }
 
 
@@ -189,7 +195,11 @@ class SocialNewsfeedPost extends React.Component{
                 <View style = {styles.justifyCenter}>
                   {
                     peopleLikeId.includes(this.props.userId ) ?
-                    <TouchableOpacity onPress = {() => this.onUnlike()}>
+                    <TouchableOpacity onPress = {() => this.onUnlike(
+                        postId,
+                        this.props.userId,
+                        contentTypeId
+                      )}>
                       <FontAwesomeIcon
                       style = {{
                         color:'red',
