@@ -23,14 +23,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 class NewsfeedView extends React.Component{
 
 
-  state={
-    username: '',
-    id: '',
-    postShow:false,
-    eventShow:false,
-    upperStart: 6
-  }
-
+  
   handleLogOut = () => {
     this.props.logout()
     // this.props.navigation.navigate("Login")
@@ -47,6 +40,14 @@ class NewsfeedView extends React.Component{
 
   constructor(props){
     super(props)
+    this.state={
+      username: '',
+      id: '',
+      postShow:false,
+      eventShow:false,
+      upperStart: 6
+    }
+    this.myRef = React.createRef();
     if(this.props.isAuthenticated){
       this.initialiseSocialNewsfeed()
 
@@ -128,7 +129,7 @@ class NewsfeedView extends React.Component{
     return(
 
       <BackgroundContainer>
-        
+
         {this.props.totalLoad === 0 ?
 
 
@@ -145,7 +146,7 @@ class NewsfeedView extends React.Component{
 
         <Header {...this.props} />
 
-        <ScrollView>
+        <ScrollView ref={this.myRef}>
 
 
           <InfiniteScroll

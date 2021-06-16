@@ -13,7 +13,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 
 
 class InfiniteScroll extends React.Component{
-
+  
   render(){
 
 

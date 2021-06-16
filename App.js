@@ -60,7 +60,7 @@ import DayAlbum from './SocialCalendar/DayAlbum.js';
 import Test from './PostingFolder/Test';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-
+import { useScrollToTop } from '@react-navigation/native';
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -199,6 +199,7 @@ class App extends Component{
   // pages you dont wnat to have the bottom bar on  so you would wnat to render
   // the home page first and then start rendering the tab stack seperatly
   createTabStack = () =>{
+
     return (
       <Tab.Navigator
         initialRouteName = "Home"
@@ -220,6 +221,14 @@ class App extends Component{
                <Home stroke={color} strokeWidth={2} width={25} height={25} />
              ),
            }}
+           listeners = {({navigation}) => ({
+             tabPress: event => {
+               console.log(event)
+               // useScrollToTop(ref)
+             }
+           })}
+
+
            />
         <Tab.Screen
           name="Explore"
