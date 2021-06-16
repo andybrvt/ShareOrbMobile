@@ -29,7 +29,7 @@ class SocialMonth extends React.PureComponent{
     this.props.navigation.navigate("DayAlbum",
   {
     entireDay:toDoStuff,
-  
+
   });
   }
 
@@ -227,8 +227,8 @@ class SocialMonth extends React.PureComponent{
     }
 
     return (
-      <View style = {styles.monthTitle}>
-        <Text> {this.props.item.rep}</Text>
+      <View style = {styles.centerMonth}>
+        <Text style = {styles.monthTitle}> {this.props.item.rep}</Text>
         {this.renderCell(this.props.item.month, cells)}
       </View>
     )
@@ -239,13 +239,20 @@ export default SocialMonth;
 
 
 const styles = StyleSheet.create({
+  centerMonth: {
+    alignItems: 'center',
+    // backgroundColor:'red',
+  },
   monthTitle: {
-    alignItems: 'center'
+    paddingTop:10,
+    fontSize:15,
   },
   monthContainer: {
     flexDirection: "column",
     flex: 1,
-    borderBottomWidth: 0.2
+    borderBottomWidth: 0.2,
+
+    // backgroundColor:'red',
   },
   // This is for the cell
   // So you want the cells to be square so that you

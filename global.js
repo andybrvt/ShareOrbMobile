@@ -9,11 +9,11 @@ global.POSTLIST_SPEC = 'http://10.3.0.116:19000/media/'
 global.WS_HEADER = "ws"
 
 //
-// global.IP_CHANGE="http://192.168.1.200:19002"
-// global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
-// global.WS_ENDPOINT = "192.168.1.200:19002"
-// global.WS_HEADER = "ws"
-// global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
+global.IP_CHANGE="http://192.168.1.200:19002"
+global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
+global.WS_ENDPOINT = "192.168.1.200:19002"
+global.WS_HEADER = "ws"
+global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
 
 // andy house
 // global.IP_CHANGE = "http://192.168.1.24:19000"
