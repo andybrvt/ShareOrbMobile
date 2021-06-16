@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   Text,
   View,
@@ -19,19 +19,31 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import LoadingBar from '../RandomComponents/LoadingBar';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
+import InfiniteScrollFlat from './InfiniteScrollFlat';
+
 
 class NewsfeedView extends React.Component{
 
 
-  
+
   handleLogOut = () => {
     this.props.logout()
     // this.props.navigation.navigate("Login")
   }
 
 
+  componentDidMount = () => {
 
-  ViewProfile = () => {
+    console.log('this stuff here')
+
+    const test = this.props.navigation.addListener("tabPress", (e)=> {
+      console.log('you presss the tab')
+
+
+    })
+  }
+
+  viewProfile = () => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
 
@@ -146,21 +158,29 @@ class NewsfeedView extends React.Component{
 
         <Header {...this.props} />
 
-        <ScrollView ref={this.myRef}>
 
+          {/*
+            <ScrollView>
+            <InfiniteScroll
+              navigation={this.props.navigation}
+              onPagePost = {this.onPagePost}
+              ViewProfile={this.ViewProfile}
+              />
 
-          <InfiniteScroll
-            navigation={this.props.navigation}
+            </ScrollView>
+
+            */}
+
+          <InfiniteScrollFlat
+            navigation = {this.props.navigation}
             onPagePost = {this.onPagePost}
-            ViewProfile={this.ViewProfile}
-            />
-
+            viewProfile = {this.viewProfile}
+             />
 
           <Button
             title = "Logout"
             onPress = {() => this.handleLogOut()}
           />
-        </ScrollView>
 
 
       </BackgroundContainer>

@@ -17,6 +17,7 @@ import * as exploreActions from './store/actions/explore';
 import * as messageActions from './store/actions/messages';
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
+import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
 import Explore from './Explore/Explore';
 import Friends from './Friends';
 import Login from './Login/Login';
@@ -319,7 +320,7 @@ class App extends Component{
               !this.props.loading && this.props.username ?
                 <Stack.Navigator
 
-
+                  mode = "modal" //keep this here, its important
                   // headerMode ="none"
                   initialRouteName = "newsfeed"
                   screenOptions={{
