@@ -2,10 +2,10 @@ import * as dateFns from 'date-fns';
 
 
 // For IP adress
-// global.IP_CHANGE = "http://10.3.0.116:19000"
-// global.IMAGE_ENDPOINT = "http://10.3.0.116:19000"
-// global.WS_ENDPOINT = "10.3.0.116:19000"
-// global.POSTLIST_SPEC = 'http://10.3.0.116:19000/media/'
+global.IP_CHANGE = "http://10.3.0.116:19000"
+global.IMAGE_ENDPOINT = "http://10.3.0.116:19000"
+global.WS_ENDPOINT = "10.3.0.116:19000"
+global.POSTLIST_SPEC = 'http://10.3.0.116:19000/media/'
 global.WS_HEADER = "ws"
 
 //
