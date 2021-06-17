@@ -23,7 +23,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 
  class Comments extends React.Component{
-   
+
    renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.panelHeader}>

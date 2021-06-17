@@ -47,6 +47,8 @@ class InfiniteScrollFlat extends React.Component{
         <FlatList
           data = {post}
           renderItem = {this.renderPost}
+          keyExtractor={item => item.id.toString()}
+
            />
       </View>
     )

@@ -362,6 +362,8 @@ class SocialNewsfeedPost extends React.Component{
 
     }
 
+    console.log(this.props.data)
+
     return (
       <View>
 

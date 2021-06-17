@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -20,6 +20,7 @@ import LoadingBar from '../RandomComponents/LoadingBar';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import InfiniteScrollFlat from './InfiniteScrollFlat';
+import NewsfeedComment from './NewsfeedComment';
 
 
 class NewsfeedView extends React.Component{
@@ -34,13 +35,6 @@ class NewsfeedView extends React.Component{
 
   componentDidMount = () => {
 
-    console.log('this stuff here')
-
-    const test = this.props.navigation.addListener("tabPress", (e)=> {
-      console.log('you presss the tab')
-
-
-    })
   }
 
   viewProfile = () => {
@@ -60,6 +54,9 @@ class NewsfeedView extends React.Component{
       upperStart: 6
     }
     this.myRef = React.createRef();
+
+
+    this.commentRef = React.createRef();
     if(this.props.isAuthenticated){
       this.initialiseSocialNewsfeed()
 
@@ -132,6 +129,15 @@ class NewsfeedView extends React.Component{
 
   }
 
+
+  renderHeader = () => (
+     <View style={styles.header}>
+       <View style={styles.panelHeader}>
+         <View style={styles.panelHandle} />
+       </View>
+     </View>
+   );
+
   render(){
 
     let curLoading = this.props.curLoad
@@ -156,31 +162,47 @@ class NewsfeedView extends React.Component{
 
         }
 
-        <Header {...this.props} />
 
+          <Header {...this.props} />
 
-          {/*
-            <ScrollView>
-            <InfiniteScroll
-              navigation={this.props.navigation}
-              onPagePost = {this.onPagePost}
-              ViewProfile={this.ViewProfile}
+            <Button
+              title = "open"
+              onPress = {() => this.scrollRef.snapTo(1)}
               />
 
-            </ScrollView>
+            <InfiniteScrollFlat
+              navigation = {this.props.navigation}
+              onPagePost = {this.onPagePost}
+              viewProfile = {this.viewProfile}
+               />
 
-            */}
+             <NewsfeedComment
+               scrollRef = {this.scrollRef}
+               />
 
-          <InfiniteScrollFlat
-            navigation = {this.props.navigation}
-            onPagePost = {this.onPagePost}
-            viewProfile = {this.viewProfile}
+
+
+            <Button
+              title = "Logout"
+              onPress = {() => this.handleLogOut()}
+            />
+
+
+
+          <BottomSheet
+            ref = {node => {this.scrollRef = node}}
+            snapPoints = {["80%","0%"]}
+            initialSnap = {true ? 0 : 1}
+            borderRadius = {10}
+            renderHeader ={this.renderHeader}
+            // renderContent = {this.renderContent}
              />
 
-          <Button
-            title = "Logout"
-            onPress = {() => this.handleLogOut()}
-          />
+
+
+
+
+
 
 
       </BackgroundContainer>
@@ -203,7 +225,28 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#1890ff"
-  }
+  },
+  header: {
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#333333',
+    shadowOffset: {width: -1, height: -3},
+    shadowRadius: 2,
+    shadowOpacity: 0.4,
+    // elevation: 5,
+    paddingTop: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  panelHeader: {
+    alignItems: 'center',
+  },
+  panelHandle: {
+    width: 40,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#00000040',
+    marginBottom: 10,
+  },
 })
 
 const mapStateToProps = state => {
