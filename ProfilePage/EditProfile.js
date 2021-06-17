@@ -43,10 +43,11 @@ import * as dateFns from 'date-fns';
    }
 
    renderInner = () => (
+
      <View style={styles.panel}>
        <View style={{alignItems: 'center'}}>
          <Text style={styles.panelTitle}>Upload Photo</Text>
-         <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
+
        </View>
        <TouchableOpacity style={styles.panelButton} >
          <Text style={styles.panelButtonTitle}>Take Photo</Text>
@@ -99,11 +100,9 @@ import * as dateFns from 'date-fns';
             <View
               style={{
                 top:10,
-
                 borderRadius: 15,
                 justifyContent: 'center',
                 alignItems: 'center',
-
               }}>
 
                 <Avatar
@@ -123,6 +122,7 @@ import * as dateFns from 'date-fns';
             @{username}
           </Text>
         </View>
+
            <BottomSheet
             ref={this.bs}
             snapPoints={[330, 0]}
@@ -132,6 +132,8 @@ import * as dateFns from 'date-fns';
             callbackNode={this.fall}
             enabledGestureInteraction={true}
           />
+
+
         <View style={styles.action}>
           <User
             style={{marginleft:10}}
@@ -228,6 +230,10 @@ import * as dateFns from 'date-fns';
   export default connect(mapStateToProps, null)(EditProfile);
 
  const styles = StyleSheet.create({
+   container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  },
    action: {
     flexDirection: 'row',
     marginTop: 10,

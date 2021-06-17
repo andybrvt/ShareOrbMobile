@@ -25,6 +25,20 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
      // to the home page
    }
 
+   selectItem(item) {
+
+     this.props.navigation.navigate("ViewProfile");
+     {/*}
+     this.props.navigation.navigate("MessageFriend",
+       {
+         chatPersonName:this.getChatUserName(item.participants),
+         chatUserName:item.participants[1].username,
+         chatPersonProfilePic: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants),
+         }
+     );
+     */}
+   }
+
    renderItem = ({item}) => {
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
