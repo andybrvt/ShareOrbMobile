@@ -9,6 +9,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   TouchableOpacity,
+  TouchableHighlight,
   ImageBackground,
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -20,13 +21,30 @@ import { Avatar } from 'react-native-elements';
  import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  import BottomSheet from 'reanimated-bottom-sheet';
  import Animated from 'react-native-reanimated';
- import { Bell, User} from "react-native-feather";
+ import { Bell, User, ArrowRight} from "react-native-feather";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as dateFns from 'date-fns';
 
 
 
  class EditProfile extends React.Component{
+
+
+   goBioPage(item) {
+
+     this.props.navigation.navigate("EditBio");
+     {/*}
+     this.props.navigation.navigate("MessageFriend",
+       {
+         chatPersonName:this.getChatUserName(item.participants),
+         chatUserName:item.participants[1].username,
+         chatPersonProfilePic: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants),
+         }
+     );
+     */}
+   }
+
+
    constructor(props){
      super(props);
      this.bs = React.createRef();
@@ -46,8 +64,16 @@ import * as dateFns from 'date-fns';
 
      <View style={styles.panel}>
        <View style={{alignItems: 'center'}}>
-         <Text style={styles.panelTitle}>Upload Photo</Text>
 
+         <Avatar
+           size={100}
+
+           rounded
+           source={{
+             uri:
+               `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
+           }}
+         />
        </View>
        <TouchableOpacity style={styles.panelButton} >
          <Text style={styles.panelButtonTitle}>Take Photo</Text>
@@ -135,9 +161,8 @@ import * as dateFns from 'date-fns';
 
 
         <View style={styles.action}>
-          <User
-            style={{marginleft:10}}
-            stroke="black" strokeWidth={2.5} width={17.5} height={17.5} />
+          <Text>Name</Text>
+
 
            <TextInput
             placeholder="First Name"
@@ -178,9 +203,11 @@ import * as dateFns from 'date-fns';
 
            </TextInput>
        </View>
-
+      <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.goBioPage()}>
        <View style={styles.action}>
+         {/*
          <TextInput
+           // multiline={true}
           placeholder="Bio"
           placeholderTextColor="#666666"
           autoCorrect={false}
@@ -189,7 +216,19 @@ import * as dateFns from 'date-fns';
 
           ]}
         />
+        */}
+        <View style={{width:'90%'}}>
+        <Text  style={[
+           styles.bioInput,
+
+           ]}>
+          Bio
+        </Text>
+        </View>
+
+        <ArrowRight stroke="black" strokeWidth={2.5} width={20} height={20} />
       </View>
+      </TouchableHighlight>
 
 
 
@@ -230,17 +269,29 @@ import * as dateFns from 'date-fns';
   export default connect(mapStateToProps, null)(EditProfile);
 
  const styles = StyleSheet.create({
+   panel: {
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+    paddingTop: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
+    // shadowColor: '#000000',
+    // shadowOffset: {width: 0, height: 0},
+    // shadowRadius: 5,
+    // shadowOpacity: 0.4,
+  },
    container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
    action: {
     flexDirection: 'row',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 25,
+
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
-    paddingBottom: 5,
+
+    padding:10,
   },
    panelButton: {
     padding: 13,
@@ -253,14 +304,23 @@ import * as dateFns from 'date-fns';
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -5,
     paddingLeft: 10,
+    fontSize:16
 
   },
+  bioInput: {
+   flex: 1,
+   marginTop: Platform.OS === 'ios' ? 0 : -5,
+   paddingLeft: 10,
+   fontSize:16,
+   color:"#666666",
+
+ },
   header: {
     backgroundColor: '#FFFFFF',
     shadowColor: '#333333',
     shadowOffset: {width: -1, height: -3},
     shadowRadius: 2,
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.2,
     // elevation: 5,
     paddingTop: 20,
     borderTopLeftRadius: 20,

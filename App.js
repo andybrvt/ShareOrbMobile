@@ -47,6 +47,7 @@ import TestDrag from './PostingFolder/TestDrag';
 import Profile from './ProfilePage/Profile';
 import ViewProfile from './ProfilePage/ViewProfile';
 import EditProfile from './ProfilePage/EditProfile';
+import EditBio from './ProfilePage/EditBio';
 import Followers from './ProfilePage/Followers';
 import Following from './ProfilePage/Following';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
@@ -419,6 +420,18 @@ class App extends Component{
                     }}
 
                     name = 'ViewProfile' component = {ViewProfile}/>
+                    <Stack.Screen
+                      options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+                        },
+                        title: 'Bio',
+                         ...TransitionPresets.SlideFromRightIOS,
+                                        }}
+
+
+                      name = 'EditBio' component = {EditBio}/>
                   <Stack.Screen
                     name = "ImageBrowserScreen"
                     options={{
