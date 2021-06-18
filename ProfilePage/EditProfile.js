@@ -32,7 +32,11 @@ import * as dateFns from 'date-fns';
 
    goBioPage(item) {
 
-     this.props.navigation.navigate("EditBio");
+     this.props.navigation.navigate("EditBio",
+     {
+       bio:this.props.route.params.bio,
+     }
+   );
      {/*}
      this.props.navigation.navigate("MessageFriend",
        {
@@ -90,10 +94,12 @@ import * as dateFns from 'date-fns';
   );
 
   renderHeader = () => (
+    <View style={styles.test}>
     <View style={styles.header}>
       <View style={styles.panelHeader}>
         <View style={styles.panelHandle} />
       </View>
+    </View>
     </View>
   );
 
@@ -159,10 +165,16 @@ import * as dateFns from 'date-fns';
             enabledGestureInteraction={true}
           />
 
+          {/*
+          <View style={{backgroundColor:'green', flexDirection:'column'}}>
+            <View style={{backgroundColor:'red'}}><Text>hi</Text></View>
+            <View style={{backgroundColor:'blue'}}><Text>ho</Text></View>
+          </View>
+          */}
 
         <View style={styles.action}>
-          <Text>Name</Text>
 
+          <View><Text style={styles.headerFont}>Name</Text></View>
 
            <TextInput
             placeholder="First Name"
@@ -184,6 +196,7 @@ import * as dateFns from 'date-fns';
         </TextInput>
         </View>
         <View style={styles.action}>
+          <View><Text style={styles.headerFont}>Username</Text></View>
           <TextInput
            placeholder="Username"
            placeholderTextColor="#666666"
@@ -204,7 +217,7 @@ import * as dateFns from 'date-fns';
            </TextInput>
        </View>
       <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.goBioPage()}>
-       <View style={styles.action}>
+       <View style={styles.action2}>
          {/*
          <TextInput
            // multiline={true}
@@ -218,11 +231,21 @@ import * as dateFns from 'date-fns';
         />
         */}
         <View style={{width:'90%'}}>
+
         <Text  style={[
            styles.bioInput,
 
            ]}>
-          Bio
+
+           {
+               (this.props.route.params.bio)?
+               <Text>
+                 {this.props.route.params.bio}
+               </Text>
+               :
+               <Text>Bio</Text>
+           }
+
         </Text>
         </View>
 
@@ -280,19 +303,32 @@ import * as dateFns from 'date-fns';
     // shadowRadius: 5,
     // shadowOpacity: 0.4,
   },
+
+  headerFont:{
+    paddingLeft:10, fontSize:15, color:"#666666",
+  },
    container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
    action: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginTop: 25,
-
+    height:75,
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
 
     padding:10,
   },
+  action2: {
+   flexDirection: 'row',
+   marginTop: 25,
+   height:50,
+   borderBottomWidth: 1,
+   borderBottomColor: '#f2f2f2',
+
+   padding:10,
+ },
    panelButton: {
     padding: 13,
     borderRadius: 10,
@@ -304,6 +340,7 @@ import * as dateFns from 'date-fns';
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -5,
     paddingLeft: 10,
+    paddingTop:10,
     fontSize:16
 
   },
@@ -315,18 +352,22 @@ import * as dateFns from 'date-fns';
    color:"#666666",
 
  },
+ test: {
+   elevation:5,
+ },
   header: {
     backgroundColor: '#FFFFFF',
     shadowColor: '#333333',
     shadowOffset: {width: -1, height: -3},
     shadowRadius: 2,
     shadowOpacity: 0.2,
-    // elevation: 5,
+
     paddingTop: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   panelHeader: {
+    // backgroundColor:'blue',
     alignItems: 'center',
   },
   panelHandle: {

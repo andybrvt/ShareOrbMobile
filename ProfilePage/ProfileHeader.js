@@ -8,7 +8,15 @@ import Followers from './Followers';
 import Following from './Following';
 class ProfileHeader extends React.Component{
   editPageClick() {
-    this.props.navigation.navigate("EditProfile");
+    console.log(this.props.profile.bio)
+    this.props.navigation.navigate("EditProfile",
+    {
+
+      bio:this.props.profile.bio,
+
+      }
+
+  );
 
   }
   navigateFollowing() {
