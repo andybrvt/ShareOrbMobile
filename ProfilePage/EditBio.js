@@ -34,21 +34,24 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
      return (
        <BackgroundContainer>
-         <View >
+         <View style={styles.addBorder}>
          <TextInput
+         style={{height:100, padding:10, fontSize:15}}
             multiline = {true}
-            numberOfLines = {6}
+            numberOfLines = {5}
+
             maxLength = {80}
             placeholder='Enter Bio..'
             value={this.state.value}
             onChangeText={(value) => this.setState({value})}
 
             />
+          <View style={styles.characterCount}>
 
-
-         <Text>
+         <Text style={{color:"#666666",}}>
             {this.state.value.length}/80
          </Text>
+         </View>
          </View>
        </BackgroundContainer>
 
@@ -60,13 +63,26 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 
  const styles = StyleSheet.create({
+   characterCount:{
+     flexDirection: "row",
+     justifyContent: "flex-end",
+     padding:10,
 
+   },
    textInput: {
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -5,
     paddingLeft: 10,
-    fontSize:16
+
 
   },
+
+  addBorder:{
+    paddingTop:10,
+    borderTopWidth:1,
+    borderTopColor: '#f2f2f2',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+  }
 
  })
