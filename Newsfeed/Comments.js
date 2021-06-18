@@ -5,7 +5,8 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  Dimensions
+  Dimensions,
+  TouchableWithoutFeedback
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Avatar, BottomNavigation } from 'react-native-paper';
@@ -24,6 +25,10 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
  class Comments extends React.Component{
 
+   constructor(props){
+     super(props)
+   }
+
    renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.panelHeader}>
@@ -32,10 +37,24 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
     </View>
   );
 
+  onPress = () => {
+    console.log('it does go back')
+    this.props.navigation.goBack(0)
+  }
 
-   onHomeNav = () => {
+  componentDidMount = () => {
+    this.scrollRef.snapTo(0);
+  }
+
+   onBackNav = () => {
      // this function will be use to navigate back
      // to the home page
+     this.scrollRef.snapTo(1);
+     setTimeout(() => {this.props.navigation.goBack(0)});
+   }
+
+   componentWillUnmount = () => {
+
    }
    // renderItem = {this.renderItem}
    // ItemSeparatorComponent = { this.FlatListItemSeparator }
@@ -45,12 +64,32 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 
      return (
-         <View style = {{
-             backgroundColor: 'red',
-             height: 200
+         <SafeAreaView
+           style = {{
+             // backgroundColor: 'red',
+             flex: 1
            }}>
-           <Text style = {{color: "white"}}> Some text </Text>
-         </View>
+
+           <TouchableWithoutFeedback onPress = {() => this.onBackNav()}>
+             <View style = {{
+                 flex: 1,
+                 backgroundColor: 'transparent'}}>
+
+                 <BottomSheet
+                   ref = {node => {this.scrollRef = node}}
+                   snapPoints = {["80%","0%"]}
+                   initialSnap = {1}
+                   borderRadius = {10}
+                   renderHeader ={this.renderHeader}
+                   // renderContent = {this.renderContent}
+                    />
+
+             </View>
+
+           </TouchableWithoutFeedback>
+
+
+         </SafeAreaView>
 
      )
    }
