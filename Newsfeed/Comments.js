@@ -56,9 +56,15 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    componentWillUnmount = () => {
 
    }
-   // renderItem = {this.renderItem}
-   // ItemSeparatorComponent = { this.FlatListItemSeparator }
 
+   renderContent = () => (
+     <View style = {{
+         backgroundColor: 'white',
+         height: "100%",
+       }}>
+       <Text> this is some text </Text>
+     </View>
+   )
 
    render(){
 
@@ -81,7 +87,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
                    initialSnap = {1}
                    borderRadius = {10}
                    renderHeader ={this.renderHeader}
-                   // renderContent = {this.renderContent}
+                   renderContent = {this.renderContent}
                     />
 
              </View>
