@@ -138,6 +138,10 @@ class NewsfeedView extends React.Component{
      </View>
    );
 
+  onCommentOpen = () => {
+    this.scrollRef.snapTo(0)
+  }
+
   render(){
 
     let curLoading = this.props.curLoad
@@ -167,13 +171,14 @@ class NewsfeedView extends React.Component{
 
             <Button
               title = "open"
-              onPress = {() => this.scrollRef.snapTo(1)}
+              onPress = {() => this.scrollRef.snapTo(0)}
               />
 
             <InfiniteScrollFlat
               navigation = {this.props.navigation}
               onPagePost = {this.onPagePost}
               viewProfile = {this.viewProfile}
+              onCommentOpen = {this.onCommentOpen}
                />
 
              <NewsfeedComment

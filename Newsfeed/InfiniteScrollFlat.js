@@ -23,12 +23,15 @@ class InfiniteScrollFlat extends React.Component{
 
   renderPost = ({item}) => {
 
+
+
     return(
 
         <SocialNewsfeedPost
           navigation = {this.props.navigation}
           ViewProfile = {this.props.viewProfile}
           data = {item}
+          onCommentOpen = {this.props.onCommentOpen}
            />
 
     )
@@ -40,6 +43,9 @@ class InfiniteScrollFlat extends React.Component{
     if(this.props.socialPosts){
       post = this.props.socialPosts
     }
+
+    console.log('inifadsf')
+    console.log(this.props)
 
     return(
       <View>

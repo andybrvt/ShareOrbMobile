@@ -29,14 +29,16 @@ class SocialNewsfeedPost extends React.Component{
 
   changeShowComments = () => {
 
-    this.props.navigation.navigate("Comments",
-    {
-        comments: this.props.data.post.get_socialCalComment,
-        profilePic:`${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture,
-        caption:this.props.data.post.dayCaption,
-    }
-
-    )
+    console.log('here are the comments')
+    this.props.onCommentOpen()
+    // this.props.navigation.navigate("Comments",
+    // {
+    //     comments: this.props.data.post.get_socialCalComment,
+    //     profilePic:`${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture,
+    //     caption:this.props.data.post.dayCaption,
+    // }
+    //
+    // )
   }
 
   changeShowLike = () => {
@@ -362,7 +364,6 @@ class SocialNewsfeedPost extends React.Component{
 
     }
 
-    console.log(this.props.data)
 
     return (
       <View>

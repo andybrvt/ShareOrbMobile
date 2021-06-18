@@ -224,7 +224,6 @@ class App extends Component{
            }}
            listeners = {({navigation}) => ({
              tabPress: event => {
-               console.log(event)
                // useScrollToTop(ref)
              }
            })}
@@ -304,7 +303,6 @@ class App extends Component{
 
   render(){
 
-    console.log('here at app', this.props.showFinalModal)
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth
