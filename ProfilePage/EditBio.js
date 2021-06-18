@@ -31,21 +31,33 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
   }
 
    render(){
+     console.log(this.props)
 
      return (
        <BackgroundContainer>
          <View style={styles.addBorder}>
          <TextInput
-         style={{height: 100, padding:10, fontSize:15}}
+         style={{fontSize:15}}
             multiline = {true}
-            numberOfLines = {5}
-
+            numberOfLines = {2}
             maxLength = {80}
             placeholder='Enter Bio..'
             value={this.state.value}
             onChangeText={(value) => this.setState({value})}
 
-            />
+            >
+
+
+            {
+                (this.props.route.params.bio)?
+                <Text>
+                  {this.props.route.params.bio}
+                </Text>
+                :
+                ''
+            }
+
+          </TextInput>
           <View style={styles.characterCount}>
 
          <Text style={{color:"#666666",}}>
@@ -78,7 +90,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
   },
 
   addBorder:{
-    paddingTop:10,
+    padding:10,
     borderTopWidth:1,
     borderTopColor: '#f2f2f2',
     borderBottomWidth: 1,
