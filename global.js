@@ -23,23 +23,12 @@ global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
 
 
 // Andy hot spoot
-<<<<<<< HEAD
-// global.IP_CHANGE = "http://172.20.10.2:19000"
-// global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
-// global.WS_ENDPOINT = "172.20.10.2:19000"
 
-// global.IP_CHANGE = "http://10.20.100.62:19000"
-// global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
-// global.WS_ENDPOINT = "10.20.100.62:19000"
-// global.POSTLIST_SPEC = 'http://10.20.100.62:19000/media/'
-// global.WS_HEADER = "ws"
-=======
 global.IP_CHANGE = "http://172.20.10.2:19000"
 global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
 global.WS_ENDPOINT = "172.20.10.2:19000"
 global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
 global.WS_HEADER = "ws"
->>>>>>> a646fc8e92899c2ddd01b677192757042a5035b4
 
 // global.IP_CHANGE = "http://10.20.100.62:19000"
 // global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
