@@ -71,6 +71,7 @@ import FadingUpArrow from './FadingUpArrow';
                   placeholder="Write something about your day..."
                   placeholderTextColor="lightgray"
                   multiline = {true}
+                  numberOfLines = {2}
                   value = {this.props.caption}
                   onChangeText = {this.props.onChange}
                 />

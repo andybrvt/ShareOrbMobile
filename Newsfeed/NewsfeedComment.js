@@ -44,9 +44,7 @@ class NewsfeedComment extends React.Component{
 
     return(
       <View style = {{position:'absolute'}}>
-        <Button
-          title = "open"
-           />
+
         <BottomSheet
           ref = {this.scrollRef}
           snapPoints = {["80%","0%"]}
