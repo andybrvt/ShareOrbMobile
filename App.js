@@ -211,7 +211,6 @@ class App extends Component{
         barStyle = {{
           backgroundColor: "white",
           height:50,
-          display: showComments ? "none" : ""
         }}
         shifting={false}
         labeled={true}
