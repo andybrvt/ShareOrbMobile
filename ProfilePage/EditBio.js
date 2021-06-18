@@ -36,7 +36,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
        <BackgroundContainer>
          <View style={styles.addBorder}>
          <TextInput
-         style={{height:100, padding:10, fontSize:15}}
+         style={{height: 100, padding:10, fontSize:15}}
             multiline = {true}
             numberOfLines = {5}
 

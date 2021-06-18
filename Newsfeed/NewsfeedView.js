@@ -4,10 +4,12 @@ import {
   View,
   Button,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  TouchableWithoutFeedback
  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
+import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import { connect } from 'react-redux';
 import Header from './Header';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
@@ -139,84 +141,84 @@ class NewsfeedView extends React.Component{
    );
 
   onCommentOpen = () => {
-    this.scrollRef.snapTo(0)
+    this.props.navigation.navigate("Comments")
+    // this.scrollRef.snapTo(0);
+    // // this.props.newsFeedCommentSec();
+    // this.props.navigation.setParams({
+    //   tabBarVisible: false,
+    // })
   }
+
+  onCommentClose = () => {
+    this.scrollRef.snapTo(1);
+    // this.props.newsFeedCommentSec();
+
+  }
+
+  renderContent = () => (
+    <View style = {{
+        backgroundColor: 'white',
+        height: "100%",
+      }}>
+      <Text> this is some text </Text>
+    </View>
+  )
 
   render(){
 
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
-
+    let showComments = this.props.showNewsfeedComments
 
     return(
+        <BackgroundContainer>
 
-      <BackgroundContainer>
-
-        {this.props.totalLoad === 0 ?
-
-
-          null
-
-          :
-
-          <LoadingBar
-            step = {curLoading}
-            steps = {totalLoading}
-            height = {5} />
-
-        }
+            <View>
+              {this.props.totalLoad === 0 ?
 
 
-          <Header {...this.props} />
+                null
 
-            <Button
-              title = "open"
-              onPress = {() => this.scrollRef.snapTo(0)}
-              />
+                :
 
-            <InfiniteScrollFlat
-              navigation = {this.props.navigation}
-              onPagePost = {this.onPagePost}
-              viewProfile = {this.viewProfile}
-              onCommentOpen = {this.onCommentOpen}
-               />
+                <LoadingBar
+                  step = {curLoading}
+                  steps = {totalLoading}
+                  height = {5} />
 
-             <NewsfeedComment
-               scrollRef = {this.scrollRef}
-               />
+              }
 
+              {/*
 
+                <Header {...this.props} />
 
-            <Button
-              title = "Logout"
-              onPress = {() => this.handleLogOut()}
-            />
+                */}
 
+                  <InfiniteScrollFlat
+                    navigation = {this.props.navigation}
+                    onPagePost = {this.onPagePost}
+                    viewProfile = {this.viewProfile}
+                    onCommentOpen = {this.onCommentOpen}
+                     />
 
+                  <Button
+                    title = "Logout"
+                    onPress = {() => this.handleLogOut()}
+                  />
 
-          <BottomSheet
-            ref = {node => {this.scrollRef = node}}
-            snapPoints = {["80%","0%"]}
-            initialSnap = {true ? 0 : 1}
-            borderRadius = {10}
-            renderHeader ={this.renderHeader}
-            // renderContent = {this.renderContent}
-             />
+                <BottomSheet
+                  ref = {node => {this.scrollRef = node}}
+                  snapPoints = {["80%","0%"]}
+                  initialSnap = {showComments ? 0 : 1}
+                  borderRadius = {10}
+                  renderHeader ={this.renderHeader}
+                  renderContent = {this.renderContent}
+                   />
 
-
-
-
-
-
+               </View>
 
 
-      </BackgroundContainer>
-
-
-
-
-
-
+        </BackgroundContainer>
 
     )
   }
@@ -263,8 +265,8 @@ const mapStateToProps = state => {
     profilePic: state.auth.profilePic,
 
     curLoad: state.auth.curLoad,
-    totalLoad: state.auth.totalLoad
-
+    totalLoad: state.auth.totalLoad,
+    showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments
 
   }
 }
@@ -273,7 +275,8 @@ const mapDispatchToProps = dispatch => {
   return {
     logout: () => dispatch(authActions.logout()),
     authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
-    authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad())
+    authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
+    newsFeedCommentSec: () => dispatch(socialNewsfeedActions.newsFeedCommentSec())
   }
 }
 

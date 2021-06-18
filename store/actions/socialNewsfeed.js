@@ -55,3 +55,10 @@ export const finalPostModal = () => {
     type: actionTypes.FINAL_POST_MODAL
   }
 }
+
+export const newsFeedCommentSec = () =>{
+  // indicate that you open up the comment section
+  return{
+    type: actionTypes.NEWSFEED_COMMENT_SECTION,
+  }
+}

@@ -41,97 +41,16 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    // ItemSeparatorComponent = { this.FlatListItemSeparator }
 
 
-   renderItem = ({item}) => {
-
-     return (
-
-         <View style={styles.container}>
-
-           <Avatar.Image
-             style={styles.image}
-             source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
-             }}
-             size = {40}
-              />
-           <View style={styles.content}>
-
-             <View style={styles.contentHeader}>
-                  <Text  style={styles.name}>  {item.commentUser.username}</Text>
-                  <Text style={styles.time}>
-
-                      {global.RENDER_TIMESTAMP(item.created_on)}
-
-                  </Text>
-              </View>
-
-              <Text style={styles.commentBody}>
-                {item.body}
-              </Text>
-           </View>
-
-
-
-
-         </View>
-
-
-     )
-   }
-
    render(){
 
-     this.props.navigation.setOptions({
-        comments:this.props.route.params.comments
-     })
-     let commentList = [];
+
      return (
-       <BackgroundContainer>
-         <Avatar.Image
-           style={styles.image}
-           source = {{
-             uri: `${global.IMAGE_ENDPOINT}`+this.props.route.params.profilePic
-           }}
-           size = {40}
-            />
-           <Text style={styles.captionBody}> {this.props.route.params.caption}</Text>
-         <View  >
-
-      <BottomSheet
-        renderHeader={this.renderHeader}
-        snapPoints={[330, 0]}
-        initialSnap={1}
-
-        borderRadius={10}
-        renderContent = {() => (
-         <View
-           style={{
+         <View style = {{
              backgroundColor: 'red',
-             padding: 10,
-             height: 450,
-
-           }}
-         >
-         <FlatList
-           style = {{marginTop:20}}
-           data = {this.props.route.params.comments}
-           renderItem = {this.renderItem}
-           ItemSeparatorComponent = { this.FlatListItemSeparator }
-
-         />
+             height: 200
+           }}>
+           <Text style = {{color: "white"}}> Some text </Text>
          </View>
-       )}      />
-           <Text> {this.props.route.params.comments.length}</Text>
-             <FlatList
-               style = {{marginTop:20}}
-               data = {this.props.route.params.comments}
-               renderItem = {this.renderItem}
-               ItemSeparatorComponent = { this.FlatListItemSeparator }
-
-             />
-
-         </View>
-       </BackgroundContainer>
 
      )
    }

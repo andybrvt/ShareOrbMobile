@@ -202,12 +202,16 @@ class App extends Component{
   // the home page first and then start rendering the tab stack seperatly
   createTabStack = () =>{
 
+    const showComments = this.props.showNewsfeedComments;
+
+    console.log(showComments)
     return (
       <Tab.Navigator
         initialRouteName = "Home"
         barStyle = {{
           backgroundColor: "white",
           height:50,
+          display: showComments ? "none" : ""
         }}
         shifting={false}
         labeled={true}
@@ -218,7 +222,6 @@ class App extends Component{
           // children = {this.createHomeStack}
           options={{
              tabBarLabel: false,
-
              tabBarIcon: ({ color }) => (
                <Home stroke={color} strokeWidth={2} width={25} height={25} />
              ),
@@ -304,6 +307,8 @@ class App extends Component{
 
   render(){
 
+    console.log('show comments')
+    console.log(this.props.showNewsfeedComments)
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth
@@ -353,13 +358,26 @@ class App extends Component{
                   <Stack.Screen
                       name = 'Comments'
                       options={{
-                        headerStyle:{
-                          shadowColor:'#fff', //ios
-                          elevation:0,        // android
-                        },
-                        title: 'Comments',
-                         ...TransitionPresets.SlideFromRightIOS,
-                                        }}
+                        headerShown: false,
+                        cardStyle: { backgroundColor: 'transparent' },
+                        cardOverlayEnabled: true,
+                        cardStyleInterpolator: ({ current: { progress } }) => ({
+                          cardStyle: {
+                            opacity: progress.interpolate({
+                              inputRange: [0, 0.5, 0.9, 1],
+                              outputRange: [0, 0.25, 0.7, 1],
+                            }),
+                          },
+                          overlayStyle: {
+                            opacity: progress.interpolate({
+                              inputRange: [0, 1],
+                              outputRange: [0, 0.5],
+                              extrapolate: 'clamp',
+                            }),
+                          },
+                        }),
+                      }}
+                      mode="modal"
                       component = {Comments}/>
                   <Stack.Screen
                     options={{
@@ -458,8 +476,8 @@ const mapStateToProps = state => {
     username: state.auth.username,
     id: state.auth.id,
     loading: state.auth.loading,
-    showFinalModal: state.socialNewsfeed.showFinalModal
-
+    showFinalModal: state.socialNewsfeed.showFinalModal,
+    showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments
 
   }
 }
