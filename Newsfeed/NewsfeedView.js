@@ -132,37 +132,16 @@ class NewsfeedView extends React.Component{
   }
 
 
-  renderHeader = () => (
-     <View style={styles.header}>
-       <View style={styles.panelHeader}>
-         <View style={styles.panelHandle} />
-       </View>
-     </View>
-   );
 
-  onCommentOpen = () => {
-    this.props.navigation.navigate("Comments")
-    // this.scrollRef.snapTo(0);
-    // // this.props.newsFeedCommentSec();
-    // this.props.navigation.setParams({
-    //   tabBarVisible: false,
-    // })
-  }
 
-  onCommentClose = () => {
-    this.scrollRef.snapTo(1);
-    // this.props.newsFeedCommentSec();
+  onCommentOpen = (cellId) => {
+    this.props.navigation.navigate("Comments", {
+      cellId: cellId
+    })
 
   }
 
-  renderContent = () => (
-    <View style = {{
-        backgroundColor: 'white',
-        height: "100%",
-      }}>
-      <Text> this is some text </Text>
-    </View>
-  )
+
 
   render(){
 
@@ -206,14 +185,6 @@ class NewsfeedView extends React.Component{
                     onPress = {() => this.handleLogOut()}
                   />
 
-                <BottomSheet
-                  ref = {node => {this.scrollRef = node}}
-                  snapPoints = {["80%","0%"]}
-                  initialSnap = {showComments ? 0 : 1}
-                  borderRadius = {10}
-                  renderHeader ={this.renderHeader}
-                  renderContent = {this.renderContent}
-                   />
 
                </View>
 
