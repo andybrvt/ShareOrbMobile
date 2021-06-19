@@ -305,6 +305,7 @@ export default ProfileHeader;
 
 const styles = StyleSheet.create({
   editButton: {
+  
     alignItems: 'center',
     paddingVertical: 5,
     paddingHorizontal: 20,
