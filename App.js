@@ -26,6 +26,7 @@ import Chats from './Chats/Chats';
 import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
 import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocket';
 import ChatSidePanelWebSocketInstance from './Websockets/newChatSidePanelWebsocket';
+import SocialCommentsWebsocketInstance from './Websockets/commentsCellWebsocket';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch,
    faUserCircle,
@@ -96,6 +97,10 @@ class App extends Component{
     ChatSidePanelWebSocketInstance.addCallbacks(
       // These function is to set the chats in
       this.props.setChats.bind(this)
+    )
+
+    SocialCommentsWebsocketInstance.addCallbacks(
+      this.props.loadSocialComments.bind(this)
     )
   }
 
@@ -202,9 +207,7 @@ class App extends Component{
   // the home page first and then start rendering the tab stack seperatly
   createTabStack = () =>{
 
-    const showComments = this.props.showNewsfeedComments;
 
-    console.log(showComments)
     return (
       <Tab.Navigator
         initialRouteName = "Home"
@@ -306,8 +309,7 @@ class App extends Component{
 
   render(){
 
-    console.log('show comments')
-    console.log(this.props.showNewsfeedComments)
+
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth
@@ -476,7 +478,6 @@ const mapStateToProps = state => {
     id: state.auth.id,
     loading: state.auth.loading,
     showFinalModal: state.socialNewsfeed.showFinalModal,
-    showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments
 
   }
 }
@@ -492,6 +493,7 @@ const mapDispatchToProps = dispatch => {
     addFirstSocialCellPost: socialCell => dispatch(socialNewsfeedActions.addFirstSocialCellPost(socialCell)),
     updateSocialCellPost: socialCell => dispatch(socialNewsfeedActions.updateSocialCellPost(socialCell)),
 
+    loadSocialComments: socialComments => dispatch(socialNewsfeedActions.loadSocialComments(socialComments)),
 
 
     loadProfile: profile => dispatch(exploreActions.loadProfile(profile)),

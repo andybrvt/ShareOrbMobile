@@ -6,7 +6,7 @@ const initialState = {
   socialPosts: [],
   curSocialCell: {},
   showFinalModal: false,
-  showNewsfeedComments: false,
+  socialComments: {},
 }
 
 const loadSocialPosts = (state, action) => {
@@ -60,11 +60,12 @@ const finalPostModal = (state, action) => {
   })
 }
 
-const newsFeedCommentSec = (state, action) => {
-  return updateObject(state, {
-    showNewsfeedComments: !state.showNewsfeedComments
+const loadSocialComments = (state, action) => {
+  return  updateObject(state, {
+    socialComments: action.socialComments
   })
 }
+
 
 
 const reducer = (state = initialState, action) => {
@@ -83,8 +84,8 @@ const reducer = (state = initialState, action) => {
       return updateSocialCellPost(state, action)
     case actionTypes.FINAL_POST_MODAL:
       return finalPostModal(state, action);
-    case actionTypes.NEWSFEED_COMMENT_SECTION:
-      return newsFeedCommentSec(state, action);
+    case actionTypes.LOAD_SOCIAL_COMMENTS:
+      return loadSocialComments(state, action);
     default:
       return state;
 

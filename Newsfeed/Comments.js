@@ -18,7 +18,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
  // you can upload pictures and write a caption after uploaidng
  // pictures
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-
+import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket';
 
 
 
@@ -27,15 +27,44 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
    constructor(props){
      super(props)
+     this.initialiseComments()
    }
 
    renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.panelHeader}>
         <View style={styles.panelHandle} />
+        <Text> Comments </Text>
       </View>
     </View>
   );
+
+  initialiseComments(){
+    const cellId = this.props.route.params.cellId
+    this.waitForCommentsSocketConnection(() => {
+      SocialCommentsWebsocketInstance.fetchComments(
+        cellId
+      )
+    })
+
+    SocialCommentsWebsocketInstance.connect(cellId)
+  }
+
+  waitForCommentsSocketConnection(callback) {
+    const component = this;
+    setTimeout(
+      function(){
+
+        if (SocialCommentsWebsocketInstance.state() === 1){
+
+          callback();
+          return;
+        } else{
+            component.waitForCommentsSocketConnection(callback);
+        }
+      }, 100)
+
+  }
 
   onPress = () => {
     console.log('it does go back')
@@ -44,6 +73,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
   componentDidMount = () => {
     this.scrollRef.snapTo(0);
+
   }
 
    onBackNav = () => {
@@ -54,21 +84,43 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    }
 
    componentWillUnmount = () => {
-
+     SocialCommentsWebsocketInstance.disconnect()
    }
 
-   renderContent = () => (
-     <View style = {{
-         backgroundColor: 'white',
-         height: "100%",
-       }}>
-       <Text> this is some text </Text>
-     </View>
-   )
+   renderComment = ({item}) => {
+
+     return(
+       <View>
+         <Text> stuff </Text>
+       </View>
+     )
+   }
+
+   renderContent = () => {
+
+     const comments = this.props.socialComments
+
+     return (
+       <View style = {{
+           backgroundColor: 'white',
+           height: "100%",
+         }}>
+         <FlatList
+           data = {comments}
+           renderItem = {this.renderComment}
+           keyExtractor={item => item.id.toString()}
+
+            />
+
+       </View>
+     )
+   }
+
+
 
    render(){
 
-
+     console.log(this.props)
      return (
          <SafeAreaView
            style = {{
@@ -85,7 +137,6 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
                    ref = {node => {this.scrollRef = node}}
                    snapPoints = {["80%","0%"]}
                    initialSnap = {1}
-                   borderRadius = {10}
                    renderHeader ={this.renderHeader}
                    renderContent = {this.renderContent}
                     />
@@ -105,6 +156,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
      userId: state.auth.id,
      currentUser: state.auth.username,
      profilepic: state.auth.profilePic,
+     socialComments: state.socialNewsfeed.socialComments
    }
  }
 

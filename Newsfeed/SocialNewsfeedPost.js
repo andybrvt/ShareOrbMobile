@@ -27,18 +27,10 @@ class SocialNewsfeedPost extends React.Component{
     }
   }
 
-  changeShowComments = () => {
+  changeShowComments = (cellId) => {
 
-    console.log('here are the comments')
-    this.props.onCommentOpen()
-    // this.props.navigation.navigate("Comments",
-    // {
-    //     comments: this.props.data.post.get_socialCalComment,
-    //     profilePic:`${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture,
-    //     caption:this.props.data.post.dayCaption,
-    // }
-    //
-    // )
+    this.props.onCommentOpen(cellId)
+
   }
 
   changeShowLike = () => {
@@ -149,6 +141,7 @@ class SocialNewsfeedPost extends React.Component{
       }
     }
 
+
     if(userPostImages.length === 1){
       return (
         <View style = {styles.container}>
@@ -242,7 +235,7 @@ class SocialNewsfeedPost extends React.Component{
               </View>
 
               <View style = {styles.tagCSS2}>
-                <TouchableOpacity  onPress={this.changeShowComments}>
+                <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
                   <View  style = {styles.justifyCenter}>
                     {
                       (this.state.showComments) ?

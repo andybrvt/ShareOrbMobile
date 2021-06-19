@@ -56,9 +56,10 @@ export const finalPostModal = () => {
   }
 }
 
-export const newsFeedCommentSec = () =>{
-  // indicate that you open up the comment section
-  return{
-    type: actionTypes.NEWSFEED_COMMENT_SECTION,
+export const loadSocialComments = (socialComments) => {
+  // load the comments for a specific post
+  return {
+    type: actionTypes.LOAD_SOCIAL_COMMENTS,
+    socialComments: socialComments
   }
 }
