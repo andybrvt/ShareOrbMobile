@@ -48,7 +48,7 @@ class NewPostingPage extends React.Component{
 
      if(list.length > 0){
        this.props.navigation.setOptions({
-         title: `Seclected ${list.length} images`,
+         title: `Selected ${list.length} images`,
          headerRight: () => this.renderDone()
        })
      }

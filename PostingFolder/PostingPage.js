@@ -29,14 +29,14 @@ import AdjModal from '../RandomComponents/AdjModal';
 import * as ImagePicker from 'expo-image-picker';
 import Animated, {Easing} from 'react-native-reanimated';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle, ChevronLeft } from "react-native-feather";
+import { Camera, Video, ArrowUpCircle, Plus, Mail, UserPlus, X, XCircle, PlusCircle, ChevronLeft } from "react-native-feather";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import NationalDayPost from './NationalDayPost';
 import CurrentPicPost from './CurrentPicPost';
 import Test from './Test';
 import FadingUpArrow from './FadingUpArrow';
-
+import { createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
@@ -139,7 +139,12 @@ class PostingPage extends React.Component{
 
      if(fileList.length > 1){
        this.props.navigation.setOptions({
-         title: `Seclected ${fileList.length} images`,
+         headerStyle:{
+           shadowColor:'#fff', //ios
+           elevation:0,        // android
+
+         },
+         title: `Selected ${fileList.length} images`,
          headerRight: () => this.renderDone(),
          headerLeft: () => this.renderBack()
 
@@ -147,6 +152,12 @@ class PostingPage extends React.Component{
      } else {
        this.props.navigation.setOptions({
          title: 'Add Day',
+         headerStyle:{
+           shadowColor:'#fff', //ios
+           elevation:0,        // android
+
+         },
+          ...TransitionPresets.ModalSlideFromBottomIOS,
          headerLeft: () => this.renderBack()
        })
      }
@@ -420,7 +431,7 @@ class PostingPage extends React.Component{
 
       if(list.length > 0){
         this.props.navigation.setOptions({
-          title: `Seclected ${list.length} images`,
+          title: `Selected ${list.length} images`,
           headerRight: () => this.renderDone()
         })
       }
@@ -433,14 +444,17 @@ class PostingPage extends React.Component{
    renderDone = () => {
 
      return (
+       <View style={{right:10}}>
        <TouchableOpacity
          >
          <Button
+
            title = "Next"
            onPress = {() => this.nextPress()}
 
             />
        </TouchableOpacity>
+       </View>
      )
    }
 
@@ -451,8 +465,9 @@ class PostingPage extends React.Component{
        onPress = {() => this.props.navigation.goBack(0)}
        >
          <X
-           height = {40}
-           width = {40}
+           height = {30}
+           width = {30}
+           style={{left:'25%'}}
            stroke = "#1890ff"
            />
 
@@ -698,7 +713,7 @@ class PostingPage extends React.Component{
        })
 
        this.props.navigation.setOptions({
-         title: `Seclected ${curList.length} images`,
+         title: `Selected ${curList.length} images`,
          headerRight: () => this.renderDone()
        })
 
@@ -965,9 +980,19 @@ class PostingPage extends React.Component{
              </View>
 
              <View style = {styles.dayTextContainer}>
+               <Camera
+                 height = {35}
+                 width = {35}
+                 stroke = "black"
+                 fill= "white" />
+               <Video
+                   height = {35}
+                   width = {35}
+                   stroke = "black"
+                   fill= "white" />
                <Text style = {styles.smallText}> Images above will be saved in your daily album </Text>
              </View>
-
+            {/*
              <View style = {styles.dayTextContainer}>
                <Text style = {styles.dayText}> National Days </Text>
 
@@ -976,13 +1001,15 @@ class PostingPage extends React.Component{
 
              </View>
 
+            */}
 
+            {/*
              <View style = {styles.dayTextContainer}>
                <Text style = {styles.dayText}> Pictures took today </Text>
 
                <CurrentPicPost />
              </View>
-
+             */}
 
 
 
@@ -1069,6 +1096,7 @@ class PostingPage extends React.Component{
      bigImageContainer:{
        width: Math.round(width/3)*coverScale,
        height: Math.round(width/3)*coverScale,
+
        overflow:"hidden",
        alignItems: 'center',
        justifyContent: "center",

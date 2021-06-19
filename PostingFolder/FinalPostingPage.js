@@ -52,21 +52,17 @@ import FadingUpArrow from './FadingUpArrow';
            <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
 
 
+             <View style={{top:10,}}>
 
 
-             <View style = {{
-                 flex: 1
-               }}>
-
-
-
+               <View><Text>Caption</Text></View>
                <View
-                 style = {styles.textContainer}
+                 style={styles.addBorder}
                  >
                  <TextInput
                    style = {{
                      width: "100%",
-                     fontSize: 30
+                     fontSize: 18
                    }}
                   placeholder="Write something about your day..."
                   placeholderTextColor="lightgray"
@@ -76,8 +72,13 @@ import FadingUpArrow from './FadingUpArrow';
                   onChangeText = {this.props.onChange}
                 />
                </View>
+               <View><Text>Tags</Text></View>
+               <View><Text>Location</Text></View>
+               <View><Text>Notify Friends</Text></View>
 
              </View>
+
+
 
            </TouchableWithoutFeedback>
 
@@ -95,6 +96,15 @@ import FadingUpArrow from './FadingUpArrow';
  }
 
 const styles = StyleSheet.create({
+  addBorder:{
+
+    padding:20,
+    borderTopWidth:1,
+    borderTopColor: '#f2f2f2',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+
+  },
   container: {
     flex: 1,
 
@@ -104,8 +114,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'green'
   },
   textContainer: {
-    flex: 3,
-    // backgroundColor: 'pink',
+    flex: 1,
+    backgroundColor: 'pink',
     padding:20
   }
 
