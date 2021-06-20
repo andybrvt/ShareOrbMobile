@@ -255,6 +255,7 @@ class App extends Component{
                 tabBarIcon: ({ color }) => (
                   <Aperture style={{bottom:5}} stroke="white" fill="#1890ff" strokeWidth={2} width={40} height={40}  />
                 ),
+                ...TransitionPresets.ModalSlideFromBottomIOS,
               }}
 
             listeners = {({navigation}) => ({

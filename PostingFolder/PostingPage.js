@@ -138,13 +138,15 @@ class PostingPage extends React.Component{
      })
 
      if(fileList.length > 1){
+       const curDate = dateFns.format(new Date(), "iiii MMMM dd")
        this.props.navigation.setOptions({
          headerStyle:{
            shadowColor:'#fff', //ios
            elevation:0,        // android
 
          },
-         title: `Selected ${fileList.length} images`,
+         ...TransitionPresets.ModalSlideFromBottomIOS,
+         title: curDate,
          headerRight: () => this.renderDone(),
          headerLeft: () => this.renderBack()
 
@@ -157,7 +159,7 @@ class PostingPage extends React.Component{
            elevation:0,        // android
 
          },
-          ...TransitionPresets.ModalSlideFromBottomIOS,
+         ...TransitionPresets.ModalSlideFromBottomIOS,
          headerLeft: () => this.renderBack()
        })
      }
@@ -500,6 +502,7 @@ class PostingPage extends React.Component{
        headerLeft: () => this.renderCloseModal(),
        headerRight: null,
      })
+
      this.showFinal.setValue(true);
    }
 

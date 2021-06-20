@@ -30,7 +30,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 // this will be used to show the list of chats
 class Chats extends React.Component{
   selectItem(item) {
-  
+
     this.props.navigation.navigate("MessageFriend",
       {
         chatPersonName:this.getChatUserName(item.participants),
@@ -425,14 +425,7 @@ const styles = StyleSheet.create({
     bottom:10,
     backgroundColor: '#1890ff',
   },
-  column:{
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',       //THIS LINE HAS CHANGED
-    paddingLeft: 35,
-    justifyContent:'center',
 
-},
   safeArea: {
     backgroundColor: "#1890ff",
     flex: 1,
@@ -492,6 +485,14 @@ const styles = StyleSheet.create({
     marginTop:30,
     height: 65,
     flexDirection: 'row'
+  },
+  column:{
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',       //THIS LINE HAS CHANGED
+    paddingLeft: 35,
+    justifyContent:'center',
+
   },
   chatAvatar: {
     flex: 1,
