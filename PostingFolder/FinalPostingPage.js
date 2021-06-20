@@ -24,7 +24,7 @@ import Animated from 'react-native-reanimated';
 import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
 import FadingUpArrow from './FadingUpArrow';
 import { Avatar, BottomNavigation } from 'react-native-paper';
-
+import Tags from "react-native-tags";
  class FinalPostingPage extends React.Component{
 
    frequentChatPeople = () => {
@@ -95,18 +95,7 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
                style={[styles.previewImage]}
               />
            </View>
-          <View style={[styles.column]}>
-             <Image
-               source = {{
-                 uri: 'https://images.unsplash.com/photo-1618125857227-df2ded76ec2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-               }}
-               style={[styles.previewImage]}
-              />
-           </View>
-
-
-
-       </View>
+      </View>
      )
    }
    /*
@@ -128,49 +117,70 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
              {translateY: this.props.slide}
            ]
          }}
-
          >
-
-           <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
-
-
-             <View style={{top:'0%'}}>
-
-                 <ScrollView
-                   showsHorizontalScrollIndicator={false}
-                   horizontal = {true}>
-                   {this.frequentChatPeople()}
-                 </ScrollView>
+             <View>
+               <ScrollView
+                 showsHorizontalScrollIndicator={false}
+                 horizontal = {true}>
+                 {this.frequentChatPeople()}
+               </ScrollView>
                <View style={styles.addBorder}>
-                 <TextInput
-                   style = {{
-                     width: "100%",
-                     fontSize: 18,
-                   }}
-                  placeholder="Write something about your day..."
-                  placeholderTextColor="lightgray"
-                  multiline = {true}
-                  numberOfLines = {2}
-                  value = {this.props.caption}
-                  onChangeText = {this.props.onChange}
-                />
+                <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
+                   <TextInput
+                     style = {{
+                       width: "100%",
+                       fontSize: 18,
+                     }}
+                    placeholder="Write something about your day..."
+                    placeholderTextColor="lightgray"
+                    multiline = {true}
+                    numberOfLines = {2}
+                    value = {this.props.caption}
+                    onChangeText = {this.props.onChange}
+                  />
+                </TouchableWithoutFeedback>
                </View>
-               <View style={{top:'50%'}}>
-                 <View><Text>Tags</Text></View>
-                 <View><Text>Location</Text></View>
-                 <View><Text>Notify Friends</Text></View>
-               </View>
+
              </View>
+             <View style={{height:'35%', top:25}}>
 
+               <View>
+                 <View style={{padding:30}}>
+                    <Text>Tags</Text>
+                    <View style={{padding:10}}>
+                      <Tags
+                      initialText="Press space to create tab"
+                      textInputProps={{
+                        placeholder: "Any type of animal"
+                      }}
+                      initialTags={[]}
+                      onChangeTags={tags => console.log(tags)}
+                      onTagPress={(index, tagLabel, event, deleted) =>
+                        console.log(index, tagLabel, event, deleted ? "deleted" : "not deleted")
+                      }
+                      maxNumberOfTags={3}
+                      containerStyle={{ justifyContent: "center"}}
+                      inputStyle={{ backgroundColor: "#d9d9d9", }}
+                      tagContainerStyle={{}}
 
+                      tagTextStyle={{ color:'blue' }}
 
-           </TouchableWithoutFeedback>
+                      renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
 
+                        <TouchableOpacity key={`${tag}-${index}`} onPress={onPress}>
+                          <View style={{backgroundColor:'#f0f0f0', borderRadius:10,  padding:10,}}>
+                          <Text>{tag}</Text>
+                          </View>
+                        </TouchableOpacity>
+                      )}
+                    />
+                  </View>
+                 <Text>Location</Text>
+                 </View>
+               </View>
 
-
+             </View>
            <FadingUpArrow />
-
-
        </Animated.View>
 
 
@@ -182,7 +192,7 @@ import { Avatar, BottomNavigation } from 'react-native-paper';
 const styles = StyleSheet.create({
 
   previewImage:{
-    width:75, height:75, borderRadius:15,
+    width:90, height:90, borderRadius:15,
   },
   frequentPeopleContainer: {
     marginTop:30,
@@ -198,8 +208,9 @@ const styles = StyleSheet.create({
 
   },
   addBorder:{
-    top:'25%',
-    padding:20,
+    top:'10%',
+    padding:30,
+    height:175,
     borderTopWidth:1,
     borderTopColor: '#f2f2f2',
     borderBottomWidth: 1,

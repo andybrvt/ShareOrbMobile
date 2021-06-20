@@ -501,6 +501,8 @@ class PostingPage extends React.Component{
      this.props.navigation.setOptions({
        headerLeft: () => this.renderCloseModal(),
        headerRight: null,
+       ...TransitionPresets.SlideFromRightIOS,
+
      })
 
      this.showFinal.setValue(true);
@@ -514,7 +516,8 @@ class PostingPage extends React.Component{
      this.submit = false;
      this.props.navigation.setOptions({
        headerRight: () => this.renderDone(),
-       headerLeft: () => this.renderBack()
+       headerLeft: () => this.renderBack(),
+
 
      })
   }
