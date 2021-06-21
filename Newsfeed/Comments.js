@@ -6,10 +6,12 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TextInput,
+  KeyboardAvoidingView
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { Avatar, BottomNavigation } from 'react-native-paper';
+ import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import Animated from 'react-native-reanimated';
@@ -19,16 +21,30 @@ import BottomSheet from 'reanimated-bottom-sheet';
  // pictures
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket';
-
+import TextModal from '../RandomComponents/TextModal';
 
 
 
  class Comments extends React.Component{
 
+   state = {
+     comment: '',
+     showTextInput: false,
+   }
+
    constructor(props){
      super(props)
      this.initialiseComments()
    }
+
+
+   onCommentChange = e =>{
+     const tempVal = e;
+     this.setState({
+       comment: tempVal
+     })
+   }
+
 
    renderHeader = () => (
     <View style={styles.header}>
@@ -87,12 +103,41 @@ import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket
      SocialCommentsWebsocketInstance.disconnect()
    }
 
-   renderComment = ({item}) => {
+   showTextInput = () => {
+     this.setState({
+       showTextInput: true
+     })
+   }
 
+   closeTextInput = () => {
+     this.setState({
+       showTextInput: false
+     })
+   }
+
+   renderComment = ({item}) => {
+     console.log(item)
+     // let profilePic = ""
+     const profilePic = `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
+     const user = item.commentUser
+     // console.log(profilePic)
      return(
-       <View>
-         <Text> stuff </Text>
-       </View>
+         <View>
+            <Avatar
+              size = {40}
+              rounded
+              source = {{
+                uri: profilePic
+              }}
+              />
+            <Text>{global.NAMEMAKE(
+                user.first_name,
+                user.last_name,
+                30
+              )}</Text>
+            <Text> {item.body} </Text>
+            <Text> {global.RENDER_TIMESTAMP(item.created_on)}</Text>
+         </View>
      )
    }
 
@@ -101,19 +146,37 @@ import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket
      const comments = this.props.socialComments
 
      return (
-       <View style = {{
-           backgroundColor: 'white',
-           height: "100%",
-         }}>
-         <FlatList
-           data = {comments}
-           renderItem = {this.renderComment}
-           keyExtractor={item => item.id.toString()}
 
-            />
+         <View style = {{
+             backgroundColor: 'white',
+             height: "100%",
+           }}>
 
-       </View>
-     )
+           <FlatList
+             data = {comments}
+             renderItem = {this.renderComment}
+             // keyExtractor={item => item.id.toString()}
+
+              />
+              <TextInput
+                placeholder = "Write a comment"
+                value = {this.state.comment}
+                onChangeText = {this.onCommentChange}
+                style = {{
+                  zIndex: 9999,
+                  backgroundColor: 'red',
+                  height: 40}}
+                />
+
+              <Button
+                onPress = {() => this.showTextInput()}
+                title = "test click"
+                 />
+
+
+         </View>
+
+            )
    }
 
 
@@ -122,6 +185,8 @@ import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket
 
      console.log(this.props)
      return (
+       <KeyboardAvoidingView style = {{flex: 1}} behavior = "padding">
+
          <SafeAreaView
            style = {{
              // backgroundColor: 'red',
@@ -129,24 +194,34 @@ import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket
            }}>
 
            <TouchableWithoutFeedback onPress = {() => this.onBackNav()}>
+
              <View style = {{
                  flex: 1,
                  backgroundColor: 'transparent'}}>
 
-                 <BottomSheet
-                   ref = {node => {this.scrollRef = node}}
-                   snapPoints = {["80%","0%"]}
-                   initialSnap = {1}
-                   renderHeader ={this.renderHeader}
-                   renderContent = {this.renderContent}
-                    />
+
+                   <BottomSheet
+                     ref = {node => {this.scrollRef = node}}
+                     snapPoints = {["80%","0%"]}
+                     initialSnap = {1}
+                     renderHeader ={this.renderHeader}
+                     renderContent = {this.renderContent}
+                      />
 
              </View>
 
+
            </TouchableWithoutFeedback>
 
+           <TextModal
+             onCancel = {this.closeTextInput}
+             visible = {this.state.showTextInput}/>
 
          </SafeAreaView>
+
+       </KeyboardAvoidingView>
+
+
 
      )
    }

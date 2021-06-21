@@ -1,0 +1,112 @@
+import React from 'react';
+import {
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  Image,
+  TextInput,
+  ActivityIndicator,
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  Modal
+ } from 'react-native';
+
+// This file will be used for modales when dealing with
+// text inputs
+ class TextModal extends React.Component{
+
+   onCancel = () => {
+     this.props.onCancel()
+   }
+
+   onAction = () => {
+     console.log('start this')
+   }
+
+   render(){
+
+     return (
+       <View>
+         <Modal
+           transparent = {true}
+           visible = {this.props.visible}
+           >
+           <TouchableWithoutFeedback
+              onPress = {() =>this.onCancel()}>
+             <View
+               onPress = {() => this.onCancel()}
+               style = {{
+                 backgroundColor: "#000000aa",
+                 flex: "1",
+                 alignItems: 'center',
+                 justifyContent: 'center'
+               }}>
+               <View style = {{
+                   backgroundColor: "#ffffff",
+                   // margin: 50,
+                   padding: 30,
+                   borderRadius: 10,
+                   height: this.props.height,
+                   width: this.props.width,
+                   alignItems: 'center'
+                   // flex: 1
+                 }}>
+                 <Text style = {{
+                    textAlign: "center",
+                    fontSize: 20}}>
+                   Are you sure you want to delete this photo?
+                 </Text>
+                 <TouchableOpacity
+                   onPress = {() => this.onAction()}
+                   style = {styles.button}
+                   >
+                   <Text
+                     style = {styles.buttonText}
+                     >Accept</Text>
+                 </TouchableOpacity>
+
+                 <View
+                   style = {styles.cancelText}>
+                   <Text
+                     onPress = {() => this.onCancel()}
+
+                     > Nope, I'm good </Text>
+                 </View>
+
+               </View>
+             </View>
+           </TouchableWithoutFeedback>
+
+         </Modal>
+       </View>
+     )
+
+   }
+ }
+
+ const styles = StyleSheet.create({
+   button: {
+     position: "relative",
+     width: "90%",
+     borderRadius: 25,
+     height: 50,
+     alignItems: "center",
+     justifyContent: "center",
+     marginTop: 30,
+     backgroundColor: "#1890ff",
+
+   },
+   buttonText: {
+     color: 'white',
+     fontSize: 14
+   },
+   cancelText: {
+     marginTop: 20,
+   }
+ })
+
+ export default TextModal;
