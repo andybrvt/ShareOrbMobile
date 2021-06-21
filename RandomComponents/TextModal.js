@@ -12,7 +12,8 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   TouchableWithoutFeedback,
-  Modal
+  Modal,
+  KeyboardAvoidingView
  } from 'react-native';
 
 // This file will be used for modales when dealing with
@@ -30,59 +31,54 @@ import {
    render(){
 
      return (
+
+
        <View>
+
          <Modal
            transparent = {true}
            visible = {this.props.visible}
            >
-           <TouchableWithoutFeedback
-              onPress = {() =>this.onCancel()}>
-             <View
-               onPress = {() => this.onCancel()}
-               style = {{
-                 backgroundColor: "#000000aa",
-                 flex: "1",
-                 alignItems: 'center',
-                 justifyContent: 'center'
-               }}>
-               <View style = {{
-                   backgroundColor: "#ffffff",
-                   // margin: 50,
-                   padding: 30,
-                   borderRadius: 10,
-                   height: this.props.height,
-                   width: this.props.width,
-                   alignItems: 'center'
-                   // flex: 1
-                 }}>
-                 <Text style = {{
-                    textAlign: "center",
-                    fontSize: 20}}>
-                   Are you sure you want to delete this photo?
-                 </Text>
-                 <TouchableOpacity
-                   onPress = {() => this.onAction()}
-                   style = {styles.button}
-                   >
-                   <Text
-                     style = {styles.buttonText}
-                     >Accept</Text>
-                 </TouchableOpacity>
+           <KeyboardAvoidingView style = {{flex: 1}} behavior = "padding" >
+             <TouchableWithoutFeedback
+                onPress = {() =>this.onCancel()}
+                >
 
-                 <View
-                   style = {styles.cancelText}>
-                   <Text
-                     onPress = {() => this.onCancel()}
 
-                     > Nope, I'm good </Text>
-                 </View>
+                  <View
+                    style = {{
+                      backgroundColor: "#000000aa",
+                      flex: "1",
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                    <View style = {{flex:1}}/>
+                    <TextInput
+                      placeholder = "Write a comment"
+                      // value = {this.state.comment}
+                      // onChangeText = {this.onCommentChange}
+                      style = {{
+                        width: "100%",
+                        zIndex: 9999,
+                        backgroundColor: 'red',
+                        height: 40}}
+                      />
+                  </View>
 
-               </View>
-             </View>
-           </TouchableWithoutFeedback>
+
+             </TouchableWithoutFeedback>
+
+
+
+           </KeyboardAvoidingView>
+
+
 
          </Modal>
+
        </View>
+
+
      )
 
    }

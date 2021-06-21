@@ -158,15 +158,7 @@ import TextModal from '../RandomComponents/TextModal';
              // keyExtractor={item => item.id.toString()}
 
               />
-              <TextInput
-                placeholder = "Write a comment"
-                value = {this.state.comment}
-                onChangeText = {this.onCommentChange}
-                style = {{
-                  zIndex: 9999,
-                  backgroundColor: 'red',
-                  height: 40}}
-                />
+
 
               <Button
                 onPress = {() => this.showTextInput()}
@@ -185,13 +177,13 @@ import TextModal from '../RandomComponents/TextModal';
 
      console.log(this.props)
      return (
-       <KeyboardAvoidingView style = {{flex: 1}} behavior = "padding">
 
          <SafeAreaView
            style = {{
              // backgroundColor: 'red',
              flex: 1
            }}>
+
 
            <TouchableWithoutFeedback onPress = {() => this.onBackNav()}>
 
@@ -217,9 +209,10 @@ import TextModal from '../RandomComponents/TextModal';
              onCancel = {this.closeTextInput}
              visible = {this.state.showTextInput}/>
 
+
+
          </SafeAreaView>
 
-       </KeyboardAvoidingView>
 
 
 
