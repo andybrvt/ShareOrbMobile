@@ -15,7 +15,7 @@ class LoadingScreen extends React.Component{
 
 
   render(){
-  
+
 
   // The funciton here will be pretty much use to render the info
   // so what happens here is that when you login and authenticated
@@ -25,7 +25,7 @@ class LoadingScreen extends React.Component{
       // This function here will turn off the loading when the
       // username is there
 
-      setTimeout(() => {this.props.authDoneLoading()}, 2000)
+      setTimeout(() => {this.props.authDoneLoading()}, 1000)
 
     }
 
