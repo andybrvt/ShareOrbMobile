@@ -15,6 +15,7 @@ import {
   Modal,
   KeyboardAvoidingView
  } from 'react-native';
+ import RealSquaredInput from './RealSquaredInput';
 
 // This file will be used for modales when dealing with
 // text inputs
@@ -26,6 +27,11 @@ import {
 
    onAction = () => {
      console.log('start this')
+   }
+
+   componentDidMount(){
+
+
    }
 
    render(){
@@ -53,16 +59,7 @@ import {
                       justifyContent: 'center'
                     }}>
                     <View style = {{flex:1}}/>
-                    <TextInput
-                      placeholder = "Write a comment"
-                      // value = {this.state.comment}
-                      // onChangeText = {this.onCommentChange}
-                      style = {{
-                        width: "100%",
-                        zIndex: 9999,
-                        backgroundColor: 'red',
-                        height: 40}}
-                      />
+                    <RealSquaredInput />
                   </View>
 
 

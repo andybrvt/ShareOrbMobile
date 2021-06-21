@@ -22,6 +22,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket';
 import TextModal from '../RandomComponents/TextModal';
+import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 
 
 
@@ -159,13 +160,6 @@ import TextModal from '../RandomComponents/TextModal';
 
               />
 
-
-              <Button
-                onPress = {() => this.showTextInput()}
-                title = "test click"
-                 />
-
-
          </View>
 
             )
@@ -200,12 +194,22 @@ import TextModal from '../RandomComponents/TextModal';
                      renderContent = {this.renderContent}
                       />
 
+
+
              </View>
 
 
            </TouchableWithoutFeedback>
 
+
+            <FakeSquaredInput
+              onOpen = {this.showTextInput}
+              />
+
+
+
            <TextModal
+             {...this.props}
              onCancel = {this.closeTextInput}
              visible = {this.state.showTextInput}/>
 
