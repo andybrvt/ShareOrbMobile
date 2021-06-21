@@ -25,6 +25,8 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH} from "../Constants";
 import FadingUpArrow from './FadingUpArrow';
 import { Avatar, BottomNavigation } from 'react-native-paper';
 import Tags from "react-native-tags";
+import { Tag, Bookmark, MapPin} from "react-native-feather";
+
  class FinalPostingPage extends React.Component{
 
    frequentChatPeople = () => {
@@ -129,7 +131,7 @@ import Tags from "react-native-tags";
                    <TextInput
                      style = {{
                        width: "100%",
-                       fontSize: 18,
+                       fontSize: 16,
                      }}
                     placeholder="Write something about your day..."
                     placeholderTextColor="lightgray"
@@ -142,40 +144,52 @@ import Tags from "react-native-tags";
                </View>
 
              </View>
-             <View style={{height:'35%', top:25}}>
+             <View style={{height:'35%', top:25, fontSize:10}}>
 
                <View>
                  <View style={{padding:30}}>
-                    <Text>Tags</Text>
-                    <View style={{padding:10}}>
+                    <View style={{flexDirection:'row'}}>
+                      <Tag stroke="black" strokeWidth={2.5} width={17.5} height={17.5} style={{top:5}} />
+                      <Text style={{left:5, fontSize:16}}>Tags</Text>
+                    </View>
+                    <View style={{marginTop:20}}>
                       <Tags
-                      initialText="Press space to create tab"
+                      initialText=""
                       textInputProps={{
-                        placeholder: "Any type of animal"
+                        placeholder: "Press space or comma to create a tag"
                       }}
                       initialTags={[]}
                       onChangeTags={tags => console.log(tags)}
                       onTagPress={(index, tagLabel, event, deleted) =>
                         console.log(index, tagLabel, event, deleted ? "deleted" : "not deleted")
                       }
-                      maxNumberOfTags={3}
+                      maxNumberOfTags={4}
                       containerStyle={{ justifyContent: "center"}}
-                      inputStyle={{ backgroundColor: "#d9d9d9", }}
-                      tagContainerStyle={{}}
+                      inputStyle={{ backgroundColor: "#f0f0f0", borderRadius:10, paddingTop:5, fontSize:15}}
+                      tagContainerStyle={{backgroundColor:'red'}}
 
                       tagTextStyle={{ color:'blue' }}
 
                       renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
 
                         <TouchableOpacity key={`${tag}-${index}`} onPress={onPress}>
-                          <View style={{backgroundColor:'#f0f0f0', borderRadius:10,  padding:10,}}>
+                          <View style={{backgroundColor:'#f0f0f0', borderRadius:10,  padding:10, marginRight:15}}>
+
                           <Text>{tag}</Text>
                           </View>
                         </TouchableOpacity>
                       )}
                     />
                   </View>
-                 <Text>Location</Text>
+                  <View>
+
+                  <View style={{flexDirection:'row', top:25}}>
+                    <MapPin stroke="black" strokeWidth={2.5} width={17.5} height={17.5} style={{top:3}} />
+                    <Text style={{left:5, fontSize:16}}>Location</Text>
+
+                  </View>
+                  <TextInput style={styles.textInput} placeholder="Input location"></TextInput>
+                  </View>
                  </View>
                </View>
 
@@ -192,7 +206,7 @@ import Tags from "react-native-tags";
 const styles = StyleSheet.create({
 
   previewImage:{
-    width:90, height:90, borderRadius:15,
+    width:80, height:80, borderRadius:15,
   },
   frequentPeopleContainer: {
     marginTop:30,
@@ -207,6 +221,14 @@ const styles = StyleSheet.create({
     justifyContent:'center',
 
   },
+  textInput: {
+   paddingLeft: 10,
+   top:40,
+   fontSize:15,
+   paddingTop:5,
+    backgroundColor: "#f0f0f0", borderRadius:10,
+
+ },
   addBorder:{
     top:'10%',
     padding:30,
