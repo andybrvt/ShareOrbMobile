@@ -13,7 +13,8 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Modal,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Keyboard
  } from 'react-native';
  import RealSquaredInput from './RealSquaredInput';
 
@@ -33,6 +34,10 @@ import {
 
 
    }
+
+
+
+
 
    render(){
 
@@ -59,7 +64,10 @@ import {
                       justifyContent: 'center'
                     }}>
                     <View style = {{flex:1}}/>
-                    <RealSquaredInput />
+                    <RealSquaredInput
+                      onChange = {this.props.onCommentChange}
+                      onValue  = {this.props.onCommentValue}
+                       />
                   </View>
 
 

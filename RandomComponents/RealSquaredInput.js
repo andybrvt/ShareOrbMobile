@@ -30,6 +30,8 @@ import {
             <TextInput
               autoFocus = {true}
               placeholder = "Write a post..."
+              value = {this.props.onValue}
+              onChangeText = {this.props.onChange}
              />
          </View>
        </TouchableHighlight>

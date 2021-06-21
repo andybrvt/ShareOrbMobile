@@ -8,7 +8,8 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Keyboard
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
  import { Avatar } from 'react-native-elements';
@@ -23,10 +24,12 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket';
 import TextModal from '../RandomComponents/TextModal';
 import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
+import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 
 
 
  class Comments extends React.Component{
+
 
    state = {
      comment: '',
@@ -36,6 +39,8 @@ import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
    constructor(props){
      super(props)
      this.initialiseComments()
+     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+
    }
 
 
@@ -93,6 +98,10 @@ import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 
   }
 
+  _keyboardDidShow(e) {
+   console.log( e.endCoordinates.height )
+  }
+
    onBackNav = () => {
      // this function will be use to navigate back
      // to the home page
@@ -114,6 +123,10 @@ import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
      this.setState({
        showTextInput: false
      })
+   }
+
+   onOpenTextInput = () => {
+     this.scrollRef.snapTo(1);
    }
 
    renderComment = ({item}) => {
@@ -148,9 +161,15 @@ import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 
      return (
 
-         <View style = {{
+       <KeyboardAvoidingView
+         keyboardVerticalOffset = {259}
+         behavior = "height" >
+
+         <View
+            style = {{
              backgroundColor: 'white',
              height: "100%",
+
            }}>
 
            <FlatList
@@ -160,7 +179,15 @@ import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 
               />
 
-         </View>
+            <RealRoundedInput
+              onChange = {this.onCommentChange}
+              value = {this.state.comment}
+              />
+
+           </View>
+
+         </KeyboardAvoidingView>
+
 
             )
    }
@@ -177,41 +204,46 @@ import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
              // backgroundColor: 'red',
              flex: 1
            }}>
+             <TouchableWithoutFeedback onPress = {() => this.onBackNav()}>
+
+               <View style = {{
+                   flex: 1,
+                   backgroundColor: 'transparent'}}>
 
 
-           <TouchableWithoutFeedback onPress = {() => this.onBackNav()}>
-
-             <View style = {{
-                 flex: 1,
-                 backgroundColor: 'transparent'}}>
-
-
-                   <BottomSheet
-                     ref = {node => {this.scrollRef = node}}
-                     snapPoints = {["80%","0%"]}
-                     initialSnap = {1}
-                     renderHeader ={this.renderHeader}
-                     renderContent = {this.renderContent}
-                      />
-
-
-
-             </View>
-
-
-           </TouchableWithoutFeedback>
-
-
-            <FakeSquaredInput
-              onOpen = {this.showTextInput}
-              />
+                     <BottomSheet
+                       ref = {node => {this.scrollRef = node}}
+                       snapPoints = {["80%","0%"]}
+                       initialSnap = {1}
+                       renderHeader ={this.renderHeader}
+                       renderContent = {this.renderContent}
+                        />
 
 
 
-           <TextModal
-             {...this.props}
-             onCancel = {this.closeTextInput}
-             visible = {this.state.showTextInput}/>
+               </View>
+
+
+             </TouchableWithoutFeedback>
+
+
+
+
+
+
+
+
+
+
+            {/*
+              <TextModal
+                {...this.props}
+                onCommentChange = {this.onCommentChange}
+                onCommentValue = {this.state.comment}
+                onCancel = {this.closeTextInput}
+                visible = {this.state.showTextInput}/>
+
+              */}
 
 
 
