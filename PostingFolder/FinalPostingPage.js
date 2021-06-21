@@ -222,10 +222,10 @@ const styles = StyleSheet.create({
 
   },
   textInput: {
-   paddingLeft: 10,
+
    top:40,
    fontSize:15,
-   paddingTop:5,
+
     backgroundColor: "#f0f0f0", borderRadius:10,
 
  },
