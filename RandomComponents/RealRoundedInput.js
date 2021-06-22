@@ -20,6 +20,11 @@ import {
      this.props.onCommentSubmit()
    }
 
+   onCommentFocus = () => {
+     console.log('scroll here')
+     this.props.onCommentFocus()
+   }
+
 
    render(){
 
@@ -52,6 +57,7 @@ import {
                   style = {{
                     height: 55,
                   }}
+                  onFocus = {() => this.onCommentFocus()}
                   placeholder = "Write a post..."
                   value = {this.props.value}
                   onChangeText = {(e) => this.props.onChange(e)}

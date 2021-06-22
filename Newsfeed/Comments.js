@@ -41,6 +41,7 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
      this.initialiseComments()
      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
 
+
    }
 
 
@@ -65,6 +66,11 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
          userId,
          comment,
        )
+
+       this.setState({
+         comment: ""
+       })
+       Keyboard.dismiss()
      }
    }
 
@@ -111,11 +117,10 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 
   componentDidMount = () => {
     this.scrollRef.snapTo(0);
-
   }
 
   _keyboardDidShow(e) {
-   console.log( e.endCoordinates.height )
+   // console.log( e.endCoordinates.height )
   }
 
    onBackNav = () => {
@@ -143,6 +148,19 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 
    onOpenTextInput = () => {
      this.scrollRef.snapTo(1);
+   }
+
+   pressToScroll = () => {
+     this.flatListRef.scrollToEnd({animating: true})
+
+   }
+
+   componentDidUpdate(prevProps){
+
+     if(prevProps.socialComments.length !== this.props.socialComments.length){
+       this.flatListRef.scrollToEnd({animating: true})
+
+     }
    }
 
    renderComment = ({item}) => {
@@ -189,9 +207,11 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
            }}>
 
            <FlatList
+             ref = {ref => this.flatListRef = ref}
+             style = {{backgroundColor: 'red'}}
              data = {comments}
              renderItem = {this.renderComment}
-             // keyExtractor={item => item.id.toString()}
+             keyExtractor={(item, index) => String(index)}
 
               />
 
@@ -199,7 +219,9 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
               onCommentSubmit = {this.onCommentSubmit}
               onChange = {this.onCommentChange}
               value = {this.state.comment}
+              onCommentFocus = {this.pressToScroll}
               />
+
 
            </View>
 
@@ -234,6 +256,9 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
                        initialSnap = {1}
                        renderHeader ={this.renderHeader}
                        renderContent = {this.renderContent}
+                       // enabledContentGestureInteraction = {false}
+                       callbackThreshold = {0.6}
+                       enabledInnerScrolling = {true}
                         />
 
 
