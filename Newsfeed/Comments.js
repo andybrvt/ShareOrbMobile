@@ -54,8 +54,7 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 
    onCommentSubmit = () => {
      // use to submit the comments into the websocket
-     console.log('here are the state comments')
-     console.log(this.state.comment)
+
      const comment = this.state.comment
      if(this.state.comment.length > 0){
        const cellId = this.props.route.params.cellId
@@ -111,7 +110,6 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
   }
 
   onPress = () => {
-    console.log('it does go back')
     this.props.navigation.goBack(0)
   }
 
@@ -164,11 +162,9 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
    }
 
    renderComment = ({item}) => {
-     console.log(item)
      // let profilePic = ""
      const profilePic = `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
      const user = item.commentUser
-     // console.log(profilePic)
      return(
          <View>
             <Avatar
@@ -235,7 +231,6 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 
    render(){
 
-     console.log(this.props)
      return (
 
          <SafeAreaView
@@ -259,6 +254,9 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
                        // enabledContentGestureInteraction = {false}
                        callbackThreshold = {0.6}
                        enabledInnerScrolling = {true}
+                       onCloseEnd = {() => console.log('closer here ')}
+                       onOpenEnd = {() => console.log('opener here')}
+                       onCloseStart = {() => this.onPress()}
                         />
 
 

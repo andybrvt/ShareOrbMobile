@@ -16,12 +16,10 @@ import {
  class RealRoundedInput extends React.Component{
 
    onSubmit = () => {
-     console.log("submit here")
      this.props.onCommentSubmit()
    }
 
    onCommentFocus = () => {
-     console.log('scroll here')
      this.props.onCommentFocus()
    }
 
