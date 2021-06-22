@@ -25,7 +25,7 @@ import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket
 import TextModal from '../RandomComponents/TextModal';
 import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 import RealRoundedInput from '../RandomComponents/RealRoundedInput';
-
+import SingleComment from './SingleComment';
 
 
  class Comments extends React.Component{
@@ -125,7 +125,16 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
      // this function will be use to navigate back
      // to the home page
      this.scrollRef.snapTo(1);
-     setTimeout(() => {this.props.navigation.goBack(0)});
+     setTimeout(() => {this.props.navigation.goBack(0)}, 100);
+   }
+
+   componentDidUpdate(prevProps){
+
+     if(prevProps.socialComments.length !== this.props.socialComments.length){
+
+       this.flatListRef.scrollToEnd({animating: true})
+
+     }
    }
 
    componentWillUnmount = () => {
@@ -153,35 +162,14 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 
    }
 
-   componentDidUpdate(prevProps){
 
-     if(prevProps.socialComments.length !== this.props.socialComments.length){
-       this.flatListRef.scrollToEnd({animating: true})
-
-     }
-   }
 
    renderComment = ({item}) => {
      // let profilePic = ""
      const profilePic = `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
      const user = item.commentUser
      return(
-         <View>
-            <Avatar
-              size = {40}
-              rounded
-              source = {{
-                uri: profilePic
-              }}
-              />
-            <Text>{global.NAMEMAKE(
-                user.first_name,
-                user.last_name,
-                30
-              )}</Text>
-            <Text> {item.body} </Text>
-            <Text> {global.RENDER_TIMESTAMP(item.created_on)}</Text>
-         </View>
+        <SingleComment item = {item} />
      )
    }
 
@@ -192,7 +180,7 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
      return (
 
        <KeyboardAvoidingView
-         keyboardVerticalOffset = {259}
+         keyboardVerticalOffset = {185}
          behavior = "height" >
 
          <View
@@ -204,7 +192,6 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 
            <FlatList
              ref = {ref => this.flatListRef = ref}
-             style = {{backgroundColor: 'red'}}
              data = {comments}
              renderItem = {this.renderComment}
              keyExtractor={(item, index) => String(index)}
@@ -217,6 +204,11 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
               value = {this.state.comment}
               onCommentFocus = {this.pressToScroll}
               />
+
+
+            <Button
+              onPress = {() => this.pressToScroll()}
+              title = "scroll" />
 
 
            </View>
@@ -247,7 +239,7 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 
                      <BottomSheet
                        ref = {node => {this.scrollRef = node}}
-                       snapPoints = {["80%","0%"]}
+                       snapPoints = {["90%","0%"]}
                        initialSnap = {1}
                        renderHeader ={this.renderHeader}
                        renderContent = {this.renderContent}
@@ -256,7 +248,7 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
                        enabledInnerScrolling = {true}
                        onCloseEnd = {() => console.log('closer here ')}
                        onOpenEnd = {() => console.log('opener here')}
-                       onCloseStart = {() => this.onPress()}
+                       // onCloseStart = {() => this.onPress()}
                         />
 
 
