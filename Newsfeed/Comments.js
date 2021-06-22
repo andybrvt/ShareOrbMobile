@@ -51,6 +51,22 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
      })
    }
 
+   onCommentSubmit = () => {
+     // use to submit the comments into the websocket
+     console.log('here are the state comments')
+     console.log(this.state.comment)
+     const comment = this.state.comment
+     if(this.state.comment.length > 0){
+       const cellId = this.props.route.params.cellId
+       const userId = this.props.userId
+       // Now do the websocket here
+       SocialCommentsWebsocketInstance.sendComment(
+         cellId,
+         userId,
+         comment,
+       )
+     }
+   }
 
    renderHeader = () => (
     <View style={styles.header}>
@@ -180,6 +196,7 @@ import RealRoundedInput from '../RandomComponents/RealRoundedInput';
               />
 
             <RealRoundedInput
+              onCommentSubmit = {this.onCommentSubmit}
               onChange = {this.onCommentChange}
               value = {this.state.comment}
               />

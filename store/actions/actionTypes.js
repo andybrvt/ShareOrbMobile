@@ -22,6 +22,8 @@ export const UPDATE_SOCIAL_CELL_POST = "UPDATE_SOCIAL_CELL_POST";
 export const LOAD_MORE_SOCIAL_POST = "LOAD_MORE_SOCIAL_POST";
 
 export const LOAD_SOCIAL_COMMENTS = "LOAD_SOCIAL_COMMENTS";
+export const SEND_SOCIAL_COMMENT = "SEND_SOCIAL_COMMENT";
+
 
 // This will be for the profile page
 export const LOAD_PROFILE = "LOAD_PROFILE";

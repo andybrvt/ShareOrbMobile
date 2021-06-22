@@ -66,6 +66,12 @@ const loadSocialComments = (state, action) => {
   })
 }
 
+const sendSocialComment =(state, action) => {
+  return updateObject(state, {
+    socialComments: [...state.socialComments, action.socialComment]
+  })
+}
+
 
 
 const reducer = (state = initialState, action) => {
@@ -86,6 +92,8 @@ const reducer = (state = initialState, action) => {
       return finalPostModal(state, action);
     case actionTypes.LOAD_SOCIAL_COMMENTS:
       return loadSocialComments(state, action);
+    case actionTypes.SEND_SOCIAL_COMMENT:
+      return sendSocialComment(state, action);
     default:
       return state;
 

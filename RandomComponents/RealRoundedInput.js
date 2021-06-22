@@ -15,6 +15,11 @@ import {
 
  class RealRoundedInput extends React.Component{
 
+   onSubmit = () => {
+     console.log("submit here")
+     this.props.onCommentSubmit()
+   }
+
 
    render(){
 
@@ -57,10 +62,31 @@ import {
 
            </View>
 
-            <TouchableOpacity style = {styles.rightContainer}>
-              <ArrowRightCircle width = {35} height = {35}/>
+           {
+             this.props.value.length > 0 ?
 
-            </TouchableOpacity>
+             <TouchableOpacity
+               onPress = {() => this.onSubmit()}
+               style = {styles.rightContainer}>
+
+               <ArrowRightCircle fill = "#1890ff" stroke = "white" width = {45} height = {45}/>
+
+             </TouchableOpacity>
+
+             :
+
+             <View
+               style = {styles.rightContainer}>
+
+               <ArrowRightCircle fill = "gray" stroke = "white" width = {45} height = {45}/>
+
+             </View>
+
+
+
+
+
+           }
 
          </View>
 

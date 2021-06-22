@@ -100,7 +100,8 @@ class App extends Component{
     )
 
     SocialCommentsWebsocketInstance.addCallbacks(
-      this.props.loadSocialComments.bind(this)
+      this.props.loadSocialComments.bind(this),
+      this.props.sendSocialComment.bind(this)
     )
   }
 
@@ -495,7 +496,7 @@ const mapDispatchToProps = dispatch => {
     updateSocialCellPost: socialCell => dispatch(socialNewsfeedActions.updateSocialCellPost(socialCell)),
 
     loadSocialComments: socialComments => dispatch(socialNewsfeedActions.loadSocialComments(socialComments)),
-
+    sendSocialComment: socialComment => dispatch(socialNewsfeedActions.sendSocialComment(socialComment)),
 
     loadProfile: profile => dispatch(exploreActions.loadProfile(profile)),
 

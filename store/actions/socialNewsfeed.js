@@ -63,3 +63,10 @@ export const loadSocialComments = (socialComments) => {
     socialComments: socialComments
   }
 }
+
+export const sendSocialComment = (socialComment) => {
+  return {
+    type: actionTypes.SEND_SOCIAL_COMMENT,
+    socialComment: socialComment
+  }
+}

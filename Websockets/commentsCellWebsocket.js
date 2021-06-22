@@ -48,20 +48,27 @@ class WebsocketCellComments{
   }
 
   addCallbacks(
-    fetchSocialComments
+    fetchSocialComments,
+    sendSocialComment
   ){
     this.callbacks['fetch_social_comments'] = fetchSocialComments
+    this.callbacks['send_social_comment'] = sendSocialComment
   }
 
   socketNewSocialComments(data){
 
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
-    console.log(command)
+    console.log(parsedData)
     if(command === 'fetch_social_cell_comments'){
       // Now start setting put up the callbacks
       const socialComments = parsedData.socialComments
       this.callbacks['fetch_social_comments'](socialComments)
+    }
+    if(command === "send_comment_cell"){
+      const comment = parsedData.comment
+
+      this.callbacks['send_social_comment'](comment)
     }
 
 
@@ -72,6 +79,18 @@ class WebsocketCellComments{
     this.sendCommentCellInfo({
       cellId: cellId,
       command: "fetch_comment_cell_info"
+    })
+  }
+
+  sendComment(cellId, userId, comment){
+    // sends the comment to the backend
+
+
+    this.sendCommentCellInfo({
+      cellId: cellId,
+      userId: userId,
+      comment: comment,
+      command: "send_comment_cell"
     })
   }
 
