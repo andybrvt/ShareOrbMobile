@@ -140,8 +140,8 @@ const styles = StyleSheet.create({
   profileHeader: {
     flex: 1.5,
     alignItems:'flex-start',
-    left:'12.5%',
-  width:'100%',
+    // left:'12.5%',
+    width:'100%',
 
 
   },

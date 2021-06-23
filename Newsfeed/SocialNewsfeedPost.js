@@ -20,7 +20,7 @@ const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animat
 
 
 const width = Dimensions.get("window").width
-const margin = 3;
+const margin = 6;
 const col = 2;
 
 class SocialNewsfeedPost extends React.Component{
@@ -77,11 +77,14 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
-  onSlidePress = () => {
-    this.showExtra.setValue(!this.state.showSlide)
-    this.setState({
-      showSlide: !this.state.showSlide
-    })
+  onSlidePress = (num) => {
+    if(num > 1){
+      this.showExtra.setValue(!this.state.showSlide)
+      this.setState({
+        showSlide: !this.state.showSlide
+      })
+    }
+
   }
 
   renderExtraPics = (items) => {
@@ -139,8 +142,10 @@ class SocialNewsfeedPost extends React.Component{
 
     const numRows = Math.ceil((userPostImages.length-1)/col)
 
-    return 553 + ((width/2) * numRows);
+    const finalHeight = 553 + ((width/2) * numRows);
 
+    console.log(finalHeight)
+    return finalHeight
   }
 
 
@@ -157,6 +162,8 @@ class SocialNewsfeedPost extends React.Component{
     let cellDay = ""
     let location = ""
     let userUsername = '';
+    let firstName = "";
+    let lastName = "";
 
     let profilePic="";
     let caption="";
@@ -191,6 +198,8 @@ class SocialNewsfeedPost extends React.Component{
       }
       if(this.props.data.owner.username) {
         userUsername = this.props.data.owner.username
+        firstName = this.props.data.owner.first_name
+        lastName = this.props.data.owner.last_name
       }
       if(this.props.data.post.socialCaldate) {
         cellDate = this.props.data.post.socialCaldate
@@ -230,7 +239,7 @@ class SocialNewsfeedPost extends React.Component{
             height: this.heightAnimation
           }}>
           <TouchableWithoutFeedback
-            onPress = {() => this.onSlidePress()}
+            onPress = {() => this.onSlidePress(userPostImages.length)}
             >
             <View style = {styles.container}>
               <Image
@@ -251,7 +260,7 @@ class SocialNewsfeedPost extends React.Component{
 
                 <View style = {styles.testWhere}>
                   <Text style = {styles.videoFooterUserName}>
-                    Ping Hsu
+                    {global.NAMEMAKE(firstName, lastName)}
                   </Text>
                 </View>
 
@@ -268,6 +277,10 @@ class SocialNewsfeedPost extends React.Component{
                       {global.RENDER_TIMESTAMP(postCreatedAt)}
                     </Text>
 
+                </View>
+
+                <View style = {styles.picNumber}>
+                  <Text style = {styles.picNumberText}> + 2 </Text>
                 </View>
 
                 <View style = {styles.videoFooter}>
@@ -369,6 +382,8 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
               </Text>
 
+
+
             </View>
 
           </TouchableWithoutFeedback>
@@ -377,15 +392,20 @@ class SocialNewsfeedPost extends React.Component{
             userPostImages.length > 1 ?
 
             <Animated.View style = {{
-              margin: margin,
               height: width ,
               flexWrap: 'wrap',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginLeft: 6,
+              marginRight: 3,
               transform: [
                 {translateY: this.slideAnimation}
               ]
               }}>
 
-              {this.renderExtraPics(userPostImages)}
+
+                {this.renderExtraPics(userPostImages)}
+
             </Animated.View>
 
             : <View></View>
@@ -513,12 +533,16 @@ export default connect(mapStateToProps)(SocialNewsfeedPost);
 
 const styles = StyleSheet.create({
   container: {
-    margin: 3,
+    margin: margin,
     backgroundColor: 'lightgray',
     height: 550,
     borderRadius: 5,
     position: 'relative',
-    zIndex: 99
+    zIndex: 99,
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 5
   },
   miniContainer: {
     margin: margin,
@@ -534,6 +558,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     position: "relative",
     height: 550,
+    shadowColor: '#000',
+
   },
   smallPic: {
 
@@ -659,7 +685,26 @@ const styles = StyleSheet.create({
     // fontWeight:'bold',
 
   },
-
+  picNumber:{
+    position:'absolute',
+    bottom:25,
+    right: 0,
+    padding:10,
+    fontWeight:'600',
+    backgroundColor:'#1890ffaa',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10
+  },
+  picNumberText:{
+    color:'white',
+    fontSize:25,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+  },
   close2: {
     margin: 10,
     position: "absolute",

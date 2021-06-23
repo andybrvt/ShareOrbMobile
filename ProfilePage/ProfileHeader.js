@@ -94,32 +94,38 @@ class ProfileHeader extends React.Component{
     }
 
     return (
-    <View style={{flexDirection:'column', top:'3%',}}>
+    <View style={{
+        flexDirection:'column',
+        }}>
 
-        <View style={styles.profileInfoHeader}>
-            <View style={{flex:1, alignItems: 'center',
-               justifyContent:'center'}}>
-              <Avatar
-                size={95}
-                rounded
-                source={{
-                  uri:
-                    profileImage,
-                }}
-              />
-            </View>
-            <View style={{flex:2,justifyContent:'center', marginLeft:30}}>
-              <Text style = {styles.name}>{name}</Text>
-              <Text style = {styles.username}>@{username}</Text>
-                <TouchableOpacity onPress={() => this.editPageClick()}>
-                  <View style={styles.editButton}>
-                     <Text style={{color:'white',}}>Edit Profile</Text>
-                   </View>
-               </TouchableOpacity>
-            </View>
+        <View>
+          <View style={styles.profileInfoHeader}>
+              <View style={{
+                 flex:1,
+                  alignItems: 'center',
+                 justifyContent:'center'}}>
+                <Avatar
+                  size={95}
+                  rounded
+                  source={{
+                    uri:
+                      profileImage,
+                  }}
+                />
+              </View>
+              <View style={{flex:2,justifyContent:'center', marginLeft:30}}>
+                <Text style = {styles.name}>{name}</Text>
+                <Text style = {styles.username}>@{username}</Text>
+                  <TouchableOpacity onPress={() => this.editPageClick()}>
+                    <View style={styles.editButton}>
+                       <Text style={{color:'white',}}>Edit Profile</Text>
+                     </View>
+                 </TouchableOpacity>
+              </View>
+          </View>
         </View>
 
-     <View style={{flex:1, top:'15%',}}>
+
        <View style = {styles.profileMidContainer}>
          <View style={styles.profileInfoContainer}>
            <View style={styles.followerCount}>
@@ -151,14 +157,11 @@ class ProfileHeader extends React.Component{
 
          </View>
      </View>
-     </View>
 
-     <View style={{flex:1, top:'17.5%',}}>
        <View style = {styles.bioContainer}>
          <Text style = {styles.bio}> {bio}</Text>
         </View>
 
-      </View>
 
 
    </View>
@@ -326,8 +329,12 @@ const styles = StyleSheet.create({
         elevation: 1,
   },
   container: {
-    backgroundColor: "white",
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%',
+    padding: 25,
+    paddingLeft: 30,
+    paddingRight: 30,
+
   },
   followerFollowingHeader: {
     color: "grey",
@@ -344,25 +351,19 @@ const styles = StyleSheet.create({
 
 
   profileInfoHeader: {
-    position:'relative',
-    top:'5%',
-    left:'5%',
-    // backgroundColor:'red',
     justifyContent: 'center',
     flexDirection:'row',
+    width: "100%",
   },
   profileMidContainer:{
-
-    width:'125%',
+    width:'100%',
     alignItems: 'center',
-    // backgroundColor:'red'
-
+    marginTop: 10
   },
   bioContainer:{
     flex:1,
-    // backgroundColor: "red",
-
-    alignItems: 'center'
+    marginTop: 10,
+    alignItems: 'center',
   },
   profileInfoContainer: {
     width:'100%',
@@ -394,9 +395,7 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   bio: {
-    width:'100%',
 
-    // backgroundColor: "blue",
     fontSize: 15
   }
 });
