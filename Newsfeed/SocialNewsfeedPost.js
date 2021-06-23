@@ -68,7 +68,7 @@ class SocialNewsfeedPost extends React.Component{
 
     let extraCards = []
 
-    for(let i= 0; i < items.length; i++){
+    for(let i= 1; i < items.length; i++){
       extraCards.push(
         <View
           key = {i}
@@ -191,40 +191,36 @@ class SocialNewsfeedPost extends React.Component{
               source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
               />
 
-          </View>
-
-          <View style = {styles.miniContainer}>
-
-            {this.renderExtraPics(userPostImages)}
-          </View>
-
-          {/*
-
-
-                <Avatar
-                  style={styles.close}
-                  onPress = {() => this.props.ViewProfile()}
-                  size={40}
-                  rounded
-                  source = {{
-                    uri: profilePic
-                  }}
-                />
+              <Avatar
+                style={styles.close}
+                onPress = {() => this.props.ViewProfile()}
+                size={40}
+                rounded
+                source = {{
+                  uri: profilePic
+                }}
+              />
 
               <View style = {styles.testWhere}>
-                <Text style = {styles.videoFooterUserName}>Ping Hsu
+                <Text style = {styles.videoFooterUserName}>
+                  Ping Hsu
                 </Text>
-
-
               </View>
 
               <View style = {styles.testWhere2}>
-                  <Text style = {styles.videoFooterUserName}>{global.RENDER_TIMESTAMP(postCreatedAt)}</Text>
+                {/*
+                  use the current date icon instead like June 14
+                  or
+                  June
+                  14
+                  with a circle around it
+                  */}
 
-
+                  <Text style = {styles.videoFooterUserName}>
+                    {global.RENDER_TIMESTAMP(postCreatedAt)}
+                  </Text>
 
               </View>
-
 
               <View style = {styles.videoFooter}>
                 <Text >
@@ -234,97 +230,119 @@ class SocialNewsfeedPost extends React.Component{
 
               </View>
 
+              <View style = {styles.tagCSS1}>
+                <View style = {styles.justifyCenter}>
+                  {
+                    peopleLikeId.includes(this.props.userId ) ?
+                    <TouchableOpacity onPress = {() => this.onUnlike(
+                        postId,
+                        this.props.userId,
+                        contentTypeId
+                      )}>
+                      <FontAwesomeIcon
+                      style = {{
+                        color:'red',
+                        right:3,
+                      }}
+                      size = {20}
+                      icon={faHeart} />
+                    </TouchableOpacity>
 
-                <View style = {styles.tagCSS1}>
-                  <View style = {styles.justifyCenter}>
-                    {
-                      peopleLikeId.includes(this.props.userId ) ?
-                      <TouchableOpacity onPress = {() => this.onUnlike(
-                          postId,
-                          this.props.userId,
-                          contentTypeId
-                        )}>
-                        <FontAwesomeIcon
-                        style = {{
-                          color:'red',
-                          right:3,
-                        }}
-                        size = {20}
-                        icon={faHeart} />
-                      </TouchableOpacity>
+                    :
 
-                      :
-
-                      <TouchableOpacity
-                        onPress = {() => this.onLike(
-                          postId,
-                          this.props.userId,
-                          contentTypeId,
-                          ownerId,
-                          cellDate
-                        )}>
-                        <FontAwesomeIcon
-                          style = {{
-                            color:'white',
-                            right:3,
-                          }}
-
-                        size = {20}
-                        icon={faHeart}>
-
-                      </FontAwesomeIcon>
-
-                      </TouchableOpacity>
-
-                    }
-                    <Text  style = {styles.justifyCenter1}>
-                    {like_people.length}
-                    </Text>
-                  </View>
-                </View>
-
-                <View style = {styles.tagCSS2}>
-                  <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
-                    <View  style = {styles.justifyCenter}>
-                      {
-                        (this.state.showComments) ?
-                        <FontAwesomeIcon
-                        style = {{
-                          color:'red',
-                          right:3,
-                        }}
-                        size = {20}
-                        icon={faComment} />
-                        :
-
-                        <FontAwesomeIcon
+                    <TouchableOpacity
+                      onPress = {() => this.onLike(
+                        postId,
+                        this.props.userId,
+                        contentTypeId,
+                        ownerId,
+                        cellDate
+                      )}>
+                      <FontAwesomeIcon
                         style = {{
                           color:'white',
                           right:3,
                         }}
-                        size = {20}
-                        icon={faComment} />
-                      }
-                      <Text  style = {styles.justifyCenter1}>
-                      {commentList.length}
-                    </Text>
-                    </View>
-                  </TouchableOpacity>
+
+                      size = {20}
+                      icon={faHeart}>
+
+                    </FontAwesomeIcon>
+
+                    </TouchableOpacity>
+
+                  }
+                  <Text  style = {styles.justifyCenter1}>
+                  {like_people.length}
+                  </Text>
                 </View>
+              </View>
+
+              <View style = {styles.tagCSS2}>
+                <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
+                  <View  style = {styles.justifyCenter}>
+                    {
+                      (this.state.showComments) ?
+                      <FontAwesomeIcon
+                      style = {{
+                        color:'red',
+                        right:3,
+                      }}
+                      size = {20}
+                      icon={faComment} />
+                      :
+
+                      <FontAwesomeIcon
+                      style = {{
+                        color:'white',
+                        right:3,
+                      }}
+                      size = {20}
+                      icon={faComment} />
+                    }
+                    <Text  style = {styles.justifyCenter1}>
+                    {commentList.length}
+                  </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
 
 
 
 
-              <Text style = {styles.tagCSS3}>
-                <View>
-                  <FontAwesomeIcon
-                  style = {{
-                    color:'white',
-                  }}
-                  size = {20}
-                  icon={faBookmark} />
-                </View>
-              </Text>
+            <Text style = {styles.tagCSS3}>
+              <View>
+                <FontAwesomeIcon
+                style = {{
+                  color:'white',
+                }}
+                size = {20}
+                icon={faBookmark} />
+              </View>
+            </Text>
+
+          </View>
+
+          {
+            userPostImages.length > 1 ?
+
+            <View style = {styles.miniContainer}>
+
+              {this.renderExtraPics(userPostImages)}
+            </View>
+
+            : <View></View>
+
+
+          }
+
+          {/*
+
+
+
+
+
+
 
             */}
 
@@ -434,6 +452,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     height: 550,
     borderRadius: 5,
+    position: 'relative'
   },
   miniContainer: {
     margin: margin,
