@@ -17,15 +17,15 @@ import SearchBar from '../RandomComponents/SearchBar';
 import  authAxios from '../util';
 import PictureBox from './PictureBox';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import { Tag, Bookmark, MapPin, Search} from "react-native-feather";
+import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather";
+
 const {width, height} = Dimensions.get('screen')
 // This class will be in charge of managing the explore page,
 // the end goal is to show people and a way to find people
 // or just browse through cool stuff that happens through out
 // the current day
+import { Icon, Grid } from 'antd-mobile';
 
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faUsers, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 // For this you dont really need real time because you are really not interacting
 // with new people but rather just see the trending stuff, so axios calls should
 // be ok
@@ -93,23 +93,32 @@ class Explore extends React.Component{
         */}
         <ScrollView>
         <View style={{flexDirection:'column', flex:1}}>
-          <View>
-            <View style={{flexDirection:'row', padding:10}}>
-              <View style={{top:'10%', left:'10%'}}>
-              <Search stroke="black" strokeWidth={2.5} width={17.5} height={17.5}  />
+
+            <View style={styles.passwordContainer}>
+              <View style={{backgroundColor:'#f0f0f0', width:'97.5%', flexDirection:'row', borderRadius:10, padding:5,}}>
+              <Search style={{top:6, left:10}} stroke="#8c8c8c" strokeWidth={2.5} width={17.5} height={17.5}   />
+              <TextInput
+                style={styles.inputStyle}
+                  autoCorrect={false}
+                  secureTextEntry
+                  placeholder="Search"
+                  value={this.state.password}
+                  onChangeText={this.onPasswordEntry}
+                />
               </View>
 
-              <TextInput style={styles.searchContainer} placeholder={"Search Albums"}>
+  </View>
 
-
-              </TextInput>
-
-            </View>
-          </View>
 
           <View style = {styles.trendingContainer}>
             <View style = {styles.trendingTextContainer}>
-                <Text style = {styles.trendingText}>Trending Albums</Text>
+                <Text style = {styles.trendingText}>Trending
+                  <View>
+                <ChevronRight stroke="gray" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
+                </View>
+                </Text>
+
+
             </View>
 
             <View style = {styles.trendingDaysContainer}>
@@ -136,8 +145,8 @@ class Explore extends React.Component{
           </View>
 
           <View style = {styles.exploreTheDayContainer}>
-            <View style = {styles.topTextContianer}>
-              <Text style = {styles.trendingText}> Explore the Day</Text>
+            <View style = {styles.trendingTextContainer}>
+              <Text style = {styles.trendingText}> Suggested</Text>
             </View>
 
             <View style = {styles.twoColContainer}>
@@ -167,25 +176,17 @@ class Explore extends React.Component{
 export default Explore;
 
 const styles = StyleSheet.create({
-  searchSection: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+  passwordContainer: {
+  flexDirection: 'row',
+
+
+  padding: 20,
 },
-searchIcon: {
-    padding: 10,
+inputStyle: {
+  paddingLeft:15,
+  flex: 1,
 },
-input: {
-    flex: 1,
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingLeft: 0,
-    backgroundColor: '#fff',
-    color: '#424242',
-},
+
 
   searchContainer: {
     flex:1,
@@ -215,9 +216,9 @@ input: {
     fontSize: 45,
     fontWeight: "bold"
   },
-  topTextContianer:{
+  suggestedContainer:{
     // backgroundColor: "white",
-    top:'2%',
+
     padding: 20
   },
   searchHeader:{
@@ -225,11 +226,11 @@ input: {
     justifyContent: 'center',
     alignItems: 'center',
 
-    backgroundColor:'red',
+    // backgroundColor:'red',
   },
   trendingContainer:{
-    flex: 3,
-    top:'1%'
+    flex: 1,
+    // flexDirection:'row',
     // backgroundColor:'green',
 
   },
@@ -238,13 +239,15 @@ input: {
     // backgroundColor:'blue',
   },
   trendingTextContainer:{
-     padding: 20,
+     padding: 10,
+     justifyContent:'center',
+     // backgroundColor:'red',
 
   },
 
   trendingText: {
     color: "black",
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: 'bold'
   },
   trendingDaysContainer: {
