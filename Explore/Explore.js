@@ -100,7 +100,7 @@ class Explore extends React.Component{
               <TextInput
                 style={styles.inputStyle}
                   autoCorrect={false}
-                  secureTextEntry
+
                   placeholder="Search"
                   value={this.state.password}
                   onChangeText={this.onPasswordEntry}

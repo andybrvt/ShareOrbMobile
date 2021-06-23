@@ -283,7 +283,7 @@ class App extends Component{
                component={Profile}
 
                options={{
-
+                 
                  tabBarLabel: false,
                   tabBarIcon: ({ color }) => (
                     <User stroke={color} strokeWidth={2} width={25} height={25} />

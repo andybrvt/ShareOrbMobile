@@ -139,8 +139,9 @@ const styles = StyleSheet.create({
   },
   profileHeader: {
     flex: 1.5,
-    alignItems:'flex-start',
-    left:'12.5%',
+    
+  // backgroundColor:'green',
+  width:'100%',
 
 
   },
@@ -150,10 +151,10 @@ const styles = StyleSheet.create({
     paddingLeft:25,
     height:50,
     paddingTop:0,
-    shadowColor:'black',
-    shadowOffset:{width:0,height:2},
-    shadowOpacity:0.2,
-    elevation:4,
+    // shadowColor:'black',
+    // shadowOffset:{width:0,height:2},
+    // shadowOpacity:0.2,
+    // elevation:4,
     position:'relative'
   },
   textStyle:{
