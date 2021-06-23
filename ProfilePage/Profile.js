@@ -139,8 +139,8 @@ const styles = StyleSheet.create({
   },
   profileHeader: {
     flex: 1.5,
-    
-  // backgroundColor:'green',
+    alignItems:'flex-start',
+    left:'12.5%',
   width:'100%',
 
 
