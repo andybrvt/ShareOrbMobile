@@ -21,11 +21,15 @@ const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animat
 
 const width = Dimensions.get("window").width
 const margin = 3;
+const col = 2;
+
 class SocialNewsfeedPost extends React.Component{
 
-  slide = new Value(0);
+  slide = new Value(-width);
   slideAnimation = withTimingTransition(this.slide, {duration: 300})
 
+  height = new Value(550);
+  heightAnimation = withTimingTransition(this.height, {duration: 200})
   constructor(props){
     super(props);
     this.state = {
@@ -120,6 +124,26 @@ class SocialNewsfeedPost extends React.Component{
     return extraCards
   }
 
+  renderContainerHeight = () => {
+    // This function will calculate the extra height to add
+
+    let userPostImages = []
+
+    if(this.props.data){
+      if(this.props.data.post) {
+        if(this.props.data.post.get_socialCalItems) {
+          userPostImages = this.props.data.post.get_socialCalItems;
+          }
+        }
+    }
+
+    const numRows = Math.ceil((userPostImages.length-1)/col)
+
+    return 553 + ((width/2) * numRows);
+
+  }
+
+
 
   revealPhoto = () =>{
     // This function will be use to render the pictures
@@ -200,8 +224,11 @@ class SocialNewsfeedPost extends React.Component{
     }
 
 
+
       return (
-        <View>
+        <Animated.View style = {{
+            height: this.heightAnimation
+          }}>
           <TouchableWithoutFeedback
             onPress = {() => this.onSlidePress()}
             >
@@ -351,7 +378,6 @@ class SocialNewsfeedPost extends React.Component{
 
             <Animated.View style = {{
               margin: margin,
-              // backgroundColor: 'blue',
               height: width ,
               flexWrap: 'wrap',
               transform: [
@@ -373,7 +399,7 @@ class SocialNewsfeedPost extends React.Component{
              />
 
 
-        </View>
+         </Animated.View>
       )
 
   }
@@ -445,7 +471,16 @@ class SocialNewsfeedPost extends React.Component{
       <View>
         <Animated.Code>
           {() => cond(
-            this.showExtra, set(this.slide, 0), set(this.slide, -width)
+            this.showExtra,
+            [
+              set(this.height, this.renderContainerHeight()),
+              set(this.slide, 0),
+            ]
+            ,
+            [
+              set(this.slide, -width),
+              set(this.height, 550 +margin)
+            ]
           )}
         </Animated.Code>
 
