@@ -493,6 +493,18 @@ class PostingPage extends React.Component{
      )
    }
 
+   renderSubmit = () => {
+     return(
+       <TouchableOpacity
+         onPress = {() => this.handleImageUpload()}
+         >
+         <Text> Save </Text>
+
+       </TouchableOpacity>
+     )
+   }
+
+
 
    // Handle opening modal
    nextPress = () => {
@@ -500,7 +512,7 @@ class PostingPage extends React.Component{
      this.props.finalPostModal();
      this.props.navigation.setOptions({
        headerLeft: () => this.renderCloseModal(),
-       headerRight: null,
+       headerRight: () => this.renderSubmit(),
        ...TransitionPresets.SlideFromRightIOS,
 
      })

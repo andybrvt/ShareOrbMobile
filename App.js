@@ -327,7 +327,8 @@ class App extends Component{
               !this.props.loading && this.props.username ?
                 <Stack.Navigator
 
-                  mode = "modal" //keep this here, its important
+                  mode = "modal"
+                  //keep this here, its important
                   // headerMode ="none"
                   initialRouteName = "newsfeed"
                   screenOptions={{

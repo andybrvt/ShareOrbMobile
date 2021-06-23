@@ -15,7 +15,8 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 
 
-
+const width = Dimensions.get("window").width
+const margin = 3;
 class SocialNewsfeedPost extends React.Component{
 
   constructor(props){
@@ -60,6 +61,44 @@ class SocialNewsfeedPost extends React.Component{
       contentTypeId)
 
 
+  }
+
+  renderExtraPics = (items) => {
+    // this function will render the extra pics
+
+    let extraCards = []
+
+    for(let i= 0; i < items.length; i++){
+      extraCards.push(
+        <View
+          key = {i}
+          style = {{
+            height: width/2- margin ,
+            width: width/2 - margin,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+          >
+          <View style = {{
+              width: "97%",
+              height: "97%",
+              backgroundColor: 'lightgray',
+              borderRadius: 5
+            }}>
+            <Image
+              style = {{
+                height:"100%",
+                borderRadius: 5,
+              }}
+              resizeMode = "cover"
+              source={{ uri: `${global.IMAGE_ENDPOINT}${items[i].itemImage}` }}
+               />
+          </View>
+        </View>
+      )
+    }
+
+    return extraCards
   }
 
 
@@ -142,156 +181,157 @@ class SocialNewsfeedPost extends React.Component{
     }
 
 
-    if(userPostImages.length === 1){
       return (
-        <View style = {styles.container}>
+        <View>
 
-          <Image
-            style={styles.cover}
-            resizeMode = "cover"
-            source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
-            />
-
-              <Avatar
-                style={styles.close}
-                onPress = {() => this.props.ViewProfile()}
-                size={40}
-                rounded
-                source = {{
-                  uri: profilePic
-                }}
+          <View style = {styles.container}>
+            <Image
+              style={styles.cover}
+              resizeMode = "cover"
+              source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
               />
 
-            <View style = {styles.testWhere}>
-              <Text style = {styles.videoFooterUserName}>Ping Hsu
-              </Text>
+          </View>
+
+          <View style = {styles.miniContainer}>
+
+            {this.renderExtraPics(userPostImages)}
+          </View>
+
+          {/*
 
 
-            </View>
+                <Avatar
+                  style={styles.close}
+                  onPress = {() => this.props.ViewProfile()}
+                  size={40}
+                  rounded
+                  source = {{
+                    uri: profilePic
+                  }}
+                />
 
-            <View style = {styles.testWhere2}>
-                <Text style = {styles.videoFooterUserName}>{global.RENDER_TIMESTAMP(postCreatedAt)}</Text>
-
-
-
-            </View>
-
-
-            <View style = {styles.videoFooter}>
-              <Text >
-                <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
-                <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
-              </Text>
-
-            </View>
+              <View style = {styles.testWhere}>
+                <Text style = {styles.videoFooterUserName}>Ping Hsu
+                </Text>
 
 
-              <View style = {styles.tagCSS1}>
-                <View style = {styles.justifyCenter}>
-                  {
-                    peopleLikeId.includes(this.props.userId ) ?
-                    <TouchableOpacity onPress = {() => this.onUnlike(
-                        postId,
-                        this.props.userId,
-                        contentTypeId
-                      )}>
-                      <FontAwesomeIcon
-                      style = {{
-                        color:'red',
-                        right:3,
-                      }}
-                      size = {20}
-                      icon={faHeart} />
-                    </TouchableOpacity>
+              </View>
 
-                    :
+              <View style = {styles.testWhere2}>
+                  <Text style = {styles.videoFooterUserName}>{global.RENDER_TIMESTAMP(postCreatedAt)}</Text>
 
-                    <TouchableOpacity
-                      onPress = {() => this.onLike(
-                        postId,
-                        this.props.userId,
-                        contentTypeId,
-                        ownerId,
-                        cellDate
-                      )}>
-                      <FontAwesomeIcon
+
+
+              </View>
+
+
+              <View style = {styles.videoFooter}>
+                <Text >
+                  <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
+                  <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
+                </Text>
+
+              </View>
+
+
+                <View style = {styles.tagCSS1}>
+                  <View style = {styles.justifyCenter}>
+                    {
+                      peopleLikeId.includes(this.props.userId ) ?
+                      <TouchableOpacity onPress = {() => this.onUnlike(
+                          postId,
+                          this.props.userId,
+                          contentTypeId
+                        )}>
+                        <FontAwesomeIcon
+                        style = {{
+                          color:'red',
+                          right:3,
+                        }}
+                        size = {20}
+                        icon={faHeart} />
+                      </TouchableOpacity>
+
+                      :
+
+                      <TouchableOpacity
+                        onPress = {() => this.onLike(
+                          postId,
+                          this.props.userId,
+                          contentTypeId,
+                          ownerId,
+                          cellDate
+                        )}>
+                        <FontAwesomeIcon
+                          style = {{
+                            color:'white',
+                            right:3,
+                          }}
+
+                        size = {20}
+                        icon={faHeart}>
+
+                      </FontAwesomeIcon>
+
+                      </TouchableOpacity>
+
+                    }
+                    <Text  style = {styles.justifyCenter1}>
+                    {like_people.length}
+                    </Text>
+                  </View>
+                </View>
+
+                <View style = {styles.tagCSS2}>
+                  <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
+                    <View  style = {styles.justifyCenter}>
+                      {
+                        (this.state.showComments) ?
+                        <FontAwesomeIcon
+                        style = {{
+                          color:'red',
+                          right:3,
+                        }}
+                        size = {20}
+                        icon={faComment} />
+                        :
+
+                        <FontAwesomeIcon
                         style = {{
                           color:'white',
                           right:3,
                         }}
-
-                      size = {20}
-                      icon={faHeart}>
-
-                    </FontAwesomeIcon>
-
-                    </TouchableOpacity>
-
-                  }
-                  <Text  style = {styles.justifyCenter1}>
-                  {like_people.length}
-                  </Text>
+                        size = {20}
+                        icon={faComment} />
+                      }
+                      <Text  style = {styles.justifyCenter1}>
+                      {commentList.length}
+                    </Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
-              </View>
-
-              <View style = {styles.tagCSS2}>
-                <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
-                  <View  style = {styles.justifyCenter}>
-                    {
-                      (this.state.showComments) ?
-                      <FontAwesomeIcon
-                      style = {{
-                        color:'red',
-                        right:3,
-                      }}
-                      size = {20}
-                      icon={faComment} />
-                      :
-
-                      <FontAwesomeIcon
-                      style = {{
-                        color:'white',
-                        right:3,
-                      }}
-                      size = {20}
-                      icon={faComment} />
-                    }
-                    <Text  style = {styles.justifyCenter1}>
-                    {commentList.length}
-                  </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
 
 
 
 
-            <Text style = {styles.tagCSS3}>
-              <View>
-                <FontAwesomeIcon
-                style = {{
-                  color:'white',
-                }}
-                size = {20}
-                icon={faBookmark} />
-              </View>
-            </Text>
+              <Text style = {styles.tagCSS3}>
+                <View>
+                  <FontAwesomeIcon
+                  style = {{
+                    color:'white',
+                  }}
+                  size = {20}
+                  icon={faBookmark} />
+                </View>
+              </Text>
+
+            */}
+
+
 
         </View>
       )
-    } else {
-    return(
-      <View>
-        <NewsfeedSpecCarousel
-          items = {userPostImages}
-
-          />
-
-      </View>
-
-    )
-
-    }
 
   }
 
@@ -389,6 +429,32 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(SocialNewsfeedPost);
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 3,
+    backgroundColor: 'lightgray',
+    height: 550,
+    borderRadius: 5,
+  },
+  miniContainer: {
+    margin: margin,
+    // backgroundColor: 'blue',
+    height: width ,
+    flexWrap: 'wrap'
+  },
+  extraPicBox: {
+
+  },
+  cover: {
+    // flex: 1,
+    borderRadius: 5,
+    position: "relative",
+    height: 550,
+  },
+  smallPic: {
+
+  },
+
+
 
   testWhere:{
     position:'absolute',
@@ -521,17 +587,6 @@ const styles = StyleSheet.create({
 
   videoText: {
     flex:1,
-  },
-  container: {
-    // backgroundColor:'red',
-    margin: 3,
-
-    height: 550
-  },
-  cover: {
-    flex: 1,
-    borderRadius: 5,
-    position: "relative"
   },
   close: {
     margin: 5,
