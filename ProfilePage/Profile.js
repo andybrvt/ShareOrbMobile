@@ -7,7 +7,7 @@ import Constant from 'expo-constants';
 import { Appbar } from 'react-native-paper';
 import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
-
+import { Tag, Bookmark, MapPin, Search, ChevronRight, Settings} from "react-native-feather";
 // This will be the bulk of the profile page
 class Profile extends React.Component{
 
@@ -80,7 +80,15 @@ class Profile extends React.Component{
 
 
         <View style={styles.viewStyle}>
+          <View style={{flex:1}}>
           <Text style={styles.textStyle}>pinghsu520</Text>
+          </View>
+          <View style={{flex:1, backgroundColor:'blue'}}>
+          <Settings
+            style={{justifyContent:'flex-end'}}
+            stroke="black" strokeWidth={2.5} width={20} height={20}
+            />
+          </View>
         </View>
         <View style = {styles.profileHeader}>
           <ProfileHeader
@@ -90,13 +98,10 @@ class Profile extends React.Component{
         </View>
 
 
-        <View
-          style = {styles.socialCalContainer}
-          >
+        <View style = {styles.socialCalContainer}>
           <SocialCalendar
             navigation={this.props.navigation}
             {...this.props} />
-
         </View>
       </BackgroundContainer>
 
@@ -146,20 +151,23 @@ const styles = StyleSheet.create({
 
   },
   viewStyle: {
-    backgroundColor:'white',
-    justifyContent:'center',
-    paddingLeft:25,
+    // backgroundColor:'red',
+
+
     height:50,
     paddingTop:0,
+    flexDirection:'row',
+
     // shadowColor:'black',
     // shadowOffset:{width:0,height:2},
     // shadowOpacity:0.2,
-    // elevation:4,
-    position:'relative'
+    // elevation:4
   },
   textStyle:{
+    padding:15,
     fontSize:20,
     fontWeight:'bold',
+    justifyContent:'flex-start',
   },
 
 })

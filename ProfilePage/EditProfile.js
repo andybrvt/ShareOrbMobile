@@ -68,10 +68,8 @@ import * as dateFns from 'date-fns';
 
      <View style={styles.panel}>
        <View style={{alignItems: 'center'}}>
-
          <Avatar
            size={100}
-
            rounded
            source={{
              uri:
@@ -126,7 +124,6 @@ import * as dateFns from 'date-fns';
      return (
        <BackgroundContainer>
          <View style={{height:'100%'}}>
-
            <View style={{alignItems: 'center'}}>
           <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
             <View
@@ -136,7 +133,6 @@ import * as dateFns from 'date-fns';
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-
                 <Avatar
                   size={95}
                   rounded
