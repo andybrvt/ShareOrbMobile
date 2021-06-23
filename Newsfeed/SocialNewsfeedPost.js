@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity, ImageBackground} from 'react-native';
+import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity, ImageBackground, TouchableWithoutFeedback} from 'react-native';
 import { Card } from 'react-native-paper';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
@@ -31,7 +31,7 @@ class SocialNewsfeedPost extends React.Component{
     this.state = {
       showComments: false,
       showLike: false,
-
+      showSlide: false,
     }
 
     this.showExtra = new Value(false);
@@ -74,7 +74,10 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   onSlidePress = () => {
-    this.showExtra.setValue(true)
+    this.showExtra.setValue(!this.state.showSlide)
+    this.setState({
+      showSlide: !this.state.showSlide
+    })
   }
 
   renderExtraPics = (items) => {
@@ -199,145 +202,149 @@ class SocialNewsfeedPost extends React.Component{
 
       return (
         <View>
+          <TouchableWithoutFeedback
+            onPress = {() => this.onSlidePress()}
+            >
+            <View style = {styles.container}>
+              <Image
+                style={styles.cover}
+                resizeMode = "cover"
+                source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
+                />
 
-          <View style = {styles.container}>
-            <Image
-              style={styles.cover}
-              resizeMode = "cover"
-              source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
-              />
+                <Avatar
+                  style={styles.close}
+                  onPress = {() => this.props.ViewProfile()}
+                  size={40}
+                  rounded
+                  source = {{
+                    uri: profilePic
+                  }}
+                />
 
-              <Avatar
-                style={styles.close}
-                onPress = {() => this.props.ViewProfile()}
-                size={40}
-                rounded
-                source = {{
-                  uri: profilePic
-                }}
-              />
-
-              <View style = {styles.testWhere}>
-                <Text style = {styles.videoFooterUserName}>
-                  Ping Hsu
-                </Text>
-              </View>
-
-              <View style = {styles.testWhere2}>
-                {/*
-                  use the current date icon instead like June 14
-                  or
-                  June
-                  14
-                  with a circle around it
-                  */}
-
+                <View style = {styles.testWhere}>
                   <Text style = {styles.videoFooterUserName}>
-                    {global.RENDER_TIMESTAMP(postCreatedAt)}
+                    Ping Hsu
+                  </Text>
+                </View>
+
+                <View style = {styles.testWhere2}>
+                  {/*
+                    use the current date icon instead like June 14
+                    or
+                    June
+                    14
+                    with a circle around it
+                    */}
+
+                    <Text style = {styles.videoFooterUserName}>
+                      {global.RENDER_TIMESTAMP(postCreatedAt)}
+                    </Text>
+
+                </View>
+
+                <View style = {styles.videoFooter}>
+                  <Text >
+                    <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
+                    <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
                   </Text>
 
-              </View>
+                </View>
 
-              <View style = {styles.videoFooter}>
-                <Text >
-                  <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
-                  <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
-                </Text>
+                <View style = {styles.tagCSS1}>
+                  <View style = {styles.justifyCenter}>
+                    {
+                      peopleLikeId.includes(this.props.userId ) ?
+                      <TouchableOpacity onPress = {() => this.onUnlike(
+                          postId,
+                          this.props.userId,
+                          contentTypeId
+                        )}>
+                        <FontAwesomeIcon
+                        style = {{
+                          color:'red',
+                          right:3,
+                        }}
+                        size = {20}
+                        icon={faHeart} />
+                      </TouchableOpacity>
 
-              </View>
+                      :
 
-              <View style = {styles.tagCSS1}>
-                <View style = {styles.justifyCenter}>
-                  {
-                    peopleLikeId.includes(this.props.userId ) ?
-                    <TouchableOpacity onPress = {() => this.onUnlike(
-                        postId,
-                        this.props.userId,
-                        contentTypeId
-                      )}>
-                      <FontAwesomeIcon
-                      style = {{
-                        color:'red',
-                        right:3,
-                      }}
-                      size = {20}
-                      icon={faHeart} />
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress = {() => this.onLike(
+                          postId,
+                          this.props.userId,
+                          contentTypeId,
+                          ownerId,
+                          cellDate
+                        )}>
+                        <FontAwesomeIcon
+                          style = {{
+                            color:'white',
+                            right:3,
+                          }}
 
-                    :
+                        size = {20}
+                        icon={faHeart}>
 
-                    <TouchableOpacity
-                      onPress = {() => this.onLike(
-                        postId,
-                        this.props.userId,
-                        contentTypeId,
-                        ownerId,
-                        cellDate
-                      )}>
-                      <FontAwesomeIcon
+                      </FontAwesomeIcon>
+
+                      </TouchableOpacity>
+
+                    }
+                    <Text  style = {styles.justifyCenter1}>
+                    {like_people.length}
+                    </Text>
+                  </View>
+                </View>
+
+                <View style = {styles.tagCSS2}>
+                  <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
+                    <View  style = {styles.justifyCenter}>
+                      {
+                        (this.state.showComments) ?
+                        <FontAwesomeIcon
+                        style = {{
+                          color:'red',
+                          right:3,
+                        }}
+                        size = {20}
+                        icon={faComment} />
+                        :
+
+                        <FontAwesomeIcon
                         style = {{
                           color:'white',
                           right:3,
                         }}
-
-                      size = {20}
-                      icon={faHeart}>
-
-                    </FontAwesomeIcon>
-
-                    </TouchableOpacity>
-
-                  }
-                  <Text  style = {styles.justifyCenter1}>
-                  {like_people.length}
-                  </Text>
+                        size = {20}
+                        icon={faComment} />
+                      }
+                      <Text  style = {styles.justifyCenter1}>
+                      {commentList.length}
+                    </Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
-              </View>
-
-              <View style = {styles.tagCSS2}>
-                <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
-                  <View  style = {styles.justifyCenter}>
-                    {
-                      (this.state.showComments) ?
-                      <FontAwesomeIcon
-                      style = {{
-                        color:'red',
-                        right:3,
-                      }}
-                      size = {20}
-                      icon={faComment} />
-                      :
-
-                      <FontAwesomeIcon
-                      style = {{
-                        color:'white',
-                        right:3,
-                      }}
-                      size = {20}
-                      icon={faComment} />
-                    }
-                    <Text  style = {styles.justifyCenter1}>
-                    {commentList.length}
-                  </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
 
 
 
 
-            <Text style = {styles.tagCSS3}>
-              <View>
-                <FontAwesomeIcon
-                style = {{
-                  color:'white',
-                }}
-                size = {20}
-                icon={faBookmark} />
-              </View>
-            </Text>
+              <Text style = {styles.tagCSS3}>
+                <View>
+                  <FontAwesomeIcon
+                  style = {{
+                    color:'white',
+                  }}
+                  size = {20}
+                  icon={faBookmark} />
+                </View>
+              </Text>
 
-          </View>
+            </View>
+
+          </TouchableWithoutFeedback>
 
           {
             userPostImages.length > 1 ?
