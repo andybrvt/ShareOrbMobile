@@ -11,13 +11,20 @@ import { Avatar } from 'react-native-elements';
 import FeatherIcon from 'feather-icons-react';
 import { Tag, Heart } from 'react-feather';
 import Animated from 'react-native-reanimated';
+import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import BottomSheet from 'reanimated-bottom-sheet';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+
+
+const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 
 const width = Dimensions.get("window").width
 const margin = 3;
 class SocialNewsfeedPost extends React.Component{
+
+  slide = new Value(0);
+  slideAnimation = withTimingTransition(this.slide, {duration: 300})
 
   constructor(props){
     super(props);
@@ -26,6 +33,9 @@ class SocialNewsfeedPost extends React.Component{
       showLike: false,
 
     }
+
+    this.showExtra = new Value(false);
+
   }
 
   changeShowComments = (cellId) => {
@@ -63,6 +73,10 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
+  onSlidePress = () => {
+    this.showExtra.setValue(true)
+  }
+
   renderExtraPics = (items) => {
     // this function will render the extra pics
 
@@ -94,6 +108,8 @@ class SocialNewsfeedPost extends React.Component{
               source={{ uri: `${global.IMAGE_ENDPOINT}${items[i].itemImage}` }}
                />
           </View>
+
+
         </View>
       )
     }
@@ -326,26 +342,28 @@ class SocialNewsfeedPost extends React.Component{
           {
             userPostImages.length > 1 ?
 
-            <View style = {styles.miniContainer}>
+            <Animated.View style = {{
+              margin: margin,
+              // backgroundColor: 'blue',
+              height: width ,
+              flexWrap: 'wrap',
+              transform: [
+                {translateY: this.slideAnimation}
+              ]
+              }}>
 
               {this.renderExtraPics(userPostImages)}
-            </View>
+            </Animated.View>
 
             : <View></View>
 
 
           }
 
-          {/*
-
-
-
-
-
-
-
-            */}
-
+          <Button
+            title = "slide"
+            onPress = {() => this.onSlidePress()}
+             />
 
 
         </View>
@@ -418,6 +436,11 @@ class SocialNewsfeedPost extends React.Component{
 
     return (
       <View>
+        <Animated.Code>
+          {() => cond(
+            this.showExtra, set(this.slide, 0), set(this.slide, -width)
+          )}
+        </Animated.Code>
 
 
 
@@ -452,7 +475,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     height: 550,
     borderRadius: 5,
-    position: 'relative'
+    position: 'relative',
+    zIndex: 99
   },
   miniContainer: {
     margin: margin,
