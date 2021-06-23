@@ -91,14 +91,18 @@ class Explore extends React.Component{
           </View>
 
         */}
+        <ScrollView>
         <View style={{flexDirection:'column', flex:1}}>
           <View>
             <View style={{flexDirection:'row', padding:10}}>
-              <View style={{top:'10%', left:'5%'}}>
-              <Search stroke="black" strokeWidth={2.5} width={17.5} height={17.5} style={{top:5}} />
+              <View style={{top:'10%', left:'10%'}}>
+              <Search stroke="black" strokeWidth={2.5} width={17.5} height={17.5}  />
               </View>
 
-              <TextInput style={styles.searchContainer} placeholder={"Search Albums"}></TextInput>
+              <TextInput style={styles.searchContainer} placeholder={"Search Albums"}>
+
+
+              </TextInput>
 
             </View>
           </View>
@@ -132,25 +136,25 @@ class Explore extends React.Component{
           </View>
 
           <View style = {styles.exploreTheDayContainer}>
-          <View style = {styles.topTextContianer}>
-            <Text style = {styles.trendingText}> Explore the Day</Text>
-          </View>
+            <View style = {styles.topTextContianer}>
+              <Text style = {styles.trendingText}> Explore the Day</Text>
+            </View>
 
-          <View style = {styles.twoColContainer}>
-            {this.state.exploreCells.map((cell, key) => {
-              return(
-                <View style = {styles.spacedSpace}>
-                  <PictureBox cell = {cell} index = {key}/>
-                </View>
+            <View style = {styles.twoColContainer}>
+              {this.state.exploreCells.map((cell, key) => {
+                return(
+                  <View style = {styles.spacedSpace}>
+                    <PictureBox cell = {cell} index = {key}/>
+                  </View>
 
-              )
-            })}
+                )
+              })}
 
           </View>
 
         </View>
         </View>
-
+      </ScrollView>
 
       </BackgroundContainer>
 
@@ -213,6 +217,7 @@ input: {
   },
   topTextContianer:{
     // backgroundColor: "white",
+    top:'2%',
     padding: 20
   },
   searchHeader:{
@@ -224,7 +229,7 @@ input: {
   },
   trendingContainer:{
     flex: 3,
-    top:'5%'
+    top:'1%'
     // backgroundColor:'green',
 
   },
@@ -246,7 +251,7 @@ input: {
     height: "82%",
   },
   spacedSpace:{
-    padding: 10,
+    padding: 3,
   },
 
   twoColContainer: {

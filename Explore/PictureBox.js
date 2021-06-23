@@ -5,10 +5,13 @@ import { Text,
    StyleSheet,
    ScrollView,
    Dimensions,
-   Image
+   Image,
+
   } from 'react-native';
 import { Avatar, BottomNavigation } from 'react-native-paper';
-
+const dimensions = Dimensions.get('window');
+const imageHeight = Math.round(dimensions.width * 11 / 16);
+const imageWidth = dimensions.width*0.48;
 
 class PictureBox extends React.Component{
 
@@ -56,9 +59,10 @@ class PictureBox extends React.Component{
                source = {{
                  uri: `${global.IMAGE_ENDPOINT}${profilePic}`
                }}
-               size = {35}
+
+               size = {30}
                 />
-              <Text style = {styles.ownerName}>{global.NAMEMAKE(firstName, lastName, 20)}</Text>
+              <Text style = {styles.videoFooterUserName}>{global.NAMEMAKE(firstName, lastName, 20)}</Text>
            </View>
 
         </View>
@@ -72,10 +76,23 @@ class PictureBox extends React.Component{
 export default PictureBox;
 
 const styles = StyleSheet.create({
+  videoFooterUserName: {
+
+    color:'white',
+    fontSize:14,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+    left:5,
+    // fontWeight:'bold',
+
+  },
   picBoxContainer: {
-    height: 250,
-    width: 170,
-    borderRadius: 25,
+    height: imageHeight,
+    width: imageWidth,
+    borderRadius: 10,
     overflow: "hidden"
   },
   pictureHolder: {
@@ -87,7 +104,7 @@ const styles = StyleSheet.create({
   ownerContainer: {
     position: "absolute",
     padding: 10,
-    bottom: 3,
+    bottom: 2,
     display: "flex",
     flexDirection: 'row',
     justifyContent: 'center',
@@ -96,7 +113,7 @@ const styles = StyleSheet.create({
   ownerName: {
     marginLeft:5,
     color: "white",
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: "bold"
   }
 
