@@ -52,12 +52,22 @@ class InfiniteScrollFlat extends React.Component{
 
 
     const y = this.props.y;
-
+    const top = interpolate(y,{
+      inputRange: [0, 50],
+      outputRange: [50, 0],
+      extrapolate: Extrapolate.CLAMP
+    })
 
     return(
-      <Animated.View>
+      <Animated.View
+        style = {{
+          top: top,
+        }}
+        >
 
         <AnimatedFlatList
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle = {16}
           onScroll = {onScrollEvent({y})}
           data = {post}
           renderItem = {this.renderPost}

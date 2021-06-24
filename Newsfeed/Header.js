@@ -34,7 +34,7 @@ class Header extends React.Component{
 
     const y = this.props.y;
     const opacity = interpolate(y, {
-      inputRange: [0, 500],
+      inputRange: [0, 600],
       outputRange: [1, 0],
       extrapolateRight: Extrapolate.CLAMP
     });
@@ -48,17 +48,33 @@ class Header extends React.Component{
     return(
       <Animated.View
         style = {[styles.container,{
-          opacity: opacity
+          opacity: opacity,
+          zIndex: 99
         }]}>
-        <View style = {styles.logoContainer}>
-           <MainLogo width = {125}/>
-        </View>
-        <View style = {styles.searchProfileContainer}>
-            <Search stroke="black" strokeWidth={2.5} width={20} height={20} />
 
-            <Bell stroke="black" strokeWidth={2.5} width={20} height={20} />
+        <Animated.View style = {{
+          flexDirection: "row",
+          flex: 1,
+          zIndex: 999,
+          backgroundColor: 'white',
+          height: 50,
+          position: 'absolute',
+          width: "100%",
+          transform: [{
+            translateY: translateY
+          }]
+          }}>
+          <View style = {styles.logoContainer}>
+             <MainLogo width = {125}/>
+          </View>
+          <View style = {styles.searchProfileContainer}>
+              <Search stroke="black" strokeWidth={2.5} width={20} height={20} />
 
-        </View>
+              <Bell stroke="black" strokeWidth={2.5} width={20} height={20} />
+
+          </View>
+
+        </Animated.View>
 
       </Animated.View>
     )
@@ -67,9 +83,8 @@ class Header extends React.Component{
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
-    flexDirection: "row",
-    backgroundColor:"white",
+    // backgroundColor:"red",
+    position: "relative",
     // shadowOffset:{  width: 0,  height: 2,  },
     // shadowColor: 'black',
     // shadowOpacity: 0.2,
