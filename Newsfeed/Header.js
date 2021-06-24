@@ -10,6 +10,10 @@ import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
 import { faBell } from '@fortawesome/free-regular-svg-icons'
 import { Search, Bell} from "react-native-feather";
+import Animated from 'react-native-reanimated';
+
+const {interpolate, Extrapolate} = Animated;
+
 
 class Header extends React.Component{
 
@@ -28,8 +32,24 @@ class Header extends React.Component{
       profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profilePic
     }
 
+    const y = this.props.y;
+    const opacity = interpolate(y, {
+      inputRange: [0, 500],
+      outputRange: [1, 0],
+      extrapolateRight: Extrapolate.CLAMP
+    });
+
+    const translateY = interpolate(y, {
+      inputRange: [0, 500],
+      outputRange: [0, -100],
+      extrapolateRight: Extrapolate.CLAMP
+    })
+
     return(
-      <View style = {styles.container}>
+      <Animated.View
+        style = {[styles.container,{
+          opacity: opacity
+        }]}>
         <View style = {styles.logoContainer}>
            <MainLogo width = {125}/>
         </View>
@@ -40,7 +60,7 @@ class Header extends React.Component{
 
         </View>
 
-      </View>
+      </Animated.View>
     )
   }
 }

@@ -25,9 +25,13 @@ import InfiniteScrollFlat from './InfiniteScrollFlat';
 import NewsfeedComment from './NewsfeedComment';
 
 
+const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
+
+
 class NewsfeedView extends React.Component{
 
 
+  y = new Value(0);
 
   handleLogOut = () => {
     this.props.logout()
@@ -167,13 +171,15 @@ class NewsfeedView extends React.Component{
 
               }
 
-              {/*
 
-                <Header {...this.props} />
+                <Header
+                  y = {this.y}
+                  {...this.props}
+                  />
 
-                */}
 
                   <InfiniteScrollFlat
+                    y = {this.y}
                     navigation = {this.props.navigation}
                     onPagePost = {this.onPagePost}
                     viewProfile = {this.viewProfile}

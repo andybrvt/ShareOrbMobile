@@ -14,6 +14,7 @@ import Animated from 'react-native-reanimated';
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import BottomSheet from 'reanimated-bottom-sheet';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+import { Navigation2 } from "react-native-feather";
 
 
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
@@ -148,6 +149,13 @@ class SocialNewsfeedPost extends React.Component{
     return finalHeight
   }
 
+  onPostDirect = (toDoStuff) => {
+
+    this.props.navigation.navigate("DayAlbum", {
+      entireDay: toDoStuff
+    })
+  }
+
 
 
   revealPhoto = () =>{
@@ -155,15 +163,16 @@ class SocialNewsfeedPost extends React.Component{
     // within thew newsfeed post. If there are only one photo
     // it iwill only show one photo, if there are more ti will
     // show a scrollable list
-    let postId = ""
-    let username = ""
-    let cellYear = ""
-    let cellMonth = ""
-    let cellDay = ""
-    let location = ""
+    let postId = "";
+    let username = "";
+    let cellYear = "";
+    let cellMonth = "";
+    let cellDay = "";
+    let location = "";
     let userUsername = '';
     let firstName = "";
     let lastName = "";
+    let post = {};
 
     let profilePic="";
     let caption="";
@@ -186,6 +195,8 @@ class SocialNewsfeedPost extends React.Component{
       }
 
       if(this.props.data.post) {
+
+        post = this.props.data.post
         if(this.props.data.post.get_socialCalItems) {
           userPostImages = this.props.data.post.get_socialCalItems;
         }
@@ -280,7 +291,7 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
 
                 <View style = {styles.picNumber}>
-                  <Text style = {styles.picNumberText}> + 2 </Text>
+                  <Text style = {styles.picNumberText}> {userPostImages.length -1} </Text>
                 </View>
 
                 <View style = {styles.videoFooter}>
@@ -370,17 +381,19 @@ class SocialNewsfeedPost extends React.Component{
 
 
 
+                <TouchableOpacity
+                  onPress = {() => this.onPostDirect(post)}
+                  style = {styles.tagCSS3}
+                  >
 
-              <Text style = {styles.tagCSS3}>
-                <View>
-                  <FontAwesomeIcon
-                  style = {{
-                    color:'white',
-                  }}
-                  size = {20}
-                  icon={faBookmark} />
-                </View>
-              </Text>
+                    <Navigation2
+                      width ={25}
+                      height = {25}
+                      stroke = "white"
+                       />
+
+                </TouchableOpacity>
+
 
 
 
@@ -691,7 +704,7 @@ const styles = StyleSheet.create({
     right: 0,
     padding:10,
     fontWeight:'600',
-    backgroundColor:'#1890ffaa',
+    // backgroundColor:'#1890ffaa',
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 10
