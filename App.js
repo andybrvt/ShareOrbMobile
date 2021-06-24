@@ -51,6 +51,7 @@ import EditProfile from './ProfilePage/EditProfile';
 import EditBio from './ProfilePage/EditBio';
 import Followers from './ProfilePage/Followers';
 import Following from './ProfilePage/Following';
+import Settings from './ProfilePage/Settings';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
 import ChatSearch from './Chats/ChatSearch';
@@ -283,7 +284,7 @@ class App extends Component{
                component={Profile}
 
                options={{
-                 
+
                  tabBarLabel: false,
                   tabBarIcon: ({ color }) => (
                     <User stroke={color} strokeWidth={2} width={25} height={25} />
@@ -400,35 +401,34 @@ class App extends Component{
                       }}
 
                       name = 'EditProfile' component = {EditProfile}/>
-                      <Stack.Screen
-                        options={{
-                          headerStyle:{
-                            shadowColor:'#fff', //ios
-                            elevation:0,        // android
-                          },
-                          title: 'Followers',
-                           ...TransitionPresets.SlideFromRightIOS,
-                         }}
+                  <Stack.Screen
+                    options={{
+                      headerStyle:{
+                        shadowColor:'#fff', //ios
+                        elevation:0,        // android
+                      },
+                      title: 'Followers',
+                       ...TransitionPresets.SlideFromRightIOS,
+                     }}
 
-                         name = 'Followers' component = {Followers}/>
-                         <Stack.Screen
-                           options={{
-                             headerStyle:{
-                               shadowColor:'#fff', //ios
-                               elevation:0,        // android
-                             },
-                             title: 'Following',
-                              ...TransitionPresets.SlideFromRightIOS,
-                            }}
-
-                            name = 'Following' component = {Following}/>
-                     <Stack.Screen
-                       options={{
-                         headerShown: false,
-                         title: 'Show Day',
-                          ...TransitionPresets.SlideFromRightIOS,
-                                         }}
-                        name = 'DayAlbum' component = {DayAlbum}/>
+                     name = 'Followers' component = {Followers}/>
+                 <Stack.Screen
+                   options={{
+                     headerStyle:{
+                       shadowColor:'#fff', //ios
+                       elevation:0,        // android
+                     },
+                     title: 'Following',
+                      ...TransitionPresets.SlideFromRightIOS,
+                    }}
+                    name = 'Following' component = {Following}/>
+                 <Stack.Screen
+                   options={{
+                     headerShown: false,
+                     title: 'Show Day',
+                      ...TransitionPresets.SlideFromRightIOS,
+                                     }}
+                    name = 'DayAlbum' component = {DayAlbum}/>
                  <Stack.Screen
                    options={{
                      title: 'Search Friends',
@@ -438,17 +438,26 @@ class App extends Component{
                     options={{
                       title: 'Your Name',
                     }}
-
                     name = 'ViewProfile' component = {ViewProfile}/>
-                    <Stack.Screen
-                      options={{
-                        headerStyle:{
-                          shadowColor:'#fff', //ios
-                          elevation:0,        // android
-                        },
-                        title: 'Bio',
-                         ...TransitionPresets.SlideFromRightIOS,
-                                        }}
+                  <Stack.Screen
+                    options={{
+                      headerStyle:{
+                        shadowColor:'#fff', //ios
+                        elevation:0,        // android
+                      },
+                      title: 'Settings',
+                       ...TransitionPresets.SlideFromRightIOS,
+                     }}
+                     name = 'Settings' component = {Settings}/>
+                  <Stack.Screen
+                    options={{
+                      headerStyle:{
+                        shadowColor:'#fff', //ios
+                        elevation:0,        // android
+                      },
+                      title: 'Bio',
+                       ...TransitionPresets.SlideFromRightIOS,
+                                      }}
 
 
                       name = 'EditBio' component = {EditBio}/>

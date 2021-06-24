@@ -7,13 +7,19 @@ import Constant from 'expo-constants';
 import { Appbar } from 'react-native-paper';
 import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
-import { Tag, Bookmark, MapPin, Search, ChevronRight, Settings} from "react-native-feather";
+import { Tag, Bookmark, MapPin, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
 // This will be the bulk of the profile page
 class Profile extends React.Component{
 
   constructor(props){
     super(props);
+  }
 
+  ViewProfile = () => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+    console.log("hi")
+    this.props.navigation.navigate("Settings")
   }
 
   initialiseProfile() {
@@ -75,19 +81,18 @@ class Profile extends React.Component{
 
   render(){
     return (
-
       <BackgroundContainer>
-
-
         <View style={styles.viewStyle}>
-          <View style={{flex:1}}>
+          <View style={{flex:1, justifyContent:'center'}}>
           <Text style={styles.textStyle}>pinghsu520</Text>
           </View>
-          <View style={{flex:1, backgroundColor:'blue'}}>
-          <Settings
-            style={{justifyContent:'flex-end'}}
-            stroke="black" strokeWidth={2.5} width={20} height={20}
-            />
+          <View
+
+            style={{flex:1,justifyContent:'center',
+             alignItems:'flex-end', padding:20}}>
+             <UserPlus
+               onPress = {() => this.ViewProfile()}
+               stroke="black" strokeWidth={2.5} width={25} height={25}/>
           </View>
         </View>
         <View style = {styles.profileHeader}>
@@ -96,19 +101,12 @@ class Profile extends React.Component{
             {...this.props}
             />
         </View>
-
-
         <View style = {styles.socialCalContainer}>
           <SocialCalendar
             navigation={this.props.navigation}
             {...this.props} />
         </View>
       </BackgroundContainer>
-
-
-
-
-
     )
   }
 }
