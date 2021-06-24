@@ -24,7 +24,6 @@ const {width, height} = Dimensions.get('screen')
 // the end goal is to show people and a way to find people
 // or just browse through cool stuff that happens through out
 // the current day
-import { Icon, Grid } from 'antd-mobile';
 
 // For this you dont really need real time because you are really not interacting
 // with new people but rather just see the trending stuff, so axios calls should

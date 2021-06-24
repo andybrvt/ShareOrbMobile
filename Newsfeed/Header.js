@@ -10,6 +10,10 @@ import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
 import { faBell } from '@fortawesome/free-regular-svg-icons'
 import { Search, Bell} from "react-native-feather";
+import Animated from 'react-native-reanimated';
+
+const {interpolate, Extrapolate} = Animated;
+
 
 class Header extends React.Component{
 
@@ -28,28 +32,59 @@ class Header extends React.Component{
       profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profilePic
     }
 
+    const y = this.props.y;
+    const opacity = interpolate(y, {
+      inputRange: [0, 600],
+      outputRange: [1, 0],
+      extrapolateRight: Extrapolate.CLAMP
+    });
+
+    const translateY = interpolate(y, {
+      inputRange: [0, 500],
+      outputRange: [0, -100],
+      extrapolateRight: Extrapolate.CLAMP
+    })
+
     return(
-      <View style = {styles.container}>
-        <View style = {styles.logoContainer}>
-           <MainLogo width = {125}/>
-        </View>
-        <View style = {styles.searchProfileContainer}>
-            <Search stroke="black" strokeWidth={2.5} width={20} height={20} />
+      <Animated.View
+        style = {[styles.container,{
+          opacity: opacity,
+          zIndex: 99
+        }]}>
 
-            <Bell stroke="black" strokeWidth={2.5} width={20} height={20} />
+        <Animated.View style = {{
+          flexDirection: "row",
+          flex: 1,
+          zIndex: 999,
+          backgroundColor: 'white',
+          height: 50,
+          position: 'absolute',
+          width: "100%",
+          transform: [{
+            translateY: translateY
+          }]
+          }}>
+          <View style = {styles.logoContainer}>
+             <MainLogo width = {125}/>
+          </View>
+          <View style = {styles.searchProfileContainer}>
+              <Search stroke="black" strokeWidth={2.5} width={20} height={20} />
 
-        </View>
+              <Bell stroke="black" strokeWidth={2.5} width={20} height={20} />
 
-      </View>
+          </View>
+
+        </Animated.View>
+
+      </Animated.View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
-    flexDirection: "row",
-    backgroundColor:"white",
+    // backgroundColor:"red",
+    position: "relative",
     // shadowOffset:{  width: 0,  height: 2,  },
     // shadowColor: 'black',
     // shadowOpacity: 0.2,

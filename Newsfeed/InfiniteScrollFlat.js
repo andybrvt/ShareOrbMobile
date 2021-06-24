@@ -14,6 +14,12 @@ import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
+import Animated from 'react-native-reanimated';
+import {onScrollEvent} from 'react-native-redash/lib/module/v1';
+
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const {interpolate, Extrapolate} = Animated;
 
 
 class InfiniteScrollFlat extends React.Component{
@@ -45,15 +51,30 @@ class InfiniteScrollFlat extends React.Component{
     }
 
 
+    const y = this.props.y;
+    const top = interpolate(y,{
+      inputRange: [0, 50],
+      outputRange: [50, 0],
+      extrapolate: Extrapolate.CLAMP
+    })
+
     return(
-      <View>
-        <FlatList
+      <Animated.View
+        style = {{
+          top: top,
+        }}
+        >
+
+        <AnimatedFlatList
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle = {16}
+          onScroll = {onScrollEvent({y})}
           data = {post}
           renderItem = {this.renderPost}
           keyExtractor={item => item.id.toString()}
 
            />
-      </View>
+       </Animated.View>
     )
   }
 
