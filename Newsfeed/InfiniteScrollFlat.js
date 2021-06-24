@@ -67,7 +67,7 @@ class InfiniteScrollFlat extends React.Component{
 
         <AnimatedFlatList
           showsVerticalScrollIndicator={false}
-          scrollEventThrottle = {16}
+          scrollEventThrottle = {16} // important for animation
           onScroll = {onScrollEvent({y})}
           data = {post}
           renderItem = {this.renderPost}

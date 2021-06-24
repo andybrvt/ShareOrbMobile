@@ -12,7 +12,7 @@ import { faBell } from '@fortawesome/free-regular-svg-icons'
 import { Search, Bell} from "react-native-feather";
 import Animated from 'react-native-reanimated';
 
-const {interpolate, Extrapolate} = Animated;
+const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
 
 
 class Header extends React.Component{
@@ -33,17 +33,24 @@ class Header extends React.Component{
     }
 
     const y = this.props.y;
-    const opacity = interpolate(y, {
-      inputRange: [0, 600],
-      outputRange: [1, 0],
-      extrapolateRight: Extrapolate.CLAMP
+    const diff = diffClamp(y, 0, 200)
+
+    const final = cond(lessOrEq(y, 0.1), y, diff)
+    const opacity = interpolate(final, {
+      inputRange: [0, 200],
+      outputRange: [ 1, 0],
+      extrapolateRight: Extrapolate.CLAMP,
     });
 
-    const translateY = interpolate(y, {
-      inputRange: [0, 500],
-      outputRange: [0, -100],
-      extrapolateRight: Extrapolate.CLAMP
+    const translateY = interpolate(final, {
+      inputRange: [0, 200],
+      outputRange: [ 0, -50],
+      extrapolateRight: Extrapolate.CLAMP,
+
     })
+
+
+
 
     return(
       <Animated.View
