@@ -31,11 +31,12 @@ class ExploreSearchBar extends React.Component{
   render(){
 
     const y = this.props.y;
+    const diff = diffClamp(y, 500, 600);
 
-    const translateY = interpolate(y, {
-      inputRange: [0,500, 600],
+    const translateY = interpolate(cond(lessOrEq(y, 500), y,diff), {
+      inputRange: [0, 500, 600],
       outputRange: [0, 0, -60],
-      extrapolateRight: Extrapolate.CLAMP
+      extrapolate: Extrapolate.CLAMP
     })
 
     return(
@@ -45,7 +46,8 @@ class ExploreSearchBar extends React.Component{
             position: "absolute",
             width: '100%',
             height: 60,
-            zIndex: 99,
+            backgroundColor: "#1890ff",
+            // backgroundColor: "white",
             transform:[
               {translateY: translateY}
             ]
@@ -79,6 +81,7 @@ const styles = StyleSheet.create({
     // padding: 10,
     backgroundColor: 'red',
     position: 'relative',
+    zIndex: 99,
   },
   inputStyle: {
     paddingLeft:15,
