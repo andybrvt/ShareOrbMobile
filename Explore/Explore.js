@@ -21,6 +21,9 @@ import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather
 import ExploreSearchBar from './ExploreSearchBar';
 import TrendingList from './TrendingList';
 import SuggestedList from './SuggestedList';
+import Animated from 'react-native-reanimated';
+
+const {  Value } = Animated;
 
 
 const {width, height} = Dimensions.get('screen')
@@ -34,6 +37,9 @@ const {width, height} = Dimensions.get('screen')
 // be ok
 
 class Explore extends React.Component{
+
+  y = new Value(0);
+
   constructor(props){
     super(props)
     this.state = {
@@ -86,16 +92,21 @@ class Explore extends React.Component{
           </View>
 
         */}
+
         <View style={{flexDirection:'column', flex:1}}>
 
 
-          <ExploreSearchBar />
+          <ExploreSearchBar
+            y = {this.y}
+            />
 
           <TrendingList
+            y = {this.y}
             cells = {trendingCells}
              />
 
           <SuggestedList
+            y = {this.y}
             cells = {exploreCells}
             />
 

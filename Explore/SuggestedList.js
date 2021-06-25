@@ -20,8 +20,13 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather";
 import ExploreSearchBar from './ExploreSearchBar';
 import TrendingList from './TrendingList';
+import Animated from 'react-native-reanimated';
+import {onScrollEvent} from 'react-native-redash/lib/module/v1';
 
 const {width, height} = Dimensions.get('screen')
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const {interpolate, Extrapolate} = Animated;
 
 class SuggestedList extends React.Component{
 
@@ -38,22 +43,29 @@ class SuggestedList extends React.Component{
   render(){
     const cells = this.props.cells
 
+    const y = this.props.y;
+
+
     return(
-      <View style = {styles.exploreTheDayContainer}>
+      <Animated.View style = {styles.exploreTheDayContainer}>
 
         <View style = {styles.trendingTextContainer}>
           <Text style = {styles.trendingText}> Suggested</Text>
         </View>
 
-        <FlatList
+        <AnimatedFlatList
+          onScroll = {onScrollEvent({y})}
+          scrollEventThrottle = {16} // important for animation
           data = {cells}
           renderItem = {this.renderPost}
           keyExtractor={item => item.id.toString()}
           numColumns = {2}
+          showsVerticalScrollIndicator={false}
+
            />
 
 
-      </View>
+       </Animated.View>
     )
   }
 }
@@ -61,7 +73,7 @@ class SuggestedList extends React.Component{
 const styles = StyleSheet.create({
   exploreTheDayContainer: {
     flex:2,
-    // backgroundColor:'blue',
+    backgroundColor:'blue',
   },
   trendingText: {
     color: "black",

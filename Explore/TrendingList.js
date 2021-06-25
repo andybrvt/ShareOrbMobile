@@ -19,12 +19,20 @@ import PictureBox from './PictureBox';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather";
 import ExploreSearchBar from './ExploreSearchBar';
+import Animated from 'react-native-reanimated';
+
+const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
+
 
 const {width, height} = Dimensions.get('screen')
 
 
 class TrendingList extends React.Component{
 
+  constructor(props){
+    super(props)
+
+  }
 
   renderPost = ({item}) => {
 
@@ -40,9 +48,16 @@ class TrendingList extends React.Component{
 
     const cells = this.props.cells;
 
+    const y = this.props.y;
+    const height = interpolate(y, {
+      inputRange: [0, 330],
+      outputRange: [330, 0],
+      extrapolateRight: Extrapolate.CLAMP
+    })
 
     return(
-      <View style = {styles.trendingContainer}>
+      <Animated.View
+         style = {styles.trendingContainer}>
 
         <View style = {styles.trendingTextContainer}>
             <Text style = {styles.trendingText}>Trending
@@ -57,20 +72,10 @@ class TrendingList extends React.Component{
           renderItem = {this.renderPost}
           keyExtractor={item => item.id.toString()}
           horizontal = {true}
+          showsHorizontalScrollIndicator = {false}
            />
-        {/*
 
-          <View style = {styles.trendingDaysContainer}>
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              horizontal = {true}
-              style = {{height: "100%"}}>
-
-            </ScrollView>
-          </View>
-          */}
-
-      </View>
+      </Animated.View>
     )
   }
 
@@ -79,6 +84,7 @@ class TrendingList extends React.Component{
 
 const styles = StyleSheet.create({
   trendingContainer:{
+    backgroundColor: 'red',
   },
   trendingTextContainer:{
      padding: 10,
