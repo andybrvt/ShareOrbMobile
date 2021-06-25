@@ -11,7 +11,7 @@ import { Text,
 import { Avatar, BottomNavigation } from 'react-native-paper';
 const dimensions = Dimensions.get('window');
 const imageHeight = Math.round(dimensions.width * 11 / 16);
-const imageWidth = dimensions.width*0.48;
+const imageWidth = dimensions.width*0.50;
 
 class PictureBox extends React.Component{
 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     width: imageWidth,
     overflow: "hidden",
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   pictureHolder: {
     backgroundColor: "lightgray",

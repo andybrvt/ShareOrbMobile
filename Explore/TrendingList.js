@@ -52,24 +52,28 @@ class TrendingList extends React.Component{
     const height = interpolate(y, {
       inputRange: [0, 330],
       outputRange: [330, 0],
-      extrapolateRight: Extrapolate.CLAMP
+      extrapolate: Extrapolate.CLAMP
     })
 
     return(
       <Animated.View
-         style = {styles.trendingContainer}>
+         style = {[styles.trendingContainer,{
+           height: height
+         }]}>
 
         <View style = {styles.trendingTextContainer}>
             <Text style = {styles.trendingText}>Trending
+            {/*
               <View>
-            <ChevronRight stroke="gray" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
-            </View>
+              <ChevronRight stroke="gray" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
+              </View>
+
+              */}
             </Text>
         </View>
-        
+
         <FlatList
-          showsVerticalScrollIndicator={false}
-  showsHorizontalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
           data = {cells}
           renderItem = {this.renderPost}
           keyExtractor={item => item.id.toString()}
@@ -86,7 +90,6 @@ class TrendingList extends React.Component{
 
 const styles = StyleSheet.create({
   trendingContainer:{
-    backgroundColor: 'red',
   },
   trendingTextContainer:{
      padding: 10,

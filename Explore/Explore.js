@@ -23,7 +23,9 @@ import TrendingList from './TrendingList';
 import SuggestedList from './SuggestedList';
 import Animated from 'react-native-reanimated';
 
-const {  Value } = Animated;
+const { Value } = Animated;
+
+const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
 
 
 const {width, height} = Dimensions.get('screen')
@@ -81,6 +83,11 @@ class Explore extends React.Component{
 
     const {trendingCells, exploreCells } = this.state;
 
+    const top = interpolate(this.y, {
+      inputRange: [0, 500, 600],
+      outputRange: [60, 60, 0],
+      extrapolateRight: Extrapolate.CLAMP
+    })
     return  (
       <BackgroundContainer>
         {/*
@@ -93,22 +100,27 @@ class Explore extends React.Component{
 
         */}
 
-        <View style={{flexDirection:'column', flex:1}}>
+        <View>
 
 
           <ExploreSearchBar
             y = {this.y}
             />
 
-          <TrendingList
-            y = {this.y}
-            cells = {trendingCells}
-             />
+          <Animated.View style = {{
+              top: top
+            }}>
+            <TrendingList
+              y = {this.y}
+              cells = {trendingCells}
+               />
 
-          <SuggestedList
-            y = {this.y}
-            cells = {exploreCells}
-            />
+            <SuggestedList
+              y = {this.y}
+              cells = {exploreCells}
+              />
+          </Animated.View>
+
 
         </View>
     </BackgroundContainer>

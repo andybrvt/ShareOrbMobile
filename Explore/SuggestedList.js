@@ -72,8 +72,7 @@ class SuggestedList extends React.Component{
 
 const styles = StyleSheet.create({
   exploreTheDayContainer: {
-    flex:2,
-    backgroundColor:'blue',
+    // flex:1,
   },
   trendingText: {
     color: "black",

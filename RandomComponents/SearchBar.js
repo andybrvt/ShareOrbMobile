@@ -18,33 +18,59 @@ class SearchBar extends React.Component{
 
     render(){
       return (
-        <View style ={styles.searchText}>
-          <Avatar.Image
-            source = {{
-              uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic,
-            }}
-            style={{right:10}}
-            size = {30}
-          />
-          <View style = {styles.searchText}>
+        <View style = {{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 60,
+          }}>
 
-            <FontAwesomeIcon
-              style={{marginRight:10, color: 'gray',left:20}}
-              size = {12.5}
-              icon={faSearch} />
+          <View style = {{
+              flex:0.5,
+              alignItems: 'center'
+            }}>
+            <Avatar.Image
+              source = {{
+                uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic,
+              }}
+              size = {30}
+            />
+          </View>
 
-            <TextInput
-              style={{left:20}}
-            underlineColorAndroid = "transparent"
-            placeholder = "Search Chats"></TextInput>
+          <View style = {{
+              flex: 3
+            }}>
+
+            <View style = {styles.searchText}>
+
+              <FontAwesomeIcon
+                style={{marginRight:10, color: 'gray',left:20}}
+                size = {12.5}
+                icon={faSearch} />
+
+              <TextInput
+                style={{left:20}}
+              underlineColorAndroid = "transparent"
+              placeholder = "Search Chats"></TextInput>
+
+            </View>
+          </View>
+
+          <View style = {{
+              flex: 0.2,
+              alignItems: 'center',
+            }}>
+
+
 
           </View>
 
-            <Settings style={{marginLeft:10}} stroke="#1890ff"
-               strokeWidth={2.5}
-               width={22.5}
-               height={22.5}
-            />
+          {/*
+
+
+
+
+            */}
 
         </View>
       )
@@ -64,9 +90,7 @@ const styles = StyleSheet.create({
     shadowOffset:{  width: 0,  height: 2,  },
     shadowColor: 'black',
     shadowOpacity: 0.2,
-    flex: 2,
     width:'100%',
-    flexDirection: 'row',
     alignItems: 'center',
 
 
