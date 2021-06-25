@@ -51,8 +51,10 @@ class TrendingList extends React.Component{
             </View>
             </Text>
         </View>
-
+        
         <FlatList
+          showsVerticalScrollIndicator={false}
+  showsHorizontalScrollIndicator={false}
           data = {cells}
           renderItem = {this.renderPost}
           keyExtractor={item => item.id.toString()}
