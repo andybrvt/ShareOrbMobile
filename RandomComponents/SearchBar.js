@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Avatar, BottomNavigation } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { Settings } from "react-native-feather";
+
+
 class SearchBar extends React.Component{
 
     render(){

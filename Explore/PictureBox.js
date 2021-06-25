@@ -92,11 +92,16 @@ const styles = StyleSheet.create({
   picBoxContainer: {
     height: imageHeight,
     width: imageWidth,
-    borderRadius: 10,
-    overflow: "hidden"
+    overflow: "hidden",
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   pictureHolder: {
-    flex: 1,
+    backgroundColor: "lightgray",
+    width:"92%",
+    height: "92%",
+    borderRadius: 10,
+    overflow: 'hidden'
   },
   image:{
     flex: 1

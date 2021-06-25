@@ -18,6 +18,10 @@ import  authAxios from '../util';
 import PictureBox from './PictureBox';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather";
+import ExploreSearchBar from './ExploreSearchBar';
+import TrendingList from './TrendingList';
+import SuggestedList from './SuggestedList';
+
 
 const {width, height} = Dimensions.get('screen')
 // This class will be in charge of managing the explore page,
@@ -68,6 +72,9 @@ class Explore extends React.Component{
 
 
   render(){
+
+    const {trendingCells, exploreCells } = this.state;
+
     return  (
       <BackgroundContainer>
         {/*
@@ -79,62 +86,20 @@ class Explore extends React.Component{
           </View>
 
         */}
-        <ScrollView>
         <View style={{flexDirection:'column', flex:1}}>
-            <View style={styles.passwordContainer}>
-              <View style={{backgroundColor:'#f0f0f0', width:'97.5%', flexDirection:'row', borderRadius:10, padding:5,}}>
-              <Search style={{top:6, left:10}} stroke="#8c8c8c" strokeWidth={2.5} width={17.5} height={17.5}   />
-              <TextInput
-                style={styles.inputStyle}
-                  autoCorrect={false}
-                  placeholder="Search"
-                  value={this.state.password}
-                  onChangeText={  (value) => this.setState({value})}
-                />
-              </View>
-          </View>
 
 
-          <View style = {styles.trendingContainer}>
-            <View style = {styles.trendingTextContainer}>
-                <Text style = {styles.trendingText}>Trending
-                  <View>
-                <ChevronRight stroke="gray" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
-                </View>
-                </Text>
-            </View>
-            <View style = {styles.trendingDaysContainer}>
-              <ScrollView
-                showsHorizontalScrollIndicator={false}
-                horizontal = {true}
-                style = {{height: "100%"}}>
-                {this.state.trendingCells.map((cell, key) => {
-                  return(
-                    <View style = {styles.spacedSpace}>
-                      <PictureBox cell = {cell} index = {key}/>
-                    </View>
-                  )
-                })}
-              </ScrollView>
-            </View>
-          </View>
+          <ExploreSearchBar />
 
-          <View style = {styles.exploreTheDayContainer}>
-            <View style = {styles.trendingTextContainer}>
-              <Text style = {styles.trendingText}> Suggested</Text>
-            </View>
-            <View style = {styles.twoColContainer}>
-              {this.state.exploreCells.map((cell, key) => {
-                return(
-                  <View style = {styles.spacedSpace}>
-                    <PictureBox cell = {cell} index = {key}/>
-                  </View>
-                  )
-                })}
-            </View>
-          </View>
+          <TrendingList
+            cells = {trendingCells}
+             />
+
+          <SuggestedList
+            cells = {exploreCells}
+            />
+
         </View>
-      </ScrollView>
     </BackgroundContainer>
 
 
@@ -146,16 +111,7 @@ class Explore extends React.Component{
 export default Explore;
 
 const styles = StyleSheet.create({
-  passwordContainer: {
-  flexDirection: 'row',
 
-
-  padding: 20,
-},
-inputStyle: {
-  paddingLeft:15,
-  flex: 1,
-},
 
 
   searchContainer: {
@@ -198,42 +154,8 @@ inputStyle: {
 
     // backgroundColor:'red',
   },
-  trendingContainer:{
-    flex: 1,
-    // flexDirection:'row',
-    // backgroundColor:'green',
 
-  },
-  exploreTheDayContainer: {
-    flex:2,
-    // backgroundColor:'blue',
-  },
-  trendingTextContainer:{
-     padding: 10,
-     justifyContent:'center',
-     // backgroundColor:'red',
 
-  },
-
-  trendingText: {
-    color: "black",
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  trendingDaysContainer: {
-    height: "82%",
-  },
-  spacedSpace:{
-    padding: 3,
-  },
-
-  twoColContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: "flex-start",
-    justifyContent:'center'
-  },
   circle1: {
     width: 400,
     height: 400,
