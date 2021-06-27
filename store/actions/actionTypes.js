@@ -31,5 +31,9 @@ export const UNLOAD_PROFILE = "UNLOAD_PROFILE";
 
 
 
+// This has to do with the social calendar
+export const FETCH_SOCIAL_CAL_CELL_PAGE = 'FETCH_SOCIAL_CAL_CELL_PAGE';
+
+
 // This will be used for the chats list (hold all the chats)
 export const SET_CHATS = "SET_CHATS";

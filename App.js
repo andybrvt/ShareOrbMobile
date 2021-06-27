@@ -15,6 +15,7 @@ import * as authActions from './store/actions/auth';
 import * as socialNewsfeedActions from './store/actions/socialNewsfeed';
 import * as exploreActions from './store/actions/explore';
 import * as messageActions from './store/actions/messages';
+import * as socialActions from './store/actions/socialCalendar';
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
@@ -27,6 +28,7 @@ import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
 import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocket';
 import ChatSidePanelWebSocketInstance from './Websockets/newChatSidePanelWebsocket';
 import SocialCommentsWebsocketInstance from './Websockets/commentsCellWebsocket';
+import SocialCalCellPageWebSocketInstance from './Websockets/socialCalCellWebsocket';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch,
    faUserCircle,
@@ -104,6 +106,12 @@ class App extends Component{
       this.props.loadSocialComments.bind(this),
       this.props.sendSocialComment.bind(this)
     )
+
+    SocialCalCellPageWebSocketInstance.addCallbacks(
+      this.props.fetchSocialCalCellPage.bind(this)
+    )
+
+
   }
 
   async loadFonts() {
@@ -511,7 +519,7 @@ const mapDispatchToProps = dispatch => {
     loadProfile: profile => dispatch(exploreActions.loadProfile(profile)),
 
     setChats: chats => dispatch(messageActions.setChats(chats)),
-
+    fetchSocialCalCellPage:socialCalCellObj => dispatch(socialActions.fetchSocialCalCellPage(socialCalCellObj))
   }
 }
 

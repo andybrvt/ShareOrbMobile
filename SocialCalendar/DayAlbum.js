@@ -17,6 +17,7 @@ import { Avatar } from 'react-native-elements';
 import FacePile from 'react-native-face-pile';
 import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons';
 import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebsocket';
+import { connect } from 'react-redux';
 
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
@@ -57,7 +58,7 @@ import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebso
        showLike: false,
 
      }
-     initializeDayAlbum()
+     this.initializeDayAlbum()
    }
 
    initializeDayAlbum(){
@@ -78,12 +79,12 @@ import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebso
      setTimeout(
        function(){
 
-         if (SocialCommentsWebsocketInstance.state() === 1){
+         if (SocialCalCellPageWebSocketInstance.state() === 1){
 
            callback();
            return;
          } else{
-             component.waitForCommentsSocketConnection(callback);
+             component.waitForDayAlbumSocketConnection(callback);
          }
        }, 100)
    }
@@ -116,142 +117,161 @@ import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebso
 
    render(){
 
-      let entireDay= (this.props.route.params.entireDay)
-      console.log("hoho")
-      console.log(entireDay[0])
-      let profilePic=entireDay[0].socialCalUser.profile_picture
+     let {
+       profilePic,
+       firstName,
+       lastName,
+       userName,
+       dayCaption,
+       socialComments,
+       likePost,
+       coverPic
+     } = ""
 
-      let firstName=entireDay[0].socialCalUser.first_name
-      let lastName=entireDay[0].socialCalUser.last_name
-      let userName=entireDay[0].socialCalUser.username
-      let dayCaption=entireDay[0].dayCaption
-      let socialComments=entireDay[0].get_socialCalComment
-      let likePost=entireDay[0].people_like
+     console.log('here is the props')
+     console.log(this.props)
+
+     if(this.props.socialCalCell){
+       const cell = this.props.socialCalCell
+       if(this.props.socialCalCell.socialCalUser){
+
+         const user = this.props.socialCalCell.socialCalUser
+          profilePic = user.profilePic
+
+          firstName = user.first_name
+          lastName = user.last_name
+          userName = user.username
+       }
+
+       dayCaption = cell.dayCaption
+       socialComments = cell.get_socialCalComment
+       likePost = cell.people_like
+       coverPic = cell.coverPic
+
+
+     }
 
      return (
        <BackgroundContainer>
-         <ImageBackground
-           blurRadius={80}
-           source={{ uri: `${global.IMAGE_ENDPOINT}`+entireDay[0].coverPic,}}
-            style={styles.albumOuterContainer}>
 
-           <Image
-             key={'blurryImage'}
-             size={300}
-             style={styles.albumLook}
-             // blurRadius={10}
-             source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+entireDay[0].coverPic,
-             }}
-           />
-           <Avatar
-             style={styles.close}
-             onPress = {() => this.props.ViewProfile()}
-             size={35}
-             rounded
-             source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+profilePic,
-             }}
-           />
-           <View style = {styles.tagCSS1}>
-             <TouchableOpacity onPress={this.changeShowLike}>
-             <View style = {styles.justifyCenter}>
-               {
-                 (this.state.showLike==true) ?
-                 <FontAwesomeIcon
-                 style = {{
-                   color:'red',
-                   right:3,
-                 }}
-                 size = {20}
-                 icon={faHeart} />
-                 :
-                 <FontAwesomeIcon
-                   style = {{
-                     color:'white',
-                     right:3,
-                   }}
+           <ImageBackground
+             blurRadius={80}
+             source={{ uri: `${global.IMAGE_ENDPOINT}`+coverPic,}}
+              style={styles.albumOuterContainer}>
 
-                 size = {20}
-                 icon={faHeart}>
-
-               </FontAwesomeIcon>
-
-               }
-               <Text  style = {styles.justifyCenter1}>
-               {likePost.length}
-               </Text>
-             </View>
-             </TouchableOpacity>
-           </View>
-           <View style = {styles.tagCSS2}>
-             <TouchableOpacity  onPress={this.changeShowComments}>
-               <View  style = {styles.justifyCenter}>
+             <Image
+               key={'blurryImage'}
+               size={300}
+               style={styles.albumLook}
+               // blurRadius={10}
+               source = {{
+                 uri: `${global.IMAGE_ENDPOINT}`+coverPic,
+               }}
+             />
+             <Avatar
+               style={styles.close}
+               onPress = {() => this.props.ViewProfile()}
+               size={35}
+               rounded
+               source = {{
+                 uri: `${global.IMAGE_ENDPOINT}`+profilePic,
+               }}
+             />
+             <View style = {styles.tagCSS1}>
+               <TouchableOpacity onPress={this.changeShowLike}>
+               <View style = {styles.justifyCenter}>
                  {
-                   (socialComments) ?
-                   <FontAwesomeIcon
-                   style = {{
-                     color:'white',
-                     right:3,
-                   }}
-                   size = {20}
-                   icon={faComment} />
-                   :
-
+                   (this.state.showLike==true) ?
                    <FontAwesomeIcon
                    style = {{
                      color:'red',
                      right:3,
                    }}
                    size = {20}
-                   icon={faComment} />
+                   icon={faHeart} />
+                   :
+                   <FontAwesomeIcon
+                     style = {{
+                       color:'white',
+                       right:3,
+                     }}
+
+                   size = {20}
+                   icon={faHeart}>
+
+                 </FontAwesomeIcon>
+
                  }
                  <Text  style = {styles.justifyCenter1}>
-                 {socialComments.length}
-               </Text>
+                 {likePost.length}
+                 </Text>
                </View>
-             </TouchableOpacity>
-           </View>
-           <Text style = {styles.tagCSS3}>
-             <View>
-               <FontAwesomeIcon
-               style = {{
-                 color:'white',
-               }}
-               size = {20}
-               icon={faBookmark} />
+               </TouchableOpacity>
              </View>
-           </Text>
-         <Text style = {styles.DayAlbumUserName}>
-           {firstName+" "+lastName}
+             <View style = {styles.tagCSS2}>
+               <TouchableOpacity  onPress={this.changeShowComments}>
+                 <View  style = {styles.justifyCenter}>
+                   {
+                     (socialComments) ?
+                     <FontAwesomeIcon
+                     style = {{
+                       color:'white',
+                       right:3,
+                     }}
+                     size = {20}
+                     icon={faComment} />
+                     :
 
-        </Text>
+                     <FontAwesomeIcon
+                     style = {{
+                       color:'red',
+                       right:3,
+                     }}
+                     size = {20}
+                     icon={faComment} />
+                   }
+                   <Text  style = {styles.justifyCenter1}>
+                   {socialComments.length}
+                 </Text>
+                 </View>
+               </TouchableOpacity>
+             </View>
+             <Text style = {styles.tagCSS3}>
+               <View>
+                 <FontAwesomeIcon
+                 style = {{
+                   color:'white',
+                 }}
+                 size = {20}
+                 icon={faBookmark} />
+               </View>
+             </Text>
+           <Text style = {styles.DayAlbumUserName}>
+             {firstName+" "+lastName}
+
+          </Text>
 
 
 
 
-        <View  style={styles.openContainer}>
+          <View  style={styles.openContainer}>
 
 
-          <View style={styles.firstContainer}>
-            <View>
-              {/*<Text style = {styles.bottomDayAlbumName}> {firstName+" "+lastName}</Text>*/}
-              <Text  style = {styles.DayCaption}>
-                <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
-                &nbsp; {dayCaption}</Text>
+            <View style={styles.firstContainer}>
+              <View>
+                <Text  style = {styles.DayCaption}>
+                  <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
+                  &nbsp; {dayCaption}</Text>
+              </View>
+            </View>
+            <View style={styles.secondContainer}>
+              <FacePile size={3} numFaces={3} faces={FACES} circleSize={17.5}
+                containerStyle={{height:40}}
+                 overlap={0.1} />
             </View>
           </View>
-          <View style={styles.secondContainer}>
-            {/* https://openbase.com/js/react-native-face-pile*/}
-            <FacePile size={3} numFaces={3} faces={FACES} circleSize={17.5}
-              containerStyle={{height:40}}
-               overlap={0.1} />
-          </View>
-        </View>
-         </ImageBackground>
-
-
-
+           </ImageBackground>
+           
 
 
        </BackgroundContainer>
@@ -423,4 +443,10 @@ import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebso
 
  })
 
- export default DayAlbum;
+ const mapStateToProps = state => {
+   return {
+     socialCalCell: state.socialCal.socialCalCellInfo
+   }
+ }
+
+ export default connect(mapStateToProps, null)(DayAlbum);
