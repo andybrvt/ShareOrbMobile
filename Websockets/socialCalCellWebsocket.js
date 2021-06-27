@@ -1,4 +1,5 @@
 
+//TEAR DOWN
 
 class WebSocketSocialCalCellPage{
   static instance = null;
@@ -19,11 +20,11 @@ class WebSocketSocialCalCellPage{
     this.socketRef = null
   }
 
-  connect(user, year, month, day){
+  connect(cellId){
     //This will be for connecting to each individual soical cal cell page
     //each one will be its own channel, this will optimize the liking and
     // commenting
-    const path = `${global.WS_HEADER}://${global.WS_ENDPOINT}/ws/socialCalendarCellPage/`+user+'/'+year+'/'+month+'/'+day
+    const path = `${global.WS_HEADER}://${global.WS_ENDPOINT}/ws/newSocialCalendarCellPage/`+cellId
     console.log(path)
     this.socketRef = new WebSocket(path)
     this.socketRef.onopen = () => {
@@ -53,137 +54,6 @@ class WebSocketSocialCalCellPage{
     this.socketRef.close()
   }
 
-  fetchSocialCalCellInfo(user, year, month, day){
-    // use to fetch the information from the right social cal event
-    console.log('fetch social cal cell info')
-    const cellDate = year+"-"+month+"-"+day
-    this.sendSocialCalCellInfo({
-      command: "fetch_social_cal_cell_info",
-      cellDate: cellDate,
-      cellUser: user
-    })
-  }
-
-  sendSocialCalCellLike (cellDate, personLike, owner){
-    //This is for liking the social cal cell
-    // The curDate and the owner will be used to either create the new social
-    // cal cell event or filter out the right one
-
-    this.sendSocialCalCellInfo({
-      command: "send_social_cal_cell_like",
-      cellDate: cellDate,
-      personLike: personLike,
-      cellOwner: owner
-
-    })
-
-  }
-
-  sendSocialDayCaption(cellDate, cellOwner, dayCaption){
-    // This is for the writing the caption of the cell
-    // The cur date and the cellOwner will be used to either create or
-    // find the right cal cell.
-
-    this.sendSocialCalCellInfo({
-      command: "send_social_day_caption",
-      cellDate: cellDate,
-      cellOwner: cellOwner,
-      dayCaption: dayCaption
-    })
-
-  }
-
-  sendSocialCalCellUnlike(cellDate, personUnlike, owner) {
-    //This is for unliking the social cal cell
-    //The curDate and the owner will be used to either create the new social
-    //cal cell event or filter out the right one
-    this.sendSocialCalCellInfo({
-      command: "send_social_cal_cell_unlike",
-      cellDate: cellDate,
-      personUnlike: personUnlike,
-      cellOwner: owner
-    })
-  }
-
-  sendSocialCalCellComment(currentDate, curUser, comment, owner){
-    //This is to send comments in the social cal cell
-    // cellowner is an id
-    // personcomment is an id
-    console.log(currentDate, curUser, comment, owner)
-    this.sendSocialCalCellInfo({
-      command: "send_social_cal_cell_comment",
-      cellDate: currentDate,
-      personComment: curUser,
-      comment: comment,
-      cellOwner: owner
-    })
-  }
-
-  sendSocialEventJoin(userId, socialEventId, socialCalCellId, cellDate){
-    // This will send information for someone to join a social event
-    // UserID will be the perosn wanting to join the event
-    // eventid is for the event itself
-    //socialcalcellid is for the social cal cell identification
-
-    // The M is for the modal view
-    this.sendSocialCalCellInfo({
-      command: "add_user_social_event_M",
-      userId: userId,
-      socialEventId: socialEventId,
-      socialCalCellId: socialCalCellId,
-      cellDate: cellDate,
-    })
-  }
-
-  sendSocialEventLeave(userId, socialEventId, socialCalCellId, cellDate){
-    // This will let someone leave an event
-    // UserId will be the perosn wanting to leave the even
-    // eventId is for the even titiself
-
-    //Pretty similar to the socialeventjoin but just someone leaving instead
-    // of joining
-
-    this.sendSocialCalCellInfo({
-      command: "remove_user_social_event_M",
-      userId: userId,
-      socialEventId: socialEventId,
-      socialCalCellId: socialCalCellId,
-      cellDate: cellDate,
-
-    })
-  }
-
-  sendDeleteSocialPic(socialItemId, socialCellId, cellDate){
-    // This function will send a request into the backend inorder to delete
-    // a specfic socialcalitem. The social cellId will be used to grab the
-    // current cell and then just update the soical cel call. The cell date
-    // will be used for the socketname
-
-    console.log('send seoms tuff')
-    this.sendSocialCalCellInfo({
-      command: "delete_social_cell_item",
-      socialItemId: socialItemId,
-      socialCellId: socialCellId,
-      cellDate: cellDate
-    })
-  }
-
-  sendDeleteSocialCell(socialCellId, curId, cellDate){
-    // This function will be send a request into the backend inorder to delete the
-    // whole day cell object. Teh social cell id will be used to get the social
-    // cal cell day. the curid and cell date be used to send it to the right
-    // websocket.
-
-    // Remember you have to check teh content type and somehow delete it too
-
-    this.sendSocialCalCellInfo({
-      command: "delete_social_cell_day",
-      socialCellId: socialCellId,
-      curId: curId,
-      cellDate: cellDate
-    })
-
-  }
 
 
   socketNewSocialCalCell(data){
@@ -285,16 +155,6 @@ class WebSocketSocialCalCellPage{
     this.callbacks['send_social_cal_cell_comment_like_unlike'] = sendSocialCalCellCommentLikeUnlike
   }
 
-
-  sendCommentLike (socialCalCellDate, socialCalCellID, commentID, personIDLike) {
-    this.sendSocialCalCellInfo({
-      socialCalCellDate: socialCalCellDate,
-      socialCalCellID:socialCalCellID,
-      commentID:commentID,
-      personIDLike: personIDLike,
-      command: 'send_social_cal_cell_comment_like_unlike',
-    })
-  }
 
 
   sendSocialCalCellInfo(data){

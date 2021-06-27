@@ -16,6 +16,8 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import FacePile from 'react-native-face-pile';
 import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons';
+import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebsocket';
+
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -55,20 +57,50 @@ import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-ico
        showLike: false,
 
      }
+     initializeDayAlbum()
    }
 
+   initializeDayAlbum(){
+     // used to connect to the websocket
+     const cellId = this.props.route.params.cellId
+     this.waitForDayAlbumSocketConnection(() => {
+       SocialCalCellPageWebSocketInstance.fetchSocialCalCellInfo(
+         cellId
+       )
+     })
+
+     SocialCalCellPageWebSocketInstance.connect(cellId)
+
+   }
+
+   waitForDayAlbumSocketConnection(callback){
+     const component = this;
+     setTimeout(
+       function(){
+
+         if (SocialCommentsWebsocketInstance.state() === 1){
+
+           callback();
+           return;
+         } else{
+             component.waitForCommentsSocketConnection(callback);
+         }
+       }, 100)
+   }
+
+
    changeShowComments = () => {
-     let entireDay= (this.props.route.params.entireDay)
-     let dayCaption=entireDay[0].dayCaption
-     let socialComments=entireDay[0].get_socialCalComment
-     let profilePic=entireDay[0].socialCalUser.profile_picture
-     this.props.navigation.navigate("Comments",
-     {
-         comments: socialComments,
-         caption: dayCaption,
-         profilePic:profilePic,
-     }
-     )
+     // let entireDay= (this.props.route.params.entireDay)
+     // let dayCaption=entireDay[0].dayCaption
+     // let socialComments=entireDay[0].get_socialCalComment
+     // let profilePic=entireDay[0].socialCalUser.profile_picture
+     // this.props.navigation.navigate("Comments",
+     // {
+     //     comments: socialComments,
+     //     caption: dayCaption,
+     //     profilePic:profilePic,
+     // }
+     // )
    }
 
    changeShowLike = () => {

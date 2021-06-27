@@ -149,10 +149,10 @@ class SocialNewsfeedPost extends React.Component{
     return finalHeight
   }
 
-  onPostDirect = (toDoStuff) => {
+  onPostDirect = (cellId) => {
 
     this.props.navigation.navigate("DayAlbum", {
-      entireDay: toDoStuff
+      cellId: cellId
     })
   }
 
@@ -382,7 +382,7 @@ class SocialNewsfeedPost extends React.Component{
 
 
                 <TouchableOpacity
-                  onPress = {() => this.onPostDirect(post)}
+                  onPress = {() => this.onPostDirect(postId)}
                   style = {styles.tagCSS3}
                   >
 
