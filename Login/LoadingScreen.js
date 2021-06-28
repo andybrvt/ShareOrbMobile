@@ -25,7 +25,7 @@ class LoadingScreen extends React.Component{
       // This function here will turn off the loading when the
       // username is there
 
-      setTimeout(() => {this.props.authDoneLoading()}, 1000)
+      setTimeout(() => {this.props.authDoneLoading()}, 500)
 
     }
 

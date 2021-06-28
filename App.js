@@ -53,11 +53,15 @@ import EditProfile from './ProfilePage/EditProfile';
 import EditBio from './ProfilePage/EditBio';
 import Followers from './ProfilePage/Followers';
 import Following from './ProfilePage/Following';
-import Settings from './ProfilePage/Settings';
+
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
 import ChatSearch from './Chats/ChatSearch';
 import Comments from './Newsfeed/Comments.js';
+
+import Settings from './Settings/Settings';
+import Privacy from './Settings/Privacy';
+import UserInfo from './Settings/UserInfo';
 
 import { Ionicons } from '@expo/vector-icons';
 import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle} from "react-native-feather";
@@ -457,6 +461,26 @@ class App extends Component{
                        ...TransitionPresets.SlideFromRightIOS,
                      }}
                      name = 'Settings' component = {Settings}/>
+                   <Stack.Screen
+                     options={{
+                       headerStyle:{
+                         shadowColor:'#fff', //ios
+                         elevation:0,        // android
+                       },
+                       title: 'Privacy',
+                        ...TransitionPresets.SlideFromRightIOS,
+                      }}
+                      name = 'Privacy' component = {Privacy}/>
+                    <Stack.Screen
+                      options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+                        },
+                        title: 'User Info',
+                         ...TransitionPresets.SlideFromRightIOS,
+                       }}
+                       name = 'UserInfo' component = {UserInfo}/>
                   <Stack.Screen
                     options={{
                       headerStyle:{
