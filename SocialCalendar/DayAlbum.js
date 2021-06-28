@@ -123,11 +123,12 @@ import { connect } from 'react-redux';
        lastName,
        userName,
        dayCaption,
-       socialComments,
-       likePost,
        coverPic
      } = ""
 
+
+     let likePost = []
+     let socialComments = []
      console.log('here is the props')
      console.log(this.props)
 
@@ -136,7 +137,7 @@ import { connect } from 'react-redux';
        if(this.props.socialCalCell.socialCalUser){
 
          const user = this.props.socialCalCell.socialCalUser
-          profilePic = user.profilePic
+          profilePic = user.profile_picture
 
           firstName = user.first_name
           lastName = user.last_name
@@ -150,6 +151,7 @@ import { connect } from 'react-redux';
 
 
      }
+
 
      return (
        <BackgroundContainer>
@@ -271,7 +273,7 @@ import { connect } from 'react-redux';
             </View>
           </View>
            </ImageBackground>
-           
+
 
 
        </BackgroundContainer>
