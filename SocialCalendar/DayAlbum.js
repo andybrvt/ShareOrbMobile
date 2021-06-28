@@ -104,10 +104,14 @@ import { connect } from 'react-redux';
      // )
    }
 
-   changeShowLike = () => {
-     this.setState({
-       showLike:!this.state.showLike,
-     });
+   sendLike = (cellId, personLike) => {
+
+     SocialCalCellPageWebSocketInstance.sendSocialCalCellLike(cellId, personLike)
+
+   }
+
+   sendUnLike = (cellId, personLike) => {
+     console.log('send unlike')
    }
 
    onHomeNav = () => {
@@ -127,13 +131,19 @@ import { connect } from 'react-redux';
      } = ""
 
 
-     let likePost = []
-     let socialComments = []
+     let likePost = [];
+     let peopleLikeId = [];
+     let socialComments = [];
+     let postId = "";
      console.log('here is the props')
-     console.log(this.props)
 
+     console.log(this.props)
      if(this.props.socialCalCell){
        const cell = this.props.socialCalCell
+
+       if(this.props.socialCalCell.id){
+         postId = this.props.socialCalCell.id;
+       }
        if(this.props.socialCalCell.socialCalUser){
 
          const user = this.props.socialCalCell.socialCalUser
@@ -145,12 +155,28 @@ import { connect } from 'react-redux';
        }
 
        dayCaption = cell.dayCaption
-       socialComments = cell.get_socialCalComment
-       likePost = cell.people_like
        coverPic = cell.coverPic
+
+       console.log('here are teh comments')
+       if(this.props.socialCalCell.get_socialCalComment){
+         socialComments = this.props.socialCalCell.get_socialCalComment
+
+       }
+
+       if(this.props.socialCalCell.people_like){
+         likePost = this.props.socialCalCell.people_like
+
+       }
 
 
      }
+
+     if(likePost.length > 0){
+       for(let i = 0; i< likePost.length; i++){
+         peopleLikeId.push(likePost[i].id);
+       }
+     }
+
 
 
      return (
@@ -177,13 +203,16 @@ import { connect } from 'react-redux';
                rounded
                source = {{
                  uri: `${global.IMAGE_ENDPOINT}`+profilePic,
-               }}
+               }}peopleLikeId
              />
+           {
+             peopleLikeId.includes(this.props.userId) ?
+
              <View style = {styles.tagCSS1}>
-               <TouchableOpacity onPress={this.changeShowLike}>
+               <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
                <View style = {styles.justifyCenter}>
-                 {
-                   (this.state.showLike==true) ?
+
+
                    <FontAwesomeIcon
                    style = {{
                      color:'red',
@@ -191,7 +220,23 @@ import { connect } from 'react-redux';
                    }}
                    size = {20}
                    icon={faHeart} />
-                   :
+
+
+                 <Text  style = {styles.justifyCenter1}>
+                 {likePost.length}
+                 </Text>
+               </View>
+               </TouchableOpacity>
+             </View>
+
+             :
+
+             <View style = {styles.tagCSS1}>
+               <TouchableOpacity onPress={() => this.sendUnLike(postId, this.props.userId)}>
+               <View style = {styles.justifyCenter}>
+
+
+
                    <FontAwesomeIcon
                      style = {{
                        color:'white',
@@ -203,13 +248,18 @@ import { connect } from 'react-redux';
 
                  </FontAwesomeIcon>
 
-                 }
+
                  <Text  style = {styles.justifyCenter1}>
                  {likePost.length}
                  </Text>
                </View>
                </TouchableOpacity>
              </View>
+
+
+
+           }
+
              <View style = {styles.tagCSS2}>
                <TouchableOpacity  onPress={this.changeShowComments}>
                  <View  style = {styles.justifyCenter}>
@@ -447,7 +497,8 @@ import { connect } from 'react-redux';
 
  const mapStateToProps = state => {
    return {
-     socialCalCell: state.socialCal.socialCalCellInfo
+     socialCalCell: state.socialCal.socialCalCellInfo,
+     userId: state.auth.id
    }
  }
 

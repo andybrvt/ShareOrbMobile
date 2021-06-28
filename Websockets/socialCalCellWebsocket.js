@@ -142,6 +142,23 @@ class WebSocketSocialCalCellPage{
     })
   }
 
+  sendSocialCalCellLike (cellId, personLike){
+  //This is for liking the social cal cell
+  // cellId to get the cell and person like would just be the id of the person
+  // liking the post
+
+
+  console.log(cellId, personLike)
+  this.sendSocialCalCellInfo({
+    command: "send_social_cal_cell_like",
+    cellId: cellId,
+    personLike: personLike,
+
+
+  })
+
+}
+
 
 
   addCallbacks(
