@@ -18,6 +18,7 @@ import FacePile from 'react-native-face-pile';
 import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons';
 import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebsocket';
 import { connect } from 'react-redux';
+import Carousel from 'react-native-snap-carousel';
 
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
@@ -56,7 +57,28 @@ import { connect } from 'react-redux';
      this.state = {
        showComments: false,
        showLike: false,
-
+       carouselItems: [
+         {
+             title:"Item 1",
+             text: "Text 1",
+         },
+         {
+             title:"Item 2",
+             text: "Text 2",
+         },
+         {
+             title:"Item 3",
+             text: "Text 3",
+         },
+         {
+             title:"Item 4",
+             text: "Text 4",
+         },
+         {
+             title:"Item 5",
+             text: "Text 5",
+         },
+       ]
      }
      this.initializeDayAlbum()
    }
@@ -119,6 +141,236 @@ import { connect } from 'react-redux';
      // to the home page
    }
 
+   renderItem({item,index}){
+     let likePost = [];
+     let peopleLikeId = [];
+     let socialComments = [];
+     let postId = "";
+     console.log('MADE IT')
+     item=item.item
+     console.log("blah")
+     console.log(item)
+     console.log(global.IMAGE_ENDPOINT+item.coverPic)
+     if(this.props.socialCalCell){
+       const cell = this.props.socialCalCell
+
+       if(this.props.socialCalCell.id){
+         postId = this.props.socialCalCell.id;
+       }
+       if(this.props.socialCalCell.socialCalUser){
+
+         const user = this.props.socialCalCell.socialCalUser
+          profilePic = user.profile_picture
+
+          firstName = user.first_name
+          lastName = user.last_name
+          userName = user.username
+       }
+
+       // dayCaption = "test"
+       // coverPic = item.coverPic
+
+
+       if(this.props.socialCalCell.get_socialCalComment){
+         socialComments = this.props.socialCalCell.get_socialCalComment
+       }
+
+       if(this.props.socialCalCell.people_like){
+         likePost = this.props.socialCalCell.people_like
+       }
+
+
+     }
+
+     if(likePost.length > 0){
+       for(let i = 0; i< likePost.length; i++){
+         peopleLikeId.push(likePost[i].id);
+       }
+     }
+     return (
+     {/*
+     <ImageBackground
+       blurRadius={80}
+       source={{ uri: `${global.IMAGE_ENDPOINT}`+item.coverPic}}
+        style={styles.albumOuterContainer}>
+
+       <Image
+         key={'blurryImage'}
+         size={300}
+         style={styles.albumLook}
+         // blurRadius={10}
+         source = {{
+           uri: `${global.IMAGE_ENDPOINT}`+item.coverPic
+         }}
+       />
+       <Avatar
+         style={styles.close}
+         onPress = {() => this.props.ViewProfile()}
+         size={35}
+         rounded
+         source = {{
+           uri: `${global.IMAGE_ENDPOINT}`+item.socialCalUser.profile_picture,
+         }}
+       />
+     {
+       peopleLikeId.includes(this.props.userId) ?
+
+       <View style = {styles.tagCSS1}>
+         <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
+         <View style = {styles.justifyCenter}>
+
+
+             <FontAwesomeIcon
+             style = {{
+               color:'red',
+               right:3,
+             }}
+             size = {20}
+             icon={faHeart} />
+
+
+           <Text  style = {styles.justifyCenter1}>
+           {likePost.length}
+           </Text>
+         </View>
+         </TouchableOpacity>
+       </View>
+
+       :
+
+       <View style = {styles.tagCSS1}>
+         <TouchableOpacity onPress={() => this.sendUnLike(postId, this.props.userId)}>
+         <View style = {styles.justifyCenter}>
+
+
+
+             <FontAwesomeIcon
+               style = {{
+                 color:'white',
+                 right:3,
+               }}
+
+             size = {20}
+             icon={faHeart}>
+
+           </FontAwesomeIcon>
+
+
+           <Text  style = {styles.justifyCenter1}>
+           {likePost.length}
+           </Text>
+         </View>
+         </TouchableOpacity>
+       </View>
+
+
+
+     }
+
+       <View style = {styles.tagCSS2}>
+         <TouchableOpacity  onPress={this.changeShowComments}>
+           <View  style = {styles.justifyCenter}>
+             {
+               (socialComments) ?
+               <FontAwesomeIcon
+               style = {{
+                 color:'white',
+                 right:3,
+               }}
+               size = {20}
+               icon={faComment} />
+               :
+
+               <FontAwesomeIcon
+               style = {{
+                 color:'red',
+                 right:3,
+               }}
+               size = {20}
+               icon={faComment} />
+             }
+             <Text  style = {styles.justifyCenter1}>
+             {socialComments.length}
+           </Text>
+           </View>
+         </TouchableOpacity>
+       </View>
+       <Text style = {styles.tagCSS3}>
+         <View>
+           <FontAwesomeIcon
+           style = {{
+             color:'white',
+           }}
+           size = {20}
+           icon={faBookmark} />
+         </View>
+       </Text>
+     <Text style = {styles.DayAlbumUserName}>
+       {item.firstName+" "+item.lastName}
+    </Text>
+    <View  style={styles.openContainer}>
+      <View style={styles.firstContainer}>
+        <View>
+          <Text  style = {styles.DayCaption}>
+            <Text style = {styles.bottomDayAlbumName}>{item.userName}</Text>
+            &nbsp; test</Text>
+        </View>
+      </View>
+      <View style={styles.secondContainer}>
+        <FacePile size={3} numFaces={3} faces={FACES} circleSize={17.5}
+          containerStyle={{height:40}}
+           overlap={0.1} />
+      </View>
+    </View>
+     </ImageBackground>
+     */}
+
+   )
+
+
+   }
+
+
+   _renderItem({item,index}){
+
+     console.log("AAAAAAAAAAAAAAAAAAAA")
+
+          return (
+
+            <View style={{
+               backgroundColor:'floralwhite',
+               borderRadius: 5,
+               height: 250,
+               padding: 50,
+               marginLeft: 25,
+               marginRight: 25, }}>
+            {/*
+            <ImageBackground
+              blurRadius={80}
+              source={{ uri: `${global.IMAGE_ENDPOINT}`+item.coverPic}}
+               style={styles.albumOuterContainer}>
+
+
+              <Image
+                key={'blurryImage'}
+                size={300}
+                style={styles.albumLook}
+                // blurRadius={10}
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+item.coverPic
+                }}
+              />
+          </ImageBackground>
+          */}
+
+
+
+           <Text>test</Text>
+         </View>
+
+        )
+    }
+
    render(){
 
      let {
@@ -135,10 +387,13 @@ import { connect } from 'react-redux';
      let peopleLikeId = [];
      let socialComments = [];
      let postId = "";
-     console.log('here is the props')
-
-
-     console.log(this.props)
+     // console.log('here is the props')
+     //
+     //
+     // console.log(this.props)
+     // console.log("TESTETSTSETS")
+     // console.log(this.props.route)
+     // console.log(this.props.route.params.entireDay)
      if(this.props.socialCalCell){
        const cell = this.props.socialCalCell
 
@@ -176,145 +431,21 @@ import { connect } from 'react-redux';
        }
      }
 
-
-
+     console.log("WHOEL LIST")
+     console.log(this.props.route.params.entireDay)
+     console.log((this.props.route.params.entireDay.length)+" items")
      return (
        <BackgroundContainer>
 
-           <ImageBackground
-             blurRadius={80}
-             source={{ uri: `${global.IMAGE_ENDPOINT}`+coverPic,}}
-              style={styles.albumOuterContainer}>
+         <Carousel
+                  layout={"default"}
+                  ref={ref => this.carousel = ref}
+                  data={this.props.route.params.entireDay}
+                  sliderWidth={300}
+                  itemWidth={300}
+                  renderItem={this._renderItem}
+                   />
 
-             <Image
-               key={'blurryImage'}
-               size={300}
-               style={styles.albumLook}
-               // blurRadius={10}
-               source = {{
-                 uri: `${global.IMAGE_ENDPOINT}`+coverPic,
-               }}
-             />
-             <Avatar
-               style={styles.close}
-               onPress = {() => this.props.ViewProfile()}
-               size={35}
-               rounded
-               source = {{
-                 uri: `${global.IMAGE_ENDPOINT}`+profilePic,
-               }}peopleLikeId
-             />
-           {
-             peopleLikeId.includes(this.props.userId) ?
-
-             <View style = {styles.tagCSS1}>
-               <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
-               <View style = {styles.justifyCenter}>
-
-
-                   <FontAwesomeIcon
-                   style = {{
-                     color:'red',
-                     right:3,
-                   }}
-                   size = {20}
-                   icon={faHeart} />
-
-
-                 <Text  style = {styles.justifyCenter1}>
-                 {likePost.length}
-                 </Text>
-               </View>
-               </TouchableOpacity>
-             </View>
-
-             :
-
-             <View style = {styles.tagCSS1}>
-               <TouchableOpacity onPress={() => this.sendUnLike(postId, this.props.userId)}>
-               <View style = {styles.justifyCenter}>
-
-
-
-                   <FontAwesomeIcon
-                     style = {{
-                       color:'white',
-                       right:3,
-                     }}
-
-                   size = {20}
-                   icon={faHeart}>
-
-                 </FontAwesomeIcon>
-
-
-                 <Text  style = {styles.justifyCenter1}>
-                 {likePost.length}
-                 </Text>
-               </View>
-               </TouchableOpacity>
-             </View>
-
-
-
-           }
-
-             <View style = {styles.tagCSS2}>
-               <TouchableOpacity  onPress={this.changeShowComments}>
-                 <View  style = {styles.justifyCenter}>
-                   {
-                     (socialComments) ?
-                     <FontAwesomeIcon
-                     style = {{
-                       color:'white',
-                       right:3,
-                     }}
-                     size = {20}
-                     icon={faComment} />
-                     :
-
-                     <FontAwesomeIcon
-                     style = {{
-                       color:'red',
-                       right:3,
-                     }}
-                     size = {20}
-                     icon={faComment} />
-                   }
-                   <Text  style = {styles.justifyCenter1}>
-                   {socialComments.length}
-                 </Text>
-                 </View>
-               </TouchableOpacity>
-             </View>
-             <Text style = {styles.tagCSS3}>
-               <View>
-                 <FontAwesomeIcon
-                 style = {{
-                   color:'white',
-                 }}
-                 size = {20}
-                 icon={faBookmark} />
-               </View>
-             </Text>
-           <Text style = {styles.DayAlbumUserName}>
-             {firstName+" "+lastName}
-          </Text>
-          <View  style={styles.openContainer}>
-            <View style={styles.firstContainer}>
-              <View>
-                <Text  style = {styles.DayCaption}>
-                  <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
-                  &nbsp; {dayCaption}</Text>
-              </View>
-            </View>
-            <View style={styles.secondContainer}>
-              <FacePile size={3} numFaces={3} faces={FACES} circleSize={17.5}
-                containerStyle={{height:40}}
-                 overlap={0.1} />
-            </View>
-          </View>
-           </ImageBackground>
 
 
 
