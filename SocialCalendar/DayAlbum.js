@@ -137,6 +137,7 @@ import { connect } from 'react-redux';
      let postId = "";
      console.log('here is the props')
 
+
      console.log(this.props)
      if(this.props.socialCalCell){
        const cell = this.props.socialCalCell
@@ -160,12 +161,10 @@ import { connect } from 'react-redux';
        console.log('here are teh comments')
        if(this.props.socialCalCell.get_socialCalComment){
          socialComments = this.props.socialCalCell.get_socialCalComment
-
        }
 
        if(this.props.socialCalCell.people_like){
          likePost = this.props.socialCalCell.people_like
-
        }
 
 
@@ -300,15 +299,8 @@ import { connect } from 'react-redux';
              </Text>
            <Text style = {styles.DayAlbumUserName}>
              {firstName+" "+lastName}
-
           </Text>
-
-
-
-
           <View  style={styles.openContainer}>
-
-
             <View style={styles.firstContainer}>
               <View>
                 <Text  style = {styles.DayCaption}>

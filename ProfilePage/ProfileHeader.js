@@ -113,7 +113,7 @@ class ProfileHeader extends React.Component{
                   }}
                 />
               </View>
-              <View style={{flex:2,justifyContent:'center', marginLeft:30}}>
+              <View style={{flex:1.5,justifyContent:'center', marginLeft:30}}>
                 <Text style = {styles.name}>{name}</Text>
                 <Text style = {styles.username}>@{username}</Text>
                   <TouchableOpacity onPress={() => this.editPageClick()}>
@@ -311,9 +311,9 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
     paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 4,
-    top:5,
+
+    borderRadius: 5,
+    top:10,
     backgroundColor: '#1890ff',
 
     alignItems: "center",

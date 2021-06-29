@@ -14,6 +14,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  // you can upload pictures and write a caption after uploaidng
  // pictures
  import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+ import { connect } from 'react-redux';
 
  const Tab = createMaterialTopTabNavigator();
  class Privacy extends React.Component{
@@ -58,4 +59,10 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    }
  }
 
- export default Privacy;
+ const mapStateToProps = state => {
+    return {
+      private:state.auth.private,
+    }
+  }
+
+ export default connect(mapStateToProps)(Privacy);

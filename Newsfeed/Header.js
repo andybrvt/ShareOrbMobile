@@ -55,7 +55,7 @@ class Header extends React.Component{
     return(
       <Animated.View
         style = {[styles.container,{
-          opacity: opacity,
+          // opacity: opacity,
           zIndex: 99
         }]}>
 
@@ -95,7 +95,9 @@ const styles = StyleSheet.create({
     // shadowOffset:{  width: 0,  height: 2,  },
     // shadowColor: 'black',
     // shadowOpacity: 0.2,
-    elevation:1,
+    elevation:3,
+    borderBottomWidth: 5,
+    borderBottomColor: "gray",
   },
   logoContainer: {
     flex: 1,

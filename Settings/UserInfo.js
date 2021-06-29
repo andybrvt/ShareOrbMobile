@@ -13,7 +13,8 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
- import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { connect } from 'react-redux';
 
  const Tab = createMaterialTopTabNavigator();
  class UserInfo extends React.Component{
@@ -24,7 +25,8 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    }
 
    render(){
-
+     console.log("HEEHEHEHEHEHE")
+     console.log(this.props)
      return (
        <BackgroundContainer>
          <View style={styles.action}>
@@ -41,7 +43,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
              ]}
            >
 
-           510-355-8813
+           {this.props.phone_number}
 
          </TextInput>
          </View>
@@ -59,7 +61,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
              ]}
            >
 
-           05/20/1999
+           {this.props.dob}
 
          </TextInput>
          </View>
@@ -70,60 +72,75 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    }
  }
 
+const mapStateToProps = state => {
+  console.log(state.auth)
+   return {
+     dob: state.auth.dob,
+     userId: state.auth.id,
+     currentUser: state.auth.username,
+     profilepic: state.auth.profilePic,
+     phone_number: state.auth.phone_number
+   }
+ }
 
+ const mapDispatchToProps = dispatch => {
+  return {
+    updateCredentials: (updatedUserObj) => dispatch(authActions.updateCredentials(updatedUserObj))
+  }
+}
 
-  const styles = StyleSheet.create({
+export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
 
-   headerFont:{
-     paddingLeft:10, fontSize:15, color:"#666666",
+const styles = StyleSheet.create({
+
+ headerFont:{
+   paddingLeft:10, fontSize:15, color:"#666666",
+ },
+  container: {
+   flex: 1,
+   backgroundColor: '#F5FCFF',
+ },
+  action: {
+   flexDirection: 'column',
+   marginTop: 25,
+   height:75,
+   borderBottomWidth: 1,
+   borderBottomColor: '#f2f2f2',
+
+   padding:10,
+ },
+ action2: {
+  flexDirection: 'row',
+  marginTop: 25,
+  height:50,
+  borderBottomWidth: 1,
+  borderBottomColor: '#f2f2f2',
+
+  padding:10,
+},
+  panelButton: {
+   padding: 13,
+   borderRadius: 10,
+   backgroundColor: '#FF6347',
+   alignItems: 'center',
+   marginVertical: 7,
    },
-    container: {
-     flex: 1,
-     backgroundColor: '#F5FCFF',
-   },
-    action: {
-     flexDirection: 'column',
-     marginTop: 25,
-     height:75,
-     borderBottomWidth: 1,
-     borderBottomColor: '#f2f2f2',
+  textInput: {
+   flex: 1,
+   marginTop: Platform.OS === 'ios' ? 0 : -5,
+   paddingLeft: 10,
+   paddingTop:10,
+   fontSize:16
 
-     padding:10,
-   },
-   action2: {
-    flexDirection: 'row',
-    marginTop: 25,
-    height:50,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
+ },
+ bioInput: {
+  flex: 1,
+  marginTop: Platform.OS === 'ios' ? 0 : -5,
+  paddingLeft: 10,
+  fontSize:16,
+  color:"#666666",
 
-    padding:10,
-  },
-    panelButton: {
-     padding: 13,
-     borderRadius: 10,
-     backgroundColor: '#FF6347',
-     alignItems: 'center',
-     marginVertical: 7,
-     },
-    textInput: {
-     flex: 1,
-     marginTop: Platform.OS === 'ios' ? 0 : -5,
-     paddingLeft: 10,
-     paddingTop:10,
-     fontSize:16
-
-   },
-   bioInput: {
-    flex: 1,
-    marginTop: Platform.OS === 'ios' ? 0 : -5,
-    paddingLeft: 10,
-    fontSize:16,
-    color:"#666666",
-
-  },
+},
 
 
-  })
-
- export default UserInfo;
+})
