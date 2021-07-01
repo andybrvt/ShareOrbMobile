@@ -33,12 +33,12 @@ class SocialCalendarHori extends React.Component{
   // if the props are not passed in this will be the
   // default so that it doesnt become undefined
   static defaultProps = {
-    data: [];
+    data: [],
     imageKey: 'image',
     local: false,
     width: Math.round(Dimensions.get('window').width),
     height: 230,
-    separatorWidth: 0;
+    separatorWidth: 0,
     loop: true,
     indicator: true,
     indicatorStyle: {},
@@ -66,22 +66,22 @@ class SocialCalendarHori extends React.Component{
   }
 
   componentDidMount(){
-    if(this.props.autoscroll){
-      this.startAutoPlay();
-    }
+    // if(this.props.autoscroll){
+    //   this.startAutoPlay();
+    // }
   }
 
   componentWillUnmount(){
-    if(this.props.autoscroll){
-      this.stopAutoPlay();
-    }
+    // if(this.props.autoscroll){
+    //   this.stopAutoPlay();
+    // }
   }
 
 
   // checks if you want animation and then
   // configue the next
   // index increases by 1 and then the slider will scroll to that
-  // index 
+  // index
   changeSliderListIndex = () => {
     if (this.props.animation) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeIn);
@@ -178,13 +178,79 @@ class SocialCalendarHori extends React.Component{
 
 
   render(){
+    const itemWidth = this.props.width;
+    const separatorWidth = this.props.separatorWidth;
+    const totalItemWidth = itemWidth + separatorWidth;
+
 
     return(
       <View>
-        <Text> some stuff </Text>
+        <FlatList
+          ref = {this.slider}
+          horizontal
+          snapToInterval = {totalItemWidth}
+          decelerationRate = "fast"
+          bounces= {false}
+          contentContainerStyle={this.props.contentContainerStyle}
+          data={this.state.data}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item, index}) =>
+            React.cloneElement(this.props.component, {
+              style: {width: this.props.width},
+              item: item,
+              imageKey: this.props.imageKey,
+              onPress: this.props.onPress,
+              index: this.state.index % this.props.data.length,
+              active: index === this.state.index,
+              local: this.props.local,
+              height: this.props.height,
+            })
+          }
+          ItemSeparatorComponent={() => (
+            <View style={{width: this.props.separatorWidth}} />
+          )}
+          keyExtractor={(item, index) => item.toString() + index}
+          onViewableItemsChanged={this.onViewableItemsChanged}
+          viewabilityConfig={this.viewabilityConfig}
+           getItemLayout={(data, index) => ({
+             length: totalItemWidth,
+             offset: totalItemWidth * index,
+             index,
+           })}
+           windowSize={1}
+           initialNumToRender={1}
+           maxToRenderPerBatch={1}
+           removeClippedSubviews={true}
+
+           />
+
       </View>
     )
   }
 }
+
+
+const styles = StyleSheet.create({
+  image: {
+    height: 230,
+    resizeMode: 'stretch',
+  },
+  indicatorContainerStyle: {
+     marginTop: 18,
+   },
+  shadow: {
+   ...Platform.select({
+     ios: {
+       shadowColor: 'black',
+       shadowOffset: {width: 3, height: 3},
+       shadowOpacity: 0.4,
+       shadowRadius: 10,
+     },
+     android: {
+       elevation: 5,
+     },
+   }),
+ },
+})
 
 export default SocialCalendarHori;
