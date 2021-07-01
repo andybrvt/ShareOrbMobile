@@ -22,6 +22,10 @@ import DayAlbum from './DayAlbum';
 // you items PureComponent so that it wont rerender every time
 class SocialMonth extends React.PureComponent{
 
+  static defaultProps = {
+    item: {},
+    navigation: {}
+  }
 
   ViewDay = (toDoStuff) => {
     // This fucntion will be used to navigate to the post page

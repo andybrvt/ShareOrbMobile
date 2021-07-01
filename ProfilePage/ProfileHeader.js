@@ -96,6 +96,7 @@ class ProfileHeader extends React.Component{
     return (
     <View style={{
         flexDirection:'column',
+        
         }}>
 
         <View>

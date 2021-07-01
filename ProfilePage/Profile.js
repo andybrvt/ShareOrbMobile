@@ -7,6 +7,7 @@ import Constant from 'expo-constants';
 import { Appbar } from 'react-native-paper';
 import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
+import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import { Tag, Bookmark, MapPin, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
 // This will be the bulk of the profile page
 class Profile extends React.Component{
@@ -102,9 +103,7 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
-          <SocialCalendar
-            navigation={this.props.navigation}
-            {...this.props} />
+          <SocialCalendarHori />
         </View>
       </BackgroundContainer>
     )
@@ -141,10 +140,11 @@ const styles = StyleSheet.create({
 
   },
   profileHeader: {
-    flex: 1.5,
+    flex: 1,
     alignItems:'flex-start',
     // left:'12.5%',
     width:'100%',
+    backgroundColor: 'red'
 
 
   },

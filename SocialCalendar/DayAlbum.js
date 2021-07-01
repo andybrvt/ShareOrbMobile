@@ -431,9 +431,8 @@ import Carousel from 'react-native-snap-carousel';
        }
      }
 
-     console.log("WHOEL LIST")
-     console.log(this.props.route.params.entireDay)
-     console.log((this.props.route.params.entireDay.length)+" items")
+
+     console.log(this.props)
      return (
        <BackgroundContainer>
 
