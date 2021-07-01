@@ -124,15 +124,15 @@ import Carousel from 'react-native-snap-carousel';
      console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCC")
      console.log(item)
      return (
-       <View>
+       <View style={{flex:1}}>
          <ImageBackground
          blurRadius={80}
          source={{ uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,}}
-          style={styles.albumOuterContainer}>
+        style={styles.albumOuterContainer}>
 
            <Image
              key={'blurryImage'}
-             size={300}
+
              style={styles.albumLook}
              // blurRadius={10}
              source = {{
@@ -262,17 +262,27 @@ import Carousel from 'react-native-snap-carousel';
      }
 
 
-
+     const width = Dimensions.get('window').width;
      return (
+       <View style={{width:'100%', height:'100%'}}>
 
-         <Carousel
-          layout={"stack"}
-          ref={ref => this.carousel = ref}
-          data={this.props.socialCalCell.get_socialCalItems}
-          sliderWidth={350}
-          itemWidth={400}
-          renderItem={this.renderItem}
-           />
+
+
+           <Carousel
+             layout='stack'
+             removeClippedSubviews={false}
+             sliderWidth={width}
+            itemWidth={width}
+            inactiveSlideScale={1}
+            slideStyle={{  flex:1 }}
+            ref={ref => this.carousel = ref}
+            data={this.props.socialCalCell.get_socialCalItems}
+            sliderWidth={width}
+            itemWidth={width}
+            renderItem={this.renderItem}
+             />
+
+       </View>
 
 
      )
@@ -417,7 +427,7 @@ import Carousel from 'react-native-snap-carousel';
    },
    albumLook:{
      borderRadius: 10,
-     width: '95%',
+     width: '97.5%',
      height: '80%',
      position:'absolute',
      top:'5%',
