@@ -60,6 +60,7 @@ import Carousel from 'react-native-snap-carousel';
 
      }
      this.initializeDayAlbum()
+     this.handleClick = this.renderItem.bind(this);
    }
 
    initializeDayAlbum(){
@@ -121,10 +122,8 @@ import Carousel from 'react-native-snap-carousel';
    }
 
    renderItem({item,index}){
-     console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCC")
-     console.log(item)
      return (
-       <View style={{flex:1}}>
+
          <ImageBackground
          blurRadius={80}
          source={{ uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,}}
@@ -150,57 +149,12 @@ import Carousel from 'react-native-snap-carousel';
            />
 
 
-             <View style = {styles.tagCSS1}>
-               <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
-               <View style = {styles.justifyCenter}>
 
 
-                   <FontAwesomeIcon
-                   style = {{
-                     color:'white',
-                     right:3,
-                   }}
-                   size = {20}
-                   icon={faHeart} />
 
 
-                 <Text  style = {styles.justifyCenter1}>
-                 4
-                 </Text>
-               </View>
-               </TouchableOpacity>
-             </View>
-
-
-           <Text style = {styles.tagCSS3}>
-             <View>
-               <FontAwesomeIcon
-               style = {{
-                 color:'white',
-               }}
-               size = {20}
-               icon={faBookmark} />
-             </View>
-           </Text>
-           <Text style = {styles.DayAlbumUserName}>
-             {item.creator.first_name+" "+item.creator.last_name}
-          </Text>
-          <View  style={styles.openContainer}>
-            <View style={styles.firstContainer}>
-              <View>
-                <Text  style = {styles.DayCaption}>
-                  <Text style = {styles.bottomDayAlbumName}>{item.creator.username}</Text>
-                  &nbsp; {item.dayCaption}</Text>
-              </View>
-            </View>
-            <View style={styles.secondContainer}>
-              <FacePile size={3} numFaces={3} faces={FACES} circleSize={17.5}
-                containerStyle={{height:40}}
-                 overlap={0.1} />
-            </View>
-          </View>
         </ImageBackground>
-      </View>
+
      )
    }
 
@@ -260,8 +214,6 @@ import Carousel from 'react-native-snap-carousel';
          peopleLikeId.push(likePost[i].id);
        }
      }
-
-
      const width = Dimensions.get('window').width;
      return (
        <View style={{width:'100%', height:'100%'}}>
@@ -276,11 +228,92 @@ import Carousel from 'react-native-snap-carousel';
             inactiveSlideScale={1}
             slideStyle={{  flex:1 }}
             ref={ref => this.carousel = ref}
+
+            loop={true}
             data={this.props.socialCalCell.get_socialCalItems}
             sliderWidth={width}
             itemWidth={width}
             renderItem={this.renderItem}
              />
+
+             <View style = {styles.tagCSS1}>
+               <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
+               <View style = {styles.justifyCenter}>
+
+
+                   <FontAwesomeIcon
+                   style = {{
+                     color:'white',
+                     right:3,
+                   }}
+                   size = {20}
+                   icon={faHeart} />
+
+
+                 <Text  style = {styles.justifyCenter1}>
+                   {likePost.length}
+
+                 </Text>
+               </View>
+               </TouchableOpacity>
+             </View>
+             <View style = {styles.tagCSS2}>
+               <TouchableOpacity  onPress={this.changeShowComments}>
+                 <View  style = {styles.justifyCenter}>
+                   {
+                     (socialComments) ?
+                     <FontAwesomeIcon
+                     style = {{
+                       color:'white',
+                       right:3,
+                     }}
+                     size = {20}
+                     icon={faComment} />
+                     :
+
+                     <FontAwesomeIcon
+                     style = {{
+                       color:'red',
+                       right:3,
+                     }}
+                     size = {20}
+                     icon={faComment} />
+                   }
+                   <Text  style = {styles.justifyCenter1}>
+                   {socialComments.length}
+                 </Text>
+                 </View>
+               </TouchableOpacity>
+             </View>
+
+             <Text style = {styles.tagCSS3}>
+               <View>
+                 <FontAwesomeIcon
+                 style = {{
+                   color:'white',
+                 }}
+                 size = {20}
+                 icon={faBookmark} />
+               </View>
+             </Text>
+             <Text style = {styles.DayAlbumUserName}>
+               {firstName+" "+lastName}
+            </Text>
+            <View  style={styles.openContainer}>
+              <View style={styles.firstContainer}>
+                <View>
+                  <Text  style = {styles.DayCaption}>
+                    <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
+                    &nbsp; {dayCaption}</Text>
+                </View>
+              </View>
+              <View style={styles.secondContainer}>
+                <FacePile size={3} numFaces={3} faces={FACES} circleSize={17.5}
+                  containerStyle={{height:40}}
+                   overlap={0.1} />
+              </View>
+            </View>
+
 
        </View>
 

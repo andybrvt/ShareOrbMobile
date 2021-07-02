@@ -7,6 +7,8 @@ import { Avatar } from 'react-native-elements';
 import Followers from './Followers';
 import Following from './Following';
 class ProfileHeader extends React.Component{
+  
+
   editPageClick() {
     console.log(this.props.profile.bio)
     this.props.navigation.navigate("EditProfile",
@@ -96,7 +98,7 @@ class ProfileHeader extends React.Component{
     return (
     <View style={{
         flexDirection:'column',
-        
+
         }}>
 
         <View>

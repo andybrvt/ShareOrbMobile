@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet,TextInput } from 'react-native';
+import { Text, View, Button, StyleSheet,TextInput, TouchableOpacity } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
@@ -17,7 +17,21 @@ const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
 
 class Header extends React.Component{
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSearchBar: false, // control what ever to render the searchbar or just the icon
+    };
+  }
 
+
+  handleSearch = () => {
+    console.log("hi")
+    this.setState({
+      showSearchBar: !this.state.showSearchBar,
+    });
+    console.log("hi")
+  }
   handleLogOut = () => {
     this.props.logout()
     this.props.navigation.navigate("Login")
@@ -51,13 +65,15 @@ class Header extends React.Component{
 
 
 
-
     return(
+
+      <View>
       <Animated.View
         style = {[styles.container,{
           // opacity: opacity,
           zIndex: 99
         }]}>
+
 
         <Animated.View style = {{
           flexDirection: "row",
@@ -72,18 +88,32 @@ class Header extends React.Component{
           }]
           }}>
           <View style = {styles.logoContainer}>
-             <MainLogo width = {125}/>
+             <MainLogo width = {120}/>
           </View>
           <View style = {styles.searchProfileContainer}>
-              <Search stroke="black" strokeWidth={2.5} width={20} height={20} />
 
-              <Bell stroke="black" strokeWidth={2.5} width={20} height={20} />
+            <Search stroke="black" strokeWidth={2.5} width={20} height={20} />
+
+
+
+
+
+
+
+
+                <Bell
+                  onPress = {() => this.props.navigation.navigate("ViewProfile")}
+                  stroke="black" strokeWidth={2.5} width={20} height={20} />
+
+
 
           </View>
 
         </Animated.View>
 
       </Animated.View>
+      
+      </View>
     )
   }
 }
@@ -115,6 +145,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
+    // backgroundColor:'red',
+    top:'5%',
     width: "25%",
   }
 })
