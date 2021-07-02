@@ -25,6 +25,11 @@ let {height, width} = Dimensions.get('window')
 // or l ayout position
 // For this to work on android you h ave to use setLayoutAnimationEnabledExperimental
 
+
+// This one would be using flat list but reusable
+// https://kps250.medium.com/creating-image-slider-with-flatlist-in-react-native-1815d3793d99
+
+
 class SocialCalendarHori extends React.Component{
 
   slider = React.createRef();
@@ -173,6 +178,21 @@ class SocialCalendarHori extends React.Component{
     viewAreaCoveragePercentThreshold: 50,
   }
 
+  renderInitialMonths(){
+    // This function will be used to render the inital 3 months
+    let currentMonth = this.state.currentDate;
+    const monthStart = dateFns.startOfMonth(currentMonth);
+    const monthEnd = dateFns.endOfMonth(currentMonth);
+
+
+
+    // Now get the beginning and end of that block
+    const startingDay = dateFns.startOfWeek(monthStart);
+    const endingDay = dateFns.endOfWeek(monthEnd);
+
+
+  }
+
 
 
 
@@ -185,44 +205,54 @@ class SocialCalendarHori extends React.Component{
 
     return(
       <View>
+
         <FlatList
           ref = {this.slider}
           horizontal
-          snapToInterval = {totalItemWidth}
-          decelerationRate = "fast"
-          bounces= {false}
-          contentContainerStyle={this.props.contentContainerStyle}
-          data={this.state.data}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item, index}) =>
-            React.cloneElement(this.props.component, {
-              style: {width: this.props.width},
-              item: item,
-              imageKey: this.props.imageKey,
-              onPress: this.props.onPress,
-              index: this.state.index % this.props.data.length,
-              active: index === this.state.index,
-              local: this.props.local,
-              height: this.props.height,
-            })
-          }
-          ItemSeparatorComponent={() => (
-            <View style={{width: this.props.separatorWidth}} />
-          )}
-          keyExtractor={(item, index) => item.toString() + index}
-          onViewableItemsChanged={this.onViewableItemsChanged}
-          viewabilityConfig={this.viewabilityConfig}
-           getItemLayout={(data, index) => ({
-             length: totalItemWidth,
-             offset: totalItemWidth * index,
-             index,
-           })}
-           windowSize={1}
-           initialNumToRender={1}
-           maxToRenderPerBatch={1}
-           removeClippedSubviews={true}
 
            />
+        {/*
+          <FlatList
+            ref = {this.slider}
+            horizontal
+            snapToInterval = {totalItemWidth}
+            decelerationRate = "fast"
+            bounces= {false}
+            contentContainerStyle={this.props.contentContainerStyle}
+            data={this.state.data}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item, index}) =>
+              React.cloneElement(this.props.component, {
+                style: {width: this.props.width},
+                item: item,
+                imageKey: this.props.imageKey,
+                onPress: this.props.onPress,
+                index: this.state.index % this.props.data.length,
+                active: index === this.state.index,
+                local: this.props.local,
+                height: this.props.height,
+              })
+            }
+            ItemSeparatorComponent={() => (
+              <View style={{width: this.props.separatorWidth}} />
+            )}
+            keyExtractor={(item, index) => item.toString() + index}
+            onViewableItemsChanged={this.onViewableItemsChanged}
+            viewabilityConfig={this.viewabilityConfig}
+             getItemLayout={(data, index) => ({
+               length: totalItemWidth,
+               offset: totalItemWidth * index,
+               index,
+             })}
+             windowSize={1}
+             initialNumToRender={1}
+             maxToRenderPerBatch={1}
+             removeClippedSubviews={true}
+
+             />
+
+
+          */}
 
       </View>
     )

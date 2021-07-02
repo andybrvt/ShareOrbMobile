@@ -8,6 +8,7 @@ import { Appbar } from 'react-native-paper';
 import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
+import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
 import { Tag, Bookmark, MapPin, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
 // This will be the bulk of the profile page
 class Profile extends React.Component{
@@ -142,11 +143,7 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
-          <SocialCalendarHori
-            data = {this.state.data}
-            timer = {4000}
-
-             />
+          <SocialCalendarVonly />
         </View>
       </BackgroundContainer>
     )
