@@ -175,7 +175,7 @@ import Carousel from 'react-native-snap-carousel';
      let socialComments = [];
      let postId = "";
      console.log('here is the props')
-
+     let num=(this.props.socialCalCell.socialCaldate.slice(-2))
 
      console.log(this.props)
      if(this.props.socialCalCell){
@@ -223,8 +223,7 @@ import Carousel from 'react-native-snap-carousel';
            <Carousel
              layout='stack'
              removeClippedSubviews={false}
-             sliderWidth={width}
-            itemWidth={width}
+
             inactiveSlideScale={1}
             slideStyle={{  flex:1 }}
             ref={ref => this.carousel = ref}
@@ -232,9 +231,19 @@ import Carousel from 'react-native-snap-carousel';
             loop={true}
             data={this.props.socialCalCell.get_socialCalItems}
             sliderWidth={width}
-            itemWidth={width}
+            itemWidth={400}
             renderItem={this.renderItem}
              />
+
+           <View style = {styles.tagCSS10}>
+               <TouchableOpacity>
+               <View style = {styles.justifyCenter}>
+                 <Text style={{color:'white', fontSize:17.5}}>
+                   March {num}
+                 </Text>
+               </View>
+               </TouchableOpacity>
+             </View>
 
              <View style = {styles.tagCSS1}>
                <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
@@ -246,7 +255,7 @@ import Carousel from 'react-native-snap-carousel';
                      color:'white',
                      right:3,
                    }}
-                   size = {20}
+                   size = {25}
                    icon={faHeart} />
 
 
@@ -267,7 +276,7 @@ import Carousel from 'react-native-snap-carousel';
                        color:'white',
                        right:3,
                      }}
-                     size = {20}
+                     size = {25}
                      icon={faComment} />
                      :
 
@@ -276,7 +285,7 @@ import Carousel from 'react-native-snap-carousel';
                        color:'red',
                        right:3,
                      }}
-                     size = {20}
+                     size = {25}
                      icon={faComment} />
                    }
                    <Text  style = {styles.justifyCenter1}>
@@ -292,7 +301,7 @@ import Carousel from 'react-native-snap-carousel';
                  style = {{
                    color:'white',
                  }}
-                 size = {20}
+                 size = {25}
                  icon={faBookmark} />
                </View>
              </Text>
@@ -304,7 +313,7 @@ import Carousel from 'react-native-snap-carousel';
                 <View>
                   <Text  style = {styles.DayCaption}>
                     <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
-                    &nbsp; {dayCaption}</Text>
+                    &nbsp; {dayCaption}{num}</Text>
                 </View>
               </View>
               <View style={styles.secondContainer}>
@@ -342,7 +351,7 @@ import Carousel from 'react-native-snap-carousel';
    tagCSS1: {
      position:'absolute',
      backgroundColor: 'rgba(0,0,0,.6)',
-     padding:9,
+     padding:10,
      borderRadius:25,
      color:'white',
      bottom:225,
@@ -355,7 +364,7 @@ import Carousel from 'react-native-snap-carousel';
    tagCSS2: {
      position:'absolute',
      backgroundColor: 'rgba(0,0,0,.6)',
-     padding:9,
+     padding:10,
      borderRadius:25,
      color:'white',
      bottom:180,
@@ -374,6 +383,21 @@ import Carousel from 'react-native-snap-carousel';
      bottom:135,
      fontSize:13,
      right:15,
+     textAlign:'right',
+     // fontWeight:'bold',
+
+   },
+
+   tagCSS10: {
+     position:'absolute',
+     backgroundColor: 'rgba(0,0,0,.6)',
+     padding:15,
+     borderRadius:25,
+     color:'white',
+
+     fontSize:13,
+     right:15,
+     top:50,
      textAlign:'right',
      // fontWeight:'bold',
 
