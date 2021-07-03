@@ -15,7 +15,7 @@ import  authAxios from '../util';
 import SocialMonth from './SocialMonth';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 // import Animated, {Easing} from 'react-native-reanimated';
-
+import NewSocialMonth from './NewSocialMonth';
 
 let {height, width} = Dimensions.get('window')
 
@@ -173,6 +173,7 @@ class SocialCalendarVonly extends React.Component{
       listener: ({nativeEvent}) => {
         // this is to set the real value
         this.record_translateX_array.forEach((translate, index, arr) => {
+          console.log(translate)
           arr[index] += nativeEvent.translationX - this.old_translateX
         })
 
@@ -378,10 +379,13 @@ class SocialCalendarVonly extends React.Component{
         <PanGestureHandler
           onGestureEvent={this._onGestureEvent}
           onHandlerStateChange={this._onHandlerStateChange}
+          // onGestureEvent={e => console.log(e.nativeEvent)}
+          // onHandlerStateChange={e =>console.log(e.nativeEvent)}
           >
 
           <Animated.View
               style={{
+                  backgroundColor: "orange",
                   flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
@@ -390,7 +394,10 @@ class SocialCalendarVonly extends React.Component{
               }}
 
             >
-            <Text> Hi </Text>
+            <NewSocialMonth
+              month = {this.state.month_array[0]}
+              year = {this.state.year_array[0]}
+               />
           </Animated.View>
         </PanGestureHandler>
 
@@ -409,7 +416,10 @@ class SocialCalendarVonly extends React.Component{
                 opacity: this.opacity_array[1],
             }}
             >
-            <Text> HI </Text>
+            <NewSocialMonth
+              month = {this.state.month_array[1]}
+              year = {this.state.year_array[1]}
+               />
           </Animated.View>
 
         </PanGestureHandler>
@@ -429,7 +439,10 @@ class SocialCalendarVonly extends React.Component{
                 opacity: this.opacity_array[2],
             }}
             >
-            <Text> Hi </Text>
+            <NewSocialMonth
+              month = {this.state.month_array[2]}
+              year = {this.state.year_array[2]}
+               />
           </Animated.View>
 
         </PanGestureHandler>
