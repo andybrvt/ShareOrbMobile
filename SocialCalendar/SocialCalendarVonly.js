@@ -173,7 +173,6 @@ class SocialCalendarVonly extends React.Component{
       listener: ({nativeEvent}) => {
         // this is to set the real value
         this.record_translateX_array.forEach((translate, index, arr) => {
-          console.log(translate)
           arr[index] += nativeEvent.translationX - this.old_translateX
         })
 
