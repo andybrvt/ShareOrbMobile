@@ -1,4 +1,5 @@
 import React from 'react';
+import * as dateFns from 'date-fns';
 import {
   Text,
   View,
@@ -19,7 +20,7 @@ import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-ico
 import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebsocket';
 import { connect } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
-
+import { parseISO } from 'date-fns'
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -175,9 +176,16 @@ import Carousel from 'react-native-snap-carousel';
      let socialComments = [];
      let postId = "";
      console.log('here is the props')
-     let num=(this.props.socialCalCell.socialCaldate.slice(-2))
 
+     console.log(this.props.socialCalCell.socialCaldate)
      console.log(this.props)
+
+    const test = new Date(parseISO(this.props.socialCalCell.socialCaldate));
+    const format = require('date-fns/format');
+    const test1=format(test, 'dd');
+    const test2=format(test, 'MMMM');
+    console.log(test1)
+      console.log(test2)
      if(this.props.socialCalCell){
        const cell = this.props.socialCalCell
 
@@ -239,7 +247,7 @@ import Carousel from 'react-native-snap-carousel';
                <TouchableOpacity>
                <View style = {styles.justifyCenter}>
                  <Text style={{color:'white', fontSize:17.5}}>
-                   March {num}
+                    {test2+" "+test1}
                  </Text>
                </View>
                </TouchableOpacity>
@@ -313,7 +321,7 @@ import Carousel from 'react-native-snap-carousel';
                 <View>
                   <Text  style = {styles.DayCaption}>
                     <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
-                    &nbsp; {dayCaption}{num}</Text>
+                    &nbsp; {dayCaption}</Text>
                 </View>
               </View>
               <View style={styles.secondContainer}>
@@ -484,11 +492,12 @@ import Carousel from 'react-native-snap-carousel';
    },
    albumLook:{
      borderRadius: 10,
-     width: '97.5%',
+     width: '95%',
      height: '80%',
      position:'absolute',
      top:'5%',
-
+     // flex: 1,
+     // resizeMode: 'contain'
    },
    albumLook2:{
      borderRadius: 10,
@@ -498,7 +507,7 @@ import Carousel from 'react-native-snap-carousel';
    },
    albumOuterContainer:{
      justifyContent: "center",
-     alignItems: 'center',
+     // alignItems: 'center',
      height:'100%',
      flexDirection:'column',
 
