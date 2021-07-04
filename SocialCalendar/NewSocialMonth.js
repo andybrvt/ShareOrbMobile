@@ -100,13 +100,18 @@ class NewSocialMonth extends React.PureComponent{
                   styles.selected : null
                 ]}>
                 {
-                  true ?
+                  dateFns.isSameMonth(day, curMonth) ?
 
-                  <Text> {formattedDate}</Text>
+                  <Text style = {{
+                      color: 'black',
+                      fontWeight: 'bold'
+                    }}> {formattedDate}</Text>
 
                   :
 
-                  <Text></Text>
+                  <Text style = {{
+                      color: "#8c8c8c"
+                    }}>{formattedDate}</Text>
                 }
               </View>
             )
@@ -187,13 +192,18 @@ class NewSocialMonth extends React.PureComponent{
                   styles.selected : null
                 ]}>
                 {
-                  true ?
+                  dateFns.isSameMonth(day, curMonth) ?
 
-                  <Text> {formattedDate}</Text>
+                  <Text style = {{
+                      color: 'black',
+                      fontWeight: 'bold'
+                    }}> {formattedDate}</Text>
 
                   :
 
-                  <Text></Text>
+                  <Text style = {{
+                      color: "#8c8c8c"
+                    }}>{formattedDate}</Text>
                 }
               </View>
             )
@@ -231,7 +241,7 @@ class NewSocialMonth extends React.PureComponent{
   render(){
     const month = new Date(this.props.year, this.props.month, 1);
 
-    const formatMonth = dateFns.format(month, 'yyyy-MMMM-dd')
+    const formatMonth = dateFns.format(month, 'MMMM yyyy')
     return(
 
       <View style = {styles.centerMonth}>
@@ -266,7 +276,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     borderBottomWidth: 0.2,
-    backgroundColor:'red',
   },
   // This is for the cell
   // So you want the cells to be square so that you
