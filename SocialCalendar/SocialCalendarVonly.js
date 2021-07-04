@@ -374,6 +374,7 @@ class SocialCalendarVonly extends React.Component{
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
+          backgroundColor: "lightgreen"
         }}
         >
         <PanGestureHandler
@@ -389,6 +390,7 @@ class SocialCalendarVonly extends React.Component{
                   flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
+                  position: 'absolute',
                   transform: [{ translateX: this.translateX_array[0] }],
                   opacity: this.opacity_array[0],
               }}
