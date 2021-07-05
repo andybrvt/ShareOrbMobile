@@ -360,7 +360,6 @@ class Chats extends React.Component{
     if(this.props.chats){
       chatList = this.props.chats
     }
-
     // You are gonna use a flat list for this chat
     return (
       <BackgroundContainer>

@@ -23,6 +23,18 @@ const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animat
 const width = Dimensions.get("window").width
 const margin = 6;
 const col = 2;
+const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+
+  const figureHorizontalDirection = (delta) =>
+    delta > 0 ? SWIPE_RIGHT : SWIPE_LEFT;
+  const figureVerticalDirection = (delta) =>
+    delta > 0 ? SWIPE_DOWN : SWIPE_UP;
+
+  const detectSwipeDirection = ({dx, dy}) => {
+    return Math.abs(dx) > Math.abs(dy)
+      ? figureHorizontalDirection(dx)
+      : figureVerticalDirection(dy);
+  };
 
 class SocialNewsfeedPost extends React.Component{
 
@@ -39,7 +51,8 @@ class SocialNewsfeedPost extends React.Component{
       showSlide: false,
       myText: 'I\'m ready to get swiped!',
       gestureName: 'none',
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      swipeDirection:'',
     }
 
     this.showExtra = new Value(false);
@@ -260,8 +273,7 @@ class SocialNewsfeedPost extends React.Component{
               <GestureRecognizer
                   onPress = {() => console.log("hi")}
                 onSwipe={(direction, state) => this.onSwipe(direction, state)}
-                onSwipeLeft={this.onSwipeLeft(postId)}
-                onSwipeRight={this.onSwipeRight(postId)}
+
 
                 config={{
                    velocityThreshold: 0.3,
@@ -453,21 +465,27 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
+
+
   onSwipe(gestureName, gestureState) {
-    const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    const {dx, dy} = gestureState;
+    let direction = detectSwipeDirection({dx, dy});
+
     this.setState({gestureName: gestureName});
     switch (gestureName) {
-      case SWIPE_UP:
-        this.setState({backgroundColor: 'red'});
+      case direction == SWIPE_UP:
+        this.setState({swipeDirection: 'up'});
         break;
-      case SWIPE_DOWN:
-        this.setState({backgroundColor: 'green'});
+      case direction == SWIPE_DOWN:
+        this.setState({swipeDirection: 'down'});
         break;
-      case SWIPE_LEFT:
+      case direction == SWIPE_LEFT:
       console.log("lefttt")
+      this.setState({swipeDirection: 'right'});
         // this.onPostDirect(postId)
         break;
-      case SWIPE_RIGHT:
+      case direction == SWIPE_RIGHT:
+      this.setState({swipeDirection: 'left'});
       console.log("RIGHT")
       // this.onPostDirect(postId)
 

@@ -68,8 +68,6 @@ class WebSocketNewChatSidePanel {
     // to then impliment in the frotnedn
     const parsedData = JSON.parse(data);
     const command = parsedData.command
-    console.log('parseddata here')
-    console.log(parsedData)
 
     if(command === "fetch_all_user_chats"){
       // this is used to fetch all the chats of the users in a lsit

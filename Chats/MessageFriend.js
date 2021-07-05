@@ -8,16 +8,17 @@ import {
   ScrollView,
   Dimensions,
   KeyboardAvoidingView,
+  FlatList
  } from 'react-native';
- import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
- import { Avatar, BottomNavigation } from 'react-native-paper';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { Avatar, BottomNavigation,  } from 'react-native-paper';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
- import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-
- import { ArrowUpCircle, Plus, Mail, UserPlus, Send, Image} from "react-native-feather";
- class MessageFriend extends React.Component{
+import BackgroundContainer from '../RandomComponents/BackgroundContainer';
+import { connect } from 'react-redux';
+import { ArrowUpCircle, Plus, Mail, UserPlus, Send, Image} from "react-native-feather";
+class MessageFriend extends React.Component{
 
    onHomeNav = () => {
      // this function will be use to navigate back
@@ -26,23 +27,54 @@ import {
 
 
    render(){
+     // console.log("MESSAGE FRIEND")
+     // console.log(this.props.chats)
      this.props.navigation.setOptions({
        headerTitle:this.props.route.params.chatPersonName+" @"+this.props.route.params.chatUserName
      })
      return (
        <BackgroundContainer>
-         <View style={{height:'92%'}}>
-           <Text> Chat with {this.props.route.params.chatPersonName}</Text>
-
-           <Avatar.Image
-             source = {{
-               uri: this.props.route.params.chatPersonProfilePic
-             }}
-             size = {50}
-              />
 
 
-         </View>
+         <View style={styles.container}>
+        <FlatList style={styles.list}
+          data={this.props.chats}
+          keyExtractor= {(item) => {
+            return item.id;
+          }}
+          renderItem={(item) => {
+            console.log("BBBBBBBBBBBBBBBBB")
+            console.log(item.item)
+            item=item.item
+
+            let inMessage = item.id === this.props.userId;
+            let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
+            return (
+              <View>
+                <Avatar.Image
+                  source = {{
+                    uri: `${global.IMAGE_ENDPOINT}`+item.recentSender.profile_picture
+                  }}
+                  size = {50}
+                   />
+                <Text>
+                {item.recentMessage}
+                </Text>
+              {/*
+              <View style={[styles.item, itemStyle]}>
+                {!inMessage && this.renderDate(item.date)}
+                <View style={[styles.balloon]}>
+                  <Text>{item.recentMessage}</Text>
+                </View>
+                {inMessage && this.renderDate(item.date)}
+              </View>
+              */}
+              </View>
+            )
+          }}/>
+
+      </View>
+
          <View style = {styles.writeMessageContainer}>
 
            <Image stroke="#1890ff" strokeWidth={2.5} width={22.5} height={22.5} />
@@ -55,6 +87,8 @@ import {
              style = {styles.whiteMessage}
              placeholder="Message..."
              returnKeyType="send"
+             underlineColorAndroid='transparent'
+
              ref="newMessage"
 
              />
@@ -67,7 +101,20 @@ import {
    }
  }
 
+ const mapStateToProps = state => {
+   return {
+     userId: state.auth.id,
+     chats: state.message.chats,
+     profilePic: state.auth.profilePic
+   }
+ }
+export default connect(mapStateToProps, null)(MessageFriend);
+
+
  const styles = StyleSheet.create({
+   list:{
+height:'92%',
+   },
    writeMessageContainer:{
 
 
@@ -91,5 +138,3 @@ import {
    },
 
  })
-
- export default MessageFriend;
