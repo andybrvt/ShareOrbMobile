@@ -175,16 +175,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    marginTop: Constant.statusBarHeight,
-    flex: 1.75,
-
+    flex: 2,
   },
   profileHeader: {
     flex: 1,
     alignItems:'flex-start',
     // left:'12.5%',
     width:'100%',
-    backgroundColor: 'red'
 
 
   },

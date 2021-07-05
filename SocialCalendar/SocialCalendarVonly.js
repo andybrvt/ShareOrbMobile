@@ -173,7 +173,6 @@ class SocialCalendarVonly extends React.Component{
       listener: ({nativeEvent}) => {
         // this is to set the real value
         this.record_translateX_array.forEach((translate, index, arr) => {
-          console.log(translate)
           arr[index] += nativeEvent.translationX - this.old_translateX
         })
 
@@ -374,19 +373,16 @@ class SocialCalendarVonly extends React.Component{
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
-          backgroundColor: "lightgreen"
         }}
         >
         <PanGestureHandler
           onGestureEvent={this._onGestureEvent}
           onHandlerStateChange={this._onHandlerStateChange}
-          // onGestureEvent={e => console.log(e.nativeEvent)}
-          // onHandlerStateChange={e =>console.log(e.nativeEvent)}
           >
 
           <Animated.View
               style={{
-                  backgroundColor: "orange",
+                  // backgroundColor: "orange",
                   flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
@@ -414,7 +410,7 @@ class SocialCalendarVonly extends React.Component{
                 alignItems: "center",
                 transform: [{ translateX: this.translateX_array[1] }],
                 position: "absolute",
-                backgroundColor: "pink",
+                // backgroundColor: "pink",
                 opacity: this.opacity_array[1],
             }}
             >
@@ -437,7 +433,7 @@ class SocialCalendarVonly extends React.Component{
                 alignItems: "center",
                 transform: [{ translateX: this.translateX_array[2] }],
                 position: "absolute",
-                backgroundColor: "gainsboro",
+                // backgroundColor: "gainsboro",
                 opacity: this.opacity_array[2],
             }}
             >

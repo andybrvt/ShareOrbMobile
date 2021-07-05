@@ -31,6 +31,8 @@ class NewSocialMonth extends React.PureComponent{
     const startDate = dateFns.startOfWeek(start)
     const endDate = dateFns.endOfWeek(end)
 
+    const diffWeeks = dateFns.differenceInCalendarWeeks(endDate, startDate)
+    console.log(diffWeeks)
 
     const dateFormat = "d";
 
@@ -41,91 +43,189 @@ class NewSocialMonth extends React.PureComponent{
     let day = startDate;
     let formattedDate = ""
 
-
-    while(day <= endDate){
-
-
-      for(let i = 0; i< 7; i++){
-        formattedDate = dateFns.format(day, dateFormat);
-        const cloneDay = day;
-
-        if(toDoStuff.length > 0){
-
-          let test1=toDoStuff
-          days.push(
-            <View
-              key = {i}
-              style = {[styles.monthPicCell, dateFns.isSameDay(day, new Date()) ?
-                styles.selected : null
-              ]}>
-              {
-                dateFns.isSameMonth(day, curMonth) ?
-
-                <View style = {styles.imageHolder}>
-                  {
-                    toDoStuff[0].coverPic ?
-                      <View>
-                        <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
-                          <Image
-                            style = {styles.smallImage}
-                            resizeMode = "cover"
-                            source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
-                            />
-                        </TouchableOpacity>
-                      </View>
-                    :
-
-                      <Text> {formattedDate}</Text>
-
-                    }
-                </View>
+    if(diffWeeks === 4){
+      // only 5 weeks then you will add another week
+      while(day <= dateFns.addWeeks(endDate, 1)){
 
 
-                :
+        for(let i = 0; i< 7; i++){
+          formattedDate = dateFns.format(day, dateFormat);
+          const cloneDay = day;
 
-                <Text></Text>
-              }
-            </View>
-          )
+          if(toDoStuff.length > 0){
 
-        } else {
-          days.push(
-            <View
-              key = {i}
-              style = {[styles.monthCell, dateFns.isSameDay(day, new Date())
-                && dateFns.isSameMonth(day, curMonth) ?
-                styles.selected : null
-              ]}>
-              {
-                true ?
+            let test1=toDoStuff
+            days.push(
+              <View
+                key = {i}
+                style = {[styles.monthPicCell, dateFns.isSameDay(day, new Date()) ?
+                  styles.selected : null
+                ]}>
+                {
+                  dateFns.isSameMonth(day, curMonth) ?
 
-                <Text> {formattedDate}</Text>
+                  <View style = {styles.imageHolder}>
+                    {
+                      toDoStuff[0].coverPic ?
+                        <View>
+                          <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
+                            <Image
+                              style = {styles.smallImage}
+                              resizeMode = "cover"
+                              source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
+                              />
+                          </TouchableOpacity>
+                        </View>
+                      :
 
-                :
+                        <Text> {formattedDate}</Text>
 
-                <Text></Text>
-              }
-            </View>
-          )
+                      }
+                  </View>
+
+
+                  :
+
+                  <Text></Text>
+                }
+              </View>
+            )
+
+          } else {
+            days.push(
+              <View
+                key = {i}
+                style = {[styles.monthCell, dateFns.isSameDay(day, new Date())
+                  && dateFns.isSameMonth(day, curMonth) ?
+                  styles.selected : null
+                ]}>
+                {
+                  dateFns.isSameMonth(day, curMonth) ?
+
+                  <Text style = {{
+                      color: 'black',
+                      fontWeight: 'bold'
+                    }}> {formattedDate}</Text>
+
+                  :
+
+                  <Text style = {{
+                      color: "#8c8c8c"
+                    }}>{formattedDate}</Text>
+                }
+              </View>
+            )
+          }
+
+          toDoStuff = []
+          day = dateFns.addDays(day, 1);
+
         }
 
-        toDoStuff = []
-        day = dateFns.addDays(day, 1);
+
+        rows.push(
+          <View
+            key = {day}
+             style = {styles.monthRow}>
+              {days}
+          </View>
+        )
+
+        days = []
 
       }
 
 
-      rows.push(
-        <View
-          key = {day}
-           style = {styles.monthRow}>
-            {days}
-        </View>
-      )
+    } else if(diffWeeks === 5){
+      while(day <= endDate){
 
 
-      days = []
+        for(let i = 0; i< 7; i++){
+          formattedDate = dateFns.format(day, dateFormat);
+          const cloneDay = day;
 
+          if(toDoStuff.length > 0){
+
+            let test1=toDoStuff
+            days.push(
+              <View
+                key = {i}
+                style = {[styles.monthPicCell, dateFns.isSameDay(day, new Date()) ?
+                  styles.selected : null
+                ]}>
+                {
+                  dateFns.isSameMonth(day, curMonth) ?
+
+                  <View style = {styles.imageHolder}>
+                    {
+                      toDoStuff[0].coverPic ?
+                        <View>
+                          <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
+                            <Image
+                              style = {styles.smallImage}
+                              resizeMode = "cover"
+                              source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
+                              />
+                          </TouchableOpacity>
+                        </View>
+                      :
+
+                        <Text> {formattedDate}</Text>
+
+                      }
+                  </View>
+
+
+                  :
+
+                  <Text></Text>
+                }
+              </View>
+            )
+
+          } else {
+            days.push(
+              <View
+                key = {i}
+                style = {[styles.monthCell, dateFns.isSameDay(day, new Date())
+                  && dateFns.isSameMonth(day, curMonth) ?
+                  styles.selected : null
+                ]}>
+                {
+                  dateFns.isSameMonth(day, curMonth) ?
+
+                  <Text style = {{
+                      color: 'black',
+                      fontWeight: 'bold'
+                    }}> {formattedDate}</Text>
+
+                  :
+
+                  <Text style = {{
+                      color: "#8c8c8c"
+                    }}>{formattedDate}</Text>
+                }
+              </View>
+            )
+          }
+
+          toDoStuff = []
+          day = dateFns.addDays(day, 1);
+
+        }
+
+
+        rows.push(
+          <View
+            key = {day}
+             style = {styles.monthRow}>
+              {days}
+          </View>
+        )
+
+        days = []
+
+      }
 
     }
 
@@ -141,7 +241,7 @@ class NewSocialMonth extends React.PureComponent{
   render(){
     const month = new Date(this.props.year, this.props.month, 1);
 
-    const formatMonth = dateFns.format(month, 'yyyy-MMMM-dd')
+    const formatMonth = dateFns.format(month, 'MMMM yyyy')
     return(
 
       <View style = {styles.centerMonth}>
@@ -176,7 +276,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     borderBottomWidth: 0.2,
-    backgroundColor:'red',
   },
   // This is for the cell
   // So you want the cells to be square so that you
