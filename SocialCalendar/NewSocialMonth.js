@@ -9,6 +9,7 @@ import { Text,
     } from 'react-native';
 import * as dateFns from 'date-fns';
 import DayAlbum from './DayAlbum';
+import  authAxios from '../util';
 
 
 const width = Dimensions.get("window").width
@@ -16,7 +17,69 @@ const width = Dimensions.get("window").width
 class NewSocialMonth extends React.PureComponent{
 
   state = {
-    month_array : []
+    month_array : [],
+    socialCells: []
+  }
+
+
+
+  componentDidMount(){
+    // For component did mount you will get the items of that month
+    const curMonth = new Date(this.props.year, this.props.month, 1);
+
+
+    const start = dateFns.startOfMonth(curMonth)
+    const end = dateFns.endOfMonth(curMonth)
+
+    const startDate = dateFns.startOfWeek(start)
+    const endDate = dateFns.endOfWeek(end)
+
+    const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
+    const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
+
+    this.getSocialCells(formatStart, formatEnd)
+    .then(data => {
+      this.setState({
+        socialCells: data
+      })
+    })
+  }
+
+
+  componentDidUpdate(prevProps){
+    // when it updates and is on a new months you will get the items of the new
+    // month
+
+    if(this.props.month !== prevProps.month){
+      const curMonth = new Date(this.props.year, this.props.month, 1);
+
+      const start = dateFns.startOfMonth(curMonth)
+      const end = dateFns.endOfMonth(curMonth)
+
+      const startDate = dateFns.startOfWeek(start)
+      const endDate = dateFns.endOfWeek(end)
+
+      const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
+      const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
+
+      this.getSocialCells(formatStart, formatEnd)
+      .then(data => {
+        this.setState({
+          socialCells: data
+        })
+
+      })
+
+    }
+
+  }
+
+
+  getSocialCells(start, end){
+    return authAxios.get(`${global.IP_CHANGE}/mySocialCal/filterCells/`+ start+`/`+end)
+    .then(res => {
+        return res.data
+    })
   }
 
   initializedMonth = (month, year) => {
