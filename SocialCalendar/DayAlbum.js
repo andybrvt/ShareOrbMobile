@@ -21,6 +21,7 @@ import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebso
 import { connect } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import { parseISO } from 'date-fns'
+import format from 'date-fns/format'
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -175,17 +176,24 @@ import { parseISO } from 'date-fns'
      let peopleLikeId = [];
      let socialComments = [];
      let postId = "";
-     console.log('here is the props')
-
-     console.log(this.props.socialCalCell.socialCaldate)
-     console.log(this.props)
-
-    const test = new Date(parseISO(this.props.socialCalCell.socialCaldate));
+     // console.log('here is the propssf')
+     //
+     // console.log(this.props)
+     // console.log( this.props.socialCalCell.socialCaldate)
+     let dataList=this.props.socialCalCell.socialCaldate.split("-")
+     let getYear=dataList[0]
+     let getMonth=dataList[1]
+     let getDay=dataList[2]
+     let socialDate=""
+     socialDate=getYear+getMonth+getDay
+     // const test=format(new Date(), this.props.socialCalCell.socialCaldate)
+     // console.log(socialDate)
+    const test = new Date(parseISO(socialDate));
     const format = require('date-fns/format');
     const test1=format(test, 'dd');
     const test2=format(test, 'MMMM');
-    console.log(test1)
-      console.log(test2)
+    // console.log(test1)
+    //   console.log(test2)
      if(this.props.socialCalCell){
        const cell = this.props.socialCalCell
 
@@ -235,7 +243,6 @@ import { parseISO } from 'date-fns'
             inactiveSlideScale={1}
             slideStyle={{  flex:1 }}
             ref={ref => this.carousel = ref}
-
             loop={true}
             data={this.props.socialCalCell.get_socialCalItems}
             sliderWidth={width}

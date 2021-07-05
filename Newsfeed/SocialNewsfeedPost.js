@@ -15,7 +15,7 @@ import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1
 import BottomSheet from 'reanimated-bottom-sheet';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import { Navigation2 } from "react-native-feather";
-
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
@@ -37,6 +37,9 @@ class SocialNewsfeedPost extends React.Component{
       showComments: false,
       showLike: false,
       showSlide: false,
+      myText: 'I\'m ready to get swiped!',
+      gestureName: 'none',
+      backgroundColor: '#fff'
     }
 
     this.showExtra = new Value(false);
@@ -253,11 +256,24 @@ class SocialNewsfeedPost extends React.Component{
             onPress = {() => this.onSlidePress(userPostImages.length)}
             >
             <View style = {styles.container}>
-              <Image
-                style={styles.cover}
-                resizeMode = "cover"
-                source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
-                />
+
+              <GestureRecognizer
+                  onPress = {() => console.log("hi")}
+                onSwipe={(direction, state) => this.onSwipe(direction, state)}
+                onSwipeLeft={this.onSwipeLeft(postId)}
+                onSwipeRight={this.onSwipeRight(postId)}
+
+                config={{
+                   velocityThreshold: 0.3,
+                   directionalOffsetThreshold: 90,
+                 }}>
+                <Image
+                  style={styles.cover}
+                  resizeMode = "cover"
+                  source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
+                  />
+
+              </GestureRecognizer>
 
                 <Avatar
                   style={styles.close}
@@ -437,6 +453,37 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
+  onSwipe(gestureName, gestureState) {
+    const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    this.setState({gestureName: gestureName});
+    switch (gestureName) {
+      case SWIPE_UP:
+        this.setState({backgroundColor: 'red'});
+        break;
+      case SWIPE_DOWN:
+        this.setState({backgroundColor: 'green'});
+        break;
+      case SWIPE_LEFT:
+      console.log("lefttt")
+        // this.onPostDirect(postId)
+        break;
+      case SWIPE_RIGHT:
+      console.log("RIGHT")
+      // this.onPostDirect(postId)
+
+    }
+  }
+
+  onSwipeLeft =(postId) =>{
+    console.log("left")
+  }
+
+  onSwipeRight= (postId) =>{
+    console.log("right")
+    // this.onPostDirect(postId)
+
+  }
+
 
 
   render(){
@@ -498,6 +545,8 @@ class SocialNewsfeedPost extends React.Component{
 
 
     }
+
+
 
 
     return (
