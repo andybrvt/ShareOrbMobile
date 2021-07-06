@@ -398,7 +398,11 @@ class App extends Component{
                       component = {Comments}/>
                   <Stack.Screen
                     options={{
-                      title: 'Chat With',
+                      headerStyle:{
+                        shadowColor:'#fff', //ios
+                        elevation:0,        // android
+
+                      },
                        ...TransitionPresets.SlideFromRightIOS,
                                       }}
                      name = 'MessageFriend' component = {MessageFriend}/>

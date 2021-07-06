@@ -36,7 +36,7 @@ import * as dateFns from 'date-fns';
 // global.WS_HEADER = "ws"
 
 
-
+console.disableYellowBox = true;
 // This is for ua guest
 // global.IP_CHANGE = "http://10.143.167.43:19000"
 // global.IMAGE_ENDPOINT = "http://10.143.167.43:19000"
@@ -80,7 +80,7 @@ global.RENDER_TIMESTAMP = (timestamp) => {
     } else if (timeDiff < 31*24*60 && timeDiff > 24*60) {
       prefix = `${Math.round(timeDiff/(60*24))} days ago`;
     } else {
-        prefix = `${dateFns.format(new Date(timestamp), "MMMM d, yyyy")}`;
+        prefix = `${dateFns.format(new Date(timestamp), "MMMM d")}`;
     }
 
     return prefix;

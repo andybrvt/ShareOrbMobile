@@ -27,15 +27,45 @@ class MessageFriend extends React.Component{
 
 
    render(){
+         // {global.RENDER_TIMESTAMP(item.recentTime)}
      // console.log("MESSAGE FRIEND")
      // console.log(this.props.chats)
+     // headerTitle:this.props.route.params.chatPersonName+" @"+this.props.route.params.chatUserName
      this.props.navigation.setOptions({
-       headerTitle:this.props.route.params.chatPersonName+" @"+this.props.route.params.chatUserName
+       headerTitle: (props) => (
+         <View style={{flexDirection:"row"}}>
+           <Avatar.Image
+             source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
+             }}
+             size = {40}
+             style={{right:10}}
+              />
+            <View style={{flexDirection:'column'}}>
+              <View style={{flex:1}}>
+                <Text style={{color: 'black', fontWeight: 'bold', fontSize:18}}>
+                    {this.props.route.params.chatPersonName}
+                </Text>
+              </View>
+              <View style={{flex:1}}>
+                <Text {...props} style={{color: 'gray', fontSize:14}}>
+                  {this.props.route.params.chatUserName}
+                </Text>
+              </View>
+
+
+          </View>
+      </View>
+    ),
+    headerStyle: {
+      // backgroundColor: 'red', //Set Header color
+      shadowColor:'#fff', //ios
+      elevation:0,
+      height:70,
+    },
      })
      return (
        <BackgroundContainer>
-
-
          <View style={styles.container}>
         <FlatList style={styles.list}
           data={this.props.chats}
@@ -43,23 +73,32 @@ class MessageFriend extends React.Component{
             return item.id;
           }}
           renderItem={(item) => {
-            console.log("BBBBBBBBBBBBBBBBB")
+            console.log("AAAAAAAAAAAAAAAAAAAAaa")
             console.log(item.item)
             item=item.item
 
             let inMessage = item.id === this.props.userId;
             let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
+            let itemStyle1 = inMessage ? styles.textIn : styles.textOut;
             return (
-              <View>
+              <View style={[styles.item, itemStyle]}>
+                {/*
                 <Avatar.Image
                   source = {{
                     uri: `${global.IMAGE_ENDPOINT}`+item.recentSender.profile_picture
                   }}
-                  size = {50}
+                  size = {35}
                    />
-                <Text>
-                {item.recentMessage}
-                </Text>
+               */}
+                 <View style={[styles.balloon]}>
+
+                    <Text style={[itemStyle1]}>
+                    {item.recentMessage}
+
+                    </Text>
+
+
+                  </View>
               {/*
               <View style={[styles.item, itemStyle]}>
                 {!inMessage && this.renderDate(item.date)}
@@ -88,12 +127,8 @@ class MessageFriend extends React.Component{
              placeholder="Message..."
              returnKeyType="send"
              underlineColorAndroid='transparent'
-
-             ref="newMessage"
-
-             />
-
-           <Send stroke="#1890ff" strokeWidth={2.5} width={22.5} height={22.5} />
+             ref="newMessage"/>
+            <Send stroke="#1890ff" strokeWidth={2.5} width={22.5} height={22.5} />
          </View>
       </BackgroundContainer>
 
@@ -105,19 +140,60 @@ class MessageFriend extends React.Component{
    return {
      userId: state.auth.id,
      chats: state.message.chats,
-     profilePic: state.auth.profilePic
+     profilePic: state.auth.profilePic,
    }
  }
 export default connect(mapStateToProps, null)(MessageFriend);
 
 
  const styles = StyleSheet.create({
+   inputs:{
+    height:30,
+    marginLeft:16,
+    borderBottomColor: '#FFFFFF',
+    flex:1,
+  },
+  textIn:{
+    color:'black',
+  },
+  textOut:{
+    color:'white',
+  },
+  balloon: {
+    maxWidth: 250,
+    padding: 12.5,
+    borderRadius: 20,
+  },
+  itemIn: {
+    alignSelf: 'flex-start'
+  },
+  itemOut: {
+    alignSelf: 'flex-end',
+    backgroundColor:'#1890ff',
+
+  },
+  time: {
+    alignSelf: 'flex-end',
+    margin: 15,
+    fontSize:12,
+    color:"#808080",
+  },
+  item: {
+    marginVertical: 5,
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor:"#eeeeee",
+    borderRadius:300,
+    padding:2.5,
+  },
    list:{
-height:'92%',
+    height:'91%',
+    padding:15,
+    // backgroundColor:'red',
    },
    writeMessageContainer:{
 
-
+     height:50,
       padding:10,
       // backgroundColor:'red',
       flexDirection:'row',
@@ -128,7 +204,7 @@ height:'92%',
    },
    whiteMessage: {
 
-     width:'82.5%',
+     width:'80%',
      padding:2,
      paddingLeft:10,
      backgroundColor: '#f0f0f0',
