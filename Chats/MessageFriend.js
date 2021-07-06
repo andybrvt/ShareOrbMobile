@@ -116,7 +116,9 @@ class MessageFriend extends React.Component{
 
          <View style = {styles.writeMessageContainer}>
 
-           <Image stroke="#1890ff" strokeWidth={2.5} width={22.5} height={22.5} />
+           <Image stroke="#1890ff"
+             style={{right:2.5}}
+             strokeWidth={2.5} width={30} height={30} />
              {/*
              onBlur={() => {this.refs.scrollView.scrollTo(0,0)}}
              onChangeText={this.updateMessageState}
@@ -128,7 +130,8 @@ class MessageFriend extends React.Component{
              returnKeyType="send"
              underlineColorAndroid='transparent'
              ref="newMessage"/>
-            <Send stroke="#1890ff" strokeWidth={2.5} width={22.5} height={22.5} />
+           <Send style={{left:15}} stroke="#1890ff"
+              strokeWidth={2.5} width={30} height={30} />
          </View>
       </BackgroundContainer>
 
@@ -187,30 +190,30 @@ export default connect(mapStateToProps, null)(MessageFriend);
     padding:2.5,
   },
    list:{
-    height:'91%',
+    height:'88.5%',
     padding:15,
-    // backgroundColor:'red',
+    // backgroundColor:'blue',
    },
    writeMessageContainer:{
 
-     height:50,
-      padding:10,
+     height:70,
+     paddingLeft:'2.5%',
       // backgroundColor:'red',
       flexDirection:'row',
       alignItems: 'center',
       borderTopWidth:1,
       borderColor:'#d9d9d9',
-      justifyContent: 'center',
+      // justifyContent: 'center',
    },
    whiteMessage: {
 
-     width:'80%',
-     padding:2,
+     width:'77.5%',
+     padding:5,
      paddingLeft:10,
      backgroundColor: '#f0f0f0',
      borderRadius:10,
      left:10,
-     right:20,
+     right:30,
    },
 
  })
