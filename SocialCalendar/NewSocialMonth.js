@@ -18,7 +18,7 @@ class NewSocialMonth extends React.PureComponent{
 
   state = {
     month_array : [],
-    socialCells: []
+    socialCells: [],
   }
 
 
@@ -31,16 +31,16 @@ class NewSocialMonth extends React.PureComponent{
   componentDidMount(){
     // For component did mount you will get the items of that month
 
-    const curMonth = new Date(this.props.year, this.props.month, 1);
-
-    const start = dateFns.startOfMonth(curMonth)
-    const end = dateFns.endOfMonth(curMonth)
-
-    const startDate = dateFns.startOfWeek(start)
-    const endDate = dateFns.endOfWeek(end)
-
-    const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
-    const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
+    // const curMonth = new Date(this.props.year, this.props.month, 1);
+    //
+    // const start = dateFns.startOfMonth(curMonth)
+    // const end = dateFns.endOfMonth(curMonth)
+    //
+    // const startDate = dateFns.startOfWeek(start)
+    // const endDate = dateFns.endOfWeek(end)
+    //
+    // const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
+    // const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
 
 
     // this.getSocialCells(formatStart, formatEnd)
@@ -74,10 +74,9 @@ class NewSocialMonth extends React.PureComponent{
       this.getSocialCells(formatStart, formatEnd)
       .then(data => {
 
-        console.log(data)
-        // this.setState({
-        //   socialCells: data
-        // })
+        this.setState({
+          socialCells: data
+        })
 
       })
 
@@ -111,7 +110,7 @@ class NewSocialMonth extends React.PureComponent{
 
     const rows = [];
 
-    const items = this.state.socialCells
+    const items = []
 
     let toDoStuff = [];
     let days = [];
@@ -333,7 +332,8 @@ class NewSocialMonth extends React.PureComponent{
   render(){
     const month = new Date(this.props.year, this.props.month, 1);
 
-    const formatMonth = dateFns.format(month, 'MMMM yyyy')
+    const formatMonth = dateFns.format(month, 'MMMM yyyy');
+    const {socialCell} = this.state;
     return(
 
       <View style = {styles.centerMonth}>
