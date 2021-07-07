@@ -153,33 +153,35 @@ class NewSocialMonth extends React.PureComponent{
                 style = {[styles.monthPicCell, dateFns.isSameDay(day, new Date()) ?
                   styles.selected : null
                 ]}>
-                {
+
+                <View style = {styles.imageHolder}>
+                  {
+                    toDoStuff[0].coverPic ?
+                      <View>
+                        <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
+                          <Image
+                            style = {styles.smallImage}
+                            resizeMode = "cover"
+                            source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
+                            />
+                        </TouchableOpacity>
+                      </View>
+                    :
+
+                      <Text> {formattedDate}</Text>
+
+                    }
+                </View>
+
+                {/*
                   dateFns.isSameMonth(day, curMonth) ?
 
-                  <View style = {styles.imageHolder}>
-                    {
-                      toDoStuff[0].coverPic ?
-                        <View>
-                          <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
-                            <Image
-                              style = {styles.smallImage}
-                              resizeMode = "cover"
-                              source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
-                              />
-                          </TouchableOpacity>
-                        </View>
-                      :
-
-                        <Text> {formattedDate}</Text>
-
-                      }
-                  </View>
 
 
                   :
 
                   <Text></Text>
-                }
+                */}
               </View>
             )
 
@@ -233,6 +235,22 @@ class NewSocialMonth extends React.PureComponent{
 
 
         for(let i = 0; i< 7; i++){
+
+
+          for(let item = 0; item < cells.length; item++){
+
+          //   // check if it fits into the day
+          //
+            const date = new Date(cells[item].socialCaldate)
+            const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
+
+            if(dateFns.isSameDay(utc, day)){
+              toDoStuff.push(
+                cells[item]
+              )
+            }
+          }
+
           formattedDate = dateFns.format(day, dateFormat);
           const cloneDay = day;
 
@@ -245,33 +263,35 @@ class NewSocialMonth extends React.PureComponent{
                 style = {[styles.monthPicCell, dateFns.isSameDay(day, new Date()) ?
                   styles.selected : null
                 ]}>
-                {
+
+                <View style = {styles.imageHolder}>
+                  {
+                    toDoStuff[0].coverPic ?
+                      <View>
+                        <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
+                          <Image
+                            style = {styles.smallImage}
+                            resizeMode = "cover"
+                            source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
+                            />
+                        </TouchableOpacity>
+                      </View>
+                    :
+
+                      <Text> {formattedDate}</Text>
+
+                    }
+                </View>
+
+                {/*
                   dateFns.isSameMonth(day, curMonth) ?
 
-                  <View style = {styles.imageHolder}>
-                    {
-                      toDoStuff[0].coverPic ?
-                        <View>
-                          <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
-                            <Image
-                              style = {styles.smallImage}
-                              resizeMode = "cover"
-                              source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
-                              />
-                          </TouchableOpacity>
-                        </View>
-                      :
-
-                        <Text> {formattedDate}</Text>
-
-                      }
-                  </View>
 
 
                   :
 
                   <Text></Text>
-                }
+                */}
               </View>
             )
 
