@@ -129,14 +129,14 @@ class NewSocialMonth extends React.PureComponent{
 
           //   // check if it fits into the day
           //
-          //   const date = new Date(items[item].socialCaldate)
-          //   const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
-          //
-          //   if(dateFns.isSameDay(utc, day)){
-          //     toDoStuff.push(
-          //       items[item]
-          //     )
-          //   }
+            const date = new Date(cells[item].socialCaldate)
+            const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
+
+            if(dateFns.isSameDay(utc, day)){
+              toDoStuff.push(
+                cells[item]
+              )
+            }
           }
 
 
@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
     height: Math.round(Dimensions.get('window').width/7),
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     // borderLeftWidth:0.2,
     // borderTopWidth: 0.2,
   },
