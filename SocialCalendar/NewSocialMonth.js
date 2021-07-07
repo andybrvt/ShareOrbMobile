@@ -92,9 +92,10 @@ class NewSocialMonth extends React.PureComponent{
     })
   }
 
-  initializedMonth = (month, year) => {
+  initializedMonth = (month, year, cells) => {
 
-
+    console.log("some cells here")
+    console.log(cells)
     const curMonth = new Date(year, month, 1);
 
 
@@ -124,7 +125,7 @@ class NewSocialMonth extends React.PureComponent{
 
         for(let i = 0; i< 7; i++){
 
-          for(let item = 0; item < items.length; i++){
+          for(let item = 0; item < cells.length; item++){
 
           //   // check if it fits into the day
           //
@@ -333,7 +334,7 @@ class NewSocialMonth extends React.PureComponent{
     const month = new Date(this.props.year, this.props.month, 1);
 
     const formatMonth = dateFns.format(month, 'MMMM yyyy');
-    const {socialCell} = this.state;
+    const {socialCells} = this.state;
     return(
 
       <View style = {styles.centerMonth}>
@@ -341,7 +342,7 @@ class NewSocialMonth extends React.PureComponent{
           <Text style = {styles.monthTitle}>
             {formatMonth}
           </Text>
-          {this.initializedMonth(this.props.month, this.props.year)}
+          {this.initializedMonth(this.props.month, this.props.year, socialCells)}
 
 
 
