@@ -1,5 +1,6 @@
 import React from "react";
-import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity, ImageBackground, TouchableWithoutFeedback} from 'react-native';
+import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity,
+   ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback} from 'react-native';
 import { Card } from 'react-native-paper';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
@@ -75,6 +76,7 @@ class SocialNewsfeedPost extends React.Component{
     // send it through the websocket
     // and then backend
     // then back to the redux
+    console.log("like button")
     WebSocketSocialNewsfeedInstance.sendOneLike(
       socialCalCellId,
       personLike,
@@ -266,7 +268,6 @@ class SocialNewsfeedPost extends React.Component{
     // console.log(timeDiff)
     if( timeDiff > 24*60){
       dayNum = `${dateFns.format(new Date(timestamp), "d")}`;
-      console.log(dayNum)
     }
 
 
@@ -334,31 +335,35 @@ class SocialNewsfeedPost extends React.Component{
                   <Text style = {styles.picNumberText}> {userPostImages.length -1} </Text>
                 </View>
                 */}
-
                 <View style = {styles.videoFooter}>
                   <Text >
                     <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
                     <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
                   </Text>
-
                 </View>
 
-                <View style = {styles.tagCSS1}>
-                  <View style = {styles.justifyCenter}>
+
                     {
                       peopleLikeId.includes(this.props.userId ) ?
-                      <TouchableOpacity onPress = {() => this.onUnlike(
+                      <TouchableOpacity
+                        onPress = {() => this.onUnlike(
                           postId,
                           this.props.userId,
                           contentTypeId
-                        )}>
-                        <FontAwesomeIcon
-                        style = {{
-                          color:'red',
-                          right:3,
-                        }}
-                        size = {22.5}
-                        icon={faHeart} />
+                        )}
+                        style = {styles.tagCSS1}>
+                        <View style = {styles.justifyCenter}>
+                          <FontAwesomeIcon
+                          style = {{
+                            color:'red',
+                            right:3,
+                          }}
+                          size = {32.5}
+                          icon={faHeart} />
+                          <Text  style = {styles.justifyCenter1}>
+                            {like_people.length}
+                          </Text>
+                        </View>
                       </TouchableOpacity>
 
                       :
@@ -370,29 +375,30 @@ class SocialNewsfeedPost extends React.Component{
                           contentTypeId,
                           ownerId,
                           cellDate
-                        )}>
-                        <FontAwesomeIcon
-                          style = {{
-                            color:'white',
-                            right:3,
-                          }}
-
-                        size = {22.5}
-                        icon={faHeart}>
-
-                      </FontAwesomeIcon>
-
+                        )}
+                        style = {styles.tagCSS1}>
+                        <View style = {styles.justifyCenter}>
+                          <FontAwesomeIcon
+                            style = {{
+                              color:'white',
+                              right:3,
+                            }}
+                            size = {32.5}
+                            icon={faHeart}>
+                          </FontAwesomeIcon>
+                          <Text  style = {styles.justifyCenter1}>
+                            {like_people.length}
+                          </Text>
+                        </View>
                       </TouchableOpacity>
 
                     }
-                    <Text  style = {styles.justifyCenter1}>
-                    {like_people.length}
-                    </Text>
-                  </View>
-                </View>
 
+
+
+                <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
                 <View style = {styles.tagCSS2}>
-                  <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
+
                     <View  style = {styles.justifyCenter}>
                       {
                         (this.state.showComments) ?
@@ -417,10 +423,10 @@ class SocialNewsfeedPost extends React.Component{
                       {commentList.length}
                     </Text>
                     </View>
-                  </TouchableOpacity>
+
                 </View>
 
-
+                </TouchableWithoutFeedback>
 
                 <TouchableOpacity
                   onPress = {() => this.onPostDirect(postId)}
@@ -688,6 +694,8 @@ const styles = StyleSheet.create({
     padding:10,
     right:0,
     width:'17.5%',
+    flexDirection:'column',
+    alignItems:'center',
      // backgroundColor:'red',
   },
   timeStampPost: {
@@ -732,19 +740,6 @@ const styles = StyleSheet.create({
     // fontWeight:'bold',
 
   },
-  tagCSS1: {
-    position:'absolute',
-    backgroundColor: 'rgba(0,0,0,.6)',
-    padding:9,
-    borderRadius:25,
-    color:'white',
-    bottom:175,
-    justifyContent: 'center',
-    fontSize:13,
-    right:10,
-    // fontWeight:'bold',
-
-  },
 
   justifyCenter:{
     flexDirection:'row',
@@ -763,6 +758,26 @@ const styles = StyleSheet.create({
     // backgroundColor:'blue',
   },
 
+  tagCSS1: {
+    position:'absolute',
+
+    padding:9,
+    borderRadius:25,
+    color:'white',
+    bottom:175,
+    justifyContent: 'center',
+    fontSize:13,
+    right:10,
+
+    zIndex:1,
+    flex:1,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+  },
+
+
   tagCSS2: {
     position:'absolute',
     backgroundColor: 'rgba(0,0,0,.6)',
@@ -770,10 +785,8 @@ const styles = StyleSheet.create({
     borderRadius:25,
     color:'white',
     bottom:130,
-
     fontSize:13,
     right:10,
-    textAlign:'right',
     // fontWeight:'bold',
 
   },
