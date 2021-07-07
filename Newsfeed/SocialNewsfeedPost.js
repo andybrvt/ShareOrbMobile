@@ -258,7 +258,16 @@ class SocialNewsfeedPost extends React.Component{
         peopleLikeId.push(like_people[i].id)
       }
     }
-
+    let timestamp=""
+    let dayNum=""
+    timestamp=postCreatedAt
+    const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+    // console.log("CCCCCCCCCCCCCCCCc")
+    // console.log(timeDiff)
+    if( timeDiff > 24*60){
+      dayNum = `${dateFns.format(new Date(timestamp), "d")}`;
+      console.log(dayNum)
+    }
 
 
       return (
@@ -271,7 +280,7 @@ class SocialNewsfeedPost extends React.Component{
             <View style = {styles.container}>
 
               <GestureRecognizer
-                  onPress = {() => console.log("hi")}
+                  onPress = {() => console.log("hii")}
                 onSwipe={(direction, state) => this.onSwipe(direction, state)}
 
 
@@ -315,12 +324,16 @@ class SocialNewsfeedPost extends React.Component{
                     <Text style = {styles.videoFooterUserName}>
                       {global.RENDER_TIMESTAMP(postCreatedAt)}
                     </Text>
+                    <Text style = {styles.dayNumTag}>
+                      {dayNum}
+                    </Text>
 
                 </View>
-
+                {/*
                 <View style = {styles.picNumber}>
                   <Text style = {styles.picNumberText}> {userPostImages.length -1} </Text>
                 </View>
+                */}
 
                 <View style = {styles.videoFooter}>
                   <Text >
@@ -344,7 +357,7 @@ class SocialNewsfeedPost extends React.Component{
                           color:'red',
                           right:3,
                         }}
-                        size = {20}
+                        size = {22.5}
                         icon={faHeart} />
                       </TouchableOpacity>
 
@@ -364,7 +377,7 @@ class SocialNewsfeedPost extends React.Component{
                             right:3,
                           }}
 
-                        size = {20}
+                        size = {22.5}
                         icon={faHeart}>
 
                       </FontAwesomeIcon>
@@ -388,7 +401,7 @@ class SocialNewsfeedPost extends React.Component{
                           color:'red',
                           right:3,
                         }}
-                        size = {20}
+                        size = {22.5}
                         icon={faComment} />
                         :
 
@@ -397,7 +410,7 @@ class SocialNewsfeedPost extends React.Component{
                           color:'white',
                           right:3,
                         }}
-                        size = {20}
+                        size = {22.5}
                         icon={faComment} />
                       }
                       <Text  style = {styles.justifyCenter1}>
@@ -413,13 +426,15 @@ class SocialNewsfeedPost extends React.Component{
                   onPress = {() => this.onPostDirect(postId)}
                   style = {styles.tagCSS3}
                   >
-
+                  <View style={{flexDirection:'row'}}>
                     <Navigation2
                       width ={25}
                       height = {25}
                       stroke = "white"
                        />
 
+                     <Text style={{color:'white', fontSize:16}}>  {userPostImages.length -1}</Text>
+                    </View>
                 </TouchableOpacity>
 
 
@@ -612,6 +627,18 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(SocialNewsfeedPost);
 
 const styles = StyleSheet.create({
+  dayNumTag: {
+
+    color:'white',
+    fontSize:30,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+    // fontWeight:'bold',
+
+  },
   container: {
     margin: margin,
     backgroundColor: 'lightgray',
@@ -660,7 +687,7 @@ const styles = StyleSheet.create({
     top:'1%',
     padding:10,
     right:0,
-    width:'35%',
+    width:'17.5%',
      // backgroundColor:'red',
   },
   timeStampPost: {
@@ -767,7 +794,7 @@ const styles = StyleSheet.create({
   },
   picNumber:{
     position:'absolute',
-    bottom:25,
+    top:100,
     right: 0,
     padding:10,
     fontWeight:'600',

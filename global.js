@@ -36,7 +36,7 @@ import * as dateFns from 'date-fns';
 // global.WS_HEADER = "ws"
 
 
-console.disableYellowBox = true;
+// console.disableYellowBox = true;
 // This is for ua guest
 // global.IP_CHANGE = "http://10.143.167.43:19000"
 // global.IMAGE_ENDPOINT = "http://10.143.167.43:19000"
@@ -66,7 +66,7 @@ global.NAMEMAKE = (firstName, lastName, length) => {
 
   return name
 }
-
+// else if (timeDiff < 31*24*60 && timeDiff > 24*60) {
 global.RENDER_TIMESTAMP = (timestamp) => {
 
     let prefix = '';
@@ -77,10 +77,12 @@ global.RENDER_TIMESTAMP = (timestamp) => {
       prefix = `${timeDiff} minutes ago`;
     }else if (timeDiff < 24*60 && timeDiff > 60) {
       prefix = `${Math.round(timeDiff/60)} hours ago`;
-    } else if (timeDiff < 31*24*60 && timeDiff > 24*60) {
-      prefix = `${Math.round(timeDiff/(60*24))} days ago`;
+    }
+    // this condition fills if time difference is greater than 2 days
+    else if (timeDiff <1*24*60 && timeDiff > 24*60) {
+      prefix = `${Math.round(timeDiff/(60*24))}d ago`;
     } else {
-        prefix = `${dateFns.format(new Date(timestamp), "MMMM d")}`;
+        prefix = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     }
 
     return prefix;

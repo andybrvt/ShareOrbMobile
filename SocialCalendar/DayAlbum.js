@@ -178,8 +178,8 @@ import format from 'date-fns/format'
      let postId = "";
      // console.log('here is the propssf')
      //
-     // console.log(this.props)
-     // console.log( this.props.socialCalCell.socialCaldate)
+     console.log(this.props)
+     console.log( this.props.socialCalCell.socialCaldate)
      let dataList=this.props.socialCalCell.socialCaldate.split("-")
      let getYear=dataList[0]
      let getMonth=dataList[1]

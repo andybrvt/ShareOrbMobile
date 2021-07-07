@@ -17,7 +17,7 @@ import { Avatar, BottomNavigation,  } from 'react-native-paper';
  // pictures
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { connect } from 'react-redux';
-import { ArrowUpCircle, Plus, Mail, UserPlus, Send, Image} from "react-native-feather";
+import { ArrowUpCircle, Plus, Mail, UserPlus, Send, Image, Info} from "react-native-feather";
 class MessageFriend extends React.Component{
 
    onHomeNav = () => {
@@ -41,20 +41,22 @@ class MessageFriend extends React.Component{
              size = {40}
              style={{right:10}}
               />
-            <View style={{flexDirection:'column'}}>
-              <View style={{flex:1}}>
-                <Text style={{color: 'black', fontWeight: 'bold', fontSize:18}}>
-                    {this.props.route.params.chatPersonName}
-                </Text>
-              </View>
-              <View style={{flex:1}}>
-                <Text {...props} style={{color: 'gray', fontSize:14}}>
-                  {this.props.route.params.chatUserName}
-                </Text>
-              </View>
-
-
+          <View style={{flexDirection:'column', flex:1}}>
+            <View style={{flex:1}}>
+              <Text style={{color: 'black', fontWeight: 'bold', fontSize:18}}>
+                  {this.props.route.params.chatPersonName}
+              </Text>
+            </View>
+            <View style={{flex:1}}>
+              <Text {...props} style={{color: 'gray', fontSize:14}}>
+                {this.props.route.params.chatUserName}
+              </Text>
+            </View>
           </View>
+          <View style={{flex:1, alignItems:'flex-end', justifyContent:'center'}}>
+          <Info style={{right:5}} stroke="#1890ff"
+             strokeWidth={2.5} width={25} height={25} />
+           </View>
       </View>
     ),
     headerStyle: {
@@ -113,7 +115,11 @@ class MessageFriend extends React.Component{
           }}/>
 
       </View>
-
+      <KeyboardAvoidingView
+        behavior="null"
+        keyboardVerticalOffset={100}
+        style={{flex:1}}
+      >
          <View style = {styles.writeMessageContainer}>
 
            <Image stroke="#1890ff"
@@ -131,8 +137,9 @@ class MessageFriend extends React.Component{
              underlineColorAndroid='transparent'
              ref="newMessage"/>
            <Send style={{left:15}} stroke="#1890ff"
-              strokeWidth={2.5} width={30} height={30} />
+              strokeWidth={2.5} width={27.5} height={27.5} />
          </View>
+        </KeyboardAvoidingView>
       </BackgroundContainer>
 
      )
@@ -195,7 +202,7 @@ export default connect(mapStateToProps, null)(MessageFriend);
     // backgroundColor:'blue',
    },
    writeMessageContainer:{
-
+     flex:1,
      height:70,
      paddingLeft:'2.5%',
       // backgroundColor:'red',
