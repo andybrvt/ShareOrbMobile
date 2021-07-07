@@ -22,11 +22,16 @@ class NewSocialMonth extends React.PureComponent{
   }
 
 
+// the way the mount works vs when it updates is when you first
+// open up the page the month and year is 0, its not until the values
+// start hitting up you will get the number in the componentdidupdate
+// and every time you scroll to a differnet page is also updates the
+// componentdidupdate
 
   componentDidMount(){
     // For component did mount you will get the items of that month
-    const curMonth = new Date(this.props.year, this.props.month, 1);
 
+    const curMonth = new Date(this.props.year, this.props.month, 1);
 
     const start = dateFns.startOfMonth(curMonth)
     const end = dateFns.endOfMonth(curMonth)
@@ -37,12 +42,13 @@ class NewSocialMonth extends React.PureComponent{
     const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
     const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
 
-    this.getSocialCells(formatStart, formatEnd)
-    .then(data => {
-      this.setState({
-        socialCells: data
-      })
-    })
+
+    // this.getSocialCells(formatStart, formatEnd)
+    // .then(data => {
+    //   this.setState({
+    //     socialCells: data
+    //   })
+    // })
   }
 
 
@@ -51,6 +57,8 @@ class NewSocialMonth extends React.PureComponent{
     // month
 
     if(this.props.month !== prevProps.month){
+
+      console.log('right here')
       const curMonth = new Date(this.props.year, this.props.month, 1);
 
       const start = dateFns.startOfMonth(curMonth)
@@ -62,11 +70,14 @@ class NewSocialMonth extends React.PureComponent{
       const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
       const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
 
+
       this.getSocialCells(formatStart, formatEnd)
       .then(data => {
-        this.setState({
-          socialCells: data
-        })
+
+        console.log(data)
+        // this.setState({
+        //   socialCells: data
+        // })
 
       })
 
@@ -78,7 +89,7 @@ class NewSocialMonth extends React.PureComponent{
   getSocialCells(start, end){
     return authAxios.get(`${global.IP_CHANGE}/mySocialCal/filterCells/`+ start+`/`+end)
     .then(res => {
-        return res.data
+      return res.data
     })
   }
 
@@ -95,11 +106,12 @@ class NewSocialMonth extends React.PureComponent{
     const endDate = dateFns.endOfWeek(end)
 
     const diffWeeks = dateFns.differenceInCalendarWeeks(endDate, startDate)
-    console.log(diffWeeks)
 
     const dateFormat = "d";
 
     const rows = [];
+
+    const items = this.state.socialCells
 
     let toDoStuff = [];
     let days = [];
@@ -112,6 +124,23 @@ class NewSocialMonth extends React.PureComponent{
 
 
         for(let i = 0; i< 7; i++){
+
+          for(let item = 0; item < items.length; i++){
+
+          //   // check if it fits into the day
+          //
+          //   const date = new Date(items[item].socialCaldate)
+          //   const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
+          //
+          //   if(dateFns.isSameDay(utc, day)){
+          //     toDoStuff.push(
+          //       items[item]
+          //     )
+          //   }
+          }
+
+
+
           formattedDate = dateFns.format(day, dateFormat);
           const cloneDay = day;
 
