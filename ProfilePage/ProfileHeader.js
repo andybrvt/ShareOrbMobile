@@ -6,7 +6,9 @@ import { Avatar } from 'react-native-elements';
 
 import Followers from './Followers';
 import Following from './Following';
-import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faHeart, faComment, faBookmark, } from '@fortawesome/free-regular-svg-icons';
+import { faFire } from '@fortawesome/free-solid-svg-icons'
 class ProfileHeader extends React.Component{
 
 
@@ -166,9 +168,17 @@ class ProfileHeader extends React.Component{
 
        <View style = {styles.bioContainer}>
          <Text style = {styles.bio}> {bio}</Text>
+
         </View>
 
-        <View style = {styles.tagCSS1}>
+        <View style = {styles.streakBubble}>
+          <FontAwesomeIcon
+                           style = {{
+                             color:'#fa541c',
+                             right:1,
+                           }}
+                           size = {20}
+                           icon={faFire} />
           <Text style = {{color:'white'}}> 5</Text>
          </View>
 
@@ -316,22 +326,24 @@ class ProfileHeader extends React.Component{
 export default ProfileHeader;
 
 const styles = StyleSheet.create({
-  tagCSS1: {
+  streakBubble: {
     position:'absolute',
-    backgroundColor: 'rgba(0,0,0,.6)',
-    padding:9,
-    borderRadius:25,
+    backgroundColor: 'rgba(0,0,0,.75)',
+    padding:6,
+    borderRadius:20,
     color:'white',
-    bottom:190,
+    bottom:'45%',
     justifyContent: 'center',
     fontSize:13,
-    right:10,
+    left:'25%',
     zIndex:1,
     flex:1,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
     fontWeight:'bold',
+    flexDirection:'row',
+    alignItems:'center',
   },
   editButton: {
 
