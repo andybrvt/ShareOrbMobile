@@ -6,8 +6,9 @@ import { Avatar } from 'react-native-elements';
 
 import Followers from './Followers';
 import Following from './Following';
+import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons';
 class ProfileHeader extends React.Component{
-  
+
 
   editPageClick() {
     console.log(this.props.profile.bio)
@@ -98,9 +99,7 @@ class ProfileHeader extends React.Component{
     return (
     <View style={{
         flexDirection:'column',
-
         }}>
-
         <View>
           <View style={styles.profileInfoHeader}>
               <View style={{
@@ -115,7 +114,9 @@ class ProfileHeader extends React.Component{
                       profileImage,
                   }}
                 />
+
               </View>
+
               <View style={{flex:1.5,justifyContent:'center', marginLeft:30}}>
                 <Text style = {styles.name}>{name}</Text>
                 <Text style = {styles.username}>@{username}</Text>
@@ -126,7 +127,9 @@ class ProfileHeader extends React.Component{
                  </TouchableOpacity>
               </View>
           </View>
+
         </View>
+
 
 
        <View style = {styles.profileMidContainer}>
@@ -165,6 +168,9 @@ class ProfileHeader extends React.Component{
          <Text style = {styles.bio}> {bio}</Text>
         </View>
 
+        <View style = {styles.tagCSS1}>
+          <Text style = {{color:'white'}}> 5</Text>
+         </View>
 
 
    </View>
@@ -310,6 +316,23 @@ class ProfileHeader extends React.Component{
 export default ProfileHeader;
 
 const styles = StyleSheet.create({
+  tagCSS1: {
+    position:'absolute',
+    backgroundColor: 'rgba(0,0,0,.6)',
+    padding:9,
+    borderRadius:25,
+    color:'white',
+    bottom:190,
+    justifyContent: 'center',
+    fontSize:13,
+    right:10,
+    zIndex:1,
+    flex:1,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+  },
   editButton: {
 
     alignItems: 'center',

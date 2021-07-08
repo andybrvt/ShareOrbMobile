@@ -10,12 +10,12 @@ import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-ico
 import { Avatar } from 'react-native-elements';
 
 import FeatherIcon from 'feather-icons-react';
-import { Tag, Heart } from 'react-feather';
+import { Tag } from 'react-feather';
 import Animated from 'react-native-reanimated';
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import BottomSheet from 'reanimated-bottom-sheet';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
-import { Navigation2 } from "react-native-feather";
+import { Navigation2, Heart, MessageCircle } from "react-native-feather";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
@@ -309,68 +309,44 @@ class SocialNewsfeedPost extends React.Component{
             cellDate)}
             >
             <View style = {styles.container}>
-
               <GestureRecognizer
                   onPress = {() => console.log("hii")}
-                onSwipe={(direction, state) => this.onSwipe(direction, state)}
-
-
-                config={{
-                   velocityThreshold: 0.3,
-                   directionalOffsetThreshold: 90,
-                 }}>
-                 {/*
-                 <TouchableWithoutFeedback onPress={this.handleDoubleTap
-                     (postId,
-                     this.props.userId,
-                     contentTypeId,
-                     ownerId,
-                     cellDate)
-                     }>
-                  */}
+                  onSwipe={(direction, state) => this.onSwipe(direction, state)}
+                  config={{
+                     velocityThreshold: 0.3,
+                     directionalOffsetThreshold: 90,
+                   }}>
                   <Image
                     style={styles.cover}
                     resizeMode = "cover"
                     source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
                     />
-                  {/*
-                </TouchableWithoutFeedback>
-                */}
               </GestureRecognizer>
+              <Avatar
+                style={styles.close}
+                onPress = {() => this.props.ViewProfile()}
+                size={40}
+                rounded
+                source = {{
+                  uri: profilePic
+                }}
+              />
 
-                <Avatar
-                  style={styles.close}
-                  onPress = {() => this.props.ViewProfile()}
-                  size={40}
-                  rounded
-                  source = {{
-                    uri: profilePic
-                  }}
-                />
+              <View style = {styles.testWhere}>
+                <Text style = {styles.videoFooterUserName}>
+                  {global.NAMEMAKE(firstName, lastName)}
+                </Text>
+              </View>
 
-                <View style = {styles.testWhere}>
+              <View style = {styles.testWhere2}>
                   <Text style = {styles.videoFooterUserName}>
-                    {global.NAMEMAKE(firstName, lastName)}
+                    {global.RENDER_TIMESTAMP(postCreatedAt)}
                   </Text>
-                </View>
+                  <Text style = {styles.dayNumTag}>
+                    {dayNum}
+                  </Text>
 
-                <View style = {styles.testWhere2}>
-                  {/*
-                    use the current date icon instead like June 14
-                    or
-                    June
-                    14
-                    with a circle around it
-                    */}
-
-                    <Text style = {styles.videoFooterUserName}>
-                      {global.RENDER_TIMESTAMP(postCreatedAt)}
-                    </Text>
-                    <Text style = {styles.dayNumTag}>
-                      {dayNum}
-                    </Text>
-
-                </View>
+              </View>
                 {/*
                 <View style = {styles.picNumber}>
                   <Text style = {styles.picNumberText}> {userPostImages.length -1} </Text>
@@ -383,7 +359,6 @@ class SocialNewsfeedPost extends React.Component{
                   </Text>
                 </View>
 
-
                     {
                       peopleLikeId.includes(this.props.userId ) ?
                       <TouchableOpacity
@@ -394,21 +369,18 @@ class SocialNewsfeedPost extends React.Component{
                         )}
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>
-                          <FontAwesomeIcon
-                          style = {{
-                            color:'red',
-                            right:3,
-                          }}
-                          size = {30}
-                          icon={faHeart} />
-                          <Text  style = {styles.justifyCenter1}>
+                          <Heart
+                            fill="red"
+                            width ={30}
+                            height = {30}
+                            style={{right:2}}
+                             />
+                          <Text  style = {styles.videoFooterUserName}>
                             {like_people.length}
                           </Text>
                         </View>
                       </TouchableOpacity>
-
                       :
-
                       <TouchableOpacity
                         onPress = {() => this.onLike(
                           postId,
@@ -419,81 +391,52 @@ class SocialNewsfeedPost extends React.Component{
                         )}
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>
-                          <FontAwesomeIcon
-                            style = {{
-                              color:'white',
-                              right:3,
-                            }}
-                            size = {30}
-                            icon={faHeart}>
-                          </FontAwesomeIcon>
-                          <Text  style = {styles.justifyCenter1}>
-                            {like_people.length}
-                          </Text>
+                          <Heart
+                            fill="white"
+                            width ={30}
+                            height = {30}
+                            style={{right:2}}
+                          />
+                         <Text style = {styles.videoFooterUserName}>
+                          {like_people.length}
+                        </Text>
                         </View>
                       </TouchableOpacity>
-
                     }
 
-
-
                 <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
-                <View style = {styles.tagCSS2}>
-
-                    <View  style = {styles.justifyCenter}>
-                      {
-                        (this.state.showComments) ?
-                        <FontAwesomeIcon
-                        style = {{
-                          color:'red',
-                          right:3,
-                        }}
-                        size = {22.5}
-                        icon={faComment} />
-                        :
-
-                        <FontAwesomeIcon
-                        style = {{
-                          color:'white',
-                          right:3,
-                        }}
-                        size = {22.5}
-                        icon={faComment} />
-                      }
-                      <Text  style = {styles.justifyCenter1}>
-                      {commentList.length}
-                    </Text>
-                    </View>
-
-                </View>
-
+                  <View style = {styles.tagCSS2}>
+                      <View style = {styles.justifyCenter}>
+                        <MessageCircle
+                          fill="white"
+                          width ={30}
+                          height = {30}
+                          style={{right:2}}
+                        />
+                        <Text style = {styles.videoFooterUserName}>
+                          {commentList.length}
+                        </Text>
+                      </View>
+                  </View>
                 </TouchableWithoutFeedback>
 
                 <TouchableOpacity
                   onPress = {() => this.onPostDirect(postId)}
-                  style = {styles.tagCSS3}
-                  >
-                  <View style={{flexDirection:'row'}}>
+                  style = {styles.tagCSS3}>
+                  <View style = {styles.justifyCenter}>
                     <Navigation2
-                      width ={25}
-                      height = {25}
-                      stroke = "white"
+                      fill="white"
+                      width={30}
+                      height={30}
                        />
-
-                     <Text style={{color:'white', fontSize:16}}>  {userPostImages.length -1}</Text>
-                    </View>
+                     <Text style = {styles.videoFooterUserName}>  {userPostImages.length -1}</Text>
+                  </View>
                 </TouchableOpacity>
-
-
-
-
             </View>
-
           </TouchableWithoutFeedback>
 
           {
             userPostImages.length > 1 ?
-
             <Animated.View style = {{
               height: width ,
               flexWrap: 'wrap',
@@ -505,15 +448,9 @@ class SocialNewsfeedPost extends React.Component{
                 {translateY: this.slideAnimation}
               ]
               }}>
-
-
                 {this.renderExtraPics(userPostImages)}
-
             </Animated.View>
-
             : <View></View>
-
-
           }
 
           <Button
@@ -524,11 +461,8 @@ class SocialNewsfeedPost extends React.Component{
             ownerId,
             cellDate)}
              />
-
-
          </Animated.View>
       )
-
   }
 
 
@@ -536,7 +470,6 @@ class SocialNewsfeedPost extends React.Component{
   onSwipe(gestureName, gestureState) {
     const {dx, dy} = gestureState;
     let direction = detectSwipeDirection({dx, dy});
-
     this.setState({gestureName: gestureName});
     switch (gestureName) {
       case direction == SWIPE_UP:
@@ -554,7 +487,6 @@ class SocialNewsfeedPost extends React.Component{
       this.setState({swipeDirection: 'left'});
       console.log("RIGHT")
       // this.onPostDirect(postId)
-
     }
   }
 
@@ -571,18 +503,13 @@ class SocialNewsfeedPost extends React.Component{
 
 
   render(){
-
-
     let like_people = []
     let profilePic = ''
     let userUsername = ""
     let userFirstName = ""
     let userLastName = ""
     let userId = ""
-
-
     let actionText = ""
-
 
     if(this.props.data) {
       if(this.props.data.post){
@@ -596,21 +523,17 @@ class SocialNewsfeedPost extends React.Component{
         if(post.actionText === "clipped"){
           actionText = " clipped picture to day"
         }
-
-
       }
 
       if(this.props.data.owner){
         if(this.props.data.owner.profile_picture){
-
           profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
-
-
         }
 
         if(this.props.data.owner.first_name){
           userFirstName = this.props.data.owner.first_name
         }
+
         if(this.props.data.owner.last_name){
           userLastName = this.props.data.owner.last_name
         }
@@ -622,16 +545,8 @@ class SocialNewsfeedPost extends React.Component{
         if(this.props.data.owner.username){
           userUsername = this.props.data.owner.username
         }
-
       }
-
-
-
-
     }
-
-
-
 
     return (
       <View>
@@ -649,16 +564,9 @@ class SocialNewsfeedPost extends React.Component{
             ]
           )}
         </Animated.Code>
-
-
-
         <View style = {styles.imageContainer}>
-
             {this.revealPhoto()}
-
         </View>
-
-
       </View>
     )
   }
@@ -679,7 +587,6 @@ export default connect(mapStateToProps)(SocialNewsfeedPost);
 
 const styles = StyleSheet.create({
   dayNumTag: {
-
     color:'white',
     fontSize:30,
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
@@ -702,15 +609,18 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     elevation: 5
   },
+
   miniContainer: {
     margin: margin,
     // backgroundColor: 'blue',
     height: width ,
     flexWrap: 'wrap'
   },
+
   extraPicBox: {
 
   },
+
   cover: {
     // flex: 1,
     borderRadius: 5,
@@ -722,8 +632,6 @@ const styles = StyleSheet.create({
   smallPic: {
 
   },
-
-
 
   testWhere:{
     position:'absolute',
@@ -753,13 +661,10 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
     fontWeight:'bold',
-
     // fontWeight:'bold',
-
   },
 
   videoFooterUserName: {
-
     color:'white',
     fontSize:14,
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
@@ -768,8 +673,8 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     fontWeight:'bold',
     // fontWeight:'bold',
-
   },
+
   videoFooter: {
     position:'absolute',
     padding:10,
@@ -783,7 +688,6 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 10
     // fontWeight:'bold',
-
   },
 
   justifyCenter:{
@@ -792,7 +696,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     color:'white',
-
     // backgroundColor:'red',
   },
   justifyCenter1:{
@@ -805,15 +708,14 @@ const styles = StyleSheet.create({
 
   tagCSS1: {
     position:'absolute',
-    backgroundColor: 'rgba(0,0,0,.6)',
+    // backgroundColor: 'rgba(0,0,0,.6)',
     padding:9,
     borderRadius:25,
     color:'white',
-    bottom:175,
+    bottom:190,
     justifyContent: 'center',
     fontSize:13,
     right:10,
-
     zIndex:1,
     flex:1,
     textShadowColor: 'black',
@@ -825,30 +727,33 @@ const styles = StyleSheet.create({
 
   tagCSS2: {
     position:'absolute',
-    backgroundColor: 'rgba(0,0,0,.6)',
+    // backgroundColor: 'rgba(0,0,0,.6)',
     padding:9,
     borderRadius:25,
     color:'white',
-    bottom:130,
+    bottom:145,
     fontSize:13,
     right:10,
-    // fontWeight:'bold',
-
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
   },
 
   tagCSS3: {
     position:'absolute',
-    backgroundColor: 'rgba(0,0,0,.6)',
-    padding:7.5,
+    // backgroundColor: 'rgba(0,0,0,.6)',
+    padding:9,
     borderRadius:25,
     color:'white',
-    bottom:85,
-
+    bottom:100,
     fontSize:13,
-    right:15,
+    right:10,
     textAlign:'right',
-    // fontWeight:'bold',
-
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
   },
   picNumber:{
     position:'absolute',
@@ -861,6 +766,7 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 10
   },
+
   picNumberText:{
     color:'white',
     fontSize:25,
@@ -870,6 +776,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     fontWeight:'bold',
   },
+
   close2: {
     margin: 10,
     position: "absolute",
@@ -877,7 +784,6 @@ const styles = StyleSheet.create({
     right: 5,
     width: 35,
     height: 35,
-
   },
 
   videoText: {
@@ -901,7 +807,6 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    // backgroundColor: "red",
     width: Math.round(Dimensions.get('window').width)-10,
     borderRadius:20,
     left:5,
@@ -910,8 +815,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderColor: '#f0f0f0',
     borderWidth: 3,
-
   },
+
   imageContainer: {
     flex: 1,
 
@@ -923,35 +828,36 @@ const styles = StyleSheet.create({
     // backgroundColor: "blue",
     flexDirection: "row",
     padding:10,
-
-
-
   },
+
   name: {
     flex: 1,
     // backgroundColor: 'blue',
     justifyContent: "center",
 
   },
+
   date: {
     justifyContent: "center",
     // backgroundColor: 'pink'
   },
+
   miniLikeCommCon: {
     // backgroundColor:'red'
     flexDirection: "row",
-
   },
 
   taggedNames: {
     color:'blue',
   },
+
   bottomButtons: {
 
     flexDirection: "row",
     borderTopWidth: 0.5,
     borderColor: "gainsboro"
   },
+
   buttons: {
     height: 40,
     flex: 1,
@@ -962,19 +868,19 @@ const styles = StyleSheet.create({
     borderColor: 'gainsboro',
     flexDirection: "row"
   },
+
   captionHolder: {
     flexDirection: "row",
     textShadowColor: 'black',
     textShadowOffset: {width: 0, height: 1},
     textShadowRadius: 6
-
   },
+
   captionUsername:{
     color:'black',
     fontSize:14,
     fontWeight:'bold',
   },
-
 
   likeCapHolder: {
     left:10,
@@ -983,6 +889,4 @@ const styles = StyleSheet.create({
   bottomLikeCommentContainer: {
     padding:10,
   }
-
-
 })
