@@ -48,16 +48,36 @@ class SocialNewsfeedPost extends React.Component{
     super(props);
     this.state = {
       showComments: false,
-      showLike: false,
       showSlide: false,
       myText: 'I\'m ready to get swiped!',
       gestureName: 'none',
       backgroundColor: '#fff',
       swipeDirection:'',
+      lastTap:null,
     }
 
     this.showExtra = new Value(false);
 
+  }
+
+  handleDoubleTap = (postId, userId, contentTypeId,
+  ownerId,
+  cellDate) => {
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    if (this.state.lastTap && (now - this.state.lastTap) < DOUBLE_PRESS_DELAY) {
+      this.onLike(
+        postId,
+        userId,
+        contentTypeId,
+        ownerId,
+        cellDate
+      )
+    } else {
+      this.setState({
+        lastTap: now
+      })
+    }
   }
 
   changeShowComments = (cellId) => {
@@ -66,11 +86,6 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
-  changeShowLike = () => {
-    this.setState({
-      showLike:!this.state.showLike,
-    });
-  }
 
   onLike = (socialCalCellId, personLike, contentTypeId, ownerId, cellDate) => {
     // send it through the websocket
@@ -96,13 +111,24 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
-  onSlidePress = (num) => {
+  onSlidePress = (num, postId,
+  userId,
+  contentTypeId,
+  ownerId,
+  cellDate) => {
     if(num > 1){
       this.showExtra.setValue(!this.state.showSlide)
       this.setState({
         showSlide: !this.state.showSlide
       })
     }
+    this.handleDoubleTap
+        (postId,
+        userId,
+        contentTypeId,
+        ownerId,
+        cellDate)
+
 
   }
 
@@ -276,7 +302,11 @@ class SocialNewsfeedPost extends React.Component{
             height: this.heightAnimation
           }}>
           <TouchableWithoutFeedback
-            onPress = {() => this.onSlidePress(userPostImages.length)}
+            onPress = {() => this.onSlidePress(userPostImages.length, postId,
+            this.props.userId,
+            contentTypeId,
+            ownerId,
+            cellDate)}
             >
             <View style = {styles.container}>
 
@@ -289,12 +319,23 @@ class SocialNewsfeedPost extends React.Component{
                    velocityThreshold: 0.3,
                    directionalOffsetThreshold: 90,
                  }}>
-                <Image
-                  style={styles.cover}
-                  resizeMode = "cover"
-                  source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
-                  />
-
+                 {/*
+                 <TouchableWithoutFeedback onPress={this.handleDoubleTap
+                     (postId,
+                     this.props.userId,
+                     contentTypeId,
+                     ownerId,
+                     cellDate)
+                     }>
+                  */}
+                  <Image
+                    style={styles.cover}
+                    resizeMode = "cover"
+                    source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
+                    />
+                  {/*
+                </TouchableWithoutFeedback>
+                */}
               </GestureRecognizer>
 
                 <Avatar
@@ -358,7 +399,7 @@ class SocialNewsfeedPost extends React.Component{
                             color:'red',
                             right:3,
                           }}
-                          size = {32.5}
+                          size = {30}
                           icon={faHeart} />
                           <Text  style = {styles.justifyCenter1}>
                             {like_people.length}
@@ -383,7 +424,7 @@ class SocialNewsfeedPost extends React.Component{
                               color:'white',
                               right:3,
                             }}
-                            size = {32.5}
+                            size = {30}
                             icon={faHeart}>
                           </FontAwesomeIcon>
                           <Text  style = {styles.justifyCenter1}>
@@ -477,7 +518,11 @@ class SocialNewsfeedPost extends React.Component{
 
           <Button
             title = "slide"
-            onPress = {() => this.onSlidePress()}
+            onPress = {() => this.onSlidePress(userPostImages.length, postId,
+            this.props.userId,
+            contentTypeId,
+            ownerId,
+            cellDate)}
              />
 
 
@@ -760,7 +805,7 @@ const styles = StyleSheet.create({
 
   tagCSS1: {
     position:'absolute',
-
+    backgroundColor: 'rgba(0,0,0,.6)',
     padding:9,
     borderRadius:25,
     color:'white',
