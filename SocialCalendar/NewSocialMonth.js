@@ -189,8 +189,7 @@ class NewSocialMonth extends React.PureComponent{
             days.push(
               <View
                 key = {i}
-                style = {[styles.monthCell, dateFns.isSameDay(day, new Date())
-                  && dateFns.isSameMonth(day, curMonth) ?
+                style = {[styles.monthCell, dateFns.isSameDay(day, new Date()) ?
                   styles.selected : null
                 ]}>
                 {
@@ -429,9 +428,9 @@ const styles = StyleSheet.create({
     borderRadius:10,
   },
   smallImage: {
-    width: Math.round(Dimensions.get('window').width/8),
-    height: Math.round(Dimensions.get('window').width/8),
-    borderRadius: 10,
+    width: Math.round(Dimensions.get('window').width/7),
+    height: Math.round(Dimensions.get('window').width/7),
+    borderRadius: 0,
   },
   imageHolder: {
 
