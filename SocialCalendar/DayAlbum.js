@@ -21,7 +21,6 @@ import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebso
 import { connect } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import { parseISO } from 'date-fns'
-import format from 'date-fns/format'
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -162,6 +161,8 @@ import format from 'date-fns/format'
 
    render(){
 
+     console.log(' here in the day album')
+     console.log(this.props)
      let {
        profilePic,
        firstName,
@@ -176,24 +177,16 @@ import format from 'date-fns/format'
      let peopleLikeId = [];
      let socialComments = [];
      let postId = "";
-     // console.log('here is the propssf')
-     //
-     console.log(this.props)
-     console.log( this.props.socialCalCell.socialCaldate)
-     let dataList=this.props.socialCalCell.socialCaldate.split("-")
-     let getYear=dataList[0]
-     let getMonth=dataList[1]
-     let getDay=dataList[2]
      let socialDate=""
-     socialDate=getYear+getMonth+getDay
-     // const test=format(new Date(), this.props.socialCalCell.socialCaldate)
-     // console.log(socialDate)
-    const test = new Date(parseISO(socialDate));
-    const format = require('date-fns/format');
-    const test1=format(test, 'dd');
-    const test2=format(test, 'MMMM');
-    // console.log(test1)
-    //   console.log(test2)
+
+
+
+    // const test = new Date(parseISO(socialDate));
+    // const format = require('date-fns/format');
+    // const test1=format(test, 'dd');
+    // const test2=format(test, 'MMMM');
+
+
      if(this.props.socialCalCell){
        const cell = this.props.socialCalCell
 
@@ -220,6 +213,16 @@ import format from 'date-fns/format'
 
        if(this.props.socialCalCell.people_like){
          likePost = this.props.socialCalCell.people_like
+       }
+
+       if(this.props.socialCalCell.socialCaldate){
+         let dataList=this.props.socialCalCell.socialCaldate.split("-")
+         let getYear=dataList[0]
+         let getMonth=dataList[1]
+         let getDay=dataList[2]
+
+         socialDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM dd")
+
        }
 
 
@@ -254,7 +257,7 @@ import format from 'date-fns/format'
                <TouchableOpacity>
                <View style = {styles.justifyCenter}>
                  <Text style={{color:'white', fontSize:17.5}}>
-                    {test2+" "+test1}
+                    {socialDate}
                  </Text>
                </View>
                </TouchableOpacity>
