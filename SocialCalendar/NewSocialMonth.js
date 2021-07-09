@@ -40,19 +40,10 @@ class NewSocialMonth extends React.PureComponent{
 
 
   componentDidMount(){
-    const curMonth = new Date(this.props.year, this.props.month, 1);
 
-    const start = dateFns.startOfMonth(curMonth)
-    const end = dateFns.endOfMonth(curMonth)
+    const dateRange = this.grabDateRange()
 
-    const startDate = dateFns.startOfWeek(start)
-    const endDate = dateFns.endOfWeek(end)
-
-    const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
-    const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
-
-
-    this.getSocialCells(formatStart, formatEnd)
+    this.getSocialCells(dateRange.start, dateRange.end)
     .then(data => {
 
       this.setState({
@@ -69,20 +60,9 @@ class NewSocialMonth extends React.PureComponent{
 
     if(this.props.month !== prevProps.month){
 
-      console.log('right here')
-      const curMonth = new Date(this.props.year, this.props.month, 1);
+      const dateRange = this.grabDateRange()
 
-      const start = dateFns.startOfMonth(curMonth)
-      const end = dateFns.endOfMonth(curMonth)
-
-      const startDate = dateFns.startOfWeek(start)
-      const endDate = dateFns.endOfWeek(end)
-
-      const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
-      const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
-
-
-      this.getSocialCells(formatStart, formatEnd)
+      this.getSocialCells(dateRange.start, dateRange.end)
       .then(data => {
 
         this.setState({
@@ -92,6 +72,37 @@ class NewSocialMonth extends React.PureComponent{
       })
 
     }
+
+  }
+
+  grabDateRange(){
+    // this function is used to get the end range of the month
+    const curMonth = new Date(this.props.year, this.props.month, 1);
+
+    const start = dateFns.startOfMonth(curMonth)
+    const end = dateFns.endOfMonth(curMonth)
+
+    const startDate = dateFns.startOfWeek(start)
+    const endDate = dateFns.endOfWeek(end)
+
+    const diffWeeks = dateFns.differenceInCalendarWeeks(endDate, startDate)
+
+    if(diffWeeks === 4 ){
+      // increase the range by a week
+      const newEndDate = dateFns.addWeeks(endDate, 1);
+      const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
+      const formatEnd = dateFns.format(newEndDate, 'yyyy-MM-dd')
+
+      return {start: formatStart, end: formatEnd}
+
+    } else {
+      const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
+      const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
+
+      return {start: formatStart, end: formatEnd}
+    }
+
+
 
   }
 
@@ -105,8 +116,6 @@ class NewSocialMonth extends React.PureComponent{
 
   initializedMonth = (month, year, cells) => {
 
-    console.log("some cells here")
-    console.log(cells)
     const curMonth = new Date(year, month, 1);
 
 
@@ -138,8 +147,6 @@ class NewSocialMonth extends React.PureComponent{
 
           for(let item = 0; item < cells.length; item++){
 
-          //   // check if it fits into the day
-          //
             const date = new Date(cells[item].socialCaldate)
             const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
 
@@ -184,15 +191,6 @@ class NewSocialMonth extends React.PureComponent{
                     }
                 </View>
 
-                {/*
-                  dateFns.isSameMonth(day, curMonth) ?
-
-
-
-                  :
-
-                  <Text></Text>
-                */}
               </View>
             )
 
@@ -292,15 +290,6 @@ class NewSocialMonth extends React.PureComponent{
                     }
                 </View>
 
-                {/*
-                  dateFns.isSameMonth(day, curMonth) ?
-
-
-
-                  :
-
-                  <Text></Text>
-                */}
               </View>
             )
 
@@ -308,8 +297,7 @@ class NewSocialMonth extends React.PureComponent{
             days.push(
               <View
                 key = {i}
-                style = {[styles.monthCell, dateFns.isSameDay(day, new Date())
-                  && dateFns.isSameMonth(day, curMonth) ?
+                style = {[styles.monthCell, dateFns.isSameDay(day, new Date()) ?
                   styles.selected : null
                 ]}>
                 {
@@ -408,7 +396,6 @@ const styles = StyleSheet.create({
     height: Math.round(Dimensions.get('window').width/7),
     alignItems: "center",
     justifyContent: "center",
-
     // borderLeftWidth:0.2,
     // borderTopWidth: 0.2,
 
@@ -418,7 +405,6 @@ const styles = StyleSheet.create({
     height: Math.round(Dimensions.get('window').width/7),
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: 'red',
     // borderLeftWidth:0.2,
     // borderTopWidth: 0.2,
   },
@@ -434,7 +420,6 @@ const styles = StyleSheet.create({
   noImageCell: {
     width: Math.round(Dimensions.get('window').width/8),
     height: Math.round(Dimensions.get('window').width/8),
-    backgroundColor:'red',
     borderRadius:10,
   },
   smallImage: {
