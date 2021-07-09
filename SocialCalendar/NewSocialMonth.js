@@ -28,27 +28,38 @@ class NewSocialMonth extends React.PureComponent{
 // and every time you scroll to a differnet page is also updates the
 // componentdidupdate
 
+
+
+  viewDay = (cellId) => {
+      console.log(cellId)
+
+      this.props.navigation.navigate("DayAlbum", {
+        cellId: cellId
+      })
+  }
+
+
   componentDidMount(){
-    // For component did mount you will get the items of that month
+    const curMonth = new Date(this.props.year, this.props.month, 1);
 
-    // const curMonth = new Date(this.props.year, this.props.month, 1);
-    //
-    // const start = dateFns.startOfMonth(curMonth)
-    // const end = dateFns.endOfMonth(curMonth)
-    //
-    // const startDate = dateFns.startOfWeek(start)
-    // const endDate = dateFns.endOfWeek(end)
-    //
-    // const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
-    // const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
+    const start = dateFns.startOfMonth(curMonth)
+    const end = dateFns.endOfMonth(curMonth)
+
+    const startDate = dateFns.startOfWeek(start)
+    const endDate = dateFns.endOfWeek(end)
+
+    const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
+    const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
 
 
-    // this.getSocialCells(formatStart, formatEnd)
-    // .then(data => {
-    //   this.setState({
-    //     socialCells: data
-    //   })
-    // })
+    this.getSocialCells(formatStart, formatEnd)
+    .then(data => {
+
+      this.setState({
+        socialCells: data
+      })
+
+    })
   }
 
 
@@ -146,7 +157,7 @@ class NewSocialMonth extends React.PureComponent{
 
           if(toDoStuff.length > 0){
 
-            let test1=toDoStuff
+            let info = toDoStuff[0]
             days.push(
               <View
                 key = {i}
@@ -158,7 +169,7 @@ class NewSocialMonth extends React.PureComponent{
                   {
                     toDoStuff[0].coverPic ?
                       <View>
-                        <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
+                        <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
                           <Image
                             style = {styles.smallImage}
                             resizeMode = "cover"
@@ -255,7 +266,6 @@ class NewSocialMonth extends React.PureComponent{
 
           if(toDoStuff.length > 0){
 
-            let test1=toDoStuff
             days.push(
               <View
                 key = {i}
@@ -267,7 +277,7 @@ class NewSocialMonth extends React.PureComponent{
                   {
                     toDoStuff[0].coverPic ?
                       <View>
-                        <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
+                        <TouchableOpacity  onPress={() => this.ViewDay(toDoStuff.id)}>
                           <Image
                             style = {styles.smallImage}
                             resizeMode = "cover"

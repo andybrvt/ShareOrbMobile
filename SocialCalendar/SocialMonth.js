@@ -27,14 +27,15 @@ class SocialMonth extends React.PureComponent{
     navigation: {}
   }
 
-  ViewDay = (toDoStuff) => {
+  viewDay = (toDoStuff) => {
+    console.log(toDoStuff)
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-    this.props.navigation.navigate("DayAlbum",
-  {
-    entireDay:toDoStuff,
-
-  });
+  //   this.props.navigation.navigate("DayAlbum",
+  // {
+  //   entireDay:toDoStuff,
+  //
+  // });
   }
 
   renderCell(curMonth, cells){
@@ -143,7 +144,7 @@ class SocialMonth extends React.PureComponent{
                     {
                       toDoStuff[0].coverPic ?
                         <View>
-                          <TouchableOpacity  onPress={() => this.ViewDay(test1)}>
+                          <TouchableOpacity  onPress={() => this.viewDay(test1)}>
                             <Image
                               style = {styles.smallImage}
                               resizeMode = "cover"

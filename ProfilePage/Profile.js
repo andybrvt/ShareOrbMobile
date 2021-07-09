@@ -143,7 +143,9 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
-          <SocialCalendarVonly />
+          <SocialCalendarVonly
+            navigation = {this.props.navigation}
+            />
         </View>
       </BackgroundContainer>
     )
