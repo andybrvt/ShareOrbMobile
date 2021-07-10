@@ -62,7 +62,7 @@ const height = Dimensions.get("window").height
      this.state = {
        showComments: false,
        showLike: false,
-
+       curBackgroundPic: ''
      }
      this.initializeDayAlbum()
      this.handleClick = this.renderItem.bind(this);
@@ -79,6 +79,34 @@ const height = Dimensions.get("window").height
 
      SocialCalCellPageWebSocketInstance.connect(cellId)
 
+   }
+
+   componentDidMount(){
+
+     if(this.props.socialCalCell){
+       if(this.props.socialCalCell.get_socialCalItems){
+         this.setState({
+           curBackgroundPic: this.props.socialCalCell.get_socialCalItems[0].itemImage
+         })
+       }
+
+     }
+   }
+
+
+   componentDidUpdate(prevProps){
+
+     if(this.props.socialCalCell !== prevProps.socialCalCell){
+       if(this.props.socialCalCell){
+         if(this.props.socialCalCell.get_socialCalItems){
+           this.setState({
+             curBackgroundPic: this.props.socialCalCell.get_socialCalItems[0].itemImage
+           })
+         }
+
+       }
+
+     }
    }
 
    waitForDayAlbumSocketConnection(callback){
@@ -127,6 +155,8 @@ const height = Dimensions.get("window").height
    }
 
    renderItem({item,index}){
+
+
      return (
        <View style = {styles.carouselImageHolder}>
 
@@ -154,6 +184,15 @@ const height = Dimensions.get("window").height
 
 
      )
+   }
+
+   changeBackground = e =>{
+     console.log(e)
+
+     this.setState({
+       curBackgroundPic: this.props.socialCalCell.get_socialCalItems[e].itemImage
+
+     })
    }
 
    render(){
@@ -236,7 +275,7 @@ const height = Dimensions.get("window").height
          <ImageBackground
            blurRadius={80}
            style={styles.albumOuterContainer}
-           source={{ uri: `${global.IMAGE_ENDPOINT}`+this.props.socialCalCell.get_socialCalItems[0].itemImage}}
+           source={{ uri: `${global.IMAGE_ENDPOINT}`+this.state.curBackgroundPic}}
 
            >
 
@@ -252,6 +291,7 @@ const height = Dimensions.get("window").height
               sliderWidth={width}
               itemWidth={width}
               renderItem={this.renderItem}
+              onBeforeSnapToItem = {e => this.changeBackground(e)}
                />
 
 
