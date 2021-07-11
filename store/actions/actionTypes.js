@@ -11,6 +11,9 @@ export const AUTH_ADD_TOTAL_LOAD = "AUTH_ADD_TOTAL_LOAD";
 export const AUTH_ZERO_CUR_LOAD = "AUTH_ZERO_CUR_LOAD";
 export const AUTH_ZERO_TOTAL_LOAD = "AUTH_ZERO_TOTAL_LOAD";
 
+export const CHANGE_PROFILE_PIC_AUTH = "CHANGE_PROFILE_PIC_AUTH";
+
+
 // This is for the newsfeed
 export const FINAL_POST_MODAL = "FINAL_POST_MODAL"; // use when you open final modal
 
@@ -28,7 +31,7 @@ export const SEND_SOCIAL_COMMENT = "SEND_SOCIAL_COMMENT";
 // This will be for the profile page
 export const LOAD_PROFILE = "LOAD_PROFILE";
 export const UNLOAD_PROFILE = "UNLOAD_PROFILE";
-
+export const CHANGE_PROFILE_PIC = 'CHANGE_PROFILE_PIC';
 
 
 // This has to do with the social calendar

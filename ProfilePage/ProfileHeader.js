@@ -47,6 +47,7 @@ class ProfileHeader extends React.Component{
     if(this.props.profile){
       if(this.props.profile.profile_picture){
         profileImage = `${global.IMAGE_ENDPOINT}`+this.props.profile.profile_picture
+        console.log(profileImage)
       }
       if(this.props.profile.first_name && this.props.profile.last_name){
         const firstName = global.CAPITALIZE(this.props.profile.first_name)

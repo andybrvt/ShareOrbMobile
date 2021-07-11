@@ -10,4 +10,12 @@ export const loadProfile = (profile) => {
   }
 
 }
- 
+
+
+export const changeProfilePic = (profilePic) => {
+  console.log('explore actions')
+  return {
+    type: actionTypes.CHANGE_PROFILE_PIC,
+    profilePic: profilePic
+  }
+}

@@ -23,11 +23,25 @@ import * as dateFns from 'date-fns';
 
 
 // Andy hot spoot
+<<<<<<< HEAD
 // global.IP_CHANGE = "http://172.20.10.2:19000"
 // global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
 // global.WS_ENDPOINT = "172.20.10.2:19000"
 // global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
 // global.WS_HEADER = "ws"
+
+// global.IP_CHANGE = "http://10.20.100.62:19000"
+// global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
+// global.WS_ENDPOINT = "10.20.100.62:19000"
+// global.POSTLIST_SPEC = 'http://10.20.100.62:19000/media/'
+// global.WS_HEADER = "ws"
+=======
+global.IP_CHANGE = "http://172.20.10.2:19000"
+global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
+global.WS_ENDPOINT = "172.20.10.2:19000"
+global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
+global.WS_HEADER = "ws"
+>>>>>>> 9848eb74fb14833185f36ba1cac27fd7ce216c5d
 
 // global.IP_CHANGE = "http://10.20.100.62:19000"
 // global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
@@ -86,6 +100,23 @@ global.RENDER_TIMESTAMP = (timestamp) => {
     }
 
     return prefix;
+}
+
+// this is used to organize the file properly
+global.FILE_NAME_GETTER = (fileURI) => {
+
+  const fileName = fileURI.split("/").pop()
+
+  let match = /\.(\w+)$/.exec(fileName);
+  let type = match ? `image/${match[1]}` : `image`;
+
+
+  return {
+    uri: fileURI,
+    type: type,
+    name: fileName,
+  }
+
 }
 
 

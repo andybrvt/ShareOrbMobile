@@ -225,3 +225,12 @@ export const addCredentials = (
     date_joined: date_joined
   };
 };
+
+
+export const changeProfilePicAuth = (profilePic) => {
+  console.log("auth action")
+  return{
+    type: actionTypes.CHANGE_PROFILE_PIC_AUTH,
+    profilePic: profilePic
+  }
+}

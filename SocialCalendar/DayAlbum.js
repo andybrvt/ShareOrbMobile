@@ -24,6 +24,10 @@ import { parseISO } from 'date-fns'
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
+
+const width = Dimensions.get("window").width
+const height = Dimensions.get("window").height
+
  const FACES = [
    {
      id: 0,
@@ -58,7 +62,7 @@ import { parseISO } from 'date-fns'
      this.state = {
        showComments: false,
        showLike: false,
-
+       curBackgroundPic: ''
      }
      this.initializeDayAlbum()
      this.handleClick = this.renderItem.bind(this);
@@ -75,6 +79,34 @@ import { parseISO } from 'date-fns'
 
      SocialCalCellPageWebSocketInstance.connect(cellId)
 
+   }
+
+   componentDidMount(){
+
+     if(this.props.socialCalCell){
+       if(this.props.socialCalCell.get_socialCalItems){
+         this.setState({
+           curBackgroundPic: this.props.socialCalCell.get_socialCalItems[0].itemImage
+         })
+       }
+
+     }
+   }
+
+
+   componentDidUpdate(prevProps){
+
+     if(this.props.socialCalCell !== prevProps.socialCalCell){
+       if(this.props.socialCalCell){
+         if(this.props.socialCalCell.get_socialCalItems){
+           this.setState({
+             curBackgroundPic: this.props.socialCalCell.get_socialCalItems[0].itemImage
+           })
+         }
+
+       }
+
+     }
    }
 
    waitForDayAlbumSocketConnection(callback){
@@ -123,40 +155,44 @@ import { parseISO } from 'date-fns'
    }
 
    renderItem({item,index}){
+
+
      return (
+       <View style = {styles.carouselImageHolder}>
 
-         <ImageBackground
-         blurRadius={80}
-         source={{ uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,}}
-        style={styles.albumOuterContainer}>
+         <Image
+           key={'blurryImage'}
 
-           <Image
-             key={'blurryImage'}
-
-             style={styles.albumLook}
-             // blurRadius={10}
-             source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,
-             }}
-           />
-           <Avatar
-             style={styles.close}
-             onPress = {() => this.props.ViewProfile()}
-             size={35}
-             rounded
-             source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+item.creator.profile_picture,
-             }}
-           />
+           style={styles.albumLook}
+           // blurRadius={10}
+           source = {{
+             uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,
+           }}
+         />
+         <Avatar
+           style={styles.close}
+           onPress = {() => this.props.ViewProfile()}
+           size={35}
+           rounded
+           source = {{
+             uri: `${global.IMAGE_ENDPOINT}`+item.creator.profile_picture,
+           }}
+         />
 
 
+       </View>
 
-
-
-
-        </ImageBackground>
 
      )
+   }
+
+   changeBackground = e =>{
+     console.log(e)
+
+     this.setState({
+       curBackgroundPic: this.props.socialCalCell.get_socialCalItems[e].itemImage
+
+     })
    }
 
    render(){
@@ -234,26 +270,33 @@ import { parseISO } from 'date-fns'
          peopleLikeId.push(likePost[i].id);
        }
      }
-     const width = Dimensions.get('window').width;
      return (
        <View style={{width:'100%', height:'100%'}}>
 
+         <ImageBackground
+           blurRadius={80}
+           style={styles.albumOuterContainer}
+           source={{ uri: `${global.IMAGE_ENDPOINT}`+this.state.curBackgroundPic}}
+
+           >
 
 
-           <Carousel
-             layout='stack'
-             removeClippedSubviews={false}
+             <Carousel
+              layout='stack'
+              removeClippedSubviews={false}
+              inactiveSlideScale={1}
+              slideStyle={{ }}
+              ref={ref => this.carousel = ref}
+              loop={false}
+              data={this.props.socialCalCell.get_socialCalItems}
+              sliderWidth={width}
+              itemWidth={width}
+              renderItem={this.renderItem}
+              onBeforeSnapToItem = {e => this.changeBackground(e)}
+               />
 
-            inactiveSlideScale={1}
-            slideStyle={{  flex:1 }}
-            ref={ref => this.carousel = ref}
-            loop={true}
-            data={this.props.socialCalCell.get_socialCalItems}
-            sliderWidth={width}
-            itemWidth={400}
-            renderItem={this.renderItem}
-             />
-           {/*
+
+
            <View style = {styles.tagCSS10}>
                <TouchableOpacity>
                <View style = {styles.justifyCenter}>
@@ -353,6 +396,9 @@ import { parseISO } from 'date-fns'
                    overlap={0.1} />
               </View>
             </View>
+         </ImageBackground>
+
+
 
 
        </View>
@@ -548,8 +594,7 @@ import { parseISO } from 'date-fns'
      borderRadius: 10,
      width: '95%',
      height: '80%',
-     position:'absolute',
-     top:'5%',
+     top: "5%"
      // flex: 1,
      // resizeMode: 'contain'
    },
@@ -564,9 +609,12 @@ import { parseISO } from 'date-fns'
      // alignItems: 'center',
      height:'100%',
      flexDirection:'column',
-
-
    },
+   carouselImageHolder: {
+     width: width,
+     height: height,
+     alignItems: 'center'
+   }
 
 
 

@@ -17,13 +17,17 @@ import { Avatar } from 'react-native-elements';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
- import { connect } from 'react-redux';
- import BackgroundContainer from '../RandomComponents/BackgroundContainer';
- import BottomSheet from 'reanimated-bottom-sheet';
- import Animated from 'react-native-reanimated';
- import { Bell, User, ArrowRight} from "react-native-feather";
+import { connect } from 'react-redux';
+import BackgroundContainer from '../RandomComponents/BackgroundContainer';
+import BottomSheet from 'reanimated-bottom-sheet';
+import Animated from 'react-native-reanimated';
+import { Bell, User, ArrowRight} from "react-native-feather";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as dateFns from 'date-fns';
+import * as ImagePicker from 'expo-image-picker';
+import  authAxios from '../util';
+import * as authActions from '../store/actions/auth';
+import * as exploreActions from '../store/actions/explore';
 
 
 
@@ -59,6 +63,61 @@ import * as dateFns from 'date-fns';
    }
 
 
+   // handle to choose photo
+   handleChooseProfile = async() => {
+
+     // this will give permission in order to open up your camera roll
+     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+     if(permissionResult.granted === false){
+       // in the case that permission is not granted
+       alert("Permission to access camera roll is required!");
+       return;
+     }
+
+     // this is to pick the image
+     let pickerResult = await ImagePicker.launchImageLibraryAsync({
+       mediaTypes: ImagePicker.MediaTypeOptions.All,
+       allowsEditing: true,
+       aspect: [4, 3],
+       quality: 1,
+       allowsMultipleSelection: true,
+       base64: true,
+     })
+
+     if(!pickerResult.cancelled){
+       // this is if you pick out a picture
+       // in this case you will just change the picture right away
+
+
+       let userId = ""
+       if(this.props.userId){
+          userId = this.props.userId
+       }
+
+       var data = new FormData();
+
+       const filePackage = global.FILE_NAME_GETTER(pickerResult.uri)
+       data.append('profile_picture', filePackage)
+
+       authAxios.put(`${global.IP_CHANGE}/userprofile/profile/update/`+userId,
+         data,
+       ).then(res => {
+
+        console.log(res.data)
+        const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
+        this.props.changeProfilePic(pic)
+        this.props.changeProfilePicAuth(pic)
+
+       })
+
+
+
+     }
+
+   }
+
+
    onHomeNav = () => {
      // this function will be use to navigate back
      // to the home page
@@ -80,7 +139,9 @@ import * as dateFns from 'date-fns';
        <TouchableOpacity style={styles.panelButton} >
          <Text style={styles.panelButtonTitle}>Take Photo</Text>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.panelButton}>
+       <TouchableOpacity
+         onPress = {this.handleChooseProfile}
+         style={styles.panelButton}>
          <Text style={styles.panelButtonTitle}>Choose From Library</Text>
        </TouchableOpacity>
        <TouchableOpacity
@@ -271,24 +332,30 @@ import * as dateFns from 'date-fns';
    }
  }
 
-// export default EditProfile;
-  //
-  const mapStateToProps = state => {
-    return {
-      firstName:state.auth.firstName,
-      lastName:state.auth.lastName,
-      username:state.auth.username,
-      userId: state.auth.id,
-      currentUser: state.auth.username,
-      profile_picture: state.auth.profilePic
-    }
+
+const mapStateToProps = state => {
+  return {
+    firstName:state.auth.firstName,
+    lastName:state.auth.lastName,
+    username:state.auth.username,
+    userId: state.auth.id,
+    currentUser: state.auth.username,
+    profile_picture: state.auth.profilePic
   }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    changeProfilePic: (profilePic) => dispatch(exploreActions.changeProfilePic(profilePic)),
+    changeProfilePicAuth: (profilePic) => dispatch(authActions.changeProfilePicAuth(profilePic))
+  }
+}
 
 
-  export default connect(mapStateToProps, null)(EditProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
 
- const styles = StyleSheet.create({
-   panel: {
+const styles = StyleSheet.create({
+  panel: {
     padding: 20,
     backgroundColor: '#FFFFFF',
     paddingTop: 20,

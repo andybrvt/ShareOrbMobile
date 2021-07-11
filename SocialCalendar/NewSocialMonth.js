@@ -40,12 +40,9 @@ class NewSocialMonth extends React.PureComponent{
 
 
   componentDidMount(){
-
     const dateRange = this.grabDateRange()
-
     this.getSocialCells(dateRange.start, dateRange.end)
     .then(data => {
-
       this.setState({
         socialCells: data
       })
@@ -59,9 +56,7 @@ class NewSocialMonth extends React.PureComponent{
     // month
 
     if(this.props.month !== prevProps.month){
-
       const dateRange = this.grabDateRange()
-
       this.getSocialCells(dateRange.start, dateRange.end)
       .then(data => {
 
@@ -101,8 +96,6 @@ class NewSocialMonth extends React.PureComponent{
 
       return {start: formatStart, end: formatEnd}
     }
-
-
 
   }
 

@@ -116,7 +116,7 @@ class Profile extends React.Component{
   }
 
   render(){
-
+    console.log(this.props)
 
     const screenWidth = Math.round(Dimensions.get('window').width);
 
