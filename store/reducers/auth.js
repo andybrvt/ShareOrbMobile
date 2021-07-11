@@ -133,6 +133,13 @@ const addCredentials = (state, action) => {
   });
 };
 
+const changeProfilePicAuth = (state, action) => {
+  console.log('auth reducers')
+  return updateObject(state, {
+    profilePic: action.profilePic
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.AUTH_START:
@@ -155,6 +162,8 @@ const reducer = (state = initialState, action) => {
       return authZeroCurLoad(state, action);
     case actionTypes.AUTH_ZERO_TOTAL_LOAD:
       return authZeroTotalLoad(state, action);
+    case actionTypes.CHANGE_PROFILE_PIC_AUTH:
+      return changeProfilePicAuth(state, action);
     default:
       return state;
   }

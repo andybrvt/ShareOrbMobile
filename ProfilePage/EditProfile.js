@@ -26,6 +26,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as dateFns from 'date-fns';
 import * as ImagePicker from 'expo-image-picker';
 import  authAxios from '../util';
+import * as authActions from '../store/actions/auth';
 import * as exploreActions from '../store/actions/explore';
 
 
@@ -106,7 +107,7 @@ import * as exploreActions from '../store/actions/explore';
         console.log(res.data)
         const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
         this.props.changeProfilePic(pic)
-
+        this.props.changeProfilePicAuth(pic)
 
        })
 
@@ -345,8 +346,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return{
-    changeProfilePic: (profilePic) => dispatch(exploreActions.changeProfilePic(profilePic))
-
+    changeProfilePic: (profilePic) => dispatch(exploreActions.changeProfilePic(profilePic)),
+    changeProfilePicAuth: (profilePic) => dispatch(authActions.changeProfilePicAuth(profilePic))
   }
 }
 
