@@ -9,7 +9,7 @@ import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
-import { Tag, Bookmark, MapPin, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
+import { Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
 // This will be the bulk of the profile page
 class Profile extends React.Component{
 
@@ -49,6 +49,13 @@ class Profile extends React.Component{
         },
       ],
     }
+  }
+
+  ViewNoti = () => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+    console.log("hi")
+    this.props.navigation.navigate("Notifications")
   }
 
   ViewProfile = () => {
@@ -127,10 +134,14 @@ class Profile extends React.Component{
           <View style={{flex:1, justifyContent:'center'}}>
           <Text style={styles.textStyle}>pinghsu520</Text>
           </View>
+
           <View
 
             style={{flex:1,justifyContent:'center',
              alignItems:'flex-end', padding:20}}>
+             <Bell
+               onPress = {() => this.ViewNoti()}
+               stroke="black" strokeWidth={2.5} width={25} height={25}/>
              <UserPlus
                onPress = {() => this.ViewProfile()}
                stroke="black" strokeWidth={2.5} width={25} height={25}/>

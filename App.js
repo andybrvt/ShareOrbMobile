@@ -50,6 +50,7 @@ import TestDrag from './PostingFolder/TestDrag';
 import Profile from './ProfilePage/Profile';
 import ViewProfile from './ProfilePage/ViewProfile';
 import EditProfile from './ProfilePage/EditProfile';
+import Notifications from './ProfilePage/Notifications';
 import EditBio from './ProfilePage/EditBio';
 import Followers from './ProfilePage/Followers';
 import Following from './ProfilePage/Following';
@@ -406,6 +407,17 @@ class App extends Component{
                        ...TransitionPresets.SlideFromRightIOS,
                                       }}
                      name = 'MessageFriend' component = {MessageFriend}/>
+                     <Stack.Screen
+                       options={{
+                         headerStyle:{
+                           shadowColor:'#fff', //ios
+                           elevation:0,        // android
+                         },
+                         title: 'Notifications',
+                          ...TransitionPresets.SlideFromRightIOS,
+                        }}
+
+                        name = 'Notifications' component = {Notifications}/>
                    <Stack.Screen
                      options={{
                        headerStyle:{

@@ -12,7 +12,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback
  } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
@@ -64,7 +63,8 @@ const height = Dimensions.get("window").height
      this.state = {
        showComments: false,
        showLike: false,
-       curBackgroundPic: ''
+       curBackgroundPic: '',
+       coverPicDay:'',
      }
      this.initializeDayAlbum()
      this.handleClick = this.renderItem.bind(this);
@@ -88,7 +88,8 @@ const height = Dimensions.get("window").height
      if(this.props.socialCalCell){
        if(this.props.socialCalCell.get_socialCalItems){
          this.setState({
-           curBackgroundPic: this.props.socialCalCell.get_socialCalItems[0].itemImage
+           curBackgroundPic: this.props.socialCalCell.get_socialCalItems[0].itemImage,
+           coverPicDay:this.props.socialCalCell.get_socialCalItems[0].itemImage,
          })
        }
 
@@ -278,7 +279,7 @@ const height = Dimensions.get("window").height
          <ImageBackground
            blurRadius={80}
            style={styles.albumOuterContainer}
-           source={{ uri: `${global.IMAGE_ENDPOINT}`+this.state.curBackgroundPic}}
+           source={{ uri: `${global.IMAGE_ENDPOINT}`+this.state.coverPicDay}}
 
            >
 
@@ -507,9 +508,10 @@ const height = Dimensions.get("window").height
 
    openContainer:{
      flexDirection:'row',
-     bottom:'6.5%',
+     bottom:'5%',
      position:'absolute',
      left:'5%',
+     justifyContent:'center',
    },
    firstContainer:{
      flex:1.5,
@@ -521,14 +523,7 @@ const height = Dimensions.get("window").height
 
      // backgroundColor:'blue',
    },
-   DayCaptionContainer:{
-     width:'70%',
-     left:'5%',
-     bottom:'12.5%',
-     position:'absolute',
-     // backgroundColor:'red',
 
-   },
    DayAlbumUserName: {
      color:'white',
      fontSize:16,
@@ -552,7 +547,7 @@ const height = Dimensions.get("window").height
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
      fontWeight:'bold',
-     bottom:'100%',
+     bottom:'90%',
      padding:10,
      position: "absolute",
      // fontWeight:'bold',
@@ -574,6 +569,7 @@ const height = Dimensions.get("window").height
      // fontWeight:'bold',
 
    },
+
    close2: {
      margin: 5,
      position: "absolute",

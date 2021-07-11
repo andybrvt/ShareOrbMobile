@@ -54,7 +54,7 @@ class Chats extends React.Component{
 
   searchPeople() {
 
-    this.props.navigation.navigate("ChatSearch",
+    this.props.navigation.navigate("ChatSeafrch",
 
     );
   }
