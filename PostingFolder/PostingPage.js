@@ -209,24 +209,6 @@ class PostingPage extends React.Component{
 
 
 
-   fileNameGetter = (fileURI) => {
-     // this function will be used to return the packaged file
-     // containing uri, type, and name
-
-     const fileName = fileURI.split("/").pop()
-
-     let match = /\.(\w+)$/.exec(fileName);
-     let type = match ? `image/${match[1]}` : `image`;
-
-
-     return {
-       uri: fileURI,
-       type: type,
-       name: fileName,
-     }
-   }
-
-
    /*
    Function to open the final page of the posting process
    */
@@ -275,7 +257,7 @@ class PostingPage extends React.Component{
      for(let i = 0; i<fileList.length; i++){
 
        if(fileList[i]){
-         const filePackage = this.fileNameGetter(fileList[i])
+         const filePackage = global.FILE_NAME_GETTER(fileList[i])
          formData.append("image["+i+"]",filePackage)
          formData.append("socialItemType["+i+"]", "picture")
 
@@ -351,7 +333,7 @@ class PostingPage extends React.Component{
             }
           else {
 
-            const coverPackage = this.fileNameGetter(fileList[fileList.length-1]);
+            const coverPackage = global.FILE_NAME_GETTER(fileList[fileList.length-1]);
 
               coverPicForm.append("coverImage", coverPackage)
             }
@@ -440,7 +422,7 @@ class PostingPage extends React.Component{
 
     }
 
-    
+
    }
 
 
