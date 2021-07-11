@@ -177,7 +177,8 @@ import { parseISO } from 'date-fns'
      let peopleLikeId = [];
      let socialComments = [];
      let postId = "";
-     let socialDate=""
+     let socialMonth=""
+     let socialDay=""
 
 
 
@@ -221,8 +222,8 @@ import { parseISO } from 'date-fns'
          let getMonth=dataList[1]
          let getDay=dataList[2]
 
-         socialDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM dd")
-
+         socialMonth = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM")
+         socialDay = dateFns.format(new Date(getYear, getMonth, getDay), "dd")
        }
 
 
@@ -252,7 +253,7 @@ import { parseISO } from 'date-fns'
             itemWidth={400}
             renderItem={this.renderItem}
              />
-
+           {/*
            <View style = {styles.tagCSS10}>
                <TouchableOpacity>
                <View style = {styles.justifyCenter}>
@@ -261,6 +262,18 @@ import { parseISO } from 'date-fns'
                  </Text>
                </View>
                </TouchableOpacity>
+             </View>
+
+             */}
+
+             <View style = {styles.testWhere2}>
+                 <Text style = {styles.videoFooterUserName}>
+                   {socialMonth}
+                 </Text>
+                 <Text style = {styles.dayNumTag}>
+                   {socialDay}
+                 </Text>
+
              </View>
 
              <View style = {styles.tagCSS1}>
@@ -350,6 +363,37 @@ import { parseISO } from 'date-fns'
  }
 
  const styles = StyleSheet.create({
+   dayNumTag: {
+     color:'white',
+     fontSize:30,
+     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 5,
+     fontWeight:'bold',
+     // fontWeight:'bold',
+
+   },
+   videoFooterUserName: {
+     color:'white',
+     fontSize:14,
+     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 5,
+     fontWeight:'bold',
+     // fontWeight:'bold',
+   },
+   testWhere2:{
+     position:'absolute',
+     top:'5%',
+     padding:10,
+     right:0,
+     width:'17.5%',
+     flexDirection:'column',
+     alignItems:'center',
+      // backgroundColor:'red',
+   },
    justifyCenter:{
      flexDirection:'row',
      alignItems: 'center',
