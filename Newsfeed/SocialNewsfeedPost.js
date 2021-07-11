@@ -666,7 +666,7 @@ const styles = StyleSheet.create({
 
   videoFooterUserName: {
     color:'white',
-    fontSize:14,
+    fontSize:16,
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},

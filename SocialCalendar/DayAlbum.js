@@ -10,13 +10,13 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  TouchableWithoutFeedback
  } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import FacePile from 'react-native-face-pile';
-import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons';
 import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebsocket';
 import { connect } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
@@ -24,7 +24,9 @@ import { parseISO } from 'date-fns'
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
-
+import { Navigation2, Heart, MessageCircle, ArrowLeft,
+ArrowLeftCircle,Bookmark
+} from "react-native-feather";
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -162,13 +164,13 @@ const height = Dimensions.get("window").height
 
          <Image
            key={'blurryImage'}
-
            style={styles.albumLook}
-           // blurRadius={10}
+
            source = {{
              uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,
            }}
          />
+
          <Avatar
            style={styles.close}
            onPress = {() => this.props.ViewProfile()}
@@ -259,7 +261,7 @@ const height = Dimensions.get("window").height
          let getDay=dataList[2]
 
          socialMonth = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM")
-         socialDay = dateFns.format(new Date(getYear, getMonth, getDay), "dd")
+         socialDay = dateFns.format(new Date(getYear, getMonth, getDay), "d")
        }
 
 
@@ -296,18 +298,18 @@ const height = Dimensions.get("window").height
                />
 
 
-
+             {/*
            <View style = {styles.tagCSS10}>
                <TouchableOpacity>
                <View style = {styles.justifyCenter}>
                  <Text style={{color:'white', fontSize:17.5}}>
-                    {socialDate}
+                    test
                  </Text>
                </View>
                </TouchableOpacity>
              </View>
-
              */}
+
 
              <View style = {styles.testWhere2}>
                  <Text style = {styles.videoFooterUserName}>
@@ -318,19 +320,25 @@ const height = Dimensions.get("window").height
                  </Text>
 
              </View>
+             <TouchableWithoutFeedback
+               onPress = {() => this.props.navigation.goBack(0)}>
+               <ArrowLeft
+                     style={styles.close2}
+                     stroke='white'
+                     width ={40}
+                     height = {40}
+                />
+            </TouchableWithoutFeedback>
 
              <View style = {styles.tagCSS1}>
                <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
                <View style = {styles.justifyCenter}>
-
-
-                   <FontAwesomeIcon
-                   style = {{
-                     color:'white',
-                     right:3,
-                   }}
-                   size = {25}
-                   icon={faHeart} />
+                 <Heart
+                   fill="red"
+                   width ={30}
+                   height = {30}
+                   style={{right:2}}
+                    />
 
 
                  <Text  style = {styles.justifyCenter1}>
@@ -343,25 +351,12 @@ const height = Dimensions.get("window").height
              <View style = {styles.tagCSS2}>
                <TouchableOpacity  onPress={this.changeShowComments}>
                  <View  style = {styles.justifyCenter}>
-                   {
-                     (socialComments) ?
-                     <FontAwesomeIcon
-                     style = {{
-                       color:'white',
-                       right:3,
-                     }}
-                     size = {25}
-                     icon={faComment} />
-                     :
-
-                     <FontAwesomeIcon
-                     style = {{
-                       color:'red',
-                       right:3,
-                     }}
-                     size = {25}
-                     icon={faComment} />
-                   }
+                   <MessageCircle
+                     fill="white"
+                     width ={30}
+                     height = {30}
+                     style={{right:2}}
+                   />
                    <Text  style = {styles.justifyCenter1}>
                    {socialComments.length}
                  </Text>
@@ -371,12 +366,11 @@ const height = Dimensions.get("window").height
 
              <Text style = {styles.tagCSS3}>
                <View>
-                 <FontAwesomeIcon
-                 style = {{
-                   color:'white',
-                 }}
-                 size = {25}
-                 icon={faBookmark} />
+                 <Bookmark
+                   fill="white"
+                   width={30}
+                   height={30}
+                    />
                </View>
              </Text>
              <Text style = {styles.DayAlbumUserName}>
@@ -434,8 +428,8 @@ const height = Dimensions.get("window").height
      position:'absolute',
      top:'5%',
      padding:10,
-     right:0,
-     width:'17.5%',
+     right:'3%',
+     width:'20%',
      flexDirection:'column',
      alignItems:'center',
       // backgroundColor:'red',
@@ -458,7 +452,7 @@ const height = Dimensions.get("window").height
    },
    tagCSS1: {
      position:'absolute',
-     backgroundColor: 'rgba(0,0,0,.6)',
+     // backgroundColor: 'rgba(0,0,0,.6)',
      padding:10,
      borderRadius:25,
      color:'white',
@@ -471,7 +465,7 @@ const height = Dimensions.get("window").height
    },
    tagCSS2: {
      position:'absolute',
-     backgroundColor: 'rgba(0,0,0,.6)',
+     // backgroundColor: 'rgba(0,0,0,.6)',
      padding:10,
      borderRadius:25,
      color:'white',
@@ -484,7 +478,7 @@ const height = Dimensions.get("window").height
 
    tagCSS3: {
      position:'absolute',
-     backgroundColor: 'rgba(0,0,0,.6)',
+     // backgroundColor: 'rgba(0,0,0,.6)',
      padding:7.5,
      borderRadius:25,
      color:'white',
@@ -536,16 +530,15 @@ const height = Dimensions.get("window").height
 
    },
    DayAlbumUserName: {
-
      color:'white',
-     fontSize:14,
+     fontSize:16,
      // textShadowColor: 'rgba(0, 0, 0, 0.75)',
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
      fontWeight:'bold',
      top:'9%',
-     left:'17.5%',
+     left:'30%',
      position: "absolute",
      // fontWeight:'bold',
 
@@ -581,14 +574,25 @@ const height = Dimensions.get("window").height
      // fontWeight:'bold',
 
    },
-   close: {
+   close2: {
      margin: 5,
      position: "absolute",
      top:'7.5%',
      left:'5%',
      width: 35,
      height: 35,
-     color: "tomato"
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 5,
+     fontWeight:'bold',
+   },
+   close: {
+     margin: 5,
+     position: "absolute",
+     top:'7.5%',
+     left:'17.5%',
+     width: 35,
+     height: 35,
    },
    albumLook:{
      borderRadius: 10,
