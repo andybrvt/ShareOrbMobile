@@ -18,11 +18,25 @@ export const loadProfile = (state, action) => {
   })
 }
 
+export const changeProfilePic = (state, action) => {
+
+  console.log('explore reducers')
+  console.log(action.profilePic)
+  return updateObject(state, {
+    profile: {
+      ...state.profile,
+      profile_picture: action.profilePic
+    }
+  })
+}
+
 const reducer = (state = initialState, action) => {
 
   switch(action.type){
     case actionTypes.LOAD_PROFILE:
       return loadProfile(state, action)
+    case actionTypes.CHANGE_PROFILE_PIC:
+      return changeProfilePic(state, action)
     default:
       return state;
   }

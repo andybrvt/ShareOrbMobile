@@ -26,6 +26,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as dateFns from 'date-fns';
 import * as ImagePicker from 'expo-image-picker';
 import  authAxios from '../util';
+import * as exploreActions from '../store/actions/explore';
 
 
 
@@ -86,8 +87,7 @@ import  authAxios from '../util';
      if(!pickerResult.cancelled){
        // this is if you pick out a picture
        // in this case you will just change the picture right away
-       console.log('here is the image')
-       console.log(pickerResult.uri)
+
 
        let userId = ""
        if(this.props.userId){
@@ -103,7 +103,10 @@ import  authAxios from '../util';
          data,
        ).then(res => {
 
-         console.log(res)
+        console.log(res.data)
+        const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
+        this.props.changeProfilePic(pic)
+
 
        })
 
@@ -328,21 +331,27 @@ import  authAxios from '../util';
    }
  }
 
-// export default EditProfile;
-  //
-  const mapStateToProps = state => {
-    return {
-      firstName:state.auth.firstName,
-      lastName:state.auth.lastName,
-      username:state.auth.username,
-      userId: state.auth.id,
-      currentUser: state.auth.username,
-      profile_picture: state.auth.profilePic
-    }
+
+const mapStateToProps = state => {
+  return {
+    firstName:state.auth.firstName,
+    lastName:state.auth.lastName,
+    username:state.auth.username,
+    userId: state.auth.id,
+    currentUser: state.auth.username,
+    profile_picture: state.auth.profilePic
   }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    changeProfilePic: (profilePic) => dispatch(exploreActions.changeProfilePic(profilePic))
+
+  }
+}
 
 
-export default connect(mapStateToProps, null)(EditProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
 
 const styles = StyleSheet.create({
   panel: {
