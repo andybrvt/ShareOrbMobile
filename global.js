@@ -88,6 +88,23 @@ global.RENDER_TIMESTAMP = (timestamp) => {
     return prefix;
 }
 
+// this is used to organize the file properly
+global.FILE_NAME_GETTER = (fileURI) => {
+
+  const fileName = fileURI.split("/").pop()
+
+  let match = /\.(\w+)$/.exec(fileName);
+  let type = match ? `image/${match[1]}` : `image`;
+
+
+  return {
+    uri: fileURI,
+    type: type,
+    name: fileName,
+  }
+
+}
+
 
 // global.IP_CHANGE = "http://192.168.1.24:8000"
 // global.IP_CHANGE = "http://192.168.1.200:19003"
