@@ -91,6 +91,14 @@ import * as exploreActions from '../store/actions/explore';
      }
    }
 
+   renderSave = () => (
+
+       <View>
+         <Button title = "Save"/>
+       </View>
+     )
+
+
 
 
    handleTakeProfile = async() => {
@@ -157,14 +165,37 @@ import * as exploreActions from '../store/actions/explore';
    handleFirstNameChange = e => {
      const tempVal = e;
 
+     if(tempVal !== this.props.firstName){
+       this.props.navigation.setOptions({
+         headerRight: () => this.renderSave()
+       })
+
+     } else {
+       this.props.navigation.setOptions({
+         headerRight: null
+       })
+     }
+
      this.setState({
        firstName: e
      })
+
    }
 
    handleUsernameChange = e => {
      const tempVal = e;
 
+     if(tempVal !== this.props.firstName){
+       this.props.navigation.setOptions({
+         headerRight: () => this.renderSave()
+       })
+
+     } else {
+       this.props.navigation.setOptions({
+         headerRight: null
+       })
+     }
+     
      this.setState({
        username: e
      })
