@@ -48,6 +48,7 @@ import PostingPage from './PostingFolder/PostingPage';
 import NewPostingPage from './PostingFolder/NewPostingPage';
 import TestDrag from './PostingFolder/TestDrag';
 import Profile from './ProfilePage/Profile';
+import UserProfile from './ProfilePage/UserProfile';
 import ViewProfile from './ProfilePage/ViewProfile';
 import EditProfile from './ProfilePage/EditProfile';
 import Notifications from './ProfilePage/Notifications';
@@ -189,15 +190,15 @@ class App extends Component{
 
   // // This will be the navigation inside the home component ,
   // // you are pretty much making a stack navigation in side a tab navigation
-  // createHomeStack = () =>{
-  //   return (
-  //     <Stack.Navigator screenOptions={{headerShown: false,}} >
-  //       <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
-  //       <Stack.Screen name = 'PostingPage' component = {PostingPage}/>
-  //     </Stack.Navigator>
-  //
-  //   )
-  // }
+  createHomeStack = () =>{
+    return (
+      <Stack.Navigator screenOptions={{headerShown: false,}} >
+        <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
+        <Stack.Screen name = 'ProfilePage' component = {UserProfile}/>
+      </Stack.Navigator>
+
+    )
+  }
   followerFollowingTab=()=>{
     return(
 
@@ -235,8 +236,8 @@ class App extends Component{
         >
         <Tab.Screen
           name="Home"
-          component={NewsfeedView}
-          // children = {this.createHomeStack}
+          // component={NewsfeedView}
+          children = {this.createHomeStack}
           options={{
              tabBarLabel: false,
              tabBarIcon: ({ color }) => (
@@ -517,6 +518,11 @@ class App extends Component{
                       title: 'Selected 0 files',
                     }}
                     component = {ImageBrowserScreen} />
+
+                  <Stack.Screen
+                    name = "otherProfile"
+                    component = {Profile}
+                     />
                 </Stack.Navigator>
                 :
                 <Routes {...this.props} />

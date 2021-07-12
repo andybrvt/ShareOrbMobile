@@ -43,11 +43,14 @@ class NewsfeedView extends React.Component{
 
   }
 
-  viewProfile = () => {
+  viewProfile = (username) => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
 
-    this.props.navigation.navigate("ViewProfile")
+
+    this.props.navigation.navigate("ProfilePage", {
+      username: username
+    })
   }
 
   constructor(props){

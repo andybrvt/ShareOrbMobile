@@ -243,9 +243,10 @@ import * as exploreActions from '../store/actions/explore';
         profile_picture: pic
       }
 
-      this.props.changeProfileInfo(profileInfo);
       this.props.changeProfileInfoAuth(profileInfo);
     })
+
+    this.props.navigation.goBack(0);
   }
 
 
@@ -268,7 +269,6 @@ import * as exploreActions from '../store/actions/explore';
 
       console.log(res.data)
       const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
-      this.props.changeProfilePic(pic)
       this.props.changeProfilePicAuth(pic)
 
      })

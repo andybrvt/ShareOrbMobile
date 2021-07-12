@@ -12,9 +12,11 @@ import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
 import { Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
 
 
-// This will be the bulk of the profile page
-// this will be used for current user
-class Profile extends React.Component{
+// this will be used mostly for the other person profile
+// I want to make it seperate is because for your profile you can just
+// use auth and changing stuff would be so much easier because you don't
+// need two reducers to manage 
+class UserProfile extends React.Component{
 
   constructor(props){
     super(props);
@@ -100,16 +102,6 @@ class Profile extends React.Component{
 
     const screenWidth = Math.round(Dimensions.get('window').width);
 
-    const profile = {
-      username: this.props.username,
-      profile_picture: this.props.profilePic,
-      first_name: this.props.firstName,
-      last_name: this.props.lastName,
-      get_following: this.props.following,
-      id: this.props.currentId,
-      bio: this.props.bio,
-      get_followers: this.props.followers
-    }
 
     return (
       <BackgroundContainer>
@@ -133,7 +125,6 @@ class Profile extends React.Component{
         <View style = {styles.profileHeader}>
           <ProfileHeader
             navigation={this.props.navigation}
-            profile = {profile}
             {...this.props}
             />
         </View>
@@ -152,15 +143,12 @@ const mapStateToProps = state => {
   return {
     currentId: state.auth.id,
     currentUser: state.auth.username,
+    profile: state.explore.profile,
     curUserFriend: state.auth.friends,
     curRequested: state.auth.requestList,
     followers: state.auth.followers,
     following: state.auth.following,
-    username: state.auth.username,
-    profilePic: state.auth.profilePic,
-    firstName: state.auth.firstName,
-    lastName: state.auth.lastName,
-    bio: state.auth.bio ,
+    // chats: state.message.chats
   }
 }
 
@@ -214,4 +202,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(UserProfile);
