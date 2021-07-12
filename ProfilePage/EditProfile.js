@@ -63,6 +63,36 @@ import * as exploreActions from '../store/actions/explore';
    }
 
 
+   handleTakeProfile = async() => {
+
+     let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+     if(permissionResult.granted === false){
+       alert("Permission to access camera is required!");
+       // permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+       return;
+     }
+
+     let pickerResult = await ImagePicker.launchCameraAsync({
+       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+       allowsEditing: true,
+       aspect: [4, 3],
+       quality: 1,
+       allowsMultipleSelection: true,
+       base64: true,
+
+     })
+
+
+     if(!pickerResult.cancelled){
+
+       this.uploadProfileImage(pickerResult.uri);
+
+     }
+
+
+   }
+
    // handle to choose photo
    handleChooseProfile = async() => {
 
@@ -77,7 +107,7 @@ import * as exploreActions from '../store/actions/explore';
 
      // this is to pick the image
      let pickerResult = await ImagePicker.launchImageLibraryAsync({
-       mediaTypes: ImagePicker.MediaTypeOptions.All,
+       mediaTypes: ImagePicker.MediaTypeOptions.Images,
        allowsEditing: true,
        aspect: [4, 3],
        quality: 1,
@@ -89,32 +119,36 @@ import * as exploreActions from '../store/actions/explore';
        // this is if you pick out a picture
        // in this case you will just change the picture right away
 
-
-       let userId = ""
-       if(this.props.userId){
-          userId = this.props.userId
-       }
-
-       var data = new FormData();
-
-       const filePackage = global.FILE_NAME_GETTER(pickerResult.uri)
-       data.append('profile_picture', filePackage)
-
-       authAxios.put(`${global.IP_CHANGE}/userprofile/profile/update/`+userId,
-         data,
-       ).then(res => {
-
-        console.log(res.data)
-        const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
-        this.props.changeProfilePic(pic)
-        this.props.changeProfilePicAuth(pic)
-
-       })
+       this.uploadProfileImage(pickerResult.uri);
 
 
 
      }
 
+   }
+
+   uploadProfileImage(imageUri){
+
+     let userId = ""
+     if(this.props.userId){
+        userId = this.props.userId
+     }
+
+     var data = new FormData();
+
+     const filePackage = global.FILE_NAME_GETTER(imageUri)
+     data.append('profile_picture', filePackage)
+
+     authAxios.put(`${global.IP_CHANGE}/userprofile/profile/update/`+userId,
+       data,
+     ).then(res => {
+
+      console.log(res.data)
+      const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
+      this.props.changeProfilePic(pic)
+      this.props.changeProfilePicAuth(pic)
+
+     })
    }
 
 
@@ -136,7 +170,9 @@ import * as exploreActions from '../store/actions/explore';
            }}
          />
        </View>
-       <TouchableOpacity style={styles.panelButton} >
+       <TouchableOpacity
+         onPress = {this.handleTakeProfile}
+         style={styles.panelButton} >
          <Text style={styles.panelButtonTitle}>Take Photo</Text>
        </TouchableOpacity>
        <TouchableOpacity
