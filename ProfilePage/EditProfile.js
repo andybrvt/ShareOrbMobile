@@ -7,10 +7,12 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
+  Keyboard,
   KeyboardAvoidingView,
   TouchableOpacity,
   TouchableHighlight,
   ImageBackground,
+  TouchableWithoutFeedback
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Avatar } from 'react-native-elements';
@@ -58,9 +60,37 @@ import * as exploreActions from '../store/actions/explore';
      this.bs = React.createRef();
      this.state = {
        date:'',
+       firstName: "",
+       lastName: "",
+       userName: "",
+       bio: ""
+     }
+   }
+
+   componentDidMount(){
+     // for this part make sure you add the name and stuff to the state
+     // and have an onchange for the inputs
+
+     this.setState({
+       firstName: this.props.firstName,
+       lastName: this.props.lastName,
+       username: this.props.username
+     })
+   }
+
+   componentDidUpdate(prevProps){
+
+
+     if(this.props !== prevProps){
+       this.setState({
+         firstName: this.props.firstName,
+         lastName: this.props.lastName,
+         username: this.props.username
+       })
 
      }
    }
+
 
 
    handleTakeProfile = async() => {
@@ -89,7 +119,6 @@ import * as exploreActions from '../store/actions/explore';
        this.uploadProfileImage(pickerResult.uri);
 
      }
-
 
    }
 
@@ -121,10 +150,24 @@ import * as exploreActions from '../store/actions/explore';
 
        this.uploadProfileImage(pickerResult.uri);
 
-
-
      }
 
+   }
+
+   handleFirstNameChange = e => {
+     const tempVal = e;
+
+     this.setState({
+       firstName: e
+     })
+   }
+
+   handleUsernameChange = e => {
+     const tempVal = e;
+
+     this.setState({
+       username: e
+     })
    }
 
    uploadProfileImage(imageUri){
@@ -200,166 +243,158 @@ import * as exploreActions from '../store/actions/explore';
 
 
    render(){
-     let firstName='';
-     let lastName='';
-     let username='';
+     // let firstName='';
+     // let lastName='';
+     // let username='';
      let profilePic = '';
      if(this.props.profile_picture){
        profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profile_picture
      }
-     if(this.props.firstName){
-       firstName = this.props.firstName
-     }
-     if(this.props.lastName){
-       lastName = this.props.lastName
-     }
-     if(this.props.username){
-       username = this.props.username
-     }
+
+     const {firstName, lastName, username} = this.state
+     // if(this.props.firstName){
+     //   firstName = this.props.firstName
+     // }
+     // if(this.props.lastName){
+     //   lastName = this.props.lastName
+     // }
+     // if(this.props.username){
+     //   username = this.props.username
+     // }
 
 
      return (
        <BackgroundContainer>
-         <View style={{height:'100%'}}>
-           <View style={{alignItems: 'center'}}>
-          <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
-            <View
-              style={{
-                top:10,
-                borderRadius: 15,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <Avatar
-                  size={95}
-                  rounded
-                  source={{
-                    uri:
-                      profilePic,
-                  }}
-                />
-            </View>
-          </TouchableOpacity>
-          <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
-            {firstName+" "+lastName}
-          </Text>
-          <Text style={{ fontSize: 15, color:'gray'}}>
-            @{username}
-          </Text>
-        </View>
-
-           <BottomSheet
-            ref={this.bs}
-            snapPoints={[330, 0]}
-            renderContent={this.renderInner}
-            renderHeader={this.renderHeader}
-            initialSnap={1}
-            callbackNode={this.fall}
-            enabledGestureInteraction={true}
-          />
-
-          {/*
-          <View style={{backgroundColor:'green', flexDirection:'column'}}>
-            <View style={{backgroundColor:'red'}}><Text>hi</Text></View>
-            <View style={{backgroundColor:'blue'}}><Text>ho</Text></View>
+         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+           <View style={{height:'100%'}}>
+             <View style={{alignItems: 'center'}}>
+            <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
+              <View
+                style={{
+                  top:10,
+                  borderRadius: 15,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                  <Avatar
+                    size={95}
+                    rounded
+                    source={{
+                      uri:
+                        profilePic,
+                    }}
+                  />
+              </View>
+            </TouchableOpacity>
+            <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
+              {this.props.firstName+" "+this.props.lastName}
+            </Text>
+            <Text style={{ fontSize: 15, color:'gray'}}>
+              @{this.props.username}
+            </Text>
           </View>
-          */}
 
-        <View style={styles.action}>
+             <BottomSheet
+              ref={this.bs}
+              snapPoints={[330, 0]}
+              renderContent={this.renderInner}
+              renderHeader={this.renderHeader}
+              initialSnap={1}
+              callbackNode={this.fall}
+              enabledGestureInteraction={true}
+            />
 
-          <View><Text style={styles.headerFont}>Name</Text></View>
+            {/*
+            <View style={{backgroundColor:'green', flexDirection:'column'}}>
+              <View style={{backgroundColor:'red'}}><Text>hi</Text></View>
+              <View style={{backgroundColor:'blue'}}><Text>ho</Text></View>
+            </View>
+            */}
 
+          <View style={styles.action}>
+
+            <View><Text style={styles.headerFont}>Name</Text></View>
+
+             <TextInput
+              placeholder="First Name"
+              placeholderTextColor="#666666"
+              autoCorrect={false}
+              style={[
+                styles.textInput,
+
+              ]}
+              onChangeText = {this.handleFirstNameChange}
+              value = {firstName}
+            />
+
+          </View>
+          <View style={styles.action}>
+            <View><Text style={styles.headerFont}>Username</Text></View>
+            <TextInput
+             placeholder="Username"
+             placeholderTextColor="#666666"
+             autoCorrect={false}
+             style={[
+               styles.textInput,
+             ]}
+             onChangeText = {this.handleUsernameChange}
+             value = {username}
+             />
+
+         </View>
+        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.goBioPage()}>
+         <View style={styles.action2}>
+           {/*
            <TextInput
-            placeholder="First Name"
+             // multiline={true}
+            placeholder="Bio"
             placeholderTextColor="#666666"
             autoCorrect={false}
             style={[
               styles.textInput,
 
             ]}
-          >
-          {
-              (firstName&&lastName)?
-              <Text>
-                {firstName+" "+lastName}
-              </Text>
-              :
-              ''
-          }
-        </TextInput>
-        </View>
-        <View style={styles.action}>
-          <View><Text style={styles.headerFont}>Username</Text></View>
-          <TextInput
-           placeholder="Username"
-           placeholderTextColor="#666666"
-           autoCorrect={false}
-           style={[
-             styles.textInput,
+          />
+          */}
+          <View style={{width:'90%'}}>
+
+          <Text  style={[
+             styles.bioInput,
 
              ]}>
+
              {
-                 (username)?
-                 <Text style={{color:'black'}}>
-                   {username}
+                 (this.props.route.params.bio)?
+                 <Text>
+                   {this.props.route.params.bio}
                  </Text>
                  :
-                 ''
+                 <Text>Bio</Text>
              }
 
-           </TextInput>
-       </View>
-      <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.goBioPage()}>
-       <View style={styles.action2}>
-         {/*
-         <TextInput
-           // multiline={true}
-          placeholder="Bio"
-          placeholderTextColor="#666666"
-          autoCorrect={false}
-          style={[
-            styles.textInput,
+          </Text>
+          </View>
 
-          ]}
-        />
-        */}
-        <View style={{width:'90%'}}>
-
-        <Text  style={[
-           styles.bioInput,
-
-           ]}>
-
-           {
-               (this.props.route.params.bio)?
-               <Text>
-                 {this.props.route.params.bio}
-               </Text>
-               :
-               <Text>Bio</Text>
-           }
-
-        </Text>
+          <ArrowRight stroke="black" strokeWidth={2.5} width={20} height={20} />
         </View>
-
-        <ArrowRight stroke="black" strokeWidth={2.5} width={20} height={20} />
-      </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
 
 
 
 
 
-           {/*
-           <Avatar.Image
-             source = {{
-               uri: this.props.route.params.chatPersonProfilePic
-             }}
-             size = {50}
-              />
-          */}
+             {/*
+             <Avatar.Image
+               source = {{
+                 uri: this.props.route.params.chatPersonProfilePic
+               }}
+               size = {50}
+                />
+            */}
 
-         </View>
+          </View>
+
+        </TouchableWithoutFeedback>
 
 
       </BackgroundContainer>
@@ -376,7 +411,8 @@ const mapStateToProps = state => {
     username:state.auth.username,
     userId: state.auth.id,
     currentUser: state.auth.username,
-    profile_picture: state.auth.profilePic
+    profile_picture: state.auth.profilePic,
+    bio: state.auth.bio
   }
 }
 

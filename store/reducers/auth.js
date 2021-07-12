@@ -22,8 +22,7 @@ const initialState ={
   showIntialInstructions: false,
   notificationSeen: 0,
   date_joined: null,
-
-
+  bio: "",
   curLoad: 0,
   totalLoad: 0,
 }
@@ -108,7 +107,8 @@ const authLogout = (state, action) => {
     requestList: [],
     showIntialInstructions: false,
     notificationSeen: 0,
-    date_joined: null
+    date_joined: null,
+    bio: ""
   });
 };
 
@@ -129,7 +129,8 @@ const addCredentials = (state, action) => {
     requestList: action.requestList,
     showIntialInstructions: action.showIntialInstructions,
     notificationSeen: action.notificationSeen,
-    date_joined: action.date_joined
+    date_joined: action.date_joined,
+    bio: action.bio
   });
 };
 

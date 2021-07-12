@@ -179,7 +179,8 @@ export const grabUserCredentials = () => {
          res.data.get_follow_request,
          res.data.showIntialInstructions,
          res.data.notificationSeen,
-         res.data.date_joined
+         res.data.date_joined,
+         res.data.bio
       ))
     })
     .catch(err => {
@@ -204,6 +205,7 @@ export const addCredentials = (
    showIntialInstructions,
    notificationSeen,
    date_joined,
+   bio
  ) => {
 
   return {
@@ -222,7 +224,8 @@ export const addCredentials = (
     requestList:requestList,
     showIntialInstructions: showIntialInstructions,
     notificationSeen: notificationSeen,
-    date_joined: date_joined
+    date_joined: date_joined,
+    bio: bio
   };
 };
 
