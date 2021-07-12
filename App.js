@@ -344,12 +344,16 @@ class App extends Component{
                   mode = "modal"
                   //keep this here, its important
                   // headerMode ="none"
-                  initialRouteName = "newsfeed"
+                  initialRouteName = "tabs"
                   screenOptions={{
                     gestureEnabled: true
                     // headerShown: false,
                   }}
                     >
+
+                    <Stack.Screen
+                      options={{headerShown: false, }}
+                      name = "tabs" component= {this.createTabStack}/>
                     <Stack.Screen
 
                       name = "FollowTab" component= {this.followerFollowingTab}
@@ -363,9 +367,7 @@ class App extends Component{
                          ...TransitionPresets.SlideFromRightIOS,
                                         }}
                       />
-                  <Stack.Screen
-                    options={{headerShown: false, }}
-                    name = "newsfeed" component= {this.createTabStack}/>
+
                   <Stack.Screen
                     options={{
                       headerShown: true,

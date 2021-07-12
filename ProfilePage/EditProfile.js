@@ -23,7 +23,7 @@ import { connect } from 'react-redux';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
-import { Bell, User, ArrowRight} from "react-native-feather";
+import { Bell, User, ArrowRight, ChevronLeft} from "react-native-feather";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as dateFns from 'date-fns';
 import * as ImagePicker from 'expo-image-picker';
@@ -71,6 +71,9 @@ import * as exploreActions from '../store/actions/explore';
      // for this part make sure you add the name and stuff to the state
      // and have an onchange for the inputs
 
+     this.props.navigation.setOptions({
+       headerLeft: () => this.renderBack()
+     })
      this.setState({
        firstName: this.props.firstName,
        lastName: this.props.lastName,
@@ -202,6 +205,17 @@ import * as exploreActions from '../store/actions/explore';
            onPress = {() =>this.onHandleEdit()}
            title = "Save"/>
        </View>
+  )
+
+  renderBack = () => (
+    <TouchableOpacity
+      onPress = {() => this.props.navigation.goBack(0)}
+      >
+      <ChevronLeft
+        height = {35}
+        width = {35}
+        />
+    </TouchableOpacity>
   )
 
   onHandleEdit(){
