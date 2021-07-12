@@ -91,12 +91,7 @@ import * as exploreActions from '../store/actions/explore';
      }
    }
 
-   renderSave = () => (
 
-       <View>
-         <Button title = "Save"/>
-       </View>
-     )
 
 
 
@@ -195,11 +190,39 @@ import * as exploreActions from '../store/actions/explore';
          headerRight: null
        })
      }
-     
+
      this.setState({
        username: e
      })
    }
+
+   renderSave = () => (
+       <View>
+         <Button
+           onPress = {() =>this.onHandleEdit()}
+           title = "Save"/>
+       </View>
+  )
+
+  onHandleEdit(){
+
+    let userId = ""
+
+    if(this.props.userId){
+      userId = this.props.userId
+    }
+
+    var data = new FormData();
+
+    data.append("first_name", this.state.firstName)
+    data.append('username', this.state.username)
+
+    authAxios.put(`${global.IP_CHANGE}/userprofile/profile/update/`+userId,
+      data,
+    )
+  }
+
+
 
    uploadProfileImage(imageUri){
 
