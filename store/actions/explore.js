@@ -12,10 +12,18 @@ export const loadProfile = (profile) => {
 }
 
 
+// DELETE
 export const changeProfilePic = (profilePic) => {
   console.log('explore actions')
   return {
     type: actionTypes.CHANGE_PROFILE_PIC,
     profilePic: profilePic
+  }
+}
+
+export const changeProfileInfo = (profileInfo) => {
+  return{
+    type: actionTypes.CHANGE_PROFILE_INFO,
+    profileInfo: profileInfo
   }
 }

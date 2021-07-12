@@ -180,7 +180,7 @@ import * as exploreActions from '../store/actions/explore';
    handleUsernameChange = e => {
      const tempVal = e;
 
-     if(tempVal !== this.props.firstName){
+     if(tempVal !== this.props.username){
        this.props.navigation.setOptions({
          headerRight: () => this.renderSave()
        })
@@ -219,7 +219,19 @@ import * as exploreActions from '../store/actions/explore';
 
     authAxios.put(`${global.IP_CHANGE}/userprofile/profile/update/`+userId,
       data,
-    )
+    ).then(res => {
+      console.log(res.data)
+      const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
+
+      const profileInfo = {
+        first_name: res.data.first_name,
+        username: res.data.username,
+        profile_picture: pic
+      }
+
+      this.props.changeProfileInfo(profileInfo);
+      this.props.changeProfileInfoAuth(profileInfo);
+    })
   }
 
 
@@ -473,7 +485,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return{
     changeProfilePic: (profilePic) => dispatch(exploreActions.changeProfilePic(profilePic)),
-    changeProfilePicAuth: (profilePic) => dispatch(authActions.changeProfilePicAuth(profilePic))
+    changeProfilePicAuth: (profilePic) => dispatch(authActions.changeProfilePicAuth(profilePic)),
+    changeProfileInfoAuth: (profileInfo) => dispatch(authActions.changeProfileInfoAuth(profileInfo)),
+    changeProfileInfo: (profileInfo) => dispatch(exploreActions.changeProfileInfo(profileInfo))
   }
 }
 

@@ -134,10 +134,20 @@ const addCredentials = (state, action) => {
   });
 };
 
+// DELETE
 const changeProfilePicAuth = (state, action) => {
-  console.log('auth reducers')
   return updateObject(state, {
     profilePic: action.profilePic
+  })
+}
+
+const changeProfileInfoAuth = (state, action) => {
+  console.log('auth reducers')
+
+  return updateObject(state, {
+    profilePic: action.profileInfo.profile_picture,
+    firstName: action.profileInfo.first_name,
+    username: action.profileInfo.username
   })
 }
 
@@ -163,8 +173,14 @@ const reducer = (state = initialState, action) => {
       return authZeroCurLoad(state, action);
     case actionTypes.AUTH_ZERO_TOTAL_LOAD:
       return authZeroTotalLoad(state, action);
+
+    // DELETE
     case actionTypes.CHANGE_PROFILE_PIC_AUTH:
       return changeProfilePicAuth(state, action);
+
+
+    case actionTypes.CHANGE_PROFILE_INFO_AUTH:
+      return changeProfileInfoAuth(state, action);
     default:
       return state;
   }

@@ -11,6 +11,9 @@ export const AUTH_ADD_TOTAL_LOAD = "AUTH_ADD_TOTAL_LOAD";
 export const AUTH_ZERO_CUR_LOAD = "AUTH_ZERO_CUR_LOAD";
 export const AUTH_ZERO_TOTAL_LOAD = "AUTH_ZERO_TOTAL_LOAD";
 
+// used to update more than just profilePic
+export const CHANGE_PROFILE_INFO_AUTH  = "CHANGE_PROFILE_INFO_AUTH";
+
 export const CHANGE_PROFILE_PIC_AUTH = "CHANGE_PROFILE_PIC_AUTH";
 
 
@@ -31,6 +34,9 @@ export const SEND_SOCIAL_COMMENT = "SEND_SOCIAL_COMMENT";
 // This will be for the profile page
 export const LOAD_PROFILE = "LOAD_PROFILE";
 export const UNLOAD_PROFILE = "UNLOAD_PROFILE";
+
+export const CHANGE_PROFILE_INFO = "CHANGE_PROFILE_INFO";
+
 export const CHANGE_PROFILE_PIC = 'CHANGE_PROFILE_PIC';
 
 

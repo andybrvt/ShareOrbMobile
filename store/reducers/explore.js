@@ -30,13 +30,32 @@ export const changeProfilePic = (state, action) => {
   })
 }
 
+export const changeProfileInfo = (state, action) => {
+
+  const info = action.profileInfo
+  return updateObject(state, {
+    profile: {
+      ...state.profile,
+      profile_picture: info.profile_picture,
+      first_name: info.first_name,
+      username: info.username
+    }
+  })
+}
+
+
 const reducer = (state = initialState, action) => {
 
   switch(action.type){
     case actionTypes.LOAD_PROFILE:
       return loadProfile(state, action)
+
+    // DELETE
     case actionTypes.CHANGE_PROFILE_PIC:
       return changeProfilePic(state, action)
+
+    case actionTypes.CHANGE_PROFILE_INFO:
+      return changeProfileInfo(state, action)
     default:
       return state;
   }

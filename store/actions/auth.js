@@ -230,10 +230,23 @@ export const addCredentials = (
 };
 
 
+// DELETE
 export const changeProfilePicAuth = (profilePic) => {
-  console.log("auth action")
   return{
     type: actionTypes.CHANGE_PROFILE_PIC_AUTH,
     profilePic: profilePic
+  }
+}
+
+// this will update the profile information,
+// for now it includes firstname, username, bio and profile pic
+// the object getting passed in will be consistend of those
+// fields listed above
+export const changeProfileInfoAuth = (profileInfo) => {
+  console.log('auth actions')
+  console.log(profileInfo)
+  return {
+    type: actionTypes.CHANGE_PROFILE_INFO_AUTH,
+    profileInfo: profileInfo
   }
 }
