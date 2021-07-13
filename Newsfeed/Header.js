@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet,TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, Button, StyleSheet,TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
 import { faBell } from '@fortawesome/free-regular-svg-icons'
-import { Search, Bell} from "react-native-feather";
+import { Search, Bell, MessageCircle} from "react-native-feather";
 import Animated from 'react-native-reanimated';
 
 const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
@@ -35,6 +35,16 @@ class Header extends React.Component{
     this.props.navigation.navigate("Login")
   }
 
+  ViewNoti = () => {
+
+    this.props.navigation.navigate("Notifications")
+  }
+
+  ViewChats = () => {
+    this.props.navigation.navigate("Notifications")
+  }
+
+
   render(){
 
 
@@ -56,7 +66,7 @@ class Header extends React.Component{
 
     const translateY = interpolate(final, {
       inputRange: [0, 200],
-      outputRange: [ 0, -50],
+      outputRange: [ 0, -55],
       extrapolateRight: Extrapolate.CLAMP,
 
     })
@@ -93,19 +103,20 @@ class Header extends React.Component{
           <View style = {styles.searchProfileContainer}>
 
             <Search stroke="black" strokeWidth={2.5} width={20} height={20} />
-
-
-
-
-
-
-
-
-                <Bell
-                  onPress = {() => this.props.navigation.navigate("ViewProfile")}
-                  stroke="black" strokeWidth={2.5} width={20} height={20} />
-
-
+            <MessageCircle
+              stroke="black" strokeWidth={2.5} width={20} height={20} />
+            <Bell
+              stroke="black" strokeWidth={2.5} width={20} height={20} />
+            {/*
+            <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Chats")}>
+               <MessageCircle
+                 stroke="black" strokeWidth={2.5} width={20} height={20} />
+           </TouchableWithoutFeedback>
+           <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Notifications")}>
+              <Bell
+                stroke="black" strokeWidth={2.5} width={20} height={20} />
+            </TouchableWithoutFeedback>
+            */}
 
           </View>
 
@@ -147,7 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     // backgroundColor:'red',
     top:'5%',
-    width: "25%",
+    width: "35%",
   }
 })
 //

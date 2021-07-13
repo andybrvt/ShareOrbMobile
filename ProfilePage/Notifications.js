@@ -41,13 +41,20 @@ import { MoreVertical
              }}
            />
          </View>
-         <View style={{flex:6,  flexDirection:'row'}}>
-           <Text style={{fontWeight:'bold'}}> {item.username}</Text>
-           <Text> liked your album on</Text>
-           <Text style={{fontWeight:'bold'}}> July 1</Text>
+         <View style={{flex:6,  flexDirection:'row', flexWrap:'wrap'}}>
+           <Text style={{fontWeight:'bold'}}> {item.username} </Text>
+           {(item.action&&(item.private=="true"))?
+             <View>
+             <Text>{item.action}ff</Text>
+             </View>
+           :
+           <Text>{item.action}</Text>
+         }
+
+           <Text style={{fontWeight:'bold'}}> {item.date}</Text>
           </View>
         <View style={{flex:0}}>
-        <Text style={{}}> {item.time}</Text>
+        <Text style={{color:'#8c8c8c'}}> {item.time}</Text>
         {/*
         <MoreVertical
         style={{top:10}}
@@ -77,12 +84,27 @@ import { MoreVertical
      const chatList=[
        {"username":"pinghsu520",
        "pic":"http://192.168.1.200:19002/media/PostPic/public/profile_pictures/2021/03/satsifying_2.png",
+       "action":"liked your album on",
+       "date":"July 1",
        "time": "3d",
        },
      {"username":"andybrvt",
        "pic":"http://192.168.1.200:19002/media/PostPic/public/profile_pictures/2021/06/doggy.jpeg",
+       "action":"commented on your album on",
+       "date":"Jan 24",
        "time": "5d",
-      }
+     },
+      {"username":"heather838282828292aaaaaaaaaaa2",
+        "pic":"https://images.unsplash.com/photo-1610555248279-adea4c523fb3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+        "action":"sent a follow request",
+        "private":"true",
+        "time": "5d",
+      },
+       {"username":"romeo938",
+         "pic":"https://images.unsplash.com/photo-1610490689129-26c48e3cb975?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=80",
+         "action":"started following you",
+         "time": "11d",
+        }
    ]
 
      return (
