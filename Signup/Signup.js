@@ -12,6 +12,8 @@ import {
  TouchableWithoutFeedback
 
 } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 // import TimePicker from 'react-native-simple-time-picker';
 import styles from './SignupStyle';
 class Signup extends React.Component{
@@ -25,46 +27,66 @@ class Signup extends React.Component{
     const dobMonth=this.state.dobMonth;
     const dobDay=this.state.dobDay;
     return(
-      <View>
-        <Text> Email </Text>
-          <TextInput
-            placeholder = "Email"
-            />
-          <View style = {styles.usernameSignup}>
-            <Text > Username </Text>
-              <TextInput
-                placeholder = "Username"
-                />
-          </View>
-          <View style = {styles.usernameSignup}>
-            <Text > Password </Text>
-              <TextInput
-                placeholder = "Password"
-              />
-          </View>
-          <View style = {styles.usernameSignup}>
-            <Text > Username </Text>
-              <TextInput
-                placeholder = "Date Of Birth"
-                />
-              { /*
-                // <TimePicker
-                //   dobMonth={dobMonth}
-                //   //initial Hourse value
-                //   dobDay={dobDay}
-                //   //initial Minutes value
-                //   onChange={(month, day) => {
-                //     this.setState({
-                //       dobMonth: month,
-                //       dobD: day,
-                //
-                //     })
-                //   }}
-                // />
-                */}
-          </View>
+      <SafeAreaView style = {{
+          flex: 1,
+        }}>
+        <ScrollView style = {{
+            flex: 1
+          }}>
 
-      </View>
+            <View style = {styles.usernameSignup}>
+              <Text > Username </Text>
+                <TextInput
+                  placeholder = "Username"
+                  />
+            </View>
+
+            <View style = {styles.usernameSignup}>
+              <Text > First Name </Text>
+                <TextInput
+                  placeholder = "First Name"
+                  />
+            </View>
+
+            <View style = {styles.usernameSignup}>
+              <Text > Last Name </Text>
+                <TextInput
+                  placeholder = "Last Name"
+                  />
+            </View>
+
+            <View style = {styles.usernameSignup}>
+              <Text> Email </Text>
+                <TextInput
+                  placeholder = "Email"
+                  />
+            </View>
+
+            <View style = {styles.usernameSignup}>
+              <Text> Birthday </Text>
+                <TextInput
+                  placeholder = "Birthday"
+                  />
+            </View>
+
+            <View style = {styles.usernameSignup}>
+              <Text > Password </Text>
+                <TextInput
+                  placeholder = "Password"
+                />
+            </View>
+
+            <View style = {styles.usernameSignup}>
+              <Text > Password </Text>
+                <TextInput
+                  placeholder = "Confirm Password"
+                />
+            </View>
+
+
+        </ScrollView>
+
+      </SafeAreaView>
     )
   }
 }
