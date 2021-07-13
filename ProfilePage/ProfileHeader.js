@@ -43,6 +43,7 @@ class ProfileHeader extends React.Component{
     let fulFollowers = []
     let following = []
     let fulfollowing = []
+    let profileId = 0
 
     if(this.props.profile){
       if(this.props.profile.profile_picture){
@@ -59,6 +60,10 @@ class ProfileHeader extends React.Component{
       }
       if(this.props.profile.bio){
         bio= this.props.profile.bio
+      }
+      if(this.props.profile.id){
+        profileId = this.props.profile.id
+
       }
       if(this.props.profile.get_following){
         if(this.props.profile.id === this.props.currentId){
@@ -123,11 +128,25 @@ class ProfileHeader extends React.Component{
               <View style={{flex:1.5,justifyContent:'center', marginLeft:30}}>
                 <Text style = {styles.name}>{name}</Text>
                 <Text style = {styles.username}>@{username}</Text>
+                {
+                  this.props.currentId === profileId ?
+
                   <TouchableOpacity onPress={() => this.editPageClick()}>
                     <View style={styles.editButton}>
                        <Text style={{color:'white',}}>Edit Profile</Text>
                      </View>
                  </TouchableOpacity>
+
+                 :
+
+                 <TouchableOpacity onPress={() => this.editPageClick()}>
+                   <View style={styles.editButton}>
+                      <Text style={{color:'white',}}>Follow</Text>
+                    </View>
+                </TouchableOpacity>
+
+                }
+
               </View>
           </View>
 
@@ -257,10 +276,7 @@ class ProfileHeader extends React.Component{
         }
 
       }
-      if(this.props.profile.get_posts){
-        posts = this.props.profile.get_posts
 
-      }
       if(this.props.profile.id){
         profileId = this.props.profile.id
 
@@ -295,15 +311,15 @@ class ProfileHeader extends React.Component{
         }
       }
 
-      if(this.props.profile.private){
-        if(this.props.profile.get_follow_request){
-          for(let i= 0; i<this.props.profile.get_follow_request.length; i++){
-              requested.push(
-                this.props.profile.get_follow_request[i].id
-              )
-          }
-        }
-      }
+      // if(this.props.profile.private){
+      //   if(this.props.profile.get_follow_request){
+      //     for(let i= 0; i<this.props.profile.get_follow_request.length; i++){
+      //         requested.push(
+      //           this.props.profile.get_follow_request[i].id
+      //         )
+      //     }
+      //   }
+      // }
 
 
 

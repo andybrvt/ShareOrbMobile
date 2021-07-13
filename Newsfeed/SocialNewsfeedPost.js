@@ -322,15 +322,17 @@ class SocialNewsfeedPost extends React.Component{
                     source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
                     />
               </GestureRecognizer>
-              <Avatar
-                style={styles.close}
-                onPress = {() => this.props.ViewProfile()}
-                size={40}
-                rounded
-                source = {{
-                  uri: profilePic
-                }}
-              />
+
+                <Avatar
+                  style={styles.close}
+                  onPress = {() => this.props.ViewProfile(userUsername)}
+                  size={40}
+                  rounded
+                  source = {{
+                    uri: profilePic
+                  }}
+                />
+
 
               <View style = {styles.testWhere}>
                 <Text style = {styles.videoFooterUserName}>
