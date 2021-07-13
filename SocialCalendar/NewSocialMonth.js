@@ -22,6 +22,10 @@ class NewSocialMonth extends React.PureComponent{
   }
 
 
+  initialProps = {
+    userId: 0
+  }
+
 // the way the mount works vs when it updates is when you first
 // open up the page the month and year is 0, its not until the values
 // start hitting up you will get the number in the componentdidupdate
@@ -41,6 +45,7 @@ class NewSocialMonth extends React.PureComponent{
 
   componentDidMount(){
     const dateRange = this.grabDateRange()
+
     this.getSocialCells(dateRange.start, dateRange.end)
     .then(data => {
       this.setState({
@@ -101,7 +106,12 @@ class NewSocialMonth extends React.PureComponent{
 
 
   getSocialCells(start, end){
-    return authAxios.get(`${global.IP_CHANGE}/mySocialCal/filterCells/`+ start+`/`+end)
+
+    console.log(this.props.userId)
+    const userId = this.props.userId;
+
+
+    return authAxios.get(`${global.IP_CHANGE}/mySocialCal/filterCells/`+userId+"/"+ start+`/`+end)
     .then(res => {
       return res.data
     })

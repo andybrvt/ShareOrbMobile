@@ -34,7 +34,6 @@ class Profile extends React.Component{
   ViewProfile = () => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-    console.log("hi")
     this.props.navigation.navigate("Settings")
   }
 
@@ -75,6 +74,7 @@ class Profile extends React.Component{
 
   }
 
+  // Probally dont need this is because its taken from the auth
   componentDidUpdate(prevProps){
     if(prevProps.route.params.username !== this.props.route.params.username){
 
@@ -115,7 +115,7 @@ class Profile extends React.Component{
       <BackgroundContainer>
         <View style={styles.viewStyle}>
           <View style={{flex:1, justifyContent:'center'}}>
-          <Text style={styles.textStyle}>pinghsu520</Text>
+          <Text style={styles.textStyle}>{global.CAPITALIZE(this.props.username)}</Text>
           </View>
 
           <View
@@ -139,6 +139,7 @@ class Profile extends React.Component{
         </View>
         <View style = {styles.socialCalContainer}>
           <SocialCalendarVonly
+            userId = {this.props.currentId}
             navigation = {this.props.navigation}
             />
         </View>

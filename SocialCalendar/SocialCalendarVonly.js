@@ -396,6 +396,8 @@ class SocialCalendarVonly extends React.Component{
               month = {this.state.month_array[0]}
               year = {this.state.year_array[0]}
               navigation = {this.props.navigation}
+              userId = {this.props.userId}
+
                />
           </Animated.View>
         </PanGestureHandler>
@@ -419,6 +421,7 @@ class SocialCalendarVonly extends React.Component{
               month = {this.state.month_array[1]}
               year = {this.state.year_array[1]}
               navigation = {this.props.navigation}
+              userId = {this.props.userId}
 
                />
           </Animated.View>
@@ -444,7 +447,7 @@ class SocialCalendarVonly extends React.Component{
               month = {this.state.month_array[2]}
               year = {this.state.year_array[2]}
               navigation = {this.props.navigation}
-
+              userId = {this.props.userId}
                />
           </Animated.View>
 
