@@ -24,8 +24,9 @@ import { parseISO } from 'date-fns'
  // you can upload pictures and write a caption after uploaidng
  // pictures
 import { Navigation2, Heart, MessageCircle, ArrowLeft,
-ArrowLeftCircle,Bookmark
+ArrowLeftCircle,Bookmark, ChevronsUp, ChevronsDown
 } from "react-native-feather";
+import * as Animatable from 'react-native-animatable';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -162,15 +163,27 @@ const height = Dimensions.get("window").height
 
      return (
        <View style = {styles.carouselImageHolder}>
+         <View style={{alignItems:'center', flexDirection:'row', height:30, top:10}}>
+           <View style={{}}>
+             <ChevronsUp
+               fill="white"
+               width={30}
+               height={30}
+              />
+           </View>
+           <View>
+             <Animatable.Text animation="fadeIn" iterationCount={"infinite"} direction="alternate" delay={10}>
+                <Text style={{color:'white', fontSize:18, top:0}}>July 16</Text>
+              </Animatable.Text>
+            </View>
+         </View>
 
          <Image
            key={'blurryImage'}
            style={styles.albumLook}
-
            source = {{
              uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,
-           }}
-         />
+           }}/>
 
          <Avatar
            style={styles.close}
@@ -182,7 +195,19 @@ const height = Dimensions.get("window").height
            }}
          />
 
+       <View style={{alignItems:'center', flexDirection:'row', height:'11%', bottom:0}}>
+             <ChevronsDown
+               fill="white"
+               width={30}
+               height={30}
+              />
 
+           <Animatable.Text animation="fadeIn" iterationCount={"infinite"} direction="alternate" delay={10}>
+              <Text style={{color:'white', fontSize:18, bottom:10}}>
+                October 2
+              </Text>
+            </Animatable.Text>
+          </View>
        </View>
 
 
@@ -276,6 +301,7 @@ const height = Dimensions.get("window").height
      return (
        <View style={{width:'100%', height:'100%'}}>
 
+
          <ImageBackground
            blurRadius={80}
            style={styles.albumOuterContainer}
@@ -326,8 +352,8 @@ const height = Dimensions.get("window").height
                <ArrowLeft
                      style={styles.close2}
                      stroke='white'
-                     width ={40}
-                     height = {40}
+                     width ={35}
+                     height = {35}
                 />
             </TouchableWithoutFeedback>
 
@@ -336,8 +362,8 @@ const height = Dimensions.get("window").height
                <View style = {styles.justifyCenter}>
                  <Heart
                    fill="red"
-                   width ={30}
-                   height = {30}
+                   width ={35}
+                   height = {35}
                    style={{right:2}}
                     />
 
@@ -354,8 +380,8 @@ const height = Dimensions.get("window").height
                  <View  style = {styles.justifyCenter}>
                    <MessageCircle
                      fill="white"
-                     width ={30}
-                     height = {30}
+                     width ={35}
+                     height = {35}
                      style={{right:2}}
                    />
                    <Text  style = {styles.justifyCenter1}>
@@ -369,8 +395,8 @@ const height = Dimensions.get("window").height
                <View>
                  <Bookmark
                    fill="white"
-                   width={30}
-                   height={30}
+                   width ={35}
+                   height = {35}
                     />
                </View>
              </Text>
@@ -386,7 +412,7 @@ const height = Dimensions.get("window").height
                 </View>
               </View>
               <View style={styles.secondContainer}>
-                <FacePile size={3} numFaces={3} faces={FACES} circleSize={17.5}
+                <FacePile size={2.5} numFaces={3} faces={FACES} circleSize={17.5}
                   containerStyle={{height:40}}
                    overlap={0.1} />
               </View>
@@ -427,9 +453,9 @@ const height = Dimensions.get("window").height
    },
    testWhere2:{
      position:'absolute',
-     top:'5%',
+     top:'7.5%',
      padding:10,
-     right:'3%',
+     right:'0%',
      width:'20%',
      flexDirection:'column',
      alignItems:'center',
@@ -457,7 +483,7 @@ const height = Dimensions.get("window").height
      padding:10,
      borderRadius:25,
      color:'white',
-     bottom:225,
+     bottom:'35%',
      justifyContent: 'center',
      fontSize:13,
      right:10,
@@ -470,7 +496,7 @@ const height = Dimensions.get("window").height
      padding:10,
      borderRadius:25,
      color:'white',
-     bottom:180,
+     bottom:'28%',
      fontSize:13,
      right:10,
      textAlign:'right',
@@ -483,7 +509,7 @@ const height = Dimensions.get("window").height
      padding:7.5,
      borderRadius:25,
      color:'white',
-     bottom:135,
+     bottom:'21%',
      fontSize:13,
      right:15,
      textAlign:'right',
@@ -508,19 +534,17 @@ const height = Dimensions.get("window").height
 
    openContainer:{
      flexDirection:'row',
-     bottom:'5%',
+     bottom:'10%',
      position:'absolute',
      left:'5%',
      justifyContent:'center',
    },
    firstContainer:{
      flex:1.5,
-
      // backgroundColor:'red',
    },
    secondContainer:{
      flex:1,
-
      // backgroundColor:'blue',
    },
 
@@ -533,7 +557,7 @@ const height = Dimensions.get("window").height
      textShadowRadius: 5,
      fontWeight:'bold',
      top:'9%',
-     left:'30%',
+     left:'27.5%',
      position: "absolute",
      // fontWeight:'bold',
 
@@ -574,9 +598,7 @@ const height = Dimensions.get("window").height
      margin: 5,
      position: "absolute",
      top:'7.5%',
-     left:'5%',
-     width: 35,
-     height: 35,
+     left:'2.5%',
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
@@ -586,15 +608,16 @@ const height = Dimensions.get("window").height
      margin: 5,
      position: "absolute",
      top:'7.5%',
-     left:'17.5%',
+     left:'15%',
      width: 35,
      height: 35,
    },
    albumLook:{
      borderRadius: 10,
-     width: '95%',
-     height: '80%',
-     top: "5%"
+     width: '98%',
+     height: '83%',
+     top:17.5,
+     alignItems:'center'
      // flex: 1,
      // resizeMode: 'contain'
    },
@@ -613,7 +636,8 @@ const height = Dimensions.get("window").height
    carouselImageHolder: {
      width: width,
      height: height,
-     alignItems: 'center'
+     alignItems: 'center',
+
    }
 
 

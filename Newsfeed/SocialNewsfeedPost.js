@@ -373,8 +373,8 @@ class SocialNewsfeedPost extends React.Component{
                         <View style = {styles.justifyCenter}>
                           <Heart
                             fill="red"
-                            width ={30}
-                            height = {30}
+                            width ={35}
+                            height = {35}
                             style={{right:2}}
                              />
                           <Text  style = {styles.videoFooterUserName}>
@@ -395,8 +395,8 @@ class SocialNewsfeedPost extends React.Component{
                         <View style = {styles.justifyCenter}>
                           <Heart
                             fill="white"
-                            width ={30}
-                            height = {30}
+                            width ={35}
+                            height = {35}
                             style={{right:2}}
                           />
                          <Text style = {styles.videoFooterUserName}>
@@ -411,8 +411,8 @@ class SocialNewsfeedPost extends React.Component{
                       <View style = {styles.justifyCenter}>
                         <MessageCircle
                           fill="white"
-                          width ={30}
-                          height = {30}
+                          width ={35}
+                          height = {35}
                           style={{right:2}}
                         />
                         <Text style = {styles.videoFooterUserName}>
@@ -428,8 +428,8 @@ class SocialNewsfeedPost extends React.Component{
                   <View style = {styles.justifyCenter}>
                     <Navigation2
                       fill="white"
-                      width={30}
-                      height={30}
+                      width ={35}
+                      height = {35}
                        />
                      <Text style = {styles.videoFooterUserName}>  {userPostImages.length -1}</Text>
                   </View>
