@@ -1,90 +1,151 @@
 import React from "react";
 import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  Keyboard,
- TouchableWithoutFeedback
-
+ ScrollView,
+ StyleSheet,
+ Text,
+ View,
+ Image,
+ TextInput,
+ Button,
+ TouchableOpacity,
+ Keyboard,
+ TouchableWithoutFeedback,
+ KeyboardAvoidingView,
+ Dimensions
 } from "react-native";
+import MainLogo from '../logo.svg';
+import TextInputError from '../RandomComponents/TextInputError';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+const width = Dimensions.get("window").width
+const height = Dimensions.get('window').height
+
+
 // import TimePicker from 'react-native-simple-time-picker';
-import styles from './SignupStyle';
 class Signup extends React.Component{
-  state = {
-    dobMonth: 0,
-    dobDay: 0,
-    dobYear: 0.
+  constructor(props){
+    super(props)
+    this.state = {
+      dobMonth: 0,
+      dobDay: 0,
+      dobYear: 0,
+      username: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      passwordConfirm:""
+    }
+  }
+
+
+  handleSubmit = () => {
+    console.log('stuff here')
+    console.log(this.state)
   }
 
   render(){
     const dobMonth=this.state.dobMonth;
     const dobDay=this.state.dobDay;
+    console.log(this.state)
     return(
       <SafeAreaView style = {{
           flex: 1,
         }}>
-        <ScrollView style = {{
-            flex: 1
-          }}>
+        <TouchableWithoutFeedback onPress = {() => Keyboard.dismiss()} >
 
-            <View style = {styles.usernameSignup}>
-              <Text > Username </Text>
-                <TextInput
-                  placeholder = "Username"
-                  />
-            </View>
+          <KeyboardAvoidingView
+            style = {styles.container}
+             behavior = "padding">
+               <View style = {styles.logoContainer}>
+                 <MainLogo height = {100}  width = {200} />
 
-            <View style = {styles.usernameSignup}>
-              <Text > First Name </Text>
-                <TextInput
-                  placeholder = "First Name"
-                  />
-            </View>
+                 <Text>
+                   Sign up
+                 </Text>
 
-            <View style = {styles.usernameSignup}>
-              <Text > Last Name </Text>
-                <TextInput
-                  placeholder = "Last Name"
-                  />
-            </View>
+               </View>
 
-            <View style = {styles.usernameSignup}>
-              <Text> Email </Text>
-                <TextInput
-                  placeholder = "Email"
-                  />
-            </View>
+               <View style = {styles.inputContainer}>
+                 <Text>Username </Text>
+                   <TextInputError
+                     placeholder = {"Username"}
+                     onChangeText = {(value) => this.setState({username: value.trim()})}
+                      />
+               </View>
 
-            <View style = {styles.usernameSignup}>
-              <Text> Birthday </Text>
-                <TextInput
-                  placeholder = "Birthday"
-                  />
-            </View>
+               <View style = {styles.inputContainer}>
+                 <Text >First Name </Text>
+                   <TextInputError
+                     onChangeText = {(value) => this.setState({firstName: value.trim()})}
+                     placeholder = "First Name"
+                     />
+               </View>
 
-            <View style = {styles.usernameSignup}>
-              <Text > Password </Text>
-                <TextInput
-                  placeholder = "Password"
-                />
-            </View>
+               <View style = {styles.inputContainer}>
+                 <Text >Last Name </Text>
+                   <TextInputError
+                     onChangeText = {(value) => this.setState({lastName: value.trim()})}
+                     placeholder = "Last Name"
+                     />
+               </View>
 
-            <View style = {styles.usernameSignup}>
-              <Text > Password </Text>
-                <TextInput
-                  placeholder = "Confirm Password"
-                />
-            </View>
+               <View style = {styles.inputContainer}>
+                 <Text>Email </Text>
+                   <TextInputError
+                     onChangeText = {(value) => this.setState({email: value.trim()})}
+                     placeholder = "Email"
+                     />
+               </View>
+
+               <View style = {styles.inputContainer}>
+                 <Text>Birthday </Text>
+                   <TextInputError
+                     // onChangeText = {(value) => this.setState({username: value.trim()})}
+                     placeholder = "Birthday"
+                     />
+               </View>
+
+               <View style = {styles.inputContainer}>
+                 <Text >Password </Text>
+                   <TextInputError
+                     onChangeText = {(value) => this.setState({password: value.trim()})}
+                     placeholder = "Password"
+                   />
+               </View>
+
+               <View style = {styles.inputContainer}>
+                 <Text >Password </Text>
+                   <TextInputError
+                     onChangeText = {(value) => this.setState({passwordConfirm: value.trim()})}
+                     placeholder = "Confirm Password"
+                   />
+               </View>
+
+               <TouchableOpacity
+                 onPress = {() => this.handleSubmit()}
+                 style = {styles.signUpButton}
+                 >
+                   <Text>
+                     Sign Up
+                   </Text>
+               </TouchableOpacity>
 
 
-        </ScrollView>
+               <TouchableOpacity>
+                 <View>
+                   <Button
+                     onPress = {() => this.props.navigation.navigate("Login")}
+                     title = "Login"
+                      />
+                 </View>
+               </TouchableOpacity>
+
+
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+
+
 
       </SafeAreaView>
     )
@@ -92,3 +153,36 @@ class Signup extends React.Component{
 }
 
 export default Signup;
+
+
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    // backgroundColor: 'red',
+    alignItems: 'center',
+    width: width
+  },
+  logoContainer:{
+    backgroundColor: 'blue',
+    width: width*0.8,
+    alignItems: 'center'
+  },
+  inputContainer: {
+    backgroundColor: 'orange',
+    height: height*0.09,
+    width: width*0.8,
+    alignItems: 'center'
+
+  },
+  signUpButton:{
+    position: "relative",
+    width: width*0.8,
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1890ff",
+  }
+
+})
