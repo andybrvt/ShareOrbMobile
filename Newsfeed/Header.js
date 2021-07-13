@@ -65,7 +65,9 @@ class Header extends React.Component{
 
     return(
 
-      <View>
+      <View style = {{
+          zIndex: 99
+        }}>
       <Animated.View
         style = {[styles.container,{
           // opacity: opacity,
