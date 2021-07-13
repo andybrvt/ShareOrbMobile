@@ -243,8 +243,7 @@ export const changeProfilePicAuth = (profilePic) => {
 // the object getting passed in will be consistend of those
 // fields listed above
 export const changeProfileInfoAuth = (profileInfo) => {
-  console.log('auth actions')
-  console.log(profileInfo)
+
   return {
     type: actionTypes.CHANGE_PROFILE_INFO_AUTH,
     profileInfo: profileInfo

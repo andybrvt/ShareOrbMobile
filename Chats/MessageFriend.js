@@ -28,10 +28,7 @@ class MessageFriend extends React.Component{
 
    render(){
          // {global.RENDER_TIMESTAMP(item.recentTime)}
-     // console.log("MESSAGE FRIEND")
-     // console.log(this.props.chats)
-     // headerTitle:this.props.route.params.chatPersonName+" @"+this.props.route.params.chatUserName
-     this.props.navigation.setOptions({
+         this.props.navigation.setOptions({
        headerTitle: (props) => (
          <View style={{flexDirection:"row"}}>
            <Avatar.Image
@@ -75,10 +72,8 @@ class MessageFriend extends React.Component{
             return item.id;
           }}
           renderItem={(item) => {
-            console.log("AAAAAAAAAAAAAAAAAAAAaa")
-            console.log(item.item)
-            item=item.item
 
+            item=item.item
             let inMessage = item.id === this.props.userId;
             let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
             let itemStyle1 = inMessage ? styles.textIn : styles.textOut;

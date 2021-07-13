@@ -15,7 +15,7 @@ import { Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus} from "re
 // this will be used mostly for the other person profile
 // I want to make it seperate is because for your profile you can just
 // use auth and changing stuff would be so much easier because you don't
-// need two reducers to manage 
+// need two reducers to manage
 class UserProfile extends React.Component{
 
   constructor(props){
@@ -29,14 +29,12 @@ class UserProfile extends React.Component{
   ViewNoti = () => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-    console.log("hi")
     this.props.navigation.navigate("Notifications")
   }
 
   ViewProfile = () => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-    console.log("hi")
     this.props.navigation.navigate("Settings")
   }
 
@@ -98,16 +96,28 @@ class UserProfile extends React.Component{
   }
 
   render(){
-    console.log(this.props)
+
 
     const screenWidth = Math.round(Dimensions.get('window').width);
 
+    let username = "";
+    let userId = "";
+
+    if(this.props.profile){
+      if(this.props.profile.username){
+        username = this.props.profile.username
+      }
+      if(this.props.profile.id){
+        userId = this.props.profile.id
+      }
+
+    }
 
     return (
       <BackgroundContainer>
         <View style={styles.viewStyle}>
           <View style={{flex:1, justifyContent:'center'}}>
-          <Text style={styles.textStyle}>pinghsu520</Text>
+          <Text style={styles.textStyle}>{global.CAPITALIZE(username)}</Text>
           </View>
 
           <View
@@ -131,6 +141,7 @@ class UserProfile extends React.Component{
         <View style = {styles.socialCalContainer}>
           <SocialCalendarVonly
             navigation = {this.props.navigation}
+            userId = {userId}
             />
         </View>
       </BackgroundContainer>
@@ -144,11 +155,6 @@ const mapStateToProps = state => {
     currentId: state.auth.id,
     currentUser: state.auth.username,
     profile: state.explore.profile,
-    curUserFriend: state.auth.friends,
-    curRequested: state.auth.requestList,
-    followers: state.auth.followers,
-    following: state.auth.following,
-    // chats: state.message.chats
   }
 }
 

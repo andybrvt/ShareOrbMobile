@@ -26,11 +26,9 @@ class Header extends React.Component{
 
 
   handleSearch = () => {
-    console.log("hi")
     this.setState({
       showSearchBar: !this.state.showSearchBar,
     });
-    console.log("hi")
   }
   handleLogOut = () => {
     this.props.logout()
@@ -112,7 +110,7 @@ class Header extends React.Component{
         </Animated.View>
 
       </Animated.View>
-      
+
       </View>
     )
   }

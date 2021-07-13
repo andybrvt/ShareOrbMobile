@@ -66,7 +66,6 @@ const authAddCurLoad = (state, action) => {
 }
 
 const authAddTotalLoad = (state, action) => {
-  console.log('in the reducers')
   return updateObject(state, {
     totalLoad: state.totalLoad + 1
   })
@@ -142,7 +141,6 @@ const changeProfilePicAuth = (state, action) => {
 }
 
 const changeProfileInfoAuth = (state, action) => {
-  console.log('auth reducers')
 
   return updateObject(state, {
     profilePic: action.profileInfo.profile_picture,

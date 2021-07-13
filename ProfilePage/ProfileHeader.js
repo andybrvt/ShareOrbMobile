@@ -66,41 +66,24 @@ class ProfileHeader extends React.Component{
 
       }
       if(this.props.profile.get_following){
-        if(this.props.profile.id === this.props.currentId){
-          // This one is to change the following list to be same as the auth if
-          // you are on your own page
-
-          following = this.props.following
-        } else {
           // This is for everyone else
           following = this.props.profile.get_following
-        }
 
       }
       if(this.props.profile.get_followers){
-        if(this.props.profile.id === this.props.currentId){
-          // Same deal as teh followers
-          for(let i =0; i<this.props.followers.length; i++){
-            followers.push(
-              this.props.followers[i].username
-            )
-          }
-        } else {
-          for(let i =0; i<this.props.profile.get_followers.length; i++){
-            followers.push(
-              this.props.profile.get_followers[i].username
-            )
-          }
+        for(let i =0; i<this.props.profile.get_followers.length; i++){
+          followers.push(
+            this.props.profile.get_followers[i].username
+          )
         }
+
 
       }
 
       if(this.props.profile.get_followers){
-        if(this.props.profile.id === this.props.currentId){
-          fulFollowers = this.props.followers
-        } else {
+
           fulFollowers = this.props.profile.get_followers
-        }
+        
       }
     }
 
@@ -265,15 +248,10 @@ class ProfileHeader extends React.Component{
         lastName = this.props.profile.last_name
       }
       if(this.props.profile.get_following){
-        if(this.props.profile.id === this.props.currentId){
-          // This one is to change the following list to be same as the auth if
-          // you are on your own page
 
-          following = this.props.following
-        } else {
           // This is for everyone else
-          following = this.props.profile.get_following
-        }
+        following = this.props.profile.get_following
+
 
       }
 
@@ -286,29 +264,17 @@ class ProfileHeader extends React.Component{
       }
 
       if(this.props.profile.get_followers){
-        if(this.props.profile.id === this.props.currentId){
-          // Same deal as teh followers
-          for(let i =0; i<this.props.followers.length; i++){
-            followers.push(
-              this.props.followers[i].username
-            )
-          }
-        } else {
           for(let i =0; i<this.props.profile.get_followers.length; i++){
             followers.push(
               this.props.profile.get_followers[i].username
             )
           }
-        }
+
 
       }
 
       if(this.props.profile.get_followers){
-        if(this.props.profile.id === this.props.currentId){
-          fulFollowers = this.props.followers
-        } else {
           fulFollowers = this.props.profile.get_followers
-        }
       }
 
       // if(this.props.profile.private){

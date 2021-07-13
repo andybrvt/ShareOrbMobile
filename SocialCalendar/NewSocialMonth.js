@@ -35,7 +35,6 @@ class NewSocialMonth extends React.PureComponent{
 
 
   viewDay = (cellId) => {
-      console.log(cellId)
 
       this.props.navigation.navigate("DayAlbum", {
         cellId: cellId
@@ -46,13 +45,17 @@ class NewSocialMonth extends React.PureComponent{
   componentDidMount(){
     const dateRange = this.grabDateRange()
 
-    this.getSocialCells(dateRange.start, dateRange.end)
-    .then(data => {
-      this.setState({
-        socialCells: data
-      })
+    if(this.props.userId !== 'undefined' && this.props.userId !== ""){
+      console.log('componentDidMount')
+      this.getSocialCells(dateRange.start, dateRange.end)
+      .then(data => {
+        this.setState({
+          socialCells: data
+        })
 
-    })
+      })
+    }
+
   }
 
 
@@ -60,18 +63,41 @@ class NewSocialMonth extends React.PureComponent{
     // when it updates and is on a new months you will get the items of the new
     // month
 
-    if(this.props.month !== prevProps.month){
-      const dateRange = this.grabDateRange()
-      this.getSocialCells(dateRange.start, dateRange.end)
-      .then(data => {
+    if(this.props !== prevProps){
+      if(this.props.month !== prevProps.month){
 
-        this.setState({
-          socialCells: data
+        if(this.props.userId !== ""){
+
+          const dateRange = this.grabDateRange()
+          this.getSocialCells(dateRange.start, dateRange.end)
+          .then(data => {
+
+            this.setState({
+              socialCells: data
+            })
+
+          })
+
+        }
+
+      } else if(this.props.userId !== "") {
+
+        const dateRange = this.grabDateRange()
+        this.getSocialCells(dateRange.start, dateRange.end)
+        .then(data => {
+
+          this.setState({
+            socialCells: data
+          })
+
         })
 
-      })
+      }
+
+
 
     }
+
 
   }
 
@@ -107,7 +133,6 @@ class NewSocialMonth extends React.PureComponent{
 
   getSocialCells(start, end){
 
-    console.log(this.props.userId)
     const userId = this.props.userId;
 
 
