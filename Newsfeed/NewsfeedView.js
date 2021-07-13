@@ -5,7 +5,8 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Dimensions
  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -27,6 +28,7 @@ import NewsfeedComment from './NewsfeedComment';
 
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
+const height = Dimensions.get('window').height
 
 class NewsfeedView extends React.Component{
 
@@ -188,11 +190,6 @@ class NewsfeedView extends React.Component{
                     viewProfile = {this.viewProfile}
                     onCommentOpen = {this.onCommentOpen}
                      />
-
-                  <Button
-                    title = "Logout"
-                    onPress = {() => this.handleLogOut()}
-                  />
 
 
                </View>

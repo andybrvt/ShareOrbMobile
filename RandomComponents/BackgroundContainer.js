@@ -5,10 +5,12 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  StatusBar
+  StatusBar,
+  Dimensions
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+const height = Dimensions.get("window").height
 
 // Since most pages need to have a background and the safe area on top that
 // is blue so we can make resuable class that we can just wrap around each component
@@ -36,7 +38,7 @@ class BackgroundContainer extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"white"
+    backgroundColor:"white",
   },
   safeArea: {
     flex: 1,
