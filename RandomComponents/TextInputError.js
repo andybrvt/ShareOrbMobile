@@ -17,6 +17,7 @@ const TextInputError = (props) => (
       <TextInput
         placeholder = {props.placeholder}
         onChangeText = {props.onChangeText}
+        onBlur = {props.onBlur}
         style = {{
           height: 40,
           fontSize: 15,
