@@ -11,7 +11,7 @@ import {
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 
- class albumHome extends React.Component{
+ class AlbumHome extends React.Component{
 
    onHomeNav = () => {
      // this function will be use to navigate back
@@ -31,4 +31,4 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    }
  }
 
- export default albumHome;
+ export default AlbumHome;

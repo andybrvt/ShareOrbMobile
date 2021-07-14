@@ -57,10 +57,10 @@ import Settings from './Settings/Settings';
 import Privacy from './Settings/Privacy';
 import UserInfo from './Settings/UserInfo';
 
-import createAlbum from './CollabAlbum/albumHome';
+import AlbumHome from './CollabAlbum/AlbumHome';
 
 import { Ionicons } from '@expo/vector-icons';
-import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle, Book} from "react-native-feather";
+import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle, FolderPlus} from "react-native-feather";
 import TestReanimated from './PostingFolder/TestReanimated';
 import DayAlbum from './SocialCalendar/DayAlbum.js';
 import Test from './PostingFolder/Test';
@@ -278,13 +278,13 @@ class App extends Component{
             })}
               />
          <Tab.Screen
-           name="albumHome"
-           component={albumHome}
+           name="AlbumHome"
+           component={AlbumHome}
            options={{
-              tabBarLabel: 'albumHome',
+              tabBarLabel: 'AlbumHome',
               tabBarLabel: false,
               tabBarIcon: ({ color }) => (
-                  <BookOpen stroke={color} strokeWidth={2} width={25} height={25} />
+                  <FolderPlus stroke={color} strokeWidth={2} width={25} height={25} />
               ),
             }}
             />
