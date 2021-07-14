@@ -20,7 +20,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as actions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import axios from "axios";
-import DatePicker from 'react-native-datepicker'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 const width = Dimensions.get("window").width
@@ -88,7 +88,7 @@ class Signup extends React.Component{
         }
         if(err.response.data.username){
           this.setState({
-            usernameError: err.response.data.username[0] 
+            usernameError: err.response.data.username[0]
           })
         }
 
@@ -226,10 +226,6 @@ class Signup extends React.Component{
                    Sign up
                  </Text>
 
-                 <Text style = {{color: 'red'}}>
-
-                 </Text>
-
                </View>
 
                <View style = {styles.inputContainer}>
@@ -268,7 +264,21 @@ class Signup extends React.Component{
 
                </View>
 
-
+               <View style = {styles.inputContainer}>
+                 <Text>Birthday </Text>
+                 <View style = {{
+                     borderWidth: 2,
+                     height: 45,
+                     borderRadius: 5,
+                     backgroundColor: 'white',
+                     borderColor: '#1890ff',
+                     justifyContent: 'center'
+                   }}>
+                   <Text style = {{
+                       color: 'lightgray'
+                     }}> Enter Birthday</Text>
+                 </View>
+               </View>
 
                <View style = {styles.inputContainer}>
                  <Text>Email </Text>
