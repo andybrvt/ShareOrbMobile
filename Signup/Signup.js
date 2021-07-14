@@ -11,11 +11,17 @@ import {
  Keyboard,
  TouchableWithoutFeedback,
  KeyboardAvoidingView,
- Dimensions
+ Dimensions,
+ AsyncStorage
 } from "react-native";
 import MainLogo from '../logo.svg';
 import TextInputError from '../RandomComponents/TextInputError';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as actions from '../store/actions/auth';
+import { connect } from 'react-redux';
+import axios from "axios";
+import DatePicker from 'react-native-datepicker'
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
@@ -45,14 +51,77 @@ class Signup extends React.Component{
       password: "",
       passwordError: "",
       passwordConfirm:"",
-      passwordConfirmError: ""
+      passwordConfirmError: "",
     }
   }
 
 
   handleSubmit = () => {
-    console.log('stuff here')
-    console.log(this.state)
+    console.log('hit here')
+    const {username, firstName, lastName,
+    email, password, passwordConfirm} = this.state;
+
+    return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
+      username: username,
+      first_name: firstName,
+      last_name: lastName,
+      dob: "2021-01-01",
+      email: email,
+      password1: password,
+      password2: passwordConfirm
+    }).then(res =>{
+        console.log(res.data)
+        const token = res.data.key;
+        AsyncStorage.setItem('token', token)
+        this.props.authSuccess(token);
+
+    }).catch(err => {
+      console.log(err.response)
+      if(err.response){
+        console.log(err.response)
+        this.props.authFail(err.response.data)
+
+        if(err.response.data.email){
+          this.setState({
+            emailError: err.response.data.email[0]
+          })
+        }
+        if(err.response.data.username){
+          this.setState({
+            usernameError: err.response.data.username[0] 
+          })
+        }
+
+      } else {
+
+      }
+
+    })
+
+  }
+
+  checkErrors = () => {
+
+    const {usernameError, firstNameError, lastNameError,
+    emailError, passwordError, passwordConfirmError} = this.state
+
+    const {username, firstName, lastName,
+    email, password, passwordConfirm} = this.state
+    if(usernameError || firstNameError || lastNameError ||
+      emailError || passwordError || passwordConfirmError
+    ){
+      return true;
+    }
+
+    if(!username || !firstName || !lastName ||
+      !email || !password || !passwordConfirm
+    ){
+      return true;
+    }
+
+
+
+    return false;
   }
 
   // this function will be used to validate the values in the
@@ -64,7 +133,7 @@ class Signup extends React.Component{
         return "Please input a username"
       }
 
-      if(values.includes("@")){
+      if(value.includes("@")){
         return "You cannot have an @ in your username."
       }
 
@@ -85,25 +154,31 @@ class Signup extends React.Component{
       if(!value){
         return  "Please input your email"
       }
+      if(email(value)){
+        return "Not a valid email"
+      }
     }
     if(fieldName === "password"){
       if(!value){
         return  "Please input a password"
       }
-      if(values.length < 9){
+      if(value.length < 9){
         // validate if the password is longer than 8 characters
         return "New password must be at least 10 characters long."
-      } else if(values.search(/[A-Z]/)< 0){
+      } else if(value.search(/[A-Z]/)< 0){
         // Validates if it has an uppercase
         return "New password must have an upper case letter."
-      } else if(values.search(/[0-9]/)< 0){
+      } else if(value.search(/[0-9]/)< 0){
         // Validate if it has a number
         return 'New password must have at least one number.'
       }
     }
     if(fieldName === "passwordConfirm"){
       if(!value){
-        return  "Please confirm your password"
+        return  "Please confirm your password";
+      }
+      if(value !== this.state.password){
+        return "Passwords must match";
       }
     }
 
@@ -113,7 +188,18 @@ class Signup extends React.Component{
   render(){
     const dobMonth=this.state.dobMonth;
     const dobDay=this.state.dobDay;
-    console.log(this.state)
+
+    let error = {}
+    if(this.props.errorMessage){
+      error = this.props.errorMessage
+    }
+    const { loading, token } = this.props;
+
+    console.log('here is the errroe')
+    console.log(error)
+    if(token){
+      this.props.navigation.navigate("LoadingScreen");
+    }
     return(
       <SafeAreaView style = {{
           flex: 1,
@@ -140,6 +226,10 @@ class Signup extends React.Component{
                    Sign up
                  </Text>
 
+                 <Text style = {{color: 'red'}}>
+
+                 </Text>
+
                </View>
 
                <View style = {styles.inputContainer}>
@@ -147,10 +237,10 @@ class Signup extends React.Component{
                    <TextInputError
                      onBlur = {() => this.setState({
                        usernameError: this.validate("username", this.state.username)})}
-                     placeholder = {"Username"}
                      onChangeText = {(value) => this.setState({username: value.trim()})}
+                     placeholder = "First Name"
                      error = {this.state.usernameError}
-                      />
+                     />
                </View>
 
                <View style = {styles.duoInputContainer}>
@@ -192,20 +282,14 @@ class Signup extends React.Component{
                      />
                </View>
 
-               <View style = {styles.inputContainer}>
-                 <Text>Birthday </Text>
-                   <TextInputError
-                     // onChangeText = {(value) => this.setState({username: value.trim()})}
-                     placeholder = "Birthday"
-                     />
-               </View>
+
 
                <View style = {styles.inputContainer}>
                  <Text >Password </Text>
                    <TextInputError
                      onBlur = {() => this.setState({
                        passwordError: this.validate("password", this.state.password)})}
-
+                     secureTextEntry={true}
                      onChangeText = {(value) => this.setState({password: value.trim()})}
                      placeholder = "Password"
                      error = {this.state.passwordError}
@@ -221,20 +305,37 @@ class Signup extends React.Component{
                      onChangeText = {(value) => this.setState({passwordConfirm: value.trim()})}
                      placeholder = "Confirm Password"
                      error = {this.state.passwordConfirmError}
-
+                     secureTextEntry={true}
                    />
                </View>
 
-               <TouchableOpacity
-                 onPress = {() => this.handleSubmit()}
-                 style = {styles.signUpButton}
-                 >
-                   <Text style = {{
-                       color: 'white'
-                     }}>
-                     Sign Up
-                   </Text>
-               </TouchableOpacity>
+               {
+                 this.checkErrors() ?
+
+
+                 <View
+                   // onPress = {() => this.handleSubmit()}
+                   style = {styles.signUpButtonDisabled}
+                   >
+                     <Text style = {{
+                         color: 'white'
+                       }}>
+                       Sign Up
+                     </Text>
+                 </View>
+                 :
+                 <TouchableOpacity
+                   onPress = {() => this.handleSubmit()}
+                   style = {styles.signUpButton}
+                   >
+                     <Text style = {{
+                         color: 'white'
+                       }}>
+                       Sign Up
+                     </Text>
+                 </TouchableOpacity>
+
+               }
 
 
                <TouchableOpacity>
@@ -259,7 +360,45 @@ class Signup extends React.Component{
   }
 }
 
-export default Signup;
+
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    errorMessage: state.auth.error,
+    token: state.auth.token,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    authSuccess: (token) => dispatch(actions.authSuccess(token)),
+    addCredentials: (
+      username,
+      id,
+      friends,
+      posts,
+      first_name,
+      last_name,
+      profile_picture,
+      following,
+      followers
+    ) => dispatch(actions.addCredentials(
+      username,
+      id,
+      friends,
+      posts,
+      first_name,
+      last_name,
+      profile_picture,
+      following,
+      followers
+    )),
+    authFail: (err) => dispatch(actions.authFail(err))
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
 
 
 const styles = StyleSheet.create({
@@ -289,6 +428,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#1890ff",
+    marginTop: 10,
+  },
+  signUpButtonDisabled:{
+    position: "relative",
+    width: width*0.8,
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "gainsboro",
     marginTop: 10,
   },
   duoInputContainer: {

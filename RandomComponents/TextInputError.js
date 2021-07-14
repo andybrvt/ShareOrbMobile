@@ -18,6 +18,7 @@ const TextInputError = (props) => (
         placeholder = {props.placeholder}
         onChangeText = {props.onChangeText}
         onBlur = {props.onBlur}
+        secureTextEntry={props.secureTextEntry}
         style = {{
           height: 40,
           fontSize: 15,
