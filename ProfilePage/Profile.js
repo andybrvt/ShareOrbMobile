@@ -9,7 +9,8 @@ import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
-import { Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
+import { Tag, Bookmark, Bell, Search, ChevronRight, Settings
+  ,MessageCircle, UserPlus} from "react-native-feather";
 
 
 // This will be the bulk of the profile page
@@ -22,6 +23,13 @@ class Profile extends React.Component{
     this.state = {
 
     }
+  }
+
+  ViewChats = () => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+    console.log("hi")
+    this.props.navigation.navigate("Chats")
   }
 
   ViewNoti = () => {
@@ -115,19 +123,26 @@ class Profile extends React.Component{
       <BackgroundContainer>
         <View style={styles.viewStyle}>
           <View style={{flex:1, justifyContent:'center'}}>
-          <Text style={styles.textStyle}>{global.CAPITALIZE(this.props.username)}</Text>
+          <Text style={styles.textStyle}>{this.props.username}</Text>
           </View>
 
           <View
 
             style={{flex:1,justifyContent:'center',
              alignItems:'flex-end', padding:20}}>
-             <Bell
-               onPress = {() => this.ViewNoti()}
-               stroke="black" strokeWidth={2.5} width={25} height={25}/>
-             <UserPlus
-               onPress = {() => this.ViewProfile()}
-               stroke="black" strokeWidth={2.5} width={25} height={25}/>
+             <View style={{flexDirection:'row'}}>
+               <MessageCircle
+                 style={{right:20}}
+                 onPress = {() => this.ViewChats()}
+                 stroke="black" strokeWidth={2.5} width={25} height={25}/>
+               <Bell
+                 style={{right:10}}
+                 onPress = {() => this.ViewNoti()}
+                 stroke="black" strokeWidth={2.5} width={25} height={25}/>
+               <UserPlus
+                 onPress = {() => this.ViewProfile()}
+                 stroke="black" strokeWidth={2.5} width={25} height={25}/>
+             </View>
           </View>
         </View>
         <View style = {styles.profileHeader}>

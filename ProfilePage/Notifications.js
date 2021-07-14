@@ -5,7 +5,8 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
  } from 'react-native';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  // this class will be a page on its own where
@@ -23,6 +24,7 @@ import { MoreVertical
    }
 
    renderItem = ({item}) => {
+
      // like notification
      // comment Notification
      // private -- accept/decline friend Notification
@@ -44,9 +46,22 @@ import { MoreVertical
          <View style={{flex:6,  flexDirection:'row', flexWrap:'wrap'}}>
            <Text style={{fontWeight:'bold'}}> {item.username} </Text>
            {(item.action&&(item.private=="true"))?
-             <View>
-             <Text>{item.action}ff</Text>
-             </View>
+             <View style={{paddingBottom:10}}>
+             <Text>{item.action}
+             </Text>
+             <View style={{flexDirection:'row'}}>
+               <TouchableOpacity>
+                 <View style={styles.editButton}>
+                    <Text style={{color:'white'}}>Accept</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <View style={styles.declineButton}>
+                     <Text style={{color:'white',}}>Decline</Text>
+                   </View>
+                </TouchableOpacity>
+               </View>
+              </View>
            :
            <Text>{item.action}</Text>
          }
@@ -123,5 +138,28 @@ import { MoreVertical
      )
    }
  }
+
+ const styles = StyleSheet.create({
+   editButton: {
+     alignItems: 'center',
+     paddingVertical: 4,
+     borderRadius: 3,
+     top:10,
+     alignItems: "center",
+     backgroundColor: "#1890ff",
+     padding: 10,
+
+   },
+   declineButton: {
+     alignItems: 'center',
+     paddingVertical: 5,
+     borderRadius: 3,
+     top:10,
+     alignItems: "center",
+     backgroundColor: "#ff4d4f",
+     padding: 10,
+     left:10,
+   },
+   });
 
  export default Notifications;

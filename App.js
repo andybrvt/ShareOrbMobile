@@ -29,14 +29,6 @@ import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocke
 import ChatSidePanelWebSocketInstance from './Websockets/newChatSidePanelWebsocket';
 import SocialCommentsWebsocketInstance from './Websockets/commentsCellWebsocket';
 import SocialCalCellPageWebSocketInstance from './Websockets/socialCalCellWebsocket';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faSearch,
-   faUserCircle,
-   faHome,
-   faMapSigns,
-   faPlusSquare,
-
- } from '@fortawesome/free-solid-svg-icons'
 // import BottomNavigation from './BottomNavigation';
 import { TabActions } from '@react-navigation/native';
 import Constant from 'expo-constants';
@@ -65,13 +57,17 @@ import Settings from './Settings/Settings';
 import Privacy from './Settings/Privacy';
 import UserInfo from './Settings/UserInfo';
 
+import createAlbum from './CollabAlbum/albumHome';
+
 import { Ionicons } from '@expo/vector-icons';
-import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle} from "react-native-feather";
+import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle, Book} from "react-native-feather";
 import TestReanimated from './PostingFolder/TestReanimated';
 import DayAlbum from './SocialCalendar/DayAlbum.js';
 import Test from './PostingFolder/Test';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useScrollToTop } from '@react-navigation/native';
+
+
 
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -282,13 +278,13 @@ class App extends Component{
             })}
               />
          <Tab.Screen
-           name="Chats"
-           component={Chats}
+           name="albumHome"
+           component={albumHome}
            options={{
-              tabBarLabel: 'Messages',
+              tabBarLabel: 'albumHome',
               tabBarLabel: false,
               tabBarIcon: ({ color }) => (
-                  <MessageCircle stroke={color} strokeWidth={2} width={25} height={25} />
+                  <BookOpen stroke={color} strokeWidth={2} width={25} height={25} />
               ),
             }}
             />

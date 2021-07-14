@@ -8,8 +8,7 @@ import MainLogo from '../logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
-import { faBell } from '@fortawesome/free-regular-svg-icons'
-import { Search, Bell, MessageCircle} from "react-native-feather";
+import { Search, Bell, MessageCircle, BookOpen} from "react-native-feather";
 import Animated from 'react-native-reanimated';
 
 const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
