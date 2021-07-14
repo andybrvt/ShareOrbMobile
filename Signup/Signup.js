@@ -57,6 +57,16 @@ class Signup extends React.Component{
           <KeyboardAvoidingView
             style = {styles.container}
              behavior = "padding">
+
+             <ScrollView
+               contentContainerStyle = {{
+                 alignItems: 'center'
+               }}
+               style = {{
+                 width: width,
+               }}
+               showsVerticalScrollIndicator = {false}
+               >
                <View style = {styles.logoContainer}>
                  <MainLogo height = {100}  width = {200} />
 
@@ -74,21 +84,26 @@ class Signup extends React.Component{
                       />
                </View>
 
-               <View style = {styles.inputContainer}>
-                 <Text >First Name </Text>
-                   <TextInputError
-                     onChangeText = {(value) => this.setState({firstName: value.trim()})}
-                     placeholder = "First Name"
-                     />
+               <View style = {styles.duoInputContainer}>
+                 <View style = {styles.smallInputContainer}>
+                   <Text >First Name </Text>
+                     <TextInputError
+                       onChangeText = {(value) => this.setState({firstName: value.trim()})}
+                       placeholder = "First Name"
+                       />
+                 </View>
+
+                 <View style = {[{marginLeft: 5},styles.smallInputContainer]}>
+                   <Text >Last Name </Text>
+                     <TextInputError
+                       onChangeText = {(value) => this.setState({lastName: value.trim()})}
+                       placeholder = "Last Name"
+                       />
+                 </View>
+
                </View>
 
-               <View style = {styles.inputContainer}>
-                 <Text >Last Name </Text>
-                   <TextInputError
-                     onChangeText = {(value) => this.setState({lastName: value.trim()})}
-                     placeholder = "Last Name"
-                     />
-               </View>
+
 
                <View style = {styles.inputContainer}>
                  <Text>Email </Text>
@@ -126,7 +141,9 @@ class Signup extends React.Component{
                  onPress = {() => this.handleSubmit()}
                  style = {styles.signUpButton}
                  >
-                   <Text>
+                   <Text style = {{
+                       color: 'white'
+                     }}>
                      Sign Up
                    </Text>
                </TouchableOpacity>
@@ -140,6 +157,8 @@ class Signup extends React.Component{
                       />
                  </View>
                </TouchableOpacity>
+             </ScrollView>
+
 
 
           </KeyboardAvoidingView>
@@ -159,20 +178,19 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    // backgroundColor: 'red',
+    backgroundColor: 'white',
     alignItems: 'center',
     width: width
   },
   logoContainer:{
-    backgroundColor: 'blue',
     width: width*0.8,
     alignItems: 'center'
   },
   inputContainer: {
-    backgroundColor: 'orange',
-    height: height*0.09,
+    // height: height*0.09,
     width: width*0.8,
-    alignItems: 'center'
+    position: 'relative'
+    // alignItems: 'center'
 
   },
   signUpButton:{
@@ -183,6 +201,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#1890ff",
+    marginTop: 10,
+  },
+  duoInputContainer: {
+    flexDirection: 'row'
+  },
+  smallInputContainer: {
+    width: width*0.4,
+    position: 'relative'
   }
 
 })

@@ -5,13 +5,28 @@ import {View, TextInput, Text} from 'react-native';
 // will have error show on the bottom
 
 const TextInputError = (props) => (
-  <View>
-    <TextInput
-      placeholder = {props.placeholder}
-      onChangeText = {props.onChangeText}
-       />
+  <View style = {{
+    }}>
+    <View style = {{
+        borderWidth: 2,
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: 'white',
+        borderColor: '#1890ff'
+      }}>
+      <TextInput
+        placeholder = {props.placeholder}
+        onChangeText = {props.onChangeText}
+        style = {{
+          height: 40,
+          fontSize: 15,
+          marginLeft: 7
+        }}
+         />
+    </View>
+
      {
-        props.error ? <Text> {props.error}</Text> : null
+        props.error ? <Text style = {{color: 'red'}}>{props.error}</Text> : null
      }
 
   </View>
