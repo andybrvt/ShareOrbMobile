@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Modal,
+  TouchableWithoutFeedback
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -978,9 +979,36 @@ class PostingPage extends React.Component{
 
 
                 {this.renderPictures()}
+                <View style={styles.addBorder}>
+                 <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
+                    <TextInput
+                      style = {{
+                        width: "100%",
+                        fontSize: 16,
+                      }}
+                     placeholder="Write something about your day..."
+                     placeholderTextColor="lightgray"
+                     multiline = {true}
+                     numberOfLines = {2}
+                     value = {this.state.caption}
+                     onChangeText = {this.handleCaptionChange}
+                   />
+                 </TouchableWithoutFeedback>
+                </View>
+
+
 
              </View>
 
+             <View>
+               <Text>
+                 put image grid below here
+               </Text>
+             </View>
+
+
+
+             {/*
              <View style = {styles.dayTextContainer}>
                <Camera
                  height = {35}
@@ -992,8 +1020,8 @@ class PostingPage extends React.Component{
                    width = {35}
                    stroke = "black"
                    fill= "white" />
-               <Text style = {styles.smallText}> Images above will be saved in your daily album </Text>
              </View>
+             */}
             {/*
              <View style = {styles.dayTextContainer}>
                <Text style = {styles.dayText}> National Days </Text>
@@ -1026,7 +1054,7 @@ class PostingPage extends React.Component{
              onAction = {this.deletePicture}
              onCancel = {this.onCloseDelete}
              />
-
+           {/*
            <FinalPostingPage
              slide = {this.slideAnimation}
              visible = {this.state.showFinal}
@@ -1035,6 +1063,7 @@ class PostingPage extends React.Component{
              onChange = {this.handleCaptionChange}
              caption = {this.state.caption}
               />
+            */}
 
 
 
@@ -1073,14 +1102,25 @@ class PostingPage extends React.Component{
        flexDirection: 'column',
        alignItems: 'center',       //THIS LINE HAS CHANGED
      },
+     addBorder:{
+       top:'75%',
+       padding:20,
+       height:'25%',
+       borderTopWidth:1,
+       borderTopColor: '#f2f2f2',
+       borderBottomWidth: 1,
+       borderBottomColor: '#f2f2f2',
+
+     },
      wholeContainer: {
         flex:1,
         alignItems: "center"
      },
      imageContainerContainer: {
-       flex: 1,
-       // flexDirection: "row",
-       width: width,
+
+       // flexDirection: "row",\
+       // backgroundColor:'red',
+       width: '100%',
        // flexWrap: 'wrap',
      },
      imageContainer: {
@@ -1135,7 +1175,7 @@ class PostingPage extends React.Component{
      addSmallImage: {
        width: "90%",
        height: "90%",
-       borderWidth: 5,
+       borderWidth: 3,
        borderRadius: 15,
        borderStyle: 'dashed',
        borderColor: 'lightgray',

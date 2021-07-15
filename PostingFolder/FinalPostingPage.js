@@ -29,7 +29,7 @@ import { Tag, Bookmark, MapPin} from "react-native-feather";
 
  class FinalPostingPage extends React.Component{
 
-   
+
 
    frequentChatPeople = () => {
      // this function will be used to render the headers of the
@@ -232,9 +232,9 @@ const styles = StyleSheet.create({
 
  },
   addBorder:{
-    top:'10%',
+
     padding:30,
-    height:175,
+    height:275,
     borderTopWidth:1,
     borderTopColor: '#f2f2f2',
     borderBottomWidth: 1,
