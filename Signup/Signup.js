@@ -42,7 +42,7 @@ const { Value, cond, set } = Animated;
 class Signup extends React.Component{
 
   slide = new Value(SCREEN_HEIGHT)
-  slideAnimation = withTimingTransition(this.slide, {duration: 300});
+  slideAnimation = withTimingTransition(this.slide, {duration: 100});
 
   constructor(props){
     super(props)
@@ -76,7 +76,7 @@ class Signup extends React.Component{
     setTimeout(() =>{
       this.showDatePicker.setValue(true);
 
-    }, 300)
+    }, 100)
   }
   onCloseDatePicker = () => {
 
@@ -87,7 +87,7 @@ class Signup extends React.Component{
       this.setState({
         showDatePicker: false
       })
-    }, 300);
+    }, 100);
 
 
   }
@@ -242,7 +242,7 @@ class Signup extends React.Component{
           flex: 1,
         }}>
         <Animated.Code>
-          {() => cond(this.showDatePicker, set(this.slide, 0), set(this.slide, 300))}
+          {() => cond(this.showDatePicker, set(this.slide, SCREEN_HEIGHT-300), set(this.slide, SCREEN_HEIGHT))}
         </Animated.Code>
         <TouchableWithoutFeedback onPress = {() => Keyboard.dismiss()} >
 

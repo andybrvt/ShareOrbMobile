@@ -43,41 +43,53 @@ class BottomModal extends React.Component{
               style = {{
                 backgroundColor: "#000000aa",
                 flex: "1",
-
               }}>
               <Animated.View style = {{
-                  backgroundColor: "#ffffff",
+                  backgroundColor: "#808080",
                   // margin: 50,
-                  padding: 30,
-                  borderRadius: 10,
-                  height: 200,
-                  alignItems: 'center',
+                  borderRadius:0,
+                  height: 300,
                   transform: [
                     {translateY: this.props.slide}
-                  ]
+                  ],
+                  justifyContent: 'center',
+                  position: 'relative'
                   // flex: 1
                 }}>
-                <Text style = {{
-                   textAlign: "center",
-                   fontSize: 20}}>
-                  Are you sure you want to delete this photo?
-                </Text>
-                <TouchableOpacity
-                  onPress = {() => this.onAction()}
-                  style = {styles.button}
-                  >
-                  <Text
-                    style = {styles.buttonText}
-                    >Accept</Text>
-                </TouchableOpacity>
+                <View style = {{
+                    flexDirection: 'row',
+                    // backgroundColor: 'red',
+                    position: 'absolute',
+                    top: 0
+                  }}>
+                  <View style = {{
+                      flex: 1,
+                      alignItems: 'flex-start'
+                    }}>
+                    <Button
+                      color="white"
+                      title = "Cancel"
+                       />
+                  </View>
 
-                <View
-                  style = {styles.cancelText}>
-                  <Text
-                    onPress = {() => this.onCancel()}
+                  <View style = {{
+                      flex: 1,
+                      alignItems: 'flex-end'
+                    }}>
+                    <Button
+                      color = "white"
+                      title = "Save"
+                       />
+                  </View>
 
-                    > Nope, I'm good </Text>
                 </View>
+                <DateTimePicker
+                   testID="dateTimePicker"
+                   value = {new Date()}
+                   mode="date"
+                   is24Hour={true}
+                   display="spinner"
+                 />
 
               </Animated.View>
             </View>
