@@ -18,7 +18,7 @@ import {
 
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import { Zap, ZapOff } from "react-native-feather";
+import { Zap, ZapOff, X } from "react-native-feather";
 
 
 class CameraScreen extends React.Component{
@@ -106,6 +106,13 @@ class CameraScreen extends React.Component{
 
   }
 
+  onCancelPhoto(){
+    this.setState({
+      isOpen: false,
+      imagePreview: null
+    })
+  }
+
   render(){
 
     return(
@@ -118,9 +125,27 @@ class CameraScreen extends React.Component{
               this.state.imagePreview !== null ?
 
               <Modal  animationType = "fade" visible = {this.state.isOpen}>
+
+
+
+
                 <Image source = {{uri:this.state.imagePreview}}
                   style = {{height: '100%', width: "100%"}}
                    />
+
+               <TouchableOpacity
+                 onPress = {() => this.onCancelPhoto()}
+                 style = {{
+                   position: 'absolute',
+                   top: 20,
+                   left: 10
+                 }}>
+                 <X
+                   stroke = 'white'
+                   height = {40}
+                   width = {40}/>
+               </TouchableOpacity>
+
               </Modal>
 
               :
