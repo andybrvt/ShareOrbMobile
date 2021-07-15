@@ -12,19 +12,23 @@ import {
  TouchableWithoutFeedback,
  KeyboardAvoidingView,
  Dimensions,
- AsyncStorage
+ AsyncStorage,
+ Modal
 } from "react-native";
 
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import { Zap } from "react-native-feather";
+import { Zap, ZapOff } from "react-native-feather";
 
 
 class CameraScreen extends React.Component{
 
   state = {
     allowCamera: false,
-    type: "front"
+    type: "front",
+    showFlash: "off",
+    imagePreview: null,
+    isOpen: false,
   }
 
   componentDidMount(){
@@ -43,6 +47,22 @@ class CameraScreen extends React.Component{
         type: 'front'
       })
     }
+
+  }
+  onFlash(){
+
+    const flash = this.state.showFlash;
+
+    if(flash === "off"){
+      this.setState({
+        showFlash: 'on'
+      })
+    } else {
+      this.setState({
+        showFlash: 'off'
+      })
+    }
+
 
   }
 
@@ -66,6 +86,26 @@ class CameraScreen extends React.Component{
     }
   }
 
+  takePicture = async() => {
+    if(!this.cameraRef){
+      return
+    }
+
+    try {
+      const pic = await this.cameraRef.takePictureAsync();
+
+      console.log(pic);
+      this.setState({
+        isOpen: true,
+        imagePreview: pic.uri
+      })
+    } catch {
+      console.log('error taking pictures')
+    }
+
+
+  }
+
   render(){
 
     return(
@@ -73,26 +113,69 @@ class CameraScreen extends React.Component{
         {
           this.state.allowCamera ?
           <View style = {{flex: 1}}>
-            <Camera
-              type = {this.state.type}
-              style = {{flex: 1}}>
 
-                <TouchableWithoutFeedback
-                  onPress = {() => this.onSwitchCamera()}
-                  style = {{flex: 1}}>
-                  <View style = {{ flex: 1, }}></View>
-                </TouchableWithoutFeedback>
-                <View style ={{
-                    position: 'absolute',
-                    top: 100
-                  }}>
-                  <Zap
-                    stroke = "white"
-                    width = {40}
-                    height = {40} />
-                </View>
+            {
+              this.state.imagePreview !== null ?
 
-            </Camera>
+              <Modal  animationType = "fade" visible = {this.state.isOpen}>
+                <Image source = {{uri:this.state.imagePreview}}
+                  style = {{height: '100%', width: "100%"}}
+                   />
+              </Modal>
+
+              :
+
+              <Camera
+                ref = {node => {this.cameraRef = node}}
+                type = {this.state.type}
+                flashMode = {this.state.showFlash}
+                style = {{flex: 1}}>
+
+                  <TouchableWithoutFeedback
+                    onPress = {() => this.onSwitchCamera()}
+                    style = {{flex: 1}}>
+                    <View style = {{ flex: 1, }}></View>
+                  </TouchableWithoutFeedback>
+                  {
+                    this.state.showFlash === "on" ?
+
+                    <TouchableOpacity
+                      onPress = {() => this.onFlash()}
+                      style ={{
+                        position: 'absolute',
+                        top: 100
+                      }}>
+                      <Zap
+                        stroke = "white"
+                        width = {40}
+                        height = {40} />
+                    </TouchableOpacity>
+
+                    :
+
+                    <TouchableOpacity
+                      onPress = {() => this.onFlash()}
+                      style ={{
+                        position: 'absolute',
+                        top: 100
+                      }}>
+                      <ZapOff
+                        stroke = "white"
+                        width = {40}
+                        height = {40} />
+                    </TouchableOpacity>
+
+                  }
+
+                  <TouchableOpacity
+                    onPress = {() => this.takePicture()}
+                    style = {styles.captureBtn}></TouchableOpacity>
+
+              </Camera>
+            }
+
+
+
           </View>
 
           :
@@ -135,6 +218,16 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: "white"
+  },
+  captureBtn: {
+    position: 'absolute',
+    bottom: 20,
+    width: 80,
+    height: 80,
+    borderRadius: 100,
+    borderWidth: 5,
+    alignSelf: 'center',
+    borderColor: 'white'
   }
 })
 
