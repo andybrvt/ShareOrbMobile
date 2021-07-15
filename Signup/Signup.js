@@ -21,6 +21,10 @@ import * as actions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import axios from "axios";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import BottomModal from '../RandomComponents/BottomModal';
+import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
+import Animated, {Easing} from 'react-native-reanimated';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 
 
 const width = Dimensions.get("window").width
@@ -32,8 +36,14 @@ const email = value =>
     ? 'Invalid email address'
     : undefined
 
+const { Value, cond, set } = Animated;
+
 // import TimePicker from 'react-native-simple-time-picker';
 class Signup extends React.Component{
+
+  slide = new Value(SCREEN_HEIGHT)
+  slideAnimation = withTimingTransition(this.slide, {duration: 300});
+
   constructor(props){
     super(props)
     this.state = {
@@ -52,7 +62,34 @@ class Signup extends React.Component{
       passwordError: "",
       passwordConfirm:"",
       passwordConfirmError: "",
+      showDatePicker: false,
     }
+
+
+    this.showDatePicker = new Value(false);
+  }
+
+  openDatePicker = () => {
+    this.setState({
+      showDatePicker: true
+    })
+    setTimeout(() =>{
+      this.showDatePicker.setValue(true);
+
+    }, 300)
+  }
+  onCloseDatePicker = () => {
+
+    // this.slide.setValue(SCREEN_HEIGHT);
+    this.showDatePicker.setValue(false);
+
+    setTimeout(() => {
+      this.setState({
+        showDatePicker: false
+      })
+    }, 300);
+
+
   }
 
 
@@ -204,6 +241,9 @@ class Signup extends React.Component{
       <SafeAreaView style = {{
           flex: 1,
         }}>
+        <Animated.Code>
+          {() => cond(this.showDatePicker, set(this.slide, 0), set(this.slide, 300))}
+        </Animated.Code>
         <TouchableWithoutFeedback onPress = {() => Keyboard.dismiss()} >
 
           <KeyboardAvoidingView
@@ -266,18 +306,23 @@ class Signup extends React.Component{
 
                <View style = {styles.inputContainer}>
                  <Text>Birthday </Text>
-                 <View style = {{
-                     borderWidth: 2,
-                     height: 45,
-                     borderRadius: 5,
-                     backgroundColor: 'white',
-                     borderColor: '#1890ff',
-                     justifyContent: 'center'
-                   }}>
-                   <Text style = {{
-                       color: 'lightgray'
-                     }}> Enter Birthday</Text>
-                 </View>
+                 <TouchableOpacity
+                   onPress = {() => this.openDatePicker()}
+                   >
+                   <View style = {{
+                       borderWidth: 2,
+                       height: 45,
+                       borderRadius: 5,
+                       backgroundColor: 'white',
+                       borderColor: '#1890ff',
+                       justifyContent: 'center'
+                     }}>
+                     <Text style = {{
+                         color: 'lightgray'
+                       }}> Enter Birthday</Text>
+                   </View>
+                 </TouchableOpacity>
+
                </View>
 
                <View style = {styles.inputContainer}>
@@ -362,7 +407,11 @@ class Signup extends React.Component{
 
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
-
+        <BottomModal
+          slide = {this.slideAnimation}
+          onCancel = {this.onCloseDatePicker}
+          visible = {this.state.showDatePicker}
+           />
 
 
       </SafeAreaView>

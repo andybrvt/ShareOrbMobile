@@ -29,6 +29,8 @@ import { Tag, Bookmark, MapPin} from "react-native-feather";
 
  class FinalPostingPage extends React.Component{
 
+   
+
    frequentChatPeople = () => {
      // this function will be used to render the headers of the
      // chats
