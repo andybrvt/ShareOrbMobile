@@ -37,7 +37,8 @@ class BottomModal extends React.Component{
           visible = {this.props.visible}
           >
           <TouchableWithoutFeedback
-             onPress = {() =>this.onCancel()}>
+             onPress = {() =>this.onCancel()}
+             >
             <View
               onPress = {() => this.onCancel()}
               style = {{
@@ -67,6 +68,7 @@ class BottomModal extends React.Component{
                       alignItems: 'flex-start'
                     }}>
                     <Button
+                      onPress = {() =>this.onCancel()}
                       color="white"
                       title = "Cancel"
                        />
@@ -77,6 +79,7 @@ class BottomModal extends React.Component{
                       alignItems: 'flex-end'
                     }}>
                     <Button
+                      onPress = {() =>this.onCancel()}
                       color = "white"
                       title = "Save"
                        />
@@ -85,10 +88,12 @@ class BottomModal extends React.Component{
                 </View>
                 <DateTimePicker
                    testID="dateTimePicker"
-                   value = {new Date()}
+                   value = {this.props.value}
                    mode="date"
                    is24Hour={true}
                    display="spinner"
+                   onChange = {this.props.onChange}
+                   maximumDate = {new Date()}
                  />
 
               </Animated.View>
