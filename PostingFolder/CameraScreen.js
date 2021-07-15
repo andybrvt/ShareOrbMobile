@@ -17,15 +17,33 @@ import {
 
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
+import { Zap } from "react-native-feather";
+
 
 class CameraScreen extends React.Component{
 
   state = {
-    allowCamera: false
+    allowCamera: false,
+    type: "front"
   }
 
   componentDidMount(){
     this.allowPermissions()
+  }
+
+  onSwitchCamera(){
+    const camera = this.state.type;
+
+    if(camera === "front"){
+      this.setState({
+        type: 'back'
+      })
+    } else {
+      this.setState({
+        type: 'front'
+      })
+    }
+
   }
 
   allowPermissions = async() => {
@@ -55,7 +73,24 @@ class CameraScreen extends React.Component{
         {
           this.state.allowCamera ?
           <View style = {{flex: 1}}>
-            <Camera style = {{flex: 1}}>
+            <Camera
+              type = {this.state.type}
+              style = {{flex: 1}}>
+
+                <TouchableWithoutFeedback
+                  onPress = {() => this.onSwitchCamera()}
+                  style = {{flex: 1}}>
+                  <View style = {{ flex: 1, }}></View>
+                </TouchableWithoutFeedback>
+                <View style ={{
+                    position: 'absolute',
+                    top: 100
+                  }}>
+                  <Zap
+                    stroke = "white"
+                    width = {40}
+                    height = {40} />
+                </View>
 
             </Camera>
           </View>
