@@ -25,6 +25,7 @@ import BottomModal from '../RandomComponents/BottomModal';
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import Animated, {Easing} from 'react-native-reanimated';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+import * as dateFns from 'date-fns';
 
 
 const width = Dimensions.get("window").width
@@ -63,6 +64,7 @@ class Signup extends React.Component{
       passwordConfirm:"",
       passwordConfirmError: "",
       showDatePicker: false,
+      dob: new Date(),
     }
 
 
@@ -92,30 +94,33 @@ class Signup extends React.Component{
 
   }
 
+  onDobChange = (event, selectedDate) => {
+    console.log(dateFns.format(selectedDate, "yyyy-MM-dd"))
+    this.setState({
+      dob: selectedDate
+    })
+  }
+
 
   handleSubmit = () => {
-    console.log('hit here')
     const {username, firstName, lastName,
-    email, password, passwordConfirm} = this.state;
+    email, password, passwordConfirm, dob} = this.state;
 
     return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
       username: username,
       first_name: firstName,
       last_name: lastName,
-      dob: "2021-01-01",
+      dob: dateFns.format(dob, "yyyy-MM-dd"),
       email: email,
       password1: password,
       password2: passwordConfirm
     }).then(res =>{
-        console.log(res.data)
         const token = res.data.key;
         AsyncStorage.setItem('token', token)
         this.props.authSuccess(token);
 
     }).catch(err => {
-      console.log(err.response)
       if(err.response){
-        console.log(err.response)
         this.props.authFail(err.response.data)
 
         if(err.response.data.email){
@@ -232,8 +237,7 @@ class Signup extends React.Component{
     }
     const { loading, token } = this.props;
 
-    console.log('here is the errroe')
-    console.log(error)
+
     if(token){
       this.props.navigation.navigate("LoadingScreen");
     }
@@ -318,8 +322,8 @@ class Signup extends React.Component{
                        justifyContent: 'center'
                      }}>
                      <Text style = {{
-                         color: 'lightgray'
-                       }}> Enter Birthday</Text>
+                         color: 'black'
+                       }}> {dateFns.format(this.state.dob, "MM-dd-yyyy")}</Text>
                    </View>
                  </TouchableOpacity>
 
@@ -411,6 +415,8 @@ class Signup extends React.Component{
           slide = {this.slideAnimation}
           onCancel = {this.onCloseDatePicker}
           visible = {this.state.showDatePicker}
+          value = {this.state.dob}
+          onChange = {this.onDobChange}
            />
 
 
