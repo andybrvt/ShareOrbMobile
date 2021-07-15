@@ -37,6 +37,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 import PostingPage from './PostingFolder/PostingPage';
+import CameraScreen from './PostingFolder/CameraScreen';
 import NewPostingPage from './PostingFolder/NewPostingPage';
 import TestDrag from './PostingFolder/TestDrag';
 import Profile from './ProfilePage/Profile';
@@ -261,21 +262,21 @@ class App extends Component{
 
            <Tab.Screen
              name="Upload"
-             component={NewPostingPage}
+             component={CameraScreen}
              options={{
                tabBarLabel: false,
                 tabBarIcon: ({ color }) => (
                   <Aperture style={{bottom:5}} stroke="white" fill="#1890ff" strokeWidth={2} width={40} height={40}  />
                 ),
-                ...TransitionPresets.ModalSlideFromBottomIOS,
+                // ...TransitionPresets.ModalSlideFromBottomIOS,
               }}
-
-            listeners = {({navigation}) => ({
-              tabPress: event => {
-                event.preventDefault();
-                navigation.navigate("PostingPage")
-              }
-            })}
+            //
+            // listeners = {({navigation}) => ({
+            //   tabPress: event => {
+            //     event.preventDefault();
+            //     navigation.navigate("PostingPage")
+            //   }
+            // })}
               />
          <Tab.Screen
            name="AlbumHome"
