@@ -100,8 +100,6 @@ class Header extends React.Component{
              <MainLogo width = {120}/>
           </View>
           <View style = {styles.searchProfileContainer}>
-
-            <Search stroke="black" strokeWidth={2.5} width={20} height={20} />
             <MessageCircle
               stroke="black" strokeWidth={2.5} width={20} height={20} />
             <Bell
@@ -116,9 +114,7 @@ class Header extends React.Component{
                 stroke="black" strokeWidth={2.5} width={20} height={20} />
             </TouchableWithoutFeedback>
             */}
-
           </View>
-
         </Animated.View>
 
       </Animated.View>

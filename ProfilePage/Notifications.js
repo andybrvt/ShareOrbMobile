@@ -13,9 +13,8 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  // you can upload pictures and write a caption after uploaidng
  // pictures
  import { Avatar } from 'react-native-elements';
-import { FlatList } from "react-native-bidirectional-infinite-scroll";
-import { MoreVertical
-} from "react-native-feather";
+ import { FlatList } from "react-native-bidirectional-infinite-scroll";
+ import { MoreVertical} from "react-native-feather";
  class Notifications extends React.Component{
 
    onHomeNav = () => {
@@ -74,7 +73,7 @@ import { MoreVertical
         <MoreVertical
         style={{top:10}}
           stroke="gray"
-          width ={25}
+          width ={25} 
           height = {25}
         />
         */}

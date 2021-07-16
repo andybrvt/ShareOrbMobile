@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons'
 import { Avatar } from 'react-native-elements';
+import styled from 'styled-components/native'
 
 import FeatherIcon from 'feather-icons-react';
 import { Tag } from 'react-feather';
@@ -668,7 +669,7 @@ const styles = StyleSheet.create({
 
   videoFooterUserName: {
     color:'white',
-    fontSize:16,
+    fontSize:15,
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
@@ -677,8 +678,26 @@ const styles = StyleSheet.create({
     // fontWeight:'bold',
   },
 
+
+  // const UserName = styled.Text`
+	// font-size: 17px;
+	// color: rgba(255, 255, 255, 1);
+	// text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+	// font-weight: bold;
+	// letter-spacing: -0.3px;
+
+  // Example:
+  // text-shadow: -1px 1px 10px rgba(0, 0, 0, 0.75)
+  //
+  // {
+  //   textShadowColor: 'rgba(0, 0, 0, 0.75)',
+  //   textShadowOffset: {width: -1, height: 1},
+  //   textShadowRadius: 10
+  // }
+
   videoFooter: {
     position:'absolute',
+    fontSize:14,
     padding:10,
     color:'white',
     bottom:25,
@@ -689,6 +708,8 @@ const styles = StyleSheet.create({
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 10
+    // color: rgba(255, 255, 255, 0.8);
+
     // fontWeight:'bold',
   },
 
