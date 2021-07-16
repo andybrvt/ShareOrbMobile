@@ -21,6 +21,7 @@ import * as Permissions from 'expo-permissions';
 import { Zap, ZapOff, X } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
+import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 
 
 class CameraScreen extends React.Component{
@@ -136,6 +137,35 @@ class CameraScreen extends React.Component{
 
     ).then(res => {
       console.log(res.data)
+
+      if(res.data.coverPicChange){
+
+
+        const coverPicForm = new FormData();
+
+        coverPicForm.append('cellId', res.data.cell.id)
+        coverPicForm.append('createdCell', res.data.created)
+        // you
+        coverPicForm.append('coverImage', imageFile)
+
+        authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
+          coverPicForm,
+          {headers: {"content-type": "multipart/form-data"}}
+
+        ).then(res => {
+          // put loading here
+        })
+
+      }
+
+      WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
+        ownerId,
+        res.data.cell.id,
+        res.data.created
+      )
+
+
+
 
     })
 
@@ -275,6 +305,8 @@ const mapStateToProps = state => {
     curUserId: state.auth.id
   }
 }
+
+
 
 const styles = StyleSheet.create({
   notAllowed: {
