@@ -21,6 +21,8 @@ import * as Permissions from 'expo-permissions';
 import { Zap, ZapOff, X } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
+import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+import * as authActions from '../store/actions/auth';
 
 
 class CameraScreen extends React.Component{
@@ -117,8 +119,8 @@ class CameraScreen extends React.Component{
 
   onSavePhoto = () => {
     // upload just one picture
-    console.log('save image')
-
+    // console.log('save image')
+    //
     // you gonnna need the userid to get the cells and then the date to
     // filter out the cell
     const ownerId = this.props.curUserId;
@@ -129,15 +131,65 @@ class CameraScreen extends React.Component{
     formData.append("curDate", curDate)
     formData.append('image', imageFile)
 
-
+    this.props.authAddTotalLoad()
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSinglePic/`+ownerId,
       formData,
       {headers: {"content-type": "multipart/form-data"}}
 
     ).then(res => {
-      console.log(res.data)
+
+      this.props.authAddCurLoad()
+
+      if(res.data.coverPicChange){
+
+
+        const coverPicForm = new FormData();
+
+        coverPicForm.append('cellId', res.data.cell.id)
+        coverPicForm.append('createdCell', res.data.created)
+        // you
+        coverPicForm.append('coverImage', imageFile)
+
+        this.props.authAddTotalLoad()
+        authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
+          coverPicForm,
+          {headers: {"content-type": "multipart/form-data"}}
+
+        ).then(res => {
+          // put loading here
+
+          this.props.authAddCurLoad()
+
+        })
+
+      }
+
+      this.props.authAddTotalLoad()
+
+      WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
+        ownerId,
+        res.data.cell.id,
+        res.data.created
+      )
+
+      this.props.authAddCurLoad()
+
+      // if(this.props.curLoad >= this.props.totalLoad){
+      //   // if they are equal or larger you will just set it back to zero
+      //   this.props.authZeroCurLoad()
+      //   this.props.authZeroTotalLoad()
+      //
+      // }
+
+
+
+
 
     })
+
+    this.onCancelPhoto();
+    this.props.navigation.navigate("newsfeed");
+
 
   }
 
@@ -276,6 +328,18 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    authAddCurLoad: () => dispatch(authActions.authAddCurLoad()),
+    authAddTotalLoad: () => dispatch(authActions.authAddTotalLoad()),
+    authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
+    authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
+
+  }
+}
+
+
+
 const styles = StyleSheet.create({
   notAllowed: {
     flex: 1,
@@ -314,4 +378,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(mapStateToProps, null)(CameraScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CameraScreen);
