@@ -15,10 +15,12 @@ import {
  AsyncStorage,
  Modal
 } from "react-native";
-
+import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import { Zap, ZapOff, X } from "react-native-feather";
+import * as dateFns from 'date-fns';
+import  authAxios from '../util';
 
 
 class CameraScreen extends React.Component{
@@ -113,6 +115,32 @@ class CameraScreen extends React.Component{
     })
   }
 
+  onSavePhoto = () => {
+    // upload just one picture
+    console.log('save image')
+
+    // you gonnna need the userid to get the cells and then the date to
+    // filter out the cell
+    const ownerId = this.props.curUserId;
+    const curDate = dateFns.format(new Date(), "yyyy-MM-dd");
+
+    const formData = new FormData();
+    const imageFile = global.FILE_NAME_GETTER(this.state.imagePreview);
+    formData.append("curDate", curDate)
+    formData.append('image', imageFile)
+
+
+    authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSinglePic/`+ownerId,
+      formData,
+      {headers: {"content-type": "multipart/form-data"}}
+
+    ).then(res => {
+      console.log(res.data)
+
+    })
+
+  }
+
   render(){
 
     return(
@@ -126,11 +154,16 @@ class CameraScreen extends React.Component{
 
               <Modal  animationType = "fade" visible = {this.state.isOpen}>
 
+                <Image
+                  source = {{uri:this.state.imagePreview}}
+                  style = {{
+                    height: '100%',
+                    width: "100%",
+                    transform: [
+                      {scaleX: this.state.type === "front" ? -1 : 1}
+                    ]
+                  }}
 
-
-
-                <Image source = {{uri:this.state.imagePreview}}
-                  style = {{height: '100%', width: "100%"}}
                    />
 
                <TouchableOpacity
@@ -144,6 +177,16 @@ class CameraScreen extends React.Component{
                    stroke = 'white'
                    height = {40}
                    width = {40}/>
+               </TouchableOpacity>
+
+               <TouchableOpacity
+                 style = {styles.submitBtn}
+                 onPress = {() => this.onSavePhoto()}
+                 >
+                   <Text style = {{
+                       color: 'white',
+                       fontSize: 20
+                     }}> Save  </Text>
                </TouchableOpacity>
 
               </Modal>
@@ -227,6 +270,12 @@ class CameraScreen extends React.Component{
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    curUserId: state.auth.id
+  }
+}
+
 const styles = StyleSheet.create({
   notAllowed: {
     flex: 1,
@@ -253,7 +302,16 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     alignSelf: 'center',
     borderColor: 'white'
+  },
+  submitBtn: {
+    position: 'absolute',
+    padding: 15,
+    backgroundColor: '#1890ff',
+    borderRadius: 20,
+    alignSelf: 'flex-end',
+    bottom: 25,
+    right: 20
   }
 })
 
-export default CameraScreen;
+export default connect(mapStateToProps, null)(CameraScreen);
