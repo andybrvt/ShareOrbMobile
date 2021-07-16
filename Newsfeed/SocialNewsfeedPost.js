@@ -311,17 +311,17 @@ class SocialNewsfeedPost extends React.Component{
             >
             <View style = {styles.container}>
               <GestureRecognizer
-                  onPress = {() => console.log("hii")}
-                  onSwipe={(direction, state) => this.onSwipe(direction, state)}
-                  config={{
-                     velocityThreshold: 0.3,
-                     directionalOffsetThreshold: 90,
-                   }}>
-                  <Image
-                    style={styles.cover}
-                    resizeMode = "cover"
-                    source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
-                    />
+                onPress = {() => console.log("hii")}
+                onSwipe={(direction, state) => this.onSwipe(direction, state)}
+                config={{
+                   velocityThreshold: 0.3,
+                   directionalOffsetThreshold: 90,
+                 }}>
+                <Image
+                  style={styles.cover}
+                  resizeMode = "cover"
+                  source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
+                  />
               </GestureRecognizer>
 
                 <Avatar

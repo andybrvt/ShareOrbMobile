@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 18,
     fontWeight: 'bold'
+    
   },
   trendingDaysContainer: {
     height: "82%",
