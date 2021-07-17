@@ -25,6 +25,8 @@ const initialState ={
   bio: "",
   curLoad: 0,
   totalLoad: 0,
+
+  showCamera: false,
 }
 
 const authStart = (state, action) => {
@@ -149,6 +151,18 @@ const changeProfileInfoAuth = (state, action) => {
   })
 }
 
+const openShowCamera = (state, action) => {
+  return updateObject(state, {
+    showCamera: true
+  })
+}
+
+const closeShowCamera = (state, action) => {
+  return updateObject(state, {
+    showCamera: false
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.AUTH_START:
@@ -179,6 +193,10 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.CHANGE_PROFILE_INFO_AUTH:
       return changeProfileInfoAuth(state, action);
+    case actionTypes.OPEN_SHOW_CAMERA:
+      return openShowCamera(state,action);
+    case actionTypes.CLOSE_SHOW_CAMERA:
+      return closeShowCamera(state, action);
     default:
       return state;
   }

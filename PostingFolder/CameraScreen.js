@@ -18,7 +18,7 @@ import {
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import { Zap, ZapOff, X } from "react-native-feather";
+import { Zap, ZapOff, X, ArrowLeft } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
@@ -33,11 +33,20 @@ class CameraScreen extends React.Component{
     showFlash: "off",
     imagePreview: null,
     isOpen: false,
+    pageShow: true
   }
 
   componentDidMount(){
     this.allowPermissions()
+
+    console.log('camera screen did mount')
   }
+
+  componentDidUpdate(){
+    console.log('did update')
+  }
+
+
 
   onSwitchCamera(){
     const camera = this.state.type;
@@ -193,10 +202,17 @@ class CameraScreen extends React.Component{
 
   }
 
+  onRedirect = () => {
+    this.props.closeShowCamera();
+    this.props.navigation.goBack();
+  }
+
   render(){
 
     return(
-      <View style = {{flex: 1}}>
+      <Modal
+        visible = {this.props.showCamera}
+        style = {{flex: 1}}>
         {
           this.state.allowCamera ?
           <View style = {{flex: 1}}>
@@ -288,6 +304,18 @@ class CameraScreen extends React.Component{
                   }
 
                   <TouchableOpacity
+                    onPress = {() => this.onRedirect()}
+                    style = {{
+                      position: 'absolute',
+                      top: 20
+                    }}
+                    >
+                    <ArrowLeft
+                      stroke = "white"
+                      width = {40} height = {40} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
                     onPress = {() => this.takePicture()}
                     style = {styles.captureBtn}></TouchableOpacity>
 
@@ -317,19 +345,21 @@ class CameraScreen extends React.Component{
 
         }
 
-      </View>
+      </Modal>
     )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    curUserId: state.auth.id
+    curUserId: state.auth.id,
+    showCamera: state.auth.showCamera
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    closeShowCamera: () => dispatch(authActions.closeShowCamera()),
     authAddCurLoad: () => dispatch(authActions.authAddCurLoad()),
     authAddTotalLoad: () => dispatch(authActions.authAddTotalLoad()),
     authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),

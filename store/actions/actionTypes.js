@@ -16,7 +16,8 @@ export const CHANGE_PROFILE_INFO_AUTH  = "CHANGE_PROFILE_INFO_AUTH";
 
 export const CHANGE_PROFILE_PIC_AUTH = "CHANGE_PROFILE_PIC_AUTH";
 
-
+export const OPEN_SHOW_CAMERA = 'OPEN_SHOW_CAMERA';
+export const CLOSE_SHOW_CAMERA = "CLOSE_SHOW_CAMERA";
 // This is for the newsfeed
 export const FINAL_POST_MODAL = "FINAL_POST_MODAL"; // use when you open final modal
 

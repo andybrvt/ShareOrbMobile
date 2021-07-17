@@ -202,6 +202,7 @@ class App extends Component{
       <TopTab.Navigator
         swipeEnabled={true}
         tabBarPosition="top"
+        backBehavior = "history"
         barStyle = {{
           backgroundColor: "white",
 
@@ -230,6 +231,8 @@ class App extends Component{
         }}
         shifting={false}
         labeled={true}
+        backBehavior = "history"
+
         >
         <Tab.Screen
           name="Home"
@@ -270,13 +273,13 @@ class App extends Component{
                 ),
                 // ...TransitionPresets.ModalSlideFromBottomIOS,
               }}
-            //
-            // listeners = {({navigation}) => ({
-            //   tabPress: event => {
-            //     event.preventDefault();
-            //     navigation.navigate("PostingPage")
-            //   }
-            // })}
+
+            listeners = {({navigation}) => ({
+              tabPress: event => {
+                // event.preventDefault();
+                this.props.openShowCamera()
+              }
+            })}
               />
          <Tab.Screen
            name="AlbumHome"
@@ -373,6 +376,14 @@ class App extends Component{
                       gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
                     }}
                     name = 'PostingPage' component = {PostingPage}/>
+                  <Stack.Screen
+                    options={{
+                      headerShown: true,
+                      gestureEnabled: true,
+                      gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
+                    }}
+                    name = 'CameraScreenTrue' component = {CameraScreen}/>
+
                   <Stack.Screen
                       name = 'Comments'
                       options={{
@@ -564,7 +575,10 @@ const mapDispatchToProps = dispatch => {
     loadProfile: profile => dispatch(exploreActions.loadProfile(profile)),
 
     setChats: chats => dispatch(messageActions.setChats(chats)),
-    fetchSocialCalCellPage:socialCalCellObj => dispatch(socialActions.fetchSocialCalCellPage(socialCalCellObj))
+    fetchSocialCalCellPage:socialCalCellObj => dispatch(socialActions.fetchSocialCalCellPage(socialCalCellObj)),
+
+    openShowCamera: () => dispatch(authActions.openShowCamera()),
+
   }
 }
 

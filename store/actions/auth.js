@@ -249,3 +249,17 @@ export const changeProfileInfoAuth = (profileInfo) => {
     profileInfo: profileInfo
   }
 }
+
+// opens and closes the camera
+export const openShowCamera = () => {
+  return{
+    type: actionTypes.OPEN_SHOW_CAMERA,
+
+  }
+}
+
+export const closeShowCamera = () => {
+  return{
+    type: actionTypes.CLOSE_SHOW_CAMERA
+  }
+}
