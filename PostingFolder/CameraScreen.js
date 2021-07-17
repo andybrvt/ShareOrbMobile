@@ -18,11 +18,15 @@ import {
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import { Zap, ZapOff, X, ArrowLeft } from "react-native-feather";
+import { Zap, ZapOff, X, ArrowLeft, Grid} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import * as authActions from '../store/actions/auth';
+import * as ImagePicker from 'expo-image-picker';
+
+
+const width = Dimensions.get("window").width
 
 
 class CameraScreen extends React.Component{
@@ -39,11 +43,9 @@ class CameraScreen extends React.Component{
   componentDidMount(){
     this.allowPermissions()
 
-    console.log('camera screen did mount')
   }
 
   componentDidUpdate(){
-    console.log('did update')
   }
 
 
@@ -126,7 +128,45 @@ class CameraScreen extends React.Component{
     })
   }
 
-  onSavePhoto = () => {
+  openPhoto =()=> {
+    this.props.closeShowCamera();
+
+
+    setTimeout(() => {this.handleChoosePhoto()}, 100)
+  }
+
+  handleChoosePhoto = async() => {
+
+
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+
+    if(permissionResult.granted == false){
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+    // this.props.closeShowCamera();
+
+    let  pickerResult = await ImagePicker.launchImageLibraryAsync({
+     mediaTypes: ImagePicker.MediaTypeOptions.All,
+     allowsEditing: true,
+     aspect: [4, 3],
+     quality: 1,
+     base64: true,
+   });
+
+   if(!pickerResult.cancelled){
+     this.onSavePhoto(pickerResult.uri)
+
+   }
+   if(pickerResult.cancelled){
+     this.props.openShowCamera()
+   }
+
+
+  }
+
+  onSavePhoto = (image) => {
     // upload just one picture
     // console.log('save image')
     //
@@ -136,7 +176,7 @@ class CameraScreen extends React.Component{
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd");
 
     const formData = new FormData();
-    const imageFile = global.FILE_NAME_GETTER(this.state.imagePreview);
+    const imageFile = global.FILE_NAME_GETTER(image);
     formData.append("curDate", curDate)
     formData.append('image', imageFile)
 
@@ -193,11 +233,12 @@ class CameraScreen extends React.Component{
 
 
 
-
     })
 
     this.onCancelPhoto();
     this.props.navigation.navigate("newsfeed");
+
+    setTimeout(() => {this.props.closeShowCamera()}, 1000);
 
 
   }
@@ -210,9 +251,14 @@ class CameraScreen extends React.Component{
   render(){
 
     return(
-      <Modal
-        visible = {this.props.showCamera}
+      <View
+        // visible = {this.props.showCamera}
         style = {{flex: 1}}>
+
+        <Modal
+          visible = {this.props.showCamera}
+          style = {{flex: 1}}
+          >
         {
           this.state.allowCamera ?
           <View style = {{flex: 1}}>
@@ -249,7 +295,7 @@ class CameraScreen extends React.Component{
 
                <TouchableOpacity
                  style = {styles.submitBtn}
-                 onPress = {() => this.onSavePhoto()}
+                 onPress = {() => this.onSavePhoto(this.state.imagePreview)}
                  >
                    <Text style = {{
                        color: 'white',
@@ -272,48 +318,76 @@ class CameraScreen extends React.Component{
                     style = {{flex: 1}}>
                     <View style = {{ flex: 1, }}></View>
                   </TouchableWithoutFeedback>
-                  {
-                    this.state.showFlash === "on" ?
+
+
+
 
                     <TouchableOpacity
-                      onPress = {() => this.onFlash()}
-                      style ={{
+                      onPress = {() => this.onRedirect()}
+                      style = {{
                         position: 'absolute',
-                        top: 100
-                      }}>
-                      <Zap
-                        stroke = "white"
-                        width = {40}
-                        height = {40} />
-                    </TouchableOpacity>
 
-                    :
+                        top: 20
+                      }}
+                      >
+                      <ArrowLeft
+                        stroke = "white"
+                        width = {45} height = {45} />
+                    </TouchableOpacity>
 
                     <TouchableOpacity
-                      onPress = {() => this.onFlash()}
-                      style ={{
+                      onPress = {this.openPhoto}
+                      style = {{
                         position: 'absolute',
-                        top: 100
-                      }}>
-                      <ZapOff
+                        bottom: 30,
+                        left: 30,
+                        alignSelf: 'flex-start',
+                      }}
+                      >
+                      <Grid
                         stroke = "white"
-                        width = {40}
-                        height = {40} />
+                        width = {40} height = {40}/>
                     </TouchableOpacity>
 
-                  }
 
-                  <TouchableOpacity
-                    onPress = {() => this.onRedirect()}
-                    style = {{
-                      position: 'absolute',
-                      top: 20
-                    }}
-                    >
-                    <ArrowLeft
-                      stroke = "white"
-                      width = {40} height = {40} />
-                  </TouchableOpacity>
+
+
+                    {
+                      this.state.showFlash === "on" ?
+
+                      <TouchableOpacity
+                        onPress = {() => this.onFlash()}
+                        style ={{
+                          position: 'absolute',
+                          top: 200,
+                          right: 20
+                        }}>
+                        <Zap
+                          stroke = "white"
+                          width = {40}
+                          height = {40} />
+                      </TouchableOpacity>
+
+                      :
+
+                      <TouchableOpacity
+                        onPress = {() => this.onFlash()}
+                        style ={{
+                          // position: 'relative',
+                          position: 'absolute',
+                          top: 200,
+                          right: 20
+                          // top: 100
+                        }}>
+                        <ZapOff
+                          stroke = "white"
+                          width = {40}
+                          height = {40} />
+                      </TouchableOpacity>
+
+                    }
+
+
 
                   <TouchableOpacity
                     onPress = {() => this.takePicture()}
@@ -345,7 +419,9 @@ class CameraScreen extends React.Component{
 
         }
 
-      </Modal>
+        </Modal>
+
+      </View>
     )
   }
 }
@@ -364,6 +440,8 @@ const mapDispatchToProps = dispatch => {
     authAddTotalLoad: () => dispatch(authActions.authAddTotalLoad()),
     authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
+
+    openShowCamera: () => dispatch(authActions.openShowCamera()),
 
   }
 }
