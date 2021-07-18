@@ -68,6 +68,7 @@ import Test from './PostingFolder/Test';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useScrollToTop } from '@react-navigation/native';
 
+import SearchPage from './Search/SearchPage';
 
 
 const TopTab = createMaterialTopTabNavigator();
@@ -530,6 +531,11 @@ class App extends Component{
                   <Stack.Screen
                     name = "otherProfile"
                     component = {Profile}
+                     />
+
+                   <Stack.Screen
+                     name = "Search"
+                     component = {SearchPage}
                      />
                 </Stack.Navigator>
                 :

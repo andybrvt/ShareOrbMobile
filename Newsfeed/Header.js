@@ -94,26 +94,32 @@ class Header extends React.Component{
           width: "100%",
           transform: [{
             translateY: translateY
-          }]
+          }],
           }}>
           <View style = {styles.logoContainer}>
              <MainLogo width = {120}/>
           </View>
           <View style = {styles.searchProfileContainer}>
-            <MessageCircle
-              stroke="black" strokeWidth={2.5} width={20} height={20} />
-            <Bell
-              stroke="black" strokeWidth={2.5} width={20} height={20} />
-            {/*
-            <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Chats")}>
-               <MessageCircle
-                 stroke="black" strokeWidth={2.5} width={20} height={20} />
-           </TouchableWithoutFeedback>
-           <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Notifications")}>
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate('Search')}
+              style = {{
+                alignItems: 'center',
+                flex: 1}}>
+              <Search
+                stroke="black" strokeWidth={2.5} width={25} height={25} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate('Notifications')}
+              style = {{
+                alignItems: 'center',
+                flex: 1
+              }}>
               <Bell
-                stroke="black" strokeWidth={2.5} width={20} height={20} />
-            </TouchableWithoutFeedback>
-            */}
+                stroke="black" strokeWidth={2.5} width={25} height={25} />
+
+            </TouchableOpacity>
+
           </View>
         </Animated.View>
 
@@ -136,7 +142,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "gray",
   },
   logoContainer: {
-    flex: 1,
+    flex: 3,
     justifyContent: "center",
     // alignItems: ,
     // backgroundColor: "red",
@@ -146,14 +152,13 @@ const styles = StyleSheet.create({
     position: "relative"
   },
   searchProfileContainer: {
-    // flex: 1,
-    justifyContent: "center",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flex: 1,
+    alignSelf: 'flex-end',
     flexDirection: "row",
-    // backgroundColor:'red',
-    top:'5%',
-    width: "35%",
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+
   }
 })
 //
