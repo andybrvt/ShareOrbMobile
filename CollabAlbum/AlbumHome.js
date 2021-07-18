@@ -6,14 +6,21 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  Image
+  Image,
+  TouchableOpacity
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import { PlusCircle} from "react-native-feather";
+import { PlusCircle, UserPlus} from "react-native-feather";
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
 class AlbumHome extends React.Component{
+  ViewChats = () => {
+    this.props.navigation.navigate("CreateAlbum",
+
+    );
+  }
+
     renderItem = ({item}) => {
       console.log(item.pic)
       return(
@@ -76,17 +83,20 @@ class AlbumHome extends React.Component{
 
      return (
        <BackgroundContainer>
-         <View style={{flexDirection:'row', backgroundColor:'white'}}>
-           <View style={{backgroundColor:'blue',flex:1, alignItems:'center',justifyContent:'center',}}>
-             <Text style={styles.trendingText}> Collab Albums</Text>
+         {/*
+         <View style={{flexDirection:'row', backgroundColor:'white', top:10}}>
+           <View style={{flex:1, alignItems:'center',justifyContent:'center',}}>
+
            </View>
-          <View style={{backgroundColor:'red',alignItems:'flex-end', justifyContent:'center', flex:1, top:10, right:20}}>
+
+          <View style={{alignItems:'flex-end', justifyContent:'center', flex:1, top:10, right:20}}>
              <PlusCircle
                onPress = {() => this.ViewChats()}
                stroke="black" strokeWidth={2.5} width={35} height={35}/>
           </View>
 
          </View>
+         */}
 
 
          <View style={{ alignItems:'center'}}>
@@ -97,7 +107,26 @@ class AlbumHome extends React.Component{
              renderItem = {this.renderItem}
              ItemSeparatorComponent = { this.FlatListItemSeparator }
            />
+
+
+
          </View>
+
+         <View
+           style={{
+             flexDirection: "row",
+             justifyContent: "flex-end",
+             padding:15,
+           }}
+         >
+           <TouchableOpacity
+             onPress = {() => this.ViewChats()}
+             style={styles.roundButton1}>
+             <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+           </TouchableOpacity>
+        </View>
+
+
        </BackgroundContainer>
 
      )
@@ -115,7 +144,19 @@ class AlbumHome extends React.Component{
      height: "82%",
    },
 
-
+   roundButton1: {
+     width: 50,
+     height: 50,
+     justifyContent: 'center',
+     alignItems: 'center',
+     padding: 10,
+     borderRadius: 100,
+     right:20,
+     bottom:60,
+     backgroundColor: '#1890ff',
+     zIndex:99,
+     position:'absolute',
+   },
  })
 
  export default AlbumHome;
