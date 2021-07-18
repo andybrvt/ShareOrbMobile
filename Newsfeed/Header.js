@@ -8,7 +8,7 @@ import MainLogo from '../logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
-import { Search, Bell, MessageCircle, BookOpen} from "react-native-feather";
+import { Search, Bell, MessageCircle, BookOpen, Sunrise} from "react-native-feather";
 import Animated from 'react-native-reanimated';
 
 const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
@@ -35,8 +35,11 @@ class Header extends React.Component{
   }
 
   ViewNoti = () => {
-
     this.props.navigation.navigate("Notifications")
+  }
+
+  ViewDay = () => {
+    this.props.navigation.navigate("PostingPage")
   }
 
   ViewChats = () => {
@@ -100,6 +103,8 @@ class Header extends React.Component{
              <MainLogo width = {120}/>
           </View>
           <View style = {styles.searchProfileContainer}>
+            <Sunrise
+              stroke="black" strokeWidth={2.5} width={20} height={20} />
             <MessageCircle
               stroke="black" strokeWidth={2.5} width={20} height={20} />
             <Bell

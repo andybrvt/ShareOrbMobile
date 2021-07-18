@@ -430,16 +430,7 @@ class App extends Component{
                           ...TransitionPresets.SlideFromRightIOS,
                         }}
                      name = 'Chats' component = {Chats}/>
-                     <Stack.Screen
-                       options={{
-                         headerStyle:{
-                           shadowColor:'#fff', //ios
-                           elevation:0,        // android
-                         },
-                         title: 'CreateAlbum',
-                          ...TransitionPresets.SlideFromRightIOS,
-                        }}
-                     name = 'Create Album' component = {CreateAlbum}/>
+
                      <Stack.Screen
                        options={{
                          headerStyle:{
@@ -489,6 +480,15 @@ class App extends Component{
                       ...TransitionPresets.SlideFromRightIOS,
                                      }}
                     name = 'DayAlbum' component = {DayAlbum}/>
+                    <Stack.Screen
+                      options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+                        },
+                        title: 'Create Album',
+                                        }}
+                       name = 'CreateAlbum' component = {CreateAlbum}/>
                  <Stack.Screen
                    options={{
                      title: 'Search Friends',
