@@ -59,6 +59,7 @@ import Privacy from './Settings/Privacy';
 import UserInfo from './Settings/UserInfo';
 
 import AlbumHome from './CollabAlbum/AlbumHome';
+import CreateAlbum from './CollabAlbum/CreateAlbum';
 
 import { Ionicons } from '@expo/vector-icons';
 import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle, FolderPlus} from "react-native-feather";
@@ -294,6 +295,7 @@ class App extends Component{
             }}
             />
 
+
             <Tab.Screen
                name="Profile"
                component={Profile}
@@ -425,10 +427,29 @@ class App extends Component{
                            shadowColor:'#fff', //ios
                            elevation:0,        // android
                          },
+                         title: 'Chats',
+                          ...TransitionPresets.SlideFromRightIOS,
+                        }}
+                     name = 'Chats' component = {Chats}/>
+                     <Stack.Screen
+                       options={{
+                         headerStyle:{
+                           shadowColor:'#fff', //ios
+                           elevation:0,        // android
+                         },
+                         title: 'CreateAlbum',
+                          ...TransitionPresets.SlideFromRightIOS,
+                        }}
+                     name = 'Create Album' component = {CreateAlbum}/>
+                     <Stack.Screen
+                       options={{
+                         headerStyle:{
+                           shadowColor:'#fff', //ios
+                           elevation:0,        // android
+                         },
                          title: 'Notifications',
                           ...TransitionPresets.SlideFromRightIOS,
                         }}
-
                         name = 'Notifications' component = {Notifications}/>
                    <Stack.Screen
                      options={{
