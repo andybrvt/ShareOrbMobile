@@ -5,7 +5,6 @@ import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
 import NewsfeedButtonContainer from './NewsfeedButtonContainer';
-
 // This will be the list of all the newsfeed items
 // Everyone's day
 import Animated from 'react-native-reanimated';
@@ -13,16 +12,11 @@ import BottomSheet from 'reanimated-bottom-sheet';
 
 
 class InfiniteScroll extends React.Component{
-  
   render(){
-
-
     let post = []
-
     if(this.props.socialPosts){
       post = this.props.socialPosts
     }
-
 
     return (
       <View>
@@ -39,11 +33,8 @@ class InfiniteScroll extends React.Component{
                            navigation={this.props.navigation}
                            ViewProfile = {this.props.ViewProfile}
                            data = {j}
-
                            />
-
                        :
-
                        <Text
                          > There is no post here</Text>
                       }
@@ -51,15 +42,11 @@ class InfiniteScroll extends React.Component{
                   )
                   })}
                 </View>
-
               :
-
 
               <View>
                 <Text> There are no post</Text>
               </View>
-
-
             }
 
       </View>
@@ -74,7 +61,6 @@ const mapStateToProps = state => {
     socialPosts: state.socialNewsfeed.socialPosts
   }
 }
-
 
 
 export default connect(mapStateToProps, null)(InfiniteScroll);

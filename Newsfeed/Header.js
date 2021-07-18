@@ -104,11 +104,14 @@ class Header extends React.Component{
           </View>
           <View style = {styles.searchProfileContainer}>
             <Sunrise
-              stroke="black" strokeWidth={2.5} width={20} height={20} />
+              style={{right:40}}
+              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
             <MessageCircle
-              stroke="black" strokeWidth={2.5} width={20} height={20} />
+              style={{right:25}}
+              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
             <Bell
-              stroke="black" strokeWidth={2.5} width={20} height={20} />
+              style={{right:10}}
+              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
             {/*
             <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Chats")}>
                <MessageCircle
@@ -119,6 +122,7 @@ class Header extends React.Component{
                 stroke="black" strokeWidth={2.5} width={25} height={25} />
 
             </TouchableOpacity>
+            */}
 
           </View>
         </Animated.View>
