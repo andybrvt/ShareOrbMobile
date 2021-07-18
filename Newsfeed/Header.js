@@ -97,7 +97,7 @@ class Header extends React.Component{
           width: "100%",
           transform: [{
             translateY: translateY
-          }]
+          }],
           }}>
           <View style = {styles.logoContainer}>
              <MainLogo width = {120}/>
@@ -116,9 +116,10 @@ class Header extends React.Component{
            </TouchableWithoutFeedback>
            <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Notifications")}>
               <Bell
-                stroke="black" strokeWidth={2.5} width={20} height={20} />
-            </TouchableWithoutFeedback>
-            */}
+                stroke="black" strokeWidth={2.5} width={25} height={25} />
+
+            </TouchableOpacity>
+
           </View>
         </Animated.View>
 
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "gray",
   },
   logoContainer: {
-    flex: 1,
+    flex: 3,
     justifyContent: "center",
     // alignItems: ,
     // backgroundColor: "red",
@@ -151,14 +152,13 @@ const styles = StyleSheet.create({
     position: "relative"
   },
   searchProfileContainer: {
-    // flex: 1,
-    justifyContent: "center",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flex: 1,
+    alignSelf: 'flex-end',
     flexDirection: "row",
-    // backgroundColor:'red',
-    top:'5%',
-    width: "35%",
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+
   }
 })
 //
