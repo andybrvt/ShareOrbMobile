@@ -26,13 +26,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
      }
    }
 
-   onHomeNav = () => {
-     // this function will be use to navigate back
-     // to the home page
-   }
-
    toggleSwitch = () => {
-
      this.setState({
        isEnabled:!this.state.isEnabled,
      })
@@ -46,12 +40,12 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
          <View >
            <Text style={{fontSize:16}}> Toggle your profile to be public or private</Text>
            <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        thumbColor={this.state.isEnabled ? "#f5dd4b" : "#f4f3f4"}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={this.toggleSwitch}
-        value={this.state.isEnabled}
-      />
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={this.state.isEnabled ? "#1890ff" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={this.toggleSwitch}
+            value={this.state.isEnabled}
+          />
          </View>
        </BackgroundContainer>
 
