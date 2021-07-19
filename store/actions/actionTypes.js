@@ -47,3 +47,9 @@ export const FETCH_SOCIAL_CAL_CELL_PAGE = 'FETCH_SOCIAL_CAL_CELL_PAGE';
 
 // This will be used for the chats list (hold all the chats)
 export const SET_CHATS = "SET_CHATS";
+
+
+
+// Used for the notifications
+export const SET_NOTIFICATIONS = 'SET_NOTIFICATIONS';
+export const NEW_NOTIFICATION = 'NEW_NOTIFICATION';

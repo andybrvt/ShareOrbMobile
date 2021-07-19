@@ -110,15 +110,18 @@ class Header extends React.Component{
             <MessageCircle
               style={{right:25}}
               stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+            <TouchableOpacity onPress = {() => this.props.navigation.navigate("Notifications")}>
             <Bell
               style={{right:10}}
               stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+            </TouchableOpacity>
+
             {/*
             <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Chats")}>
                <MessageCircle
                  stroke="black" strokeWidth={2.5} width={20} height={20} />
            </TouchableWithoutFeedback>
-           <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Notifications")}>
+           <TouchableOpacity onPress = {() => this.props.navigation.navigate("Notifications")}>
               <Bell
                 stroke="black" strokeWidth={2.5} width={25} height={25} />
 
