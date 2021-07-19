@@ -56,12 +56,10 @@ class WebSocketNotifications {
 
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
-    console.log(parsedData)
 
     if (command === 'notifications') {
-        // const notifications = JSON.parse(parsedData.notifications);
-        // this.callbacks['notifications'](notifications)
-        //     // createNotification(notifications[i]);
+        const notifications = JSON.parse(parsedData.notifications);
+        this.callbacks['notifications'](notifications)
         // if(parsedData.requestList){
         //   const requestList = JSON.parse(parsedData.requestList)
         //
@@ -120,19 +118,19 @@ class WebSocketNotifications {
   addCallbacks(
     notificationsCallback,
     newNotificationCallback,
-    addNewFollowRequest,
-    updateFollowRequest,
-    authAddFollower,
-    authUpdateFollowers,
-    addOneNotificationSeen,
+    // addNewFollowRequest,
+    // updateFollowRequest,
+    // authAddFollower,
+    // authUpdateFollowers,
+    // addOneNotificationSeen,
   ){
     this.callbacks['notifications'] = notificationsCallback;
     this.callbacks['new_notification'] = newNotificationCallback;
-    this.callbacks['new_follow_request'] = addNewFollowRequest;
-    this.callbacks['update_follow_request'] = updateFollowRequest;
-    this.callbacks['auth_add_follower'] = authAddFollower;
-    this.callbacks['auth_update_followers'] = authUpdateFollowers;
-    this.callbacks['add_one_notification_seen'] = addOneNotificationSeen;
+    // this.callbacks['new_follow_request'] = addNewFollowRequest;
+    // this.callbacks['update_follow_request'] = updateFollowRequest;
+    // this.callbacks['auth_add_follower'] = authAddFollower;
+    // this.callbacks['auth_update_followers'] = authUpdateFollowers;
+    // this.callbacks['add_one_notification_seen'] = addOneNotificationSeen;
   }
 
 

@@ -16,6 +16,8 @@ import * as socialNewsfeedActions from './store/actions/socialNewsfeed';
 import * as exploreActions from './store/actions/explore';
 import * as messageActions from './store/actions/messages';
 import * as socialActions from './store/actions/socialCalendar';
+import * as notificationsActions from './store/actions/notifications';
+
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
@@ -118,6 +120,16 @@ class App extends Component{
       this.props.fetchSocialCalCellPage.bind(this)
     )
 
+    NotificationWebSocketInstance.addCallbacks(
+      this.props.setNotifications.bind(this),
+      this.props.newNotification.bind(this),
+      // this.props.updateRequestList.bind(this),
+      // this.props.newUpRequestList.bind(this),
+      // this.props.authAddFollower.bind(this),
+      // this.props.authUpdateFollowers.bind(this),
+      // this.props.addOneNotificationSeen.bind(this)
+    )
+
 
   }
 
@@ -161,7 +173,7 @@ class App extends Component{
         ChatSidePanelWebSocketInstance.connect(this.props.id)
 
         NotificationWebSocketInstance.disconnect()
-      
+
         this.waitForNotificationSocketConnection(() => {
             NotificationWebSocketInstance.fetchFriendRequests(
               this.props.id
@@ -644,6 +656,10 @@ const mapDispatchToProps = dispatch => {
     fetchSocialCalCellPage:socialCalCellObj => dispatch(socialActions.fetchSocialCalCellPage(socialCalCellObj)),
 
     openShowCamera: () => dispatch(authActions.openShowCamera()),
+
+    setNotifications: notifications => dispatch(notificationsActions.setNotifications(notifications)),
+    newNotification: notification => dispatch(notificationsActions.newNotification(notification)),
+
 
   }
 }
