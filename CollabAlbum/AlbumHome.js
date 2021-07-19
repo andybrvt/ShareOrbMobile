@@ -76,7 +76,60 @@ const FlatListItemSeparator = () => {
 }
 
 const FirstRoute = () => (
-  <View style={[styles.container, { backgroundColor: '#ff4081' }]} />
+
+  <View style={[styles.container, { backgroundColor: '#white' }]} >
+    <FlatList
+         showsVerticalScrollIndicator={false}
+         style = {{}}
+         data = {[
+             {"username":"pinghsu520",
+             "pic":"https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+             "caption":"liked your album on",
+             "month":"March 2021",
+             "date":"July 1",
+             "time": "8h",
+             },
+           {"username":"andybrvt",
+             "pic":"https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80",
+             "caption":"commented on your album on",
+             "month":"July 2020",
+             "date":"September 24",
+             "time": "3h",
+           },
+           {"username":"andybrvt",
+             "pic":"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1140&q=80",
+             "caption":"commented on your album on",
+             "month":"April 2020",
+             "date":"Jan 24",
+             "time": "3h",
+           },
+           {"username":"andybrvt",
+             "pic":"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
+             "caption":"commented on your album on",
+             "month":"January 2020",
+             "date":"Jan 24",
+             "time": "3h",
+           },
+         ]}
+         renderItem ={(item) => renderItem(item)}
+
+         />
+    <View
+     style={{
+         flexDirection: "row",
+         justifyContent: "flex-end",
+         padding:15,
+         zIndex:99,
+       }}
+     >
+       <TouchableOpacity
+         onPress = {() => this.ViewChats()}
+         style={styles.roundButton1}>
+         <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+       </TouchableOpacity>
+    </View>
+
+  </View>
 );
 
 // <View style={{ alignItems:'center'}}>
@@ -113,24 +166,8 @@ const FirstRoute = () => (
 //
 
 const SecondRoute = () => (
-  <View style={[styles.container, { backgroundColor: '#673ab7' }]} >
-    <Text>hi</Text>
-    {/*
-    <View
-     style={{
-         flexDirection: "row",
-         justifyContent: "flex-end",
-         padding:15,
-       }}
-     >
-       <TouchableOpacity
-         onPress = {() => this.ViewChats()}
-         style={styles.roundButton1}>
-         <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
-       </TouchableOpacity>
-    </View>
-    */}
-  </View>
+  <View style={[styles.container, { backgroundColor: '#ff4081' }]} />
+
 );
 
 class AlbumHome extends React.Component{
