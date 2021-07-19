@@ -73,6 +73,86 @@ class Notifications extends React.Component{
      )
 
    }
+
+   if(item.type === "comment_notification"){
+
+     return(
+       <TouchableOpacity>
+          <View style={{
+             flexDirection:'row',
+             padding:15}}>
+            <View style={{flex:1}}>
+              <Avatar
+                // onPress = {() => this.props.ViewProfile(userUsername)}
+                size={40}
+                rounded
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
+                }}
+              />
+            </View>
+          <View style={{
+
+              flex:6,
+              flexDirection:'column',
+              }}>
+            <View style = {{flexDirection: 'row'}}>
+              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
+              <Text> commented on your post. </Text>
+            </View>
+            <View style = {{marginTop: 10}}>
+              <Text>
+                {global.RENDER_TIMESTAMP(item.timestamp)}
+              </Text>
+            </View>
+
+        </View>
+          </View>
+
+       </TouchableOpacity>
+     )
+
+   }
+
+   if(item.type === "follow_notification"){
+
+     return(
+       <TouchableOpacity>
+          <View style={{
+             flexDirection:'row',
+             padding:15}}>
+            <View style={{flex:1}}>
+              <Avatar
+                // onPress = {() => this.props.ViewProfile(userUsername)}
+                size={40}
+                rounded
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
+                }}
+              />
+            </View>
+          <View style={{
+
+              flex:6,
+              flexDirection:'column',
+              }}>
+            <View style = {{flexDirection: 'row'}}>
+              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
+              <Text> followed you. </Text>
+            </View>
+            <View style = {{marginTop: 10}}>
+              <Text>
+                {global.RENDER_TIMESTAMP(item.timestamp)}
+              </Text>
+            </View>
+
+        </View>
+          </View>
+
+       </TouchableOpacity>
+     )
+
+   }
    // return (
 
 
