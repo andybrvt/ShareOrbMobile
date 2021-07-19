@@ -12,48 +12,19 @@ import {
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import { PlusCircle, UserPlus} from "react-native-feather";
+import { PlusCircle, UserPlus, Clock, Users} from "react-native-feather";
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { TabView, SceneMap } from 'react-native-tab-view';
-const chatList=[
-    {"username":"pinghsu520",
-    "pic":"https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-    "caption":"liked your album on",
-    "month":"March 2021",
-    "date":"July 1",
-    "time": "8h",
-    },
-  {"username":"andybrvt",
-    "pic":"https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80",
-    "caption":"commented on your album on",
-    "month":"July 2020",
-    "date":"September 24",
-    "time": "3h",
-  },
-  {"username":"andybrvt",
-    "pic":"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1140&q=80",
-    "caption":"commented on your album on",
-    "month":"April 2020",
-    "date":"Jan 24",
-    "time": "3h",
-  },
-  {"username":"andybrvt",
-    "pic":"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
-    "caption":"commented on your album on",
-    "month":"January 2020",
-    "date":"Jan 24",
-    "time": "3h",
-  },
-]
+
 const renderItem = ({item}) => {
   console.log(item.pic)
   return(
     <View style={{width:'100%', padding:10}}>
-      <Text style={{padding:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             5, fontSize:18}}>{item.month}</Text>
+      <Text style={{padding: 5, fontSize:18}}>{item.month}</Text>
       <Image
         style = {{
           height:200,
-          width:325,
+          width:340,
           borderRadius: 5,
         }}
         source = {{
@@ -77,7 +48,7 @@ const FlatListItemSeparator = () => {
 
 const FirstRoute = () => (
 
-  <View style={[styles.container, { backgroundColor: '#white' }]} >
+  <View style={[styles.container, { backgroundColor: 'white' }]} >
     <FlatList
          showsVerticalScrollIndicator={false}
          style = {{}}
@@ -128,42 +99,8 @@ const FirstRoute = () => (
          <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
        </TouchableOpacity>
     </View>
-
   </View>
 );
-
-// <View style={{ alignItems:'center'}}>
-//   <FlatList
-//     showsVerticalScrollIndicator={false}
-//     style = {{}}
-//     data = {chatList}
-//     renderItem ={(item) => this.renderItem(item)}
-//     ItemSeparatorComponent = { <View
-//       style={{
-//         top:24,
-//         backgroundColor:'red'
-//       }}
-//     /> }
-//   />
-//
-//
-//
-// </View>
-//
-// <View
-//   style={{
-//     flexDirection: "row",
-//     justifyContent: "flex-end",
-//     padding:15,
-//   }}
-// >
-//   <TouchableOpacity
-//     onPress = {() => this.ViewChats()}
-//     style={styles.roundButton1}>
-//     <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
-//   </TouchableOpacity>
-// </View>
-//
 
 const SecondRoute = () => (
   <View style={[styles.container, { backgroundColor: '#ff4081' }]} />
@@ -174,8 +111,8 @@ class AlbumHome extends React.Component{
   state = {
     index: 0,
     routes: [
-      { key: 'first', title: 'Timeline' },
-      { key: 'second', title: 'Second' },
+      { key: 'first', title: 'With Friends' },
+      { key: 'second', title: 'Expiring' },
     ],
   };
 
@@ -187,15 +124,24 @@ class AlbumHome extends React.Component{
     return (
       <View style={styles.tabBar}>
         {
-          props.navigationState.routes.map((route, i) => {
-
-
-          return (
-            <TouchableOpacity
-              style={styles.tabItem}
-              onPress={() => this.setState({ index: i })}>
-              <Animated.Text>{route.title}</Animated.Text>
-            </TouchableOpacity>
+        props.navigationState.routes.map((route, i) => {
+        return (
+          <TouchableOpacity
+            style={styles.tabItem}
+            onPress={() => this.setState({ index: i })}>
+            <View style={{flexDirection:'row'}}>
+            {(i==1)?
+               <Clock
+                 style={{right:10}}
+                 stroke="black" strokeWidth={2.5} width={20} height={20} />
+            :
+             <Users
+               style={{right:10}}
+               stroke="black" strokeWidth={2.5} width={20} height={20} />
+            }
+            <Animated.Text style={{fontSize:14}}>{route.title}</Animated.Text>
+            </View>
+          </TouchableOpacity>
           );
         })}
       </View>
@@ -244,10 +190,14 @@ class AlbumHome extends React.Component{
      height: "82%",
    },
    container: {
-    flex: 1,
+
   },
   tabBar: {
     flexDirection: 'row',
+    // backgroundColor:'red',
+    borderBottomColor: '#FFFFFF',
+    elevation:1,
+    borderBottomWidth: 1,
 
   },
   tabItem: {
