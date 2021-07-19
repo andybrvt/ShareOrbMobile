@@ -350,12 +350,14 @@ const height = Dimensions.get("window").height
              </View>
              <TouchableWithoutFeedback
                onPress = {() => this.props.navigation.goBack(0)}>
-               <ArrowLeft
-                     style={styles.close2}
-                     stroke='white'
-                     width ={35}
-                     height = {35}
-                />
+
+                 <ArrowLeft
+                       style={styles.close2}
+                       stroke='white'
+                       width ={35}
+                       height = {35}
+                  />
+
             </TouchableWithoutFeedback>
 
              <View style = {styles.tagCSS1}>
@@ -363,8 +365,8 @@ const height = Dimensions.get("window").height
                <View style = {styles.justifyCenter}>
                  <Heart
                    fill="red"
-                   width ={35}
-                   height = {35}
+                   width ={32.5}
+                   height = {32.5}
                    style={{right:2}}
                     />
 
@@ -381,8 +383,8 @@ const height = Dimensions.get("window").height
                  <View  style = {styles.justifyCenter}>
                    <MessageCircle
                      fill="white"
-                     width ={35}
-                     height = {35}
+                     width ={32.5}
+                     height = {32.5}
                      style={{right:2}}
                    />
                    <Text  style = {styles.justifyCenter1}>
@@ -396,8 +398,8 @@ const height = Dimensions.get("window").height
                <View>
                  <Bookmark
                    fill="white"
-                   width ={35}
-                   height = {35}
+                   width ={32.5}
+                   height = {32.5}
                     />
                </View>
              </Text>
@@ -477,6 +479,20 @@ const height = Dimensions.get("window").height
      // flex: 1, flexDirection: 'row',
      // justifyContent: 'center', alignItems: 'center',
      // backgroundColor:'blue',
+   },
+   backArrow: {
+     position:'absolute',
+     backgroundColor: 'rgba(0,0,0,.6)',
+     padding:10,
+     borderRadius:25,
+     color:'white',
+     top:'15%',
+     left:'1%',
+     justifyContent: 'center',
+     fontSize:13,
+     right:10,
+     // fontWeight:'bold',
+
    },
    tagCSS1: {
      position:'absolute',
@@ -604,6 +620,9 @@ const height = Dimensions.get("window").height
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
      fontWeight:'bold',
+     backgroundColor: 'rgba(0,0,0,.6)',
+     padding:15,
+     borderRadius:25,
    },
    close: {
      margin: 5,

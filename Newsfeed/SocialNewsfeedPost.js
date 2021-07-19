@@ -389,8 +389,8 @@ class SocialNewsfeedPost extends React.Component{
                           <Heart
                             stroke = "red"
                             fill="red"
-                            width ={35}
-                            height = {35}
+                            width ={32.5}
+                            height = {32.5}
                             style={{right:2}}
                              />
                           <Text  style = {styles.videoFooterUserName}>
@@ -412,8 +412,8 @@ class SocialNewsfeedPost extends React.Component{
                           <Heart
                             stroke = "white"
                             fill="white"
-                            width ={35}
-                            height = {35}
+                            width ={32.5}
+                            height = {32.5}
                             style={{right:2}}
                           />
                          <Text style = {styles.videoFooterUserName}>
@@ -430,8 +430,8 @@ class SocialNewsfeedPost extends React.Component{
                           stroke = "white"
 
                           fill="white"
-                          width ={35}
-                          height = {35}
+                          width ={32.5}
+                          height = {32.5}
                           style={{right:2}}
                         />
                         <Text style = {styles.videoFooterUserName}>
@@ -449,8 +449,8 @@ class SocialNewsfeedPost extends React.Component{
                       stroke = "white"
 
                       fill="white"
-                      width ={35}
-                      height = {35}
+                      width ={32.5}
+                      height = {32.5}
                        />
                      <Text style = {styles.videoFooterUserName}>  {userPostImages.length -1}</Text>
                   </View>
