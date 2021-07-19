@@ -78,7 +78,8 @@ class Header extends React.Component{
     return(
 
       <View style = {{
-          zIndex: 99
+          zIndex: 99,
+          height:0
         }}>
       <Animated.View
         style = {[styles.container,{

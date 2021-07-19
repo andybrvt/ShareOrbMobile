@@ -485,8 +485,10 @@ class App extends Component{
                         headerStyle:{
                           shadowColor:'#fff', //ios
                           elevation:0,        // android
+
                         },
                         title: 'Create Album',
+                        ...TransitionPresets.SlideFromRightIOS,
                                         }}
                        name = 'CreateAlbum' component = {CreateAlbum}/>
                  <Stack.Screen
