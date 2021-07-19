@@ -8,7 +8,8 @@ import {
   Dimensions,
   Image,
   Animated,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableHighlight,
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -49,7 +50,7 @@ const renderItem = ({item}) => {
   return(
     <View style={{width:'100%', height:'22.5%', padding:10}}>
       <Text style={{top:0, padding: 5, fontSize:16}}>{item.month}</Text>
-      <TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.6}>
         <Image
           style = {{
             height:200,
@@ -66,11 +67,12 @@ const renderItem = ({item}) => {
             containerStyle={{height:40}}
              overlap={0.1} />
         </View>
+        <Text style={styles.albumTitle}>
+          {item.title}
+        </Text>
       </TouchableOpacity>
 
-     <Text style={{bottom:'17.5%', color:'white', fontSize:17, padding:10}}>
-       {item.title}
-     </Text>
+
 
    </View>
   )
@@ -82,7 +84,7 @@ const FirstRoute = () => (
 
   <View style={{ backgroundColor: 'white' }} >
     <FlatList
-      contentContainerStyle={{paddingBottom:0}} 
+      contentContainerStyle={{paddingBottom:0}}
          showsVerticalScrollIndicator={false}
          style = {{}}
          data = {[
@@ -195,7 +197,7 @@ class AlbumHome extends React.Component{
           renderTabBar={this._renderTabBar}
           onIndexChange={this._handleIndexChange}
          />
-         <TouchableOpacity
+       <TouchableOpacity activeOpacity={0.9}
            onPress = {() => this.ViewChats()}
            style={styles.roundButton1}>
            <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
@@ -206,7 +208,16 @@ class AlbumHome extends React.Component{
    }
  }
  const styles = StyleSheet.create({
-
+   // {bottom:'17.5%', color:'white', fontSize:17, padding:10}
+   albumTitle:{
+     bottom:'17.5%',
+     color:'white',
+     fontSize:16,
+     padding:10,
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 10
+   },
 
   tabBar: {
     flexDirection: 'row',
