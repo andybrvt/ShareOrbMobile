@@ -32,24 +32,18 @@ const height = Dimensions.get('window').height
 
 class NewsfeedView extends React.Component{
 
-
   y = new Value(0);
-
   handleLogOut = () => {
     this.props.logout()
     // this.props.navigation.navigate("Login")
   }
 
-
   componentDidMount = () => {
-
   }
 
   viewProfile = (username) => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-
-
     this.props.navigation.navigate("ProfilePage", {
       username: username
     })
@@ -65,16 +59,10 @@ class NewsfeedView extends React.Component{
       upperStart: 6
     }
     this.myRef = React.createRef();
-
-
     this.commentRef = React.createRef();
     if(this.props.isAuthenticated){
       this.initialiseSocialNewsfeed()
-
     }
-
-
-
   }
 
   initialiseSocialNewsfeed(){
@@ -107,7 +95,6 @@ class NewsfeedView extends React.Component{
 }
 
   componentDidUpdate(prevProps){
-
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
     WebSocketSocialNewsfeedInstance.disconnect()
     if(this.props.isAuthenticated){
@@ -117,86 +104,57 @@ class NewsfeedView extends React.Component{
           this.props.id,
           curDate,
           this.state.upperStart)
-
       })
       WebSocketSocialNewsfeedInstance.connect()
     }
 
 
   if(this.props.curLoad >= this.props.totalLoad && this.props.totalLoad > 0){
-
     setTimeout(() => {
       this.props.authZeroTotalLoad()
       this.props.authZeroCurLoad()
     }, 2000)
-
-
-  }
-
+    }
   }
 
   ComponentWillUnmount(){
     // WebSocketSocialNewsfeedInstance.disconnect()
-
   }
-
-
-
 
   onCommentOpen = (cellId) => {
     this.props.navigation.navigate("Comments", {
       cellId: cellId
     })
-
   }
 
-
-
   render(){
-
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
     let showComments = this.props.showNewsfeedComments
 
     return(
         <BackgroundContainer>
-
             <View>
-              {this.props.totalLoad === 0 ?
-
-
+              {
+                this.props.totalLoad === 0 ?
                 null
-
                 :
-
                 <LoadingBar
                   step = {curLoading}
                   steps = {totalLoading}
                   height = {5} />
-
               }
-
-
-                <Header
-                  y = {this.y}
-                  {...this.props}
-                  />
-
-
-                  <InfiniteScrollFlat
-                    y = {this.y}
-                    navigation = {this.props.navigation}
-                    onPagePost = {this.onPagePost}
-                    viewProfile = {this.viewProfile}
-                    onCommentOpen = {this.onCommentOpen}
-                     />
-
-
-               </View>
-
-
+              <Header
+                y = {this.y}
+                {...this.props}/>
+              <InfiniteScrollFlat
+                y = {this.y}
+                navigation = {this.props.navigation}
+                onPagePost = {this.onPagePost}
+                viewProfile = {this.viewProfile}
+                onCommentOpen = {this.onCommentOpen}/>
+            </View>
         </BackgroundContainer>
-
     )
   }
 }

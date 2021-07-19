@@ -18,7 +18,13 @@ class CreateAlbum extends React.Component{
      return (
        <BackgroundContainer>
          <View>
-            <Text> hi</Text>
+            <Text> Title</Text>
+         </View>
+         <View>
+            <Text> Invite Friends</Text>
+         </View>
+         <View>
+            <Text>Cover Pic</Text>
          </View>
        </BackgroundContainer>
 

@@ -8,7 +8,7 @@ import MainLogo from '../logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
-import { Search, Bell, MessageCircle, BookOpen} from "react-native-feather";
+import { Search, Bell, MessageCircle, BookOpen, Sunrise} from "react-native-feather";
 import Animated from 'react-native-reanimated';
 
 const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
@@ -35,8 +35,11 @@ class Header extends React.Component{
   }
 
   ViewNoti = () => {
-
     this.props.navigation.navigate("Notifications")
+  }
+
+  ViewDay = () => {
+    this.props.navigation.navigate("PostingPage")
   }
 
   ViewChats = () => {
@@ -75,7 +78,8 @@ class Header extends React.Component{
     return(
 
       <View style = {{
-          zIndex: 99
+          zIndex: 99,
+          height:0
         }}>
       <Animated.View
         style = {[styles.container,{
@@ -100,25 +104,26 @@ class Header extends React.Component{
              <MainLogo width = {120}/>
           </View>
           <View style = {styles.searchProfileContainer}>
-            <TouchableOpacity
-              onPress = {() => this.props.navigation.navigate('Search')}
-              style = {{
-                alignItems: 'center',
-                flex: 1}}>
-              <Search
-                stroke="black" strokeWidth={2.5} width={25} height={25} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress = {() => this.props.navigation.navigate('Notifications')}
-              style = {{
-                alignItems: 'center',
-                flex: 1
-              }}>
+            <Sunrise
+              style={{right:40}}
+              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+            <MessageCircle
+              style={{right:25}}
+              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+            <Bell
+              style={{right:10}}
+              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+            {/*
+            <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Chats")}>
+               <MessageCircle
+                 stroke="black" strokeWidth={2.5} width={20} height={20} />
+           </TouchableWithoutFeedback>
+           <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Notifications")}>
               <Bell
                 stroke="black" strokeWidth={2.5} width={25} height={25} />
 
             </TouchableOpacity>
+            */}
 
           </View>
         </Animated.View>

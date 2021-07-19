@@ -71,7 +71,6 @@ import Test from './PostingFolder/Test';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useScrollToTop } from '@react-navigation/native';
 
-import SearchPage from './Search/SearchPage';
 
 
 const TopTab = createMaterialTopTabNavigator();
@@ -473,16 +472,7 @@ class App extends Component{
                           ...TransitionPresets.SlideFromRightIOS,
                         }}
                      name = 'Chats' component = {Chats}/>
-                     <Stack.Screen
-                       options={{
-                         headerStyle:{
-                           shadowColor:'#fff', //ios
-                           elevation:0,        // android
-                         },
-                         title: 'CreateAlbum',
-                          ...TransitionPresets.SlideFromRightIOS,
-                        }}
-                     name = 'Create Album' component = {CreateAlbum}/>
+
                      <Stack.Screen
                        options={{
                          headerStyle:{
@@ -532,6 +522,17 @@ class App extends Component{
                       ...TransitionPresets.SlideFromRightIOS,
                                      }}
                     name = 'DayAlbum' component = {DayAlbum}/>
+                    <Stack.Screen
+                      options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+
+                        },
+                        title: 'Create Album',
+                        ...TransitionPresets.SlideFromRightIOS,
+                                        }}
+                       name = 'CreateAlbum' component = {CreateAlbum}/>
                  <Stack.Screen
                    options={{
                      title: 'Search Friends',
@@ -596,10 +597,6 @@ class App extends Component{
                     component = {Profile}
                      />
 
-                   <Stack.Screen
-                     name = "Search"
-                     component = {SearchPage}
-                     />
                 </Stack.Navigator>
                 :
                 <Routes {...this.props} />
