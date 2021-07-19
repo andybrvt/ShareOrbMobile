@@ -15,36 +15,67 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { PlusCircle, UserPlus, Clock, Users} from "react-native-feather";
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { TabView, SceneMap } from 'react-native-tab-view';
+import FacePile from 'react-native-face-pile';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+
+const FACES = [
+  {
+    id: 0,
+    imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+  },
+  {
+    id: 1,
+    imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+  },
+  {
+    id: 2,
+    imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 3,
+    imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+  },
+  {
+    id: 4,
+    imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
+  },
+  {
+    id: 5,
+    imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
+  }
+];
 
 const renderItem = ({item}) => {
   console.log(item.pic)
   return(
     <View style={{width:'100%', padding:10}}>
-      <Text style={{padding: 5, fontSize:18}}>{item.month}</Text>
+      <Text style={{padding: 5, fontSize:16}}>{item.month}</Text>
       <Image
         style = {{
           height:200,
-          width:340,
+          width:SCREEN_WIDTH-25,
           borderRadius: 5,
         }}
         source = {{
           uri: item.pic
-        }}
-       />
+        }}>
+
+      </Image>
+      <View style={{top:'17.5%', right:'6%', position:'absolute'}}>
+      <FacePile
+        size={2.5} numFaces={3} faces={FACES} circleSize={14}
+        containerStyle={{height:40}}
+         overlap={0.1} />
+       </View>
+     <Text style={{bottom:'17.5%', color:'white', fontSize:17, padding:10}}>
+       Trip with the boys
+     </Text>
+
    </View>
   )
 }
 
-const FlatListItemSeparator = () => {
-  return (
-    <View
-      style={{
-        top:24,
-        backgroundColor:'red'
-      }}
-    />
-  );
-}
+
 
 const FirstRoute = () => (
 
@@ -85,20 +116,7 @@ const FirstRoute = () => (
          renderItem ={(item) => renderItem(item)}
 
          />
-    <View
-     style={{
-         flexDirection: "row",
-         justifyContent: "flex-end",
-         padding:15,
-         zIndex:99,
-       }}
-     >
-       <TouchableOpacity
-         onPress = {() => this.ViewChats()}
-         style={styles.roundButton1}>
-         <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
-       </TouchableOpacity>
-    </View>
+
   </View>
 );
 
@@ -173,6 +191,13 @@ class AlbumHome extends React.Component{
         renderTabBar={this._renderTabBar}
         onIndexChange={this._handleIndexChange}
       />
+
+         <TouchableOpacity
+           onPress = {() => this.ViewChats()}
+           style={styles.roundButton1}>
+           <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+         </TouchableOpacity>
+    
        </BackgroundContainer>
 
      )

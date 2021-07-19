@@ -20,6 +20,7 @@ import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebso
 import { connect } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import { parseISO } from 'date-fns'
+import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -614,7 +615,7 @@ const height = Dimensions.get("window").height
    },
    albumLook:{
      borderRadius: 10,
-     width: '98%',
+     width: SCREEN_WIDTH-10,
      height: '83%',
      top:17.5,
      alignItems:'center'
