@@ -22,6 +22,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
  // pictures
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket';
+import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import TextModal from '../RandomComponents/TextModal';
 import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 import RealRoundedInput from '../RandomComponents/RealRoundedInput';
@@ -59,12 +60,27 @@ import SingleComment from './SingleComment';
      if(this.state.comment.length > 0){
        const cellId = this.props.route.params.cellId
        const userId = this.props.userId
+       const commentHost = this.props.commentHost
+       const cellDate = this.props.cellDate
+       const notificationObject = {
+         command: "social_comment_notification",
+         actor: userId,
+         recipient:commentHost,
+         cellDate: cellDate
+       }
+       console.log(notificationObject)
        // Now do the websocket here
        SocialCommentsWebsocketInstance.sendComment(
          cellId,
          userId,
          comment,
        )
+
+       if(userId !== commentHost){
+         console.log('does this hit')
+         NotificationWebSocketInstance.sendNotification(notificationObject)
+
+       }
 
        this.setState({
          comment: ""
@@ -205,10 +221,12 @@ import SingleComment from './SingleComment';
               onCommentFocus = {this.pressToScroll}
               />
 
+            {/*
+              <Button
+                onPress = {() => this.pressToScroll()}
+                title = "scroll" />
 
-            <Button
-              onPress = {() => this.pressToScroll()}
-              title = "scroll" />
+              */}
 
 
            </View>
@@ -292,7 +310,9 @@ import SingleComment from './SingleComment';
      userId: state.auth.id,
      currentUser: state.auth.username,
      profilepic: state.auth.profilePic,
-     socialComments: state.socialNewsfeed.socialComments
+     socialComments: state.socialNewsfeed.socialComments,
+     commentHost: state.socialNewsfeed.commentHost,
+     cellDate: state.socialNewsfeed.cellDate
    }
  }
 

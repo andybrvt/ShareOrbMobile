@@ -57,6 +57,7 @@ class WebSocketNotifications {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
 
+    console.log(parsedData)
     if (command === 'notifications') {
         const notifications = JSON.parse(parsedData.notifications);
         this.callbacks['notifications'](notifications)
@@ -79,11 +80,8 @@ class WebSocketNotifications {
 
 
     } else if (command === 'new_notification') {
-        // this.showNotification(parsedData, 'bottomRight')
-        //
-        // const notification = JSON.parse(parsedData.notification)
-        // console.log(notification)
-        // this.callbacks['new_notification'](notification)
+        const notification = JSON.parse(parsedData.notification)
+        this.callbacks['new_notification'](notification)
         //
         // // Add a call back where you jsut add 1 to the notificationseen her
         //

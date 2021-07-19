@@ -7,6 +7,8 @@ const initialState = {
   curSocialCell: {},
   showFinalModal: false,
   socialComments: {},
+  commentHost: null,
+  cellDate: new Date()
 }
 
 const loadSocialPosts = (state, action) => {
@@ -62,7 +64,9 @@ const finalPostModal = (state, action) => {
 
 const loadSocialComments = (state, action) => {
   return  updateObject(state, {
-    socialComments: action.socialComments
+    socialComments: action.socialComments.socialComments,
+    commentHost: action.socialComments.ownerId,
+    cellDate: action.socialComments.cellDate
   })
 }
 

@@ -16,6 +16,7 @@ import Animated from 'react-native-reanimated';
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import BottomSheet from 'reanimated-bottom-sheet';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+import NotificationWebSocketInstance from  '../Websockets/notificationWebsocket';
 import { Navigation2, Heart, MessageCircle } from "react-native-feather";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
@@ -93,11 +94,24 @@ class SocialNewsfeedPost extends React.Component{
     // and then backend
     // then back to the redux
     console.log("like button")
+    const notificationObject = {
+      command: 'social_like_notification',
+      actor: personLike,
+      recipient: ownerId,
+      cellDate:cellDate,
+
+    }
+
     WebSocketSocialNewsfeedInstance.sendOneLike(
       socialCalCellId,
       personLike,
       contentTypeId
     )
+
+    if(personLike !== ownerId){
+      NotificationWebSocketInstance.sendNotification(notificationObject)
+
+    }
 
   }
 
@@ -373,6 +387,7 @@ class SocialNewsfeedPost extends React.Component{
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>
                           <Heart
+                            stroke = "red"
                             fill="red"
                             width ={35}
                             height = {35}
@@ -395,6 +410,7 @@ class SocialNewsfeedPost extends React.Component{
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>
                           <Heart
+                            stroke = "white"
                             fill="white"
                             width ={35}
                             height = {35}
@@ -411,6 +427,8 @@ class SocialNewsfeedPost extends React.Component{
                   <View style = {styles.tagCSS2}>
                       <View style = {styles.justifyCenter}>
                         <MessageCircle
+                          stroke = "white"
+
                           fill="white"
                           width ={35}
                           height = {35}
@@ -428,6 +446,8 @@ class SocialNewsfeedPost extends React.Component{
                   style = {styles.tagCSS3}>
                   <View style = {styles.justifyCenter}>
                     <Navigation2
+                      stroke = "white"
+
                       fill="white"
                       width ={35}
                       height = {35}
@@ -455,15 +475,17 @@ class SocialNewsfeedPost extends React.Component{
             </Animated.View>
             : <View></View>
           }
+          {/*
+            <Button
+              title = "slide"
+              onPress = {() => this.onSlidePress(userPostImages.length, postId,
+              this.props.userId,
+              contentTypeId,
+              ownerId,
+              cellDate)}
+               />
+            */}
 
-          <Button
-            title = "slide"
-            onPress = {() => this.onSlidePress(userPostImages.length, postId,
-            this.props.userId,
-            contentTypeId,
-            ownerId,
-            cellDate)}
-             />
          </Animated.View>
       )
   }

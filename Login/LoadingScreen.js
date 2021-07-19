@@ -4,7 +4,7 @@ import Frame from '../Frame.svg';
 import { connect } from "react-redux";
 import * as authActions from '../store/actions/auth';
 
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
 
 // This will function as a loading screen while informaiton
@@ -32,7 +32,10 @@ class LoadingScreen extends React.Component{
     return (
       <View style = {styles.container}>
         <Frame height = {100} width = {200} />
-
+        <Button
+          title = "Logout"
+          onPress = {() => this.props.logout()}
+          />
       </View>
     )
   }
@@ -51,6 +54,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    logout: () => dispatch(authActions.logout()),
+
     authDoneLoading: () => dispatch(authActions.authDoneLoading())
 
   }

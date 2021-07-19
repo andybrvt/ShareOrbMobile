@@ -59,10 +59,16 @@ class WebsocketCellComments{
 
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
+    console.log(parsedData)
     if(command === 'fetch_social_cell_comments'){
       // Now start setting put up the callbacks
       const socialComments = parsedData.socialComments
-      this.callbacks['fetch_social_comments'](socialComments)
+      const commentObj = {
+        socialComments: socialComments,
+        ownerId: parsedData.owenrId,
+        cellDate: parsedData.cellDate
+      }
+      this.callbacks['fetch_social_comments'](commentObj)
     }
     if(command === "send_comment_cell"){
       const comment = parsedData.comment
