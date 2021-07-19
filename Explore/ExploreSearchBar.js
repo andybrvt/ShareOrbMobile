@@ -49,11 +49,16 @@ class ExploreSearchBar extends React.Component{
             backgroundColor: "#1890ff",
             // backgroundColor: "white",
             transform:[
-              {translateY: translateY}
+              // {translateY: translateY}
             ]
           }}>
 
-          <SearchBar />
+          <SearchBar
+            onOpen = {this.props.onOpen}
+            onClose = {this.props.onClose}
+            visible = {this.props.visible}
+            onChange = {this.props.onChange}
+             />
           {/*
             <View style={{backgroundColor:'#f0f0f0', width:'97.5%', flexDirection:'row', borderRadius:10, padding:5,}}>
             <Search style={{top:6, left:10}} stroke="#8c8c8c" strokeWidth={2.5} width={17.5} height={17.5}   />
@@ -79,7 +84,8 @@ const styles = StyleSheet.create({
   passwordContainer: {
     flexDirection: 'row',
     // padding: 10,
-    backgroundColor: 'red',
+    height: 60,
+    // backgroundColor: 'red',
     position: 'relative',
     zIndex: 99,
   },
