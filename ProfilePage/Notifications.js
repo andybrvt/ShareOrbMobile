@@ -7,14 +7,14 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  FlatList
  } from 'react-native';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
 import { Avatar } from 'react-native-elements';
-import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { MoreVertical} from "react-native-feather";
 import { connect } from 'react-redux';
 

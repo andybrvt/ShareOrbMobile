@@ -49,9 +49,12 @@ class SuggestedList extends React.Component{
     return(
       <Animated.View style = {styles.exploreTheDayContainer}>
 
-        <View style = {styles.trendingTextContainer}>
-          <Text style = {styles.trendingText}> Suggested</Text>
-        </View>
+        {/*
+          <View style = {styles.trendingTextContainer}>
+            <Text style = {styles.trendingText}> Suggested</Text>
+          </View>
+
+          */}
 
         <AnimatedFlatList
           onScroll = {onScrollEvent({y})}
@@ -72,7 +75,7 @@ class SuggestedList extends React.Component{
 
 const styles = StyleSheet.create({
   exploreTheDayContainer: {
-    // flex:1,
+    flex:1,
   },
   trendingText: {
     color: "black",

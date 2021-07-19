@@ -25,20 +25,23 @@ class SearchBar extends React.Component{
             height: 60,
           }}>
 
-          <View style = {{
-              flex:0.5,
-              alignItems: 'center'
-            }}>
-            <Avatar.Image
-              source = {{
-                uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic,
-              }}
-              size = {30}
-            />
-          </View>
+          {/*
+            <View style = {{
+                flex:0.5,
+                alignItems: 'center'
+              }}>
+              <Avatar.Image
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic,
+                }}
+                size = {30}
+              />
+            </View>
+
+            */}
 
           <View style = {{
-              flex: 3
+              width: this.props.visible ? '75%' : '90%',
             }}>
 
             <View style = {styles.searchText}>
@@ -49,28 +52,34 @@ class SearchBar extends React.Component{
                 icon={faSearch} />
 
               <TextInput
-                style={{left:20}}
-              underlineColorAndroid = "transparent"
-              placeholder = "Search Chats"></TextInput>
+                onChangeText = {this.props.onChange}
+                onFocus = {() => this.props.onOpen()}
+                style={{
+                  width: "80%",
+                  // backgroundColor: 'yellow',
+                  left:20}}
+                underlineColorAndroid = "transparent"
+                placeholder = "Search Chats"></TextInput>
 
             </View>
           </View>
+          {
+            this.props.visible ?
 
-          <View style = {{
-              flex: 0.2,
-              alignItems: 'center',
-            }}>
+            <View style = {{
+                width:'20%'
+              }}>
+              <Button
+                onPress = {() => this.props.onClose()}
+                color="white"
+                title = "cancel"
+                 />
+            </View>
+
+            : null
+          }
 
 
-
-          </View>
-
-          {/*
-
-
-
-
-            */}
 
         </View>
       )

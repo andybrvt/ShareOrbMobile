@@ -366,7 +366,7 @@ class Chats extends React.Component{
         <View style = {styles.chatHeaderHeader}>
           {this.searchHeader()}
           <View style = {styles.searchTextContainer}>
-            <SearchBar />
+            <SearchBar/>
           </View>
           <ScrollView
             showsHorizontalScrollIndicator={false}

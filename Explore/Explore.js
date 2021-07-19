@@ -7,14 +7,15 @@ import { Text,
    Dimensions,
    FlatList,
    TouchableHighlight,
-   TextInput
+   TextInput,
+   Keyboard
   } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../RandomComponents/SearchBar';
-import  authAxios from '../util';
+import authAxios from '../util';
 import PictureBox from './PictureBox';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather";
@@ -22,7 +23,7 @@ import ExploreSearchBar from './ExploreSearchBar';
 import TrendingList from './TrendingList';
 import SuggestedList from './SuggestedList';
 import Animated from 'react-native-reanimated';
-
+import SearchResults from './SearchResults';
 const { Value } = Animated;
 
 const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
@@ -48,6 +49,10 @@ class Explore extends React.Component{
      searchText:'',
      trendingCells: [],
      exploreCells: [],
+     showSearch: false,
+     searched: [],
+     searchValue: "",
+     loading: false
      };
   }
 
@@ -78,6 +83,53 @@ class Explore extends React.Component{
     })
   }
 
+  onShowSearch = () => {
+    this.setState({
+      showSearch: true
+    })
+  }
+
+  onCloseSearch =() => {
+    Keyboard.dismiss()
+    this.setState({
+      showSearch: false
+    })
+  }
+
+  onChangeNewSearch = e => {
+
+    console.log(e)
+    this.setState({
+      searchValue: e
+    })
+
+    const search = e === undefined ? null : e;
+
+    if(search !== ""){
+      this.setState({
+        loading: true
+      });
+    authAxios.get(`${global.IP_CHANGE}/userprofile/userSearch/`, {
+      params: {
+        search
+      }
+    }).then(res => {
+      console.log(res.data)
+      this.setState({
+        loading: false,
+        searched: res.data,
+      })
+    })
+
+  } else {
+    this.setState({
+      searched:[],
+
+    })
+  }
+
+  }
+
 
   render(){
 
@@ -100,26 +152,49 @@ class Explore extends React.Component{
 
         */}
 
-        <View>
+        <View style = {{
+            flex: 1,
+          }}>
 
 
           <ExploreSearchBar
+            onOpen = {this.onShowSearch}
+            onClose = {this.onCloseSearch}
+            visible = {this.state.showSearch}
+            onChange = {this.onChangeNewSearch}
             y = {this.y}
             />
 
-          <Animated.View style = {{
-              top: top
-            }}>
-            <TrendingList
-              y = {this.y}
-              cells = {trendingCells}
+
+            {/*
+
+              <Animated.View style = {{
+                  top: top
+                }}>
+              <TrendingList
+                y = {this.y}
+                cells = {trendingCells}
+                 />
+
+               </Animated.View>
+
+              */}
+          {
+            this.state.showSearch ?
+
+            <SearchResults
+              data = {this.state.searched}
                />
 
+            :
             <SuggestedList
               y = {this.y}
               cells = {exploreCells}
               />
-          </Animated.View>
+
+
+          }
+
 
 
         </View>
