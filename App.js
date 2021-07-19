@@ -29,6 +29,8 @@ import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocke
 import ChatSidePanelWebSocketInstance from './Websockets/newChatSidePanelWebsocket';
 import SocialCommentsWebsocketInstance from './Websockets/commentsCellWebsocket';
 import SocialCalCellPageWebSocketInstance from './Websockets/socialCalCellWebsocket';
+import NotificationWebSocketInstance from './Websockets/notificationWebsocket';
+
 // import BottomNavigation from './BottomNavigation';
 import { TabActions } from '@react-navigation/native';
 import Constant from 'expo-constants';
@@ -88,6 +90,7 @@ class App extends Component{
     // wnat to render it along with notificaitons
 
     this.initialiseChats()
+    this.initialiseNotification()
     WebSocketSocialNewsfeedInstance.addCallbacks(
       this.props.id,
       this.props.loadSocialPosts.bind(this),
@@ -143,7 +146,7 @@ class App extends Component{
       // login... check if you are authenticated and then
       // grab the userinfromation
       this.props.grabUserCredentials()
-      if(parseInt(this.props.id) !== parseInt(prevProps.id) && this.props.id !== null){
+      if(parseInt(this.props.id) !== parseInt(prevProps.id) && this.props.id !== null && this.props.username !== null){
         // Now this will see if there is a person logged in
         // Now if you want to connect to the chat,
         // since there is an inital connection you have to disconnect it
@@ -158,9 +161,48 @@ class App extends Component{
         // Now you can try to connect
         ChatSidePanelWebSocketInstance.connect(this.props.id)
 
+        NotificationWebSocketInstance.disconnect()
+      
+        this.waitForNotificationSocketConnection(() => {
+            NotificationWebSocketInstance.fetchFriendRequests(
+              this.props.id
+            )
+          })
+        NotificationWebSocketInstance.connect(this.props.username)
+
+
       }
     }
   }
+
+  initialiseNotification(){
+    this.waitForNotificationSocketConnection(() => {
+      NotificationWebSocketInstance.fetchFriendRequests(
+        this.props.id
+      )
+    })
+    console.log('1')
+    NotificationWebSocketInstance.connect(this.props.username)
+
+  }
+
+  waitForNotificationSocketConnection (callback) {
+    const component = this;
+    setTimeout(
+      function(){
+
+        if (NotificationWebSocketInstance.state() === 1){
+
+          callback();
+          return;
+        } else{
+
+            component.waitForNotificationSocketConnection(callback);
+        }
+      }, 100)
+
+  }
+
 
   initialiseChats(){
     this.waitForChatsSocketConnection(() => {
