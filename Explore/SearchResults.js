@@ -16,17 +16,21 @@ import { Search,} from "react-native-feather";
 
 class SearchResults extends React.Component{
 
+
+
+
   renderItem = ({item}) => {
 
 
     return(
-      <TouchableHighlight>
+      <TouchableOpacity
+        onPress = {() => this.props.viewProfile(item.username)}
+        >
         <View style={{
            flexDirection:'row',
            padding:15}}>
           <View style={{flex:1}}>
             <Avatar
-              // onPress = {() => this.props.ViewProfile(userUsername)}
               size={40}
               rounded
               source = {{
@@ -48,7 +52,7 @@ class SearchResults extends React.Component{
 
         </View>
       </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     )
   }
 
@@ -105,5 +109,8 @@ class SearchResults extends React.Component{
     )
   }
 }
+
+
+
 
 export default SearchResults;

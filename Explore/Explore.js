@@ -92,8 +92,24 @@ class Explore extends React.Component{
   onCloseSearch =() => {
     Keyboard.dismiss()
     this.setState({
+      searchValue: "",
       showSearch: false
     })
+  }
+
+  viewProfile = (username) => {
+    this.setState({
+      searchValue: "",
+      showSearch: false
+    })
+    if(username === this.props.username){
+      this.props.navigation.navigate("Profile");
+    } else {
+      this.props.navigation.navigate("ProfilePage", {
+        username: username
+      })
+    }
+
   }
 
   onChangeNewSearch = e => {
@@ -158,6 +174,7 @@ class Explore extends React.Component{
 
 
           <ExploreSearchBar
+            value = {this.state.searchValue}
             onOpen = {this.onShowSearch}
             onClose = {this.onCloseSearch}
             visible = {this.state.showSearch}
@@ -183,10 +200,12 @@ class Explore extends React.Component{
             this.state.showSearch ?
 
             <SearchResults
+              viewProfile = {this.viewProfile}
               data = {this.state.searched}
                />
 
             :
+
             <SuggestedList
               y = {this.y}
               cells = {exploreCells}
@@ -203,6 +222,12 @@ class Explore extends React.Component{
 
 
     )
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    username: state.auth.username
   }
 }
 

@@ -37,7 +37,7 @@ class Notifications extends React.Component{
    if(item.type === "like_notification"){
 
      return(
-       <TouchableOpacity>
+       <TouchableOpacity >
           <View style={{
              flexDirection:'row',
              padding:15}}>
