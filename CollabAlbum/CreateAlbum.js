@@ -80,7 +80,7 @@ class CreateAlbum extends React.Component{
          </TouchableHighlight>
 
          <View>
-            <Text>Public/Private</Text>
+            <Text style={{padding:20}}>Public/Private</Text>
               <Switch
                style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }}
                trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -90,8 +90,8 @@ class CreateAlbum extends React.Component{
                value={this.state.isEnabled}
              />
          </View>
-         <View style={{alignItems:'center'}}>
-            <Text>Cover Pic</Text>
+         <View style={{alignItems:'center', top:'12.5%'}}>
+            <Text style={{fontSize:18, bottom:30}}>Cover Pic</Text>
             <View style={styles.bigImageContainer}>
               <TouchableOpacity
                 activeOpacity={0.6}
