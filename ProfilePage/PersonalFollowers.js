@@ -18,7 +18,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
  // you can upload pictures and write a caption after uploaidng
  // pictures
 
- class Followers extends React.Component{
+ class PersonalFollowers extends React.Component{
 
    onHomeNav = () => {
      // this function will be use to navigate back
@@ -76,20 +76,14 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
    render(){
 
-     let data = [];
 
-     if(this.props.profile){
-       if(this.props.profile.get_followers){
-         data = this.props.profile.get_followers
-       }
-     }
 
      return (
        <BackgroundContainer>
          <View >
          <FlatList
            style = {{marginTop:5}}
-           data = {data}
+           data = {this.props.followers}
            renderItem = {this.renderItem}
            ItemSeparatorComponent = { this.FlatListItemSeparator }
            keyExtractor={(item, index) => String(index)}
@@ -106,7 +100,6 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
    return {
      followers:state.auth.followers,
-     profile: state.explore.profile
    }
  }
 
@@ -174,4 +167,4 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
   })
 
 
- export default connect(mapStateToProps, null)(Followers);
+ export default connect(mapStateToProps, null)(PersonalFollowers);
