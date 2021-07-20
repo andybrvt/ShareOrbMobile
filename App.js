@@ -65,6 +65,7 @@ import UserInfo from './Settings/UserInfo';
 
 import AlbumHome from './CollabAlbum/AlbumHome';
 import CreateAlbum from './CollabAlbum/CreateAlbum';
+import InviteFriends from './CollabAlbum/InviteFriends';
 
 import { Ionicons } from '@expo/vector-icons';
 import { ArrowUpCircle, Search, Home, Disc, Aperture, BookOpen, User, MessageCircle, FolderPlus} from "react-native-feather";
@@ -588,6 +589,17 @@ class App extends Component{
                         ...TransitionPresets.SlideFromRightIOS,
                                         }}
                        name = 'CreateAlbum' component = {CreateAlbum}/>
+                       <Stack.Screen
+                         options={{
+                           headerStyle:{
+                             shadowColor:'#fff', //ios
+                             elevation:0,        // android
+
+                           },
+                           title: 'InviteFriends',
+                           ...TransitionPresets.ModalSlideFromBottomIOS,
+                                           }}
+                          name = 'InviteFriends' component = {InviteFriends}/>
                  <Stack.Screen
                    options={{
                      title: 'Search Friends',

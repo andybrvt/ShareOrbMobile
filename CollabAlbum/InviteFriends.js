@@ -22,7 +22,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
 const col = 3;
-class CreateAlbum extends React.Component{
+class InviteFriends extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -222,4 +222,4 @@ class CreateAlbum extends React.Component{
    },
  })
 
- export default CreateAlbum;
+ export default InviteFriends;
