@@ -8,7 +8,10 @@ import Followers from './Followers';
 import Following from './Following';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeart, faComment, faBookmark, } from '@fortawesome/free-regular-svg-icons';
-import { faFire } from '@fortawesome/free-solid-svg-icons'
+import { faFire } from '@fortawesome/free-solid-svg-icons';
+import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
+
+
 class ProfileHeader extends React.Component{
 
 
@@ -49,8 +52,17 @@ class ProfileHeader extends React.Component{
   //
   // }
 
-  onFollow = () => {
-    console.log('follow this')
+  onFollow = (follower, following) => {
+
+
+    ExploreWebSocketInstance.sendFollowing(follower,following);
+    //update user credentials and then send out notifications
+
+  }
+
+  onUnfollow = (follower, following) => {
+    ExploreWebSocketInstance.sendUnFollowing(follower, following);
+
   }
 
   renderProfilePic = () => {
@@ -143,7 +155,11 @@ class ProfileHeader extends React.Component{
 
                  followers.includes(this.props.currentUser.toString()) ?
 
-                 <TouchableOpacity onPress={() => this.onFollow()}>
+                 <TouchableOpacity
+                   onPress={() => this.onUnfollow(
+                     this.props.currentId,
+                     profileId
+                   )}>
                    <View style={styles.editButton}>
                       <Text style={{color:'white',}}>Unfollow</Text>
                     </View>
@@ -151,7 +167,11 @@ class ProfileHeader extends React.Component{
 
                 :
 
-                <TouchableOpacity onPress={() => this.onFollow()}>
+                <TouchableOpacity
+                  onPress={() => this.onFollow(
+                    this.props.currentId,
+                    profileId
+                  )}>
                   <View style={styles.editButton}>
                      <Text style={{color:'white',}}>Follow</Text>
                    </View>

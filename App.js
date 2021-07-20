@@ -105,7 +105,9 @@ class App extends Component{
 
     ExploreWebSocketInstance.addCallbacks(
       // add the call backs here
-      this.props.loadProfile.bind(this)
+      this.props.loadProfile.bind(this),
+      this.props.addFollowerUnfollower.bind(this),
+
     )
 
     ChatSidePanelWebSocketInstance.addCallbacks(
@@ -398,7 +400,8 @@ class App extends Component{
                    tabPress: e => {
                      // Prevent default action
                      if(this.props.username === null){
-                       e.preventDefault();
+                       // e.preventDefault();
+                       this.props.grabUserCredentials()
 
 
                      }
@@ -706,6 +709,8 @@ const mapDispatchToProps = dispatch => {
     sendSocialComment: socialComment => dispatch(socialNewsfeedActions.sendSocialComment(socialComment)),
 
     loadProfile: profile => dispatch(exploreActions.loadProfile(profile)),
+    addFollowerUnfollower: followObject => dispatch(exploreActions.addFollowerUnfollower(followObject)),
+
 
     setChats: chats => dispatch(messageActions.setChats(chats)),
     fetchSocialCalCellPage:socialCalCellObj => dispatch(socialActions.fetchSocialCalCellPage(socialCalCellObj)),

@@ -56,7 +56,7 @@ class WebSocketExplore{
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
     console.log(parsedData)
-    
+
     if (command === "user_profile"){
       //STATUS REDONE
 
@@ -64,20 +64,12 @@ class WebSocketExplore{
       this.callbacks['load_profile'](profile)
 
     } else if (command === 'send_follower'){
-      // STATUS REDONE
-
-      // MAKE SURE TO ADD A METHOD TO UPDATE THE AUTH TOO
-
-      // This is to add to the other person's followers
+    
       const newFollowerList = parsedData.followerList
       this.callbacks['new_follower_unfollower'](newFollowerList)
 
     } else if (command === 'send_unfollower'){
-      // STATUS REDONE
 
-      // MAKE SURE TO ADD A METHOD TO UPDATE THE AUTH TOO
-
-      // This is to un add the other person follower
       const newFollowerList = parsedData.followerList
       this.callbacks['new_follower_unfollower'](newFollowerList)
 
@@ -197,7 +189,7 @@ class WebSocketExplore{
 
   addCallbacks(
      loadProfile,
-     // addFollowerUnfollowerCallBack,
+     addFollowerUnfollowerCallBack,
      // addSocialEventJoinLeave,
      // addSocialCell,
      // addSocialEventJoinLeavePage,
@@ -207,7 +199,7 @@ class WebSocketExplore{
      // addFollowing
    ){
     this.callbacks['load_profile'] = loadProfile
-    // this.callbacks['new_follower_unfollower'] = addFollowerUnfollowerCallBack
+    this.callbacks['new_follower_unfollower'] = addFollowerUnfollowerCallBack
     // this.callbacks['add_social_event_join_leave'] = addSocialEventJoinLeave
     // this.callbacks['add_social_cell'] = addSocialCell
     // this.callbacks['add_social_event_join_leave_page'] = addSocialEventJoinLeavePage
@@ -230,6 +222,27 @@ class WebSocketExplore{
         username: username
       })
     }
+
+  sendFollowing = (follower, following) => {
+
+    // same as share orb
+    this.sendExplore({
+      follower: follower,
+      following: following,
+      command: 'send_following'
+    })
+  }
+
+  sendUnFollowing = (follower, following) => {
+
+    this.sendExplore({
+      follower: follower,
+      following: following,
+      command: 'send_unfollowing'
+    })
+
+
+  }
 
   sendExplore(data){
     // So this is just used as a way to send info into the backend

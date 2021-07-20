@@ -26,3 +26,12 @@ export const changeProfileInfo = (profileInfo) => {
     profileInfo: profileInfo
   }
 }
+
+export const addFollowerUnfollower = followerList => {
+//IMPROVED
+  // This will be for the receiving persopn (both for following and unfollowing)
+  return{
+    type: actionTypes.ADD_FOLLOWER_UNFOLLOWER,
+    followerList: followerList
+  }
+}

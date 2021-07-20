@@ -41,6 +41,18 @@ export const changeProfileInfo = (state, action) => {
   })
 }
 
+export const addFollowerUnfollower = (state, action) => {
+  // IMPROVED
+
+  return updateObject(state, {
+    profile: {
+      ...state.profile,
+      get_followers: action.followerList
+    }
+
+  })
+}
+
 
 const reducer = (state = initialState, action) => {
 
@@ -54,6 +66,8 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.CHANGE_PROFILE_INFO:
       return changeProfileInfo(state, action)
+    case actionTypes.ADD_FOLLOWER_UNFOLLOWER:
+      return addFollowerUnfollower(state, action);
     default:
       return state;
   }
