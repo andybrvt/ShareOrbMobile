@@ -15,7 +15,7 @@ import {
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import { PlusCircle, ArrowRight, XCircle, Lock, Users} from "react-native-feather";
+import { PlusCircle, ArrowRight, XCircle, Unlock, Lock, Users} from "react-native-feather";
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { moderateScale } from 'react-native-size-matters';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
@@ -29,6 +29,12 @@ class CreateAlbum extends React.Component{
       isEnabled:false,
 
     }
+  }
+
+  InviteFriendsNav = () => {
+    this.props.navigation.navigate("InviteFriends",
+
+    );
   }
 
   toggleSwitch = () => {
@@ -75,7 +81,7 @@ class CreateAlbum extends React.Component{
                   <Text>Invite Friends</Text>
                </Text>
              </View>
-           <TouchableOpacity onPress={() => this.editPageClick()}>
+           <TouchableOpacity onPress={() => this.InviteFriendsNav()}>
              <View style={styles.editButton}>
                 <Text style={{color:'#595959',}}>@Friends</Text>
               </View>
@@ -85,7 +91,11 @@ class CreateAlbum extends React.Component{
 
 
          <View style={styles.action3}>
-           <Lock stroke="black" strokeWidth={2.5} width={20} height={20} />
+             {this.state.isEnabled?
+           <Unlock stroke="black" strokeWidth={2.5} width={20} height={20} />
+           :
+             <Lock stroke="black" strokeWidth={2.5} width={20} height={20} />
+           }
            <View style={{width:'65%'}}>
              <Text style={[
                 styles.bioInput,

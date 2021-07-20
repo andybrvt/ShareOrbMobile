@@ -599,7 +599,7 @@ class App extends Component{
                              elevation:0,        // android
 
                            },
-                           title: 'InviteFriends',
+                           title: 'Invite Friends',
                            ...TransitionPresets.ModalSlideFromBottomIOS,
                                            }}
                           name = 'InviteFriends' component = {InviteFriends}/>
