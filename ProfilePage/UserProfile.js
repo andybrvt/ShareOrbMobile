@@ -155,6 +155,7 @@ const mapStateToProps = state => {
   return {
     currentId: state.auth.id,
     currentUser: state.auth.username,
+    following: state.auth.following,
     profile: state.explore.profile,
   }
 }
