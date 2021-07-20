@@ -57,13 +57,11 @@ class ProfileHeader extends React.Component{
 
     ExploreWebSocketInstance.sendFollowing(follower,following);
     //update user credentials and then send out notifications
-    this.props.grabUserCredentials()
 
   }
 
   onUnfollow = (follower, following) => {
     ExploreWebSocketInstance.sendUnFollowing(follower, following);
-    this.props.grabUserCredentials()
 
   }
 
