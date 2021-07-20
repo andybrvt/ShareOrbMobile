@@ -67,7 +67,7 @@ import AlbumHome from './CollabAlbum/AlbumHome';
 import CreateAlbum from './CollabAlbum/CreateAlbum';
 
 import { Ionicons } from '@expo/vector-icons';
-import { ArrowUpCircle, Search, Home, Disc, Aperture, User, MessageCircle, FolderPlus} from "react-native-feather";
+import { ArrowUpCircle, Search, Home, Disc, Aperture, BookOpen, User, MessageCircle, FolderPlus} from "react-native-feather";
 import TestReanimated from './PostingFolder/TestReanimated';
 import DayAlbum from './SocialCalendar/DayAlbum.js';
 import Test from './PostingFolder/Test';
@@ -374,7 +374,7 @@ class App extends Component{
               tabBarLabel: 'AlbumHome',
               tabBarLabel: false,
               tabBarIcon: ({ color }) => (
-                  <FolderPlus stroke={color} strokeWidth={2} width={25} height={25} />
+                  <BookOpen stroke={color} strokeWidth={2} width={25} height={25} />
               ),
             }}
             />

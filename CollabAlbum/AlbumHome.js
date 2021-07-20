@@ -13,7 +13,7 @@ import {
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import { PlusCircle, UserPlus, Clock, Users} from "react-native-feather";
+import { PlusCircle, UserPlus, Book, FolderPlus,Clock, Users} from "react-native-feather";
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { TabView, SceneMap } from 'react-native-tab-view';
 import FacePile from 'react-native-face-pile';
@@ -200,7 +200,7 @@ class AlbumHome extends React.Component{
        <TouchableOpacity activeOpacity={0.9}
            onPress = {() => this.ViewChats()}
            style={styles.roundButton1}>
-           <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+           <FolderPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
          </TouchableOpacity>
        </BackgroundContainer>
 

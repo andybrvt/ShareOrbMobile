@@ -837,7 +837,6 @@ class PostingPage extends React.Component{
              width = {50}
              stroke = "lightgray"
              fill= "white" />
-
          </TouchableOpacity>
 
          </Animated.View>

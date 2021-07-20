@@ -46,7 +46,7 @@ class CreateAlbum extends React.Component{
            <View><Text style={styles.headerFont}>Title</Text></View>
 
             <TextInput
-             placeholder="Write Title"
+             placeholder=""
              placeholderTextColor="#666666"
              autoCorrect={false}
              style={[
@@ -65,13 +65,8 @@ class CreateAlbum extends React.Component{
 
            <Text  style={[
               styles.bioInput,
-
               ]}>
-
-
                   <Text>Invite Friends</Text>
-
-
            </Text>
            </View>
 
