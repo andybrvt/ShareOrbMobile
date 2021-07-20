@@ -64,22 +64,14 @@ class WebSocketExplore{
       this.callbacks['load_profile'](profile)
 
     } else if (command === 'send_follower'){
-      // STATUS REDONE
-
-      // MAKE SURE TO ADD A METHOD TO UPDATE THE AUTH TOO
-
-      // This is to add to the other person's followers
+    
       const newFollowerList = parsedData.followerList
       this.callbacks['new_follower_unfollower'](newFollowerList)
 
     } else if (command === 'send_unfollower'){
-      // STATUS REDONE
 
-      // MAKE SURE TO ADD A METHOD TO UPDATE THE AUTH TOO
-
-      // This is to un add the other person follower
       const newFollowerList = parsedData.followerList
-      // this.callbacks['new_follower_unfollower'](newFollowerList)
+      this.callbacks['new_follower_unfollower'](newFollowerList)
 
 
     } else if(command === 'send_social_event'){
@@ -239,6 +231,17 @@ class WebSocketExplore{
       following: following,
       command: 'send_following'
     })
+  }
+
+  sendUnFollowing = (follower, following) => {
+
+    this.sendExplore({
+      follower: follower,
+      following: following,
+      command: 'send_unfollowing'
+    })
+
+
   }
 
   sendExplore(data){

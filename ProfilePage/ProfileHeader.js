@@ -53,14 +53,16 @@ class ProfileHeader extends React.Component{
   // }
 
   onFollow = (follower, following) => {
-    console.log('follow this')
 
-    console.log(follower, following)
 
     ExploreWebSocketInstance.sendFollowing(follower,following);
-    // here we need a websocket to send it to each page
     //update user credentials and then send out notifications
 
+  }
+
+  onUnfollow = (follower, following) => {
+    ExploreWebSocketInstance.sendUnFollowing(follower, following);
+    
   }
 
   renderProfilePic = () => {
@@ -153,7 +155,11 @@ class ProfileHeader extends React.Component{
 
                  followers.includes(this.props.currentUser.toString()) ?
 
-                 <TouchableOpacity onPress={() => this.onFollow()}>
+                 <TouchableOpacity
+                   onPress={() => this.onUnfollow(
+                     this.props.currentId,
+                     profileId
+                   )}>
                    <View style={styles.editButton}>
                       <Text style={{color:'white',}}>Unfollow</Text>
                     </View>
