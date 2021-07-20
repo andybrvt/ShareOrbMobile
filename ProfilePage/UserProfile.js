@@ -10,6 +10,7 @@ import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
 import { Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
+import * as authActions from '../store/actions/auth';
 
 
 // this will be used mostly for the other person profile
@@ -158,6 +159,13 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return{
+    grabUserCredentials: () => dispatch(authActions.grabUserCredentials()),
+
+  }
+}
+
 const styles = StyleSheet.create({
   backgroundColor: {
     flex:1,
@@ -208,4 +216,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default connect(mapStateToProps)(UserProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

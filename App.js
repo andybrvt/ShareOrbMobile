@@ -399,7 +399,8 @@ class App extends Component{
                    tabPress: e => {
                      // Prevent default action
                      if(this.props.username === null){
-                       e.preventDefault();
+                       // e.preventDefault();
+                       this.props.grabUserCredentials()
 
 
                      }
