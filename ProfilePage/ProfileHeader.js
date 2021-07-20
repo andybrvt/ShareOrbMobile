@@ -11,6 +11,7 @@ import { faHeart, faComment, faBookmark, } from '@fortawesome/free-regular-svg-i
 import { faFire } from '@fortawesome/free-solid-svg-icons';
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
+import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 
 
 class ProfileHeader extends React.Component{
@@ -55,6 +56,13 @@ class ProfileHeader extends React.Component{
 
   onFollow = (follower, following) => {
 
+    console.log(this.props.following.length)
+
+    if(this.props.following.length === 0){
+        // if the person doesn't have any followers already
+        //  you wanna rerun so that newsfeed shows up
+
+    }
 
     ExploreWebSocketInstance.sendFollowing(follower,following);
     //update user credentials and then send out notifications

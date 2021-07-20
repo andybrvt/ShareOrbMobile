@@ -75,6 +75,7 @@ import Test from './PostingFolder/Test';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useScrollToTop } from '@react-navigation/native';
 
+import * as dateFns from 'date-fns';
 
 
 const TopTab = createMaterialTopTabNavigator();
@@ -307,6 +308,7 @@ class App extends Component{
   // pages you dont wnat to have the bottom bar on  so you would wnat to render
   // the home page first and then start rendering the tab stack seperatly
   createTabStack = () =>{
+    const curDate = dateFns.format(new Date(), "yyyy-MM-dd");
 
 
     return (
@@ -334,6 +336,11 @@ class App extends Component{
            listeners = {({navigation}) => ({
              tabPress: event => {
                // useScrollToTop(ref)
+               // WebSocketSocialNewsfeedInstance.fetchSocialPost(
+               //   this.props.id,
+               //   curDate,
+               //   this.state.upperStart)
+
              }
            })}
 
@@ -414,7 +421,6 @@ class App extends Component{
   }
 
   render(){
-
 
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the

@@ -6,7 +6,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableWithoutFeedback,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -153,6 +154,7 @@ class NewsfeedView extends React.Component{
                 onPagePost = {this.onPagePost}
                 viewProfile = {this.viewProfile}
                 onCommentOpen = {this.onCommentOpen}/>
+
             </View>
         </BackgroundContainer>
     )
@@ -189,6 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000040',
     marginBottom: 10,
   },
+
 })
 
 const mapStateToProps = state => {
@@ -198,10 +201,10 @@ const mapStateToProps = state => {
     username: state.auth.username,
     id: state.auth.id,
     profilePic: state.auth.profilePic,
-
+    following: state.auth.following,
     curLoad: state.auth.curLoad,
     totalLoad: state.auth.totalLoad,
-    showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments
+    showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments,
 
   }
 }
