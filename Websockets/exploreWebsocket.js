@@ -56,7 +56,7 @@ class WebSocketExplore{
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
     console.log(parsedData)
-    
+
     if (command === "user_profile"){
       //STATUS REDONE
 
@@ -79,7 +79,7 @@ class WebSocketExplore{
 
       // This is to un add the other person follower
       const newFollowerList = parsedData.followerList
-      this.callbacks['new_follower_unfollower'](newFollowerList)
+      // this.callbacks['new_follower_unfollower'](newFollowerList)
 
 
     } else if(command === 'send_social_event'){
@@ -197,7 +197,7 @@ class WebSocketExplore{
 
   addCallbacks(
      loadProfile,
-     // addFollowerUnfollowerCallBack,
+     addFollowerUnfollowerCallBack,
      // addSocialEventJoinLeave,
      // addSocialCell,
      // addSocialEventJoinLeavePage,
@@ -207,7 +207,7 @@ class WebSocketExplore{
      // addFollowing
    ){
     this.callbacks['load_profile'] = loadProfile
-    // this.callbacks['new_follower_unfollower'] = addFollowerUnfollowerCallBack
+    this.callbacks['new_follower_unfollower'] = addFollowerUnfollowerCallBack
     // this.callbacks['add_social_event_join_leave'] = addSocialEventJoinLeave
     // this.callbacks['add_social_cell'] = addSocialCell
     // this.callbacks['add_social_event_join_leave_page'] = addSocialEventJoinLeavePage
@@ -230,6 +230,16 @@ class WebSocketExplore{
         username: username
       })
     }
+
+  sendFollowing = (follower, following) => {
+
+    // same as share orb
+    this.sendExplore({
+      follower: follower,
+      following: following,
+      command: 'send_following'
+    })
+  }
 
   sendExplore(data){
     // So this is just used as a way to send info into the backend

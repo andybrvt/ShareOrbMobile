@@ -8,7 +8,10 @@ import Followers from './Followers';
 import Following from './Following';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeart, faComment, faBookmark, } from '@fortawesome/free-regular-svg-icons';
-import { faFire } from '@fortawesome/free-solid-svg-icons'
+import { faFire } from '@fortawesome/free-solid-svg-icons';
+import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
+
+
 class ProfileHeader extends React.Component{
 
 
@@ -49,8 +52,15 @@ class ProfileHeader extends React.Component{
   //
   // }
 
-  onFollow = () => {
+  onFollow = (follower, following) => {
     console.log('follow this')
+
+    console.log(follower, following)
+
+    ExploreWebSocketInstance.sendFollowing(follower,following);
+    // here we need a websocket to send it to each page
+    //update user credentials and then send out notifications
+
   }
 
   renderProfilePic = () => {
@@ -151,7 +161,11 @@ class ProfileHeader extends React.Component{
 
                 :
 
-                <TouchableOpacity onPress={() => this.onFollow()}>
+                <TouchableOpacity
+                  onPress={() => this.onFollow(
+                    this.props.currentId,
+                    profileId
+                  )}>
                   <View style={styles.editButton}>
                      <Text style={{color:'white',}}>Follow</Text>
                    </View>

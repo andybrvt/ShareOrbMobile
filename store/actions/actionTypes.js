@@ -35,6 +35,9 @@ export const SEND_SOCIAL_COMMENT = "SEND_SOCIAL_COMMENT";
 // This will be for the profile page
 export const LOAD_PROFILE = "LOAD_PROFILE";
 export const UNLOAD_PROFILE = "UNLOAD_PROFILE";
+export const ADD_FOLLOWER_UNFOLLOWER = 'ADD_FOLLOWER_UNFOLLOWER';
+
+
 
 export const CHANGE_PROFILE_INFO = "CHANGE_PROFILE_INFO";
 
