@@ -54,6 +54,7 @@ class ExploreSearchBar extends React.Component{
           }}>
 
           <SearchBar
+            value = {this.props.value}
             onOpen = {this.props.onOpen}
             onClose = {this.props.onClose}
             visible = {this.props.visible}

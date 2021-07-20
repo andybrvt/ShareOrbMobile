@@ -52,7 +52,8 @@ import Notifications from './ProfilePage/Notifications';
 import EditBio from './ProfilePage/EditBio';
 import Followers from './ProfilePage/Followers';
 import Following from './ProfilePage/Following';
-
+import PersonalFollowers from './ProfilePage/PersonalFollowers';
+import PersonalFollowing from './ProfilePage/PersonalFollowing';
 import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
 import ChatSearch from './Chats/ChatSearch';
@@ -251,7 +252,8 @@ class App extends Component{
 
     )
   }
-  followerFollowingTab=()=>{
+  followerFollowingTab=(props)=>{
+
     return(
 
       <TopTab.Navigator
@@ -263,8 +265,35 @@ class App extends Component{
 
         }}>
 
-        <TopTab.Screen name="Following" component={Following} />
+        <TopTab.Screen
+          initialParams = {props.route.params.following}
+          name="Following"
+          component={Following} />
         <TopTab.Screen name="Followers" component={Followers} />
+      </TopTab.Navigator>
+
+
+    )
+  }
+
+  pFollowerFollowingTab=(props)=>{
+
+    return(
+
+      <TopTab.Navigator
+        swipeEnabled={true}
+        tabBarPosition="top"
+        backBehavior = "history"
+        barStyle = {{
+          backgroundColor: "white",
+
+        }}>
+
+        <TopTab.Screen
+          initialParams = {props.route.params.following}
+          name="Following"
+          component={PersonalFollowing} />
+        <TopTab.Screen name="Followers" component={PersonalFollowers} />
       </TopTab.Navigator>
 
 
@@ -420,7 +449,21 @@ class App extends Component{
                           elevation:0,        // android
 
                         },
-                        title: 'pinghsu520',
+
+                         ...TransitionPresets.SlideFromRightIOS,
+                                        }}
+                      />
+
+                    <Stack.Screen
+
+                      name = "PFollowTab" component= {this.pFollowerFollowingTab}
+                      options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+
+                        },
+
                          ...TransitionPresets.SlideFromRightIOS,
                                         }}
                       />

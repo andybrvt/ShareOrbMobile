@@ -52,6 +52,7 @@ class SearchBar extends React.Component{
                 icon={faSearch} />
 
               <TextInput
+                value = {this.props.value}
                 onChangeText = {this.props.onChange}
                 onFocus = {() => this.props.onOpen()}
                 style={{

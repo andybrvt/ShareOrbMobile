@@ -25,12 +25,32 @@ class ProfileHeader extends React.Component{
 
   }
   navigateFollowing() {
-    this.props.navigation.navigate("FollowTab");
+
+    const followers = this.props.profile.get_followers;
+    const following = this.props.profile.get_following;
+
+    if(this.props.currentId === this.props.profile.id){
+      this.props.navigation.navigate("PFollowTab", {
+        following: following,
+        followers: followers
+      });
+
+    } else {
+      this.props.navigation.navigate("FollowTab", {
+        following: following,
+        followers: followers
+      });
+
+    }
 
   }
-  navigateFollowers() {
-    this.props.navigation.navigate("Followers");
+  // navigateFollowers() {
+  //   this.props.navigation.navigate("Followers");
+  //
+  // }
 
+  onFollow = () => {
+    console.log('follow this')
   }
 
   renderProfilePic = () => {
@@ -48,7 +68,6 @@ class ProfileHeader extends React.Component{
     if(this.props.profile){
       if(this.props.profile.profile_picture){
         profileImage = `${global.IMAGE_ENDPOINT}`+this.props.profile.profile_picture
-        console.log(profileImage)
       }
       if(this.props.profile.first_name && this.props.profile.last_name){
         const firstName = global.CAPITALIZE(this.props.profile.first_name)
@@ -76,14 +95,14 @@ class ProfileHeader extends React.Component{
             this.props.profile.get_followers[i].username
           )
         }
-
+        console.log(followers)
 
       }
 
       if(this.props.profile.get_followers){
 
           fulFollowers = this.props.profile.get_followers
-        
+
       }
     }
 
@@ -122,11 +141,21 @@ class ProfileHeader extends React.Component{
 
                  :
 
-                 <TouchableOpacity onPress={() => this.editPageClick()}>
+                 followers.includes(this.props.currentUser.toString()) ?
+
+                 <TouchableOpacity onPress={() => this.onFollow()}>
                    <View style={styles.editButton}>
-                      <Text style={{color:'white',}}>Follow</Text>
+                      <Text style={{color:'white',}}>Unfollow</Text>
                     </View>
                 </TouchableOpacity>
+
+                :
+
+                <TouchableOpacity onPress={() => this.onFollow()}>
+                  <View style={styles.editButton}>
+                     <Text style={{color:'white',}}>Follow</Text>
+                   </View>
+               </TouchableOpacity>
 
                 }
 

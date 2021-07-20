@@ -32,6 +32,8 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
    }
 
    renderItem = ({item}) => {
+
+
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
@@ -51,11 +53,14 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                   <Text style = {styles.chatText}> {item.first_name+" "+item.last_name} </Text>
                 </View>
              </View>
-             <View style={{flex:0.5, justifyContent:"center"}}>
-               <View style={styles.editButton}>
-                  <Text style={{color:'white',}}>Follow</Text>
-                </View>
-             </View>
+             {/*
+               <View style={{flex:0.5, justifyContent:"center"}}>
+                 <View style={styles.editButton}>
+                    <Text style={{color:'white',}}>Follow</Text>
+                  </View>
+               </View>
+               */}
+
           </View>
          </View>
        </TouchableHighlight>
@@ -64,13 +69,20 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
 
    render(){
+     let data = [];
 
+     if(this.props.profile){
+       if(this.props.profile.get_following){
+         data = this.props.profile.get_following
+       }
+     }
      return (
        <BackgroundContainer>
          <View >
          <FlatList
+           keyExtractor={(item, index) => String(index)}
            style = {{marginTop:5}}
-           data = {this.props.following}
+           data = {data}
            renderItem = {this.renderItem}
            ItemSeparatorComponent = { this.FlatListItemSeparator }
            />
@@ -83,10 +95,10 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
  }
 
  const mapStateToProps = state => {
-   console.log(state.auth)
    return {
-     following:state.auth.following,
 
+     following:state.auth.following,
+     profile: state.explore.profile,
    }
  }
 
