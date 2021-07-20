@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeart, faComment, faBookmark, } from '@fortawesome/free-regular-svg-icons';
 import { faFire } from '@fortawesome/free-solid-svg-icons';
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
+import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 
 
 class ProfileHeader extends React.Component{
@@ -57,6 +58,16 @@ class ProfileHeader extends React.Component{
 
     ExploreWebSocketInstance.sendFollowing(follower,following);
     //update user credentials and then send out notifications
+
+    const notificationObject = {
+      command: "send_follow_notification",
+      actor: follower,
+      recipient: following
+    }
+
+    NotificationWebSocketInstance.sendNotification(notificationObject);
+
+
 
   }
 
