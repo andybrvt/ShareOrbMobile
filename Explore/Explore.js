@@ -114,7 +114,6 @@ class Explore extends React.Component{
 
   onChangeNewSearch = e => {
 
-    console.log(e)
     this.setState({
       searchValue: e
     })
@@ -130,7 +129,6 @@ class Explore extends React.Component{
         search
       }
     }).then(res => {
-      console.log(res.data)
       this.setState({
         loading: false,
         searched: res.data,

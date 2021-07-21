@@ -68,7 +68,6 @@ import SingleComment from './SingleComment';
          recipient:commentHost,
          cellDate: cellDate
        }
-       console.log(notificationObject)
        // Now do the websocket here
        SocialCommentsWebsocketInstance.sendComment(
          cellId,
@@ -77,7 +76,6 @@ import SingleComment from './SingleComment';
        )
 
        if(userId !== commentHost){
-         console.log('does this hit')
          NotificationWebSocketInstance.sendNotification(notificationObject)
 
        }

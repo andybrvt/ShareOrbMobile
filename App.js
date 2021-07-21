@@ -197,7 +197,6 @@ class App extends Component{
         this.props.id
       )
     })
-    console.log('1')
     NotificationWebSocketInstance.connect(this.props.username)
 
   }

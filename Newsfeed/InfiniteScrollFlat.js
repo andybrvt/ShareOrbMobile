@@ -21,6 +21,8 @@ import Animated from 'react-native-reanimated';
 import {onScrollEvent} from 'react-native-redash/lib/module/v1';
 import { User } from "react-native-feather";
 import * as dateFns from 'date-fns';
+import  authAxios from '../util';
+import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -32,7 +34,10 @@ class InfiniteScrollFlat extends React.Component{
 
 
   state = {
-    refreshing: false
+    refreshing: false,
+    start: 6,
+    addMore: 5,
+    hasMore: true
   }
 
   onRefresh = () => {
@@ -50,6 +55,31 @@ class InfiniteScrollFlat extends React.Component{
 
   }
 
+  loadSocialPost = () => {
+
+    const {start, addMore} = this.state;
+
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSocial/`+start+'/'+addMore)
+    .then( res => {
+      this.props.loadMoreSocialPost(res.data.socialPost)
+
+      const hasMore = res.data.has_more;
+
+      this.setState({
+        hasMore:hasMore,
+        loading: false,
+        start: start+addMore
+      })
+
+    })
+    .catch( err => {
+      this.setState({
+        error: err.message
+      })
+    })
+
+  }
+
   renderPost = ({item}) => {
 
 
@@ -61,6 +91,7 @@ class InfiniteScrollFlat extends React.Component{
           ViewProfile = {this.props.viewProfile}
           data = {item}
           onCommentOpen = {this.props.onCommentOpen}
+
            />
 
     )
@@ -139,6 +170,8 @@ class InfiniteScrollFlat extends React.Component{
             data = {post}
             renderItem = {this.renderPost}
             keyExtractor={item => item.id.toString()}
+            onEndReachedThreshold={0.5}
+            onEndReached = {() => this.loadSocialPost()}
 
              />
         }
@@ -159,4 +192,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, null)(InfiniteScrollFlat);
+const mapDispatchToProps = dispatch => {
+  return {
+    loadMoreSocialPost: (post) => dispatch(socialNewsfeedActions.loadMoreSocialPost(post)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InfiniteScrollFlat);
