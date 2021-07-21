@@ -28,6 +28,11 @@ class InviteFriends extends React.Component{
     super(props);
     this.state = {
       isEnabled:false,
+      searchText:'',
+      showSearch: false,
+      searched: [],
+      searchValue: "",
+      loading: false,
 
     }
   }
@@ -49,6 +54,33 @@ class InviteFriends extends React.Component{
     )
   }
 
+  onChangeNewSearch = e => {
+    this.setState({
+      searchValue: e
+    })
+    const search = e === undefined ? null : e;
+    if(search !== ""){
+      this.setState({
+        loading: true
+      });
+    authAxios.get(`${global.IP_CHANGE}/userprofile/userSearch/`, {
+      params: {
+        search
+      }
+    }).then(res => {
+      console.log(res.data)
+      this.setState({
+        loading: false,
+        searched: res.data,
+      })
+    })
+  } else {
+    this.setState({
+      searched:[],
+    })
+  }
+  }
+
 
    render(){
      this.props.navigation.setOptions({
@@ -67,28 +99,32 @@ class InviteFriends extends React.Component{
                stroke = "#bfbfbf"
                />
            </View>
-
            <View style={{flex:10}}>
                <View
                  style={{alignItems:'center'}}
                  >
-
-              <TextInput
-                autoCapitalize="none"
-                autoCorrect={false}
-                clearButtonMode="always"
-                // value={query}
-                // onChangeText={queryText => handleSearch(queryText)}
-                placeholder="Search"
-                style={{ backgroundColor: '#f0f0f0',
-                  width:'90%',
-                  paddingHorizontal: 40,
-                  paddingVertical:5,
-                }}>
+                <TextInput
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  clearButtonMode="always"
+                  // value={query}
+                  // onChangeText={queryText => handleSearch(queryText)}
+                  placeholder="Search"
+                  style={{ backgroundColor: '#f0f0f0',
+                    width:'90%',
+                    paddingHorizontal: 40,
+                    paddingVertical:5,
+                  }}>
               </TextInput>
+              </View>
             </View>
           </View>
-      </View>
+          <FlatList
+            data = {this.state.searched}
+            renderItem = {this.renderItem}
+            keyExtractor={(item, index) => String(index)}
+
+             />
 
          {/*
          <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.goBioPage()}>
