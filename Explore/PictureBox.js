@@ -6,9 +6,11 @@ import { Text,
    ScrollView,
    Dimensions,
    Image,
-   TouchableOpacity
+   TouchableOpacity,
+   TouchableWithoutFeedback
   } from 'react-native';
-import { Avatar, BottomNavigation } from 'react-native-paper';
+import { Avatar } from 'react-native-elements';
+
 const dimensions = Dimensions.get('window');
 const imageHeight = Math.round(dimensions.width * 11 / 16);
 const imageWidth = dimensions.width*0.50;
@@ -37,7 +39,7 @@ class PictureBox extends React.Component{
     let lastName = ""
 
     let cellId = 0;
-    let userId = 0;
+    let username = '';
     console.log(this.props.cell)
     if(this.props.cell){
       if(this.props.cell.id){
@@ -57,8 +59,8 @@ class PictureBox extends React.Component{
 
         lastName = this.props.cell.socialCalUser.last_name
 
-        if(this.props.cell.socialCalUser.id){
-          cellId = this.props.cell.socialCalUser.id;
+        if(this.props.cell.socialCalUser.username){
+          username = this.props.cell.socialCalUser.username;
 
         }
 
@@ -78,12 +80,12 @@ class PictureBox extends React.Component{
             source={{ uri: `${global.IMAGE_ENDPOINT}${coverPic}` }}
              />
            <View style = {styles.ownerContainer}>
-             <Avatar.Image
-               onPress = {() => this.onProfileDirect(userId)}
+             <Avatar
+               onPress = {() => this.onProfileDirect(username)}
                source = {{
                  uri: `${global.IMAGE_ENDPOINT}${profilePic}`
                }}
-
+               rounded
                size = {30}
                 />
               <Text style = {styles.videoFooterUserName}>{global.NAMEMAKE(firstName, lastName, 20)}</Text>

@@ -159,20 +159,9 @@ const height = Dimensions.get("window").height
      // to the home page
    }
 
-   viewProfile = () => {
 
-     console.log('stuff')
-     // if(username === this.props.username){
-     //   this.props.navigation.navigate("Profile");
-     // } else {
-     //   this.props.navigation.navigate("ProfilePage", {
-     //     username: username
-     //   })
-     // }
 
-   }
-
-   renderItem({item,index}){
+   renderItem = ({item,index}) =>{
 
 
      return (
@@ -198,7 +187,7 @@ const height = Dimensions.get("window").height
            source = {{
              uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,
            }}/>
-           
+
          <Avatar
            style={styles.close}
            onPress = {() => this.viewProfile(item.creator.username)}
@@ -226,6 +215,18 @@ const height = Dimensions.get("window").height
 
 
      )
+   }
+
+   viewProfile = (username) => {
+
+     if(username === this.props.username){
+       this.props.navigation.navigate("Profile");
+     } else {
+       this.props.navigation.navigate("ProfilePage", {
+         username: username
+       })
+     }
+
    }
 
    changeBackground = e =>{
@@ -377,6 +378,7 @@ const height = Dimensions.get("window").height
                <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
                <View style = {styles.justifyCenter}>
                  <Heart
+                   stroke = "red"
                    fill="red"
                    width ={32.5}
                    height = {32.5}
@@ -395,6 +397,7 @@ const height = Dimensions.get("window").height
                <TouchableOpacity  onPress={this.changeShowComments}>
                  <View  style = {styles.justifyCenter}>
                    <MessageCircle
+                     stroke = "white"
                      fill="white"
                      width ={32.5}
                      height = {32.5}
@@ -410,6 +413,7 @@ const height = Dimensions.get("window").height
              <Text style = {styles.tagCSS3}>
                <View>
                  <Bookmark
+                   stroke = "white"
                    fill="white"
                    width ={32.5}
                    height = {32.5}
