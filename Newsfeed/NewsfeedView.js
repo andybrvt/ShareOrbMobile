@@ -35,7 +35,7 @@ class NewsfeedView extends React.Component{
 
   y = new Value(0);
   handleLogOut = () => {
-    this.props.logout()
+  this.props.logout()
     // this.props.navigation.navigate("Login")
   }
 

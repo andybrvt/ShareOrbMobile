@@ -6,7 +6,7 @@ import { Text,
    ScrollView,
    Dimensions,
    Image,
-
+   TouchableOpacity
   } from 'react-native';
 import { Avatar, BottomNavigation } from 'react-native-paper';
 const dimensions = Dimensions.get('window');
@@ -15,7 +15,19 @@ const imageWidth = dimensions.width*0.50;
 
 class PictureBox extends React.Component{
 
+  onPostDirect = cellId => {
+    this.props.navigation.navigate("DayAlbum",{
+      cellId: cellId
+    })
+  }
 
+
+  onProfileDirect = username => {
+
+    this.props.navigation.navigate("ProfilePage", {
+      username: username
+    })
+  }
 
 
   render(){
@@ -24,7 +36,13 @@ class PictureBox extends React.Component{
     let firstName = ""
     let lastName = ""
 
+    let cellId = 0;
+    let userId = 0;
+    console.log(this.props.cell)
     if(this.props.cell){
+      if(this.props.cell.id){
+        cellId = this.props.cell.id
+      }
       if(this.props.cell.coverPic){
         coverPic= this.props.cell.coverPic
       }
@@ -39,13 +57,18 @@ class PictureBox extends React.Component{
 
         lastName = this.props.cell.socialCalUser.last_name
 
+        if(this.props.cell.socialCalUser.id){
+          cellId = this.props.cell.socialCalUser.id;
+
+        }
 
 
       }
 
     }
     return(
-      <View
+      <TouchableOpacity
+        onPress = {() => this.onPostDirect(cellId)}
         key = {this.props.index}
         style = {styles.picBoxContainer}>
         <View style = {styles.pictureHolder}>
@@ -56,6 +79,7 @@ class PictureBox extends React.Component{
              />
            <View style = {styles.ownerContainer}>
              <Avatar.Image
+               onPress = {() => this.onProfileDirect(userId)}
                source = {{
                  uri: `${global.IMAGE_ENDPOINT}${profilePic}`
                }}
@@ -68,7 +92,7 @@ class PictureBox extends React.Component{
         </View>
 
 
-      </View>
+      </TouchableOpacity>
     )
   }
 }

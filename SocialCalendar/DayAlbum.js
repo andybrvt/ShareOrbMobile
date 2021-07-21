@@ -69,7 +69,7 @@ const height = Dimensions.get("window").height
        coverPicDay:'',
      }
      this.initializeDayAlbum()
-     this.handleClick = this.renderItem.bind(this);
+     // this.handleClick = this.renderItem.bind(this);
    }
 
    initializeDayAlbum(){
@@ -159,6 +159,19 @@ const height = Dimensions.get("window").height
      // to the home page
    }
 
+   viewProfile = () => {
+
+     console.log('stuff')
+     // if(username === this.props.username){
+     //   this.props.navigation.navigate("Profile");
+     // } else {
+     //   this.props.navigation.navigate("ProfilePage", {
+     //     username: username
+     //   })
+     // }
+
+   }
+
    renderItem({item,index}){
 
 
@@ -185,10 +198,10 @@ const height = Dimensions.get("window").height
            source = {{
              uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,
            }}/>
-
+           
          <Avatar
            style={styles.close}
-           onPress = {() => this.props.ViewProfile()}
+           onPress = {() => this.viewProfile(item.creator.username)}
            size={35}
            rounded
            source = {{
@@ -667,7 +680,8 @@ const height = Dimensions.get("window").height
  const mapStateToProps = state => {
    return {
      socialCalCell: state.socialCal.socialCalCellInfo,
-     userId: state.auth.id
+     userId: state.auth.id,
+     username: state.auth.username
    }
  }
 

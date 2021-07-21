@@ -144,6 +144,8 @@ class Explore extends React.Component{
 
   }
 
+  
+
 
   render(){
 
@@ -204,6 +206,7 @@ class Explore extends React.Component{
             :
 
             <SuggestedList
+              navigation = {this.props.navigation}
               y = {this.y}
               cells = {exploreCells}
               />
