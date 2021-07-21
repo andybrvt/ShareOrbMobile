@@ -113,6 +113,7 @@ class Explore extends React.Component{
   }
 
   onChangeNewSearch = e => {
+<<<<<<< HEAD
       this.setState({
         searchValue: e
       })
@@ -133,11 +134,31 @@ class Explore extends React.Component{
         })
       })
     } else {
+=======
+
+    this.setState({
+      searchValue: e
+    })
+
+    const search = e === undefined ? null : e;
+
+    if(search !== ""){
+      this.setState({
+        loading: true
+      });
+    authAxios.get(`${global.IP_CHANGE}/userprofile/userSearch/`, {
+      params: {
+        search
+      }
+    }).then(res => {
+>>>>>>> 7928c4cb500a7fcaa0400c3849aff7b818df9835
       this.setState({
         searched:[],
       })
     }
   }
+
+  
 
 
   render(){
@@ -199,6 +220,7 @@ class Explore extends React.Component{
             :
 
             <SuggestedList
+              navigation = {this.props.navigation}
               y = {this.y}
               cells = {exploreCells}
               />

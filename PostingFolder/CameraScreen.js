@@ -109,7 +109,6 @@ class CameraScreen extends React.Component{
     try {
       const pic = await this.cameraRef.takePictureAsync();
 
-      console.log(pic);
       this.setState({
         isOpen: true,
         imagePreview: pic.uri

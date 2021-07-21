@@ -12,6 +12,7 @@ import { faFire } from '@fortawesome/free-solid-svg-icons';
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+import * as dateFns from 'date-fns';
 
 
 class ProfileHeader extends React.Component{
@@ -56,17 +57,23 @@ class ProfileHeader extends React.Component{
 
   onFollow = (follower, following) => {
 
-    console.log(this.props.following.length)
+    const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+    const followingLength = this.props.following.length
 
-    if(this.props.following.length === 0){
-        // if the person doesn't have any followers already
-        //  you wanna rerun so that newsfeed shows up
-
-    }
 
     ExploreWebSocketInstance.sendFollowing(follower,following);
     //update user credentials and then send out notifications
 
+    if(followingLength === 0){
+
+      console.log('hit this here')
+        // if the person doesn't have any followers already
+        //  you wanna rerun so that newsfeed shows up
+        WebSocketSocialNewsfeedInstance.fetchSocialPost(
+          this.props.currentId,
+          curDate,
+          6)
+    }
     const notificationObject = {
       command: "send_follow_notification",
       actor: follower,

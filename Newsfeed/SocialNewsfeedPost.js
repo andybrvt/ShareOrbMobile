@@ -93,7 +93,6 @@ class SocialNewsfeedPost extends React.Component{
     // send it through the websocket
     // and then backend
     // then back to the redux
-    console.log("like button")
     const notificationObject = {
       command: 'social_like_notification',
       actor: personLike,
@@ -204,7 +203,6 @@ class SocialNewsfeedPost extends React.Component{
 
     const finalHeight = 553 + ((width/2) * numRows);
 
-    console.log(finalHeight)
     return finalHeight
   }
 
@@ -305,8 +303,7 @@ class SocialNewsfeedPost extends React.Component{
     let dayNum=""
     timestamp=postCreatedAt
     const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
-    // console.log("CCCCCCCCCCCCCCCCc")
-    // console.log(timeDiff)
+
     if( timeDiff > 24*60){
       dayNum = `${dateFns.format(new Date(timestamp), "d")}`;
     }
@@ -504,23 +501,19 @@ class SocialNewsfeedPost extends React.Component{
         this.setState({swipeDirection: 'down'});
         break;
       case direction == SWIPE_LEFT:
-      console.log("lefttt")
       this.setState({swipeDirection: 'right'});
         // this.onPostDirect(postId)
         break;
       case direction == SWIPE_RIGHT:
       this.setState({swipeDirection: 'left'});
-      console.log("RIGHT")
       // this.onPostDirect(postId)
     }
   }
 
   onSwipeLeft =(postId) =>{
-    console.log("left")
   }
 
   onSwipeRight= (postId) =>{
-    console.log("right")
     // this.onPostDirect(postId)
 
   }

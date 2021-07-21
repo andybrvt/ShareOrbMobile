@@ -35,6 +35,7 @@ class SuggestedList extends React.Component{
 
     return (
       <PictureBox
+        navigation = {this.props.navigation}
         cell = {item}
          />
     )

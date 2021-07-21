@@ -69,7 +69,7 @@ const height = Dimensions.get("window").height
        coverPicDay:'',
      }
      this.initializeDayAlbum()
-     this.handleClick = this.renderItem.bind(this);
+     // this.handleClick = this.renderItem.bind(this);
    }
 
    initializeDayAlbum(){
@@ -159,7 +159,9 @@ const height = Dimensions.get("window").height
      // to the home page
    }
 
-   renderItem({item,index}){
+
+
+   renderItem = ({item,index}) =>{
 
 
      return (
@@ -188,7 +190,7 @@ const height = Dimensions.get("window").height
 
          <Avatar
            style={styles.close}
-           onPress = {() => this.props.ViewProfile()}
+           onPress = {() => this.viewProfile(item.creator.username)}
            size={35}
            rounded
            source = {{
@@ -213,6 +215,18 @@ const height = Dimensions.get("window").height
 
 
      )
+   }
+
+   viewProfile = (username) => {
+
+     if(username === this.props.username){
+       this.props.navigation.navigate("Profile");
+     } else {
+       this.props.navigation.navigate("ProfilePage", {
+         username: username
+       })
+     }
+
    }
 
    changeBackground = e =>{
@@ -364,6 +378,7 @@ const height = Dimensions.get("window").height
                <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
                <View style = {styles.justifyCenter}>
                  <Heart
+                   stroke = "red"
                    fill="red"
                    width ={32.5}
                    height = {32.5}
@@ -382,6 +397,7 @@ const height = Dimensions.get("window").height
                <TouchableOpacity  onPress={this.changeShowComments}>
                  <View  style = {styles.justifyCenter}>
                    <MessageCircle
+                     stroke = "white"
                      fill="white"
                      width ={32.5}
                      height = {32.5}
@@ -397,6 +413,7 @@ const height = Dimensions.get("window").height
              <Text style = {styles.tagCSS3}>
                <View>
                  <Bookmark
+                   stroke = "white"
                    fill="white"
                    width ={32.5}
                    height = {32.5}
@@ -667,7 +684,8 @@ const height = Dimensions.get("window").height
  const mapStateToProps = state => {
    return {
      socialCalCell: state.socialCal.socialCalCellInfo,
-     userId: state.auth.id
+     userId: state.auth.id,
+     username: state.auth.username
    }
  }
 

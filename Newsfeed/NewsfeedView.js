@@ -35,7 +35,7 @@ class NewsfeedView extends React.Component{
 
   y = new Value(0);
   handleLogOut = () => {
-    this.props.logout()
+  this.props.logout()
     // this.props.navigation.navigate("Login")
   }
 
@@ -97,6 +97,7 @@ class NewsfeedView extends React.Component{
 
   componentDidUpdate(prevProps){
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+
     WebSocketSocialNewsfeedInstance.disconnect()
     if(this.props.isAuthenticated){
       this.waitForSocialNewsfeedSocketConnection(() => {

@@ -6,16 +6,30 @@ import { Text,
    ScrollView,
    Dimensions,
    Image,
-
+   TouchableOpacity,
+   TouchableWithoutFeedback
   } from 'react-native';
-import { Avatar, BottomNavigation } from 'react-native-paper';
+import { Avatar } from 'react-native-elements';
+
 const dimensions = Dimensions.get('window');
 const imageHeight = Math.round(dimensions.width * 11 / 16);
 const imageWidth = dimensions.width*0.50;
 
 class PictureBox extends React.Component{
 
+  onPostDirect = cellId => {
+    this.props.navigation.navigate("DayAlbum",{
+      cellId: cellId
+    })
+  }
 
+
+  onProfileDirect = username => {
+
+    this.props.navigation.navigate("ProfilePage", {
+      username: username
+    })
+  }
 
 
   render(){
@@ -24,7 +38,13 @@ class PictureBox extends React.Component{
     let firstName = ""
     let lastName = ""
 
+    let cellId = 0;
+    let username = '';
+    console.log(this.props.cell)
     if(this.props.cell){
+      if(this.props.cell.id){
+        cellId = this.props.cell.id
+      }
       if(this.props.cell.coverPic){
         coverPic= this.props.cell.coverPic
       }
@@ -39,13 +59,18 @@ class PictureBox extends React.Component{
 
         lastName = this.props.cell.socialCalUser.last_name
 
+        if(this.props.cell.socialCalUser.username){
+          username = this.props.cell.socialCalUser.username;
+
+        }
 
 
       }
 
     }
     return(
-      <View
+      <TouchableOpacity
+        onPress = {() => this.onPostDirect(cellId)}
         key = {this.props.index}
         style = {styles.picBoxContainer}>
         <View style = {styles.pictureHolder}>
@@ -55,11 +80,12 @@ class PictureBox extends React.Component{
             source={{ uri: `${global.IMAGE_ENDPOINT}${coverPic}` }}
              />
            <View style = {styles.ownerContainer}>
-             <Avatar.Image
+             <Avatar
+               onPress = {() => this.onProfileDirect(username)}
                source = {{
                  uri: `${global.IMAGE_ENDPOINT}${profilePic}`
                }}
-
+               rounded
                size = {30}
                 />
               <Text style = {styles.videoFooterUserName}>{global.NAMEMAKE(firstName, lastName, 20)}</Text>
@@ -68,7 +94,7 @@ class PictureBox extends React.Component{
         </View>
 
 
-      </View>
+      </TouchableOpacity>
     )
   }
 }
