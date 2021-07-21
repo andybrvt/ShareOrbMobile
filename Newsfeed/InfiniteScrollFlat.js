@@ -172,7 +172,8 @@ class InfiniteScrollFlat extends React.Component{
             keyExtractor={item => item.id.toString()}
             onEndReachedThreshold={0.5}
             onEndReached = {() => this.loadSocialPost()}
-
+            onRefresh = {() => this.onRefresh()}
+            refreshing = {this.state.refreshing}
              />
         }
 
