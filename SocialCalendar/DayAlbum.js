@@ -166,6 +166,7 @@ const height = Dimensions.get("window").height
 
      return (
        <View style = {styles.carouselImageHolder}>
+         {/*
          <View style={{alignItems:'center', flexDirection:'row', height:30, top:10}}>
            <View style={{}}>
              <ChevronsUp
@@ -180,6 +181,7 @@ const height = Dimensions.get("window").height
               </Animatable.Text>
             </View>
          </View>
+         */}
 
          <Image
            key={'blurryImage'}
@@ -197,21 +199,22 @@ const height = Dimensions.get("window").height
              uri: `${global.IMAGE_ENDPOINT}`+item.creator.profile_picture,
            }}
          />
-
-       <View style={{alignItems:'center', flexDirection:'row', height:'11%', bottom:0}}>
-             <ChevronsDown
-               fill="white"
-               width={30}
-               height={30}
-              />
+        {/*
+         <View style={{alignItems:'center', flexDirection:'row', height:'11%', bottom:0}}>
+           <ChevronsDown
+             fill="white"
+             width={30}
+             height={30}
+            />
 
            <Animatable.Text animation="fadeIn" iterationCount={"infinite"} direction="alternate" delay={10}>
               <Text style={{color:'white', fontSize:18, bottom:10}}>
                 October 2
               </Text>
-            </Animatable.Text>
+          </Animatable.Text>
           </View>
-       </View>
+          */}
+         </View>
 
 
      )
