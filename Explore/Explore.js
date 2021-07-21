@@ -113,52 +113,38 @@ class Explore extends React.Component{
   }
 
   onChangeNewSearch = e => {
-<<<<<<< HEAD
-      this.setState({
-        searchValue: e
-      })
-      const search = e === undefined ? null : e;
-      if(search !== ""){
-        this.setState({
-          loading: true
-        });
-      authAxios.get(`${global.IP_CHANGE}/userprofile/userSearch/`, {
-        params: {
-          search
-        }
-      }).then(res => {
-        console.log(res.data)
-        this.setState({
-          loading: false,
-          searched: res.data,
-        })
-      })
-    } else {
-=======
 
-    this.setState({
-      searchValue: e
-    })
+   this.setState({
+     searchValue: e
+   })
 
-    const search = e === undefined ? null : e;
+   const search = e === undefined ? null : e;
 
-    if(search !== ""){
-      this.setState({
-        loading: true
-      });
-    authAxios.get(`${global.IP_CHANGE}/userprofile/userSearch/`, {
-      params: {
-        search
-      }
-    }).then(res => {
->>>>>>> 7928c4cb500a7fcaa0400c3849aff7b818df9835
-      this.setState({
-        searched:[],
-      })
-    }
-  }
+   if(search !== ""){
+     this.setState({
+       loading: true
+     });
+   authAxios.get(`${global.IP_CHANGE}/userprofile/userSearch/`, {
+     params: {
+       search
+     }
+   }).then(res => {
+     this.setState({
+       loading: false,
+       searched: res.data,
+     })
+   })
 
-  
+ } else {
+   this.setState({
+     searched:[],
+
+   })
+ }
+
+ }
+
+
 
 
   render(){
