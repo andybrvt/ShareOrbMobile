@@ -65,6 +65,7 @@ import UserInfo from './Settings/UserInfo';
 
 import AlbumHome from './CollabAlbum/AlbumHome';
 import CreateAlbum from './CollabAlbum/CreateAlbum';
+import PicAlbum from './CollaCollabAlbumbAlbum/PicAlbum';
 import InviteFriends from './CollabAlbum/InviteFriends';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -597,6 +598,17 @@ class App extends Component{
                         ...TransitionPresets.SlideFromRightIOS,
                                         }}
                        name = 'CreateAlbum' component = {CreateAlbum}/>
+                       <Stack.Screen
+                         options={{
+                           headerStyle:{
+                             shadowColor:'#fff', //ios
+                             elevation:0,        // android
+
+                           },
+                           title: 'PicAlbum',
+                           ...TransitionPresets.SlideFromRightIOS,
+                                           }}
+                          name = 'PicAlbum' component = {PicAlbum}/>
                        <Stack.Screen
                          options={{
                            headerStyle:{
