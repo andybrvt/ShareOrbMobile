@@ -10,6 +10,7 @@ import {
   Animated,
   TouchableOpacity,
   TouchableHighlight,
+  ImageBackground,
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -52,11 +53,7 @@ const renderItem = ({item}) => {
       <Text style={{top:0, padding: 5, fontSize:16}}>{item.month}</Text>
       <TouchableOpacity activeOpacity={0.6}>
         <Image
-          style = {{
-            height:200,
-            width:SCREEN_WIDTH-25,
-            borderRadius: 5,
-          }}
+          style={styles.expiringImageLook}
           source = {{
             uri: item.pic
           }}>
@@ -78,57 +75,131 @@ const renderItem = ({item}) => {
   )
 }
 
+const renderItem2 = ({item}) => {
+  return(
+    <View style={{width:'100%', height:'22.5%', padding:10, }}>
+      <Text style={{top:0, padding: 5, fontSize:16}}>{item.month}</Text>
+      <TouchableOpacity activeOpacity={0.6}>
+        <ImageBackground
+          style={styles.expiringImageLook}
+          source = {{
+            uri: item.pic
+          }}>
+          <View style={styles.child}></View>
+
+        </ImageBackground>
+        <View style={{top:'2.5%', right:'4%', position:'absolute'}}>
+          <FacePile
+            size={2.5} numFaces={3} faces={FACES} circleSize={14}
+            containerStyle={{height:40}}
+             overlap={0.1} />
+        </View>
+        <Text style={styles.countDownTimer}>
+          23h 15m
+        </Text>
+        <Text style={styles.albumTitle2}>
+          {item.title}
+        </Text>
+      </TouchableOpacity>
+   </View>
+  )
+}
+
 
 
 const FirstRoute = () => (
 
   <View style={{ backgroundColor: 'white' }} >
     <FlatList
-      contentContainerStyle={{paddingBottom:0}}
-         showsVerticalScrollIndicator={false}
-         style = {{}}
-         data = {[
-             {"username":"pinghsu520",
-             "pic":"https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-             "title": "Trip with the boys",
-             "caption":"liked your album on",
-             "month":"March 2021",
-             "date":"July 1",
-             "time": "8h",
-             },
-           {"username":"andybrvt",
-             "pic":"https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80",
-             "title": "WaterFall in Nigeria",
-             "caption":"commented on your album on",
-             "month":"July 2020",
-             "date":"September 24",
-             "time": "3h",
+       contentContainerStyle={{paddingBottom:0}}
+       showsVerticalScrollIndicator={false}
+       style = {{}}
+       data = {[
+           {"username":"pinghsu520",
+           "pic":"https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+           "title": "Trip with the boys",
+           "caption":"liked your album on",
+           "month":"March 2021",
+           "date":"July 1",
+           "time": "8h",
            },
-           {"username":"andybrvt",
-             "pic":"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1140&q=80",
-             "title": "Iceland Views 7/2/2020",
-             "caption":"commented on your album on",
-             "month":"April 2020",
-             "date":"Jan 24",
-             "time": "3h",
-           },
-           {"username":"andybrvt",
-             "pic":"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
-             "title":"Nature Vibes forest",
-             "caption":"commented on your album on",
-             "month":"January 2020",
-             "date":"Jan 24",
-             "time": "3h",
-           },
-         ]}
-         renderItem ={(item) => renderItem(item)}
-         />
+         {"username":"andybrvt",
+           "pic":"https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80",
+           "title": "WaterFall in Nigeria",
+           "caption":"commented on your album on",
+           "month":"July 2020",
+           "date":"September 24",
+           "time": "3h",
+         },
+         {"username":"andybrvt",
+           "pic":"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1140&q=80",
+           "title": "Iceland Views 7/2/2020",
+           "caption":"commented on your album on",
+           "month":"April 2020",
+           "date":"Jan 24",
+           "time": "3h",
+         },
+         {"username":"andybrvt",
+           "pic":"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
+           "title":"Nature Vibes forest",
+           "caption":"commented on your album on",
+           "month":"January 2020",
+           "date":"Jan 24",
+           "time": "3h",
+         },
+       ]}
+       renderItem ={(item) => renderItem(item)}
+     />
 
   </View>
 );
 
 const SecondRoute = () => (
-  <View style={{ backgroundColor: '#ff4081' }} />
+  <View style={{ backgroundColor: 'white' }} >
+    <FlatList
+      contentContainerStyle={{paddingBottom:0}}
+         showsVerticalScrollIndicator={false}
+         style = {{}}
+         data = {[
+           {"username":"pinghsu520",
+           "pic":"https://images.unsplash.com/photo-1431794062232-2a99a5431c6c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+           "title": "Trip with the boys",
+           "caption":"liked your album on",
+           "month":"March 2021",
+           "date":"July 1",
+           "time": "8h",
+           },
+         {"username":"andybrvt",
+           "pic":"https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80",
+           "title": "WaterFall in Nigeria",
+           "caption":"commented on your album on",
+           "month":"July 2020",
+           "date":"September 24",
+           "time": "3h",
+         },
+         {"username":"andybrvt",
+           "pic":"https://images.unsplash.com/photo-1552083375-1447ce886485?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+           "title": "Iceland Views 7/2/2020",
+           "caption":"commented on your album on",
+           "month":"April 2020",
+           "date":"Jan 24",
+           "time": "3h",
+         },
+         {"username":"andybrvt",
+           "pic":"https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80",
+           "title":"Nature Vibes forest",
+           "caption":"commented on your album on",
+           "month":"January 2020",
+           "date":"Jan 24",
+           "time": "3h",
+         },
+
+
+         ]}
+         renderItem ={(item) => renderItem2(item)}
+         />
+
+  </View>
 
 );
 
@@ -145,7 +216,6 @@ class AlbumHome extends React.Component{
 
   _renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
-
     return (
       <View style={styles.tabBar}>
         {
@@ -173,22 +243,18 @@ class AlbumHome extends React.Component{
     );
   };
 
-  _renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-  });
+    _renderScene = SceneMap({
+      first: FirstRoute,
+      second: SecondRoute,
+    });
 
-  ViewChats = () => {
-    this.props.navigation.navigate("CreateAlbum",
+    ViewChats = () => {
+      this.props.navigation.navigate("CreateAlbum",
 
-    );
-  }
-
-
+      );
+    }
 
    render(){
-
-
      return (
        <BackgroundContainer>
          <TabView
@@ -197,26 +263,52 @@ class AlbumHome extends React.Component{
           renderTabBar={this._renderTabBar}
           onIndexChange={this._handleIndexChange}
          />
-       <TouchableOpacity activeOpacity={0.9}
+         <TouchableOpacity activeOpacity={0.9}
            onPress = {() => this.ViewChats()}
            style={styles.roundButton1}>
            <FolderPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
          </TouchableOpacity>
        </BackgroundContainer>
-
      )
    }
  }
  const styles = StyleSheet.create({
+
+   expiringImageLook:{
+     height:200,
+     width:SCREEN_WIDTH-25,
+     borderRadius: 5,
+   },
+   child: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
    // {bottom:'17.5%', color:'white', fontSize:17, padding:10}
-   albumTitle:{
-     bottom:'17.5%',
+   albumTitle2:{
+     bottom:'25%',
      color:'white',
-     fontSize:16,
+     fontSize:15,
      padding:10,
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 10
+   },
+   albumTitle:{
+     bottom:'17.5%',
+     color:'white',
+     fontSize:15,
+     padding:10,
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 10
+   },
+   countDownTimer: {
+     alignItems:'center',
+     color:'white',
+     fontSize:22,
+     bottom:'40%',
+     left:'45%',
+
    },
 
   tabBar: {
