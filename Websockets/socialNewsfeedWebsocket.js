@@ -49,6 +49,7 @@ class WebSocketSocialNewsfeed{
   const parsedData = JSON.parse(data);
   const command = parsedData.command;
 
+  console.log(parsedData);
 
   // Make the different calls here
   if(command === "fetch_social_posts"){
@@ -174,6 +175,8 @@ class WebSocketSocialNewsfeed{
 
   fetchSocialPost(userId, curDate, startIndex){
   // Because of the timezone issue we need to get timezone from front end
+
+    console.log('fetch social post')
     this.sendPostsInfo({
       userId: userId,
       curDate: curDate,

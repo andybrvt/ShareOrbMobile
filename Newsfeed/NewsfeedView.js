@@ -97,6 +97,7 @@ class NewsfeedView extends React.Component{
 
   componentDidUpdate(prevProps){
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+
     WebSocketSocialNewsfeedInstance.disconnect()
     if(this.props.isAuthenticated){
       this.waitForSocialNewsfeedSocketConnection(() => {

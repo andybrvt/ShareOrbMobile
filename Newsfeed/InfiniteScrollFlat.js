@@ -6,7 +6,9 @@ import {
   StyleSheet,
   ScrollView,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
+  RefreshControl
  } from 'react-native';
 import axios from "axios";
 import Header from './Header';
@@ -18,16 +20,35 @@ import SocialNewsfeedPost from './SocialNewsfeedPost';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent} from 'react-native-redash/lib/module/v1';
 import { User } from "react-native-feather";
+import * as dateFns from 'date-fns';
 
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const {interpolate, Extrapolate} = Animated;
+const height = Dimensions.get('window').height;
 
 
 class InfiniteScrollFlat extends React.Component{
 
 
+  state = {
+    refreshing: false
+  }
 
+  onRefresh = () => {
+    this.setState({refreshing: true})
+    const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+
+    WebSocketSocialNewsfeedInstance.fetchSocialPost(
+      this.props.id,
+      curDate,
+      6
+    )
+
+
+    this.setState({refreshing: false});
+
+  }
 
   renderPost = ({item}) => {
 
@@ -53,6 +74,7 @@ class InfiniteScrollFlat extends React.Component{
     }
 
 
+
     const y = this.props.y;
     const top = interpolate(y,{
       inputRange: [0, 50],
@@ -69,33 +91,44 @@ class InfiniteScrollFlat extends React.Component{
         {
           post.length === 0 ?
 
-          <View style = {{
-              top: 50,
-              height: 400,
-              alignItems: 'center',
-              justifyContent: 'center'
-              // flex: 1,
-                }}>
+          <ScrollView
+            showsVerticalScrollIndicator = {false}
+              refreshControl = {
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.onRefresh}
+                />
+              }
+            >
+            <View style = {{
+                top: 50,
+                height: height-100,
+                alignItems: 'center',
+                // justifyContent: 'center'
+                // flex: 1,
+                  }}>
 
-            <User
-              strokeWidth = {1}
-              stroke = "black"
-              height ={70}
-              width = {70}
-              />
-            <Text>No Posts</Text>
-            <TouchableOpacity
-              onPress = {() => this.props.navigation.navigate("Explore")}
-              >
-              <View style = {{
-                backgroundColor: "#1890ff",
-                padding: 15,
-                borderRadius: 15}}>
-                <Text style = {{color: 'white'}}>Let's follow some people</Text>
-              </View>
-            </TouchableOpacity>
+              <User
+                strokeWidth = {1}
+                stroke = "black"
+                height ={70}
+                width = {70}
+                />
+              <Text>No Posts</Text>
+              <TouchableOpacity
+                onPress = {() => this.props.navigation.navigate("Explore")}
+                >
+                <View style = {{
+                  backgroundColor: "#1890ff",
+                  padding: 15,
+                  borderRadius: 15}}>
+                  <Text style = {{color: 'white'}}>Let's follow some people</Text>
+                </View>
+              </TouchableOpacity>
 
-          </View>
+            </View>
+          </ScrollView>
+
 
           :
 
