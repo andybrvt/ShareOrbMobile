@@ -19,6 +19,9 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { TabView, SceneMap } from 'react-native-tab-view';
 import FacePile from 'react-native-face-pile';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+import Timeline from './Timeline'
+import Expiring from './Expiring'
+
 
 const FACES = [
   {
@@ -244,15 +247,11 @@ class AlbumHome extends React.Component{
   };
 
     _renderScene = SceneMap({
-      first: FirstRoute,
-      second: SecondRoute,
+      first: () => <Timeline {...this.props}/>,
+    second: () => <Expiring {...this.props}/>,
     });
 
-    ViewChats = () => {
-      this.props.navigation.navigate("CreateAlbum",
 
-      );
-    }
 
    render(){
      return (
@@ -264,7 +263,7 @@ class AlbumHome extends React.Component{
           onIndexChange={this._handleIndexChange}
          />
          <TouchableOpacity activeOpacity={0.9}
-           onPress = {() => this.ViewChats()}
+           onPress = {() => this.goToNextScreen()}
            style={styles.roundButton1}>
            <FolderPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
          </TouchableOpacity>
