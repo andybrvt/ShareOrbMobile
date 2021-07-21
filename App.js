@@ -65,7 +65,7 @@ import UserInfo from './Settings/UserInfo';
 
 import AlbumHome from './CollabAlbum/AlbumHome';
 import CreateAlbum from './CollabAlbum/CreateAlbum';
-import PicAlbum from './CollaCollabAlbumbAlbum/PicAlbum';
+import PicAlbum from './CollabAlbum/PicAlbum';
 import InviteFriends from './CollabAlbum/InviteFriends';
 
 import { Ionicons } from '@expo/vector-icons';

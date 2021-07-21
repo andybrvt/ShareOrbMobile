@@ -23,7 +23,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
 const col = 3;
-class InviteFriends extends React.Component{
+class PicAlbum extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -61,4 +61,4 @@ class InviteFriends extends React.Component{
 
  })
 
- export default InviteFriends;
+ export default PicAlbum;

@@ -51,7 +51,7 @@ const renderItem = ({item}) => {
   return(
     <View style={{width:'100%', height:'22.5%', padding:10}}>
       <Text style={{top:0, padding: 5, fontSize:16}}>{item.month}</Text>
-      <TouchableOpacity activeOpacity={0.6}>
+      <TouchableOpacity activeOpacity={0.6} onPress = {() => this.props.navigation.navigate("PicAlbum")}>
         <Image
           style={styles.expiringImageLook}
           source = {{
