@@ -9,6 +9,7 @@ import exploreReducer from './store/reducers/explore';
 import socialCalReducer from './store/reducers/socialCalendar';
 import messageReducer from './store/reducers/messages';
 import notificationsReducer from './store/reducers/notifications';
+import colabAlbumReducer from './store/reducers/colabAlbum';
 import App from './App';
 import React, {Component} from 'react';
 import { AppRegistry } from 'react-native';
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   socialCal: socialCalReducer,
   message: messageReducer,
   notifications: notificationsReducer,
+  colabAlbum: colabAlbumReducer
 
 })
 

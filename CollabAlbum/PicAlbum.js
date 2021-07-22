@@ -21,6 +21,8 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { moderateScale } from 'react-native-size-matters';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import ColabAlbumWebsocketInstance from '../Websockets/colabAlbumWebsocket';
+import { connect } from 'react-redux';
+import * as colabAlbumActions from '../store/actions/colabAlbum';
 
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
@@ -102,6 +104,8 @@ class PicAlbum extends React.Component{
   };
 
    render(){
+     console.log('here in the pic album')
+     console.log(this.props)
      return (
        <BackgroundContainer>
          <View style={{flexDirection:'row'}}>
@@ -208,4 +212,16 @@ class PicAlbum extends React.Component{
 
  })
 
- export default PicAlbum;
+const mapStateToProps = state => {
+  return {
+    colabAlbum: state.colabAlbum.curColabAlbum
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    unfetchColabAlbum: () => dispatch(colabAlbumActions.unfetchColabAlbum())
+  }
+}
+
+ export default connect(mapStateToProps, mapDispatchToProps)(PicAlbum);

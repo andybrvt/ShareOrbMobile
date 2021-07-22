@@ -17,6 +17,7 @@ import * as exploreActions from './store/actions/explore';
 import * as messageActions from './store/actions/messages';
 import * as socialActions from './store/actions/socialCalendar';
 import * as notificationsActions from './store/actions/notifications';
+import * as colabAlbumActions from './store/actions/colabAlbum';
 
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
@@ -32,6 +33,7 @@ import ChatSidePanelWebSocketInstance from './Websockets/newChatSidePanelWebsock
 import SocialCommentsWebsocketInstance from './Websockets/commentsCellWebsocket';
 import SocialCalCellPageWebSocketInstance from './Websockets/socialCalCellWebsocket';
 import NotificationWebSocketInstance from './Websockets/notificationWebsocket';
+import ColabAlbumWebsocketInstance from './Websockets/colabAlbumWebsocket';
 
 // import BottomNavigation from './BottomNavigation';
 import { TabActions } from '@react-navigation/native';
@@ -134,6 +136,10 @@ class App extends Component{
       // this.props.authAddFollower.bind(this),
       // this.props.authUpdateFollowers.bind(this),
       // this.props.addOneNotificationSeen.bind(this)
+    )
+
+    ColabAlbumWebsocketInstance.addCallbacks(
+      this.props.fetchColabAlbum.bind(this)
     )
 
 
@@ -737,7 +743,7 @@ const mapDispatchToProps = dispatch => {
     setNotifications: notifications => dispatch(notificationsActions.setNotifications(notifications)),
     newNotification: notification => dispatch(notificationsActions.newNotification(notification)),
 
-
+    fetchColabAlbum: album => dispatch(colabAlbumActions.fetchColabAlbum(album))
   }
 }
 

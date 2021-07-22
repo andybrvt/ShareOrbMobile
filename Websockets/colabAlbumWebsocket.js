@@ -52,20 +52,32 @@ class WebsocketColabAlbum{
 
   // this is to add the call backs related to the colab in
   addCallbacks(
-
+    fetchColabAlbum
   ){
-
+    this.callbacks['fetch_colab_album'] = fetchColabAlbum
   }
 
   // this function is used to recieve the incoming data and
   // and sort it using redux callbacks
   socketNewSocialAlbum(data){
+    const parsedData = JSON.parse(data);
+    const command = parsedData.command;
 
+    console.log(parsedData);
+
+    if(command === "fetch_colab_album"){
+
+      const album = parsedData.albumInfo;
+      this.callbacks['fetch_colab_album'](album)
+    }
   }
 
   // used to fetch the album and its info
   fetchAlbums(albumId){
-
+    this.sendColabAlbumInfo({
+      albumId: albumId,
+      command: 'fetch_colab_album'
+    })
   }
 
   sendColabAlbumInfo(data){

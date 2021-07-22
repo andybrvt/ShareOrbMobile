@@ -56,3 +56,8 @@ export const SET_CHATS = "SET_CHATS";
 // Used for the notifications
 export const SET_NOTIFICATIONS = 'SET_NOTIFICATIONS';
 export const NEW_NOTIFICATION = 'NEW_NOTIFICATION';
+
+
+// this has to do with the colab album
+export const FETCH_COLAB_ALBUM = "FETCH_COLAB_ALBUM";
+export const UNFETCH_COLAB_ABLUM = "UNFETCH_COLAB_ABLUM";
