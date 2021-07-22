@@ -68,9 +68,9 @@ const FACES = [
      })
    }
 
-   navAlbum = () => {
+   navAlbum = (albumId) => {
      this.props.navigation.navigate("PicAlbum",
-
+      {albumId: albumId}
      );
    }
    renderItem = ({item}) => {
@@ -84,7 +84,7 @@ const FACES = [
            padding:10
          }}>
         <Text style={{top:0, padding: 5, fontSize:16}}>{month}</Text>
-        <TouchableOpacity activeOpacity={0.6} onPress = {() => this.navAlbum()}>
+        <TouchableOpacity activeOpacity={0.6} onPress = {() => this.navAlbum(item.id)}>
           <Image
             style={styles.expiringImageLook}
             source = {{

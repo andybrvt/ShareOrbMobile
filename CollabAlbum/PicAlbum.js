@@ -20,6 +20,8 @@ import { ArrowRight,PlusCircle, XCircle, Unlock, Lock, Users, X, Search, Edit2, 
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { moderateScale } from 'react-native-size-matters';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+import ColabAlbumWebsocketInstance from '../Websockets/colabAlbumWebsocket';
+
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
 const col = 3;
@@ -47,10 +49,39 @@ const numColumns=3;
 class PicAlbum extends React.Component{
   constructor(props){
     super(props);
+    this.initaliseColabAlbum()
     this.state = {
 
     }
   }
+
+  initaliseColabAlbum(){
+      const albumId = this.props.route.params.albumId
+
+      this.waitForAlbumSocketConnection(() => {
+        ColabAlbumWebsocketInstance.fetchAlbums(albumId)
+      })
+
+      ColabAlbumWebsocketInstance.connect(albumId)
+  }
+
+  waitForAlbumSocketConnection(callback){
+    const component = this;
+    setTimeout(
+      function(){
+
+        if (ColabAlbumWebsocketInstance.state() === 1){
+
+          callback();
+          return;
+        } else{
+            component.waitForAlbumSocketConnection(callback);
+        }
+      }, 100)
+  }
+
+
+
   renderItem = ({ item, index }) => {
     console.log(item)
     if (item.empty === true) {

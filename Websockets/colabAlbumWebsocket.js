@@ -31,7 +31,7 @@ class WebsocketColabAlbum{
     }
 
     this.socketRef.onmessage = (e) => {
-
+      this.socketNewSocialAlbum(e.data)
 
     }
     this.socketRef.onerror = (e) => {

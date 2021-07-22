@@ -75,9 +75,9 @@ const height = Dimensions.get('window').height
      })
    }
 
-   navAlbum = () => {
+   navAlbum = (albumId) => {
      this.props.navigation.navigate("PicAlbum",
-
+        {albumId: albumId}
      );
    }
 
@@ -88,8 +88,7 @@ const height = Dimensions.get('window').height
      const hourLeft = dateFns.differenceInHours(lastTime, new Date())
      const minLeft = dateFns.differenceInMinutes(lastTime, new Date())%60
 
-     console.log(hourLeft)
-     console.log(minLeft%60)
+
      return hourLeft+"h"+" "+minLeft+"m"
    }
 
@@ -107,7 +106,7 @@ const height = Dimensions.get('window').height
            padding:10, }}>
          <Text style={{top:0, padding: 5, fontSize:16}}>{month}</Text>
          <TouchableOpacity
-           onPress = {() => this.navAlbum()}
+           onPress = {() => this.navAlbum(item.id)}
            activeOpacity={0.6}>
            <ImageBackground
              style={styles.expiringImageLook}
