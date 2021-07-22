@@ -9,11 +9,11 @@ import * as dateFns from 'date-fns';
 // global.WS_HEADER = "ws"
 
 
-global.IP_CHANGE="http://192.168.1.200:19002"
-global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
-global.WS_ENDPOINT = "192.168.1.200:19002"
-global.WS_HEADER = "ws"
-global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
+// global.IP_CHANGE="http://192.168.1.200:19002"
+// global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
+// global.WS_ENDPOINT = "192.168.1.200:19002"
+// global.WS_HEADER = "ws"
+// global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
 
 // andy house
 // global.IP_CHANGE = "http://192.168.1.24:19000"

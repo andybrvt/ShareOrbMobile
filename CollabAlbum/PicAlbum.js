@@ -23,6 +23,7 @@ import ColabAlbumWebsocketInstance from '../Websockets/colabAlbumWebsocket';
 import { connect } from 'react-redux';
 import * as colabAlbumActions from '../store/actions/colabAlbum';
 import * as ImagePicker from 'expo-image-picker';
+import  authAxios from '../util';
 
 
 const width=SCREEN_WIDTH;
@@ -142,8 +143,32 @@ class PicAlbum extends React.Component{
     // you just need the album, list of images
     // do it through views and then just send it normally through
     // websockets
-    const albumId = this.props.colabAlbum.id
-    console.log(albumId)
+    const albumId = this.props.colabAlbum.id;
+    const fileList = this.state.tempPictures;
+    const formData = new FormData();
+    const userId = this.props.userId
+
+    for(i = 0; i< fileList.length; i++){
+      const filePackage = global.FILE_NAME_GETTER(fileList[i])
+      formData.append("image["+i+"]", filePackage)
+    }
+    formData.append('length', fileList.length)
+
+    this.setState({
+      tempPictures: []
+    })
+    this.props.navigation.setOptions({
+      headerRight: null
+    })
+    authAxios.post(`${global.IP_CHANGE}/colabAlbum/uploadColabAlbum/`+userId+"/"+albumId,
+      formData,
+    ).then( res => {
+      ColabAlbumWebsocketInstance.fetchAlbums(albumId)
+
+
+    })
+
+
 
   }
 
@@ -349,7 +374,8 @@ class PicAlbum extends React.Component{
 
 const mapStateToProps = state => {
   return {
-    colabAlbum: state.colabAlbum.curColabAlbum
+    colabAlbum: state.colabAlbum.curColabAlbum,
+    userId: state.auth.id
   }
 }
 
