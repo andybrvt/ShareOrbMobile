@@ -55,8 +55,7 @@ class CreateAlbum extends React.Component{
             <TextInput
              placeholder="Describe your album"
              autoCapitalize={true}
-             numberOfLines={Platform.OS === 'ios' ? null : 2}
-  minHeight={(Platform.OS === 'ios' && numberOfLines) ? (20 * 2) : null}
+             numberOfLines={2}
              placeholderTextColor="#d9d9d9"
              autoCorrect={false}
              style={[
