@@ -14,7 +14,7 @@
         "image":"./assets/splash.png",
         "resizeMode":"contain",
         "backgroundColor":"#ffffff"
-      }
+      },
     "orientation": "portrait",
     "version": "1.0.0",
     "assetBundlePatterns": [
