@@ -80,6 +80,10 @@ class PicAlbum extends React.Component{
       }, 100)
   }
 
+  componentWillUnmount(){
+    ColabAlbumWebsocketInstance.disconnect();
+  }
+
 
 
   renderItem = ({ item, index }) => {

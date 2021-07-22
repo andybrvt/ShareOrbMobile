@@ -46,6 +46,10 @@ class WebsocketColabAlbum{
 
   }
 
+  disconnect(){
+    this.socketRef.close();
+  }
+
   // this is to add the call backs related to the colab in
   addCallbacks(
 
