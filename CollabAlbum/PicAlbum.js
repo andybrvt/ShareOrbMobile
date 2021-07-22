@@ -22,6 +22,8 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import ColabAlbumWebsocketInstance from '../Websockets/colabAlbumWebsocket';
 import { connect } from 'react-redux';
 import * as colabAlbumActions from '../store/actions/colabAlbum';
+import * as ImagePicker from 'expo-image-picker';
+
 
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
@@ -85,30 +87,112 @@ class PicAlbum extends React.Component{
     ColabAlbumWebsocketInstance.disconnect();
   }
 
+  renderSave = () => {
+
+    return (
+      <View style={{right:10}}>
+      <TouchableOpacity
+        >
+        <Button
+
+          title = "Save"
+          onPress = {() => this.onSaveAlbum()}
+
+           />
+      </TouchableOpacity>
+      </View>
+    )
+  }
+
+  handleChoosePhoto = async() => {
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if(permissionResult.granted == false){
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let  pickerResult = await ImagePicker.launchImageLibraryAsync({
+     mediaTypes: ImagePicker.MediaTypeOptions.All,
+     allowsEditing: true,
+     aspect: [4, 3],
+     quality: 1,
+     allowsMultipleSelection: true,
+     base64: true,
+    });
+
+    if(!pickerResult.cancelled){
+      // const imageUri = global.FILE_NAME_GETTER(pickerResult.uri).uri
+      const list = [...this.state.tempPictures, pickerResult.uri]
+      this.setState({
+        tempPictures: list
+      })
+
+      this.props.navigation.setOptions({
+        headerRight: () => this.renderSave()
+      })
+
+    }
+
+  }
+
+  onSaveAlbum = () => {
+    // this function is used to save the images in the ablum
+    // to the websockets
+    // you just need the album, list of images
+    // do it through views and then just send it normally through
+    // websockets
+    const albumId = this.props.colabAlbum.id
+    console.log(albumId)
+
+  }
+
 
 
   renderItem = ({ item, index }) => {
+    console.log('in render items')
     console.log(item)
-    if (item.empty === true) {
-      return <View style={[styles.item, styles.itemInvisible]} />;
-    }
-    return (
-      <View
-        style={styles.item}
-      >
-        <Image
-          style ={{
-            width: "100%",
-            height: '100%'
-          }}
-          resizeMode = "cover"
-          source = {{
-            uri: `${global.IMAGE_ENDPOINT}` + item.itemImage
-          }}
-           />
+    // if (item.empty === true) {
+    //   return <View style={[styles.item, styles.itemInvisible]} />;
+    // }
+    if(item.itemImage){
+      return (
+        <View
+          style={styles.item}
+        >
+          <Image
+            style ={{
+              width: "100%",
+              height: '100%'
+            }}
+            resizeMode = "cover"
+            source = {{
+              uri: `${global.IMAGE_ENDPOINT}` + item.itemImage
+            }}
+             />
 
-      </View>
-    );
+        </View>
+      );
+    } else {
+      return (
+        <View
+          style={styles.item}
+        >
+          <Image
+            style ={{
+              width: "100%",
+              height: '100%'
+            }}
+            resizeMode = "cover"
+            source = {{
+              uri: item
+            }}
+             />
+
+        </View>
+      );
+    }
+
   };
 
    render(){
@@ -121,6 +205,9 @@ class PicAlbum extends React.Component{
        }
 
      }
+     const {tempPictures} = this.state;
+
+     let finalAlbum = [...currentAlbum, ...tempPictures];
 
      return (
        <BackgroundContainer>
@@ -175,12 +262,28 @@ class PicAlbum extends React.Component{
            */}
 
            <FlatList
-             data = {currentAlbum}
+             data = {finalAlbum}
              renderItem = {this.renderItem}
              numColumns = {3}
              keyExtractor={(item, index) => String(index)}
 
               />
+
+
+            <TouchableOpacity
+              onPress = {() => this.handleChoosePhoto()}
+              >
+              <View style = {{
+                  backgroundColor: '#1890ff',
+                  alignSelf: 'center',
+                  padding: 15,
+                  borderRadius: 15
+                }}>
+                <Text style = {{color:'white'}}>Add pictures here</Text>
+              </View>
+            </TouchableOpacity>
+
+
 
 
 
@@ -196,7 +299,6 @@ class PicAlbum extends React.Component{
     marginVertical: 20,
   },
   item: {
-    backgroundColor: '#4D243D',
     alignItems: 'center',
     justifyContent: 'center',
     // flex: 1,
