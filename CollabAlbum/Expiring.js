@@ -126,6 +126,8 @@ const FACES = [
 
               ]}
               renderItem ={(item) => this.renderItem(item)}
+              keyExtractor={(item, index) => String(index)}
+
               />
 
        </View>
