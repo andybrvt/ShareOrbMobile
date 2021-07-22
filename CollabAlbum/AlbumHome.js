@@ -32,6 +32,10 @@ class AlbumHome extends React.Component{
     ],
   };
 
+  navCreateAlbum = () => {
+    this.props.navigation.navigate("CreateAlbum")
+  }
+
   _handleIndexChange = (index) => this.setState({ index });
 
   _renderTabBar = (props) => {
@@ -80,7 +84,7 @@ class AlbumHome extends React.Component{
           onIndexChange={this._handleIndexChange}
          />
          <TouchableOpacity activeOpacity={0.9}
-           onPress = {() => this.goToNextScreen()}
+           onPress = {() => this.navCreateAlbum()}
            style={styles.roundButton1}>
            <FolderPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
          </TouchableOpacity>
