@@ -154,10 +154,18 @@ class PicAlbum extends React.Component{
     }
     formData.append('length', fileList.length)
 
+    this.setState({
+      tempPictures: []
+    })
+    this.props.navigation.setOptions({
+      headerRight: null
+    })
     authAxios.post(`${global.IP_CHANGE}/colabAlbum/uploadColabAlbum/`+userId+"/"+albumId,
       formData,
     ).then( res => {
-        console.log(res.data)
+      ColabAlbumWebsocketInstance.fetchAlbums(albumId)
+
+
     })
 
 
