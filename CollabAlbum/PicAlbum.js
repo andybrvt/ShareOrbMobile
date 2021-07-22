@@ -6,12 +6,11 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  Image,
   Switch,
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
-
+  Image
  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -53,7 +52,7 @@ class PicAlbum extends React.Component{
     super(props);
     this.initaliseColabAlbum()
     this.state = {
-
+      tempPictures: []
     }
   }
 
@@ -97,61 +96,93 @@ class PicAlbum extends React.Component{
       <View
         style={styles.item}
       >
-      <Text></Text>
-        <Text style={styles.itemText}>{item.key}</Text>
+        <Image
+          style ={{
+            width: "100%",
+            height: '100%'
+          }}
+          resizeMode = "cover"
+          source = {{
+            uri: `${global.IMAGE_ENDPOINT}` + item.itemImage
+          }}
+           />
+
       </View>
     );
   };
 
    render(){
-     console.log('here in the pic album')
+
      console.log(this.props)
+     let currentAlbum = [];
+     if(this.props.colabAlbum){
+       if(this.props.colabAlbum.get_colabItems){
+          currentAlbum = this.props.colabAlbum.get_colabItems
+       }
+
+     }
+
      return (
        <BackgroundContainer>
-         <View style={{flexDirection:'row'}}>
-           <View style={{alignItems:'center', top:'12.5%', flex:1}}>
-              <Text style={{fontSize:18, bottom:30}}>Cover Pic</Text>
-              <View style={styles.bigImageContainer}>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress = {this.handleChoosePhoto}
-                  style = {styles.addSmallImage}>
-                  <PlusCircle
-                    height = {50}
-                    width = {50}
-                    stroke = "lightgray"
-                    fill= "white" />
 
-                </TouchableOpacity>
+         {/*
+           <View style={{flexDirection:'row'}}>
+             <View style={{alignItems:'center', top:'12.5%', flex:1}}>
+                <Text style={{fontSize:18, bottom:30}}>Cover Pic</Text>
+                <View style={styles.bigImageContainer}>
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress = {this.handleChoosePhoto}
+                    style = {styles.addSmallImage}>
+                    <PlusCircle
+                      height = {50}
+                      width = {50}
+                      stroke = "lightgray"
+                      fill= "white" />
 
-              </View>
-           </View>
-           <View style={{top:'10%'}}>
-             <PlusCircle
-               style={{right:'50%', top:'25%'}}
-               width={35} height={35}
-               stroke = "black"
-               fill= "white" />
-             <Edit2
-               style={{right:'50%', top:'35%'}}
+                  </TouchableOpacity>
+
+                </View>
+             </View>
+             <View style={{top:'10%'}}>
+               <PlusCircle
+                 style={{right:'50%', top:'25%'}}
+                 width={35} height={35}
+                 stroke = "black"
+                 fill= "white" />
+               <Edit2
+                 style={{right:'50%', top:'35%'}}
+                 stroke="black" strokeWidth={2.5} width={30} height={30} />
+             <Navigation2
+               style={{right:'50%', top:'50%'}}
                stroke="black" strokeWidth={2.5} width={30} height={30} />
-           <Navigation2
-             style={{right:'50%', top:'50%'}}
-             stroke="black" strokeWidth={2.5} width={30} height={30} />
+             </View>
            </View>
-         </View>
-         <View style={{top:'30%', height:'100%'}}>
-           <ScrollView>
-             <FlatList
-              data={formatData([
-                { key: 'A' }, { key: 'B' }, { key: 'C' }, { key: 'D' }, { key: 'E' }, { key: 'F' }, { key: 'G' }, { key: 'H' }, { key: 'I' }, { key: 'J' },
-              ], 3)}
-              style={styles.container}
-              renderItem={this.renderItem}
-              numColumns={3}
-            />
-          </ScrollView>
-        </View>
+           <View style={{top:'30%', height:'100%'}}>
+             <ScrollView>
+               <FlatList
+                data={formatData([
+                  { key: 'A' }, { key: 'B' }, { key: 'C' }, { key: 'D' }, { key: 'E' }, { key: 'F' }, { key: 'G' }, { key: 'H' }, { key: 'I' }, { key: 'J' },
+                ], 3)}
+                style={styles.container}
+                renderItem={this.renderItem}
+                numColumns={3}
+              />
+            </ScrollView>
+          </View>
+
+
+           */}
+
+           <FlatList
+             data = {currentAlbum}
+             renderItem = {this.renderItem}
+             numColumns = {3}
+             keyExtractor={(item, index) => String(index)}
+
+              />
+
+
 
 
 
@@ -168,8 +199,10 @@ class PicAlbum extends React.Component{
     backgroundColor: '#4D243D',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
-    margin: 1,
+    // flex: 1,
+    // margin: 1,
+    padding: 1,
+    width: width/3,
     height: Dimensions.get('window').width / numColumns, // approximate a square
   },
   itemInvisible: {
