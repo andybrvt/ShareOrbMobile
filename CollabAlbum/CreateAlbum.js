@@ -27,7 +27,7 @@ class CreateAlbum extends React.Component{
     super(props);
     this.state = {
       isEnabled:false,
-
+      caption:'',
     }
   }
 
@@ -44,8 +44,16 @@ class CreateAlbum extends React.Component{
     })
 
   }
+
+  handleCaptionChange = e => {
+    this.setState({
+      caption: e
+    })
+
+  }
+
    render(){
-     const {firstName, lastName, username} = this.state
+     const {caption} = this.state
      return (
        <BackgroundContainer>
          <View style={styles.action}>
@@ -62,8 +70,8 @@ class CreateAlbum extends React.Component{
                styles.textInput,
 
              ]}
-             onChangeText = {this.handleFirstNameChange}
-             value = {firstName}
+             onChangeText = {this.handleCaptionChange}
+             value = {caption}
            />
 
          </View>
@@ -73,7 +81,7 @@ class CreateAlbum extends React.Component{
 
           <View style={styles.action2}>
              <Users stroke="black" strokeWidth={2.5} width={20} height={20} />
-             <View style={{width:'65%'}}>
+             <View style={{width:'70%'}}>
                <Text style={[
                   styles.bioInput,
                   ]}>
@@ -82,7 +90,7 @@ class CreateAlbum extends React.Component{
              </View>
            <TouchableOpacity onPress={() => this.InviteFriendsNav()}>
              <View style={styles.editButton}>
-                <Text style={{color:'#595959',}}>@Friends</Text>
+                <Text style={{color:'#595959',}}>Invite</Text>
               </View>
           </TouchableOpacity>
           {/* <ArrowRight stroke="black" strokeWidth={2.5} width={20} height={20} />*/}
@@ -95,7 +103,7 @@ class CreateAlbum extends React.Component{
            :
              <Lock stroke="black" strokeWidth={2.5} width={20} height={20} />
            }
-           <View style={{width:'65%'}}>
+           <View style={{width:'72.5%'}}>
              <Text style={[
                 styles.bioInput,
                 ]}>
@@ -108,13 +116,14 @@ class CreateAlbum extends React.Component{
            </View>
 
               <Switch
-               style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }}
+                style={{ transform: [{ scaleX:  moderateScale(1, 0.2) }, { scaleY:
+    moderateScale(1, 0.2) }] }}
                trackColor={{ false: "#767577", true: "#81b0ff" }}
                thumbColor={this.state.isEnabled ? "#1890ff" : "#f4f3f4"}
                ios_backgroundColor="#3e3e3e"
                onValueChange={this.toggleSwitch}
                value={this.state.isEnabled}
-             />
+             ></Switch>
          </View>
          <View style={{alignItems:'center', top:'12.5%'}}>
             <Text style={{fontSize:18, bottom:30}}>Cover Pic</Text>

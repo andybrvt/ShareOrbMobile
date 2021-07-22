@@ -25,7 +25,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
  // you can upload pictures and write a caption after uploaidng
  // pictures
 import { Navigation2, Heart, MessageCircle, ArrowLeft,
-ArrowLeftCircle,Bookmark, ChevronsUp, ChevronsDown
+ArrowLeftCircle,Bookmark, ChevronsUp, ChevronsDown, Edit2,
 } from "react-native-feather";
 import * as Animatable from 'react-native-animatable';
 const width = Dimensions.get("window").width
@@ -157,6 +157,12 @@ const height = Dimensions.get("window").height
    onHomeNav = () => {
      // this function will be use to navigate back
      // to the home page
+   }
+
+   editAlbum = () => {
+     this.props.navigation.navigate("PostingPage",
+
+     );
    }
 
 
@@ -385,7 +391,7 @@ const height = Dimensions.get("window").height
                    fill="red"
                    width ={32.5}
                    height = {32.5}
-                   style={{right:2}}
+                   style={{right:5}}
                     />
 
 
@@ -404,7 +410,7 @@ const height = Dimensions.get("window").height
                      fill="white"
                      width ={32.5}
                      height = {32.5}
-                     style={{right:2}}
+                     style={{right:5}}
                    />
                    <Text  style = {styles.justifyCenter1}>
                    {socialComments.length}
@@ -415,11 +421,13 @@ const height = Dimensions.get("window").height
 
              <Text style = {styles.tagCSS3}>
                <View>
-                 <Bookmark
+                 <Edit2
+                   onPress={() => this.editAlbum()}
                    stroke = "white"
                    fill="white"
-                   width ={32.5}
-                   height = {32.5}
+                   width ={30}
+                   height = {30}
+                   style={{right:5}}
                     />
                </View>
              </Text>
@@ -435,7 +443,7 @@ const height = Dimensions.get("window").height
                 </View>
               </View>
               <View style={styles.secondContainer}>
-                <FacePile size={2.5} numFaces={3} faces={FACES} circleSize={17.5}
+                <FacePile size={2} numFaces={3} faces={FACES} circleSize={17.5}
                   containerStyle={{height:40}}
                    overlap={0.1} />
               </View>
@@ -476,9 +484,9 @@ const height = Dimensions.get("window").height
    },
    testWhere2:{
      position:'absolute',
-     top:'7.5%',
+     top:'5.5%',
      padding:10,
-     right:'0%',
+     right:'1%',
      width:'20%',
      flexDirection:'column',
      alignItems:'center',
@@ -571,7 +579,7 @@ const height = Dimensions.get("window").height
 
    openContainer:{
      flexDirection:'row',
-     bottom:'10%',
+     bottom:'7%',
      position:'absolute',
      left:'5%',
      justifyContent:'center',
@@ -634,7 +642,7 @@ const height = Dimensions.get("window").height
    close2: {
      margin: 5,
      position: "absolute",
-     top:'7.5%',
+     top:'8%',
      left:'2.5%',
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
@@ -655,9 +663,10 @@ const height = Dimensions.get("window").height
    albumLook:{
      borderRadius: 10,
      width: SCREEN_WIDTH-10,
-     height: '83%',
-     top:17.5,
-     alignItems:'center'
+     height: '90%',
+     top:'3.5%',
+     alignItems:'center',
+
      // flex: 1,
      // resizeMode: 'contain'
    },
