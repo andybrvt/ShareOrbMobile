@@ -24,11 +24,11 @@ import * as dateFns from 'date-fns';
 
 // Andy hot spoot
 
-// global.IP_CHANGE = "http://172.20.10.2:19000"
-// global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
-// global.WS_ENDPOINT = "172.20.10.2:19000"
-// global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
-// global.WS_HEADER = "ws"
+global.IP_CHANGE = "http://172.20.10.2:19000"
+global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
+global.WS_ENDPOINT = "172.20.10.2:19000"
+global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
+global.WS_HEADER = "ws"
 
 // global.IP_CHANGE = "http://10.20.100.62:19000"
 // global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
