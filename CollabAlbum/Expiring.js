@@ -74,9 +74,31 @@ const height = Dimensions.get('window').height
 
      })
    }
-   renderItem = ({item}) => {
 
+   navAlbum = () => {
+     this.props.navigation.navigate("PicAlbum",
+
+     );
+   }
+
+   timeLeft = (created) => {
+     const curDate = new Date(created);
+     const lastTime = dateFns.addHours(curDate, 24);
+
+     const hourLeft = dateFns.differenceInHours(lastTime, new Date())
+     const minLeft = dateFns.differenceInMinutes(lastTime, new Date())%60
+
+     console.log(hourLeft)
+     console.log(minLeft%60)
+     return hourLeft+"h"+" "+minLeft+"m"
+   }
+
+   renderItem = ({item}) => {
+     const curDate = new Date(item.created_at);
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
+     const lastTime = dateFns.addHours(new Date(item.created_at), 24);
+
+     const timeLeft = this.timeLeft(item.created_at)
 
      return(
        <View style={{
@@ -84,7 +106,9 @@ const height = Dimensions.get('window').height
            height:250,
            padding:10, }}>
          <Text style={{top:0, padding: 5, fontSize:16}}>{month}</Text>
-         <TouchableOpacity activeOpacity={0.6}>
+         <TouchableOpacity
+           onPress = {() => this.navAlbum()}
+           activeOpacity={0.6}>
            <ImageBackground
              style={styles.expiringImageLook}
              source = {{
@@ -100,7 +124,7 @@ const height = Dimensions.get('window').height
                 overlap={0.1} />
            </View>
            <Text style={styles.countDownTimer}>
-             23h 15m
+             {timeLeft}
            </Text>
            <Text style={styles.albumTitle2}>
              {item.title}
