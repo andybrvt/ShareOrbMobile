@@ -17,6 +17,13 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import FacePile from 'react-native-face-pile';
+import authAxios from '../util';
+import * as dateFns from 'date-fns';
+import { Folder } from "react-native-feather";
+
+
+const height = Dimensions.get('window').height
+
 const FACES = [
   {
     id: 0,
@@ -45,81 +52,103 @@ const FACES = [
 ];
 
  class Timeline extends React.Component{
+
+   state = {
+     albums: []
+   }
+
+   componentDidMount(){
+     authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getAlbums')
+     .then(res => {
+       this.setState({
+         albums: res.data
+
+       })
+
+     })
+   }
+
    navAlbum = () => {
      this.props.navigation.navigate("PicAlbum",
 
      );
    }
    renderItem = ({item}) => {
+     const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
+
      return(
-       <View style={{width:'100%', height:'22.5%', padding:10}}>
-         <Text style={{top:0, padding: 5, fontSize:16}}>{item.month}</Text>
-         <TouchableOpacity activeOpacity={0.6} onPress = {() => this.navAlbum()}>
-           <Image
-             style={styles.expiringImageLook}
-             source = {{
-               uri: item.pic
-             }}>
-           </Image>
-           <View style={{top:'2.5%', right:'4%', position:'absolute'}}>
-             <FacePile
-               size={2.5} numFaces={3} faces={FACES} circleSize={14}
-               containerStyle={{height:40}}
-                overlap={0.1} />
-           </View>
-           <Text style={styles.albumTitle}>
-             {item.title}
-           </Text>
-         </TouchableOpacity>
-      </View>
+       <View style={{
+           // backgroundColor: 'red',
+           width:'100%',
+           height:250,
+           padding:10
+         }}>
+        <Text style={{top:0, padding: 5, fontSize:16}}>{month}</Text>
+        <TouchableOpacity activeOpacity={0.6} onPress = {() => this.navAlbum()}>
+          <Image
+            style={styles.expiringImageLook}
+            source = {{
+              uri: item.coverPic
+            }}>
+          </Image>
+
+          <View style={{top:'2.5%', right:'4%', position:'absolute'}}>
+            <FacePile
+              size={2.5} numFaces={3} faces={FACES} circleSize={14}
+              containerStyle={{height:40}}
+               overlap={0.1} />
+          </View>
+          <Text style={styles.albumTitle}>
+            {item.title}
+          </Text>
+        </TouchableOpacity>
+
+        </View>
      )
    }
 
    render(){
 
+     const{albums} = this.state;
+
 
      return (
-       <View style={{ backgroundColor: 'white' }} >
-         <FlatList
-            contentContainerStyle={{paddingBottom:0}}
-            showsVerticalScrollIndicator={false}
-            style = {{}}
-            data = {[
-                {"username":"pinghsu520",
-                "pic":"https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-                "title": "Trip with the boys",
-                "caption":"liked your album on",
-                "month":"March 2021",
-                "date":"July 1",
-                "time": "8h",
-                },
-              {"username":"andybrvt",
-                "pic":"https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80",
-                "title": "WaterFall in Nigeria",
-                "caption":"commented on your album on",
-                "month":"July 2020",
-                "date":"September 24",
-                "time": "3h",
-              },
-              {"username":"andybrvt",
-                "pic":"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1140&q=80",
-                "title": "Iceland Views 7/2/2020",
-                "caption":"commented on your album on",
-                "month":"April 2020",
-                "date":"Jan 24",
-                "time": "3h",
-              },
-              {"username":"andybrvt",
-                "pic":"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
-                "title":"Nature Vibes forest",
-                "caption":"commented on your album on",
-                "month":"January 2020",
-                "date":"Jan 24",
-                "time": "3h",
-              },
-            ]}
-            renderItem ={(item) => this.renderItem(item)}
-          />
+       <View style={{
+          flex: 1,
+         }} >
+         {
+           albums.length === 0 ?
+           <View style = {{
+               flex: 1,
+               alignItems: 'center',
+               justifyContent: 'center'
+             }}>
+             <View style = {{
+                 alignItems: 'center'
+               }}>
+               <Folder
+                 stroke = "gainsboro"
+                  />
+                <Text style = {{color: 'gainsboro'}}>You have no folders here</Text>
+             </View>
+           </View>
+
+
+           :
+
+           <FlatList
+              // contentContainerStyle={{paddingBottom:0}}
+              showsVerticalScrollIndicator={false}
+              style = {{flex: 1}}
+              data = {albums}
+              renderItem ={(item) => this.renderItem(item)}
+              keyExtractor={(item, index) => String(index)}
+
+            />
+
+
+
+         }
 
        </View>
      )
@@ -129,6 +158,7 @@ const FACES = [
  const styles = StyleSheet.create({
 
    expiringImageLook:{
+     position: 'relative',
      height:200,
      width:SCREEN_WIDTH-25,
      borderRadius: 5,
