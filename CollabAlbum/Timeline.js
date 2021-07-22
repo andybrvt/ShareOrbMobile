@@ -17,8 +17,9 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import FacePile from 'react-native-face-pile';
-import  authAxios from '../util';
+import authAxios from '../util';
 import * as dateFns from 'date-fns';
+import { Folder } from "react-native-feather";
 
 
 const height = Dimensions.get('window').height
@@ -102,12 +103,6 @@ const FACES = [
           </Text>
         </TouchableOpacity>
 
-         {/*
-
-
-
-
-           */}
         </View>
      )
    }
@@ -121,15 +116,39 @@ const FACES = [
        <View style={{
           flex: 1,
          }} >
-         <FlatList
-            // contentContainerStyle={{paddingBottom:0}}
-            showsVerticalScrollIndicator={false}
-            style = {{flex: 1}}
-            data = {albums}
-            renderItem ={(item) => this.renderItem(item)}
-            keyExtractor={(item, index) => String(index)}
+         {
+           albums.length === 0 ?
+           <View style = {{
+               flex: 1,
+               alignItems: 'center',
+               justifyContent: 'center'
+             }}>
+             <View style = {{
+                 alignItems: 'center'
+               }}>
+               <Folder
+                 stroke = "gainsboro"
+                  />
+                <Text style = {{color: 'gainsboro'}}>You have no folders here</Text>
+             </View>
+           </View>
 
-          />
+
+           :
+
+           <FlatList
+              // contentContainerStyle={{paddingBottom:0}}
+              showsVerticalScrollIndicator={false}
+              style = {{flex: 1}}
+              data = {albums}
+              renderItem ={(item) => this.renderItem(item)}
+              keyExtractor={(item, index) => String(index)}
+
+            />
+
+
+
+         }
 
        </View>
      )

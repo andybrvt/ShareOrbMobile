@@ -17,6 +17,11 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import FacePile from 'react-native-face-pile';
+import authAxios from '../util';
+import * as dateFns from 'date-fns';
+import { Folder } from "react-native-feather";
+
+
 const FACES = [
   {
     id: 0,
@@ -44,21 +49,46 @@ const FACES = [
   }
 ];
 
+
+const height = Dimensions.get('window').height
+
  class Expiring extends React.Component{
+
+   state = {
+     albums: []
+   }
+
    navAlbum = () => {
      this.props.navigation.navigate("PicAlbum",
 
      );
    }
+
+   componentDidMount(){
+     authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getLiveAlbums')
+     .then(res => {
+       this.setState({
+         albums: res.data
+
+       })
+
+     })
+   }
    renderItem = ({item}) => {
+
+     const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
+
      return(
-       <View style={{width:'100%', height:'22.5%', padding:10, }}>
-         <Text style={{top:0, padding: 5, fontSize:16}}>{item.month}</Text>
+       <View style={{
+           width:'100%',
+           height:250,
+           padding:10, }}>
+         <Text style={{top:0, padding: 5, fontSize:16}}>{month}</Text>
          <TouchableOpacity activeOpacity={0.6}>
            <ImageBackground
              style={styles.expiringImageLook}
              source = {{
-               uri: item.pic
+               uri: item.coverPic
              }}>
              <View style={styles.child}></View>
 
@@ -81,54 +111,45 @@ const FACES = [
    }
 
    render(){
-
+     const {albums} = this.state;
 
      return (
-       <View style={{ backgroundColor: 'white' }} >
-         <FlatList
-           contentContainerStyle={{paddingBottom:0}}
-              showsVerticalScrollIndicator={false}
-              style = {{}}
-              data = {[
-                {"username":"pinghsu520",
-                "pic":"https://images.unsplash.com/photo-1431794062232-2a99a5431c6c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-                "title": "Trip with the boys",
-                "caption":"liked your album on",
-                "month":"March 2021",
-                "date":"July 1",
-                "time": "8h",
-                },
-              {"username":"andybrvt",
-                "pic":"https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80",
-                "title": "WaterFall in Nigeria",
-                "caption":"commented on your album on",
-                "month":"July 2020",
-                "date":"September 24",
-                "time": "3h",
-              },
-              {"username":"andybrvt",
-                "pic":"https://images.unsplash.com/photo-1552083375-1447ce886485?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-                "title": "Iceland Views 7/2/2020",
-                "caption":"commented on your album on",
-                "month":"April 2020",
-                "date":"Jan 24",
-                "time": "3h",
-              },
-              {"username":"andybrvt",
-                "pic":"https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80",
-                "title":"Nature Vibes forest",
-                "caption":"commented on your album on",
-                "month":"January 2020",
-                "date":"Jan 24",
-                "time": "3h",
-              },
+       <View style={{
+           flex: 1,
+           backgroundColor: 'white' }} >
 
+          {
+            albums.length === 0 ?
 
-              ]}
-              renderItem ={(item) => this.renderItem(item)}
-              keyExtractor={(item, index) => String(index)}
+            <View style = {{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+              <View style = {{
+                  alignItems: 'center'
+                }}>
+                <Folder
+                  stroke = "gainsboro"
+                   />
+                 <Text style = {{color: 'gainsboro'}}>You have no folders here</Text>
+              </View>
+            </View>
 
-              />
+            :
+
+            <FlatList
+              contentContainerStyle={{paddingBottom:0}}
+                 showsVerticalScrollIndicator={false}
+                 style = {{flex: 1}}
+                 data = {albums}
+                 renderItem ={(item) => this.renderItem(item)}
+                 keyExtractor={(item, index) => String(index)}
+
+                 />
+
+          }
+
 
        </View>
      )
