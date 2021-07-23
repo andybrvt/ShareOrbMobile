@@ -11,7 +11,7 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
-
+  Modal
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -19,22 +19,35 @@ import { PlusCircle, ArrowRight, XCircle, Unlock, Lock, Users} from "react-nativ
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { moderateScale } from 'react-native-size-matters';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+import * as ImagePicker from 'expo-image-picker';
+import FriendPickModal from './FriendPickModal';
+
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
 const col = 3;
 class CreateAlbum extends React.Component{
+
   constructor(props){
     super(props);
     this.state = {
       isEnabled:false,
       caption:'',
+      coverPic: '',
+      showInvite: false,
     }
   }
 
-  InviteFriendsNav = () => {
-    this.props.navigation.navigate("InviteFriends",
+  showInvite = () => {
 
-    );
+    this.setState({
+      showInvite: true
+    })
+  }
+
+  closeInvite = () => {
+    this.setState({
+      showInvite:false
+    })
   }
 
   toggleSwitch = () => {
@@ -51,6 +64,33 @@ class CreateAlbum extends React.Component{
     })
 
   }
+
+  handleChoosePhoto = async() => {
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if(permissionResult.granted == false){
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let  pickerResult = await ImagePicker.launchImageLibraryAsync({
+     mediaTypes: ImagePicker.MediaTypeOptions.All,
+     allowsEditing: true,
+     aspect: [4, 3],
+     quality: 1,
+     allowsMultipleSelection: true,
+     base64: true,
+    });
+
+    if(!pickerResult.cancelled){
+      this.setState({
+        coverPic: pickerResult.uri
+      })
+    }
+
+
+  }
+
 
    render(){
      const {caption} = this.state
@@ -88,7 +128,7 @@ class CreateAlbum extends React.Component{
                   <Text>Invite Friends</Text>
                </Text>
              </View>
-           <TouchableOpacity onPress={() => this.InviteFriendsNav()}>
+           <TouchableOpacity onPress={() => this.showInvite()}>
              <View style={styles.editButton}>
                 <Text style={{color:'#595959',}}>Invite</Text>
               </View>
@@ -127,20 +167,47 @@ class CreateAlbum extends React.Component{
          </View>
          <View style={{alignItems:'center', top:'12.5%'}}>
             <Text style={{fontSize:18, bottom:30}}>Cover Pic</Text>
-            <View style={styles.bigImageContainer}>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress = {this.handleChoosePhoto}
-                style = {styles.addSmallImage}>
-                <PlusCircle
-                  height = {50}
-                  width = {50}
-                  stroke = "lightgray"
-                  fill= "white" />
+            {
+              this.state.coverPic === "" ?
 
-              </TouchableOpacity>
-            </View>
+              <View style={styles.bigImageContainer}>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress = {this.handleChoosePhoto}
+                  style = {styles.addSmallImage}>
+                  <PlusCircle
+                    height = {50}
+                    width = {50}
+                    stroke = "lightgray"
+                    fill= "white" />
+
+                </TouchableOpacity>
+              </View>
+
+              :
+
+
+                <TouchableOpacity
+                  onPress = {this.handleChoosePhoto}
+
+                   style = {styles.bigImageContainer} >
+                  <Image
+                    style = {styles.smallImage}
+                    resizeMode = "cover"
+                    source = {{
+                      uri: this.state.coverPic
+                    }}
+                     />
+                </TouchableOpacity>
+
+
+            }
+
          </View>
+         <FriendPickModal
+           visible = {this.state.showInvite}
+           onClose = {this.closeInvite}
+            />
 
 
        </BackgroundContainer>
@@ -237,6 +304,13 @@ class CreateAlbum extends React.Component{
    },
    trendingDaysContainer: {
      height: "82%",
+   },
+   smallImage: {
+     width: "90%",
+     height: "90%",
+     borderRadius: 15,
+     backgroundColor: 'lightgray',
+
    },
  })
 
