@@ -14,7 +14,7 @@
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		96905EF65AED1B983A6B3ABC /* libPods-ShareOrbMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-ShareOrbMobile.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		
+		710C50B233574F9B87395052 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB2266343204CBCAD9EAD67 /* noop-file.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +49,8 @@
 		D4CAA64372AE4BCE8C7DABD1 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		4D6CCCC3BAD7414AB50E52FF /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		50F917E2FDD8471094EDFE95 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2FB2266343204CBCAD9EAD67 /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "ShareOrbMobile/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		3DB7B2E395CE4F6B99DA5B26 /* ShareOrbMobile-Bridging-Header.h */ = {isa = PBXFileReference; name = "ShareOrbMobile-Bridging-Header.h"; path = "ShareOrbMobile/ShareOrbMobile-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,8 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
+				2FB2266343204CBCAD9EAD67 /* noop-file.swift */,
+				3DB7B2E395CE4F6B99DA5B26 /* ShareOrbMobile-Bridging-Header.h */,
 			);
 			name = ShareOrbMobile;
 			sourceTree = "<group>";
@@ -241,6 +245,7 @@
 				FF6B904FCB35442D8B41A16C /* Octicons.ttf in Resources */,
 				BB253CDB92484CC8B34D0EF9 /* SimpleLineIcons.ttf in Resources */,
 				261638796D5741BC94E4428D /* Zocial.ttf in Resources */,
+				E4F746F4F6814BA0A747BE1A /* ShareOrbMobile-Bridging-Header.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +334,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				710C50B233574F9B87395052 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,11 +374,14 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.ShareOrbMobile;
-				PRODUCT_NAME = ShareOrbMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shareorb.shareorbmobile";
+				PRODUCT_NAME = shareorbmobile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_OBJC_BRIDGING_HEADER = ShareOrbMobile/ShareOrbMobile-Bridging-Header.h;
+				CODE_SIGN_ENTITLEMENTS = ShareOrbMobile/shareorbmobile.entitlements;
 			};
 			name = Debug;
 		};
@@ -392,10 +401,13 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.ShareOrbMobile;
-				PRODUCT_NAME = ShareOrbMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shareorb.shareorbmobile";
+				PRODUCT_NAME = shareorbmobile;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_OBJC_BRIDGING_HEADER = ShareOrbMobile/ShareOrbMobile-Bridging-Header.h;
+				CODE_SIGN_ENTITLEMENTS = ShareOrbMobile/shareorbmobile.entitlements;
 			};
 			name = Release;
 		};
@@ -456,6 +468,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				CODE_SIGN_ENTITLEMENTS = ShareOrbMobile/shareorbmobile.entitlements;
 			};
 			name = Debug;
 		};
@@ -509,6 +522,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				CODE_SIGN_ENTITLEMENTS = ShareOrbMobile/shareorbmobile.entitlements;
 			};
 			name = Release;
 		};
