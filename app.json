@@ -25,7 +25,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.shareorb.shareorbmobile"
+      "bundleIdentifier": "com.shareorb.shareorbmobile",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "To access your photos",
+        "NSCameraUsageDescription": "To take more pictures"
+      },
     }
   }
 }

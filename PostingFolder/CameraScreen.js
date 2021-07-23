@@ -83,11 +83,13 @@ class CameraScreen extends React.Component{
 
   allowPermissions = async() => {
 
-    try{
+    // try{
 
       const camera = await ImagePicker.requestCameraPermissionsAsync();
 
       if(!camera.granted){
+        alert("Permission to access camera roll is required!");
+
         return ImagePicker.requestCameraPermissionsAsync();
       }
 
@@ -95,10 +97,12 @@ class CameraScreen extends React.Component{
         allowCamera: true
       })
 
+      // ImagePicker.launchImageLibraryAsync()
 
-    } catch(error){
 
-    }
+    // } catch(error){
+
+    // }
   }
 
   takePicture = async() => {
@@ -251,11 +255,10 @@ class CameraScreen extends React.Component{
 
     return(
       <View
-        // visible = {this.props.showCamera}
         style = {{flex: 1}}>
 
-        <Modal
-          visible = {this.props.showCamera}
+        <View
+          // visible = {this.props.showCamera}
           style = {{flex: 1}}
           >
         {
@@ -418,7 +421,7 @@ class CameraScreen extends React.Component{
 
         }
 
-        </Modal>
+      </View>
 
       </View>
     )
@@ -455,7 +458,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     padding: 10,
-    backgroundColor: 'black',
+    backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5
