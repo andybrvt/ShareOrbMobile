@@ -85,10 +85,10 @@ class CameraScreen extends React.Component{
 
     try{
 
-      const camera = await Permissions.askAsync(Permissions.CAMERA)
+      const camera = await ImagePicker.requestCameraPermissionsAsync();
 
       if(!camera.granted){
-        return Permissions.askAsync(Permissions.CAMERA)
+        return ImagePicker.requestCameraPermissionsAsync();
       }
 
       this.setState({

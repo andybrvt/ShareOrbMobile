@@ -20,6 +20,7 @@ import styles from './LoginStyle';
 import SvgUri from 'react-native-svg-uri';
 import { connect } from "react-redux";
 import { authLogin } from "../store/actions/auth";
+import * as ImagePicker from 'expo-image-picker';
 
 
 
@@ -80,14 +81,12 @@ class Login extends React.Component{
           style = {styles.background}>
 
            <StatusBar style="auto" />
-           {/*
-             <View style = {styles.logo}>
-               <MainLogo height = {100}  width = {200} />
+
+           <View style = {styles.logo}>
+             <MainLogo height = {100}  width = {200} />
 
 
-             </View>
-
-             */}
+           </View>
 
 
           <View style = {styles.inputHolders}>
