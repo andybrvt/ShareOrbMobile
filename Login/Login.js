@@ -80,11 +80,14 @@ class Login extends React.Component{
           style = {styles.background}>
 
            <StatusBar style="auto" />
-           <View style = {styles.logo}>
-             <MainLogo height = {100}  width = {200} />
+           {/*
+             <View style = {styles.logo}>
+               <MainLogo height = {100}  width = {200} />
 
 
-           </View>
+             </View>
+
+             */}
 
 
           <View style = {styles.inputHolders}>
