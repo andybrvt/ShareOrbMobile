@@ -109,6 +109,20 @@ global.RENDER_TIMESTAMP = (timestamp) => {
     return prefix;
 }
 
+global.RENDER_MONTH_DAY = (timestamp) => {
+
+    let prefix = '';
+    const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+    // this condition fills if time difference is greater than 2 days
+    if (timeDiff <31*24*60 && timeDiff > 24*60) {
+      prefix = `${Math.round(timeDiff/(60*24))}d ago`;
+    } else {
+        prefix = `${dateFns.format(new Date(timestamp), "MMMM dd")}`;
+    }
+
+    return prefix;
+}
+
 // this is used to organize the file properly
 global.FILE_NAME_GETTER = (fileURI) => {
 
