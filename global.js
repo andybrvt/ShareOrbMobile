@@ -9,11 +9,11 @@ import * as dateFns from 'date-fns';
 // global.WS_HEADER = "ws"
 
 
-// global.IP_CHANGE="http://192.168.1.200:19002"
-// global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
-// global.WS_ENDPOINT = "192.168.1.200:19002"
-// global.WS_HEADER = "ws"
-// global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
+global.IP_CHANGE="http://192.168.1.200:19002"
+global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
+global.WS_ENDPOINT = "192.168.1.200:19002"
+global.WS_HEADER = "ws"
+global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
 
 // andy house
 // global.IP_CHANGE = "http://192.168.1.24:19000"
@@ -30,11 +30,11 @@ import * as dateFns from 'date-fns';
 // global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
 // global.WS_HEADER = "ws"
 
-global.IP_CHANGE = "https://api.shareorb.com"
-global.IMAGE_ENDPOINT = ""
-global.WS_ENDPOINT = "api.shareorb.com"
-global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
-global.WS_HEADER = "wss"
+// global.IP_CHANGE = "https://api.shareorb.com"
+// global.IMAGE_ENDPOINT = ""
+// global.WS_ENDPOINT = "api.shareorb.com"
+// global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
+// global.WS_HEADER = "wss"
 
 
 // global.IP_CHANGE = "http://10.20.100.62:19000"
