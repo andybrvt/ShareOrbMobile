@@ -95,9 +95,9 @@ global.RENDER_TIMESTAMP = (timestamp) => {
     if (timeDiff < 1 ) {
       prefix = `Just now`;
     } else if (timeDiff < 60 && timeDiff >= 1 ) {
-      prefix = `${timeDiff} minutes ago`;
+      prefix = `${timeDiff}m ago`;
     }else if (timeDiff < 24*60 && timeDiff > 60) {
-      prefix = `${Math.round(timeDiff/60)} hours ago`;
+      prefix = `${Math.round(timeDiff/60)}h ago`;
     }
     // this condition fills if time difference is greater than 1 day, less than 7 days
     else if (timeDiff <7*24*60 && timeDiff > 24*60) {
@@ -107,6 +107,39 @@ global.RENDER_TIMESTAMP = (timestamp) => {
     }
 
     return prefix;
+}
+
+
+global.OVER_WEEK = (timestamp) => {
+
+    let prefix = '';
+    const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+
+    prefix = `${dateFns.format(new Date(timestamp), "MMMM dd")}`;
+  
+    return prefix;
+}
+
+global.UNDER_WEEK = (timestamp) => {
+
+  let prefix = '';
+  const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+  if (timeDiff < 1 ) {
+    prefix = `Just now`;
+  } else if (timeDiff < 60 && timeDiff >= 1 ) {
+    prefix = `${timeDiff}m`;
+  }else if (timeDiff < 24*60 && timeDiff > 60) {
+    prefix = `${Math.round(timeDiff/60)}h`;
+  }
+  // this condition fills if time difference is greater than 1 day, less than 7 days
+  else if (timeDiff <7*24*60 && timeDiff > 24*60) {
+    prefix = `${Math.round(timeDiff/(60*24))}d`;
+  }
+  else {
+    prefix=""
+  }
+
+  return prefix;
 }
 
 global.RENDER_MONTH_DAY = (timestamp) => {
