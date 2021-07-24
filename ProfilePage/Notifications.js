@@ -26,13 +26,15 @@ class Notifications extends React.Component{
    // to the home page
  }
 
+
+
  renderItem = ({item}) => {
 
    // like notification
    // comment Notification
    // private -- accept/decline friend Notification
    // public -- somone follows you
-
+   const timeDiff = Math.round((new Date().getTime() - new Date(item.timestamp).getTime())/60000)
    console.log(item)
    if(item.type === "like_notification"){
 
@@ -177,7 +179,7 @@ class Notifications extends React.Component{
               }}>
             <View style = {{flexDirection: 'row'}}>
               <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
-              <Text> liked your post on {item.pendingEventDate}. </Text>
+              <Text> liked your album on {item.pendingEventDate}   </Text>
             </View>
             <View style = {{marginTop: 10}}>
               <Text>
@@ -196,36 +198,37 @@ class Notifications extends React.Component{
 
      return(
        <TouchableOpacity>
-          <View style={{
-             flexDirection:'row',
-             padding:15}}>
-            <View style={{flex:1}}>
-              <Avatar
-                // onPress = {() => this.props.ViewProfile(userUsername)}
-                size={40}
-                rounded
-                source = {{
-                  uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
-                }}
-              />
-            </View>
-          <View style={{
+        <View style={{flexDirection:'row', padding:15}}>
+          <View style={{flex:1}}>
+            <Avatar
+              // onPress = {() => this.props.ViewProfile(userUsername)}
+              size={40}
+              rounded
+              source = {{
+                uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
+              }}
+            />
+          </View>
+          <View style={{flex:6,flexDirection:'column',flexWrap:'wrap'}}>
+              <View style = {{flexDirection: 'row'}}>
+                <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
+                <Text>commented on your album on </Text>
+              </View>
 
-              flex:6,
-              flexDirection:'column',
-              }}>
-            <View style = {{flexDirection: 'row'}}>
-              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
-              <Text>commented on your post on </Text>
-              <Text style = {{fontWeight: 'bold'}}>{global.RENDER_MONTH_DAY(item.timestamp)} </Text>
+              <Text style = {{fontWeight: 'bold'}}>{global.RENDER_TIMESTAMP(item.timestamp)} </Text>
+          </View>
+          {
+            (timeDiff <7*24*60 && timeDiff > 24*60)?
+            <View style={{flex:0}}>
+              <Text style={{color:'#8c8c8c'}}> {global.RENDER_TIMESTAMP(item.timestamp)}</Text>
             </View>
+            :
+            <Text></Text>
+          }
 
         </View>
-          </View>
-
        </TouchableOpacity>
      )
-
    }
    // return (
 

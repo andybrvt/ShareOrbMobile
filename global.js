@@ -99,11 +99,11 @@ global.RENDER_TIMESTAMP = (timestamp) => {
     }else if (timeDiff < 24*60 && timeDiff > 60) {
       prefix = `${Math.round(timeDiff/60)} hours ago`;
     }
-    // this condition fills if time difference is greater than 2 days
-    else if (timeDiff <1*24*60 && timeDiff > 24*60) {
+    // this condition fills if time difference is greater than 1 day, less than 7 days
+    else if (timeDiff <7*24*60 && timeDiff > 24*60) {
       prefix = `${Math.round(timeDiff/(60*24))}d ago`;
     } else {
-        prefix = `${dateFns.format(new Date(timestamp), "MMMM")}`;
+        prefix = `${dateFns.format(new Date(timestamp), "MMMM dd")}`;
     }
 
     return prefix;
@@ -114,11 +114,9 @@ global.RENDER_MONTH_DAY = (timestamp) => {
     let prefix = '';
     const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
     // this condition fills if time difference is greater than 2 days
-    if (timeDiff <31*24*60 && timeDiff > 24*60) {
-      prefix = `${Math.round(timeDiff/(60*24))}d ago`;
-    } else {
-        prefix = `${dateFns.format(new Date(timestamp), "MMMM dd")}`;
-    }
+
+    prefix = `${dateFns.format(new Date(timestamp), "MMMM")}`;
+
 
     return prefix;
 }
