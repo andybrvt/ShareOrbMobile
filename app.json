@@ -16,7 +16,7 @@
         "backgroundColor":"#ffffff"
       },
     "orientation": "portrait",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "assetBundlePatterns": [
       "assets/**"
     ],
@@ -30,6 +30,8 @@
         "NSPhotoLibraryUsageDescription": "To access your photos",
         "NSCameraUsageDescription": "To take more pictures"
       },
+      "buildNumber": "1.0.0"
+
     }
   }
 }
