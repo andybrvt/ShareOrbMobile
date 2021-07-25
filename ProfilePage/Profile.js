@@ -123,7 +123,7 @@ class Profile extends React.Component{
       <BackgroundContainer>
         <View style={styles.viewStyle}>
           <View style={{flex:1, justifyContent:'center'}}>
-          <Text style={styles.textStyle}>{this.props.username}</Text>
+            <Text style={styles.textStyle}>{this.props.username}</Text>
           </View>
 
           <View

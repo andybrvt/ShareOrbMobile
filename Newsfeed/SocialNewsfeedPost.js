@@ -354,7 +354,7 @@ class SocialNewsfeedPost extends React.Component{
 
               <View style = {styles.testWhere2}>
                   <Text style = {styles.videoFooterUserName}>
-                    {global.RENDER_TIMESTAMP(postCreatedAt)}
+                    {global.RENDER_MONTH_DAY(postCreatedAt)}
                   </Text>
                   <Text style = {styles.dayNumTag}>
                     {dayNum}

@@ -17,6 +17,7 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import { MoreVertical} from "react-native-feather";
 import { connect } from 'react-redux';
+import * as dateFns from 'date-fns';
 
 
 class Notifications extends React.Component{
@@ -26,13 +27,15 @@ class Notifications extends React.Component{
    // to the home page
  }
 
- renderItem = ({item}) => {
 
+
+ renderItem = ({item}) => {
+   console.log(item)
    // like notification
    // comment Notification
    // private -- accept/decline friend Notification
    // public -- somone follows you
-
+   const timestamp = Math.round((new Date().getTime() - new Date(item.timestamp).getTime())/60000)
    console.log(item)
    if(item.type === "like_notification"){
 
@@ -97,8 +100,8 @@ class Notifications extends React.Component{
               flexDirection:'column',
               }}>
             <View style = {{flexDirection: 'row'}}>
-              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
-              <Text> commented on your post. </Text>
+              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
+              <Text>commented on your post. </Text>
             </View>
             <View style = {{marginTop: 10}}>
               <Text>
@@ -137,8 +140,8 @@ class Notifications extends React.Component{
               flexDirection:'column',
               }}>
             <View style = {{flexDirection: 'row'}}>
-              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
-              <Text> followed you. </Text>
+              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
+              <Text> followed you.</Text>
             </View>
             <View style = {{marginTop: 10}}>
               <Text>
@@ -157,36 +160,39 @@ class Notifications extends React.Component{
 
      return(
        <TouchableOpacity>
-          <View style={{
-             flexDirection:'row',
-             padding:15}}>
-            <View style={{flex:1}}>
-              <Avatar
-                // onPress = {() => this.props.ViewProfile(userUsername)}
-                size={40}
-                rounded
-                source = {{
-                  uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
-                }}
-              />
-            </View>
-          <View style={{
+         <View style={{flexDirection:'row', padding:15}}>
+           <View style={{flex:1}}>
+             <Avatar
+               // onPress = {() => this.props.ViewProfile(userUsername)}
+               size={40}
+               rounded
+               source = {{
+                 uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
+               }}
+             />
+           </View>
+           <View style={{flex:6,flexWrap:'wrap'}}>
+               <View style = {{flexDirection: 'row'}}>
+                 <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
 
-              flex:6,
-              flexDirection:'column',
-              }}>
-            <View style = {{flexDirection: 'row'}}>
-              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
-              <Text> liked your social cell on {item.pendingEventDate}. </Text>
-            </View>
-            <View style = {{marginTop: 10}}>
-              <Text>
-                {global.RENDER_TIMESTAMP(item.timestamp)}
-              </Text>
-            </View>
+                 <Text>liked your album on </Text>
+                 <Text style = {{fontWeight: 'bold'}}>{dateFns.format(new Date(item.timestamp), "MMMM dd")}</Text>
+               </View>
 
-        </View>
-          </View>
+
+           </View>
+           {
+             (timestamp <7*24*60 && timestamp > 1)?
+             <View style={{flex:0}}>
+               <Text style={{color:'#8c8c8c'}}> {global.UNDER_WEEK(item.timestamp)}</Text>
+             </View>
+             :
+             <View style={{flex:0}}>
+               <Text style={{color:'#8c8c8c'}}> {global.OVER_WEEK(item.timestamp)}</Text>
+             </View>
+           }
+
+         </View>
 
        </TouchableOpacity>
      )
@@ -196,40 +202,37 @@ class Notifications extends React.Component{
 
      return(
        <TouchableOpacity>
-          <View style={{
-             flexDirection:'row',
-             padding:15}}>
-            <View style={{flex:1}}>
-              <Avatar
-                // onPress = {() => this.props.ViewProfile(userUsername)}
-                size={40}
-                rounded
-                source = {{
-                  uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
-                }}
-              />
-            </View>
-          <View style={{
+        <View style={{flexDirection:'row', padding:15}}>
+          <View style={{flex:1}}>
+            <Avatar
+              // onPress = {() => this.props.ViewProfile(userUsername)}
+              size={40}
+              rounded
+              source = {{
+                uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
+              }}
+            />
+          </View>
+          <View style={{flex:6,flexDirection:'column',flexWrap:'wrap'}}>
+              <View style = {{flexDirection: 'row'}}>
+                <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
+                <Text>commented on your album on </Text>
+              </View>
 
-              flex:6,
-              flexDirection:'column',
-              }}>
-            <View style = {{flexDirection: 'row'}}>
-              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
-              <Text> commented your social cell on {item.pendingEventDate}. </Text>
+              <Text style = {{fontWeight: 'bold'}}>{global.RENDER_TIMESTAMP(item.timestamp)} </Text>
+          </View>
+          {
+            (timestamp <7*24*60 && timestamp > 24*60)?
+            <View style={{flex:0}}>
+              <Text style={{color:'#8c8c8c'}}> {global.RENDER_TIMESTAMP(item.timestamp)}</Text>
             </View>
-            <View style = {{marginTop: 10}}>
-              <Text>
-                {global.RENDER_TIMESTAMP(item.timestamp)}
-              </Text>
-            </View>
+            :
+            <Text></Text>
+          }
 
         </View>
-          </View>
-
        </TouchableOpacity>
      )
-
    }
    // return (
 

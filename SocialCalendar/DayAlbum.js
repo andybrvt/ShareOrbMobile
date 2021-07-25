@@ -348,89 +348,65 @@ const height = Dimensions.get("window").height
               onBeforeSnapToItem = {e => this.changeBackground(e)}
                />
 
-
-             {/*
-           <View style = {styles.tagCSS10}>
-               <TouchableOpacity>
-               <View style = {styles.justifyCenter}>
-                 <Text style={{color:'white', fontSize:17.5}}>
-                    test
-                 </Text>
+               <View style = {styles.testWhere2}>
+                   <Text style = {styles.videoFooterUserName}>
+                     {socialMonth}
+                   </Text>
+                   <Text style = {styles.dayNumTag}>
+                     {socialDay}
+                   </Text>
                </View>
-               </TouchableOpacity>
-             </View>
-             */}
-
-
-             <View style = {styles.testWhere2}>
-                 <Text style = {styles.videoFooterUserName}>
-                   {socialMonth}
-                 </Text>
-                 <Text style = {styles.dayNumTag}>
-                   {socialDay}
-                 </Text>
-
-             </View>
-             <TouchableWithoutFeedback
-               onPress = {() => this.props.navigation.goBack(0)}>
-
-                 <ArrowLeft
-                       style={styles.close2}
-                       stroke='white'
-                       width ={35}
-                       height = {35}
-                  />
-
-            </TouchableWithoutFeedback>
-
-             <View style = {styles.tagCSS1}>
-               <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
-               <View style = {styles.justifyCenter}>
-                 <Heart
-                   stroke = "red"
-                   fill="red"
-                   width ={32.5}
-                   height = {32.5}
-                   style={{right:5}}
+               <TouchableWithoutFeedback
+                 onPress = {() => this.props.navigation.goBack(0)}>
+                   <ArrowLeft
+                         style={styles.close2}
+                         stroke='white'
+                         width ={30}
+                         height = {30}
                     />
-
-
-                 <Text  style = {styles.justifyCenter1}>
-                   {likePost.length}
-
-                 </Text>
-               </View>
-               </TouchableOpacity>
-             </View>
-             <View style = {styles.tagCSS2}>
-               <TouchableOpacity  onPress={this.changeShowComments}>
-                 <View  style = {styles.justifyCenter}>
-                   <MessageCircle
-                     stroke = "white"
-                     fill="white"
+              </TouchableWithoutFeedback>
+               <View style = {styles.tagCSS1}>
+                 <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
+                 <View style = {styles.justifyCenter}>
+                   <Heart
+                     stroke = "red"
+                     fill="red"
                      width ={32.5}
                      height = {32.5}
                      style={{right:5}}
-                   />
+                      />
                    <Text  style = {styles.justifyCenter1}>
-                   {socialComments.length}
-                 </Text>
+                     {likePost.length}
+                   </Text>
                  </View>
-               </TouchableOpacity>
-             </View>
+                 </TouchableOpacity>
+               </View>
+               <View style = {styles.tagCSS2}>
+                 <TouchableOpacity  onPress={this.changeShowComments}>
+                   <View  style = {styles.justifyCenter}>
+                     <MessageCircle
+                       stroke = "white"
+                       fill="white"
+                       width ={32.5}
+                       height = {32.5}
+                       style={{right:5}}
+                     />
+                     <Text  style = {styles.justifyCenter1}>
+                     {socialComments.length}
+                   </Text>
+                   </View>
+                 </TouchableOpacity>
+               </View>
 
-             <Text style = {styles.tagCSS3}>
-               <View>
+               <View style={styles.tagCSS3}>
                  <Edit2
                    onPress={() => this.editAlbum()}
                    stroke = "white"
                    fill="white"
                    width ={30}
                    height = {30}
-                   style={{right:5}}
                     />
                </View>
-             </Text>
              <Text style = {styles.DayAlbumUserName}>
                {firstName+" "+lastName}
             </Text>
@@ -449,13 +425,7 @@ const height = Dimensions.get("window").height
               </View>
             </View>
          </ImageBackground>
-
-
-
-
        </View>
-
-
      )
    }
  }
@@ -556,11 +526,11 @@ const height = Dimensions.get("window").height
      color:'white',
      bottom:'21%',
      fontSize:13,
-     right:15,
+     right:20,
      textAlign:'right',
      // fontWeight:'bold',
-
    },
+
 
    tagCSS10: {
      position:'absolute',
@@ -601,8 +571,8 @@ const height = Dimensions.get("window").height
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
      fontWeight:'bold',
-     top:'9%',
-     left:'27.5%',
+     top:'7.5%',
+     left:'28%',
      position: "absolute",
      // fontWeight:'bold',
 
@@ -642,20 +612,20 @@ const height = Dimensions.get("window").height
    close2: {
      margin: 5,
      position: "absolute",
-     top:'8%',
+     top:'5.5%',
      left:'2.5%',
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
      fontWeight:'bold',
      backgroundColor: 'rgba(0,0,0,.6)',
-     padding:15,
+     padding:20,
      borderRadius:25,
    },
    close: {
      margin: 5,
      position: "absolute",
-     top:'7.5%',
+     top:'6%',
      left:'15%',
      width: 35,
      height: 35,
