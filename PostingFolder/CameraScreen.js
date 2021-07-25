@@ -90,32 +90,27 @@ class CameraScreen extends React.Component{
       // const  camera = await Permissions.askAsync(Permissions.CAMERA);
 
 
-      setTimeout(async () => {
+      // setTimeout(async () => {
         try{
-          await Permissions.askAsync(Permissions.CAMERA);
+          const camera = await Permissions.askAsync(Permissions.CAMERA);
+
+          if(!camera.granted){
+            alert("Permission to access camera roll is required!");
+
+            return await Permissions.askAsync(Permissions.CAMERA);
+          }
+
+          this.setState({
+            allowCamera: true
+          })
         }
         catch(err){
           alert(err)
         }
 
 
-      }, 1000)
-      // if(!camera.granted){
-      //   // alert("Permission to access camera roll is required!");
-      //
-      //   return await Permissions.askAsync(Permissions.CAMERA);
-      // }
-      //
-      // this.setState({
-      //   allowCamera: true
-      // })
+      // }, 1000)
 
-      // ImagePicker.launchImageLibraryAsync()
-
-
-    // } catch(error){
-
-    // }
   }
 
   takePicture = async() => {
@@ -270,8 +265,8 @@ class CameraScreen extends React.Component{
       <View
         style = {{flex: 1}}>
 
-        <View
-          // visible = {this.props.showCamera}
+        <Modal
+          visible = {this.props.showCamera}
           style = {{flex: 1}}
           >
         {
@@ -434,7 +429,7 @@ class CameraScreen extends React.Component{
 
         }
 
-      </View>
+      </Modal>
 
       </View>
     )
@@ -471,7 +466,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     padding: 10,
-    backgroundColor: 'orange',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5
