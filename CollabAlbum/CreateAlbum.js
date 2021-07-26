@@ -21,6 +21,7 @@ import { moderateScale } from 'react-native-size-matters';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import * as ImagePicker from 'expo-image-picker';
 import FriendPickModal from './FriendPickModal';
+import { connect } from 'react-redux';
 
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
@@ -34,6 +35,7 @@ class CreateAlbum extends React.Component{
       caption:'',
       coverPic: '',
       showInvite: false,
+      invitedPeople: []
     }
   }
 
@@ -63,6 +65,13 @@ class CreateAlbum extends React.Component{
       caption: e
     })
 
+  }
+  addToInviteList = (username) => {
+    const newList = [...this.state.invitedPeople, username]
+
+    this.setState({
+      invitedPeople: newList
+    })
   }
 
   handleChoosePhoto = async() => {
@@ -102,7 +111,7 @@ class CreateAlbum extends React.Component{
            */}
             <TextInput
              placeholder="Describe your album"
-             autoCapitalize={true}
+             autoCapitalize="sentences"
              numberOfLines={2}
              placeholderTextColor="#d9d9d9"
              autoCorrect={false}
@@ -207,6 +216,9 @@ class CreateAlbum extends React.Component{
          <FriendPickModal
            visible = {this.state.showInvite}
            onClose = {this.closeInvite}
+           action = {this.addToInviteList}
+           invitedPeople = {this.state.invitedPeople}
+           {...this.props}
             />
 
 
@@ -215,7 +227,17 @@ class CreateAlbum extends React.Component{
      )
    }
  }
- const styles = StyleSheet.create({
+
+
+const mapStateToProps = state => {
+  return{
+    following: state.auth.following
+  }
+
+}
+
+
+const styles = StyleSheet.create({
    editButton: {
 
      alignItems: 'center',
@@ -314,4 +336,4 @@ class CreateAlbum extends React.Component{
    },
  })
 
- export default CreateAlbum;
+export default connect(mapStateToProps, null)(CreateAlbum);

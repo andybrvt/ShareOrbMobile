@@ -63,7 +63,6 @@ class WebsocketColabAlbum{
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
 
-    console.log(parsedData);
 
     if(command === "fetch_colab_album"){
 

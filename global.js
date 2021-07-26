@@ -9,18 +9,18 @@ import * as dateFns from 'date-fns';
 // global.WS_HEADER = "ws"
 
 
-global.IP_CHANGE="http://192.168.1.200:19002"
-global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
-global.WS_ENDPOINT = "192.168.1.200:19002"
-global.WS_HEADER = "ws"
-global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
+// global.IP_CHANGE="http://192.168.1.200:19002"
+// global.IMAGE_ENDPOINT = "http://192.168.1.200:19002"
+// global.WS_ENDPOINT = "192.168.1.200:19002"
+// global.WS_HEADER = "ws"
+// global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
 
 // andy house
-// global.IP_CHANGE = "http://192.168.1.24:19000"
-// global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
-// global.WS_ENDPOINT = "192.168.1.24:19000"
-// global.POSTLIST_SPEC = 'http://192.168.1.24:19000/media/'
-// global.WS_HEADER = "ws"
+global.IP_CHANGE = "http://192.168.1.24:19000"
+global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
+global.WS_ENDPOINT = "192.168.1.24:19000"
+global.POSTLIST_SPEC = 'http://192.168.1.24:19000/media/'
+global.WS_HEADER = "ws"
 
 
 // Andy hot spoot
@@ -117,7 +117,7 @@ global.OVER_WEEK = (timestamp) => {
     const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
 
     prefix = `${dateFns.format(new Date(timestamp), "MMMM dd")}`;
-  
+
     return prefix;
 }
 

@@ -49,7 +49,6 @@ class WebSocketSocialNewsfeed{
   const parsedData = JSON.parse(data);
   const command = parsedData.command;
 
-  console.log(parsedData);
 
   // Make the different calls here
   if(command === "fetch_social_posts"){

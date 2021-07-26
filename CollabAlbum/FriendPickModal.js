@@ -13,16 +13,31 @@ import {
   TouchableHighlight,
   Modal,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  FlatList
 } from 'react-native';
 import ExploreSearchBar from '../Explore/ExploreSearchBar';
 import { Search, ChevronLeft } from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-
+import UserListItem from '../RandomComponents/UserListItem';
 
 class FriendPickModal extends React.Component{
 
+  state = {
+    input: ""
+  }
 
+  renderItem = ({item}) => {
+    return(
+      <View>
+        <UserListItem
+          item = {item}
+          action = {this.props.action}
+
+           />
+      </View>
+    )
+  }
 
    render(){
      return(
@@ -39,7 +54,6 @@ class FriendPickModal extends React.Component{
               <View style = {{flex: 1}}>
                 <View style = {{
 
-                    backgroundColor: 'pink',
                     height: 60,
                     justifyContent: 'center',
                     flexDirection: 'row',
@@ -73,80 +87,49 @@ class FriendPickModal extends React.Component{
                           />
 
                        <TextInput
-                         value = {this.props.value}
+                         value = {this.state.input}
                          onChangeText = {this.props.onChange}
                          // onFocus = {() => this.props.onOpen()}
                          style={{
                            width: "80%",
                            // backgroundColor: 'yellow',
                            left:20}}
-                         underlineColorAndroid = "transparent"
-                         placeholder = "Search Chats"/>
+                         // underlineColorAndroid = "transparent"
+                         placeholder = "Search Chats"
+                         />
 
                      </View>
                    </View>
 
                 </View>
 
+                <View>
+                  {this.props.invitedPeople.map((people,index) => {
+                    return(
+                      <View
+                        key = {index}
+                        >
+                        <Text>
+                          {people}
+                        </Text>
+                      </View>
+                    )
+                  })}
+                </View>
 
+
+                <View style = {{
+                    flex: 1,
+                  }}>
+                  <FlatList
+                    data = {this.props.following}
+                    renderItem = {(item) => this.renderItem(item)}
+                    keyExtractor={(item, index) => String(index)}
+
+                     />
+                </View>
               </View>
 
-             {/*
-               <View style = {{
-                   flexDirection: 'row',
-                   alignItems: 'center',
-                   justifyContent: 'center',
-                   backgroundColor: 'pink'
-                 }}>
-
-
-                 <View style = {{
-                     width: this.props.visible ? '75%' : '90%',
-                   }}>
-
-                   <View style = {styles.searchText}>
-
-                     <Search
-                       style={{marginRight:10, color: 'gray',left:20}}
-                       width= {12.5}
-                       height= {12.5}
-                        />
-
-                     <TextInput
-                       value = {this.props.value}
-                       onChangeText = {this.props.onChange}
-                       onFocus = {() => this.props.onOpen()}
-                       style={{
-                         width: "80%",
-                         // backgroundColor: 'yellow',
-                         left:20}}
-                       underlineColorAndroid = "transparent"
-                       placeholder = "Search Chats"></TextInput>
-
-                   </View>
-                 </View>
-                 {
-                   this.props.visible ?
-
-                   <View style = {{
-                       width:'20%'
-                     }}>
-                     <Button
-                       onPress = {() => this.props.onClose()}
-                       color="white"
-                       title = "cancel"
-                        />
-                   </View>
-
-                   : null
-                 }
-
-
-
-               </View>
-
-
-               */}
 
          </TouchableWithoutFeedback>
        </BackgroundContainer>

@@ -55,7 +55,6 @@ class WebSocketExplore{
 
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
-    console.log(parsedData)
 
     if (command === "user_profile"){
       //STATUS REDONE
@@ -64,7 +63,7 @@ class WebSocketExplore{
       this.callbacks['load_profile'](profile)
 
     } else if (command === 'send_follower'){
-    
+
       const newFollowerList = parsedData.followerList
       this.callbacks['new_follower_unfollower'](newFollowerList)
 
