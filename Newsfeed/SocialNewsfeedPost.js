@@ -83,7 +83,7 @@ class SocialNewsfeedPost extends React.Component{
   }
 
 
-  
+
 
 
   changeShowComments = (cellId) => {
@@ -333,7 +333,7 @@ class SocialNewsfeedPost extends React.Component{
             >
             <View style = {styles.container}>
               <GestureRecognizer
-                onPress = {() => console.log("hii")}
+                onPress = {() => console.log("hiioi")}
                 onSwipe={(direction, state) => this.onSwipe(direction, state)}
                 config={{
                    velocityThreshold: 0.3,

@@ -65,7 +65,7 @@ class Notifications extends React.Component{
               flex:6,
               flexDirection:'column',
               }}>
-            <View style = {{flexDirection: 'row'}}>
+            <View style={styles.wrapNoti}>
               <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
               <Text>liked your post on {item.albumDate}</Text>
             </View>
@@ -137,7 +137,7 @@ class Notifications extends React.Component{
               />
             </View>
           <View style={styles.midNotiSpace}>
-            <View style = {{flexDirection: 'row'}}>
+            <View style={styles.wrapNoti}>
               <Text style = {{fontWeight: 'bold'}}>{item.actor.username}</Text>
               <Text> followed you</Text>
             </View>
@@ -166,7 +166,7 @@ class Notifications extends React.Component{
              />
            </View>
            <View style={styles.midNotiSpace}>
-               <View style = {{flexDirection: 'row'}}>
+               <View style={styles.wrapNoti}>
                  <Text style = {{fontWeight: 'bold'}}>{item.actor.username} </Text>
                  <Text>liked your
                    <Text style = {{fontWeight: 'bold'}}> {albumDate} </Text>
@@ -187,35 +187,32 @@ class Notifications extends React.Component{
 
      return(
        <TouchableOpacity>
-        <View style={{flexDirection:'row', padding:15}}>
-          <View style={{flex:1}}>
-            <Avatar
-              onPress = {() => this.ViewProfile(item.actor.username)}
-              size={40}
-              rounded
-              source = {{
-                uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
-              }}
-            />
-          </View>
-          <View style={{flex:6,flexDirection:'column',flexWrap:'wrap'}}>
-              <View style = {{flexDirection: 'row'}}>
-                <Text style = {{fontWeight: 'bold'}}>{item.actor.username} </Text>
-                <Text>commented on your album on </Text>
-              </View>
-
-              <Text style = {{fontWeight: 'bold'}}>{global.RENDER_TIMESTAMP(item.timestamp)} </Text>
-          </View>
-          {
-            (timestamp <7*24*60 && timestamp > 24*60)?
-            <View style={{flex:0}}>
-              <Text style={{color:'#8c8c8c'}}> {global.RENDER_TIMESTAMP(item.timestamp)}</Text>
-            </View>
-            :
-            <Text></Text>
-          }
-
-        </View>
+         <View style={styles.notiContainer}>
+           <View style={styles.frontNotiSpace}>
+             <Avatar
+               onPress = {() => this.ViewProfile(item.actor.username)}
+               size={40}
+               rounded
+               source = {{
+                 uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
+               }}
+             />
+           </View>
+           <View style={styles.midNotiSpace}>
+               <View style={styles.wrapNoti}>
+                 <Text style = {{fontWeight: 'bold'}}>{item.actor.username} </Text>
+                 <Text>commented on your
+                   <Text style = {{fontWeight: 'bold'}}> {albumDate} </Text>
+                   album
+                </Text>
+               </View>
+           </View>
+           <View style={{flex:0}}>
+             <Text style={styles.notiTimeStamp}>
+               {global.RENDER_TIMESTAMP(item.timestamp)}
+             </Text>
+           </View>
+         </View>
        </TouchableOpacity>
      )
    }
@@ -317,6 +314,10 @@ const mapStateToProps = state => {
 }
 
 const styles = StyleSheet.create({
+  wrapNoti:{
+    flexDirection:'row',
+    flexWrap:'wrap',
+  },
   notiContainer:{
     flexDirection:'row', padding:15
   },
@@ -324,7 +325,7 @@ const styles = StyleSheet.create({
     flex:1,
   },
   midNotiSpace:{
-    flex:6,flexWrap:'wrap', left:5
+    flex:6,flexWrap:'wrap', left:5,
   },
   notiTimeStamp: {
     color:'#8c8c8c',
