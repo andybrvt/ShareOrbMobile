@@ -16,7 +16,6 @@ class WebSocketSocialNewsfeed{
 
   connect(){
   const path = `${global.WS_HEADER}://${global.WS_ENDPOINT}/ws/socialNewsfeed`
-  console.log(path)
   this.socketRef = new WebSocket(path)
 
   this.socketRef.onopen = () => {
@@ -49,7 +48,7 @@ class WebSocketSocialNewsfeed{
   const parsedData = JSON.parse(data);
   const command = parsedData.command;
 
-  console.log(parsedData);
+
 
   // Make the different calls here
   if(command === "fetch_social_posts"){

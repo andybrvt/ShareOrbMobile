@@ -64,7 +64,6 @@ class WebSocketSocialCalCellPage{
     const command = parsedData.command
 
     console.log('websockets ')
-    console.log(parsedData)
     if(command === 'fetch_social_cal_cell_info'){
       // This will load up the information for the social cal cell page
       const socialCalCellObj = parsedData.socialCell

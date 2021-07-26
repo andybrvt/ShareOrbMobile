@@ -82,6 +82,10 @@ class SocialNewsfeedPost extends React.Component{
     }
   }
 
+
+  
+
+
   changeShowComments = (cellId) => {
 
     this.props.onCommentOpen(cellId)
@@ -227,8 +231,7 @@ class SocialNewsfeedPost extends React.Component{
     let cellDay = "";
     let location = "";
     let userUsername = '';
-    let firstName = "";
-    let lastName = "";
+
     let post = {};
 
     let profilePic="";
@@ -242,6 +245,9 @@ class SocialNewsfeedPost extends React.Component{
     let contentTypeId="";
     let ownerId = "";
     let cellDate = "";
+
+    let firstName="";
+    let lastName="";
     if(this.props.data) {
 
       contentTypeId = this.props.data.id
@@ -264,11 +270,15 @@ class SocialNewsfeedPost extends React.Component{
 
 
       }
-      if(this.props.data.owner.username) {
-        userUsername = this.props.data.owner.username
-        firstName = this.props.data.owner.first_name
-        lastName = this.props.data.owner.last_name
+
+
+      if(this.props.data.post) {
+        userUsername = this.props.data.post.socialCalUser.username
+        firstName = this.props.data.post.socialCalUser.first_name
+        lastName = this.props.data.post.socialCalUser.last_name
+        console.log(firstName, lastName)
       }
+
       if(this.props.data.post.socialCaldate) {
         cellDate = this.props.data.post.socialCaldate
         const date = this.props.data.post.socialCaldate.split("-")
@@ -309,6 +319,7 @@ class SocialNewsfeedPost extends React.Component{
     }
 
 
+
       return (
         <Animated.View style = {{
             height: this.heightAnimation
@@ -344,6 +355,7 @@ class SocialNewsfeedPost extends React.Component{
                     uri: profilePic
                   }}
                 />
+
 
 
               <View style = {styles.testWhere}>
@@ -524,11 +536,11 @@ class SocialNewsfeedPost extends React.Component{
     let like_people = []
     let profilePic = ''
     let userUsername = ""
-    let userFirstName = ""
-    let userLastName = ""
+    let firstName=""
+    let lastName=""
     let userId = ""
     let actionText = ""
-
+    console.log(this.props.data.post)
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post
@@ -543,18 +555,13 @@ class SocialNewsfeedPost extends React.Component{
         }
       }
 
+
+
       if(this.props.data.owner){
         if(this.props.data.owner.profile_picture){
           profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
         }
 
-        if(this.props.data.owner.first_name){
-          userFirstName = this.props.data.owner.first_name
-        }
-
-        if(this.props.data.owner.last_name){
-          userLastName = this.props.data.owner.last_name
-        }
 
         if(this.props.data.owner.id){
           userId = this.props.data.owner.id

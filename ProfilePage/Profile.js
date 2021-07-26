@@ -28,14 +28,12 @@ class Profile extends React.Component{
   ViewChats = () => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-    console.log("hi")
     this.props.navigation.navigate("Chats")
   }
 
   ViewNoti = () => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-    console.log("hi")
     this.props.navigation.navigate("Notifications")
   }
 
@@ -104,7 +102,6 @@ class Profile extends React.Component{
   }
 
   render(){
-    console.log(this.props)
 
     const screenWidth = Math.round(Dimensions.get('window').width);
 

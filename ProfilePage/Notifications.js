@@ -27,16 +27,22 @@ class Notifications extends React.Component{
    // to the home page
  }
 
+ ViewProfile = (username) => {
+   // This fucntion will be used to navigate to the post page
+   // that you can use to post pictures and write caption
+   this.props.navigation.navigate("ProfilePage", {
+     username: username
+   })
+ }
 
 
  renderItem = ({item}) => {
-   console.log(item)
-   // like notification
-   // comment Notification
-   // private -- accept/decline friend Notification
-   // public -- somone follows you
    const timestamp = Math.round((new Date().getTime() - new Date(item.timestamp).getTime())/60000)
-   console.log(item)
+   let dataList=item.pendingEventDate.split("-")
+   let getYear=dataList[0]
+   let getMonth=dataList[1]-1
+   let getDay=dataList[2]
+   albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM dd")
    if(item.type === "like_notification"){
 
      return(
@@ -46,7 +52,7 @@ class Notifications extends React.Component{
              padding:15}}>
             <View style={{flex:1}}>
               <Avatar
-                // onPress = {() => this.props.ViewProfile(userUsername)}
+                onPress = {() => this.ViewProfile(item.actor.username)}
                 size={40}
                 rounded
                 source = {{
@@ -61,7 +67,7 @@ class Notifications extends React.Component{
               }}>
             <View style = {{flexDirection: 'row'}}>
               <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
-              <Text> liked your post. </Text>
+              <Text>liked your post on {item.albumDate}</Text>
             </View>
             <View style = {{marginTop: 10}}>
               <Text>
@@ -86,7 +92,7 @@ class Notifications extends React.Component{
              padding:15}}>
             <View style={{flex:1}}>
               <Avatar
-                // onPress = {() => this.props.ViewProfile(userUsername)}
+                // onPress = {() => this.ViewProfile(item.actor.username)}
                 size={40}
                 rounded
                 source = {{
@@ -108,25 +114,21 @@ class Notifications extends React.Component{
                 {global.RENDER_TIMESTAMP(item.timestamp)}
               </Text>
             </View>
-
         </View>
-          </View>
 
+          </View>
        </TouchableOpacity>
      )
 
    }
 
    if(item.type === "follow_notification"){
-
      return(
        <TouchableOpacity>
-          <View style={{
-             flexDirection:'row',
-             padding:15}}>
-            <View style={{flex:1}}>
+          <View style={styles.notiContainer}>
+            <View style={styles.frontNotiSpace}>
               <Avatar
-                // onPress = {() => this.props.ViewProfile(userUsername)}
+                onPress = {() => this.ViewProfile(item.actor.username)}
                 size={40}
                 rounded
                 source = {{
@@ -134,36 +136,28 @@ class Notifications extends React.Component{
                 }}
               />
             </View>
-          <View style={{
-
-              flex:6,
-              flexDirection:'column',
-              }}>
+          <View style={styles.midNotiSpace}>
             <View style = {{flexDirection: 'row'}}>
-              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
-              <Text> followed you.</Text>
+              <Text style = {{fontWeight: 'bold'}}>{item.actor.username}</Text>
+              <Text> followed you</Text>
             </View>
-            <View style = {{marginTop: 10}}>
-              <Text>
+          </View>
+            <View style={{flex:0}}>
+              <Text style={styles.notiTimeStamp}>
                 {global.RENDER_TIMESTAMP(item.timestamp)}
               </Text>
             </View>
-
-        </View>
           </View>
-
        </TouchableOpacity>
      )
-
    }
    if(item.type === "send_social_cell_like"){
-
      return(
        <TouchableOpacity>
-         <View style={{flexDirection:'row', padding:15}}>
-           <View style={{flex:1}}>
+         <View style={styles.notiContainer}>
+           <View style={styles.frontNotiSpace}>
              <Avatar
-               // onPress = {() => this.props.ViewProfile(userUsername)}
+               onPress = {() => this.ViewProfile(item.actor.username)}
                size={40}
                rounded
                source = {{
@@ -171,32 +165,23 @@ class Notifications extends React.Component{
                }}
              />
            </View>
-           <View style={{flex:6,flexWrap:'wrap'}}>
+           <View style={styles.midNotiSpace}>
                <View style = {{flexDirection: 'row'}}>
-                 <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
-
-                 <Text>liked your album on </Text>
-                 <Text style = {{fontWeight: 'bold'}}>{dateFns.format(new Date(item.timestamp), "MMMM dd")}</Text>
+                 <Text style = {{fontWeight: 'bold'}}>{item.actor.username} </Text>
+                 <Text>liked your
+                   <Text style = {{fontWeight: 'bold'}}> {albumDate} </Text>
+                   album
+                </Text>
                </View>
-
-
            </View>
-           {
-             (timestamp <7*24*60 && timestamp > 1)?
-             <View style={{flex:0}}>
-               <Text style={{color:'#8c8c8c'}}> {global.UNDER_WEEK(item.timestamp)}</Text>
-             </View>
-             :
-             <View style={{flex:0}}>
-               <Text style={{color:'#8c8c8c'}}> {global.OVER_WEEK(item.timestamp)}</Text>
-             </View>
-           }
-
+           <View style={{flex:0}}>
+             <Text style={styles.notiTimeStamp}>
+               {global.RENDER_TIMESTAMP(item.timestamp)}
+             </Text>
+           </View>
          </View>
-
        </TouchableOpacity>
      )
-
    }
    if(item.type === "send_social_cell_comment"){
 
@@ -205,7 +190,7 @@ class Notifications extends React.Component{
         <View style={{flexDirection:'row', padding:15}}>
           <View style={{flex:1}}>
             <Avatar
-              // onPress = {() => this.props.ViewProfile(userUsername)}
+              onPress = {() => this.ViewProfile(item.actor.username)}
               size={40}
               rounded
               source = {{
@@ -215,7 +200,7 @@ class Notifications extends React.Component{
           </View>
           <View style={{flex:6,flexDirection:'column',flexWrap:'wrap'}}>
               <View style = {{flexDirection: 'row'}}>
-                <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
+                <Text style = {{fontWeight: 'bold'}}>{item.actor.username} </Text>
                 <Text>commented on your album on </Text>
               </View>
 
@@ -240,7 +225,7 @@ class Notifications extends React.Component{
    //   <View style={{flexDirection:'row', padding:15}}>
    //     <View style={{flex:1}}>
    //       <Avatar
-   //         // onPress = {() => this.props.ViewProfile(userUsername)}
+   //         // onPress = {() => this.props.ViewProfile(item.actor.username)}
    //         size={40}
    //         rounded
    //         source = {{
@@ -304,8 +289,6 @@ class Notifications extends React.Component{
 
  render(){
    let notifications = [];
-   console.log('here in notifications')
-   console.log(this.props)
    if(this.props.notifications){
 
      notifications = this.props.notifications
@@ -318,6 +301,7 @@ class Notifications extends React.Component{
            data = {notifications}
            renderItem = {this.renderItem}
            keyExtractor={(item, index) => String(index)}
+
             />
        </View>
      </BackgroundContainer>
@@ -333,6 +317,19 @@ const mapStateToProps = state => {
 }
 
 const styles = StyleSheet.create({
+  notiContainer:{
+    flexDirection:'row', padding:15
+  },
+  frontNotiSpace:{
+    flex:1,
+  },
+  midNotiSpace:{
+    flex:6,flexWrap:'wrap', left:5
+  },
+  notiTimeStamp: {
+    color:'#8c8c8c',
+    fontSize:12,
+  },
  editButton: {
    alignItems: 'center',
    paddingVertical: 4,
