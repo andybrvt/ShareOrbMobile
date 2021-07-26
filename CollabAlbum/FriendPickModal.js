@@ -48,7 +48,6 @@ class FriendPickModal extends React.Component{
          <TouchableWithoutFeedback
            onPress = {() => Keyboard.dismiss()}
             style = {{
-              backgroundColor: 'blue',
               flex:1}}>
 
               <View style = {{flex: 1}}>
@@ -103,7 +102,10 @@ class FriendPickModal extends React.Component{
 
                 </View>
 
-                <View>
+                <View style = {{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap'
+                  }}>
                   {this.props.invitedPeople.map((people,index) => {
                     return(
                       <View

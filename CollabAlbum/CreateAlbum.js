@@ -60,12 +60,15 @@ class CreateAlbum extends React.Component{
 
   }
 
+
   handleCaptionChange = e => {
     this.setState({
       caption: e
     })
 
   }
+
+
   addToInviteList = (username) => {
     const newList = [...this.state.invitedPeople, username]
 
@@ -100,15 +103,46 @@ class CreateAlbum extends React.Component{
 
   }
 
+  renderSave = () => {
+
+    return (
+      <View style={{right:10}}>
+      <TouchableOpacity
+        >
+        <Button
+
+          title = "Save"
+          onPress = {() => this.onSaveAlbum()}
+
+           />
+      </TouchableOpacity>
+      </View>
+    )
+  }
+
 
    render(){
-     const {caption} = this.state
+     const {caption, invitedPeople, coverPic} = this.state
+
+
+     if(
+       caption !== "" &&
+       invitedPeople.length !== 0 &&
+       coverPic !== ""
+     ){
+       this.props.navigation.setOptions({
+         headerRight:() => this.renderSave()
+       })
+     } else {
+       this.props.navigation.setOptions({
+         headerRight:null
+       })
+     }
+
      return (
        <BackgroundContainer>
          <View style={styles.action}>
-           {/*
-           <View><Text style={styles.headerFont}>Title</Text></View>
-           */}
+
             <TextInput
              placeholder="Describe your album"
              autoCapitalize="sentences"
@@ -124,25 +158,48 @@ class CreateAlbum extends React.Component{
            />
 
          </View>
-         {/*
-         <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.goBioPage()}>
-           </TouchableHighlight>*/}
+
 
           <View style={styles.action2}>
-             <Users stroke="black" strokeWidth={2.5} width={20} height={20} />
-             <View style={{width:'70%'}}>
-               <Text style={[
-                  styles.bioInput,
-                  ]}>
-                  <Text>Invite Friends</Text>
-               </Text>
-             </View>
-           <TouchableOpacity onPress={() => this.showInvite()}>
-             <View style={styles.editButton}>
-                <Text style={{color:'#595959',}}>Invite</Text>
+            <View style = {{
+              marginTop:25,
+             flexDirection: 'row',
+             minHeight:50,
+             left:10,
+             padding:10,
+              }}>
+              <Users stroke="black" strokeWidth={2.5} width={20} height={20} />
+              <View style={{width:'70%'}}>
+                <Text style={[
+                   styles.bioInput,
+                   ]}>
+                   <Text>Invite Friends</Text>
+                </Text>
               </View>
-          </TouchableOpacity>
-          {/* <ArrowRight stroke="black" strokeWidth={2.5} width={20} height={20} />*/}
+            <TouchableOpacity onPress={() => this.showInvite()}>
+              <View style={styles.editButton}>
+                 <Text style={{color:'#595959',}}>Invite</Text>
+               </View>
+           </TouchableOpacity>
+
+            </View>
+
+          <View style = {{
+              flexDirection: 'row',
+              flexWrap: 'wrap'
+            }}>
+            {invitedPeople.map((people,index) => {
+              return(
+                <View
+                  key = {index}
+                  >
+                  <Text>
+                    {people}
+                  </Text>
+                </View>
+              )
+            })}
+          </View>
          </View>
 
 
@@ -290,11 +347,7 @@ const styles = StyleSheet.create({
 
   },
   action2: {
-    marginTop:25,
-   flexDirection: 'row',
-   minHeight:50,
-   left:10,
-   padding:10,
+    flexDirection: 'column'
  },
  action3: {
   flexDirection: 'row',
