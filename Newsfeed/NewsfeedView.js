@@ -26,11 +26,8 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import InfiniteScrollFlat from './InfiniteScrollFlat';
 import NewsfeedComment from './NewsfeedComment';
 
-
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
-
 const height = Dimensions.get('window').height
-
 class NewsfeedView extends React.Component{
 
   y = new Value(0);

@@ -96,13 +96,13 @@ global.RENDER_TIMESTAMP = (timestamp) => {
     if (timeDiff < 1 ) {
       prefix = `Just now`;
     } else if (timeDiff < 60 && timeDiff >= 1 ) {
-      prefix = `${timeDiff}m ago`;
+      prefix = `${timeDiff}m`;
     }else if (timeDiff < 24*60 && timeDiff > 60) {
-      prefix = `${Math.round(timeDiff/60)}h ago`;
+      prefix = `${Math.round(timeDiff/60)}h`;
     }
     // this condition fills if time difference is greater than 1 day, less than 7 days
-    else if (timeDiff <7*24*60 && timeDiff > 24*60) {
-      prefix = `${Math.round(timeDiff/(60*24))}d ago`;
+    else if (timeDiff <7*24*60 && timeDiff >= 24*60) {
+      prefix = `${Math.round(timeDiff/(60*24))}d`;
     } else {
         prefix = `${dateFns.format(new Date(timestamp), "MMMM dd")}`;
     }

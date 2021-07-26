@@ -19,16 +19,9 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
    selectItem(item) {
 
-     this.props.navigation.navigate("ViewProfile");
-     {/*}
-     this.props.navigation.navigate("MessageFriend",
-       {
-         chatPersonName:this.getChatUserName(item.participants),
-         chatUserName:item.participants[1].username,
-         chatPersonProfilePic: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants),
-         }
-     );
-     */}
+     this.props.navigation.navigate("ProfilePage", {
+       username: item.username
+     })
    }
 
    renderItem = ({item}) => {
