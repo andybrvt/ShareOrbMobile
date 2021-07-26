@@ -11,7 +11,8 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
-  Modal
+  Modal,
+  Keyboard
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -22,6 +23,8 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import * as ImagePicker from 'expo-image-picker';
 import FriendPickModal from './FriendPickModal';
 import { connect } from 'react-redux';
+import  authAxios from '../util';
+
 
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
@@ -100,6 +103,28 @@ class CreateAlbum extends React.Component{
       })
     }
 
+
+  }
+
+  onSaveAlbum(){
+    Keyboard.dismiss();
+    // this function will be used to save the album
+    const {caption, invitedPeople, coverPic} = this.state
+
+    const newInvited = [...invitedPeople, this.props.username]
+
+    const newPic = global.FILE_NAME_GETTER(coverPic)
+
+    const formData = new FormData();
+
+    formData.append('title', caption)
+    formData.append('person', JSON.stringify(newInvited))
+    formData.append('coverPic', newPic)
+    authAxios.post(`${global.IP_CHANGE}/colabAlbum/createColabAlubm`,
+      formData
+    ).then( res =>
+      console.log(res.data)
+    )
 
   }
 
@@ -288,7 +313,8 @@ class CreateAlbum extends React.Component{
 
 const mapStateToProps = state => {
   return{
-    following: state.auth.following
+    following: state.auth.following,
+    username: state.auth.username
   }
 
 }

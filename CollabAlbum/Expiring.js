@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   ImageBackground,
+  RefreshControl
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -55,7 +56,8 @@ const height = Dimensions.get('window').height
  class Expiring extends React.Component{
 
    state = {
-     albums: []
+     albums: [],
+     refreshing: false
    }
 
    navAlbum = () => {
@@ -73,6 +75,20 @@ const height = Dimensions.get('window').height
        })
 
      })
+   }
+
+   onRefresh = () => {
+     this.setState({refreshing: true})
+     authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getLiveAlbums')
+     .then(res => {
+       this.setState({
+         albums: res.data
+
+       })
+
+     })
+
+     this.setState({refreshing: false});
    }
 
    navAlbum = (albumId) => {
@@ -144,20 +160,31 @@ const height = Dimensions.get('window').height
           {
             albums.length === 0 ?
 
-            <View style = {{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
+            <ScrollView
+              showsVerticalScrollIndicator = {false}
+              refreshControl = {
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.onRefresh}
+                />
+              }
+              >
               <View style = {{
-                  alignItems: 'center'
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}>
-                <Folder
-                  stroke = "gainsboro"
-                   />
-                 <Text style = {{color: 'gainsboro'}}>You have no folders here</Text>
+                <View style = {{
+                    alignItems: 'center'
+                  }}>
+                  <Folder
+                    stroke = "gainsboro"
+                     />
+                   <Text style = {{color: 'gainsboro'}}>You have no folders here</Text>
+                </View>
               </View>
-            </View>
+
+            </ScrollView>
 
             :
 
@@ -168,6 +195,8 @@ const height = Dimensions.get('window').height
                  data = {albums}
                  renderItem ={(item) => this.renderItem(item)}
                  keyExtractor={(item, index) => String(index)}
+                 onRefresh = {() => this.onRefresh()}
+                 refreshing = {this.state.refreshing}
 
                  />
 
