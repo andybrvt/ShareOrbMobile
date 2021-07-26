@@ -30,6 +30,8 @@
         "NSPhotoLibraryUsageDescription": "To access your photos",
         "NSCameraUsageDescription": "To take more pictures"
       },
+      "buildNumber": "3"
+
     }
   }
 }

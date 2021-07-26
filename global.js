@@ -20,6 +20,7 @@ global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
 // global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
 // global.WS_ENDPOINT = "192.168.1.24:19000"
 // global.POSTLIST_SPEC = 'http://192.168.1.24:19000/media/'
+// global.WS_HEADER = "ws"
 
 
 // Andy hot spoot

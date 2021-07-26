@@ -13,7 +13,8 @@ import {
  KeyboardAvoidingView,
  Dimensions,
  AsyncStorage,
- Modal
+ Modal,
+ Constants
 } from "react-native";
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
@@ -85,24 +86,31 @@ class CameraScreen extends React.Component{
 
     // try{
 
-      const camera = await ImagePicker.requestCameraPermissionsAsync();
-
-      if(!camera.granted){
-        alert("Permission to access camera roll is required!");
-
-        return ImagePicker.requestCameraPermissionsAsync();
-      }
-
-      this.setState({
-        allowCamera: true
-      })
-
-      // ImagePicker.launchImageLibraryAsync()
+    // if (Constants.platform.ios) {
+      // const  camera = await Permissions.askAsync(Permissions.CAMERA);
 
 
-    // } catch(error){
+      // setTimeout(async () => {
+        try{
+          const camera = await Permissions.askAsync(Permissions.CAMERA);
 
-    // }
+          if(!camera.granted){
+            alert("Permission to access camera roll is required!");
+
+            return await Permissions.askAsync(Permissions.CAMERA);
+          }
+
+          this.setState({
+            allowCamera: true
+          })
+        }
+        catch(err){
+          alert(err)
+        }
+
+
+      // }, 1000)
+
   }
 
   takePicture = async() => {
@@ -257,8 +265,8 @@ class CameraScreen extends React.Component{
       <View
         style = {{flex: 1}}>
 
-        <View
-          // visible = {this.props.showCamera}
+        <Modal
+          visible = {this.props.showCamera}
           style = {{flex: 1}}
           >
         {
@@ -421,7 +429,7 @@ class CameraScreen extends React.Component{
 
         }
 
-      </View>
+      </Modal>
 
       </View>
     )
@@ -458,7 +466,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     padding: 10,
-    backgroundColor: 'red',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5
