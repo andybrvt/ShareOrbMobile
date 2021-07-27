@@ -42,46 +42,8 @@ class Notifications extends React.Component{
    let getYear=dataList[0]
    let getMonth=dataList[1]-1
    let getDay=dataList[2]
-   albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM dd")
-   if(item.type === "like_notification"){
+   let albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM dd")
 
-     return(
-       <TouchableOpacity >
-          <View style={{
-             flexDirection:'row',
-             padding:15}}>
-            <View style={{flex:1}}>
-              <Avatar
-                onPress = {() => this.ViewProfile(item.actor.username)}
-                size={40}
-                rounded
-                source = {{
-                  uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
-                }}
-              />
-            </View>
-          <View style={{
-
-              flex:6,
-              flexDirection:'column',
-              }}>
-            <View style={styles.wrapNoti}>
-              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)} </Text>
-              <Text>liked your post on {item.albumDate}</Text>
-            </View>
-            <View style = {{marginTop: 10}}>
-              <Text>
-                {global.RENDER_TIMESTAMP(item.timestamp)}
-              </Text>
-            </View>
-
-        </View>
-          </View>
-
-       </TouchableOpacity>
-     )
-
-   }
 
    if(item.type === "comment_notification"){
 
@@ -183,8 +145,7 @@ class Notifications extends React.Component{
        </TouchableOpacity>
      )
    }
-   if(item.type === "send_social_cell_comment"){
-
+   if(item.type === "accept_follow_request"){
      return(
        <TouchableOpacity>
          <View style={styles.notiContainer}>
@@ -212,63 +173,26 @@ class Notifications extends React.Component{
                {global.RENDER_TIMESTAMP(item.timestamp)}
              </Text>
            </View>
+           <View style={{paddingBottom:10}}>
+              <View style={{flexDirection:'row'}}>
+               <TouchableOpacity>
+                 <View style={styles.editButton}>
+                    <Text style={{color:'white'}}>Accept</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <View style={styles.declineButton}>
+                     <Text style={{color:'white',}}>Decline</Text>
+                   </View>
+                </TouchableOpacity>
+              </View>
+            </View>
          </View>
        </TouchableOpacity>
      )
    }
-   // return (
 
 
-   //   <View style={{flexDirection:'row', padding:15}}>
-   //     <View style={{flex:1}}>
-   //       <Avatar
-   //         // onPress = {() => this.props.ViewProfile(item.actor.username)}
-   //         size={40}
-   //         rounded
-   //         source = {{
-   //           uri: item.pic
-   //         }}
-   //       />
-   //     </View>
-   //     <View style={{flex:6,  flexDirection:'row', flexWrap:'wrap'}}>
-   //       <Text style={{fontWeight:'bold'}}> {item.username} </Text>
-   //       {(item.action&&(item.private=="true"))?
-   //         <View style={{paddingBottom:10}}>
-   //         <Text>{item.action}
-   //         </Text>
-   //         <View style={{flexDirection:'row'}}>
-   //           <TouchableOpacity>
-   //             <View style={styles.editButton}>
-   //                <Text style={{color:'white'}}>Accept</Text>
-   //              </View>
-   //            </TouchableOpacity>
-   //            <TouchableOpacity>
-   //              <View style={styles.declineButton}>
-   //                 <Text style={{color:'white',}}>Decline</Text>
-   //               </View>
-   //            </TouchableOpacity>
-   //           </View>
-   //          </View>
-   //       :
-   //       <Text>{item.action}</Text>
-   //     }
-   //
-   //       <Text style={{fontWeight:'bold'}}> {item.date}</Text>
-   //      </View>
-   //    <View style={{flex:0}}>
-   //    <Text style={{color:'#8c8c8c'}}> {item.time}</Text>
-   //    {/*
-   //    <MoreVertical
-   //    style={{top:10}}
-   //      stroke="gray"
-   //      width ={25}
-   //      height = {25}
-   //    />
-   //    */}
-   //
-   //    </View>
-   //   </View>
-   // )
  }
 
 

@@ -398,11 +398,10 @@ class SocialNewsfeedPost extends React.Component{
                           <Heart
                             stroke = "red"
                             fill="red"
-                            width ={32.5}
-                            height = {32.5}
-                            style={{right:2}}
+                            width ={30}
+                            height = {30}
                              />
-                          <Text  style = {styles.videoFooterUserName}>
+                          <Text  style = {styles.statNum}>
                             {like_people.length}
                           </Text>
                         </View>
@@ -421,11 +420,10 @@ class SocialNewsfeedPost extends React.Component{
                           <Heart
                             stroke = "white"
                             fill="white"
-                            width ={32.5}
-                            height = {32.5}
-                            style={{right:2}}
+                            width ={30}
+                            height = {30}
                           />
-                         <Text style = {styles.videoFooterUserName}>
+                         <Text style = {styles.statNum}>
                           {like_people.length}
                         </Text>
                         </View>
@@ -437,13 +435,11 @@ class SocialNewsfeedPost extends React.Component{
                       <View style = {styles.justifyCenter}>
                         <MessageCircle
                           stroke = "white"
-
                           fill="white"
-                          width ={32.5}
-                          height = {32.5}
-                          style={{right:2}}
+                          width ={30}
+                          height = {30}
                         />
-                        <Text style = {styles.videoFooterUserName}>
+                        <Text style = {styles.statNum}>
                           {commentList.length}
                         </Text>
                       </View>
@@ -456,12 +452,12 @@ class SocialNewsfeedPost extends React.Component{
                   <View style = {styles.justifyCenter}>
                     <Navigation2
                       stroke = "white"
-
                       fill="white"
-                      width ={32.5}
-                      height = {32.5}
+                      width ={30}
+                      height = {30}
+                      style={{left:5}}
                        />
-                     <Text style = {styles.videoFooterUserName}>  {userPostImages.length -1}</Text>
+                     <Text style = {styles.statNum}>  {userPostImages.length -1}</Text>
                   </View>
                 </TouchableOpacity>
             </View>
@@ -686,6 +682,18 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
     fontWeight:'bold',
+    // fontWeight:'bold',
+  },
+
+  statNum: {
+    color:'white',
+    fontSize:15,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+    left:5,
     // fontWeight:'bold',
   },
 

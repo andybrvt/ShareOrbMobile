@@ -128,11 +128,13 @@ class Profile extends React.Component{
             style={{flex:1,justifyContent:'center',
              alignItems:'flex-end', padding:20}}>
              <View style={{flexDirection:'row'}}>
+               {/*
                <MessageCircle
                  style={{right:20}}
                  onPress = {() => this.ViewChats()}
                  stroke="black" strokeWidth={2.5} width={25} height={25}/>
-               <Bell
+                 */}
+                  <Bell
                  style={{right:10}}
                  onPress = {() => this.ViewNoti()}
                  stroke="black" strokeWidth={2.5} width={25} height={25}/>

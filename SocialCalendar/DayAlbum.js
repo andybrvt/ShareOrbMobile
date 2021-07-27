@@ -400,7 +400,7 @@ const height = Dimensions.get("window").height
 
                <View style={styles.tagCSS3}>
                  <Edit2
-                   onPress={() => this.editAlbum()}
+                   // onPress={() => this.editAlbum()}
                    stroke = "white"
                    fill="white"
                    width ={30}
