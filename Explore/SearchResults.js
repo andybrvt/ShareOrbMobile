@@ -77,7 +77,9 @@ class SearchResults extends React.Component{
           <View style = {{
               height: 100,
               width: 200,
-              alignItems: 'center'
+              alignItems: 'center',
+              justifyContent: 'center',
+              top:50,
             }}>
             <Search
               stroke = "gainsboro"
@@ -86,15 +88,17 @@ class SearchResults extends React.Component{
               width = {60}
                />
              <Text
-               style ={{color: 'gainsboro'}}
+               style ={{color: 'gainsboro', fontSize:20}}
                >Looking for someone?</Text>
           </View>
 
           :
 
           <View style = {{
+              height: 200,
               width: "100%",
               flex: 1,
+              backgroundColor:'red'
             }}>
             <FlatList
               data = {data}

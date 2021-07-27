@@ -3,7 +3,9 @@ import { Text,
    View,
   Button,
   StyleSheet,
-  TextInput
+  TextInput,
+  TouchableWithoutFeedback,
+
  } from 'react-native';
 import axios from "axios";
 import { ArrowUpCircle, Search, Plus, Menu } from "react-native-feather";
@@ -60,7 +62,7 @@ class SearchBar extends React.Component{
                   // backgroundColor: 'yellow',
                   left:20}}
                 underlineColorAndroid = "transparent"
-                placeholder = "Search Chats"></TextInput>
+                placeholder = "Search"></TextInput>
 
             </View>
           </View>
@@ -68,13 +70,14 @@ class SearchBar extends React.Component{
             this.props.visible ?
 
             <View style = {{
-                width:'20%'
+                width:'17.5%',
+                left:10,
               }}>
-              <Button
-                onPress = {() => this.props.onClose()}
-                color="white"
-                title = "cancel"
-                 />
+              <TouchableWithoutFeedback onPress = {() => this.props.onClose()}>
+                <View style={styles.editButton}>
+                   <Text style={{color:'white',}}>Cancel</Text>
+                 </View>
+             </TouchableWithoutFeedback>
             </View>
 
             : null
@@ -91,12 +94,27 @@ class SearchBar extends React.Component{
 
 
 const styles = StyleSheet.create({
+
+  editButton: {
+
+    alignItems: 'center',
+    paddingVertical: 7.5,
+
+    borderRadius: 5,
+    backgroundColor: '#1890ff',
+
+    alignItems: "center",
+    backgroundColor: "#1890ff",
+    padding: 10
+  },
+
+
   searchText: {
     flexDirection: 'row',
 
-    height: 40,
+    height:37.5,
     backgroundColor: 'whitesmoke',
-    borderRadius: 25,
+    borderRadius: 10,
     shadowOffset:{  width: 0,  height: 2,  },
     shadowColor: 'black',
     shadowOpacity: 0.2,

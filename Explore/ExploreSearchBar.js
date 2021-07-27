@@ -46,7 +46,7 @@ class ExploreSearchBar extends React.Component{
             position: "absolute",
             width: '100%',
             height: 60,
-            backgroundColor: "#1890ff",
+    
             // backgroundColor: "white",
             transform:[
               // {translateY: translateY}
