@@ -119,14 +119,14 @@ class Profile extends React.Component{
     return (
       <BackgroundContainer>
         <View style={styles.viewStyle}>
-          <View style={{flex:1, justifyContent:'center'}}>
+          <View style={{flex:1, justifyContent:'center', top:10}}>
             <Text style={styles.textStyle}>{this.props.username}</Text>
           </View>
 
           <View
 
             style={{flex:1,justifyContent:'center',
-             alignItems:'flex-end', padding:20}}>
+             alignItems:'flex-end', padding:15}}>
              <View style={{flexDirection:'row'}}>
                {/*
                <MessageCircle
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     // backgroundColor:'red',
 
 
-    height:50,
+    height:30,
     paddingTop:0,
     flexDirection:'row',
 

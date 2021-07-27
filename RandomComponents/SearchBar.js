@@ -43,7 +43,7 @@ class SearchBar extends React.Component{
             */}
 
           <View style = {{
-              width: this.props.visible ? '75%' : '90%',
+              width: this.props.visible ? '75%' : '95%',
             }}>
 
             <View style = {styles.searchText}>
@@ -54,6 +54,7 @@ class SearchBar extends React.Component{
                 icon={faSearch} />
 
               <TextInput
+                autoCapitalize={false}
                 value = {this.props.value}
                 onChangeText = {this.props.onChange}
                 onFocus = {() => this.props.onOpen()}
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
 
     height:37.5,
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#f0f0f0',
     borderRadius: 10,
     shadowOffset:{  width: 0,  height: 2,  },
     shadowColor: 'black',

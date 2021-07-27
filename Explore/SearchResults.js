@@ -88,7 +88,7 @@ class SearchResults extends React.Component{
               width = {60}
                />
              <Text
-               style ={{color: 'gainsboro', fontSize:20}}
+               style ={{color: 'gainsboro', fontSize:18}}
                >Looking for someone?</Text>
           </View>
 
@@ -98,7 +98,7 @@ class SearchResults extends React.Component{
               height: 200,
               width: "100%",
               flex: 1,
-              backgroundColor:'red'
+
             }}>
             <FlatList
               data = {data}

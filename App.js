@@ -291,6 +291,9 @@ class App extends Component{
     return(
 
       <TopTab.Navigator
+        screenOptions={{
+          headerShown: false
+        }}
         swipeEnabled={true}
         tabBarPosition="top"
         backBehavior = "history"

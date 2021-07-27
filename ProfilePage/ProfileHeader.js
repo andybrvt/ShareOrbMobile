@@ -165,7 +165,7 @@ class ProfileHeader extends React.Component{
 
               </View>
 
-              <View style={{flex:1.5,justifyContent:'center', marginLeft:30}}>
+              <View style={{flex:1.5,justifyContent:'center', marginLeft:30, }}>
                 <Text style = {styles.name}>{name}</Text>
                 <Text style = {styles.username}>@{username}</Text>
                 {
