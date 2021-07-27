@@ -61,3 +61,5 @@ export const NEW_NOTIFICATION = 'NEW_NOTIFICATION';
 // this has to do with the colab album
 export const FETCH_COLAB_ALBUM = "FETCH_COLAB_ALBUM";
 export const UNFETCH_COLAB_ABLUM = "UNFETCH_COLAB_ABLUM";
+export const FETCH_TIMELINE_COLAB = "FETCH_TIMELINE_COLAB";
+export const FETCH_EXPIRING_COLAB = "FETCH_EXPIRING_COLAB";

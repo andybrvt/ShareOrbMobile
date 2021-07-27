@@ -3,7 +3,9 @@ import { updateObject } from "../utility";
 
 
 const initialState = {
-  curColabAlbum: {}
+  curColabAlbum: {},
+  expiring: [],
+  timeLine: []
 }
 
 const fetchColabAlbum = (state, action) => {
@@ -18,12 +20,28 @@ const unfetchColabAlbum = (state, action) => {
   })
 }
 
+const fetchTimeLineColab = (state, action) => {
+  return updateObject(state, {
+    timeLine: action.albums
+  })
+}
+
+const fetchExpiringColab = (state, action) => {
+  return updateObject(state, {
+    expiring: action.albums
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.FETCH_COLAB_ALBUM:
       return fetchColabAlbum(state, action);
     case actionTypes.UNFETCH_COLAB_ALBUM:
       return unfetchColabAlbum(state, action);
+    case actionTypes.FETCH_TIMELINE_COLAB:
+      return fetchTimeLineColab(state, action);
+    case actionTypes.FETCH_EXPIRING_COLAB:
+      return fetchExpiringColab(state, action);
     default:
       return state;
   }
