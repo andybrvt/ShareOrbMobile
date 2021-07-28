@@ -92,6 +92,7 @@ class Login extends React.Component{
           <View style = {styles.inputHolders}>
             <View style = {styles.inputHolder}>
               <TextInput
+                autoCapitalize="none"
                 onChangeText = {this.handleUserName}
                 style = {styles.inputBox}
                 placeholder = "Username"
@@ -101,6 +102,7 @@ class Login extends React.Component{
 
             <View style = {styles.inputHolder}>
               <TextInput
+                autoCapitalize="none"
                 secureTextEntry={true}
                 onChangeText = {this.handlePasword}
                 style = {styles.inputBox}

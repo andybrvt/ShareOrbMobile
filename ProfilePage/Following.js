@@ -18,15 +18,13 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
    }
 
    selectItem(item) {
-
      this.props.navigation.navigate("ProfilePage", {
        username: item.username
      })
    }
 
    renderItem = ({item}) => {
-
-
+     let userFollowing=this.props.following
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
@@ -47,12 +45,18 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                 </View>
              </View>
              {/*
+
+             {    userFollowing.includes(item.id) ?
+
+               ''
+               :
                <View style={{flex:0.5, justifyContent:"center"}}>
                  <View style={styles.editButton}>
                     <Text style={{color:'white',}}>Follow</Text>
                   </View>
                </View>
-               */}
+          }
+          */}
 
           </View>
          </View>
@@ -69,6 +73,9 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
          data = this.props.profile.get_following
        }
      }
+     console.log(data)
+     console.log("LLLLLLLLLLLLLLLLLLLL")
+     console.log(this.props.following)
      return (
        <BackgroundContainer>
          <View >

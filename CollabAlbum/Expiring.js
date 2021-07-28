@@ -163,6 +163,7 @@ const height = Dimensions.get('window').height
             albums.length === 0 ?
 
             <ScrollView
+              style={{position:'relative', top:'50%'}}
               showsVerticalScrollIndicator = {false}
               refreshControl = {
                 <RefreshControl
@@ -171,21 +172,19 @@ const height = Dimensions.get('window').height
                 />
               }
               >
-              <View style = {{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
                 <View style = {{
-                    alignItems: 'center'
+                    flexDirection:'column',
+                    height:'100%',
+                  }}>
+                <View style = {{
+                    alignItems: 'center',
                   }}>
                   <Folder
                     stroke = "gainsboro"
                      />
-                   <Text style = {{color: 'gainsboro'}}>You have no folders here</Text>
+                   <Text style = {{color: 'gainsboro', fontSize:20}}>No Pending Albums with Friends</Text>
                 </View>
               </View>
-
             </ScrollView>
 
             :

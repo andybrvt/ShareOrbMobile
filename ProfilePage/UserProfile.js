@@ -118,21 +118,9 @@ class UserProfile extends React.Component{
       <BackgroundContainer>
         <View style={styles.viewStyle}>
           <View style={{flex:1, justifyContent:'center'}}>
-            <Text style={styles.textStyle}>{global.CAPITALIZE(username)}</Text>
+            <Text style={styles.textStyle}>{username}</Text>
           </View>
-          <View
-            style={{flex:1,justifyContent:'center',
-             alignItems:'flex-end', padding:20}}>
-              <View style={{flexDirection:'row'}}>
-                <Bell
-                  style={{right:10}}
-                  onPress = {() => this.ViewNoti()}
-                  stroke="black" strokeWidth={2.5} width={25} height={25}/>
-                <UserPlus
-                  onPress = {() => this.ViewProfile()}
-                  stroke="black" strokeWidth={2.5} width={25} height={25}/>
-              </View>
-          </View>
+
         </View>
         <View style = {styles.profileHeader}>
           <ProfileHeader
@@ -193,7 +181,7 @@ const styles = StyleSheet.create({
     // backgroundColor:'red',
 
 
-    height:50,
+    height:30,
     paddingTop:0,
     flexDirection:'row',
 

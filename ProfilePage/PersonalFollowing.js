@@ -12,28 +12,14 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
  class PersonalFollowing extends React.Component{
 
-   onHomeNav = () => {
-     // this function will be use to navigate back
-     // to the home page
-   }
 
    selectItem(item) {
-
-     this.props.navigation.navigate("ViewProfile");
-     {/*}
-     this.props.navigation.navigate("MessageFriend",
-       {
-         chatPersonName:this.getChatUserName(item.participants),
-         chatUserName:item.participants[1].username,
-         chatPersonProfilePic: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants),
-         }
-     );
-     */}
+     this.props.navigation.navigate("ProfilePage", {
+       username: item.username
+     })
    }
 
    renderItem = ({item}) => {
-
-
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
@@ -53,14 +39,14 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                   <Text style = {styles.chatText}> {item.first_name+" "+item.last_name} </Text>
                 </View>
              </View>
-             {/*
+
                <View style={{flex:0.5, justifyContent:"center"}}>
 
                  <View style={styles.editButton}>
                     <Text style={{color:'white',}}>Follow</Text>
                   </View>
                </View>
-               */}
+
 
           </View>
          </View>
@@ -77,6 +63,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
          data = this.props.profile.get_following
        }
      }
+  
      return (
        <BackgroundContainer>
          <View >

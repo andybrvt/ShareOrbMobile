@@ -27,8 +27,8 @@ class AlbumHome extends React.Component{
   state = {
     index: 0,
     routes: [
-      { key: 'first', title: 'With Friends' },
-      { key: 'second', title: 'Expiring' },
+      { key: 'first', title: 'Shared Albums' },
+      { key: 'second', title: 'Pending' },
     ],
   };
 
