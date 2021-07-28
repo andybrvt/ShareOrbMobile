@@ -25,6 +25,7 @@ import * as ImagePicker from 'expo-image-picker';
 import FriendPickModal from './FriendPickModal';
 import { connect } from 'react-redux';
 import  authAxios from '../util';
+import { Avatar } from 'react-native-elements';
 import * as colabAlbumActions from '../store/actions/colabAlbum';
 
 
@@ -74,12 +75,16 @@ class CreateAlbum extends React.Component{
   }
 
 
-  addToInviteList = (username) => {
-    const newList = [...this.state.invitedPeople, username]
-
+  addToInviteList = (username, profile_picture) => {
+    console.log("START")
+    let temp={"username":username, "profile_picture":profile_picture}
+    console.log(temp)
+    const newList = [...this.state.invitedPeople, temp]
     this.setState({
       invitedPeople: newList
     })
+    console.log("DONEEEE")
+
   }
 
   handleChoosePhoto = async() => {
@@ -225,12 +230,20 @@ class CreateAlbum extends React.Component{
                   flexWrap: 'wrap'
                 }}>
                 {invitedPeople.map((people,index) => {
+
                   return(
                     <View
                       key = {index}
                       >
+                      <Avatar
+                        size={40}
+                        rounded
+                        source = {{
+                          uri: `${global.IMAGE_ENDPOINT}`+people.profile_picture
+                        }}
+                      />
                       <Text>
-                        {people}
+                        {people.username}
                       </Text>
                     </View>
                   )

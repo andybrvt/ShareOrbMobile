@@ -79,16 +79,10 @@ class Login extends React.Component{
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
         <View
           style = {styles.background}>
-
            <StatusBar style="auto" />
-
            <View style = {styles.logo}>
              <MainLogo height = {100}  width = {200} />
-
-
            </View>
-
-
           <View style = {styles.inputHolders}>
             <View style = {styles.inputHolder}>
               <TextInput
@@ -99,7 +93,6 @@ class Login extends React.Component{
                 value = {this.state.username}
                 />
             </View>
-
             <View style = {styles.inputHolder}>
               <TextInput
                 autoCapitalize="none"
@@ -110,9 +103,6 @@ class Login extends React.Component{
                 value = {this.state.password}
                 />
             </View>
-
-
-
           </View>
 
           <View style ={{
@@ -125,30 +115,22 @@ class Login extends React.Component{
                style = {styles.loginBtn}>
               <Text style = {styles.loginText}> Login</Text>
             </TouchableOpacity>
-
             <View style= {{
                 marginTop: 20,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center"}}>
-
               <Button
                 onPress = {() =>this.props.navigation.navigate('Signup')}
                  title = "Sign up" />
             </View>
-
           </View>
-
-
         </View>
       </TouchableWithoutFeedback>
-
-
-
     )
-
   }
 }
+
 
 const mapStateToProps = state => {
   // you get the token here

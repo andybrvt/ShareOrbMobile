@@ -9,25 +9,25 @@ import * as dateFns from 'date-fns';
 // global.WS_HEADER = "ws"
 
 // Ping ethernet house
-// global.IP_CHANGE="http://192.168.1.206:19000"
-// global.IMAGE_ENDPOINT = "http://192.168.1.206:19000"
-// global.WS_ENDPOINT = "192.168.1.206:19000"
-// global.WS_HEADER = "ws"
-// global.POSTLIST_SPEC = 'http://192.168.1.206:19000/media/'
+global.IP_CHANGE="http://192.168.1.206:19000"
+global.IMAGE_ENDPOINT = "http://192.168.1.206:19000"
+global.WS_ENDPOINT = "192.168.1.206:19000"
+global.WS_HEADER = "ws"
+global.POSTLIST_SPEC = 'http://192.168.1.206:19000/media/'
 
 // Ping house
-// global.IP_CHANGE="http://172.17.0.1:19000"
-// global.IMAGE_ENDPOINT = "http://172.17.0.1:19000"
-// global.WS_ENDPOINT = "172.17.0.1:19000"
+// global.IP_CHANGE="http://172.17.0.1:19001"
+// global.IMAGE_ENDPOINT = "http://172.17.0.1:19001"
+// global.WS_ENDPOINT = "172.17.0.1:19001"
 // global.WS_HEADER = "ws"
-// global.POSTLIST_SPEC = 'http://172.17.0.1:19000/media/'
+// global.POSTLIST_SPEC = 'http://172.17.0.1:19001/media/'
 
 // andy house
-global.IP_CHANGE = "http://192.168.1.24:19000"
-global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
-global.WS_ENDPOINT = "192.168.1.24:19000"
-global.POSTLIST_SPEC = 'http://192.168.1.24:19000/media/'
-global.WS_HEADER = "ws"
+// global.IP_CHANGE = "http://192.168.1.24:19000"
+// global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
+// global.WS_ENDPOINT = "192.168.1.24:19000"
+// global.POSTLIST_SPEC = 'http://192.168.1.24:19000/media/'
+// global.WS_HEADER = "ws"
 
 
 // Andy hot spoot
