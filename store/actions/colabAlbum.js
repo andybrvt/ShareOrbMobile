@@ -36,3 +36,10 @@ export const fetchExpiringColab = (albums) => {
   }
 
 }
+
+export const updateExpiringColab = (album) => {
+  return{
+    type: actionTypes.UPDATE_EXPIRING_COLAB,
+    album: album
+  }
+}

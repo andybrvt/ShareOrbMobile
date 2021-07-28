@@ -11,6 +11,7 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Modal,
   Keyboard
  } from 'react-native';
@@ -24,6 +25,7 @@ import * as ImagePicker from 'expo-image-picker';
 import FriendPickModal from './FriendPickModal';
 import { connect } from 'react-redux';
 import  authAxios from '../util';
+import * as colabAlbumActions from '../store/actions/colabAlbum';
 
 
 const width=SCREEN_WIDTH;
@@ -123,9 +125,12 @@ class CreateAlbum extends React.Component{
     authAxios.post(`${global.IP_CHANGE}/colabAlbum/createColabAlubm`,
       formData
     ).then( res =>{
-      
-    }
+      // Probally run redux here to update albums
+      this.props.updateExpiringColab(res.data)
+      }
     )
+
+    this.props.navigation.goBack(0);
 
   }
 
@@ -167,136 +172,144 @@ class CreateAlbum extends React.Component{
 
      return (
        <BackgroundContainer>
-         <View style={styles.action}>
+         <TouchableWithoutFeedback
+           onPress = {() => Keyboard.dismiss()}
+           >
 
-            <TextInput
-             placeholder="Describe your album"
-             autoCapitalize="sentences"
-             numberOfLines={2}
-             placeholderTextColor="#d9d9d9"
-             autoCorrect={false}
-             style={[
-               styles.textInput,
+           <View>
+             <View style={styles.action}>
 
-             ]}
-             onChangeText = {this.handleCaptionChange}
-             value = {caption}
-           />
+                <TextInput
+                 placeholder="Describe your album"
+                 autoCapitalize="sentences"
+                 numberOfLines={2}
+                 placeholderTextColor="#d9d9d9"
+                 autoCorrect={false}
+                 style={[
+                   styles.textInput,
 
-         </View>
+                 ]}
+                 onChangeText = {this.handleCaptionChange}
+                 value = {caption}
+               />
+
+             </View>
 
 
-          <View style={styles.action2}>
-            <View style = {{
-              marginTop:25,
-             flexDirection: 'row',
-             minHeight:50,
-             left:10,
-             padding:10,
-              }}>
-              <Users stroke="black" strokeWidth={2.5} width={20} height={20} />
-              <View style={{width:'70%'}}>
-                <Text style={[
-                   styles.bioInput,
-                   ]}>
-                   <Text>Invite Friends</Text>
-                </Text>
-              </View>
-            <TouchableOpacity onPress={() => this.showInvite()}>
-              <View style={styles.editButton}>
-                 <Text style={{color:'#595959',}}>Invite</Text>
-               </View>
-           </TouchableOpacity>
+              <View style={styles.action2}>
+                <View style = {{
+                  marginTop:25,
+                 flexDirection: 'row',
+                 minHeight:50,
+                 left:10,
+                 padding:10,
+                  }}>
+                  <Users stroke="black" strokeWidth={2.5} width={20} height={20} />
+                  <View style={{width:'70%'}}>
+                    <Text style={[
+                       styles.bioInput,
+                       ]}>
+                       <Text>Invite Friends</Text>
+                    </Text>
+                  </View>
+                <TouchableOpacity onPress={() => this.showInvite()}>
+                  <View style={styles.editButton}>
+                     <Text style={{color:'#595959',}}>Invite</Text>
+                   </View>
+               </TouchableOpacity>
 
-            </View>
-
-          <View style = {{
-              flexDirection: 'row',
-              flexWrap: 'wrap'
-            }}>
-            {invitedPeople.map((people,index) => {
-              return(
-                <View
-                  key = {index}
-                  >
-                  <Text>
-                    {people}
-                  </Text>
                 </View>
-              )
-            })}
-          </View>
-         </View>
+
+              <View style = {{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap'
+                }}>
+                {invitedPeople.map((people,index) => {
+                  return(
+                    <View
+                      key = {index}
+                      >
+                      <Text>
+                        {people}
+                      </Text>
+                    </View>
+                  )
+                })}
+              </View>
+             </View>
 
 
-         <View style={styles.action3}>
-             {this.state.isEnabled?
-           <Unlock stroke="black" strokeWidth={2.5} width={20} height={20} />
-           :
-             <Lock stroke="black" strokeWidth={2.5} width={20} height={20} />
-           }
-           <View style={{width:'72.5%'}}>
-             <Text style={[
-                styles.bioInput,
-                ]}>
-                {this.state.isEnabled?
-                  <Text style={styles.headerFont}>Public</Text>
-                :
-                <Text style={styles.headerFont}>Private</Text>
-                 }
-             </Text>
+             <View style={styles.action3}>
+                 {this.state.isEnabled?
+               <Unlock stroke="black" strokeWidth={2.5} width={20} height={20} />
+               :
+                 <Lock stroke="black" strokeWidth={2.5} width={20} height={20} />
+               }
+               <View style={{width:'72.5%'}}>
+                 <Text style={[
+                    styles.bioInput,
+                    ]}>
+                    {this.state.isEnabled?
+                      <Text style={styles.headerFont}>Public</Text>
+                    :
+                    <Text style={styles.headerFont}>Private</Text>
+                     }
+                 </Text>
+               </View>
+
+                  <Switch
+                    style={{ transform: [{ scaleX:  moderateScale(1, 0.2) }, { scaleY:
+        moderateScale(1, 0.2) }] }}
+                   trackColor={{ false: "#767577", true: "#81b0ff" }}
+                   thumbColor={this.state.isEnabled ? "#1890ff" : "#f4f3f4"}
+                   ios_backgroundColor="#3e3e3e"
+                   onValueChange={this.toggleSwitch}
+                   value={this.state.isEnabled}
+                 ></Switch>
+             </View>
+             <View style={{alignItems:'center', top:'12.5%'}}>
+                <Text style={{fontSize:18, bottom:30}}>Cover Pic</Text>
+                {
+                  this.state.coverPic === "" ?
+
+                  <View style={styles.bigImageContainer}>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress = {this.handleChoosePhoto}
+                      style = {styles.addSmallImage}>
+                      <PlusCircle
+                        height = {50}
+                        width = {50}
+                        stroke = "lightgray"
+                        fill= "white" />
+
+                    </TouchableOpacity>
+                  </View>
+
+                  :
+
+
+                    <TouchableOpacity
+                      onPress = {this.handleChoosePhoto}
+
+                       style = {styles.bigImageContainer} >
+                      <Image
+                        style = {styles.smallImage}
+                        resizeMode = "cover"
+                        source = {{
+                          uri: this.state.coverPic
+                        }}
+                         />
+                    </TouchableOpacity>
+
+
+                }
+
+             </View>
            </View>
 
-              <Switch
-                style={{ transform: [{ scaleX:  moderateScale(1, 0.2) }, { scaleY:
-    moderateScale(1, 0.2) }] }}
-               trackColor={{ false: "#767577", true: "#81b0ff" }}
-               thumbColor={this.state.isEnabled ? "#1890ff" : "#f4f3f4"}
-               ios_backgroundColor="#3e3e3e"
-               onValueChange={this.toggleSwitch}
-               value={this.state.isEnabled}
-             ></Switch>
-         </View>
-         <View style={{alignItems:'center', top:'12.5%'}}>
-            <Text style={{fontSize:18, bottom:30}}>Cover Pic</Text>
-            {
-              this.state.coverPic === "" ?
-
-              <View style={styles.bigImageContainer}>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress = {this.handleChoosePhoto}
-                  style = {styles.addSmallImage}>
-                  <PlusCircle
-                    height = {50}
-                    width = {50}
-                    stroke = "lightgray"
-                    fill= "white" />
-
-                </TouchableOpacity>
-              </View>
-
-              :
-
-
-                <TouchableOpacity
-                  onPress = {this.handleChoosePhoto}
-
-                   style = {styles.bigImageContainer} >
-                  <Image
-                    style = {styles.smallImage}
-                    resizeMode = "cover"
-                    source = {{
-                      uri: this.state.coverPic
-                    }}
-                     />
-                </TouchableOpacity>
-
-
-            }
-
-         </View>
-         <FriendPickModal
+         </TouchableWithoutFeedback>
+          <FriendPickModal
            visible = {this.state.showInvite}
            onClose = {this.closeInvite}
            action = {this.addToInviteList}
@@ -318,6 +331,12 @@ const mapStateToProps = state => {
     username: state.auth.username
   }
 
+}
+
+const mapDispatchToProps = dispatch =>{
+  return{
+    updateExpiringColab: (album) => dispatch(colabAlbumActions.updateExpiringColab(album))
+  }
 }
 
 
@@ -416,4 +435,4 @@ const styles = StyleSheet.create({
    },
  })
 
-export default connect(mapStateToProps, null)(CreateAlbum);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAlbum);

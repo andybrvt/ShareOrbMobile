@@ -116,6 +116,10 @@ const height = Dimensions.get('window').height
 
      const timeLeft = this.timeLeft(item.created_at)
 
+     let coverPic = item.coverPic;
+     if(!coverPic.includes(global.IMAGE_ENDPOINT)){
+       coverPic = global.IMAGE_ENDPOINT + item.coverPic
+     }
      return(
        <View style={{
            width:'100%',
@@ -128,7 +132,7 @@ const height = Dimensions.get('window').height
            <ImageBackground
              style={styles.expiringImageLook}
              source = {{
-               uri: item.coverPic
+               uri: coverPic
              }}>
              <View style={styles.child}></View>
 
@@ -156,6 +160,8 @@ const height = Dimensions.get('window').height
      if(this.props.expiring){
        albums = this.props.expiring;
      }
+
+     console.log(albums)
      return (
        <View style={{
            flex: 1,

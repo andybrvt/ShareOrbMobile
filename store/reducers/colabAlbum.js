@@ -33,6 +33,12 @@ const fetchExpiringColab = (state, action) => {
   })
 }
 
+const updateExpiringColab = (state, action) => {
+  return updateObject(state, {
+    expiring: [...state.expiring, action.album]
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.FETCH_COLAB_ALBUM:
@@ -43,6 +49,8 @@ const reducer = (state = initialState, action) => {
       return fetchTimeLineColab(state, action);
     case actionTypes.FETCH_EXPIRING_COLAB:
       return fetchExpiringColab(state, action);
+    case actionTypes.UPDATE_EXPIRING_COLAB:
+      return updateExpiringColab(state, action);
     default:
       return state;
   }
