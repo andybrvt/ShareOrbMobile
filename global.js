@@ -8,12 +8,19 @@ import * as dateFns from 'date-fns';
 // global.POSTLIST_SPEC = 'http://10.3.0.116:19000/media/'
 // global.WS_HEADER = "ws"
 
+// Ping ethernet house
+// global.IP_CHANGE="http://192.168.1.206:19000"
+// global.IMAGE_ENDPOINT = "http://192.168.1.206:19000"
+// global.WS_ENDPOINT = "192.168.1.206:19000"
+// global.WS_HEADER = "ws"
+// global.POSTLIST_SPEC = 'http://192.168.1.206:19000/media/'
 
-global.IP_CHANGE="http://192.168.1.205:19002"
-global.IMAGE_ENDPOINT = "http://192.168.1.205:19002"
-global.WS_ENDPOINT = "192.168.1.205:19002"
+// Ping house
+global.IP_CHANGE="http://172.17.0.1:19000"
+global.IMAGE_ENDPOINT = "http://172.17.0.1:19000"
+global.WS_ENDPOINT = "172.17.0.1:19000"
 global.WS_HEADER = "ws"
-global.POSTLIST_SPEC = 'http://192.168.1.205:19002/media/'
+global.POSTLIST_SPEC = 'http://172.17.0.1:19000/media/'
 
 // andy house
 // global.IP_CHANGE = "http://192.168.1.24:19000"

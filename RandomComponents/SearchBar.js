@@ -54,7 +54,7 @@ class SearchBar extends React.Component{
                 icon={faSearch} />
 
               <TextInput
-                autoCapitalize={false}
+                autoCapitalize="none"
                 value = {this.props.value}
                 onChangeText = {this.props.onChange}
                 onFocus = {() => this.props.onOpen()}
