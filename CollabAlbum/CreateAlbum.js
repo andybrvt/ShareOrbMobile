@@ -76,15 +76,19 @@ class CreateAlbum extends React.Component{
 
 
   addToInviteList = (username, profile_picture) => {
-    console.log("START")
     let temp={"username":username, "profile_picture":profile_picture}
-    console.log(temp)
-    const newList = [...this.state.invitedPeople, temp]
-    this.setState({
-      invitedPeople: newList
-    })
-    console.log("DONEEEE")
-
+    if(this.state.invitedPeople.some(item => temp["username"] == item["username"])){
+      const newList = this.state.invitedPeople.filter(function(el) { return el.username != temp["username"] });
+      this.setState({
+        invitedPeople: newList
+      })
+    }
+    else{
+      const newList = [...this.state.invitedPeople, temp]
+      this.setState({
+        invitedPeople: newList
+      })
+    }
   }
 
   handleChoosePhoto = async() => {
@@ -227,12 +231,13 @@ class CreateAlbum extends React.Component{
 
               <View style = {{
                   flexDirection: 'row',
-                  flexWrap: 'wrap'
+
                 }}>
                 {invitedPeople.map((people,index) => {
 
                   return(
                     <View
+                      style={{left:35}}
                       key = {index}
                       >
                       <Avatar

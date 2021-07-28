@@ -106,9 +106,9 @@ class FriendPickModal extends React.Component{
                   }}>
                   {this.props.invitedPeople.map((people,index) => {
                     return(
-                      <View style={{right:10}}>
+
                       <View
-                        style={{marginLeft:20}}
+                        style={{marginLeft:35}}
                         key = {index}
                         >
                         <Avatar
@@ -119,11 +119,11 @@ class FriendPickModal extends React.Component{
                             uri: `${global.IMAGE_ENDPOINT}`+people.profile_picture
                           }}
                         />
-                        <Text>
+                      <Text style={{fontSize:13}}>
                           {people.username}
                         </Text>
                       </View>
-                      </View>
+
                     )
                   })}
                 </View>
