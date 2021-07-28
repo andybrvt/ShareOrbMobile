@@ -24,6 +24,7 @@ import { connect } from 'react-redux';
 import * as colabAlbumActions from '../store/actions/colabAlbum';
 import * as ImagePicker from 'expo-image-picker';
 import  authAxios from '../util';
+import * as dateFns from 'date-fns';
 
 
 const width=SCREEN_WIDTH;
@@ -219,12 +220,31 @@ class PicAlbum extends React.Component{
 
   };
 
+  checkPostable = (date) => {
+    // this function will check if the album
+    // is still valid to post
+    let postable = true;
+
+    const threshold = dateFns.subHours(new Date(), 24);
+    if(dateFns.isBefore(new Date(date), threshold)){
+      postable = false;
+    }
+    return postable;
+  }
+
+
+
    render(){
 
      let currentAlbum = [];
+     let created_at = new Date();
      if(this.props.colabAlbum){
        if(this.props.colabAlbum.get_colabItems){
           currentAlbum = this.props.colabAlbum.get_colabItems
+       }
+
+       if(this.props.colabAlbum.created_at){
+         created_at = this.props.colabAlbum.created_at;
        }
 
      }
@@ -283,28 +303,46 @@ class PicAlbum extends React.Component{
 
 
            */}
+           {
+             finalAlbum.length === 0 ?
 
-           <FlatList
-             data = {finalAlbum}
-             renderItem = {this.renderItem}
-             numColumns = {3}
-             keyExtractor={(item, index) => String(index)}
+             <View>
+               <Text> there is no photos here </Text>
+             </View>
 
-              />
+             :
+             <FlatList
+               data = {finalAlbum}
+               renderItem = {this.renderItem}
+               numColumns = {3}
+               keyExtractor={(item, index) => String(index)}
+
+                />
+
+           }
 
 
-            <TouchableOpacity
-              onPress = {() => this.handleChoosePhoto()}
-              >
-              <View style = {{
-                  backgroundColor: '#1890ff',
-                  alignSelf: 'center',
-                  padding: 15,
-                  borderRadius: 15
-                }}>
-                <Text style = {{color:'white'}}>Add pictures here</Text>
-              </View>
-            </TouchableOpacity>
+
+            {
+              this.checkPostable(created_at) ?
+
+              <TouchableOpacity
+                onPress = {() => this.handleChoosePhoto()}
+                >
+                <View style = {{
+                    backgroundColor: '#1890ff',
+                    alignSelf: 'center',
+                    padding: 15,
+                    borderRadius: 15
+                  }}>
+                  <Text style = {{color:'white'}}>Add pictures here</Text>
+                </View>
+              </TouchableOpacity>
+
+              : null
+            }
+
+
 
 
 
