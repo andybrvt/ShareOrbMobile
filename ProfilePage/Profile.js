@@ -61,7 +61,6 @@ class Profile extends React.Component{
 	const component = this;
 	setTimeout(
 		function(){
-			console.log(ExploreWebSocketInstance.state())
 			if (ExploreWebSocketInstance.state() === 1){
 				console.log('connection is secure');
 				callback();

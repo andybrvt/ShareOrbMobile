@@ -16,20 +16,20 @@ import * as dateFns from 'date-fns';
 // global.POSTLIST_SPEC = 'http://192.168.1.200:19002/media/'
 
 // andy house
-// global.IP_CHANGE = "http://192.168.1.24:19000"
-// global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
-// global.WS_ENDPOINT = "192.168.1.24:19000"
-// global.POSTLIST_SPEC = 'http://192.168.1.24:19000/media/'
-// global.WS_HEADER = "ws"
+global.IP_CHANGE = "http://192.168.1.24:19000"
+global.IMAGE_ENDPOINT = "http://192.168.1.24:19000"
+global.WS_ENDPOINT = "192.168.1.24:19000"
+global.POSTLIST_SPEC = 'http://192.168.1.24:19000/media/'
+global.WS_HEADER = "ws"
 
 
 // Andy hot spoot
 
-global.IP_CHANGE = "http://172.20.10.2:19000"
-global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
-global.WS_ENDPOINT = "172.20.10.2:19000"
-global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
-global.WS_HEADER = "ws"
+// global.IP_CHANGE = "http://172.20.10.2:19000"
+// global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
+// global.WS_ENDPOINT = "172.20.10.2:19000"
+// global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
+// global.WS_HEADER = "ws"
 
 // global.IP_CHANGE = "https://api.shareorb.com"
 // global.IMAGE_ENDPOINT = ""

@@ -17,25 +17,22 @@ export const unfetchColabAlbum = () => {
   }
 }
 
-export const fetchTimeLineColab = () => {
-  authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getAlbums')
-  .then(res => {
+export const fetchTimeLineColab = (albums) => {
 
-    return {
-      type: actionTypes.FETCH_TIMELINE_COLAB,
-      albums: res.data
-    }
+  return {
+    type: actionTypes.FETCH_TIMELINE_COLAB,
+    albums: albums
+  }
 
 
-  })
+
 }
 
-export const fetchExpiringColab = () => {
-  authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getLiveAlbums')
-  .then(res => {
-    return {
-      type: actionTypes.FETCH_EXPIRING_COLAB,
-      albums: res.data
-    }
-  })
+export const fetchExpiringColab = (albums) => {
+
+  return {
+    type: actionTypes.FETCH_EXPIRING_COLAB,
+    albums: albums
+  }
+
 }

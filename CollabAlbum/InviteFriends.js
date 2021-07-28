@@ -68,7 +68,6 @@ class InviteFriends extends React.Component{
         search
       }
     }).then(res => {
-      console.log(res.data)
       this.setState({
         loading: false,
         searched: res.data,

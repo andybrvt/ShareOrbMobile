@@ -170,7 +170,6 @@ class PostingPage extends React.Component{
    componentWillUnmount(){
      //This will be run when the transition starts, from the animation
 
-     console.log("unmount here")
      if(this.submit === true){
        this.props.finalPostModal()
        // Now you will submit
@@ -550,7 +549,6 @@ class PostingPage extends React.Component{
     const adjY = this.adjustLoc(y)
 
     this.curPicIndex = this.getOrder(x,adjY);
-    console.log(this.getOrder(x,adjY))
     this.setState({
        dragging: true,
        draggingIndex: this.curPicIndex

@@ -19,7 +19,6 @@ class ProfileHeader extends React.Component{
 
 
   editPageClick() {
-    console.log(this.props.profile.bio)
     this.props.navigation.navigate("EditProfile",
     {
 
@@ -66,7 +65,6 @@ class ProfileHeader extends React.Component{
 
     if(followingLength === 0){
 
-      console.log('hit this here')
         // if the person doesn't have any followers already
         //  you wanna rerun so that newsfeed shows up
         WebSocketSocialNewsfeedInstance.fetchSocialPost(
@@ -133,7 +131,6 @@ class ProfileHeader extends React.Component{
             this.props.profile.get_followers[i].username
           )
         }
-        console.log(followers)
 
       }
 

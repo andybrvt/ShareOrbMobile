@@ -21,6 +21,7 @@ import FacePile from 'react-native-face-pile';
 import authAxios from '../util';
 import * as dateFns from 'date-fns';
 import { Folder } from "react-native-feather";
+import { connect } from 'react-redux';
 
 
 const height = Dimensions.get('window').height
@@ -126,8 +127,8 @@ const FACES = [
    render(){
 
      const{albums} = this.state;
-
-
+     console.log('is timeLine')
+     console.log(this.props.timeLine)
      return (
        <View style={{
           flex: 1,
@@ -252,5 +253,10 @@ const FACES = [
    },
  })
 
+const mapStateToProps = state => {
+  return{
+    timeLine: state.colabAlbum.timeLine
+  }
+}
 
- export default Timeline;
+ export default connect(mapStateToProps, null)(Timeline);

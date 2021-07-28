@@ -234,7 +234,6 @@ import * as exploreActions from '../store/actions/explore';
     authAxios.put(`${global.IP_CHANGE}/userprofile/profile/update/`+userId,
       data,
     ).then(res => {
-      console.log(res.data)
       const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
 
       const profileInfo = {
@@ -267,7 +266,6 @@ import * as exploreActions from '../store/actions/explore';
        data,
      ).then(res => {
 
-      console.log(res.data)
       const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
       this.props.changeProfilePicAuth(pic)
 

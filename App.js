@@ -77,6 +77,7 @@ import DayAlbum from './SocialCalendar/DayAlbum.js';
 import Test from './PostingFolder/Test';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useScrollToTop } from '@react-navigation/native';
+import authAxios from './util';
 
 import * as dateFns from 'date-fns';
 
@@ -170,6 +171,21 @@ class App extends Component{
       // grab the userinfromation
       this.props.grabUserCredentials()
       if(parseInt(this.props.id) !== parseInt(prevProps.id) && this.props.id !== null && this.props.username !== null){
+
+        authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getLiveAlbums')
+        .then(res => {
+
+          this.props.fetchExpiringColab(res.data);
+
+        })
+
+        authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getAlbums')
+        .then(res => {
+
+          this.props.fetchTimeLineColab(res.data);
+
+
+        })
         // Now this will see if there is a person logged in
         // Now if you want to connect to the chat,
         // since there is an inital connection you have to disconnect it
@@ -743,7 +759,9 @@ const mapDispatchToProps = dispatch => {
     setNotifications: notifications => dispatch(notificationsActions.setNotifications(notifications)),
     newNotification: notification => dispatch(notificationsActions.newNotification(notification)),
 
-    fetchColabAlbum: album => dispatch(colabAlbumActions.fetchColabAlbum(album))
+    fetchColabAlbum: album => dispatch(colabAlbumActions.fetchColabAlbum(album)),
+    fetchTimeLineColab: (albums) => dispatch(colabAlbumActions.fetchTimeLineColab(albums)),
+    fetchExpiringColab: (albums) => dispatch(colabAlbumActions.fetchExpiringColab(albums))
   }
 }
 

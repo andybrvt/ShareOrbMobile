@@ -276,7 +276,6 @@ class SocialNewsfeedPost extends React.Component{
         userUsername = this.props.data.post.socialCalUser.username
         firstName = this.props.data.post.socialCalUser.first_name
         lastName = this.props.data.post.socialCalUser.last_name
-        console.log(firstName, lastName)
       }
 
       if(this.props.data.post.socialCaldate) {
@@ -333,7 +332,6 @@ class SocialNewsfeedPost extends React.Component{
             >
             <View style = {styles.container}>
               <GestureRecognizer
-                onPress = {() => console.log("hiioi")}
                 onSwipe={(direction, state) => this.onSwipe(direction, state)}
                 config={{
                    velocityThreshold: 0.3,
@@ -536,7 +534,6 @@ class SocialNewsfeedPost extends React.Component{
     let lastName=""
     let userId = ""
     let actionText = ""
-    console.log(this.props.data.post)
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post

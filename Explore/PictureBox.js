@@ -40,7 +40,6 @@ class PictureBox extends React.Component{
 
     let cellId = 0;
     let username = '';
-    console.log(this.props.cell)
     if(this.props.cell){
       if(this.props.cell.id){
         cellId = this.props.cell.id

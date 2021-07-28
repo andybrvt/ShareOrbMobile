@@ -175,8 +175,7 @@ class PicAlbum extends React.Component{
 
 
   renderItem = ({ item, index }) => {
-    console.log('in render items')
-    console.log(item)
+
     // if (item.empty === true) {
     //   return <View style={[styles.item, styles.itemInvisible]} />;
     // }
@@ -222,7 +221,6 @@ class PicAlbum extends React.Component{
 
    render(){
 
-     console.log(this.props)
      let currentAlbum = [];
      if(this.props.colabAlbum){
        if(this.props.colabAlbum.get_colabItems){

@@ -122,8 +122,9 @@ class CreateAlbum extends React.Component{
     formData.append('coverPic', newPic)
     authAxios.post(`${global.IP_CHANGE}/colabAlbum/createColabAlubm`,
       formData
-    ).then( res =>
-      console.log(res.data)
+    ).then( res =>{
+      
+    }
     )
 
   }

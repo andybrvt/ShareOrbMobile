@@ -21,6 +21,7 @@ import FacePile from 'react-native-face-pile';
 import authAxios from '../util';
 import * as dateFns from 'date-fns';
 import { Folder } from "react-native-feather";
+import { connect } from 'react-redux';
 
 
 const FACES = [
@@ -151,7 +152,8 @@ const height = Dimensions.get('window').height
 
    render(){
      const {albums} = this.state;
-
+     console.log('in expiring')
+     console.log(this.props.expiring)
      return (
        <View style={{
            flex: 1,
@@ -275,5 +277,11 @@ const height = Dimensions.get('window').height
    },
  })
 
+ const mapStateToProps = state => {
+   return{
+     expiring: state.colabAlbum.expiring
+   }
+ }
 
- export default Expiring;
+
+export default connect(mapStateToProps, null)(Expiring);
