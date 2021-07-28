@@ -126,9 +126,11 @@ const FACES = [
 
    render(){
 
-     const{albums} = this.state;
-     console.log('is timeLine')
-     console.log(this.props.timeLine)
+     let albums = [];
+     if(this.props.timeLine){
+       albums = this.props.timeLine
+     }
+
      return (
        <View style={{
           height:'100%',

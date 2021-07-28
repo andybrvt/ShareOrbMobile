@@ -151,9 +151,11 @@ const height = Dimensions.get('window').height
    }
 
    render(){
-     const {albums} = this.state;
-     console.log('in expiring')
-     console.log(this.props.expiring)
+
+     let albums = [];
+     if(this.props.expiring){
+       albums = this.props.expiring;
+     }
      return (
        <View style={{
            flex: 1,
