@@ -41,7 +41,8 @@ class CreateAlbum extends React.Component{
       caption:'',
       coverPic: '',
       showInvite: false,
-      invitedPeople: []
+      invitedPeople: [],
+      invitedUsername: []
     }
   }
 
@@ -72,6 +73,8 @@ class CreateAlbum extends React.Component{
       caption: e
     })
 
+    this.checkReady()
+
   }
 
 
@@ -89,6 +92,9 @@ class CreateAlbum extends React.Component{
         invitedPeople: newList
       })
     }
+
+    this.checkReady()
+
   }
 
   handleChoosePhoto = async() => {
@@ -114,6 +120,9 @@ class CreateAlbum extends React.Component{
       })
     }
 
+    this.checkReady()
+
+
 
   }
 
@@ -121,8 +130,13 @@ class CreateAlbum extends React.Component{
     Keyboard.dismiss();
     // this function will be used to save the album
     const {caption, invitedPeople, coverPic} = this.state
-
-    const newInvited = [...invitedPeople, this.props.username]
+    let newInvited = [];
+    for(let i = 0; i < invitedPeople.length; i++){
+      newInvited.push(
+        invitedPeople[i].username
+      )
+    }
+    newInvited.push(this.props.username)
 
     const newPic = global.FILE_NAME_GETTER(coverPic)
 
@@ -160,24 +174,42 @@ class CreateAlbum extends React.Component{
     )
   }
 
+  checkReady = () => {
+    const {caption, invitedPeople, coverPic} = this.state
+
+    if(
+      caption !== "" &&
+      invitedPeople.length !== 0 &&
+      coverPic !== ""
+    ){
+      this.props.navigation.setOptions({
+        headerRight:() => this.renderSave()
+      })
+    } else {
+      this.props.navigation.setOptions({
+        headerRight:null
+      })
+    }
+  }
+
 
    render(){
      const {caption, invitedPeople, coverPic} = this.state
+     console.log(invitedPeople)
 
-
-     if(
-       caption !== "" &&
-       invitedPeople.length !== 0 &&
-       coverPic !== ""
-     ){
-       this.props.navigation.setOptions({
-         headerRight:() => this.renderSave()
-       })
-     } else {
-       this.props.navigation.setOptions({
-         headerRight:null
-       })
-     }
+     // if(
+     //   caption !== "" &&
+     //   invitedPeople.length !== 0 &&
+     //   coverPic !== ""
+     // ){
+     //   this.props.navigation.setOptions({
+     //     headerRight:() => this.renderSave()
+     //   })
+     // } else {
+     //   this.props.navigation.setOptions({
+     //     headerRight:null
+     //   })
+     // }
 
      return (
        <BackgroundContainer>
