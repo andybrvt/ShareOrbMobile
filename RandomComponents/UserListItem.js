@@ -31,11 +31,13 @@ class UserListItem extends React.Component{
 
     return(
       <TouchableOpacity
-        onPress = {() => this.props.action(item.username)}
+        onPress = {() => this.props.action(item.username, item.profile_picture)}
         >
         <View style={{
+            top:10,
+            
            flexDirection:'row',
-           padding:15}}>
+           padding:10}}>
           <View style={{flex:1}}>
             <Avatar
               size={40}
@@ -46,7 +48,6 @@ class UserListItem extends React.Component{
             />
           </View>
         <View style={{
-
             flex:6,
             flexDirection:'column',
             }}>
@@ -54,8 +55,6 @@ class UserListItem extends React.Component{
             <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.first_name, item.last_name, 20)} </Text>
           </View>
           <Text>{item.username}</Text>
-
-
 
         </View>
       </View>

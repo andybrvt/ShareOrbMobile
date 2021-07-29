@@ -17,10 +17,10 @@ import {
   FlatList
 } from 'react-native';
 import ExploreSearchBar from '../Explore/ExploreSearchBar';
-import { Search, ChevronLeft } from "react-native-feather";
+import { Search, ChevronLeft, ArrowLeft } from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import UserListItem from '../RandomComponents/UserListItem';
-
+import { Avatar } from 'react-native-elements';
 class FriendPickModal extends React.Component{
 
   state = {
@@ -66,10 +66,9 @@ class FriendPickModal extends React.Component{
                      }}
                      onPress = {this.props.onClose}
                      >
-                     <ChevronLeft
-                       height = {45}
-                       width = {45}
-                       />
+                     <ArrowLeft
+                       style={{left:10}}
+                       stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
 
                    </TouchableOpacity>
                    <View style = {{
@@ -94,7 +93,7 @@ class FriendPickModal extends React.Component{
                            // backgroundColor: 'yellow',
                            left:20}}
                          // underlineColorAndroid = "transparent"
-                         placeholder = "Search Chats"
+                         placeholder = "Search People"
                          />
 
                      </View>
@@ -104,17 +103,27 @@ class FriendPickModal extends React.Component{
 
                 <View style = {{
                     flexDirection: 'row',
-                    flexWrap: 'wrap'
                   }}>
                   {this.props.invitedPeople.map((people,index) => {
                     return(
+
                       <View
+                        style={{marginLeft:35}}
                         key = {index}
                         >
-                        <Text>
-                          {people}
+                        <Avatar
+
+                          size={40}
+                          rounded
+                          source = {{
+                            uri: `${global.IMAGE_ENDPOINT}`+people.profile_picture
+                          }}
+                        />
+                      <Text style={{fontSize:13}}>
+                          {people.username}
                         </Text>
                       </View>
+
                     )
                   })}
                 </View>
@@ -127,7 +136,6 @@ class FriendPickModal extends React.Component{
                     data = {this.props.following}
                     renderItem = {(item) => this.renderItem(item)}
                     keyExtractor={(item, index) => String(index)}
-
                      />
                 </View>
               </View>
@@ -144,10 +152,9 @@ class FriendPickModal extends React.Component{
 const styles = StyleSheet.create({
   searchText: {
     flexDirection: 'row',
-
-    height: 40,
-    backgroundColor: 'whitesmoke',
-    borderRadius: 25,
+    height:37.5,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
     shadowOffset:{  width: 0,  height: 2,  },
     shadowColor: 'black',
     shadowOpacity: 0.2,
