@@ -9,11 +9,11 @@ import * as dateFns from 'date-fns';
 // global.WS_HEADER = "ws"
 
 // Ping ethernet house
-global.IP_CHANGE="http://192.168.1.206:19000"
-global.IMAGE_ENDPOINT = "http://192.168.1.206:19000"
-global.WS_ENDPOINT = "192.168.1.206:19000"
-global.WS_HEADER = "ws"
-global.POSTLIST_SPEC = 'http://192.168.1.206:19000/media/'
+// global.IP_CHANGE="http://192.168.1.206:19000"
+// global.IMAGE_ENDPOINT = "http://192.168.1.206:19000"
+// global.WS_ENDPOINT = "192.168.1.206:19000"
+// global.WS_HEADER = "ws"
+// global.POSTLIST_SPEC = 'http://192.168.1.206:19000/media/'
 
 // Ping house
 // global.IP_CHANGE="http://172.17.0.1:19001"

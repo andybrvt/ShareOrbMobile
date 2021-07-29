@@ -147,7 +147,8 @@ const changeProfileInfoAuth = (state, action) => {
   return updateObject(state, {
     profilePic: action.profileInfo.profile_picture,
     firstName: action.profileInfo.first_name,
-    username: action.profileInfo.username
+    username: action.profileInfo.username,
+    bio: action.profileInfo.bio
   })
 }
 

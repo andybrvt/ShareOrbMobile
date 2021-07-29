@@ -9,7 +9,7 @@ import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
-import { Tag, Bookmark, Bell, Search, ChevronRight, Settings
+import { Tag, Bookmark, Search, ChevronRight, Settings
   ,MessageCircle, UserPlus} from "react-native-feather";
 
 
@@ -127,17 +127,8 @@ class Profile extends React.Component{
             style={{flex:1,justifyContent:'center',
              alignItems:'flex-end', padding:15}}>
              <View style={{flexDirection:'row'}}>
-               {/*
-               <MessageCircle
-                 style={{right:20}}
-                 onPress = {() => this.ViewChats()}
-                 stroke="black" strokeWidth={2.5} width={25} height={25}/>
-                 */}
-                  <Bell
-                 style={{right:10}}
-                 onPress = {() => this.ViewNoti()}
-                 stroke="black" strokeWidth={2.5} width={25} height={25}/>
-               <UserPlus
+
+               <Settings
                  onPress = {() => this.ViewProfile()}
                  stroke="black" strokeWidth={2.5} width={25} height={25}/>
              </View>
@@ -174,7 +165,7 @@ const mapStateToProps = state => {
     profilePic: state.auth.profilePic,
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,
-    bio: state.auth.bio ,
+    bio: state.auth.bio,
   }
 }
 

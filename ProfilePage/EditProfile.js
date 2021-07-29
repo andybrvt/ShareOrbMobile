@@ -36,22 +36,13 @@ import * as exploreActions from '../store/actions/explore';
  class EditProfile extends React.Component{
 
 
-   goBioPage(item) {
-
-     this.props.navigation.navigate("EditBio",
-     {
-       bio:this.props.route.params.bio,
+   goBioPage() {
+     let bio = this.props.bio;
+     if(bio === null){
+       bio = ""
      }
-   );
-     {/*}
-     this.props.navigation.navigate("MessageFriend",
-       {
-         chatPersonName:this.getChatUserName(item.participants),
-         chatUserName:item.participants[1].username,
-         chatPersonProfilePic: `${global.IMAGE_ENDPOINT}`+this.getChatUserProfile(item.participants),
-         }
-     );
-     */}
+     this.props.navigation.navigate("EditBio");
+
    }
 
 
@@ -154,7 +145,6 @@ import * as exploreActions from '../store/actions/explore';
        // this is if you pick out a picture
        // in this case you will just change the picture right away
 
-       console.log('choose picture here')
        this.uploadProfileImage(pickerResult.uri);
 
      }
@@ -331,26 +321,16 @@ import * as exploreActions from '../store/actions/explore';
 
 
    render(){
-     // let firstName='';
-     // let lastName='';
-     // let username='';
+
      let profilePic = '';
      if(this.props.profile_picture){
        profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profile_picture
      }
 
      const {firstName, lastName, username} = this.state
-     // if(this.props.firstName){
-     //   firstName = this.props.firstName
-     // }
-     // if(this.props.lastName){
-     //   lastName = this.props.lastName
-     // }
-     // if(this.props.username){
-     //   username = this.props.username
-     // }
 
-
+     console.log('edit profile')
+     console.log(this.props)
      return (
        <BackgroundContainer>
          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -452,9 +432,9 @@ import * as exploreActions from '../store/actions/explore';
              ]}>
 
              {
-                 (this.props.route.params.bio)?
+                 (this.props.bio)?
                  <Text>
-                   {this.props.route.params.bio}
+                   {this.props.bio}
                  </Text>
                  :
                  <Text>Bio</Text>
