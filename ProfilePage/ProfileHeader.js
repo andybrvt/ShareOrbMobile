@@ -101,14 +101,14 @@ class ProfileHeader extends React.Component{
     let fulfollowing = []
     let profileId = 0
 
+    console.log(this.props.profile)
     if(this.props.profile){
       if(this.props.profile.profile_picture){
         profileImage = `${global.IMAGE_ENDPOINT}`+this.props.profile.profile_picture
       }
-      if(this.props.profile.first_name && this.props.profile.last_name){
+      if(this.props.profile.first_name){
         const firstName = global.CAPITALIZE(this.props.profile.first_name)
-        const lastName = global.CAPITALIZE(this.props.profile.last_name)
-        name = firstName +' '+lastName
+        name = firstName
       }
       if(this.props.profile.username){
         username = this.props.profile.username
@@ -140,6 +140,7 @@ class ProfileHeader extends React.Component{
 
       }
     }
+    console.log(name)
 
     return (
     <View style={{

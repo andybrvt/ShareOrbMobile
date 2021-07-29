@@ -154,6 +154,7 @@ import * as exploreActions from '../store/actions/explore';
        // this is if you pick out a picture
        // in this case you will just change the picture right away
 
+       console.log('choose picture here')
        this.uploadProfileImage(pickerResult.uri);
 
      }
@@ -250,8 +251,10 @@ import * as exploreActions from '../store/actions/explore';
 
 
 
+
    uploadProfileImage(imageUri){
 
+     console.log('it goes here')
      let userId = ""
      if(this.props.userId){
         userId = this.props.userId
@@ -260,15 +263,22 @@ import * as exploreActions from '../store/actions/explore';
      var data = new FormData();
 
      const filePackage = global.FILE_NAME_GETTER(imageUri)
-     data.append('profile_picture', filePackage)
+     console.log(filePackage)
 
+     data.append('profile_picture', filePackage)
+     data.append('username', this.props.username)
      authAxios.put(`${global.IP_CHANGE}/userprofile/profile/update/`+userId,
        data,
+       {headers: {"content-type": "multipart/form-data"}}
+
      ).then(res => {
 
       const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
       this.props.changeProfilePicAuth(pic)
 
+     })
+     .catch(err => {
+       console.log(err)
      })
    }
 

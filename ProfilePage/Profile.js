@@ -118,7 +118,7 @@ class Profile extends React.Component{
     return (
       <BackgroundContainer>
         <View style={styles.viewStyle}>
-          <View style={{flex:1, justifyContent:'center', top:10}}>
+          <View style={{top: 10,flex:1, justifyContent:'center', paddingLeft: 10}}>
             <Text style={styles.textStyle}>{this.props.username}</Text>
           </View>
 
@@ -213,7 +213,6 @@ const styles = StyleSheet.create({
     // elevation:4
   },
   textStyle:{
-    padding:15,
     fontSize:20,
     fontWeight:'bold',
     justifyContent:'flex-start',

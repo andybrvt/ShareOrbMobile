@@ -108,10 +108,13 @@ class Header extends React.Component{
               onPress = {() => this.props.navigation.navigate("PostingPage")}
               style={{right:40}}
               stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
-            <MessageCircle
-              onPress = {() => this.props.navigation.navigate("Messages")}
-              style={{right:25}}
-              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+            {/*
+              <MessageCircle
+                onPress = {() => this.props.navigation.navigate("Messages")}
+                style={{right:25}}
+                stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+              */}
+
             <TouchableOpacity onPress = {() => this.props.navigation.navigate("Notifications")}>
             <Bell
               style={{right:10}}
