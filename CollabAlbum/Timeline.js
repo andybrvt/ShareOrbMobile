@@ -137,19 +137,11 @@ const FACES = [
          }} >
          {
            albums.length === 0 ?
-           <ScrollView
-             style={{position:'relative', top:'50%'}}
-             showsVerticalScrollIndicator = {false}
-             refreshControl = {
-               <RefreshControl
-                 refreshing={this.state.refreshing}
-                 onRefresh={this.onRefresh}
-               />
-             }
-             >
+
                <View style = {{
                    flexDirection:'column',
                    height:'100%',
+                   top:'50%'
                  }}>
                <View style = {{
                    alignItems: 'center',
@@ -160,7 +152,6 @@ const FACES = [
                   <Text style = {{color: 'gainsboro', fontSize:20}}>No Shared Albums with Friends</Text>
                </View>
              </View>
-           </ScrollView>
 
 
            :
