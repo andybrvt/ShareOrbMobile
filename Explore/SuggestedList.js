@@ -45,7 +45,8 @@ class SuggestedList extends React.Component{
     const cells = this.props.cells
 
     const y = this.props.y;
-
+    console.log('here are the cells')
+    console.log(cells)
 
     return(
       <Animated.View style = {styles.exploreTheDayContainer}>
@@ -62,10 +63,11 @@ class SuggestedList extends React.Component{
           scrollEventThrottle = {16} // important for animation
           data = {cells}
           renderItem = {this.renderPost}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item, index) => String(index)}
           numColumns = {2}
           showsVerticalScrollIndicator={false}
-
+          onEndReachedThreshold = {0.5}
+          onEndReached = {this.props.loadMore}
            />
 
 

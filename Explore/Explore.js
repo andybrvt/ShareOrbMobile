@@ -52,7 +52,10 @@ class Explore extends React.Component{
      showSearch: false,
      searched: [],
      searchValue: "",
-     loading: false
+     loading: false,
+     start: 0,
+     addMore: 6,
+     hasMore: true
      };
   }
 
@@ -68,17 +71,34 @@ class Explore extends React.Component{
   componentDidMount(){
     // so you want to pull the information here like all the trending
     // social cal cell and people
-    axios.get(`${global.IP_CHANGE}`+'/mySocialCal/trendingDay')
+    // axios.get(`${global.IP_CHANGE}`+'/mySocialCal/trendingDay')
+    // .then( res => {
+    //   this.setState({
+    //     trendingCells: res.data
+    //   })
+    // })
+    const {start, addMore} = this.state;
+    const end = start + addMore
+    axios.get(`${global.IP_CHANGE}/mySocialCal/exploreDay/`+start+'/'+end)
     .then( res => {
       this.setState({
-        trendingCells: res.data
+          exploreCells:res.data,
+          start: start+ addMore
       })
     })
+  }
 
-    axios.get(`${global.IP_CHANGE}/mySocialCal/exploreDay`)
+  loadMore= ()=>{
+    const {start, addMore, exploreCells} = this.state;
+    const end = start+ addMore;
+    axios.get(`${global.IP_CHANGE}/mySocialCal/exploreDay/`+start+'/'+end)
     .then( res => {
+
+      console.log(res.data)
+
       this.setState({
-          exploreCells: res.data
+          exploreCells: exploreCells.concat(res.data),
+          start: start+addMore
       })
     })
   }
@@ -206,6 +226,7 @@ class Explore extends React.Component{
             :
 
             <SuggestedList
+              loadMore = {this.loadMore}
               navigation = {this.props.navigation}
               y = {this.y}
               cells = {exploreCells}

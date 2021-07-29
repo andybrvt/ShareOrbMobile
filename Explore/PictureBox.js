@@ -15,7 +15,7 @@ const dimensions = Dimensions.get('window');
 const imageHeight = Math.round(dimensions.width * 11 / 16);
 const imageWidth = dimensions.width*0.50;
 
-class PictureBox extends React.Component{
+class PictureBox extends React.PureComponent{
 
   onPostDirect = cellId => {
     this.props.navigation.navigate("DayAlbum",{
