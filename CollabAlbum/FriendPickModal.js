@@ -52,7 +52,6 @@ class FriendPickModal extends React.Component{
 
               <View style = {{flex: 1}}>
                 <View style = {{
-
                     height: 60,
                     justifyContent: 'center',
                     flexDirection: 'row',
@@ -95,10 +94,8 @@ class FriendPickModal extends React.Component{
                          // underlineColorAndroid = "transparent"
                          placeholder = "Search People"
                          />
-
                      </View>
                    </View>
-
                 </View>
 
                 <View style = {{
@@ -106,9 +103,8 @@ class FriendPickModal extends React.Component{
                   }}>
                   {this.props.invitedPeople.map((people,index) => {
                     return(
-
                       <View
-                        style={{marginLeft:35}}
+                        style={{marginLeft:25}}
                         key = {index}
                         >
                         <Avatar

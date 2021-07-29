@@ -324,6 +324,7 @@ class NewSocialMonth extends React.PureComponent{
           } else {
             days.push(
               <View
+                onPress = {() => this.props.navigation.navigate("PostingPage")}
                 key = {i}
                 style = {[styles.monthCell, dateFns.isSameDay(day, new Date()) ?
                   styles.selected : null
@@ -332,8 +333,8 @@ class NewSocialMonth extends React.PureComponent{
                   dateFns.isSameMonth(day, curMonth) ?
 
                   <Text style = {{
-                      color: 'black',
-                      fontWeight: 'bold'
+
+
                     }}> {formattedDate}</Text>
 
                   :
@@ -443,7 +444,7 @@ const styles = StyleSheet.create({
   },
   selected: {
     borderWidth: 1,
-    // backgroundColor: 'blue'
+    backgroundColor: 'blue'
   },
   noImageCell: {
     width: Math.round(Dimensions.get('window').width/8),

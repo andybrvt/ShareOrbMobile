@@ -241,16 +241,19 @@ class CreateAlbum extends React.Component{
                       key = {index}
                       >
                       <Avatar
-                        size={40}
+                        size={35}
                         rounded
                         source = {{
                           uri: `${global.IMAGE_ENDPOINT}`+people.profile_picture
                         }}
                       />
-                      <Text>
-                        {people.username}
-                      </Text>
-                    </View>
+                      {/*
+                        <Text>
+                          {people.username}
+                        </Text>
+                      */}
+                  </View>
+
                   )
                 })}
               </View>
@@ -293,7 +296,7 @@ class CreateAlbum extends React.Component{
                   <View style={styles.bigImageContainer}>
                     <TouchableOpacity
                       activeOpacity={0.6}
-                      onPress = {this.handleChoosePhoto}
+                      onPress = {() => this.handleChoosePhoto()}
                       style = {styles.addSmallImage}>
                       <PlusCircle
                         height = {50}
@@ -308,7 +311,7 @@ class CreateAlbum extends React.Component{
 
 
                     <TouchableOpacity
-                      onPress = {this.handleChoosePhoto}
+                      onPress = {() => this.handleChoosePhoto()}
 
                        style = {styles.bigImageContainer} >
                       <Image
@@ -385,11 +388,10 @@ const styles = StyleSheet.create({
    bigImageContainer:{
      width: Math.round(SCREEN_WIDTH/3)*coverScale,
      height: Math.round(SCREEN_WIDTH/3)*coverScale,
-     // backgroundColor:'red',
-     overflow:"hidden",
+
      alignItems: 'center',
      justifyContent: "center",
-     position: "absolute",
+     
      shadowColor:'black',
      shadowOffset:{width:0,height:2},
      shadowOpacity:0.2,

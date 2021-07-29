@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import  authAxios from '../util';
-import SocialMonth from './SocialMonth';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 // import Animated, {Easing} from 'react-native-reanimated';
 import NewSocialMonth from './NewSocialMonth';
