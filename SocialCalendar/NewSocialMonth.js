@@ -444,7 +444,6 @@ const styles = StyleSheet.create({
   },
   selected: {
     borderWidth: 1,
-    backgroundColor: 'blue'
   },
   noImageCell: {
     width: Math.round(Dimensions.get('window').width/8),
