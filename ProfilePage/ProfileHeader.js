@@ -101,6 +101,7 @@ class ProfileHeader extends React.Component{
     let fulfollowing = []
     let profileId = 0
 
+    console.log('headers')
     console.log(this.props.profile)
     if(this.props.profile){
       if(this.props.profile.profile_picture){
@@ -114,7 +115,7 @@ class ProfileHeader extends React.Component{
         username = this.props.profile.username
       }
       if(this.props.profile.bio){
-        bio= this.props.profile.bio
+        bio = this.props.profile.bio
       }
       if(this.props.profile.id){
         profileId = this.props.profile.id
@@ -140,7 +141,9 @@ class ProfileHeader extends React.Component{
 
       }
     }
-    console.log(name)
+
+    console.log(' here is the bio ')
+    console.log(bio)
 
     return (
     <View style={{
@@ -245,7 +248,7 @@ class ProfileHeader extends React.Component{
        <View style = {styles.bioContainer}>
          <Text style = {styles.bio}> {bio}</Text>
 
-        </View>
+       </View>
 
         <View style = {styles.streakBubble}>
           <FontAwesomeIcon
@@ -455,7 +458,6 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   bioContainer:{
-    flex:1,
     marginTop: 10,
     alignItems: 'center',
   },
@@ -489,7 +491,6 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   bio: {
-
     fontSize: 15
   }
 });

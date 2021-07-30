@@ -103,7 +103,6 @@ class Profile extends React.Component{
   render(){
 
     const screenWidth = Math.round(Dimensions.get('window').width);
-
     const profile = {
       username: this.props.username,
       profile_picture: this.props.profilePic,
