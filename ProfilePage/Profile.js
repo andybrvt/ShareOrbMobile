@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: 2,
+    flex: 1.5,
   },
   profileHeader: {
     flex: 1,

@@ -205,11 +205,15 @@ class NewSocialMonth extends React.PureComponent{
                     toDoStuff[0].coverPic ?
                       <View>
                         <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
-                          <Image
-                            style = {styles.smallImage}
-                            resizeMode = "cover"
-                            source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
-                            />
+                          <View style={styles.miniBox}>
+                            <Text style = {styles.formatDateImage}> {formattedDate}</Text>
+                            <Image
+                              style = {styles.smallImage}
+                              resizeMode = "cover"
+                              source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
+                              />
+                          </View>
+
                         </TouchableOpacity>
                       </View>
                     :
@@ -226,23 +230,30 @@ class NewSocialMonth extends React.PureComponent{
             days.push(
               <View
                 key = {i}
-                style = {[styles.monthCell, dateFns.isSameDay(day, new Date()) ?
-                  styles.selected : null
+                style = {[styles.monthCell
                 ]}>
-                {
-                  dateFns.isSameMonth(day, curMonth) ?
 
-                  <Text style = {{
-                      color: 'black',
-                      fontWeight: 'bold'
-                    }}> {formattedDate}</Text>
+                <View style = {[dateFns.isSameDay(day, new Date()) ?
+                  styles.currentMiniBox : styles.miniBox
+                ]}>
+                  {
+                    dateFns.isSameMonth(day, curMonth) ?
 
-                  :
+                    <Text style = {{
+                        fontSize:12,
+                        color: 'black',
+                        fontWeight: 'bold'
+                      }}> {formattedDate}</Text>
 
-                  <Text style = {{
-                      color: "#8c8c8c"
-                    }}>{formattedDate}</Text>
-                }
+                    :
+
+                    <Text style = {{
+                        fontSize:12,
+                        color: "#8c8c8c"
+                      }}>{formattedDate}</Text>
+                  }
+
+                  </View>
               </View>
             )
           }
@@ -324,7 +335,7 @@ class NewSocialMonth extends React.PureComponent{
           } else {
             days.push(
               <View
-                onPress = {() => this.props.navigation.navigate("PostingPage")}
+                // onPress = {() => this.props.navigation.navigate("PostingPage")}
                 key = {i}
                 style = {[styles.monthCell, dateFns.isSameDay(day, new Date()) ?
                   styles.selected : null
@@ -403,6 +414,25 @@ export default NewSocialMonth;
 
 
 const styles = StyleSheet.create({
+  miniBox: {
+    backgroundColor:'whitesmoke',
+     width:'92.5%', height:'92.5%',
+      borderRadius:5,
+    alignItems: "center", padding:2
+  },
+  currentMiniBox: {
+    backgroundColor:'#1890ff',
+     width:'92.5%', height:'92.5%',
+      borderRadius:5,
+    alignItems: "center", padding:2
+  },
+  formatDateImage:{
+    position: 'absolute',
+    fontSize:12,
+    color: 'white',
+    fontWeight: 'bold',
+    zIndex:99,
+  },
   centerMonth: {
     alignItems: 'center',
     width: width,
@@ -414,7 +444,7 @@ const styles = StyleSheet.create({
   monthContainer: {
     flexDirection: "column",
     flex: 1,
-    borderBottomWidth: 0.2,
+    // borderBottomWidth: 0.2,
   },
   // This is for the cell
   // So you want the cells to be square so that you
@@ -422,9 +452,13 @@ const styles = StyleSheet.create({
   // and then make it the height
   monthCell: {
     flex: 1,
+
     height: Math.round(Dimensions.get('window').width/7),
     alignItems: "center",
     justifyContent: "center",
+    // backgroundColor:'red',
+
+
     // borderLeftWidth:0.2,
     // borderTopWidth: 0.2,
 
@@ -434,6 +468,7 @@ const styles = StyleSheet.create({
     height: Math.round(Dimensions.get('window').width/7),
     alignItems: "center",
     justifyContent: "center",
+
     // borderLeftWidth:0.2,
     // borderTopWidth: 0.2,
   },
@@ -444,17 +479,19 @@ const styles = StyleSheet.create({
   },
   selected: {
     borderWidth: 1,
-    backgroundColor: 'blue'
+    backgroundColor: '#1890ff'
   },
-  noImageCell: {
-    width: Math.round(Dimensions.get('window').width/8),
-    height: Math.round(Dimensions.get('window').width/8),
-    borderRadius:10,
-  },
+
   smallImage: {
-    width: Math.round(Dimensions.get('window').width/7),
-    height: Math.round(Dimensions.get('window').width/7),
-    borderRadius: 0,
+    width: Math.round(Dimensions.get('window').width/7.5),
+    height: Math.round(Dimensions.get('window').width/7.5),
+    borderRadius:5,
+
+
+    // borderTopWidth: 1,
+    // borderTopColor: '#f2f2f2',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#f2f2f2',
   },
   imageHolder: {
 
