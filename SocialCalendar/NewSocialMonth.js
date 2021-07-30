@@ -439,7 +439,9 @@ const styles = StyleSheet.create({
   },
   monthTitle: {
     paddingTop:10,
-    fontSize:15,
+    fontSize:18,
+    // color:'red',
+    fontWeight:'bold',
   },
   monthContainer: {
     flexDirection: "column",

@@ -174,15 +174,17 @@ const styles = StyleSheet.create({
     backgroundColor:"#1890ff"
   },
   container: {
-    flex: 1,
     marginTop: Constant.statusBarHeight,
     backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: 1.5,
+    flex: 1.7,
   },
   profileHeader: {
+
     flex: 1,
+    top:'1%',
+    // backgroundColor:'red',
     alignItems:'flex-start',
     // left:'12.5%',
     width:'100%',

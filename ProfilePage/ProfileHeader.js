@@ -215,6 +215,7 @@ class ProfileHeader extends React.Component{
 
        <View style = {styles.profileMidContainer}>
          <View style={styles.profileInfoContainer}>
+           {/*
            <View style={styles.followerCount}>
               <TouchableOpacity onPress={() => this.navigateFollowing()}>
                 <View style={{flexDirection:'column', alignItems:'center'}}>
@@ -223,6 +224,7 @@ class ProfileHeader extends React.Component{
                </View>
               </TouchableOpacity>
            </View>
+           */}
            <View style={styles.followerCount}>
               <TouchableOpacity onPress={() => this.navigateFollowing()}>
                 <View style={{flexDirection:'column', alignItems:'center'}}>
@@ -249,7 +251,7 @@ class ProfileHeader extends React.Component{
          <Text style = {styles.bio}> {bio}</Text>
 
        </View>
-
+       {/*
         <View style = {styles.streakBubble}>
           <FontAwesomeIcon
                            style = {{
@@ -260,7 +262,7 @@ class ProfileHeader extends React.Component{
                            icon={faFire} />
           <Text style = {{color:'white'}}> 5</Text>
          </View>
-
+         */}
 
    </View>
 
@@ -408,9 +410,9 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
     paddingVertical: 5,
-
+    width:'90%',
     borderRadius: 5,
-    top:10,
+    top:7.5,
     backgroundColor: '#1890ff',
 
     alignItems: "center",
@@ -455,10 +457,10 @@ const styles = StyleSheet.create({
   profileMidContainer:{
     width:'100%',
     alignItems: 'center',
-    marginTop: 10
+    marginTop: 15
   },
   bioContainer:{
-    marginTop: 10,
+    marginTop: 20,
     alignItems: 'center',
   },
   profileInfoContainer: {
