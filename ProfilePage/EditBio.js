@@ -45,6 +45,7 @@ class EditBio extends React.Component{
   }
 
   onHandleSaveBio = () => {
+
     // console.log('save stuff here')
     const userId = this.props.userId
     const username = this.props.username
@@ -64,7 +65,10 @@ class EditBio extends React.Component{
       }
 
       this.props.changeProfileInfoAuth(profileInfo);
+
+      this.props.navigation.navigate("Profile")
     })
+
   }
 
   renderSave = () => (
