@@ -10,7 +10,7 @@ import { Text,
 import * as dateFns from 'date-fns';
 import DayAlbum from './DayAlbum';
 import  authAxios from '../util';
-
+import * as Animatable from 'react-native-animatable';
 
 const width = Dimensions.get("window").width
 
@@ -46,7 +46,6 @@ class NewSocialMonth extends React.PureComponent{
     const dateRange = this.grabDateRange()
 
     if(this.props.userId !== 'undefined' && this.props.userId !== ""){
-      console.log('componentDidMount')
       this.getSocialCells(dateRange.start, dateRange.end)
       .then(data => {
         this.setState({
@@ -65,77 +64,52 @@ class NewSocialMonth extends React.PureComponent{
 
     if(this.props !== prevProps){
       if(this.props.month !== prevProps.month){
-
         if(this.props.userId !== ""){
-
           const dateRange = this.grabDateRange()
           this.getSocialCells(dateRange.start, dateRange.end)
           .then(data => {
-
             this.setState({
               socialCells: data
             })
-
           })
-
         }
-
       } else if(this.props.userId !== "") {
 
         const dateRange = this.grabDateRange()
         this.getSocialCells(dateRange.start, dateRange.end)
         .then(data => {
-
           this.setState({
             socialCells: data
           })
-
         })
-
       }
-
-
-
     }
-
-
   }
 
   grabDateRange(){
     // this function is used to get the end range of the month
     const curMonth = new Date(this.props.year, this.props.month, 1);
-
     const start = dateFns.startOfMonth(curMonth)
     const end = dateFns.endOfMonth(curMonth)
-
     const startDate = dateFns.startOfWeek(start)
     const endDate = dateFns.endOfWeek(end)
-
     const diffWeeks = dateFns.differenceInCalendarWeeks(endDate, startDate)
-
     if(diffWeeks === 4 ){
       // increase the range by a week
       const newEndDate = dateFns.addWeeks(endDate, 1);
       const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
       const formatEnd = dateFns.format(newEndDate, 'yyyy-MM-dd')
-
       return {start: formatStart, end: formatEnd}
-
     } else {
       const formatStart = dateFns.format(startDate, 'yyyy-MM-dd')
       const formatEnd = dateFns.format(endDate, 'yyyy-MM-dd')
-
       return {start: formatStart, end: formatEnd}
     }
-
   }
 
 
   getSocialCells(start, end){
-
     const userId = this.props.userId;
-
-
     return authAxios.get(`${global.IP_CHANGE}/mySocialCal/filterCells/`+userId+"/"+ start+`/`+end)
     .then(res => {
       return res.data
@@ -145,22 +119,14 @@ class NewSocialMonth extends React.PureComponent{
   initializedMonth = (month, year, cells) => {
 
     const curMonth = new Date(year, month, 1);
-
-
     const start = dateFns.startOfMonth(curMonth)
     const end = dateFns.endOfMonth(curMonth)
-
     const startDate = dateFns.startOfWeek(start)
     const endDate = dateFns.endOfWeek(end)
-
     const diffWeeks = dateFns.differenceInCalendarWeeks(endDate, startDate)
-
     const dateFormat = "d";
-
     const rows = [];
-
     const items = []
-
     let toDoStuff = [];
     let days = [];
     let day = startDate;
@@ -169,15 +135,10 @@ class NewSocialMonth extends React.PureComponent{
     if(diffWeeks === 4){
       // only 5 weeks then you will add another week
       while(day <= dateFns.addWeeks(endDate, 1)){
-
-
         for(let i = 0; i< 7; i++){
-
           for(let item = 0; item < cells.length; item++){
-
             const date = new Date(cells[item].socialCaldate)
             const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
-
             if(dateFns.isSameDay(utc, day)){
               toDoStuff.push(
                 cells[item]
@@ -185,13 +146,9 @@ class NewSocialMonth extends React.PureComponent{
             }
           }
 
-
-
           formattedDate = dateFns.format(day, dateFormat);
           const cloneDay = day;
-
           if(toDoStuff.length > 0){
-
             let info = toDoStuff[0]
             days.push(
               <View
@@ -199,7 +156,6 @@ class NewSocialMonth extends React.PureComponent{
                 style = {[styles.monthPicCell, dateFns.isSameDay(day, new Date()) ?
                   styles.selected : null
                 ]}>
-
                 <View style = {styles.imageHolder}>
                   {
                     toDoStuff[0].coverPic ?
@@ -217,52 +173,63 @@ class NewSocialMonth extends React.PureComponent{
                         </TouchableOpacity>
                       </View>
                     :
-
                       <Text> {formattedDate}</Text>
-
                     }
                 </View>
-
               </View>
             )
-
           } else {
             days.push(
               <View
                 key = {i}
                 style = {[styles.monthCell
                 ]}>
-
-                <View style = {[dateFns.isSameDay(day, new Date()) ?
-                  styles.currentMiniBox : styles.miniBox
-                ]}>
+                {
+                  (dateFns.isSameDay(day, new Date()))?
+                  <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
+                    style = {styles.currentMiniBox}>
+                  <View>
+                    {
+                      dateFns.isSameMonth(day, curMonth) ?
+                      <Text style = {{
+                          fontSize:12,
+                          color: 'black',
+                          fontWeight: 'bold'
+                        }}> {formattedDate}</Text>
+                      :
+                      <Text style = {{
+                          fontSize:12,
+                          color: "#8c8c8c"
+                        }}>{formattedDate}</Text>
+                    }
+                    </View>
+                    </TouchableOpacity>
+                  :
+                  <View onPress = {() => this.props.navigation.navigate("PostingPage")}
+                    style = {styles.miniBox}>
+                  <View>
                   {
                     dateFns.isSameMonth(day, curMonth) ?
-
                     <Text style = {{
                         fontSize:12,
                         color: 'black',
                         fontWeight: 'bold'
                       }}> {formattedDate}</Text>
-
                     :
-
                     <Text style = {{
                         fontSize:12,
                         color: "#8c8c8c"
                       }}>{formattedDate}</Text>
                   }
-
                   </View>
+                  </View>
+                }
               </View>
             )
           }
-
           toDoStuff = []
           day = dateFns.addDays(day, 1);
-
         }
-
 
         rows.push(
           <View
@@ -271,46 +238,30 @@ class NewSocialMonth extends React.PureComponent{
               {days}
           </View>
         )
-
         days = []
-
       }
-
-
     } else if(diffWeeks === 5){
       while(day <= endDate){
-
-
         for(let i = 0; i< 7; i++){
-
-
           for(let item = 0; item < cells.length; item++){
-
-          //   // check if it fits into the day
-          //
             const date = new Date(cells[item].socialCaldate)
             const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
-
             if(dateFns.isSameDay(utc, day)){
               toDoStuff.push(
                 cells[item]
               )
             }
           }
-
           formattedDate = dateFns.format(day, dateFormat);
           const cloneDay = day;
-
           if(toDoStuff.length > 0){
-
             days.push(
               <View
                 key = {i}
-                style = {[styles.monthPicCell, dateFns.isSameDay(day, new Date()) ?
-                  styles.selected : null
+                style = {[styles.monthPicCell]}>
+                <View style = {[dateFns.isSameDay(day, new Date()) ?
+                  styles.currentMiniBox : styles.miniBox
                 ]}>
-
-                <View style = {styles.imageHolder}>
                   {
                     toDoStuff[0].coverPic ?
                       <View>
@@ -323,31 +274,21 @@ class NewSocialMonth extends React.PureComponent{
                         </TouchableOpacity>
                       </View>
                     :
-
                       <Text> {formattedDate}</Text>
-
                     }
                 </View>
-
               </View>
             )
-
           } else {
             days.push(
               <View
                 // onPress = {() => this.props.navigation.navigate("PostingPage")}
                 key = {i}
-                style = {[styles.monthCell, dateFns.isSameDay(day, new Date()) ?
-                  styles.selected : null
-                ]}>
+                style = {[styles.monthCell]}>
                 {
                   dateFns.isSameMonth(day, curMonth) ?
-
                   <Text style = {{
-
-
                     }}> {formattedDate}</Text>
-
                   :
 
                   <Text style = {{
@@ -357,12 +298,9 @@ class NewSocialMonth extends React.PureComponent{
               </View>
             )
           }
-
           toDoStuff = []
           day = dateFns.addDays(day, 1);
-
         }
-
 
         rows.push(
           <View
@@ -371,47 +309,30 @@ class NewSocialMonth extends React.PureComponent{
               {days}
           </View>
         )
-
         days = []
-
       }
-
     }
-
-
     return (
       <Text style = {styles.monthContainer}> {rows}</Text>
-
     )
-
-
   }
 
   render(){
     const month = new Date(this.props.year, this.props.month, 1);
-
     const formatMonth = dateFns.format(month, 'MMMM yyyy');
     const {socialCells} = this.state;
     return(
-
       <View style = {styles.centerMonth}>
-
           <Text style = {styles.monthTitle}>
             {formatMonth}
           </Text>
           {this.initializedMonth(this.props.month, this.props.year, socialCells)}
-
-
-
-
       </View>
-
     )
   }
 }
 
 export default NewSocialMonth;
-
 
 const styles = StyleSheet.create({
   miniBox: {
@@ -496,8 +417,5 @@ const styles = StyleSheet.create({
     // borderBottomColor: '#f2f2f2',
   },
   imageHolder: {
-
   }
-
-
 })
