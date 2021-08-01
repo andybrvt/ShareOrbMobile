@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   profileHeader: {
 
     flex: 1,
-    top:'1%',
+    top:'0%',
     // backgroundColor:'red',
     alignItems:'flex-start',
     // left:'12.5%',

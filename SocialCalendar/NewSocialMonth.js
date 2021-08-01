@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     width: width,
   },
   monthTitle: {
-    paddingTop:10,
+    top:20,
     fontSize:18,
     // color:'red',
     fontWeight:'bold',
