@@ -310,7 +310,7 @@ const height = Dimensions.get("window").height
          console.log(dateFns.isSameDay(utc, new Date()))
          let dataList=this.props.socialCalCell.socialCaldate.split("-")
          let getYear=dataList[0]
-         let getMonth=dataList[1]
+         let getMonth=dataList[1]-1
          let getDay=dataList[2]
 
          socialMonth = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM")
