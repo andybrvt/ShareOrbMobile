@@ -155,9 +155,8 @@ class NewSocialMonth extends React.PureComponent{
             days.push(
               <View
                 key = {i}
-                style = {[styles.monthPicCell, dateFns.isSameDay(day, new Date()) ?
-                  styles.selected : null
-                ]}>
+                style={styles.monthPicCell}
+                >
                 <View style = {styles.imageHolder}>
                   {
                     toDoStuff[0].coverPic ?
@@ -166,7 +165,10 @@ class NewSocialMonth extends React.PureComponent{
                           <View style={styles.miniBox}>
                             <Text style = {styles.formatDateImage}> {formattedDate}</Text>
                             <Image
-                              style = {styles.smallImage}
+                              style = {dateFns.isSameDay(day, new Date()) ?
+                                styles.smallImageGlow : styles.smallImage
+                              }
+
                               resizeMode = "cover"
                               source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
                               />
@@ -412,12 +414,15 @@ const styles = StyleSheet.create({
     width: Math.round(Dimensions.get('window').width/7.5),
     height: Math.round(Dimensions.get('window').width/7.5),
     borderRadius:5,
+  },
 
-
-    // borderTopWidth: 1,
-    // borderTopColor: '#f2f2f2',
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#f2f2f2',
+  smallImageGlow: {
+    width: Math.round(Dimensions.get('window').width/7.5),
+    height: Math.round(Dimensions.get('window').width/7.5),
+    borderRadius:5,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "#1890ff"
   },
   imageHolder: {
   }
