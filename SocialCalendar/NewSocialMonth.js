@@ -139,6 +139,8 @@ class NewSocialMonth extends React.PureComponent{
           for(let item = 0; item < cells.length; item++){
             const date = new Date(cells[item].socialCaldate)
             const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
+            // console.log(date,utc)
+            // console.log("LLLLLLLLLLLLL")
             if(dateFns.isSameDay(utc, day)){
               toDoStuff.push(
                 cells[item]
@@ -246,6 +248,7 @@ class NewSocialMonth extends React.PureComponent{
           for(let item = 0; item < cells.length; item++){
             const date = new Date(cells[item].socialCaldate)
             const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
+
             if(dateFns.isSameDay(utc, day)){
               toDoStuff.push(
                 cells[item]
