@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, SafeAreaView, View, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { Text, SafeAreaView, View, TouchableOpacity, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
 import ProfileHeader from './ProfileHeader';
 import { connect } from "react-redux";
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
@@ -9,7 +9,7 @@ import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
-import { Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
+import { ArrowLeft, Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
 import * as authActions from '../store/actions/auth';
 
 
@@ -96,6 +96,11 @@ class UserProfile extends React.Component{
 
   }
 
+
+  onRedirect = () => {
+    this.props.navigation.goBack();
+  }
+
   render(){
 
 
@@ -117,6 +122,16 @@ class UserProfile extends React.Component{
     return (
       <BackgroundContainer>
         <View style={styles.viewStyle}>
+          <TouchableOpacity
+
+            onPress = {() => this.onRedirect()}>
+          <ArrowLeft
+                style={{top:'50%', left:'30%'}}
+                stroke='black'
+                width ={35}
+                height = {25}
+           />
+         </TouchableOpacity>
           <View style={{flex:1, justifyContent:'center', top:10}}>
             <Text style={styles.textStyle}>{username}</Text>
           </View>

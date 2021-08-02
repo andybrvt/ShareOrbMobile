@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons'
 import { Avatar } from 'react-native-elements';
 import styled from 'styled-components/native'
-
+import FacePile from 'react-native-face-pile';
 import FeatherIcon from 'feather-icons-react';
 import { Tag } from 'react-feather';
 import Animated from 'react-native-reanimated';
@@ -22,7 +22,28 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
+const FACES = [
+  {
+    "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+  },
+  {
 
+    "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+  },
+  {
+
+    "imageUrl": 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+  },
+  {
+
+    "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+  },
+  {
+
+    "imageUrl": 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
+  },
+
+];
 const width = Dimensions.get("window").width
 const margin = 6;
 const col = 2;
@@ -248,6 +269,8 @@ class SocialNewsfeedPost extends React.Component{
 
     let firstName="";
     let lastName="";
+    let likeListImages=[]
+
     if(this.props.data) {
 
       contentTypeId = this.props.data.id
@@ -308,6 +331,16 @@ class SocialNewsfeedPost extends React.Component{
         peopleLikeId.push(like_people[i].id)
       }
     }
+
+    if(this.props.data.post.people_like.length>0)
+    {
+      likeListImages = this.props.data.post.people_like.map(item => {
+       return {
+         imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+       };
+       });
+    }
+
     let timestamp=""
     let socialMonth=""
     let socialDay=""
@@ -317,7 +350,7 @@ class SocialNewsfeedPost extends React.Component{
     socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
 
-
+    console.log(likeListImages)
 
 
       return (
@@ -372,23 +405,42 @@ class SocialNewsfeedPost extends React.Component{
                   </Text>
 
               </View>
-                {/*
-                <View style = {styles.picNumber}>
-                  <Text style = {styles.picNumberText}> {userPostImages.length -1} </Text>
+              {/*
+              <View style={{backgroundColor:'red'}}>
+                <View style={{backgroundColor:'blue'}}>
+                  <Text>hi</Text>
                 </View>
-                */}
-                <View style = {styles.videoFooter}>
-                  <Text >
-                    {
-                      (caption.length==0)?
-                      ''
-                      :
-                      <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
-                    }
+                <View style={{backgroundColor:'green'}}>
+                  <FacePile size={2} numFaces={3} faces={FACES} circleSize={17.5}
+                    containerStyle={{height:40}}
+                     overlap={0.1} />
+                </View>
+              </View>
+              */}
+              <View style={{flexDirection:'row', bottom:'27.5%',}}>
 
-                    <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
-                  </Text>
+                  <View style = {styles.videoFooter}>
+                    <Text >
+                      {
+                        (caption.length==0)?
+                        ''
+                        :
+                        <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
+                      }
+
+                      <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
+                    </Text>
+
+                  </View>
+
+                <View style={{flex:1, padding:10, alignItems:'center'}}>
+                  <Text style = {styles.videoFooterUserName}>
+                    <FacePile size={2} numFaces={3} faces={likeListImages} circleSize={17.5}
+                      containerStyle={{height:40}}
+                       overlap={0.1} />
+                 </Text>
                 </View>
+              </View>
 
                     {
                       peopleLikeId.includes(this.props.userId ) ?
@@ -541,6 +593,8 @@ class SocialNewsfeedPost extends React.Component{
     let lastName=""
     let userId = ""
     let actionText = ""
+
+
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post
@@ -554,7 +608,6 @@ class SocialNewsfeedPost extends React.Component{
           actionText = " clipped picture to day"
         }
       }
-
 
 
       if(this.props.data.owner){
@@ -571,7 +624,10 @@ class SocialNewsfeedPost extends React.Component{
           userUsername = this.props.data.owner.username
         }
       }
+
+
     }
+
 
     return (
       <View>
@@ -730,20 +786,21 @@ const styles = StyleSheet.create({
   // }
 
   videoFooter: {
-    position:'absolute',
+
     fontSize:14,
-    padding:10,
+
     color:'white',
-    bottom:25,
-    width:'75%',
+    top:10,
+    width:'25%',
     padding:10,
     fontWeight:'600',
-    // backgroundColor:'red',
+
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10
+    textShadowRadius: 10,
     // color: rgba(255, 255, 255, 0.8);
-
+    flex:3,
+    // backgroundColor:'red',
     // fontWeight:'bold',
   },
 

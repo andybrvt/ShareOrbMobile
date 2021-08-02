@@ -33,28 +33,25 @@ const height = Dimensions.get("window").height
 
  const FACES = [
    {
-     imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+     "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
    },
    {
 
-     imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+     "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
    },
    {
 
-     imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+     "imageUrl": 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
    },
    {
 
-     imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+     "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
    },
    {
 
-     imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
+     "imageUrl": 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
    },
-   {
 
-     imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
-   }
  ];
 
  class DayAlbum extends React.Component{
@@ -249,7 +246,10 @@ const height = Dimensions.get("window").height
    render(){
 
      console.log(' here in the day album')
-     console.log(this.props)
+     console.log(this.props.socialCalCell.people_like)
+
+
+
      let {
        profilePic,
        firstName,
@@ -258,8 +258,7 @@ const height = Dimensions.get("window").height
        dayCaption,
        coverPic
      } = ""
-
-
+     let temp=[]
      let likePost = [];
      let peopleLikeId = [];
      let socialComments = [];
@@ -306,21 +305,25 @@ const height = Dimensions.get("window").height
        if(this.props.socialCalCell.socialCaldate){
          let today=new Date(this.props.socialCalCell.socialCaldate)
          let utc = dateFns.addHours(today, today.getTimezoneOffset()/60)
-         console.log(utc, new Date())
-
-         console.log(dateFns.isSameDay(utc, new Date() ))
-
+         // console.log(utc, new Date())
+         // console.log(dateFns.isSameDay(utc, new Date() ))
          sameDay = dateFns.isSameDay(utc, new Date());
          let dataList=this.props.socialCalCell.socialCaldate.split("-")
          let getYear=dataList[0]
          let getMonth=dataList[1]-1
          let getDay=dataList[2]
-
          socialMonth = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM")
          socialDay = dateFns.format(new Date(getYear, getMonth, getDay), "d")
        }
 
-
+       if(this.props.socialCalCell.people_like.length>0)
+       {
+         temp = this.props.socialCalCell.people_like.map(item => {
+          return {
+            imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+          };
+          });
+       }
      }
 
      if(likePost.length > 0){
@@ -328,6 +331,8 @@ const height = Dimensions.get("window").height
          peopleLikeId.push(likePost[i].id);
        }
      }
+
+     console.log(temp)
      return (
        <View style={{width:'100%', height:'100%'}}>
 
@@ -432,7 +437,7 @@ const height = Dimensions.get("window").height
                 </View>
               </View>
               <View style={styles.secondContainer}>
-                <FacePile size={2} numFaces={3} faces={FACES} circleSize={17.5}
+                <FacePile size={2} numFaces={3} faces={temp} circleSize={17.5}
                   containerStyle={{height:40}}
                    overlap={0.1} />
               </View>

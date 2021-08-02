@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
     height: Math.round(Dimensions.get('window').width/7.5),
     borderRadius:5,
     overflow: "hidden",
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: "#1890ff"
   },
   imageHolder: {
