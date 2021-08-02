@@ -268,7 +268,7 @@ const height = Dimensions.get("window").height
      let socialDay=""
      let today=""
      let utc=""
-
+     let sameDay = false
     // const test = new Date(parseISO(socialDate));
     // const format = require('date-fns/format');
     // const test1=format(test, 'dd');
@@ -306,8 +306,11 @@ const height = Dimensions.get("window").height
        if(this.props.socialCalCell.socialCaldate){
          let today=new Date(this.props.socialCalCell.socialCaldate)
          let utc = dateFns.addHours(today, today.getTimezoneOffset()/60)
-         console.log(today, utc)
-         console.log(dateFns.isSameDay(utc, new Date()))
+         console.log(utc, new Date())
+
+         console.log(dateFns.isSameDay(utc, new Date() ))
+
+         sameDay = dateFns.isSameDay(utc, new Date());
          let dataList=this.props.socialCalCell.socialCaldate.split("-")
          let getYear=dataList[0]
          let getMonth=dataList[1]-1
@@ -404,7 +407,7 @@ const height = Dimensions.get("window").height
                  MUST CHECK IF USER ID IS SAME AS USER
                  this.props.id== ... */}
                {
-                 dateFns.isSameDay(utc, today)?
+                sameDay ?
                <View style={styles.tagCSS3}>
                  <Edit2
                    onPress={() => this.editAlbum()}
