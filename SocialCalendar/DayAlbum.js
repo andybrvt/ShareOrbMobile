@@ -33,27 +33,26 @@ const height = Dimensions.get("window").height
 
  const FACES = [
    {
-     id: 0,
      imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
    },
    {
-     id: 1,
+
      imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
    },
    {
-     id: 2,
+
      imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
    },
    {
-     id: 3,
+
      imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
    },
    {
-     id: 4,
+
      imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
    },
    {
-     id: 5,
+
      imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
    }
  ];
@@ -267,8 +266,8 @@ const height = Dimensions.get("window").height
      let postId = "";
      let socialMonth=""
      let socialDay=""
-
-
+     let today=""
+     let utc=""
 
     // const test = new Date(parseISO(socialDate));
     // const format = require('date-fns/format');
@@ -305,9 +304,13 @@ const height = Dimensions.get("window").height
        }
 
        if(this.props.socialCalCell.socialCaldate){
+         let today=new Date(this.props.socialCalCell.socialCaldate)
+         let utc = dateFns.addHours(today, today.getTimezoneOffset()/60)
+         console.log(today, utc)
+         console.log(dateFns.isSameDay(utc, new Date()))
          let dataList=this.props.socialCalCell.socialCaldate.split("-")
          let getYear=dataList[0]
-         let getMonth=dataList[1]
+         let getMonth=dataList[1]-1
          let getDay=dataList[2]
 
          socialMonth = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM")
@@ -397,7 +400,11 @@ const height = Dimensions.get("window").height
                    </View>
                  </TouchableOpacity>
                </View>
-               {/* only on current day */}
+               {/* only on current day,
+                 MUST CHECK IF USER ID IS SAME AS USER
+                 this.props.id== ... */}
+               {
+                 dateFns.isSameDay(utc, today)?
                <View style={styles.tagCSS3}>
                  <Edit2
                    onPress={() => this.editAlbum()}
@@ -407,6 +414,9 @@ const height = Dimensions.get("window").height
                    height = {30}
                     />
                </View>
+               :
+               <Text></Text>
+               }
              <Text style = {styles.DayAlbumUserName}>
                {firstName+" "+lastName}
             </Text>

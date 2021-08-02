@@ -309,13 +309,14 @@ class SocialNewsfeedPost extends React.Component{
       }
     }
     let timestamp=""
-    let dayNum=""
+    let socialMonth=""
+    let socialDay=""
     timestamp=postCreatedAt
     const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
 
-    if( timeDiff > 24*60){
-      dayNum = `${dateFns.format(new Date(timestamp), "d")}`;
-    }
+    socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
+    socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
+
 
 
 
@@ -364,10 +365,10 @@ class SocialNewsfeedPost extends React.Component{
 
               <View style = {styles.testWhere2}>
                   <Text style = {styles.videoFooterUserName}>
-                    {global.RENDER_MONTH_DAY(postCreatedAt)}
+                    {socialMonth}
                   </Text>
                   <Text style = {styles.dayNumTag}>
-                    {dayNum}
+                    {socialDay}
                   </Text>
 
               </View>
@@ -378,7 +379,13 @@ class SocialNewsfeedPost extends React.Component{
                 */}
                 <View style = {styles.videoFooter}>
                   <Text >
-                    <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
+                    {
+                      (caption.length==0)?
+                      ''
+                      :
+                      <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
+                    }
+
                     <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
                   </Text>
                 </View>
@@ -664,7 +671,7 @@ const styles = StyleSheet.create({
     top:'1%',
     padding:10,
     right:0,
-    width:'17.5%',
+    width:'20%',
     flexDirection:'column',
     alignItems:'center',
      // backgroundColor:'red',
@@ -919,18 +926,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
 
-  captionHolder: {
-    flexDirection: "row",
-    textShadowColor: 'black',
-    textShadowOffset: {width: 0, height: 1},
-    textShadowRadius: 6
-  },
 
-  captionUsername:{
-    color:'black',
-    fontSize:14,
-    fontWeight:'bold',
-  },
 
   likeCapHolder: {
     left:10,
