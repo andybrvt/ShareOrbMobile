@@ -246,7 +246,7 @@ const height = Dimensions.get("window").height
    render(){
 
      console.log(' here in the day album')
-     console.log(this.props.socialCalCell.people_like)
+
 
 
 
@@ -316,7 +316,7 @@ const height = Dimensions.get("window").height
          socialDay = dateFns.format(new Date(getYear, getMonth, getDay), "d")
        }
 
-       if(this.props.socialCalCell.people_like.length>0)
+       if(this.props.socialCalCell.people_like)
        {
          temp = this.props.socialCalCell.people_like.map(item => {
           return {

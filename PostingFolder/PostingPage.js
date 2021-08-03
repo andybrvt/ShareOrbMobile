@@ -12,6 +12,8 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Modal,
+  PermissionsAndroid,
+  FlatList,
   TouchableWithoutFeedback
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -38,7 +40,7 @@ import CurrentPicPost from './CurrentPicPost';
 import Test from './Test';
 import FadingUpArrow from './FadingUpArrow';
 import { createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-
+import * as MediaLibrary from 'expo-media-library';
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
 const margin = 0;
@@ -70,7 +72,9 @@ class PostingPage extends React.Component{
        showDeleteModal: false,
        deleteIndex: -1,
        showFinal: false,
-       bigPicSize: 0
+       bigPicSize: 0,
+
+       grabImages:[],
 
      }
 
@@ -111,6 +115,26 @@ class PostingPage extends React.Component{
      let caption = "";
      let fileList = [];
 
+     {/*
+     if (Platform.OS === 'android') {
+        const result = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          {
+            title: 'Permission Explanation',
+            message: 'ReactNativeForYou would like to access your photos!',
+          },
+        );
+        if (result !== 'granted') {
+          console.log('Access to pictures was denied');
+          return;
+        }
+      }
+      */}
+      console.log("WWWWWWWWWWW")
+
+
+      console.log("LL")
+      console.log(this.state.grabImages)
 
 
      if(this.props.curSocialCalCell){
@@ -137,6 +161,8 @@ class PostingPage extends React.Component{
        caption: caption,
        imageList: fileList,
      })
+
+
 
      if(fileList.length > 1){
        const curDate = dateFns.format(new Date(), "iiii MMMM dd")
@@ -851,6 +877,40 @@ class PostingPage extends React.Component{
     const {dragging, draggingIndex, imageList} = this.state
 
 
+    // const album = MediaLibrary.getAlbumAsync('Camera')
+    // const photosTemp = MediaLibrary.getAssetsAsync({ album: album })
+    //
+    // photosTemp.then((data) => {
+    //   this.setState({
+    //     grabImages:data,
+    //   })
+    // });
+
+    // const getAllPhotos=MediaLibrary.getAssetsAsync({
+    //   first:20,
+    //   album:getPhotos,
+    //   sortBy:['creationTime'],
+    //   mediaType:['photo', 'video'],
+    // })
+    // console.log("AAAAAAAAAAAA")
+    // console.log(album)
+    // console.log("BBBBBBBBBBBBBBB")
+    // console.log(photosTemp)
+    // console.log(this.state.grabImages)
+
+
+
+    const options ={
+      first: 10,
+      after: 'pic',
+      mediaType: ["Photo"]
+    }
+
+    // if permissions granted
+    let albumsReponse = MediaLibrary.getAssetsAsync(options);
+
+    console.log("albumsReponse=", albumsReponse);
+
      // Remember, if you ever want to animate an element you will have to use
      // animated.view
 
@@ -998,9 +1058,17 @@ class PostingPage extends React.Component{
              </View>
 
              <View>
-               <Text>
-                 put image grid below here
-               </Text>
+               <FlatList
+                data={this.state.grabImages}
+                numColumns={3}
+                renderItem={({ item }) => <Image
+                   style={{
+                     width: '33%',
+                     height: 150,
+                   }}
+                   source={{ uri: item.node.image.uri }}
+                 />}
+                 />
              </View>
 
 

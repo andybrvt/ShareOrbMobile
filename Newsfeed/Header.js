@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet,TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, Button, StyleSheet,TextInput, TouchableWithoutFeedback } from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
@@ -91,7 +92,7 @@ class Header extends React.Component{
         <Animated.View style = {{
           flexDirection: "row",
           flex: 1,
-          zIndex: 999,
+
           backgroundColor: 'white',
           height: 50,
           position: 'absolute',
@@ -104,10 +105,12 @@ class Header extends React.Component{
              <MainLogo width = {120}/>
           </View>
           <View style = {styles.searchProfileContainer}>
+            <TouchableOpacity
+              
+              onPress = {() => this.props.navigation.navigate("PostingPage")}>
             <Sunrise
-              onPress = {() => this.props.navigation.navigate("PostingPage")}
-              style={{right:40}}
               stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+          </TouchableOpacity>
             {/*
               <MessageCircle
                 onPress = {() => this.props.navigation.navigate("Messages")}
@@ -115,23 +118,14 @@ class Header extends React.Component{
                 stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
               */}
 
-            <TouchableOpacity onPress = {() => this.props.navigation.navigate("Notifications")}>
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate("Notifications")}>
             <Bell
-              style={{right:10}}
+
               stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
 
-            {/*
-            <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate("Chats")}>
-               <MessageCircle
-                 stroke="black" strokeWidth={2.5} width={20} height={20} />
-           </TouchableWithoutFeedback>
-           <TouchableOpacity onPress = {() => this.props.navigation.navigate("Notifications")}>
-              <Bell
-                stroke="black" strokeWidth={2.5} width={25} height={25} />
 
-            </TouchableOpacity>
-            */}
 
           </View>
         </Animated.View>
@@ -166,12 +160,12 @@ const styles = StyleSheet.create({
   },
   searchProfileContainer: {
     flex: 1,
-    alignSelf: 'flex-end',
+
     flexDirection: "row",
-    height: 50,
+
     justifyContent: 'center',
     alignItems: 'center',
-
+    // backgroundColor:'blue'
   }
 })
 //
