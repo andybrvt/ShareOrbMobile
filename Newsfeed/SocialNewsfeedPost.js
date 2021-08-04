@@ -433,14 +433,14 @@ class SocialNewsfeedPost extends React.Component{
 
                   </View>
 
-                <View style={{flex:1, padding:10, alignItems:'center'}}>
-                  {/*
+                <View style={{flex:1, alignItems:'center'}}>
+
                   <Text style = {styles.videoFooterUserName}>
-                    <FacePile size={2} numFaces={3} faces={likeListImages} circleSize={17.5}
+                    <FacePile size={2} numFaces={3} faces={likeListImages} circleSize={15}
                       containerStyle={{height:40}}
                        overlap={0.1} />
                  </Text>
-                 */}
+
                 </View>
               </View>
 
@@ -710,7 +710,7 @@ const styles = StyleSheet.create({
     position: "relative",
     height: 550,
     shadowColor: '#000',
-
+    // transform: [{ scale: 0.9 }]
   },
   smallPic: {
 

@@ -24,7 +24,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
    }
 
    renderItem = ({item}) => {
-     let userFollowing=this.props.following
+
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
@@ -44,19 +44,23 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                   <Text style = {styles.chatText}> {item.first_name+" "+item.last_name} </Text>
                 </View>
              </View>
-             {/*
-
-             {    userFollowing.includes(item.id) ?
-
-               ''
-               :
-               <View style={{flex:0.5, justifyContent:"center"}}>
-                 <View style={styles.editButton}>
-                    <Text style={{color:'white',}}>Follow</Text>
+             {
+               (this.props.following.length>0)?
+                 <View>
+                   {
+                    (this.props.following.some((loopItem) => loopItem.username === item.username)) ?
+                     <View style={{flex:1, justifyContent:"center"}}>
+                       <View style={styles.editButton}>
+                          <Text style={{color:'white',}}>Following</Text>
+                        </View>
+                     </View>:
+                     <Text></Text>
+                    }
                   </View>
-               </View>
-          }
-          */}
+                :
+                <Text></Text>
+              
+              }
 
           </View>
          </View>
@@ -74,8 +78,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
        }
      }
      console.log(data)
-     console.log("LLLLLLLLLLLLLLLLLLLL")
-     console.log(this.props.following)
+
      return (
        <BackgroundContainer>
          <View >
@@ -96,7 +99,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
  const mapStateToProps = state => {
    return {
-
+     followers:state.auth.followers,
      following:state.auth.following,
      profile: state.explore.profile,
    }

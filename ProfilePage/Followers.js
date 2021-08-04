@@ -53,14 +53,23 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                   <Text style = {styles.chatText}> {item.first_name+" "+item.last_name} </Text>
                 </View>
              </View>
-             {/*
-               <View style={{flex:0.5, justifyContent:"center"}}>
-                 <View style={styles.editButton}>
-                    <Text style={{color:'white',}}>Follow</Text>
+             {
+               (this.props.following.length>0)?
+                 <View>
+                   {
+                    (this.props.following.some((loopItem) => loopItem.username === item.username)) ?
+                     <View style={{flex:1, justifyContent:"center"}}>
+                       <View style={styles.editButton}>
+                          <Text style={{color:'white',}}>Following</Text>
+                        </View>
+                     </View>:
+                     <Text></Text>
+                    }
                   </View>
-               </View>
-               */}
+                :
+                <Text></Text>
 
+              }
           </View>
          </View>
        </TouchableHighlight>
@@ -98,6 +107,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
  const mapStateToProps = state => {
 
    return {
+     following:state.auth.following,
      followers:state.auth.followers,
      profile: state.explore.profile
    }

@@ -199,6 +199,7 @@ const height = Dimensions.get("window").height
          <Image
            key={'blurryImage'}
            style={styles.albumLook}
+           // resizeMode="contain"
            source = {{
              uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,
            }}/>
@@ -383,8 +384,8 @@ const height = Dimensions.get("window").height
                    <ArrowLeft
                          style={styles.close2}
                          stroke='white'
-                         width ={30}
-                         height = {30}
+                         width ={25}
+                         height = {25}
                     />
               </TouchableWithoutFeedback>
                <View style = {styles.tagCSS1}>

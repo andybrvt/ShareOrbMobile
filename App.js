@@ -498,6 +498,7 @@ class App extends Component{
                           elevation:0,        // android
 
                         },
+                        title: 'Your Info',
 
                          ...TransitionPresets.SlideFromRightIOS,
                                         }}
