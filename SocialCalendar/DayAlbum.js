@@ -125,6 +125,17 @@ const height = Dimensions.get("window").height
        }, 100)
    }
 
+   viewLikeList=(likePeople)=>{
+     this.props.navigation.navigate("DisplayLikeList",
+     {
+       likePeople:likePeople,
+         // comments: socialComments,
+         // caption: dayCaption,
+         // profilePic:profilePic,
+     }
+    )
+   }
+
 
    changeShowComments = () => {
      // let entireDay= (this.props.route.params.entireDay)
@@ -436,11 +447,13 @@ const height = Dimensions.get("window").height
                     &nbsp; {dayCaption}</Text>
                 </View>
               </View>
-              <View style={styles.secondContainer}>
-                <FacePile size={2} numFaces={3} faces={temp} circleSize={17.5}
-                  containerStyle={{height:40}}
-                   overlap={0.1} />
-              </View>
+              <TouchableOpacity style={styles.secondContainer} onPress={()=> this.viewLikeList(this.props.socialCalCell.people_like)}>
+
+                  <FacePile size={2} numFaces={3} faces={temp} circleSize={17.5}
+                    containerStyle={{height:40}}
+                     overlap={0.1} />
+
+              </TouchableOpacity>
             </View>
          </ImageBackground>
        </View>

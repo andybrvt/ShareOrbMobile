@@ -11,16 +11,18 @@ import {
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 
 
- class ViewProfile extends React.Component{
+ class DisplayLikeList extends React.Component{
 
 
 
    render(){
-
+     console.log("new page")
+     let likeList=this.props.route.params.likePeople
+     console.log(likeList)
      return (
        <BackgroundContainer>
          <View >
-           <Text> Person Profilef</Text>
+           <Text> Like List</Text>
          </View>
        </BackgroundContainer>
 
@@ -28,4 +30,4 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
    }
  }
 
- export default ViewProfile;
+ export default DisplayLikeList;

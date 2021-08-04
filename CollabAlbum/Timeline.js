@@ -91,6 +91,8 @@ const FACES = [
      );
    }
    renderItem = ({item}) => {
+     console.log("BBBBBBB")
+     console.log(item)
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
 
      return(

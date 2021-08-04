@@ -60,7 +60,7 @@ import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
 import ChatSearch from './Chats/ChatSearch';
 import Comments from './Newsfeed/Comments.js';
-
+import DisplayLikeList from './Newsfeed/DisplayLikeList.js';
 import Settings from './Settings/Settings';
 import Privacy from './Settings/Privacy';
 import UserInfo from './Settings/UserInfo';
@@ -584,6 +584,17 @@ class App extends Component{
                       }}
 
                       name = 'EditProfile' component = {EditProfile}/>
+                      <Stack.Screen
+                        options={{
+                          headerStyle:{
+                            shadowColor:'#fff', //ios
+                            elevation:0,        // android
+                          },
+                          title: 'Liked By',
+                           ...TransitionPresets.SlideFromRightIOS,
+                         }}
+
+                         name = 'DisplayLikeList' component = {DisplayLikeList}/>
                   <Stack.Screen
                     options={{
                       headerStyle:{
