@@ -10,9 +10,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Keyboard
- } from 'react-native';
- import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
- import { Avatar } from 'react-native-elements';
+} from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import Animated from 'react-native-reanimated';
@@ -262,9 +262,9 @@ import SingleComment from './SingleComment';
                        // enabledContentGestureInteraction = {false}
                        callbackThreshold = {0.6}
                        enabledInnerScrolling = {true}
-                       onCloseEnd = {() => console.log('closer here ')}
-                       onOpenEnd = {() => console.log('opener here')}
-                       // onCloseStart = {() => this.onPress()}
+                       // onCloseEnd = {() => console.log('closer here ')}
+                       // onOpenEnd = {() => console.log('opener here')}
+                       onCloseStart = {() => this.onPress()}
                         />
 
 
