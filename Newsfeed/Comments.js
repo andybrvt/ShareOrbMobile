@@ -27,6 +27,7 @@ import TextModal from '../RandomComponents/TextModal';
 import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 import SingleComment from './SingleComment';
+import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 
 
  class Comments extends React.Component{
@@ -152,7 +153,9 @@ import SingleComment from './SingleComment';
    }
 
    componentWillUnmount = () => {
+
      SocialCommentsWebsocketInstance.disconnect()
+     this.props.unloadSocialComments()
    }
 
    showTextInput = () => {
@@ -314,6 +317,12 @@ import SingleComment from './SingleComment';
    }
  }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    unloadSocialComments: () => dispatch(socialNewsfeedActions.unloadSocialComments())
+  }
+}
+
  const styles = StyleSheet.create({
    header: {
    backgroundColor: '#FFFFFF',
@@ -381,4 +390,4 @@ import SingleComment from './SingleComment';
 
 
 
- export default connect(mapStateToProps)(Comments);
+ export default connect(mapStateToProps, mapDispatchToProps)(Comments);

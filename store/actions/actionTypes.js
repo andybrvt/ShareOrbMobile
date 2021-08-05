@@ -30,7 +30,7 @@ export const LOAD_MORE_SOCIAL_POST = "LOAD_MORE_SOCIAL_POST";
 
 export const LOAD_SOCIAL_COMMENTS = "LOAD_SOCIAL_COMMENTS";
 export const SEND_SOCIAL_COMMENT = "SEND_SOCIAL_COMMENT";
-
+export const UNLOAD_SOCIAL_COMMENTS = "UNLOAD_SOCIAL_COMMENTS";
 
 // This will be for the profile page
 export const LOAD_PROFILE = "LOAD_PROFILE";

@@ -70,3 +70,11 @@ export const sendSocialComment = (socialComment) => {
     socialComment: socialComment
   }
 }
+
+export const unloadSocialComments = () => {
+    // use to unload the social comments
+    return{
+      type: actionTypes.UNLOAD_SOCIAL_COMMENTS,
+      
+    }
+}

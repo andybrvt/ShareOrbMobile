@@ -76,6 +76,14 @@ const sendSocialComment =(state, action) => {
   })
 }
 
+const unloadSocialComments = (state, action) => {
+    return updateObject(state, {
+      socialComments: {},
+      commentHost: null,
+      cellDate: new Date()
+    })
+}
+
 
 
 const reducer = (state = initialState, action) => {
@@ -98,6 +106,9 @@ const reducer = (state = initialState, action) => {
       return loadSocialComments(state, action);
     case actionTypes.SEND_SOCIAL_COMMENT:
       return sendSocialComment(state, action);
+    case actionTypes.UNLOAD_SOCIAL_COMMENTS:
+      return unloadSocialComments(state,action);
+
     default:
       return state;
 
