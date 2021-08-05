@@ -37,20 +37,19 @@ class Login extends React.Component{
   }
 
   handleUserName = e => {
-    // onChange for the username
     const tempVal = e
+    console.log(e)
     this.setState({
       username: tempVal
     })
   }
 
   handlePasword = e => {
-    // onchange for the password
-   const tempVal = e;
-  this.setState({
-    password: tempVal
-  });
-};
+    const tempVal = e;
+    this.setState({
+      password: tempVal
+    });
+  };
 
   handleSubmit = () => {
     // This function will be used to submit for the login
@@ -71,6 +70,9 @@ class Login extends React.Component{
 
   render(){
     const { error, loading, token } = this.props;
+
+    console.log('stuff here')
+    console.log(error)
 
     if(token){
       this.props.navigation.navigate("LoadingScreen")
@@ -105,6 +107,18 @@ class Login extends React.Component{
             </View>
           </View>
 
+          {
+            error ?
+            <Text>
+              Username or Password Incorrect
+            </Text>
+
+            :
+
+            null
+
+
+          }
           <View style ={{
               flex: 1,
               width: "100%",

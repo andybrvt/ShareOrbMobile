@@ -94,10 +94,9 @@ export const authLogin = (username, password) => {
       // return axios.get(`${global.IP_CHANGE}/userprofile/current-user`)
 
     })
-
     .catch(err => {
       console.log(err)
-      // dispatch(authFail(err));
+      dispatch(authFail(err));
     })
 
 
