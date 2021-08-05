@@ -9,7 +9,8 @@ import {
   TouchableWithoutFeedback,
   TextInput,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
+  TouchableOpacity
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Avatar } from 'react-native-elements';
@@ -28,9 +29,10 @@ import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 import SingleComment from './SingleComment';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
+import { ChevronLeft } from "react-native-feather";
 
 
- class Comments extends React.Component{
+ class CommentPage extends React.Component{
 
 
    state = {
@@ -129,7 +131,7 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
   }
 
   componentDidMount = () => {
-    this.scrollRef.snapTo(0);
+
   }
 
   _keyboardDidShow(e) {
@@ -139,7 +141,6 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
    onBackNav = () => {
      // this function will be use to navigate back
      // to the home page
-     this.scrollRef.snapTo(1);
      setTimeout(() => {this.props.navigation.goBack(0)}, 100);
    }
 
@@ -191,7 +192,6 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
    }
 
    renderContent = () => {
-
      const comments = this.props.socialComments
 
      return (
@@ -212,7 +212,6 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
              data = {comments}
              renderItem = {this.renderComment}
              keyExtractor={(item, index) => String(index)}
-             removeClippedSubviews={false}
               />
 
             <RealRoundedInput
@@ -242,66 +241,75 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 
    render(){
 
-    
+     const comments = this.props.socialComments
+
+
      return (
 
-         <SafeAreaView
+
+
+       <SafeAreaView
+         style ={{flex: 1}}
+         >
+         <KeyboardAvoidingView
            style = {{
-             // backgroundColor: 'red',
-             flex: 1
-           }}>
-             <TouchableWithoutFeedback onPress = {() => this.onBackNav()}>
+             flex: 1,
+             backgroundColor: 'white'
+           }}
+           // keyboardVerticalOffset = {0}
+           behavior = "padding" >
 
-               <View style = {{
-                   flex: 1,
-                   backgroundColor: 'transparent'}}>
+            <View style ={{
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <View style ={{
+                  position: 'absolute',
+                  left: 10
+                }}>
+                <TouchableOpacity
+                onPress = {() => this.onBackNav()}
+                  >
+                  <ChevronLeft />
+                </TouchableOpacity>
 
-
-                     <BottomSheet
-                       ref = {node => {this.scrollRef = node}}
-                       snapPoints = {["90%","0%"]}
-                       initialSnap = {1}
-                       renderHeader ={this.renderHeader}
-                       renderContent = {this.renderContent}
-                       // enabledContentGestureInteraction = {false}
-                       callbackThreshold = {0.6}
-                       enabledInnerScrolling = {true}
-                       // onCloseEnd = {() => console.log('closer here ')}
-                       // onOpenEnd = {() => console.log('opener here')}
-                       onCloseStart = {() => this.onPress()}
-                       // enabledGestureInteraction = {false}
-                       enabledManualSnapping = {false}
-                        />
-
+              </View>
+              <Text> Comments </Text>
+            </View>
 
 
-               </View>
+             <FlatList
+               ref = {ref => this.flatListRef = ref}
+               data = {comments}
+               renderItem = {this.renderComment}
+               keyExtractor={(item, index) => String(index)}
+               // removeClippedSubviews={false}
+                />
 
+              <RealRoundedInput
+                onCommentSubmit = {this.onCommentSubmit}
+                onChange = {this.onCommentChange}
+                value = {this.state.comment}
+                onCommentFocus = {this.pressToScroll}
+                />
 
-             </TouchableWithoutFeedback>
+              {/*
+                <Button
+                  onPress = {() => this.pressToScroll()}
+                  title = "scroll" />
 
-
-
-
-
-
-
-
-
-
-            {/*
-              <TextModal
-                {...this.props}
-                onCommentChange = {this.onCommentChange}
-                onCommentValue = {this.state.comment}
-                onCancel = {this.closeTextInput}
-                visible = {this.state.showTextInput}/>
-
-              */}
+                */}
 
 
 
-         </SafeAreaView>
+           </KeyboardAvoidingView>
+
+       </SafeAreaView>
+
+
+
+
 
 
 
@@ -393,4 +401,4 @@ const mapDispatchToProps = dispatch => {
 
 
 
- export default connect(mapStateToProps, mapDispatchToProps)(Comments);
+ export default connect(mapStateToProps, mapDispatchToProps)(CommentPage);

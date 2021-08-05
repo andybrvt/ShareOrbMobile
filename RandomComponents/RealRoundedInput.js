@@ -16,6 +16,7 @@ import {
  class RealRoundedInput extends React.Component{
 
    onSubmit = () => {
+     console.log('you hit here')
      this.props.onCommentSubmit()
    }
 
@@ -30,11 +31,12 @@ import {
        <TouchableHighlight
          // onPress = {() => this.props.onPagePost()}
          style = {{
-           borderRadius: 15,
+           // backgroundColor: 'red',
+           position: 'relative',
            width: "100%",
            height: 60,
            alignItems: "center",
-           justifyContent: 'center'
+           justifyContent: 'center',
          }}
          underlayColor = "gray"
          >
@@ -65,8 +67,16 @@ import {
               </View>
 
            </View>
+           {/*
+             <Button
+               disabled = {this.props.value.length > 0 ? false : true}
+               onPress = {() => this.onSubmit()}
+               title = "send"
+                />
 
-           {
+             */}
+
+            {
              this.props.value.length > 0 ?
 
              <TouchableOpacity

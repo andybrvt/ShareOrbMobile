@@ -60,6 +60,7 @@ import ImageBrowserScreen from './Newsfeed/ImageBrowserScreen';
 import MessageFriend from './Chats/MessageFriend';
 import ChatSearch from './Chats/ChatSearch';
 import Comments from './Newsfeed/Comments.js';
+import CommentPage from './Newsfeed/CommentPage.js';
 import DisplayLikeList from './Newsfeed/DisplayLikeList.js';
 import Settings from './Settings/Settings';
 import Privacy from './Settings/Privacy';
@@ -522,27 +523,28 @@ class App extends Component{
                   <Stack.Screen
                       name = 'Comments'
                       options={{
+
                         headerShown: false,
-                        cardStyle: { backgroundColor: 'transparent' },
-                        cardOverlayEnabled: true,
-                        cardStyleInterpolator: ({ current: { progress } }) => ({
-                          cardStyle: {
-                            opacity: progress.interpolate({
-                              inputRange: [0, 0.5, 0.9, 1],
-                              outputRange: [0, 0.25, 0.7, 1],
-                            }),
-                          },
-                          overlayStyle: {
-                            opacity: progress.interpolate({
-                              inputRange: [0, 1],
-                              outputRange: [0, 0.5],
-                              extrapolate: 'clamp',
-                            }),
-                          },
-                        }),
+                        // cardStyle: { backgroundColor: 'transparent' },
+                        // cardOverlayEnabled: true,
+                        // cardStyleInterpolator: ({ current: { progress } }) => ({
+                        //   cardStyle: {
+                        //     opacity: progress.interpolate({
+                        //       inputRange: [0, 0.5, 0.9, 1],
+                        //       outputRange: [0, 0.25, 0.7, 1],
+                        //     }),
+                        //   },
+                        //   overlayStyle: {
+                        //     opacity: progress.interpolate({
+                        //       inputRange: [0, 1],
+                        //       outputRange: [0, 0.5],
+                        //       extrapolate: 'clamp',
+                        //     }),
+                        //   },
+                        // }),
                       }}
-                      mode="modal"
-                      component = {Comments}/>
+                      // mode="modal"
+                      component = {CommentPage}/>
                   <Stack.Screen
                     options={{
                       headerStyle:{
