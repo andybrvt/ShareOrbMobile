@@ -39,11 +39,11 @@ import * as dateFns from 'date-fns';
 
 
 // Main site
-// global.IP_CHANGE = "https://api.shareorb.com"
-// global.IMAGE_ENDPOINT = ""
-// global.WS_ENDPOINT = "api.shareorb.com"
-// global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
-// global.WS_HEADER = "wss"
+global.IP_CHANGE = "https://api.shareorb.com"
+global.IMAGE_ENDPOINT = ""
+global.WS_ENDPOINT = "api.shareorb.com"
+global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
+global.WS_HEADER = "wss"
 
 // 931
 // global.IP_CHANGE = "http://10.20.100.62:19000"
@@ -81,11 +81,11 @@ import * as dateFns from 'date-fns';
 
 
 // UACI
-global.IP_CHANGE = "http://206.207.51.192:19000"
-global.IMAGE_ENDPOINT = "http://206.207.51.192:19000"
-global.WS_ENDPOINT = "206.207.51.192:19000"
-global.POSTLIST_SPEC = 'http://206.207.51.192:19000/media/'
-global.WS_HEADER = "ws"
+// global.IP_CHANGE = "http://206.207.51.192:19000"
+// global.IMAGE_ENDPOINT = "http://206.207.51.192:19000"
+// global.WS_ENDPOINT = "206.207.51.192:19000"
+// global.POSTLIST_SPEC = 'http://206.207.51.192:19000/media/'
+// global.WS_HEADER = "ws"
 
 
 
