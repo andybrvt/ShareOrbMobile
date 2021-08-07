@@ -8,6 +8,14 @@ import * as dateFns from 'date-fns';
 // global.POSTLIST_SPEC = 'http://10.3.0.116:19000/media/'
 // global.WS_HEADER = "ws"
 
+// Ping UACI
+global.IP_CHANGE = "http://206.207.51.82:19002"
+global.IMAGE_ENDPOINT = "http://206.207.51.82:19002"
+global.WS_ENDPOINT = "206.207.51.82:19002"
+global.POSTLIST_SPEC = 'http://206.207.51.82:19002/media/'
+global.WS_HEADER = "ws"
+
+
 // Ping ethernet house
 // global.IP_CHANGE="http://192.168.1.205:19003"
 // global.IMAGE_ENDPOINT = "http://192.168.1.205:19003"
@@ -81,11 +89,11 @@ import * as dateFns from 'date-fns';
 
 
 // UACI
-global.IP_CHANGE = "http://206.207.51.82:19002"
-global.IMAGE_ENDPOINT = "http://206.207.51.82:19002"
-global.WS_ENDPOINT = "206.207.51.82:19002"
-global.POSTLIST_SPEC = 'http://206.207.51.82:19002/media/'
-global.WS_HEADER = "ws"
+// global.IP_CHANGE = "http://206.207.51.82:19002"
+// global.IMAGE_ENDPOINT = "http://206.207.51.82:19002"
+// global.WS_ENDPOINT = "206.207.51.82:19002"
+// global.POSTLIST_SPEC = 'http://206.207.51.82:19002/media/'
+// global.WS_HEADER = "ws"
 
 //test
 
