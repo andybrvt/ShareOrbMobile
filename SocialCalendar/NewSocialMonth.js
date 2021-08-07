@@ -55,6 +55,23 @@ class NewSocialMonth extends React.PureComponent{
       })
     }
 
+
+
+    const onRefresh = this.props.navigation.addListener("focus", () =>{
+      console.log('on refresh here')
+
+      console.log(this.grabDateRange())
+      // this.getSocialCells(dateRange.start, dateRange.end)
+      // .then(data => {
+      //   console.log(data.length)
+      //   this.setState({
+      //     socialCells: data
+      //   })
+      //
+      // })
+    })
+
+
   }
 
 
@@ -84,6 +101,11 @@ class NewSocialMonth extends React.PureComponent{
         })
       }
     }
+
+
+
+
+
   }
 
   grabDateRange(){

@@ -242,7 +242,7 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 
    render(){
 
-    
+
      return (
 
          <SafeAreaView

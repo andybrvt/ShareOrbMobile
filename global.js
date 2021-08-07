@@ -31,25 +31,26 @@ import * as dateFns from 'date-fns';
 
 
 // Andy hot spoot
-
 // global.IP_CHANGE = "http://172.20.10.2:19000"
 // global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
 // global.WS_ENDPOINT = "172.20.10.2:19000"
 // global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
 // global.WS_HEADER = "ws"
 
+
+// Main site
 // global.IP_CHANGE = "https://api.shareorb.com"
 // global.IMAGE_ENDPOINT = ""
 // global.WS_ENDPOINT = "api.shareorb.com"
 // global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
 // global.WS_HEADER = "wss"
 
-//
-global.IP_CHANGE = "http://10.20.100.62:19000"
-global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
-global.WS_ENDPOINT = "10.20.100.62:19000"
-global.POSTLIST_SPEC = 'http://10.20.100.62:19000/media/'
-global.WS_HEADER = "ws"
+// 931
+// global.IP_CHANGE = "http://10.20.100.62:19000"
+// global.IMAGE_ENDPOINT = "http://10.20.100.62:19000"
+// global.WS_ENDPOINT = "10.20.100.62:19000"
+// global.POSTLIST_SPEC = 'http://10.20.100.62:19000/media/'
+// global.WS_HEADER = "ws"
 
 // global.IP_CHANGE = "http://172.20.10.2:19000"
 // global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
@@ -77,6 +78,16 @@ global.WS_HEADER = "ws"
 // global.IMAGE_ENDPOINT = "http://172.16.101.129:19000"
 // global.WS_ENDPOINT = "172.16.101.129:19000"
 // global.POSTLIST_SPEC = 'http://172.16.101.129:19000/media/'
+
+
+// UACI
+global.IP_CHANGE = "http://206.207.51.192:19000"
+global.IMAGE_ENDPOINT = "http://206.207.51.192:19000"
+global.WS_ENDPOINT = "206.207.51.192:19000"
+global.POSTLIST_SPEC = 'http://206.207.51.192:19000/media/'
+global.WS_HEADER = "ws"
+
+
 
 global.CAPITALIZE = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1)

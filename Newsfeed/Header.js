@@ -69,7 +69,7 @@ class Header extends React.Component{
 
     const translateY = interpolate(final, {
       inputRange: [0, 200],
-      outputRange: [ 0, -55],
+      outputRange: [ 0, -80],
       extrapolateRight: Extrapolate.CLAMP,
 
     })
@@ -106,7 +106,7 @@ class Header extends React.Component{
           </View>
           <View style = {styles.searchProfileContainer}>
             <TouchableOpacity
-              
+
               onPress = {() => this.props.navigation.navigate("PostingPage")}>
             <Sunrise
               stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />

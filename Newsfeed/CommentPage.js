@@ -271,7 +271,7 @@ import { ChevronLeft } from "react-native-feather";
                 <TouchableOpacity
                 onPress = {() => this.onBackNav()}
                   >
-                  <ChevronLeft />
+                  <ChevronLeft height = {30} width = {30}/>
                 </TouchableOpacity>
 
               </View>

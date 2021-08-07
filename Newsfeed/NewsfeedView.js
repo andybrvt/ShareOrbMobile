@@ -134,15 +134,15 @@ class NewsfeedView extends React.Component{
     return(
         <BackgroundContainer>
             <View>
-              {
+              {/*
                 this.props.totalLoad === 0 ?
-                null
+                <View style = {{backgroundColor: 'white'}}></View>
                 :
                 <LoadingBar
                   step = {curLoading}
                   steps = {totalLoading}
                   height = {5} />
-              }
+              */}
               <Header
                 y = {this.y}
                 {...this.props}/>
