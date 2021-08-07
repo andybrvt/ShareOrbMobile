@@ -87,6 +87,7 @@ global.WS_HEADER = "wss"
 // global.POSTLIST_SPEC = 'http://206.207.51.192:19000/media/'
 // global.WS_HEADER = "ws"
 
+//test
 
 
 global.CAPITALIZE = (str) => {
