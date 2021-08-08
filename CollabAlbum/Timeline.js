@@ -210,41 +210,8 @@ const FACES = [
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 10
    },
-   countDownTimer: {
-     alignItems:'center',
-     color:'white',
-     fontSize:22,
-     bottom:'40%',
-     left:'45%',
 
-   },
 
-  tabBar: {
-    flexDirection: 'row',
-    // backgroundColor:'red',
-    borderBottomColor: '#FFFFFF',
-    elevation:1,
-    borderBottomWidth: 1,
-
-  },
-  tabItem: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 15,
-  },
-   roundButton1: {
-     width: 50,
-     height: 50,
-     justifyContent: 'center',
-     alignItems: 'center',
-     padding: 10,
-     borderRadius: 100,
-     right:20,
-     bottom:50,
-     backgroundColor: '#1890ff',
-     zIndex:99,
-     position:'absolute',
-   },
  })
 
 const mapStateToProps = state => {

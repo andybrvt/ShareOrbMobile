@@ -463,6 +463,35 @@ const height = Dimensions.get("window").height
  }
 
  const styles = StyleSheet.create({
+   expiringImageLook:{
+     position: 'relative',
+     height:200,
+     width:SCREEN_WIDTH-25,
+     borderRadius: 5,
+   },
+   child: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
+   // {bottom:'17.5%', color:'white', fontSize:17, padding:10}
+   albumTitle2:{
+     bottom:'25%',
+     color:'white',
+     fontSize:15,
+     padding:10,
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 10
+   },
+   albumTitle:{
+     bottom:'17.5%',
+     color:'white',
+     fontSize:15,
+     padding:10,
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 10
+   },
    dayNumTag: {
      color:'white',
      fontSize:30,
