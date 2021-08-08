@@ -55,13 +55,15 @@ class WebSocketSocialNewsfeed{
     // pull data and add callbacks here
     // add call back here
     const curSocialCalCellList = JSON.parse(parsedData.curSocialCalCell)
-
+    console.log('it worked')
     let curSocialCell = {}
     if(curSocialCalCellList.length > 0){
       curSocialCell = curSocialCalCellList[0];
     }
 
     const socialPost = JSON.parse(parsedData.social_posts)
+    console.log(socialPost)
+
     this.callbacks['fetch_social_posts'](socialPost)
 
     // add a call back here to update the current socialcal in redux here
