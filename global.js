@@ -9,11 +9,11 @@ import * as dateFns from 'date-fns';
 // global.WS_HEADER = "ws"
 
 // Ping UACI
-// global.IP_CHANGE = "http://206.207.51.82:19002"
-// global.IMAGE_ENDPOINT = "http://206.207.51.82:19002"
-// global.WS_ENDPOINT = "206.207.51.82:19002"
-// global.POSTLIST_SPEC = 'http://206.207.51.82:19002/media/'
-// global.WS_HEADER = "ws"
+global.IP_CHANGE = "http://206.207.51.82:19002"
+global.IMAGE_ENDPOINT = "http://206.207.51.82:19002"
+global.WS_ENDPOINT = "206.207.51.82:19002"
+global.POSTLIST_SPEC = 'http://206.207.51.82:19002/media/'
+global.WS_HEADER = "ws"
 
 
 // Ping ethernet house
@@ -47,11 +47,11 @@ import * as dateFns from 'date-fns';
 
 
 // Main site
-global.IP_CHANGE = "https://api.shareorb.com"
-global.IMAGE_ENDPOINT = ""
-global.WS_ENDPOINT = "api.shareorb.com"
-global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
-global.WS_HEADER = "wss"
+// global.IP_CHANGE = "https://api.shareorb.com"
+// global.IMAGE_ENDPOINT = ""
+// global.WS_ENDPOINT = "api.shareorb.com"
+// global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
+// global.WS_HEADER = "wss"
 
 // 931
 // global.IP_CHANGE = "http://10.20.100.62:19000"

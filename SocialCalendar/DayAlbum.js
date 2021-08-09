@@ -24,7 +24,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
-import { Navigation2, Heart, MessageCircle, ArrowLeft,
+import { Navigation2, MoreVertical, Heart, MessageCircle, ArrowLeft,
 ArrowLeftCircle,Bookmark, ChevronsUp, ChevronsDown, Edit2,
 } from "react-native-feather";
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
@@ -194,8 +194,16 @@ const height = Dimensions.get("window").height
               containerStyle={{height:40}}
                overlap={0.1} />
           </View>
-          <View style={{top:'7.5%', right:'2.5%', position:'absolute'}}>
-            <Text style={styles.videoFooterUserName}> 8:32 PM</Text>
+          <View style={{top:'7.5%', right:'4.5%', position:'absolute'}}>
+            <Text style={styles.videoFooterUserName}>
+              <MoreVertical
+               stroke = "white"
+               // fill="red"
+               width ={27.5}
+               height = {27.5}
+               style={{right:5}}
+                />
+            </Text>
           </View>
           <View style={{bottom:'40%', right:'4%', position:'absolute'}}>
             <Heart
@@ -222,7 +230,7 @@ const height = Dimensions.get("window").height
         </TouchableOpacity>
 
         <View style={{top:'100%',position:'absolute', flexDirection:'row', padding:20}}>
-          <Text style={{fontWeight:'bold', color:'white', fontSize:15}}>admin </Text>
+          <Text style={{fontWeight:'bold', color:'white', fontSize:15}}>8:32PM </Text>
         <Text style={{color:'white'}}>Going out with the boys</Text></View>
 
 
