@@ -407,7 +407,7 @@ class SocialNewsfeedPost extends React.Component{
                  }}>
                  <TouchableOpacity
                    activeOpacity={0.8}
-                   // onPress = {() => this.onPostDirect(postId)}
+                   onPress = {() => this.onPostDirect(postId)}
                    // style = {styles.tagCSS3}
                    >
                 <Image

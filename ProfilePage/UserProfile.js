@@ -123,16 +123,15 @@ class UserProfile extends React.Component{
       <BackgroundContainer>
         <View style={styles.viewStyle}>
           <TouchableOpacity
-
             onPress = {() => this.onRedirect()}>
           <ArrowLeft
-                style={{top:'50%', left:'30%'}}
+                style={{top:'70%', left:'30%'}}
                 stroke='black'
                 width ={35}
                 height = {25}
            />
          </TouchableOpacity>
-          <View style={{flex:1, justifyContent:'center', top:10}}>
+          <View style={{flex:1, justifyContent:'center', top:'5%'}}>
             <Text style={styles.textStyle}>{username}</Text>
           </View>
 
