@@ -17,6 +17,14 @@ export const loadMoreSocialPost = post => {
   }
 }
 
+export const addSinglePostLike = postObj => {
+
+  return{
+    type: actionTypes.ADD_SINGLE_POST_LIKE,
+    postObj: postObj
+  }
+}
+
 
 export const addSocialPostLike = postObj => {
   return {
@@ -75,6 +83,6 @@ export const unloadSocialComments = () => {
     // use to unload the social comments
     return{
       type: actionTypes.UNLOAD_SOCIAL_COMMENTS,
-      
+
     }
 }

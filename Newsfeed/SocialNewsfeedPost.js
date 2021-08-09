@@ -112,42 +112,60 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
+  // New like that likes the single day post
+  onLike = (socialItemId, personLike, ownerId) => {
 
-  onLike = (socialCalCellId, personLike, contentTypeId, ownerId, cellDate) => {
-    // send it through the websocket
-    // and then backend
-    // then back to the redux
-    const notificationObject = {
-      command: 'social_like_notification',
-      actor: personLike,
-      recipient: ownerId,
-      cellDate:cellDate,
-
-    }
-
-    WebSocketSocialNewsfeedInstance.sendOneLike(
-      socialCalCellId,
+    WebSocketSocialNewsfeedInstance.sendSinglePostLike(
+      socialItemId,
       personLike,
-      contentTypeId
     )
 
-    if(personLike !== ownerId){
-      NotificationWebSocketInstance.sendNotification(notificationObject)
-
-    }
-
   }
 
+  // New unlike for the single day post
+  onUnlike = (socialItemId, personUnlike) => {
 
-  onUnlike = (socialCalCellId, personUnlike, contentTypeId) => {
-
-    WebSocketSocialNewsfeedInstance.unSendOneUnlike(
-      socialCalCellId,
-      personUnlike,
-      contentTypeId)
-
+    WebSocketSocialNewsfeedInstance.sendSinglePostUnlike(
+      socialItemId,
+      personUnlike
+    )
 
   }
+  // Old like that likes the whole day album
+  // onLike = (socialCalCellId, personLike, contentTypeId, ownerId, cellDate) => {
+  //   // send it through the websocket
+  //   // and then backend
+  //   // then back to the redux
+  //   const notificationObject = {
+  //     command: 'social_like_notification',
+  //     actor: personLike,
+  //     recipient: ownerId,
+  //     cellDate:cellDate,
+  //
+  //   }
+  //
+  //   WebSocketSocialNewsfeedInstance.sendOneLike(
+  //     socialCalCellId,
+  //     personLike,
+  //     contentTypeId
+  //   )
+  //
+  //   if(personLike !== ownerId){
+  //     NotificationWebSocketInstance.sendNotification(notificationObject)
+  //
+  //   }
+  //
+  // }
+
+  // onUnlike = (socialCalCellId, personUnlike, contentTypeId) => {
+  //
+  //   WebSocketSocialNewsfeedInstance.unSendOneUnlike(
+  //     socialCalCellId,
+  //     personUnlike,
+  //     contentTypeId)
+  //
+  //
+  // }
 
   onSlidePress = (num, postId,
   userId,
@@ -273,7 +291,7 @@ class SocialNewsfeedPost extends React.Component{
 
     let itemImage = "";
 
-    console.log(this.props)
+
     if(this.props.data){
       if(this.props.data.creator){
 
@@ -472,7 +490,6 @@ class SocialNewsfeedPost extends React.Component{
                         onPress = {() => this.onUnlike(
                           postId,
                           this.props.userId,
-                          contentTypeId
                         )}
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>
@@ -492,9 +509,7 @@ class SocialNewsfeedPost extends React.Component{
                         onPress = {() => this.onLike(
                           postId,
                           this.props.userId,
-                          contentTypeId,
                           ownerId,
-                          cellDate
                         )}
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>
