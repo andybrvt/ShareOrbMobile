@@ -107,9 +107,9 @@ class SocialNewsfeedPost extends React.Component{
 
 
 
-  changeShowComments = (cellId) => {
+  changeShowComments = (postId) => {
 
-    this.props.onCommentOpen(cellId)
+    this.props.onCommentOpen(postId)
 
   }
 

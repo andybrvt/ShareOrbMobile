@@ -120,9 +120,9 @@ class NewsfeedView extends React.Component{
     // WebSocketSocialNewsfeedInstance.disconnect()
   }
 
-  onCommentOpen = (cellId) => {
+  onCommentOpen = (postId) => {
     this.props.navigation.navigate("Comments", {
-      cellId: cellId
+      postId: postId
     })
   }
 
