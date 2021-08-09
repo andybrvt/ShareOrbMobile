@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity,
    ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback} from 'react-native';
-import { Card } from 'react-native-paper';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
 import { connect } from 'react-redux';
@@ -294,7 +293,6 @@ class SocialNewsfeedPost extends React.Component{
 
 
     if(this.props.data){
-
       if(this.props.data.creator){
 
         if(this.props.data.creator.profile_picture){
@@ -384,9 +382,14 @@ class SocialNewsfeedPost extends React.Component{
 
 
       return (
+
+        <View>
+        {/*
         <Animated.View style = {{
             height: this.heightAnimation
           }}>
+          */}
+          {/*
           <TouchableWithoutFeedback
             onPress = {() => this.onSlidePress(userPostImages.length, postId,
             this.props.userId,
@@ -394,6 +397,7 @@ class SocialNewsfeedPost extends React.Component{
             ownerId,
             cellDate)}
             >
+            */}
             <View style = {styles.container}>
               <GestureRecognizer
                 onSwipe={(direction, state) => this.onSwipe(direction, state)}
@@ -401,11 +405,17 @@ class SocialNewsfeedPost extends React.Component{
                    velocityThreshold: 0.3,
                    directionalOffsetThreshold: 90,
                  }}>
+                 <TouchableOpacity
+                   activeOpacity={0.8}
+                   onPress = {() => this.onPostDirect(postId)}
+                   // style = {styles.tagCSS3}
+                   >
                 <Image
                   style={styles.cover}
                   resizeMode = "cover"
                   source={{ uri: itemImage }}
                   />
+              </TouchableOpacity>
               </GestureRecognizer>
 
                 <Avatar
@@ -447,9 +457,9 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
               </View>
               */}
-              <View style={{flexDirection:'row', bottom:'27.5%',}}>
+              <View style={{flexDirection:'row', bottom:'20%',}}>
 
-                  <View style = {styles.videoFooter}>
+                  <View style={{padding:10, flex:2}}>
                     <Text >
                       {
                         (caption.length==0)?
@@ -466,7 +476,7 @@ class SocialNewsfeedPost extends React.Component{
                 <View style={{flex:1, alignItems:'center'}}>
 
                   <Text style = {styles.videoFooterUserName}>
-                    <FacePile size={2} numFaces={3} faces={likeListImages} circleSize={15}
+                    <FacePile size={2} numFaces={3} faces={FACES} circleSize={15}
                       containerStyle={{height:40}}
                        overlap={0.1} />
                  </Text>
@@ -532,9 +542,8 @@ class SocialNewsfeedPost extends React.Component{
                   </View>
                 </TouchableWithoutFeedback>
 
-                <TouchableOpacity
-                  onPress = {() => this.onPostDirect(postId)}
-                  style = {styles.tagCSS3}>
+
+                  {/*
                   <View style = {styles.justifyCenter}>
                     <Navigation2
                       stroke = "white"
@@ -545,11 +554,13 @@ class SocialNewsfeedPost extends React.Component{
                        />
                      <Text style = {styles.statNum}>  {userPostImages.length}</Text>
                   </View>
-                </TouchableOpacity>
-            </View>
-          </TouchableWithoutFeedback>
+                  */}
 
-          {
+            </View>
+            {/*
+          </TouchableWithoutFeedback>
+          */}
+          {/*
             userPostImages.length > 1 ?
             <Animated.View style = {{
               height: width ,
@@ -565,7 +576,7 @@ class SocialNewsfeedPost extends React.Component{
                 {this.renderExtraPics(userPostImages)}
             </Animated.View>
             : <View></View>
-          }
+          */}
           {/*
             <Button
               title = "slide"
@@ -576,8 +587,11 @@ class SocialNewsfeedPost extends React.Component{
               cellDate)}
                />
             */}
-
+          {/*
          </Animated.View>
+         */}
+
+       </View>
       )
   }
 
@@ -660,6 +674,7 @@ class SocialNewsfeedPost extends React.Component{
 
     return (
       <View>
+        {/*
         <Animated.Code>
           {() => cond(
             this.showExtra,
@@ -674,6 +689,7 @@ class SocialNewsfeedPost extends React.Component{
             ]
           )}
         </Animated.Code>
+        */}
         <View style = {styles.imageContainer}>
             {this.revealPhoto()}
         </View>
@@ -708,9 +724,9 @@ const styles = StyleSheet.create({
 
   },
   container: {
-    margin: margin,
+
     backgroundColor: 'lightgray',
-    height: 550,
+    height: 450,
     borderRadius: 5,
     position: 'relative',
     zIndex: 99,
@@ -735,7 +751,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     borderRadius: 5,
     position: "relative",
-    height: 550,
+    height: 450,
     shadowColor: '#000',
     // transform: [{ scale: 0.9 }]
   },
@@ -855,7 +871,7 @@ const styles = StyleSheet.create({
     padding:9,
     borderRadius:25,
     color:'white',
-    bottom:'40%',
+    bottom:'35%',
     justifyContent: 'center',
     fontSize:13,
     right:7.5,
@@ -874,7 +890,7 @@ const styles = StyleSheet.create({
     padding:9,
     borderRadius:25,
     color:'white',
-    bottom:'30%',
+    bottom:'22.5%',
     fontSize:13,
     right:7.5,
     textShadowColor: 'black',
@@ -947,17 +963,6 @@ const styles = StyleSheet.create({
     // height: 400,
     position: "relative"
     // backgroundColor: 'blue'
-  },
-
-  card: {
-    width: Math.round(Dimensions.get('window').width)-10,
-    borderRadius:20,
-    left:5,
-    position: 'relative',
-    // height: 600,
-    marginBottom: 20,
-    borderColor: '#f0f0f0',
-    borderWidth: 3,
   },
 
   imageContainer: {

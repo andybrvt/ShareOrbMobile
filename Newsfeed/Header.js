@@ -106,7 +106,7 @@ class Header extends React.Component{
           </View>
           <View style = {styles.searchProfileContainer}>
             <TouchableOpacity
-
+              style={{right:15}}
               onPress = {() => this.props.navigation.navigate("PostingPage")}>
             <Sunrise
               stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
