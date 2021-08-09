@@ -24,6 +24,7 @@ import { Folder } from "react-native-feather";
 import { connect } from 'react-redux';
 
 
+let temp=[]
 const height = Dimensions.get('window').height
 
 const FACES = [
@@ -57,7 +58,7 @@ const FACES = [
 
    state = {
      albums: [],
-     refreshing: false
+     refreshing: false,
    }
 
    componentDidMount(){
@@ -91,10 +92,12 @@ const FACES = [
      );
    }
    renderItem = ({item}) => {
-     console.log("BBBBBBB")
-     console.log(item)
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
-
+     temp=item.person.map(item => {
+        return {
+          imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+        };
+      });
      return(
        <View style={{
            // backgroundColor: 'red',
@@ -113,7 +116,7 @@ const FACES = [
 
           <View style={{top:'2.5%', right:'4%', position:'absolute'}}>
             <FacePile
-              size={2.5} numFaces={3} faces={FACES} circleSize={14}
+              size={2.5} numFaces={3} faces={temp} circleSize={14}
               containerStyle={{height:40}}
                overlap={0.1} />
           </View>
@@ -127,10 +130,19 @@ const FACES = [
    }
 
    render(){
-
+     var temp=[];
      let albums = [];
      if(this.props.timeLine){
        albums = this.props.timeLine
+       // temp=albums.map(item => {
+       //  item.map(item2=>{
+       //    return {
+       //      imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+       //    };
+       //  })
+       //
+       //  });
+       //  console.log(temp)
      }
 
      return (
