@@ -353,6 +353,10 @@ class SocialNewsfeedPost extends React.Component{
     let timestamp=""
     let socialMonth=""
     let socialDay=""
+    timestamp=postCreatedAt
+    const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+    socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
+    socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
 
     // timestamp=postCreatedAt
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
