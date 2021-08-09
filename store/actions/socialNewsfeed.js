@@ -19,7 +19,6 @@ export const loadMoreSocialPost = post => {
 
 export const addSinglePostLike = postObj => {
 
-
   return{
     type: actionTypes.ADD_SINGLE_POST_LIKE,
     postObj: postObj

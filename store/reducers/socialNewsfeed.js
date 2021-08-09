@@ -25,7 +25,6 @@ const loadMoreSocialPost = (state, action) =>{
 
 const addSinglePostLike = (state, action) => {
 
-  console.log('right here buddy')
   return updateObject(state, {
     socialPosts: state.socialPosts.map(
       socialPost => socialPost.id === action.postObj.id ? {

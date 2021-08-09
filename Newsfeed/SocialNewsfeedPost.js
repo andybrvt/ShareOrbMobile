@@ -123,6 +123,15 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
+  // New unlike for the single day post
+  onUnlike = (socialItemId, personUnlike) => {
+
+    WebSocketSocialNewsfeedInstance.sendSinglePostUnlike(
+      socialItemId,
+      personUnlike
+    )
+
+  }
   // Old like that likes the whole day album
   // onLike = (socialCalCellId, personLike, contentTypeId, ownerId, cellDate) => {
   //   // send it through the websocket
@@ -149,16 +158,15 @@ class SocialNewsfeedPost extends React.Component{
   //
   // }
 
-
-  onUnlike = (socialCalCellId, personUnlike, contentTypeId) => {
-
-    WebSocketSocialNewsfeedInstance.unSendOneUnlike(
-      socialCalCellId,
-      personUnlike,
-      contentTypeId)
-
-
-  }
+  // onUnlike = (socialCalCellId, personUnlike, contentTypeId) => {
+  //
+  //   WebSocketSocialNewsfeedInstance.unSendOneUnlike(
+  //     socialCalCellId,
+  //     personUnlike,
+  //     contentTypeId)
+  //
+  //
+  // }
 
   onSlidePress = (num, postId,
   userId,
@@ -472,7 +480,6 @@ class SocialNewsfeedPost extends React.Component{
                         onPress = {() => this.onUnlike(
                           postId,
                           this.props.userId,
-                          contentTypeId
                         )}
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>
@@ -492,9 +499,7 @@ class SocialNewsfeedPost extends React.Component{
                         onPress = {() => this.onLike(
                           postId,
                           this.props.userId,
-                          contentTypeId,
                           ownerId,
-                          cellDate
                         )}
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>
