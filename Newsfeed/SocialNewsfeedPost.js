@@ -309,8 +309,31 @@ class SocialNewsfeedPost extends React.Component{
         itemImage = `${global.IMAGE_ENDPOINT}`+this.props.data.itemImage;
       }
 
+      if(this.props.data.caption){
+        caption = this.props.data.caption
+      }
+      if(this.props.data.people_like){
+        like_people = this.props.data.people_like
+      }
+
 
     }
+
+    if(like_people.length > 0){
+      for(let i = 0; i< like_people.length; i++){
+        peopleLikeId.push(like_people[i].id)
+      }
+    }
+
+    if(this.props.data.people_like.length>0)
+    {
+      likeListImages = this.props.data.people_like.map(item => {
+       return {
+         imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+       };
+       });
+    }
+
     // if(this.props.data) {
     //
     //   contentTypeId = this.props.data.id
@@ -324,44 +347,11 @@ class SocialNewsfeedPost extends React.Component{
     //     }
     //
     //   }
-    //
-    //
-    //   if(this.props.data.post.socialCaldate) {
-    //     cellDate = this.props.data.post.socialCaldate
-    //     const date = this.props.data.post.socialCaldate.split("-")
-    //     cellYear = date[0]
-    //     cellMonth = date[1]
-    //     cellDay = date[2]
-    //   }
-    //   if(this.props.data.post.dayCaption){
-    //     caption = this.props.data.post.dayCaption
-    //   }
-    //   if(this.props.data.post.people_like){
-    //     like_people = this.props.data.post.people_like
-    //   }
-    //   if(this.props.data.post.get_socialCalComment){
-    //     commentList = this.props.data.post.get_socialCalComment
-    //   }
-    //   if(this.props.data.post_date){
-    //     postCreatedAt = this.props.data.post_date
-    //   }
+
+
+
 
     //
-    // }
-    //
-    // if(like_people.length > 0){
-    //   for(let i = 0; i< like_people.length; i++){
-    //     peopleLikeId.push(like_people[i].id)
-    //   }
-    // }
-    //
-    // if(this.props.data.post.people_like.length>0)
-    // {
-    //   likeListImages = this.props.data.post.people_like.map(item => {
-    //    return {
-    //      imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
-    //    };
-    //    });
     // }
 
     let timestamp=""
@@ -538,7 +528,7 @@ class SocialNewsfeedPost extends React.Component{
                       height = {30}
                       style={{left:5}}
                        />
-                     <Text style = {styles.statNum}>  {userPostImages.length -1}</Text>
+                     <Text style = {styles.statNum}>  {userPostImages.length}</Text>
                   </View>
                 </TouchableOpacity>
             </View>
