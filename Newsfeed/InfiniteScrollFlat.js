@@ -57,9 +57,11 @@ class InfiniteScrollFlat extends React.Component{
 
   loadSocialPost = () => {
 
+    console.log('hit here')
     const {start, addMore} = this.state;
 
-    authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSocial/`+start+'/'+addMore)
+    const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSocial/`+curDate+"/"+start+'/'+addMore)
     .then( res => {
       this.props.loadMoreSocialPost(res.data.socialPost)
 
@@ -100,6 +102,7 @@ class InfiniteScrollFlat extends React.Component{
   render(){
 
     let post = [];
+
     if(this.props.socialPosts){
       post = this.props.socialPosts
     }
@@ -174,6 +177,7 @@ class InfiniteScrollFlat extends React.Component{
             onEndReached = {() => this.loadSocialPost()}
             onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
+
              />
         }
 

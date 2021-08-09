@@ -271,55 +271,47 @@ class SocialNewsfeedPost extends React.Component{
     let lastName="";
     let likeListImages=[]
 
-    if(this.props.data) {
 
-      contentTypeId = this.props.data.id
+    let itemImage = "";
 
-      if(this.props.data.owner.profile_picture){
-        profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
+    console.log(this.props)
 
-      }
+    if(this.props.data){
 
-      if(this.props.data.post) {
+      if(this.props.data.creator){
 
-        post = this.props.data.post
-        if(this.props.data.post.get_socialCalItems) {
-          userPostImages = this.props.data.post.get_socialCalItems;
+        if(this.props.data.creator.profile_picture){
+          profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.creator.profile_picture
         }
+        if(this.props.data.creator.username){
+          userUsername = this.props.data.creator.username;
+        }
+        if(this.props.data.creator.first_name){
+          firstName = this.props.data.creator.first_name;
+        }
+        if(this.props.data.creator.last_name){
+          lastName = this.props.data.creator.last_name;
+        }
+        if(this.props.data.creator.id){
+          ownerId = this.props.data.creator.id
 
-        if(this.props.data.post.id){
-          postId = this.props.data.post.id
         }
       }
 
-
-      if(this.props.data.post) {
-        userUsername = this.props.data.post.socialCalUser.username
-        firstName = this.props.data.post.socialCalUser.first_name
-        lastName = this.props.data.post.socialCalUser.last_name
+      if(this.props.data.id){
+        postId = this.props.data.id
       }
 
-      if(this.props.data.post.socialCaldate) {
-        cellDate = this.props.data.post.socialCaldate
-        const date = this.props.data.post.socialCaldate.split("-")
-        cellYear = date[0]
-        cellMonth = date[1]
-        cellDay = date[2]
+
+      if(this.props.data.itemImage){
+        itemImage = `${global.IMAGE_ENDPOINT}`+this.props.data.itemImage;
       }
-      if(this.props.data.post.dayCaption){
-        caption = this.props.data.post.dayCaption
+
+      if(this.props.data.caption){
+        caption = this.props.data.caption
       }
-      if(this.props.data.post.people_like){
-        like_people = this.props.data.post.people_like
-      }
-      if(this.props.data.post.get_socialCalComment){
-        commentList = this.props.data.post.get_socialCalComment
-      }
-      if(this.props.data.post_date){
-        postCreatedAt = this.props.data.post_date
-      }
-      if(this.props.data.owner.id){
-        ownerId = this.props.data.owner.id
+      if(this.props.data.people_like){
+        like_people = this.props.data.people_like
       }
     }
 
@@ -329,23 +321,53 @@ class SocialNewsfeedPost extends React.Component{
       }
     }
 
-    if(this.props.data.post.people_like.length>0)
+    if(this.props.data.people_like.length>0)
     {
-      likeListImages = this.props.data.post.people_like.map(item => {
+      likeListImages = this.props.data.people_like.map(item => {
        return {
          imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
        };
        });
     }
 
+    // if(this.props.data) {
+    //
+    //   contentTypeId = this.props.data.id
+    //
+    //
+    //   if(this.props.data.post) {
+    //
+    //     post = this.props.data.post
+    //     if(this.props.data.post.get_socialCalItems) {
+    //       userPostImages = this.props.data.post.get_socialCalItems;
+    //     }
+    //
+    //   }
+
+
+
+
+    //
+    // }
+
     let timestamp=""
     let socialMonth=""
     let socialDay=""
+<<<<<<< HEAD
     timestamp=postCreatedAt
     const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
     socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
 
+=======
+    // timestamp=postCreatedAt
+    // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+    //
+    // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
+    // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
+
+
+>>>>>>> 9c194fcd221c115c402b55148e047cecf0aa39fa
 
       return (
         <Animated.View style = {{
@@ -368,7 +390,7 @@ class SocialNewsfeedPost extends React.Component{
                 <Image
                   style={styles.cover}
                   resizeMode = "cover"
-                  source={{ uri: `${global.IMAGE_ENDPOINT}${userPostImages[0].itemImage}` }}
+                  source={{ uri: itemImage }}
                   />
               </GestureRecognizer>
 
@@ -510,7 +532,7 @@ class SocialNewsfeedPost extends React.Component{
                       height = {30}
                       style={{left:5}}
                        />
-                     <Text style = {styles.statNum}>  {userPostImages.length -1}</Text>
+                     <Text style = {styles.statNum}>  {userPostImages.length}</Text>
                   </View>
                 </TouchableOpacity>
             </View>
