@@ -141,6 +141,14 @@ class WebSocketSocialCalCellPage{
     })
   }
 
+  fetchSocialCalCellInfoV2(curDate, userId){
+    this.sendSocialCalCellInfo({
+      curDate,
+      userId,
+      command: "fetch_social_cal_cell_info_v2"
+    })
+  }
+
   sendSocialCalCellLike (cellId, personLike){
   //This is for liking the social cal cell
   // cellId to get the cell and person like would just be the id of the person

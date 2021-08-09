@@ -61,7 +61,7 @@ import { ChevronLeft } from "react-native-feather";
 
      const comment = this.state.comment
      if(this.state.comment.length > 0){
-       const cellId = this.props.route.params.cellId
+       const cellId = this.props.route.params.postId
        const userId = this.props.userId
        const commentHost = this.props.commentHost
        const cellDate = this.props.cellDate
@@ -100,14 +100,14 @@ import { ChevronLeft } from "react-native-feather";
   );
 
   initialiseComments(){
-    const cellId = this.props.route.params.cellId
+    const postId = this.props.route.params.postId
     this.waitForCommentsSocketConnection(() => {
       SocialCommentsWebsocketInstance.fetchComments(
-        cellId
+        postId
       )
     })
 
-    SocialCommentsWebsocketInstance.connect(cellId)
+    SocialCommentsWebsocketInstance.connect(postId)
   }
 
   waitForCommentsSocketConnection(callback) {

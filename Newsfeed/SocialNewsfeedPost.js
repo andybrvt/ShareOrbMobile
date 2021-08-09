@@ -106,9 +106,9 @@ class SocialNewsfeedPost extends React.Component{
 
 
 
-  changeShowComments = (cellId) => {
+  changeShowComments = (postId) => {
 
-    this.props.onCommentOpen(cellId)
+    this.props.onCommentOpen(postId)
 
   }
 
@@ -252,7 +252,7 @@ class SocialNewsfeedPost extends React.Component{
   onPostDirect = (cellId) => {
 
     this.props.navigation.navigate("DayAlbum", {
-      cellId: cellId
+      cellId
     })
   }
 
@@ -264,6 +264,7 @@ class SocialNewsfeedPost extends React.Component{
     // it iwill only show one photo, if there are more ti will
     // show a scrollable list
     let postId = "";
+    let calCell = "";
     let username = "";
     let cellYear = "";
     let cellMonth = "";
@@ -314,6 +315,9 @@ class SocialNewsfeedPost extends React.Component{
         }
       }
 
+      if(this.props.data.calCell){
+        calCell = this.props.data.calCell
+      }
       if(this.props.data.id){
         postId = this.props.data.id
       }
@@ -380,8 +384,7 @@ class SocialNewsfeedPost extends React.Component{
     // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
 
-
-
+    console.log(this.props.data)
       return (
 
         <View style={{marginBottom:10}}>
@@ -408,7 +411,7 @@ class SocialNewsfeedPost extends React.Component{
                  }}>
                  <TouchableOpacity
                    activeOpacity={0.8}
-                   onPress = {() => this.onPostDirect(postId)}
+                   onPress = {() => this.onPostDirect(calCell)}
                    // style = {styles.tagCSS3}
                    >
                 <Image

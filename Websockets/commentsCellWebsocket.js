@@ -21,11 +21,11 @@ class WebsocketCellComments{
   }
 
   // probally just gonna be the id of the cell
-  connect(cellId){
+  connect(postId){
     //This will be for connecting to each individual soical cal cell page
     //each one will be its own channel, this will optimize the liking and
     // commenting
-    const path = `${global.WS_HEADER}://${global.WS_ENDPOINT}/ws/socialComments/`+cellId
+    const path = `${global.WS_HEADER}://${global.WS_ENDPOINT}/ws/socialComments/`+postId
     console.log(path)
     this.socketRef = new WebSocket(path)
     this.socketRef.onopen = () => {

@@ -70,8 +70,11 @@ const height = Dimensions.get("window").height
    }
 
    initializeDayAlbum(){
+     console.log('cellid here')
+
      // used to connect to the websocket
      const cellId = this.props.route.params.cellId
+     console.log(cellId)
      this.waitForDayAlbumSocketConnection(() => {
        SocialCalCellPageWebSocketInstance.fetchSocialCalCellInfo(
          cellId
