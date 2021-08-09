@@ -48,34 +48,29 @@ class WebSocketSocialNewsfeed{
   const parsedData = JSON.parse(data);
   const command = parsedData.command;
 
-
-
   // Make the different calls here
   if(command === "fetch_social_posts"){
-    // pull data and add callbacks here
-    // add call back here
     const curSocialCalCellList = JSON.parse(parsedData.curSocialCalCell)
-    console.log('it worked')
     let curSocialCell = {}
     if(curSocialCalCellList.length > 0){
       curSocialCell = curSocialCalCellList[0];
     }
 
     const socialPost = JSON.parse(parsedData.social_posts)
-    console.log(socialPost)
 
     this.callbacks['fetch_social_posts'](socialPost)
-
-    // add a call back here to update the current socialcal in redux here
-    // probally just gonna include it in the soical newsfeed bc it will
-    // be used mostly there
-
 
     this.callbacks['fetch_cur_social_cell'](curSocialCell)
 
 
   }
-   else if (command === "send_social_post_like"){
+  else if(command === "send_single_post_like"){
+    const socialCalCellObj = parsedData.socialCalItemObj
+    this.callbacks['add_single_post_like'](socialCalCellObj)
+
+
+  }
+  else if (command === "send_social_post_like"){
     const contentTypeId = parsedData.contentTypeId
     const socialCalCellObj = parsedData.socialCalCellObj
 
@@ -161,6 +156,7 @@ class WebSocketSocialNewsfeed{
   addCallbacks(
       curId,
       loadSocialPostCallback,
+      addSingleLikeCallback,
       addSocialLikeCallback,
       loadCurSocialCellCallback,
       addFirstSocialCellPost,
@@ -168,6 +164,7 @@ class WebSocketSocialNewsfeed{
     ){
       this.callbacks['curId'] = curId
       this.callbacks['fetch_social_posts'] = loadSocialPostCallback
+      this.callbacks['add_single_post_like'] = addSingleLikeCallback
       this.callbacks['add_social_post_like'] = addSocialLikeCallback
       this.callbacks['fetch_cur_social_cell'] = loadCurSocialCellCallback
       this.callbacks['add_first_social_cell_post'] = addFirstSocialCellPost
@@ -216,6 +213,15 @@ class WebSocketSocialNewsfeed{
       personLike: personLike,
       contentTypeId: contentTypeId,
       command: "send_social_post_like"
+    })
+  }
+
+  sendSinglePostLike(socialItemId, personLike){
+
+    this.sendPostsInfo({
+      socialItemId: socialItemId,
+      personLike: personLike,
+      command: "send_single_post_like"
     })
   }
 

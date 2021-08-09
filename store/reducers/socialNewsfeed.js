@@ -23,6 +23,18 @@ const loadMoreSocialPost = (state, action) =>{
   })
 }
 
+const addSinglePostLike = (state, action) => {
+
+  console.log('right here buddy')
+  return updateObject(state, {
+    socialPosts: state.socialPosts.map(
+      socialPost => socialPost.id === action.postObj.id ? {
+        ...action.postObj
+      } : socialPost
+    )
+  })
+}
+
 const addSocialPostLike = (state, action) => {
   return updateObject(state, {
     socialPosts: state.socialPosts.map(
@@ -92,6 +104,8 @@ const reducer = (state = initialState, action) => {
       return loadSocialPosts(state, action);
     case actionTypes.LOAD_MORE_SOCIAL_POST:
       return loadMoreSocialPost(state, action);
+    case actionTypes.ADD_SINGLE_POST_LIKE:
+      return addSinglePostLike(state, action);
     case actionTypes.ADD_SOCIAL_POST_LIKE:
       return addSocialPostLike(state, action);
     case actionTypes.LOAD_CUR_SOCIAL_CELL:

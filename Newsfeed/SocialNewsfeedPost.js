@@ -113,31 +113,41 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
+  // New like that likes the single day post
+  onLike = (socialItemId, personLike, ownerId) => {
 
-  onLike = (socialCalCellId, personLike, contentTypeId, ownerId, cellDate) => {
-    // send it through the websocket
-    // and then backend
-    // then back to the redux
-    const notificationObject = {
-      command: 'social_like_notification',
-      actor: personLike,
-      recipient: ownerId,
-      cellDate:cellDate,
-
-    }
-
-    WebSocketSocialNewsfeedInstance.sendOneLike(
-      socialCalCellId,
+    WebSocketSocialNewsfeedInstance.sendSinglePostLike(
+      socialItemId,
       personLike,
-      contentTypeId
     )
 
-    if(personLike !== ownerId){
-      NotificationWebSocketInstance.sendNotification(notificationObject)
-
-    }
-
   }
+
+  // Old like that likes the whole day album
+  // onLike = (socialCalCellId, personLike, contentTypeId, ownerId, cellDate) => {
+  //   // send it through the websocket
+  //   // and then backend
+  //   // then back to the redux
+  //   const notificationObject = {
+  //     command: 'social_like_notification',
+  //     actor: personLike,
+  //     recipient: ownerId,
+  //     cellDate:cellDate,
+  //
+  //   }
+  //
+  //   WebSocketSocialNewsfeedInstance.sendOneLike(
+  //     socialCalCellId,
+  //     personLike,
+  //     contentTypeId
+  //   )
+  //
+  //   if(personLike !== ownerId){
+  //     NotificationWebSocketInstance.sendNotification(notificationObject)
+  //
+  //   }
+  //
+  // }
 
 
   onUnlike = (socialCalCellId, personUnlike, contentTypeId) => {
@@ -274,7 +284,6 @@ class SocialNewsfeedPost extends React.Component{
 
     let itemImage = "";
 
-    console.log(this.props)
 
     if(this.props.data){
 
@@ -353,10 +362,10 @@ class SocialNewsfeedPost extends React.Component{
     let timestamp=""
     let socialMonth=""
     let socialDay=""
-    timestamp=postCreatedAt
-    const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
-    socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
-    socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
+    // timestamp=postCreatedAt
+    // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+    // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
+    // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
 
     // timestamp=postCreatedAt
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)

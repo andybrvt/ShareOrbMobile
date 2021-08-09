@@ -22,6 +22,9 @@ export const CLOSE_SHOW_CAMERA = "CLOSE_SHOW_CAMERA";
 export const FINAL_POST_MODAL = "FINAL_POST_MODAL"; // use when you open final modal
 
 export const LOAD_SOCIAL_POSTS = "LOAD_SOCIAL_POSTS";
+export const ADD_SINGLE_POST_LIKE = "ADD_SINGLE_POST_LIKE";
+
+// Used for when post are in albums on newsfeed
 export const ADD_SOCIAL_POST_LIKE = "ADD_SOCIAL_POST_LIKE";
 export const LOAD_CUR_SOCIAL_CELL = "LOAD_CUR_SOCIAL_CELL";
 export const ADD_FIRST_SOCIAL_CELL_POST = "ADD_FIRST_SOCIAL_CELL_POST";
