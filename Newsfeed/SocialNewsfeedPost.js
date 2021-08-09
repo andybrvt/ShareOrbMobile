@@ -290,8 +290,6 @@ class SocialNewsfeedPost extends React.Component{
         if(this.props.data.post.id){
           postId = this.props.data.post.id
         }
-
-
       }
 
 
@@ -323,7 +321,6 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.owner.id){
         ownerId = this.props.data.owner.id
       }
-
     }
 
     if(like_people.length > 0){
@@ -346,11 +343,8 @@ class SocialNewsfeedPost extends React.Component{
     let socialDay=""
     timestamp=postCreatedAt
     const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
-
     socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
-
-    console.log(likeListImages)
 
 
       return (

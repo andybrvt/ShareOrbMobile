@@ -27,6 +27,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import { Navigation2, Heart, MessageCircle, ArrowLeft,
 ArrowLeftCircle,Bookmark, ChevronsUp, ChevronsDown, Edit2,
 } from "react-native-feather";
+import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import * as Animatable from 'react-native-animatable';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -137,20 +138,6 @@ const height = Dimensions.get("window").height
    }
 
 
-   changeShowComments = () => {
-     // let entireDay= (this.props.route.params.entireDay)
-     // let dayCaption=entireDay[0].dayCaption
-     // let socialComments=entireDay[0].get_socialCalComment
-     // let profilePic=entireDay[0].socialCalUser.profile_picture
-     // this.props.navigation.navigate("Comments",
-     // {
-     //     comments: socialComments,
-     //     caption: dayCaption,
-     //     profilePic:profilePic,
-     // }
-     // )
-   }
-
    sendLike = (cellId, personLike) => {
 
      SocialCalCellPageWebSocketInstance.sendSocialCalCellLike(cellId, personLike)
@@ -174,63 +161,72 @@ const height = Dimensions.get("window").height
 
 
 
-   renderItem = ({item,index}) =>{
+   renderItem = ({item}) => {
+     console.log("BBBBBBB")
+     console.log(item)
+     console.log(`${global.IP_CHANGE}`+item.itemImage)
+     const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
+     return(
+       <View style={{
+           // backgroundColor: 'red',
+           width:'100%',
+           height:300,
+           marginBottom:25, // change to
+           padding:10,
 
+         }}>
 
-     return (
-       <View style = {styles.carouselImageHolder}>
-         {/*
-         <View style={{alignItems:'center', flexDirection:'row', height:30, top:10}}>
-           <View style={{}}>
-             <ChevronsUp
-               fill="white"
-               width={30}
-               height={30}
-              />
-           </View>
-           <View>
-             <Animatable.Text animation="fadeIn" iterationCount={"infinite"} direction="alternate" delay={10}>
-                <Text style={{color:'white', fontSize:18, top:0}}>July 16</Text>
-              </Animatable.Text>
-            </View>
-         </View>
-         */}
+        <TouchableOpacity
+          activeOpacity={0.6}
+          // onPress = {() => this.navAlbum(item.id)}
+          >
+          <Image
+            resizeMode="contain"
+            style={{width:'100%', height:'90%', borderRadius:5, }}
+            source = {{
+              uri: `${global.IP_CHANGE}`+item.itemImage
+            }}>
+          </Image>
 
-         <Image
-           key={'blurryImage'}
-           style={styles.albumLook}
-           // resizeMode="contain"
-           source = {{
-             uri: `${global.IMAGE_ENDPOINT}`+item.itemImage,
-           }}/>
-
-         <Avatar
-           style={styles.close}
-           onPress = {() => this.viewProfile(item.creator.username)}
-           size={35}
-           rounded
-           source = {{
-             uri: `${global.IMAGE_ENDPOINT}`+item.creator.profile_picture,
-           }}
-         />
-        {/*
-         <View style={{alignItems:'center', flexDirection:'row', height:'11%', bottom:0}}>
-           <ChevronsDown
-             fill="white"
-             width={30}
-             height={30}
-            />
-
-           <Animatable.Text animation="fadeIn" iterationCount={"infinite"} direction="alternate" delay={10}>
-              <Text style={{color:'white', fontSize:18, bottom:10}}>
-                October 2
-              </Text>
-          </Animatable.Text>
+          <View style={{bottom:'15%', left:'4%', position:'absolute'}}>
+            <FacePile
+              size={2.5} numFaces={3} faces={FACES} circleSize={14}
+              containerStyle={{height:40}}
+               overlap={0.1} />
           </View>
-          */}
-         </View>
+          <View style={{top:'7.5%', right:'2.5%', position:'absolute'}}>
+            <Text style={styles.videoFooterUserName}> 8:32 PM</Text>
+          </View>
+          <View style={{bottom:'40%', right:'4%', position:'absolute'}}>
+            <Heart
+             stroke = "white"
+             // fill="red"
+             width ={27.5}
+             height = {27.5}
+             style={{right:5}}
+              />
+          </View>
+          <View style={{bottom:'25%', right:'4%', position:'absolute'}}>
+            <MessageCircle
+             stroke = "white"
+             // fill="red"
+             width ={27.5}
+             height = {27.5}
+             style={{right:5}}
+              />
+          </View>
+
+          <Text style={styles.albumTitle}>
+            {item.title}
+          </Text>
+        </TouchableOpacity>
+
+        <View style={{top:'100%',position:'absolute', flexDirection:'row', padding:20}}>
+          <Text style={{fontWeight:'bold', color:'white', fontSize:15}}>admin </Text>
+        <Text style={{color:'white'}}>Going out with the boys</Text></View>
 
 
+        </View>
      )
    }
 
@@ -255,6 +251,31 @@ const height = Dimensions.get("window").height
      })
    }
 
+   onRedirect = () => {
+     this.props.navigation.goBack();
+   }
+
+   FlatListItemSeparator = () => {
+     return (
+       // change to 50 if caption exists
+       <View
+         style={{
+           height: 50,
+
+           width:'97.5%',
+           backgroundColor: "white",
+           padding:20,
+           marginBottom:20,
+
+         }}
+       >
+       <View style={{flexDirection:'row'}}>
+       <Text style={{fontWeight:'bold'}}>admin </Text>
+       <Text style={{color:'black'}}>swimmign in the lake</Text>
+       </View>
+     </View>
+     );
+   }
    render(){
 
      console.log(' here in the day album')
@@ -284,7 +305,7 @@ const height = Dimensions.get("window").height
     // const format = require('date-fns/format');
     // const test1=format(test, 'dd');
     // const test2=format(test, 'MMMM');
-
+    let user=""
 
      if(this.props.socialCalCell){
        const cell = this.props.socialCalCell
@@ -294,7 +315,7 @@ const height = Dimensions.get("window").height
        }
        if(this.props.socialCalCell.socialCalUser){
 
-         const user = this.props.socialCalCell.socialCalUser
+          user = this.props.socialCalCell.socialCalUser
           profilePic = user.profile_picture
 
           firstName = user.first_name
@@ -344,34 +365,55 @@ const height = Dimensions.get("window").height
        }
      }
 
-     console.log(temp)
      return (
-       <View style={{width:'100%', height:'100%'}}>
+       <View style={{width:'100%', height:'100%', backgroundColor: 'rgba(0, 0, 0, 0.85)'}}>
+         <View style={{padding:15, flexDirection:'row', alignItems:'center', borderBottomColor:'#434343', borderBottomWidth:1}}>
 
+           <TouchableOpacity
 
-         <ImageBackground
-           blurRadius={80}
-           style={styles.albumOuterContainer}
-           source={{ uri: `${global.IMAGE_ENDPOINT}`+this.state.coverPicDay}}
+             onPress = {() => this.onRedirect()}>
+           <ArrowLeft
+             stroke='white'
+             width ={35}
+             height = {35}
+            />
 
-           >
-
-
-             <Carousel
-              layout='stack'
-              removeClippedSubviews={false}
-              inactiveSlideScale={1}
-              slideStyle={{ }}
-              ref={ref => this.carousel = ref}
-              loop={false}
-              data={this.props.socialCalCell.get_socialCalItems}
-              sliderWidth={width}
-              itemWidth={width}
-              renderItem={this.renderItem}
-              onBeforeSnapToItem = {e => this.changeBackground(e)}
+          </TouchableOpacity>
+          <View style = {styles.chatInfoHolder} >
+            <Avatar
+            rounded
+              source = {{
+                uri: `${global.IMAGE_ENDPOINT}`+user.profile_picture,
+              }}
+              size = {40}
                />
-
-               <View style = {styles.testWhere2}>
+             <View style = {styles.chatInfo}>
+               <View style = {styles.chatNameContainer}>
+                 <Text style = {styles.chatName}>{userName}</Text>
+               </View>
+               <Text style = {styles.chatText}> {firstName+" "+lastName} </Text>
+             </View>
+          </View>
+          {/*
+           <Avatar
+             style={styles.close}
+            onPress = {() => this.viewProfile(this.props.socialCalCell.socialCalUser.username)}
+             size={40}
+             rounded
+             source = {{
+             uri: `${global.IMAGE_ENDPOINT}`+this.props.socialCalCell.socialCalUser.profile_picture,
+           }}
+           />
+         <View>
+             <Text style = {styles.DayAlbumUserName}>
+               {firstName+" "+lastName}
+              </Text>
+              <Text style = {styles.DayAlbumUserName}>
+                {userName}
+              </Text>
+            </View>
+            */}
+            <View style = {styles.testWhere2}>
                    <Text style = {styles.videoFooterUserName}>
                      {socialMonth}
                    </Text>
@@ -379,68 +421,22 @@ const height = Dimensions.get("window").height
                      {socialDay}
                    </Text>
                </View>
-               <TouchableWithoutFeedback
-                 onPress = {() => this.props.navigation.goBack(0)}>
-                   <ArrowLeft
-                         style={styles.close2}
-                         stroke='white'
-                         width ={25}
-                         height = {25}
-                    />
-              </TouchableWithoutFeedback>
-               <View style = {styles.tagCSS1}>
-                 <TouchableOpacity onPress={() => this.sendLike(postId, this.props.userId)}>
-                 <View style = {styles.justifyCenter}>
-                   <Heart
-                     stroke = "red"
-                     fill="red"
-                     width ={32.5}
-                     height = {32.5}
-                     style={{right:5}}
-                      />
-                   <Text  style = {styles.justifyCenter1}>
-                     {likePost.length}
-                   </Text>
-                 </View>
-                 </TouchableOpacity>
-               </View>
-               <View style = {styles.tagCSS2}>
-                 <TouchableOpacity  onPress={this.changeShowComments}>
-                   <View  style = {styles.justifyCenter}>
-                     <MessageCircle
-                       stroke = "white"
-                       fill="white"
-                       width ={32.5}
-                       height = {32.5}
-                       style={{right:5}}
-                     />
-                     <Text  style = {styles.justifyCenter1}>
-                     {socialComments.length}
-                   </Text>
-                   </View>
-                 </TouchableOpacity>
-               </View>
-               {/* only on current day,
-                 MUST CHECK IF USER ID IS SAME AS USER
-                 this.props.id== ... */}
-               {
-                sameDay ?
-               <View style={styles.tagCSS3}>
-                 <Edit2
-                   onPress={() => this.editAlbum()}
-                   stroke = "white"
-                   fill="white"
-                   width ={30}
-                   height = {30}
-                    />
-               </View>
-               :
-               <Text></Text>
-               }
-             <Text style = {styles.DayAlbumUserName}>
-               {firstName+" "+lastName}
-            </Text>
+         </View>
+         <FlatList
+
+            contentContainerStyle={{paddingBottom:40}}
+            showsVerticalScrollIndicator={false}
+            data = {this.props.socialCalCell.get_socialCalItems}
+            renderItem ={(item) => this.renderItem(item)}
+            keyExtractor={(item, index) => String(index)}
+            // ItemSeparatorComponent = { this.FlatListItemSeparator }
+          />
+
+
+
+
             <View  style={styles.openContainer}>
+              {/* day caption
               <View style={styles.firstContainer}>
                 <View>
                   <Text  style = {styles.DayCaption}>
@@ -448,15 +444,15 @@ const height = Dimensions.get("window").height
                     &nbsp; {dayCaption}</Text>
                 </View>
               </View>
+              */}
+              {/* day container like
               <TouchableOpacity style={styles.secondContainer} onPress={()=> this.viewLikeList(this.props.socialCalCell.people_like)}>
-
                   <FacePile size={2} numFaces={3} faces={temp} circleSize={17.5}
                     containerStyle={{height:40}}
                      overlap={0.1} />
-
               </TouchableOpacity>
+              */}
             </View>
-         </ImageBackground>
        </View>
      )
    }
@@ -464,9 +460,9 @@ const height = Dimensions.get("window").height
 
  const styles = StyleSheet.create({
    expiringImageLook:{
-     position: 'relative',
-     height:200,
-     width:SCREEN_WIDTH-25,
+
+     height:'100%',
+     width:'100%',
      borderRadius: 5,
    },
    child: {
@@ -478,16 +474,18 @@ const height = Dimensions.get("window").height
      bottom:'25%',
      color:'white',
      fontSize:15,
+
      padding:10,
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 10
    },
    albumTitle:{
-     bottom:'17.5%',
+
      color:'white',
+     // backgroundColor:'red',
      fontSize:15,
-     padding:10,
+     padding:20,
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 10
@@ -515,10 +513,10 @@ const height = Dimensions.get("window").height
    },
    testWhere2:{
      position:'absolute',
-     top:'5.5%',
+
      padding:10,
-     right:'1%',
-     width:'20%',
+     right:0,
+     width:'30%',
      flexDirection:'column',
      alignItems:'center',
       // backgroundColor:'red',
@@ -632,9 +630,7 @@ const height = Dimensions.get("window").height
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
      fontWeight:'bold',
-     top:'7.5%',
-     left:'28%',
-     position: "absolute",
+     padding: 10,
      // fontWeight:'bold',
 
    },
@@ -674,7 +670,7 @@ const height = Dimensions.get("window").height
      margin: 5,
      position: "absolute",
      top:'5.5%',
-     left:'2.5%',
+     left:'3%',
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
@@ -685,9 +681,9 @@ const height = Dimensions.get("window").height
    },
    close: {
      margin: 5,
-     position: "absolute",
-     top:'6%',
-     left:'15%',
+
+
+
      width: 35,
      height: 35,
    },
@@ -718,7 +714,37 @@ const height = Dimensions.get("window").height
      height: height,
      alignItems: 'center',
 
-   }
+   },
+
+   chatInfoHolder:{
+     left:10,
+     display: 'flex',
+     flexDirection: 'row',
+     alignItems:'center',
+     flex:1,
+   },
+
+   chatInfo: {
+     justifyContent: "center",
+     marginLeft: 10,
+     // backgroundColor:'red',
+   },
+   chatNameContainer: {
+     flexDirection: "row"
+   },
+   chatName: {
+     fontSize: 18,
+     color: 'white',
+     fontWeight:'bold',
+
+     left:5,
+   },
+
+   chatText: {
+     marginTop: 0,
+     color: 'white',
+     fontWeight: '400'
+   },
 
 
 
