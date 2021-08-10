@@ -24,6 +24,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
+import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import TextModal from '../RandomComponents/TextModal';
 import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 import RealRoundedInput from '../RandomComponents/RealRoundedInput';
@@ -77,6 +78,11 @@ import { ChevronLeft } from "react-native-feather";
          userId,
          comment,
        )
+
+       setTimeout(() => WebSocketSocialNewsfeedInstance.updateSinglePost(
+        cellId
+      ), 1000)
+
 
        // FOR LATER
        // if(userId !== commentHost){
