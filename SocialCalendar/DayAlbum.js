@@ -31,7 +31,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import * as Animatable from 'react-native-animatable';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
-
+let likeAvatarList=[]
  const FACES = [
    {
      "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
@@ -163,7 +163,28 @@ const height = Dimensions.get("window").height
    }
 
    renderItem = ({item}) => {
+     console.log("CCCCCCCCCFCc")
+     console.log(item)
+     if(item.people_like.length>0)
+     {
+       likeAvatarList = item.people_like.map(item => {
+        return {
+          imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+        };
+        });
+     }
+     console.log("FFFFFFFFF")
+     console.log(likeAvatarList)
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
+     // if(this.props.data.people_like.length>0)
+     // {
+     //   likeAvatarList = this.props.data.people_like.map(item => {
+     //    return {
+     //      imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+     //    };
+     //    });
+     // }
+
      return(
        <View style={{
            // backgroundColor: 'red',
@@ -188,7 +209,7 @@ const height = Dimensions.get("window").height
 
           <View style={{bottom:'15%', left:'4%', position:'absolute'}}>
             <FacePile
-              size={2.5} numFaces={3} faces={FACES} circleSize={14}
+              size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
               containerStyle={{height:40}}
                overlap={0.1} />
           </View>
@@ -204,22 +225,34 @@ const height = Dimensions.get("window").height
             </Text>
           </View>
           <View style={{bottom:'40%', right:'4%', position:'absolute'}}>
-            <Heart
-             stroke = "white"
-             // fill="red"
-             width ={27.5}
-             height = {27.5}
-             style={{right:5}}
+            <View style = {styles.justifyCenter}>
+              <Heart
+                fill="white"
+                 stroke = "white"
+                 width ={25}
+                 height = {25}
+                 style={{right:5}}
               />
+              <Text  style = {styles.statNum}>
+                {item.people_like.length}
+              </Text>
+
+            </View>
           </View>
           <View style={{bottom:'25%', right:'4%', position:'absolute'}}>
-            <MessageCircle
-             stroke = "white"
-             // fill="red"
-             width ={27.5}
-             height = {27.5}
-             style={{right:5}}
-              />
+            <View style = {styles.justifyCenter}>
+              <MessageCircle
+                fill="white"
+               stroke = "white"
+               // fill="red"
+               width ={27.5}
+               height = {27.5}
+               style={{right:5}}
+                />
+                <Text  style = {styles.statNum}>
+                  {item.get_socialCalItemComment.length}
+                </Text>
+            </View>
           </View>
 
           <Text style={styles.albumTitle}>
@@ -229,7 +262,7 @@ const height = Dimensions.get("window").height
 
         <View style={{top:'100%',position:'absolute', flexDirection:'row', padding:20}}>
           <Text style={{fontWeight:'bold', color:'white', fontSize:15}}>8:32PM </Text>
-        <Text style={{color:'white'}}>Going out with the boys</Text></View>
+        <Text style={{color:'white'}}>{item.caption}</Text></View>
 
 
         </View>
@@ -283,12 +316,7 @@ const height = Dimensions.get("window").height
      );
    }
    render(){
-
      console.log(' here in the day album')
-
-
-
-
      let {
        profilePic,
        firstName,
@@ -297,7 +325,6 @@ const height = Dimensions.get("window").height
        dayCaption,
        coverPic
      } = ""
-     let temp=[]
      let likePost = [];
      let peopleLikeId = [];
      let socialComments = [];
@@ -355,14 +382,7 @@ const height = Dimensions.get("window").height
          socialDay = dateFns.format(new Date(getYear, getMonth, getDay), "d")
        }
 
-       if(this.props.socialCalCell.people_like)
-       {
-         temp = this.props.socialCalCell.people_like.map(item => {
-          return {
-            imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
-          };
-          });
-       }
+
      }
 
      if(likePost.length > 0){
@@ -465,6 +485,25 @@ const height = Dimensions.get("window").height
  }
 
  const styles = StyleSheet.create({
+   justifyCenter:{
+     flexDirection:'row',
+     alignItems: 'center',
+     flex: 1,
+     justifyContent: 'center',
+     color:'white',
+     // backgroundColor:'red',
+   },
+   statNum: {
+     color:'white',
+     fontSize:15,
+     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 5,
+     fontWeight:'bold',
+     left:5,
+     // fontWeight:'bold',
+   },
    expiringImageLook:{
 
      height:'100%',
