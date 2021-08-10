@@ -207,7 +207,7 @@ class SocialCalendarVonly extends React.Component{
   )
 
 
-  // snapping animation here, set between -120 and 120 for safe and no snapping
+  // snapping animation here, set between -10 and 10 for safe and no snapping
 
   handleAnimation = (main_index) => {
 
@@ -215,7 +215,7 @@ class SocialCalendarVonly extends React.Component{
     // so that will be reflected on handle animations here so that you cna check
     // if it is larger or smaller than a certain range
 
-    if(this.record_translateX_array[main_index] >= -120 && this.record_translateX_array[main_index] <= 120){
+    if(this.record_translateX_array[main_index] >= -10 && this.record_translateX_array[main_index] <= 10){
       this.opacity_array[main_index].setValue(1)
 
       this.record_translateX_array[main_index] = 0
@@ -254,7 +254,7 @@ class SocialCalendarVonly extends React.Component{
 
 
     // snap to the left
-    else if(this.record_translateX_array[main_index] < -120){
+    else if(this.record_translateX_array[main_index] < -10){
       this.record_translateX_array[main_index] = - this.dimension_width
 
       this.record_translateX_array[(main_index + 1) % 3] = 0
@@ -299,7 +299,7 @@ class SocialCalendarVonly extends React.Component{
 
     }
 
-    else if(this.record_translateX_array[main_index] > 120){
+    else if(this.record_translateX_array[main_index] > 10){
 
 
       this.record_translateX_array[main_index] = this.dimension_width
