@@ -23,52 +23,19 @@ import * as dateFns from 'date-fns';
 import { Folder } from "react-native-feather";
 import { connect } from 'react-redux';
 
-
 let temp=[]
 const height = Dimensions.get('window').height
-
-const FACES = [
-  {
-    id: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-  },
-  {
-    id: 1,
-    imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-  },
-  {
-    id: 2,
-    imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 3,
-    imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-  },
-  {
-    id: 4,
-    imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
-  },
-  {
-    id: 5,
-    imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
-  }
-];
-
- class Timeline extends React.Component{
-
+class Timeline extends React.Component{
    state = {
      albums: [],
      refreshing: false,
    }
-
    componentDidMount(){
      authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getAlbums')
      .then(res => {
        this.setState({
          albums: res.data
-
        })
-
      })
    }
 
@@ -78,11 +45,8 @@ const FACES = [
      .then(res => {
        this.setState({
          albums: res.data
-
        })
-
      })
-
      this.setState({refreshing: false});
    }
 
@@ -100,7 +64,6 @@ const FACES = [
       });
      return(
        <View style={{
-           // backgroundColor: 'red',
            width:'100%',
            height:250,
            padding:10
@@ -113,7 +76,6 @@ const FACES = [
               uri: item.coverPic
             }}>
           </Image>
-
           <View style={{top:'2.5%', right:'4%', position:'absolute'}}>
             <FacePile
               size={2.5} numFaces={3} faces={temp} circleSize={14}
@@ -124,7 +86,6 @@ const FACES = [
             {item.title}
           </Text>
         </TouchableOpacity>
-
         </View>
      )
    }
@@ -134,24 +95,13 @@ const FACES = [
      let albums = [];
      if(this.props.timeLine){
        albums = this.props.timeLine
-       // temp=albums.map(item => {
-       //  item.map(item2=>{
-       //    return {
-       //      imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
-       //    };
-       //  })
-       //
-       //  });
-       //  console.log(temp)
      }
-
      return (
        <View style={{
           height:'100%',
          }} >
          {
            albums.length === 0 ?
-
                <View style = {{
                    flexDirection:'column',
                    height:'100%',
@@ -166,10 +116,7 @@ const FACES = [
                   <Text style = {{color: 'gainsboro', fontSize:20}}>No Shared Albums with Friends</Text>
                </View>
              </View>
-
-
            :
-
            <FlatList
               // contentContainerStyle={{paddingBottom:0}}
               showsVerticalScrollIndicator={false}
@@ -179,20 +126,14 @@ const FACES = [
               keyExtractor={(item, index) => String(index)}
               onRefresh = {() => this.onRefresh()}
               refreshing = {this.state.refreshing}
-
             />
-
-
-
          }
-
        </View>
      )
    }
  }
 
  const styles = StyleSheet.create({
-
    expiringImageLook:{
      position: 'relative',
      height:200,
