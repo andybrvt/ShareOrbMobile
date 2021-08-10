@@ -143,6 +143,8 @@ class NewSocialMonth extends React.PureComponent{
     const curMonth = new Date(year, month, 1);
     const start = dateFns.startOfMonth(curMonth)
     const end = dateFns.endOfMonth(curMonth)
+
+    console.log(curMonth, start, end)
     const startDate = dateFns.startOfWeek(start)
     const endDate = dateFns.endOfWeek(end)
     const diffWeeks = dateFns.differenceInCalendarWeeks(endDate, startDate)
