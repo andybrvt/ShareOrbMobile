@@ -5,7 +5,6 @@ import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons'
 import { Avatar } from 'react-native-elements';
 import styled from 'styled-components/native'
 import FacePile from 'react-native-face-pile';
@@ -448,7 +447,7 @@ class SocialNewsfeedPost extends React.Component{
               */}
               <View style={{flexDirection:'row', bottom:'25%',}}>
                 {likeAvatarList.length==1?
-                  <View style={{padding:10, width:'85%'}}>
+                  <View style={{padding:10, width:'87.5%'}}>
                     <Text>
                       {
                         (caption.length==0)?
