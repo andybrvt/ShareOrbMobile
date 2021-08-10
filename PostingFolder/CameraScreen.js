@@ -25,20 +25,40 @@ import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import * as authActions from '../store/actions/auth';
 import * as ImagePicker from 'expo-image-picker';
-
+import InputModal from '../RandomComponents/InputModal';
+import Animated, {Easing} from 'react-native-reanimated';
+import { PanGestureHandler, State } from "react-native-gesture-handler";
+import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 
 const width = Dimensions.get("window").width
+const height = Dimensions.get('window').height
+
+
+const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 
 class CameraScreen extends React.Component{
 
+
+  slide = new Value(SCREEN_HEIGHT);
+
+  slideAnimation = withTimingTransition(this.slide, {duration: 300})
+
+  constructor(props){
+
+    super(props)
+    this.showFinal = new Value(false)
+  }
   state = {
     allowCamera: false,
     type: "front",
     showFlash: "off",
     imagePreview: null,
     isOpen: false,
-    pageShow: true
+    pageShow: true,
+    showCaptionModal: false,
+    caption:""
   }
 
   componentDidMount(){
@@ -47,6 +67,38 @@ class CameraScreen extends React.Component{
   }
 
   componentDidUpdate(){
+  }
+
+  onWriteCaption =() =>{
+
+    if(this.state.showCaptionModal === false){
+      this.showFinal.setValue(true)
+      this.setState({
+        showCaptionModal: true
+      })
+      this.textInput.focus()
+    } else {
+
+      if(this.state.caption.length === 0){
+        this.showFinal.setValue(false)
+        this.setState({
+          showCaptionModal: false
+        })
+        Keyboard.dismiss()
+      } else {
+        Keyboard.dismiss()
+
+      }
+
+    }
+  }
+
+
+  changeCaption = e => {
+    console.log(e)
+    this.setState({
+      caption:e
+    })
   }
 
 
@@ -133,10 +185,15 @@ class CameraScreen extends React.Component{
   }
 
   onCancelPhoto(){
-    this.setState({
-      isOpen: false,
-      imagePreview: null
-    })
+    this.showFinal.setValue(false)
+
+    setTimeout(() =>  this.setState({
+        isOpen: false,
+        imagePreview: null,
+        caption: "",
+        showCaptionModal: false
+      }), 1 )
+
   }
 
   openPhoto =()=> {
@@ -265,11 +322,15 @@ class CameraScreen extends React.Component{
     return(
       <View
         style = {{flex: 1}}>
+        <Animated.Code>
+          {() => cond(this.showFinal, set(this.slide, SCREEN_HEIGHT*0.3), set(this.slide,SCREEN_HEIGHT))}
+        </Animated.Code>
 
         <Modal
           visible = {this.props.showCamera}
           style = {{flex: 1}}
           >
+
         {
           this.state.allowCamera ?
           <View style = {{flex: 1}}>
@@ -279,17 +340,70 @@ class CameraScreen extends React.Component{
 
               <Modal  animationType = "fade" visible = {this.state.isOpen}>
 
-                <Image
-                  source = {{uri:this.state.imagePreview}}
-                  style = {{
-                    height: '100%',
-                    width: "100%",
-                    transform: [
-                      {scaleX: this.state.type === "front" ? -1 : 1}
-                    ]
-                  }}
+                <Animated.View style = {{
+                    position: 'absolute',
+                    backgroundColor: 'white',
 
-                   />
+                    // left: "50%",
+                    // transform: [
+                    //   {translateX: "-50%"}
+                    // ],
+                    alignSelf: 'center',
+                    zIndex: 99,
+                    transform: [
+                      {translateY: this.slideAnimation}
+                    ]
+                  }}>
+                  <KeyboardAvoidingView
+                    style = {{
+                      padding: 20,
+                      backgroundColor: 'white',
+                      width: width*0.8,
+                      alignItems: 'center'
+                    }}
+                    behavior = "height"
+                    keyboardVerticalOffset = {100}
+                    >
+
+                   <Text>Write a caption here today</Text>
+                   <View
+                     style = {{
+                       backgroundColor: "whitesmoke",
+                       padding: 20,
+                       borderRadius:10,
+                       width: "100%"
+                     }}
+                     >
+
+                     <TextInput
+                       value = {this.state.caption}
+                       onChangeText = {this.changeCaption}
+                       placeholder = "Write something here"
+                       multiline = {true}
+                       ref={(input) => { this.textInput = input; }}
+                        />
+                   </View>
+
+                 </KeyboardAvoidingView>
+
+                </Animated.View>
+
+                <TouchableWithoutFeedback
+                  onPress = {() => this.onWriteCaption()}
+                  >
+                  <Image
+                    source = {{uri:this.state.imagePreview}}
+                    style = {{
+                      height: '100%',
+                      width: "100%",
+                      transform: [
+                        {scaleX: this.state.type === "front" ? -1 : 1}
+                      ]
+                    }}
+
+                     />
+
+                </TouchableWithoutFeedback>
 
                <TouchableOpacity
                  onPress = {() => this.onCancelPhoto()}
@@ -303,6 +417,8 @@ class CameraScreen extends React.Component{
                    height = {40}
                    width = {40}/>
                </TouchableOpacity>
+
+
 
                <TouchableOpacity
                  style = {styles.submitBtn}
