@@ -201,7 +201,8 @@ class SocialNewsfeedPost extends React.Component{
             height: width/2- margin ,
             width: width/2 - margin,
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
+
           }}
           >
           <View style = {{
@@ -390,7 +391,7 @@ class SocialNewsfeedPost extends React.Component{
     console.log(this.props.data)
       return (
 
-        <View>
+        <View style={{marginBottom:10}}>
         {/*
         <Animated.View style = {{
             height: this.heightAnimation
@@ -428,7 +429,7 @@ class SocialNewsfeedPost extends React.Component{
                 <Avatar
                   style={styles.close}
                   onPress = {() => this.props.ViewProfile(userUsername)}
-                  size={40}
+                  size={37.5}
                   rounded
                   source = {{
                     uri: profilePic
