@@ -435,7 +435,6 @@ const styles = StyleSheet.create({
     height: Math.round(Dimensions.get('window').width/7),
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor:'red',
 
 
     // borderLeftWidth:0.2,
@@ -453,8 +452,8 @@ const styles = StyleSheet.create({
   },
   monthRow: {
     width: Math.round(Dimensions.get('window').width),
-    // height: 100,
-    flexDirection: "row"
+    height: 100,
+    // flexDirection: "row"
   },
   selected: {
     borderWidth: 1,
