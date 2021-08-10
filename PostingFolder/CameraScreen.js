@@ -241,6 +241,7 @@ class CameraScreen extends React.Component{
     // you gonnna need the userid to get the cells and then the date to
     // filter out the cell
     const ownerId = this.props.curUserId;
+    const caption = this.state.caption;
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd");
     const curDateTime = dateFns.format(new Date(), "yyyy-MM-dd HH:mm:ss")
     // const curDateTime = new Date();
@@ -249,6 +250,7 @@ class CameraScreen extends React.Component{
     formData.append("curDate", curDate)
     formData.append('image', imageFile)
     formData.append('curDateTime', curDateTime)
+    formData.append("caption", caption)
     this.props.authAddTotalLoad()
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSinglePic/`+ownerId,
       formData,
