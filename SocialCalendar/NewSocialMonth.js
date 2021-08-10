@@ -58,9 +58,9 @@ class NewSocialMonth extends React.PureComponent{
 
 
     const onRefresh = this.props.navigation.addListener("focus", () =>{
-      console.log('on refresh here')
-
-      console.log(this.grabDateRange())
+      // console.log('on refresh here')
+      //
+      // console.log(this.grabDateRange())
       // this.getSocialCells(dateRange.start, dateRange.end)
       // .then(data => {
       //   console.log(data.length)
@@ -143,7 +143,7 @@ class NewSocialMonth extends React.PureComponent{
     const curMonth = new Date(year, month, 1);
     const start = dateFns.startOfMonth(curMonth)
     const end = dateFns.endOfMonth(curMonth)
-
+    console.log('andy was here')
     console.log(curMonth, start, end)
     const startDate = dateFns.startOfWeek(start)
     const endDate = dateFns.endOfWeek(end)
