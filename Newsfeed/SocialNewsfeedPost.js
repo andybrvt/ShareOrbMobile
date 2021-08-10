@@ -284,6 +284,7 @@ class SocialNewsfeedPost extends React.Component{
     let lastName="";
     let likeAvatarList=[]
     let itemImage = "";
+    let calComment = 0;
 
     if(this.props.data){
       if(this.props.data.creator){
@@ -323,6 +324,10 @@ class SocialNewsfeedPost extends React.Component{
       }
       if(this.props.data.people_like){
         like_people = this.props.data.people_like
+      }
+
+      if(this.props.data.get_socialCalItemComment){
+        calComment =this.props.data.get_socialCalItemComment.length
       }
     }
 
@@ -541,7 +546,7 @@ class SocialNewsfeedPost extends React.Component{
                           height = {30}
                         />
                         <Text style = {styles.statNum}>
-                          {commentList.length}
+                          {calComment}
                         </Text>
                       </View>
                   </View>

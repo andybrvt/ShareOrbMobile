@@ -78,10 +78,11 @@ import { ChevronLeft } from "react-native-feather";
          comment,
        )
 
-       if(userId !== commentHost){
-         NotificationWebSocketInstance.sendNotification(notificationObject)
-
-       }
+       // FOR LATER
+       // if(userId !== commentHost){
+       //   NotificationWebSocketInstance.sendNotification(notificationObject)
+       //
+       // }
 
        this.setState({
          comment: ""
