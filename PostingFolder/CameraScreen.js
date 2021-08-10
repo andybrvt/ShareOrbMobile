@@ -58,7 +58,8 @@ class CameraScreen extends React.Component{
     isOpen: false,
     pageShow: true,
     showCaptionModal: false,
-    caption:""
+    caption:"",
+    isGallery: false
   }
 
   componentDidMount(){
@@ -217,14 +218,22 @@ class CameraScreen extends React.Component{
 
     let  pickerResult = await ImagePicker.launchImageLibraryAsync({
      mediaTypes: ImagePicker.MediaTypeOptions.All,
-     allowsEditing: true,
+     allowsEditing: false,
      aspect: [4, 3],
      quality: 1,
      base64: true,
    });
 
    if(!pickerResult.cancelled){
-     this.onSavePhoto(pickerResult.uri)
+     this.props.openShowCamera()
+     // setTimeout(() =>
+     this.setState({
+       isOpen: true,
+       imagePreview: pickerResult.uri
+     })
+
+    // , 100)
+
 
    }
    if(pickerResult.cancelled){
@@ -399,7 +408,7 @@ class CameraScreen extends React.Component{
                       height: '100%',
                       width: "100%",
                       transform: [
-                        {scaleX: this.state.type === "front" ? -1 : 1}
+                        {scaleX: this.state.isGallery ? this.state.type === "front" ? -1 : 1  : 1}
                       ]
                     }}
 
