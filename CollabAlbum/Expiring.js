@@ -22,7 +22,7 @@ import authAxios from '../util';
 import * as dateFns from 'date-fns';
 import { Folder } from "react-native-feather";
 import { connect } from 'react-redux';
-
+let likeAvatarList=[]
 
 const FACES = [
   {
@@ -115,7 +115,11 @@ const height = Dimensions.get('window').height
      const lastTime = dateFns.addHours(new Date(item.created_at), 24);
 
      const timeLeft = this.timeLeft(item.created_at)
-
+     likeAvatarList=item.person.map(item => {
+        return {
+          imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+        };
+      });
      let coverPic = item.coverPic;
      if(!coverPic.includes(global.IMAGE_ENDPOINT)){
        coverPic = global.IMAGE_ENDPOINT + item.coverPic
@@ -139,7 +143,7 @@ const height = Dimensions.get('window').height
            </ImageBackground>
            <View style={{top:'2.5%', right:'4%', position:'absolute'}}>
              <FacePile
-               size={2.5} numFaces={3} faces={FACES} circleSize={14}
+               size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
                containerStyle={{height:40}}
                 overlap={0.1} />
            </View>

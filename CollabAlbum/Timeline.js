@@ -23,7 +23,7 @@ import * as dateFns from 'date-fns';
 import { Folder } from "react-native-feather";
 import { connect } from 'react-redux';
 
-let temp=[]
+let likeAvatarList=[]
 const height = Dimensions.get('window').height
 class Timeline extends React.Component{
    state = {
@@ -57,7 +57,7 @@ class Timeline extends React.Component{
    }
    renderItem = ({item}) => {
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
-     temp=item.person.map(item => {
+     likeAvatarList=item.person.map(item => {
         return {
           imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
         };
@@ -78,7 +78,7 @@ class Timeline extends React.Component{
           </Image>
           <View style={{top:'2.5%', right:'4%', position:'absolute'}}>
             <FacePile
-              size={2.5} numFaces={3} faces={temp} circleSize={14}
+              size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
               containerStyle={{height:40}}
                overlap={0.1} />
           </View>
@@ -91,7 +91,7 @@ class Timeline extends React.Component{
    }
 
    render(){
-     var temp=[];
+     var likeAvatarList=[];
      let albums = [];
      if(this.props.timeLine){
        albums = this.props.timeLine

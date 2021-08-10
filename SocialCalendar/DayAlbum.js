@@ -695,7 +695,7 @@ const height = Dimensions.get("window").height
    },
    albumLook:{
      borderRadius: 10,
-     width: SCREEN_WIDTH-10,
+     width: SCREEN_WIDTH-5,
      height: '90%',
      top:'3.5%',
      alignItems:'center',
