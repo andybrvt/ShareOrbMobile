@@ -452,8 +452,8 @@ const styles = StyleSheet.create({
   },
   monthRow: {
     width: Math.round(Dimensions.get('window').width),
-    height: 100,
-    // flexDirection: "row"
+    // height: 100,
+    flexDirection: "row"
   },
   selected: {
     borderWidth: 1,
