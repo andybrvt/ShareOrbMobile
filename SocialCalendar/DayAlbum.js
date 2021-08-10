@@ -162,12 +162,7 @@ const height = Dimensions.get("window").height
      );
    }
 
-
-
    renderItem = ({item}) => {
-     console.log("BBBBBBB")
-     console.log(item)
-     console.log(`${global.IP_CHANGE}`+item.itemImage)
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
      return(
        <View style={{
@@ -184,7 +179,7 @@ const height = Dimensions.get("window").height
           // onPress = {() => this.navAlbum(item.id)}
           >
           <Image
-            resizeMode="contain"
+            resizeMode="cover"
             style={{width:'100%', height:'90%', borderRadius:5, }}
             source = {{
               uri: `${global.IP_CHANGE}`+item.itemImage

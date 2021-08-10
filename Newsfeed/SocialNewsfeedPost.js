@@ -103,13 +103,17 @@ class SocialNewsfeedPost extends React.Component{
   }
 
 
+  navLikePeople(people_like) {
 
-
+    this.props.navigation.navigate("DisplayLikeList",
+      {
+        likePeople:people_like,
+        }
+    );
+  }
 
   changeShowComments = (postId) => {
-
     this.props.onCommentOpen(postId)
-
   }
 
   // New like that likes the single day post
@@ -124,7 +128,6 @@ class SocialNewsfeedPost extends React.Component{
 
   // New unlike for the single day post
   onUnlike = (socialItemId, personUnlike) => {
-
     WebSocketSocialNewsfeedInstance.sendSinglePostUnlike(
       socialItemId,
       personUnlike
@@ -192,7 +195,6 @@ class SocialNewsfeedPost extends React.Component{
     // this function will render the extra pics
 
     let extraCards = []
-
     for(let i= 1; i < items.length; i++){
       extraCards.push(
         <View
@@ -220,8 +222,6 @@ class SocialNewsfeedPost extends React.Component{
               source={{ uri: `${global.IMAGE_ENDPOINT}${items[i].itemImage}` }}
                />
           </View>
-
-
         </View>
       )
     }
@@ -233,7 +233,6 @@ class SocialNewsfeedPost extends React.Component{
     // This function will calculate the extra height to add
 
     let userPostImages = []
-
     if(this.props.data){
       if(this.props.data.post) {
         if(this.props.data.post.get_socialCalItems) {
@@ -241,11 +240,8 @@ class SocialNewsfeedPost extends React.Component{
           }
         }
     }
-
     const numRows = Math.ceil((userPostImages.length-1)/col)
-
     const finalHeight = 553 + ((width/2) * numRows);
-
     return finalHeight
   }
 
@@ -255,8 +251,6 @@ class SocialNewsfeedPost extends React.Component{
       cellId
     })
   }
-
-
 
   revealPhoto = () =>{
     // This function will be use to render the pictures
@@ -288,11 +282,8 @@ class SocialNewsfeedPost extends React.Component{
 
     let firstName="";
     let lastName="";
-    let likeListImages=[]
-
-
+    let likeAvatarList=[]
     let itemImage = "";
-
 
     if(this.props.data){
       if(this.props.data.creator){
@@ -343,7 +334,7 @@ class SocialNewsfeedPost extends React.Component{
 
     if(this.props.data.people_like.length>0)
     {
-      likeListImages = this.props.data.people_like.map(item => {
+      likeAvatarList = this.props.data.people_like.map(item => {
        return {
          imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
        };
@@ -363,10 +354,6 @@ class SocialNewsfeedPost extends React.Component{
     //     }
     //
     //   }
-
-
-
-
     //
     // }
 
@@ -383,8 +370,6 @@ class SocialNewsfeedPost extends React.Component{
     //
     // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
-
-    console.log(this.props.data)
       return (
 
         <View style={{marginBottom:10}}>
@@ -411,9 +396,7 @@ class SocialNewsfeedPost extends React.Component{
                  }}>
                  <TouchableOpacity
                    activeOpacity={0.8}
-                   onPress = {() => this.onPostDirect(calCell)}
-                   // style = {styles.tagCSS3}
-                   >
+                   onPress = {() => this.onPostDirect(calCell)}>
                 <Image
                   style={styles.cover}
                   resizeMode = "cover"
@@ -432,8 +415,6 @@ class SocialNewsfeedPost extends React.Component{
                   }}
                 />
 
-
-
               <View style = {styles.testWhere}>
                 <Text style = {styles.videoFooterUserName}>
                   {global.NAMEMAKE(firstName, lastName)}
@@ -447,7 +428,6 @@ class SocialNewsfeedPost extends React.Component{
                   <Text style = {styles.dayNumTag}>
                     {socialDay}
                   </Text>
-
               </View>
               {/*
               <View style={{backgroundColor:'red'}}>
@@ -461,9 +441,23 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
               </View>
               */}
-              <View style={{flexDirection:'row', bottom:'20%',}}>
+              <View style={{flexDirection:'row', bottom:'25%',}}>
+                {likeAvatarList.length==1?
+                  <View style={{padding:10, width:'85%'}}>
+                    <Text>
+                      {
+                        (caption.length==0)?
+                        ''
+                        :
+                        <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
+                      }
+                      <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
+                    </Text>
+                  </View>
+                  :
 
-                  <View style={{padding:10, flex:2}}>
+
+                  <View style={{padding:10, width:'80%'}}>
                     <Text >
                       {
                         (caption.length==0)?
@@ -471,21 +465,28 @@ class SocialNewsfeedPost extends React.Component{
                         :
                         <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
                       }
-
                       <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
                     </Text>
+                  </View>
+                }
 
+
+                  <View>
+                    <TouchableOpacity
+
+                      onPress={() => this.navLikePeople(like_people)}>
+                      <View>
+                        <FacePile
+                        size={2} numFaces={2} faces={likeAvatarList}
+                        circleSize={15}
+                        containerStyle={{height:40}}
+                         overlap={0.1} />
+                      </View>
+                    </TouchableOpacity>
                   </View>
 
-                <View style={{flex:1, alignItems:'center'}}>
 
-                  <Text style = {styles.videoFooterUserName}>
-                    <FacePile size={2} numFaces={3} faces={FACES} circleSize={15}
-                      containerStyle={{height:40}}
-                       overlap={0.1} />
-                 </Text>
 
-                </View>
               </View>
 
                     {
