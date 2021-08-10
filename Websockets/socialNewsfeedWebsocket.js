@@ -73,6 +73,11 @@ class WebSocketSocialNewsfeed{
     this.callbacks['add_single_post_like'](socialCalCellObj)
 
   }
+  else if(command === "update_single_post"){
+    const socialCalCellObj = parsedData.socialCalItemObj
+    this.callbacks['add_single_post_like'](socialCalCellObj)
+
+  }
 
   // else if (command === "send_social_post_like"){
   //   const contentTypeId = parsedData.contentTypeId
@@ -206,7 +211,8 @@ class WebSocketSocialNewsfeed{
     command: "grab_new_updated_social_cell"
   })
 
-}
+  }
+
 
   sendOneLike(socialCalCellId, personLike, contentTypeId){
     // This is to send a like
@@ -247,6 +253,16 @@ class WebSocketSocialNewsfeed{
       socialItemId: socialItemId,
       personUnlike: personUnlike,
       command: "send_single_post_unlike"
+    })
+  }
+
+  updateSinglePost(socialItemId){
+    // This function is used mostly to update the post after comments
+
+    console.log('update here')
+    this.sendPostsInfo({
+      socialItemId: socialItemId,
+      command: 'update_single_post'
     })
   }
 
