@@ -199,7 +199,7 @@ class NewSocialMonth extends React.PureComponent{
                         </TouchableOpacity>
                       </View>
                     :
-                      <Text> {formattedDate}</Text>
+                      <Text style = {{color: 'red'}}> {formattedDate}</Text>
                     }
                 </View>
               </View>
@@ -313,14 +313,44 @@ class NewSocialMonth extends React.PureComponent{
                 key = {i}
                 style = {[styles.monthCell]}>
                 {
-                  dateFns.isSameMonth(day, curMonth) ?
-                  <Text style = {{
-                    }}> {formattedDate}</Text>
+                  (dateFns.isSameDay(day, new Date()))?
+                  <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
+                    style = {styles.currentMiniBox}>
+                  <View>
+                    {
+                      dateFns.isSameMonth(day, curMonth) ?
+                      <Text style = {{
+                          fontSize:12,
+                          color: 'black',
+                          fontWeight: 'bold'
+                        }}> {formattedDate}</Text>
+                      :
+                      <Text style = {{
+                          fontSize:12,
+                          color: "#8c8c8c"
+                        }}>{formattedDate}</Text>
+                    }
+                    </View>
+                    </TouchableOpacity>
                   :
-
-                  <Text style = {{
-                      color: "#8c8c8c"
-                    }}>{formattedDate}</Text>
+                  <View onPress = {() => this.props.navigation.navigate("PostingPage")}
+                    style = {styles.miniBox}>
+                  <View>
+                  {
+                    dateFns.isSameMonth(day, curMonth) ?
+                    <Text style = {{
+                        fontSize:12,
+                        color: 'black',
+                        fontWeight: 'bold'
+                      }}> {formattedDate}</Text>
+                    :
+                    <Text style = {{
+                        fontSize:12,
+                        color: "#8c8c8c"
+                      }}>{formattedDate}</Text>
+                  }
+                  </View>
+                  </View>
                 }
               </View>
             )
