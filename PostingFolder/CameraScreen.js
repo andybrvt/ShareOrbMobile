@@ -26,7 +26,6 @@ import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsock
 import * as authActions from '../store/actions/auth';
 import * as ImagePicker from 'expo-image-picker';
 
-
 const width = Dimensions.get("window").width
 
 
@@ -38,7 +37,8 @@ class CameraScreen extends React.Component{
     showFlash: "off",
     imagePreview: null,
     isOpen: false,
-    pageShow: true
+    pageShow: true,
+    showCaptionModal: false
   }
 
   componentDidMount(){
@@ -270,6 +270,7 @@ class CameraScreen extends React.Component{
           visible = {this.props.showCamera}
           style = {{flex: 1}}
           >
+
         {
           this.state.allowCamera ?
           <View style = {{flex: 1}}>
