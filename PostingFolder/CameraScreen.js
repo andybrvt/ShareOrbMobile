@@ -19,7 +19,7 @@ import {
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import { Zap, ZapOff, X, ArrowLeft, Grid} from "react-native-feather";
+import { Zap, ZapOff, X, ArrowLeft, Grid, Repeat} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
@@ -322,14 +322,9 @@ class CameraScreen extends React.Component{
               <Camera
                 ref = {node => {this.cameraRef = node}}
                 type = {this.state.type}
+                ratio={"16:9"}
                 flashMode = {this.state.showFlash}
                 style = {{flex: 1}}>
-
-                  <TouchableWithoutFeedback
-                    onPress = {() => this.onSwitchCamera()}
-                    style = {{flex: 1}}>
-                    <View style = {{ flex: 1, }}></View>
-                  </TouchableWithoutFeedback>
 
 
 
@@ -339,20 +334,21 @@ class CameraScreen extends React.Component{
                       style = {{
                         position: 'absolute',
 
-                        top: 20
+                        top: '5%',
+                        left:'5%',
                       }}
                       >
                       <ArrowLeft
                         stroke = "white"
-                        width = {45} height = {45} />
+                        width = {40} height = {40} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                       onPress = {this.openPhoto}
                       style = {{
                         position: 'absolute',
-                        bottom: 30,
-                        left: 30,
+                        bottom: '5%',
+                        left: '5%',
                         alignSelf: 'flex-start',
                       }}
                       >
@@ -371,13 +367,13 @@ class CameraScreen extends React.Component{
                         onPress = {() => this.onFlash()}
                         style ={{
                           position: 'absolute',
-                          top: 200,
-                          right: 20
+                          top: '10%',
+                          right: '5%',
                         }}>
                         <Zap
                           stroke = "white"
-                          width = {40}
-                          height = {40} />
+                          width = {30}
+                          height = {30} />
                       </TouchableOpacity>
 
                       :
@@ -387,23 +383,40 @@ class CameraScreen extends React.Component{
                         style ={{
                           // position: 'relative',
                           position: 'absolute',
-                          top: 200,
-                          right: 20
+                          top: '10%',
+                          right: '5%',
                           // top: 100
                         }}>
                         <ZapOff
                           stroke = "white"
-                          width = {40}
-                          height = {40} />
+                          width = {30}
+                          height = {30} />
                       </TouchableOpacity>
 
                     }
 
 
+                    <TouchableOpacity
+                      onPress = {() => this.onSwitchCamera()}
+                      style ={{
+                        // position: 'relative',
+                        position: 'absolute',
+                        top: '20%',
+                        right: '5%',
+                        // top: 100
+                      }}>
+                      <Repeat
+                        stroke = "white"
+                        width = {30}
+                        height = {30} />
+                    </TouchableOpacity>
+
 
                   <TouchableOpacity
                     onPress = {() => this.takePicture()}
                     style = {styles.captureBtn}></TouchableOpacity>
+
+
 
               </Camera>
             }
@@ -479,9 +492,9 @@ const styles = StyleSheet.create({
   },
   captureBtn: {
     position: 'absolute',
-    bottom: 20,
-    width: 80,
-    height: 80,
+    bottom: '5%',
+    width: 90,
+    height: 90,
     borderRadius: 100,
     borderWidth: 5,
     alignSelf: 'center',

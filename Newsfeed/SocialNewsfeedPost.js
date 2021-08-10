@@ -18,7 +18,7 @@ import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsock
 import NotificationWebSocketInstance from  '../Websockets/notificationWebsocket';
 import { Navigation2, Heart, MessageCircle } from "react-native-feather";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-
+import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 const FACES = [
@@ -377,7 +377,7 @@ class SocialNewsfeedPost extends React.Component{
     // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
       return (
 
-        <View style={{marginBottom:10}}>
+        <View style={{marginTop:10, marginBottom:10}}>
         {/*
         <Animated.View style = {{
             height: this.heightAnimation
@@ -474,24 +474,16 @@ class SocialNewsfeedPost extends React.Component{
                     </Text>
                   </View>
                 }
-
-
                   <View>
                     <TouchableOpacity
-
                       onPress={() => this.navLikePeople(like_people)}>
-                      <View>
                         <FacePile
                         size={2} numFaces={2} faces={likeAvatarList}
                         circleSize={15}
                         containerStyle={{height:40}}
                          overlap={0.1} />
-                      </View>
                     </TouchableOpacity>
                   </View>
-
-
-
               </View>
 
                     {
