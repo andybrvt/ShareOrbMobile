@@ -30,17 +30,17 @@ class SocialCalendarTap extends React.Component{
 
   renderHeader(){
 
-    const dateFormat =  "MMMM yyyy"
+    const dateFormat =  "MMMM"
 
     return(
-      <View>
+      <View style = {styles.monthTitleContainer}>
         <View>
           <ChevronLeft />
 
         </View>
 
         <View>
-          <Text>
+          <Text style = {styles.monthTitle}>
             {dateFns.format(this.state.currentDate, dateFormat)}
           </Text>
         </View>
@@ -288,10 +288,9 @@ class SocialCalendarTap extends React.Component{
     const month = dateFns.format(this.state.currentDate, "MMMM yyyy")
     return(
       <View style = {styles.centerMonth}>
-          <Text style = {styles.monthTitle}>
-            {month}
-          </Text>
-          {this.initializedMonth()}
+
+        {this.renderHeader()}
+        {this.initializedMonth()}
       </View>
     )
   }
@@ -323,11 +322,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width,
   },
+  monthTitleContainer: {
+    flexDirection: "row",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'pink',
+    width: width,
+  },
   monthTitle: {
-
-    fontSize:18,
-    // color:'red',
-    fontWeight:'bold',
+    fontSize: 18,
+    fontWeight: 'bold'
   },
   monthContainer: {
     flexDirection: "column",
