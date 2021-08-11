@@ -99,7 +99,7 @@ class SocialCalendarTap extends React.Component{
 
   renderHeader(){
 
-    const dateFormat =  "MMMM"
+    const dateFormat =  "MMMM yyyy"
 
     return(
       <View style = {styles.monthTitleContainer}>
@@ -145,232 +145,138 @@ class SocialCalendarTap extends React.Component{
     let day = startDate;
     let formattedDate = "";
 
-    if(diffWeeks === 4){
-
+    if(diffWeeks === 4 ){
       while(day<= dateFns.addWeeks(endDate, 1)){
+        formattedDate = dateFns.format(day, dateFormat);
 
-        for(let i = 0; i< 7; i++){
 
-          for(let item = 0; item < cells.length; item++){
-            const date = new Date(cells[item].socialCaldate)
-            const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
-
-            if(dateFns.isSameDay(utc, day)){
-              toDoStuff.push(
-                cells[item]
-              )
+        days.push(
+          <View
+            // onPress = {() => this.props.navigation.navigate("PostingPage")}
+            style = {[styles.monthCell]}>
+            {
+              (dateFns.isSameDay(day, new Date()))?
+              <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
+                style = {styles.currentMiniBox}>
+              <View>
+                {
+                  dateFns.isSameMonth(day, curMonth) ?
+                  <Text style = {{
+                      fontSize:12,
+                      color: 'black',
+                      fontWeight: 'bold'
+                    }}> {formattedDate}</Text>
+                  :
+                  <Text style = {{
+                      fontSize:12,
+                      color: "#8c8c8c"
+                    }}>{formattedDate}</Text>
+                }
+                </View>
+                </TouchableOpacity>
+              :
+              <View onPress = {() => this.props.navigation.navigate("PostingPage")}
+                style = {styles.miniBox}>
+              <View>
+              {
+                dateFns.isSameMonth(day, curMonth) ?
+                <Text style = {{
+                    fontSize:12,
+                    color: 'black',
+                    fontWeight: 'bold'
+                  }}> {formattedDate}</Text>
+                :
+                <Text style = {{
+                    fontSize:12,
+                    color: "#8c8c8c"
+                  }}>{formattedDate}</Text>
+              }
+              </View>
+              </View>
             }
-          }
-
-          formattedDate = dateFns.format(day, dateFormat);
-          const cloneDay = day;
-
-          if(toDoStuff.length > 0){
-            let info = toDoStuff[0];
-            days.push(
-              <View
-                key = {i}
-                style={styles.monthPicCell}
-                >
-                <View style = {styles.imageHolder}>
-                  {
-                    toDoStuff[0].coverPic ?
-                      <View>
-                        <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
-                          <View style={styles.miniBox}>
-                            <Text style = {styles.formatDateImage}> {formattedDate}</Text>
-                            <Image
-                              style = {dateFns.isSameDay(day, new Date()) ?
-                                styles.smallImageGlow : styles.smallImage
-                              }
-
-                              resizeMode = "cover"
-                              source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
-                              />
-                          </View>
-
-                        </TouchableOpacity>
-                      </View>
-                    :
-                      <Text style = {{color: 'red'}}> {formattedDate}</Text>
-                    }
-                </View>
-              </View>
-            )
-          } else {
-            days.push(
-              <View
-                key = {i}
-                style = {[styles.monthCell
-                ]}>
-                {
-                  (dateFns.isSameDay(day, new Date()))?
-                  <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
-                    style = {styles.currentMiniBox}>
-                  <View>
-                    {
-                      dateFns.isSameMonth(day, curMonth) ?
-                      <Text style = {{
-                          fontSize:12,
-                          color: 'black',
-                          fontWeight: 'bold'
-                        }}> {formattedDate}</Text>
-                      :
-                      <Text style = {{
-                          fontSize:12,
-                          color: "#8c8c8c"
-                        }}>{formattedDate}</Text>
-                    }
-                    </View>
-                    </TouchableOpacity>
-                  :
-                  <View onPress = {() => this.props.navigation.navigate("PostingPage")}
-                    style = {styles.miniBox}>
-                  <View>
-                  {
-                    dateFns.isSameMonth(day, curMonth) ?
-                    <Text style = {{
-                        fontSize:12,
-                        color: 'black',
-                        fontWeight: 'bold'
-                      }}> {formattedDate}</Text>
-                    :
-                    <Text style = {{
-                        fontSize:12,
-                        color: "#8c8c8c"
-                      }}>{formattedDate}</Text>
-                  }
-                  </View>
-                  </View>
-                }
-              </View>
-            )
-          }
-
-          toDoStuff = []
-          day = dateFns.addDays(day, 1);
-        }
-
-        rows.push(
-          <View
-            key = {day}
-             style = {styles.monthRow}>
-              {days}
           </View>
         )
 
-        days = []
-      }
-    } else if(diffWeeks === 5){
-      while(day <= endDate){
-        for(let i = 0; i< 7; i++){
+        day= dateFns.addDays(day,1);
 
-          formattedDate = dateFns.format(day, dateFormat);
-          const cloneDay = day;
-          if(toDoStuff.length > 0){
-            days.push(
-              <View
-                key = {i}
-                style = {[styles.monthPicCell]}>
-                <View style = {[dateFns.isSameDay(day, new Date()) ?
-                  styles.currentMiniBox : styles.miniBox
-                ]}>
-                  {
-                    toDoStuff[0].coverPic ?
-                      <View>
-                        <TouchableOpacity  onPress={() => this.ViewDay(toDoStuff.id)}>
-                          <Image
-                            style = {styles.smallImage}
-                            resizeMode = "cover"
-                            source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
-                            />
-                        </TouchableOpacity>
-                      </View>
-                    :
-                      <Text> {formattedDate}</Text>
-                    }
-                </View>
-              </View>
-            )
-          } else {
-            days.push(
-              <View
-                // onPress = {() => this.props.navigation.navigate("PostingPage")}
-                key = {i}
-                style = {[styles.monthCell]}>
-                {
-                  (dateFns.isSameDay(day, new Date()))?
-                  <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
-                    style = {styles.currentMiniBox}>
-                  <View>
-                    {
-                      dateFns.isSameMonth(day, curMonth) ?
-                      <Text style = {{
-                          fontSize:12,
-                          color: 'black',
-                          fontWeight: 'bold'
-                        }}> {formattedDate}</Text>
-                      :
-                      <Text style = {{
-                          fontSize:12,
-                          color: "#8c8c8c"
-                        }}>{formattedDate}</Text>
-                    }
-                    </View>
-                    </TouchableOpacity>
-                  :
-                  <View onPress = {() => this.props.navigation.navigate("PostingPage")}
-                    style = {styles.miniBox}>
-                  <View>
-                  {
-                    dateFns.isSameMonth(day, curMonth) ?
-                    <Text style = {{
-                        fontSize:12,
-                        color: 'black',
-                        fontWeight: 'bold'
-                      }}> {formattedDate}</Text>
-                    :
-                    <Text style = {{
-                        fontSize:12,
-                        color: "#8c8c8c"
-                      }}>{formattedDate}</Text>
-                  }
-                  </View>
-                  </View>
-                }
-              </View>
-            )
-          }
 
-          toDoStuff = [];
-          day= dateFns.addDays(day,1);
-        }
-
-        rows.push(
-          <View
-            key = {day}
-             style = {styles.monthRow}>
-              {days}
-          </View>
-        )
-
-        days = []
-
-      }
 
     }
 
+
+    } else {
+      while(day<= endDate){
+        formattedDate = dateFns.format(day, dateFormat);
+
+
+        days.push(
+          <View
+            // onPress = {() => this.props.navigation.navigate("PostingPage")}
+            style = {[styles.monthCell]}>
+            {
+              (dateFns.isSameDay(day, new Date()))?
+              <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
+                style = {styles.currentMiniBox}>
+              <View>
+                {
+                  dateFns.isSameMonth(day, curMonth) ?
+                  <Text style = {{
+                      fontSize:12,
+                      color: 'black',
+                      fontWeight: 'bold'
+                    }}> {formattedDate}</Text>
+                  :
+                  <Text style = {{
+                      fontSize:12,
+                      color: "#8c8c8c"
+                    }}>{formattedDate}</Text>
+                }
+                </View>
+                </TouchableOpacity>
+              :
+              <View onPress = {() => this.props.navigation.navigate("PostingPage")}
+                style = {styles.miniBox}>
+              <View>
+              {
+                dateFns.isSameMonth(day, curMonth) ?
+                <Text style = {{
+                    fontSize:12,
+                    color: 'black',
+                    fontWeight: 'bold'
+                  }}> {formattedDate}</Text>
+                :
+                <Text style = {{
+                    fontSize:12,
+                    color: "#8c8c8c"
+                  }}>{formattedDate}</Text>
+              }
+              </View>
+              </View>
+            }
+          </View>
+        )
+
+        day= dateFns.addDays(day,1);
+
+
+
+    }
+
+    }
+
+
+
     return (
-      <Text style = {styles.monthContainer}> {rows}</Text>
+      <Text style = {styles.monthContainer}>{days}</Text>
     )
 
-  }
+
+}
 
   render(){
     const month = dateFns.format(this.state.currentDate, "MMMM yyyy")
     return(
       <View style = {styles.centerMonth}>
-
         {this.renderHeader()}
         {this.initializedMonth()}
       </View>
@@ -394,13 +300,13 @@ const styles = StyleSheet.create({
     backgroundColor:'whitesmoke',
      width:'92.5%', height:'92.5%',
       borderRadius:5,
-    alignItems: "center", padding:2
+    alignItems: "center",
   },
   currentMiniBox: {
     backgroundColor:'#1890ff',
      width:'92.5%', height:'92.5%',
       borderRadius:5,
-    alignItems: "center", padding:2
+    alignItems: "center",
   },
   formatDateImage:{
     position: 'absolute',
@@ -436,7 +342,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   monthContainer: {
-    flexDirection: "column",
+    // flexDirection: "column",
     // borderBottomWidth: 0.2,
   },
   // This is for the cell
@@ -444,8 +350,7 @@ const styles = StyleSheet.create({
   // divde the full with by 7 to get the wdith of each cell
   // and then make it the height
   monthCell: {
-    flex: 1,
-
+    width: width/7,
     height: Math.round(Dimensions.get('window').width/7),
     alignItems: "center",
     justifyContent: "center",

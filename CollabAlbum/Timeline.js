@@ -76,7 +76,7 @@ class Timeline extends React.Component{
               uri: item.coverPic
             }}>
           </Image>
-          <View style={{top:'2.5%', right:'4%', position:'absolute'}}>
+          <View style={{top:'2.5%', right:'7.5%', position:'absolute'}}>
             <FacePile
               size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
               containerStyle={{height:40}}
@@ -148,17 +148,18 @@ class Timeline extends React.Component{
    albumTitle2:{
      bottom:'25%',
      color:'white',
-     fontSize:15,
+
      padding:10,
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 10
    },
    albumTitle:{
-     bottom:'17.5%',
+     bottom:'22.5%',
      color:'white',
-     fontSize:15,
-     padding:10,
+     fontSize:25,
+     fontWeight:'bold',
+     padding:20,
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 10

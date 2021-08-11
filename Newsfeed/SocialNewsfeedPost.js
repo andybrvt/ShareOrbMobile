@@ -21,26 +21,11 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 const FACES = [
-  {
-    "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-  },
-  {
 
-    "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-  },
   {
-
-    "imageUrl": 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+    id: 2,
+    imageUrl: 'https://media3.giphy.com/media/yV7jSbydbbkSRzgrn7/giphy.gif?cid=790b761116d91445dcf0e4c8ec2b80856514d631e1e976b6&rid=giphy.gif&ct=g',
   },
-  {
-
-    "imageUrl": 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-  },
-  {
-
-    "imageUrl": 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
-  },
-
 ];
 const width = Dimensions.get("window").width
 const margin = 6;
@@ -263,12 +248,12 @@ class SocialNewsfeedPost extends React.Component{
     let cellMonth = "";
     let cellDay = "";
     let location = "";
-    let userUsername = '';
+
 
     let post = {};
 
     let profilePic="";
-    let caption="";
+
     let userPostImages = []
     let like_people = [];
     let commentList = [];
@@ -291,9 +276,7 @@ class SocialNewsfeedPost extends React.Component{
         if(this.props.data.creator.profile_picture){
           profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.creator.profile_picture
         }
-        if(this.props.data.creator.username){
-          userUsername = this.props.data.creator.username;
-        }
+
         if(this.props.data.creator.first_name){
           firstName = this.props.data.creator.first_name;
         }
@@ -318,9 +301,7 @@ class SocialNewsfeedPost extends React.Component{
         itemImage = `${global.IMAGE_ENDPOINT}`+this.props.data.itemImage;
       }
 
-      if(this.props.data.caption){
-        caption = this.props.data.caption
-      }
+
       if(this.props.data.people_like){
         like_people = this.props.data.people_like
       }
@@ -338,11 +319,16 @@ class SocialNewsfeedPost extends React.Component{
 
     if(this.props.data.people_like.length>0)
     {
+
       likeAvatarList = this.props.data.people_like.map(item => {
        return {
          imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
        };
        });
+
+       // likeAvatarList.push({"imageURL":"http://i.imgur.com/f93vCxM.gif"});
+       // console.log(likeAvatarList)
+       // likeAvatarList.push({'imageURL':'http://i.imgur.com/f93vCxM.gif'}]),
     }
 
     // if(this.props.data) {
@@ -376,7 +362,7 @@ class SocialNewsfeedPost extends React.Component{
     // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
       return (
 
-        <View style={{marginBottom:200}}>
+        <View>
         {/*
         <Animated.View style = {{
             height: this.heightAnimation
@@ -424,7 +410,7 @@ class SocialNewsfeedPost extends React.Component{
                   {global.NAMEMAKE(firstName, lastName)}
                 </Text>
               </View>
-
+              {/*
               <View style = {styles.testWhere2}>
                   <Text style = {styles.videoFooterUserName}>
                     {socialMonth}
@@ -432,6 +418,14 @@ class SocialNewsfeedPost extends React.Component{
                   <Text style = {styles.dayNumTag}>
                     {socialDay}
                   </Text>
+              </View>
+              */}
+              <View style={{left:'5%', bottom:'5%', position:'absolute'}}>
+                <TouchableOpacity
+                  onPress={() => this.navLikePeople(like_people)}>
+                    <FacePile numFaces={3} circleStyle={{backgroundColor:'red'}} faces={likeAvatarList} overlap={1}
+                       circleSize={15} />
+                </TouchableOpacity>
               </View>
               {/*
               <View style={{backgroundColor:'red'}}>
@@ -445,17 +439,7 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
               </View>
               */}
-              <View style={{padding:10}}>
-                <Text>
-                  {
-                    (caption.length==0)?
-                    ''
-                    :
-                    <Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Text>
-                  }
-                  <Text numberofLines={1} style={{color:'black'}}>{caption.substring(0,140)}</Text>
-                </Text>
-              </View>
+
               {/*
               <View style={{flexDirection:'row'}}>
                 {likeAvatarList.length==1?
@@ -498,16 +482,7 @@ class SocialNewsfeedPost extends React.Component{
               </View>
               */}
 
-              <View >
-                <TouchableOpacity
-                  onPress={() => this.navLikePeople(like_people)}>
-                    <FacePile
-                    size={2} numFaces={2} faces={likeAvatarList}
-                    circleSize={15}
-                    containerStyle={{height:40}}
-                     overlap={0.1} />
-                </TouchableOpacity>
-              </View>
+
                     {
                       peopleLikeId.includes(this.props.userId ) ?
                       <TouchableOpacity
@@ -520,8 +495,8 @@ class SocialNewsfeedPost extends React.Component{
                           <Heart
                             stroke = "red"
                             fill="red"
-                            width ={30}
-                            height = {30}
+                            width = {27.5}
+                            height = {27.5}
                              />
                           <Text  style = {styles.statNum}>
                             {like_people.length}
@@ -540,8 +515,8 @@ class SocialNewsfeedPost extends React.Component{
                           <Heart
                             stroke = "white"
                             fill="white"
-                            width ={30}
-                            height = {30}
+                            width = {27.5}
+                            height = {27.5}
                           />
                          <Text style = {styles.statNum}>
                           {like_people.length}
@@ -660,7 +635,7 @@ class SocialNewsfeedPost extends React.Component{
     let lastName=""
     let userId = ""
     let actionText = ""
-
+    let caption=""
 
     if(this.props.data) {
       if(this.props.data.post){
@@ -676,20 +651,25 @@ class SocialNewsfeedPost extends React.Component{
         }
       }
 
-
-      if(this.props.data.owner){
-        if(this.props.data.owner.profile_picture){
-          profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.owner.profile_picture
+      console.log("AAAAAAAAB")
+      console.log(this.props.data.creator)
+      if(this.props.data.creator){
+        if(this.props.data.creator.profile_picture){
+          profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.creator.profile_picture
         }
 
 
-        if(this.props.data.owner.id){
-          userId = this.props.data.owner.id
+        if(this.props.data.creator.id){
+          userId = this.props.data.creator.id
         }
 
-        if(this.props.data.owner.username){
-          userUsername = this.props.data.owner.username
+        if(this.props.data.creator.username){
+          userUsername = this.props.data.creator.username
         }
+      }
+
+      if(this.props.data.caption){
+        caption = this.props.data.caption
       }
 
 
@@ -716,6 +696,17 @@ class SocialNewsfeedPost extends React.Component{
         */}
         <View style = {styles.imageContainer}>
             {this.revealPhoto()}
+        </View>
+        <View style={{padding:15}}>
+          <Text >
+            {
+              (caption.length==0)?
+              ''
+              :
+              <Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Text>
+            }
+            <Text numberofLines={1} style={{color:'black'}}>{caption.substring(0,140)}</Text>
+          </Text>
         </View>
       </View>
     )
@@ -750,7 +741,7 @@ const styles = StyleSheet.create({
   container: {
 
     backgroundColor: 'lightgray',
-    height: 425,
+    height: 350,
     borderRadius: 5,
     position: 'relative',
     zIndex: 99,
@@ -775,7 +766,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     borderRadius: 5,
     position: "relative",
-    height: 425,
+    height: 350,
     shadowColor: '#000',
     width:SCREEN_WIDTH-5,
     left:1,
@@ -894,10 +885,10 @@ const styles = StyleSheet.create({
   tagCSS1: {
     position:'absolute',
     // backgroundColor: 'rgba(0,0,0,.6)',
-    padding:9,
+    padding:15,
     borderRadius:25,
     color:'white',
-    bottom:'35%',
+    bottom:'30%',
     justifyContent: 'center',
     fontSize:13,
     right:7.5,
@@ -913,10 +904,10 @@ const styles = StyleSheet.create({
   tagCSS2: {
     position:'absolute',
     // backgroundColor: 'rgba(0,0,0,.6)',
-    padding:9,
+    padding:15,
     borderRadius:25,
     color:'white',
-    bottom:'22.5%',
+    bottom:'17.5%',
     fontSize:13,
     right:7.5,
     textShadowColor: 'black',
@@ -993,7 +984,7 @@ const styles = StyleSheet.create({
 
   imageContainer: {
     flex: 1,
-
+    minHeight:300,
     // backgroundColor: 'red',
     position: "relative",
   },
