@@ -28,13 +28,29 @@ class SocialCalendarTap extends React.Component{
 
   }
 
+  addMonth = ()=>{
+    // this function will increaes month by one
+    this.setState({
+      currentDate: dateFns.addMonths(this.state.currentDate, 1),
+    })
+  }
+
+  subMonth =() =>{
+    // this function will decrase the month by one
+    this.setState({
+      currentDate: dateFns.subMonths(this.state.currentDate, 1)
+    })
+  }
+
   renderHeader(){
 
     const dateFormat =  "MMMM"
 
     return(
       <View style = {styles.monthTitleContainer}>
-        <TouchableOpacity style = {styles.monthLeftContainer}>
+        <TouchableOpacity
+          onPress = {() => this.subMonth()}
+          style = {styles.monthLeftContainer}>
           <ChevronLeft />
 
         </TouchableOpacity>
@@ -45,7 +61,9 @@ class SocialCalendarTap extends React.Component{
           </Text>
         </View>
 
-        <TouchableOpacity style = {styles.monthRightContainer}>
+        <TouchableOpacity
+          onPress = {() => this.addMonth()}
+          style = {styles.monthRightContainer}>
           <ChevronRight />
         </TouchableOpacity>
 
