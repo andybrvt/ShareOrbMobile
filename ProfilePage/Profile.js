@@ -142,19 +142,13 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
-          {
-            Platform.OS === "ios" ?
-
+        
             <SocialCalendarVonly
               userId = {this.props.currentId}
               navigation = {this.props.navigation}
               />
 
-            :
 
-            <SocialCalendarTap />
-
-          }
 
         </View>
       </BackgroundContainer>

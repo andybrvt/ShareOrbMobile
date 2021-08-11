@@ -126,10 +126,9 @@ class SocialCalendarTap extends React.Component{
     )
   }
 
-  initializedMonth(){
+  initializedMonth(month, year, cells){
 
-    const cells = this.state.socialCells;
-    const curMonth = this.state.currentDate;
+    const curMonth = new Date(year, month, 1);
     const monthStart = dateFns.startOfMonth(curMonth);
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart);
@@ -274,11 +273,15 @@ class SocialCalendarTap extends React.Component{
 }
 
   render(){
-    const month = dateFns.format(this.state.currentDate, "MMMM yyyy")
+    const month = new Date(this.props.year, this.props.month, 1);
+    const formatMonth = dateFns.format(month, 'MMMM yyyy');
+    const {socialCells} = this.state;
     return(
       <View style = {styles.centerMonth}>
-        {this.renderHeader()}
-        {this.initializedMonth()}
+        <Text style = {styles.monthTitle}>
+          {formatMonth}
+        </Text>
+        {this.initializedMonth(this.props.month, this.props.year, socialCells)}
       </View>
     )
   }
@@ -319,28 +322,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width,
   },
-  monthTitleContainer: {
-    flexDirection: "row",
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: width,
-  },
+
   monthTitle: {
-    fontSize: 18,
-    fontWeight: 'bold'
+    fontSize:18,
+    // color:'red',
+    fontWeight:'bold',
   },
-  monthLeftContainer: {
-    flex:1,
-    alignItems: 'center'
-  },
-  monthRightContainer: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  monthMiddleContainer: {
-    flex: 3,
-    alignItems: 'center',
-  },
+
   monthContainer: {
     // flexDirection: "column",
     // borderBottomWidth: 0.2,

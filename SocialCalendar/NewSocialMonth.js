@@ -143,7 +143,7 @@ class NewSocialMonth extends React.PureComponent{
     const curMonth = new Date(year, month, 1);
     const start = dateFns.startOfMonth(curMonth)
     const end = dateFns.endOfMonth(curMonth)
-    console.log('andy was here')
+
     console.log(curMonth, start, end)
     const startDate = dateFns.startOfWeek(start)
     const endDate = dateFns.endOfWeek(end)

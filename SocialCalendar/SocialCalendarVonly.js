@@ -7,6 +7,7 @@ import { Text,
    SafeAreaView,
    TouchableOpacity,
    Animated,
+   Platform,
    Dimensions } from 'react-native';
 import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
@@ -15,6 +16,7 @@ import  authAxios from '../util';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 // import Animated, {Easing} from 'react-native-reanimated';
 import NewSocialMonth from './NewSocialMonth';
+import SocialCalendarTap from './SocialCalendarTap';
 
 let {height, width} = Dimensions.get('window')
 
@@ -391,13 +393,30 @@ class SocialCalendarVonly extends React.Component{
               }}
 
             >
-            <NewSocialMonth
-              month = {this.state.month_array[0]}
-              year = {this.state.year_array[0]}
-              navigation = {this.props.navigation}
-              userId = {this.props.userId}
-              navigation = {this.props.navigation}
-               />
+            {
+              Platform.OS === "ios" ?
+
+              <NewSocialMonth
+                month = {this.state.month_array[0]}
+                year = {this.state.year_array[0]}
+                navigation = {this.props.navigation}
+                userId = {this.props.userId}
+                navigation = {this.props.navigation}
+                 />
+
+               :
+
+               <SocialCalendarTap
+                 month = {this.state.month_array[0]}
+                 year = {this.state.year_array[0]}
+                 navigation = {this.props.navigation}
+                 userId = {this.props.userId}
+                 navigation = {this.props.navigation}
+                 />
+
+
+            }
+
           </Animated.View>
         </PanGestureHandler>
 
@@ -416,13 +435,30 @@ class SocialCalendarVonly extends React.Component{
                 opacity: this.opacity_array[1],
             }}
             >
-            <NewSocialMonth
-              month = {this.state.month_array[1]}
-              year = {this.state.year_array[1]}
-              navigation = {this.props.navigation}
-              userId = {this.props.userId}
 
-               />
+            {
+              Platform.OS === "ios" ?
+
+              <NewSocialMonth
+                month = {this.state.month_array[1]}
+                year = {this.state.year_array[1]}
+                navigation = {this.props.navigation}
+                userId = {this.props.userId}
+                navigation = {this.props.navigation}
+                 />
+
+               :
+
+               <SocialCalendarTap
+                 month = {this.state.month_array[1]}
+                 year = {this.state.year_array[1]}
+                 navigation = {this.props.navigation}
+                 userId = {this.props.userId}
+                 navigation = {this.props.navigation}
+                 />
+
+
+            }
           </Animated.View>
 
         </PanGestureHandler>
@@ -442,12 +478,29 @@ class SocialCalendarVonly extends React.Component{
                 opacity: this.opacity_array[2],
             }}
             >
-            <NewSocialMonth
-              month = {this.state.month_array[2]}
-              year = {this.state.year_array[2]}
-              navigation = {this.props.navigation}
-              userId = {this.props.userId}
-               />
+            {
+              Platform.OS === "ios" ?
+
+              <NewSocialMonth
+                month = {this.state.month_array[2]}
+                year = {this.state.year_array[2]}
+                navigation = {this.props.navigation}
+                userId = {this.props.userId}
+                navigation = {this.props.navigation}
+                 />
+
+               :
+
+               <SocialCalendarTap
+                 month = {this.state.month_array[2]}
+                 year = {this.state.year_array[2]}
+                 navigation = {this.props.navigation}
+                 userId = {this.props.userId}
+                 navigation = {this.props.navigation}
+                  />
+
+
+            }
           </Animated.View>
 
         </PanGestureHandler>
