@@ -376,7 +376,7 @@ class SocialNewsfeedPost extends React.Component{
     // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
       return (
 
-        <View style={{marginTop:10, marginBottom:10}}>
+        <View style={{marginBottom:200}}>
         {/*
         <Animated.View style = {{
             height: this.heightAnimation
@@ -445,7 +445,19 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
               </View>
               */}
-              <View style={{flexDirection:'row', bottom:'25%',}}>
+              <View style={{padding:10}}>
+                <Text>
+                  {
+                    (caption.length==0)?
+                    ''
+                    :
+                    <Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Text>
+                  }
+                  <Text numberofLines={1} style={{color:'black'}}>{caption.substring(0,140)}</Text>
+                </Text>
+              </View>
+              {/*
+              <View style={{flexDirection:'row'}}>
                 {likeAvatarList.length==1?
                   <View style={{padding:10, width:'87.5%'}}>
                     <Text>
@@ -453,7 +465,7 @@ class SocialNewsfeedPost extends React.Component{
                         (caption.length==0)?
                         ''
                         :
-                        <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
+                        <Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Text>
                       }
                       <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
                     </Text>
@@ -484,7 +496,18 @@ class SocialNewsfeedPost extends React.Component{
                     </TouchableOpacity>
                   </View>
               </View>
+              */}
 
+              <View >
+                <TouchableOpacity
+                  onPress={() => this.navLikePeople(like_people)}>
+                    <FacePile
+                    size={2} numFaces={2} faces={likeAvatarList}
+                    circleSize={15}
+                    containerStyle={{height:40}}
+                     overlap={0.1} />
+                </TouchableOpacity>
+              </View>
                     {
                       peopleLikeId.includes(this.props.userId ) ?
                       <TouchableOpacity
@@ -727,7 +750,7 @@ const styles = StyleSheet.create({
   container: {
 
     backgroundColor: 'lightgray',
-    height: 450,
+    height: 425,
     borderRadius: 5,
     position: 'relative',
     zIndex: 99,
@@ -752,8 +775,10 @@ const styles = StyleSheet.create({
     // flex: 1,
     borderRadius: 5,
     position: "relative",
-    height: 450,
+    height: 425,
     shadowColor: '#000',
+    width:SCREEN_WIDTH-5,
+    left:1,
     // transform: [{ scale: 0.9 }]
   },
   smallPic: {
