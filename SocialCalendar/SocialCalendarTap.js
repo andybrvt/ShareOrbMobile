@@ -34,20 +34,20 @@ class SocialCalendarTap extends React.Component{
 
     return(
       <View style = {styles.monthTitleContainer}>
-        <View>
+        <TouchableOpacity style = {styles.monthLeftContainer}>
           <ChevronLeft />
 
-        </View>
+        </TouchableOpacity>
 
-        <View>
+        <View style = {styles.monthMiddleContainer}>
           <Text style = {styles.monthTitle}>
             {dateFns.format(this.state.currentDate, dateFormat)}
           </Text>
         </View>
 
-        <View>
+        <TouchableOpacity style = {styles.monthRightContainer}>
           <ChevronRight />
-        </View>
+        </TouchableOpacity>
 
       </View>
     )
@@ -326,12 +326,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'pink',
     width: width,
   },
   monthTitle: {
     fontSize: 18,
     fontWeight: 'bold'
+  },
+  monthLeftContainer: {
+    flex:1,
+    alignItems: 'center'
+  },
+  monthRightContainer: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  monthMiddleContainer: {
+    flex: 3,
+    alignItems: 'center',
   },
   monthContainer: {
     flexDirection: "column",
