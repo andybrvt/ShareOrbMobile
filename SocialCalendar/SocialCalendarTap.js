@@ -7,6 +7,7 @@ import { Text,
    SafeAreaView,
    TouchableOpacity,
    Animated,
+   Image,
    Dimensions } from 'react-native';
 import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
@@ -33,14 +34,25 @@ class SocialCalendarTap extends React.Component{
     // this function will increaes month by one
     this.setState({
       currentDate: dateFns.addMonths(this.state.currentDate, 1),
+      socialCells: {}
+    }, () => {
+      const range = this.grabMonth()
+      this.getSocialCells(range.start, range.end)
     })
+
   }
 
   subMonth =() =>{
     // this function will decrase the month by one
     this.setState({
-      currentDate: dateFns.subMonths(this.state.currentDate, 1)
+      currentDate: dateFns.subMonths(this.state.currentDate, 1),
+      socialCells: {}
+    }, () => {
+      const range = this.grabMonth()
+      this.getSocialCells(range.start, range.end)
+
     })
+
   }
 
   getSocialCells(start,end){
@@ -55,7 +67,7 @@ class SocialCalendarTap extends React.Component{
     })
   }
 
-  grabMonth(month){
+  grabMonth(){
     const startMonth = dateFns.startOfMonth(this.state.currentDate)
     const endMonth = dateFns.endOfMonth(this.state.currentDate)
 
@@ -67,13 +79,13 @@ class SocialCalendarTap extends React.Component{
     if(diffWeeks === 4){
       return{
         start: start,
-        end: end
+        end: dateFns.addWeeks(end,1)
       }
     }
 
     return{
       start: start,
-      end: dateFns.addWeeks(end,1)
+      end: end
     }
   }
 
@@ -116,6 +128,7 @@ class SocialCalendarTap extends React.Component{
 
   initializedMonth(){
 
+    const cells = this.state.socialCells;
     const curMonth = this.state.currentDate;
     const monthStart = dateFns.startOfMonth(curMonth);
     const monthEnd = dateFns.endOfMonth(monthStart);
@@ -138,7 +151,16 @@ class SocialCalendarTap extends React.Component{
 
         for(let i = 0; i< 7; i++){
 
-          // put the for loop for the items here
+          for(let item = 0; item < cells.length; item++){
+            const date = new Date(cells[item].socialCaldate)
+            const utc = dateFns.addHours(date, date.getTimezoneOffset()/60)
+
+            if(dateFns.isSameDay(utc, day)){
+              toDoStuff.push(
+                cells[item]
+              )
+            }
+          }
 
           formattedDate = dateFns.format(day, dateFormat);
           const cloneDay = day;
@@ -345,7 +367,6 @@ class SocialCalendarTap extends React.Component{
   }
 
   render(){
-    console.log(this.state)
     const month = dateFns.format(this.state.currentDate, "MMMM yyyy")
     return(
       <View style = {styles.centerMonth}>
