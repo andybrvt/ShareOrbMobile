@@ -39,9 +39,7 @@ class Header extends React.Component{
     this.props.navigation.navigate("Notifications")
   }
 
-  ViewDay = () => {
-    this.props.navigation.navigate("PostingPage")
-  }
+
 
   ViewChats = () => {
     this.props.navigation.navigate("Notifications")
@@ -92,7 +90,6 @@ class Header extends React.Component{
         <Animated.View style = {{
           flexDirection: "row",
           flex: 1,
-
           backgroundColor: 'white',
           height: 50,
           position: 'absolute',
@@ -105,28 +102,17 @@ class Header extends React.Component{
              <MainLogo width = {120}/>
           </View>
           <View style = {styles.searchProfileContainer}>
-            <TouchableOpacity
-              style={{right:15}}
-              onPress = {() => this.props.navigation.navigate("PostingPage")}>
-            <Sunrise
-              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
-          </TouchableOpacity>
             {/*
               <MessageCircle
                 onPress = {() => this.props.navigation.navigate("Messages")}
                 style={{right:25}}
                 stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
               */}
-
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Notifications")}>
             <Bell
-
               stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
-
-
-
           </View>
         </Animated.View>
 
