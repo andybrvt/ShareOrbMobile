@@ -22,7 +22,8 @@ class SocialCalendarTap extends React.Component{
     super(props)
 
     this.state = {
-        currentDate: new Date()
+        currentDate: new Date(),
+        socialCells: {}
     }
 
 
@@ -40,6 +41,48 @@ class SocialCalendarTap extends React.Component{
     this.setState({
       currentDate: dateFns.subMonths(this.state.currentDate, 1)
     })
+  }
+
+  getSocialCells(start,end){
+    const userId = this.props.userId;
+    const newStart = dateFns.format(start, "yyyy-MM-dd")
+    const newEnd = dateFns.format(end, "yyyy-MM-dd")
+    return authAxios.get(`${global.IP_CHANGE}/mySocialCal/filterCells/`+userId+"/"+ newStart+`/`+newEnd)
+    .then(res => {
+      this.setState({
+        socialCells: res.data
+      })
+    })
+  }
+
+  grabMonth(month){
+    const startMonth = dateFns.startOfMonth(this.state.currentDate)
+    const endMonth = dateFns.endOfMonth(this.state.currentDate)
+
+    const start = dateFns.startOfWeek(startMonth);
+    const end = dateFns.endOfWeek(endMonth);
+
+    const diffWeeks = dateFns.differenceInCalendarWeeks(end, start)
+
+    if(diffWeeks === 4){
+      return{
+        start: start,
+        end: end
+      }
+    }
+
+    return{
+      start: start,
+      end: dateFns.addWeeks(end,1)
+    }
+  }
+
+  componentDidMount(){
+
+    const range = this.grabMonth(this.state.currentDate)
+    this.getSocialCells(range.start, range.end)
+
+
   }
 
   renderHeader(){
@@ -302,7 +345,7 @@ class SocialCalendarTap extends React.Component{
   }
 
   render(){
-
+    console.log(this.state)
     const month = dateFns.format(this.state.currentDate, "MMMM yyyy")
     return(
       <View style = {styles.centerMonth}>
@@ -314,7 +357,16 @@ class SocialCalendarTap extends React.Component{
   }
 }
 
-export default SocialCalendarTap;
+const mapStateToProps = state => {
+  return{
+    userId: state.auth.id
+  }
+}
+
+
+export default connect(mapStateToProps)(SocialCalendarTap);
+
+
 
 const styles = StyleSheet.create({
   miniBox: {
