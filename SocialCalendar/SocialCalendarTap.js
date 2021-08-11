@@ -224,7 +224,7 @@ class SocialCalendarTap extends React.Component{
                       </TouchableOpacity>
                     </View>
                   :
-                    <Text style = {{color: 'red'}}> {formattedDate}</Text>
+                    <Text> {formattedDate}</Text>
                   }
               </View>
             </View>
