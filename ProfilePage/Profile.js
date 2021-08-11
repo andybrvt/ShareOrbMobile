@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, SafeAreaView, View, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { Text, Platform, SafeAreaView, View, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
 import ProfileHeader from './ProfileHeader';
 import { connect } from "react-redux";
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
@@ -9,6 +9,7 @@ import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
+import SocialCalendarTap from '../SocialCalendar/SocialCalendarTap';
 import { Tag, Bookmark, Search, ChevronRight, Settings
   ,MessageCircle, UserPlus} from "react-native-feather";
 
@@ -141,10 +142,20 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
-          <SocialCalendarVonly
-            userId = {this.props.currentId}
-            navigation = {this.props.navigation}
-            />
+          {
+            Platform.OS === "ios" ?
+
+            <SocialCalendarVonly
+              userId = {this.props.currentId}
+              navigation = {this.props.navigation}
+              />
+
+            :
+
+            <SocialCalendarTap />
+
+          }
+
         </View>
       </BackgroundContainer>
     )
