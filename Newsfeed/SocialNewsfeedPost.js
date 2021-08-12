@@ -697,7 +697,7 @@ class SocialNewsfeedPost extends React.Component{
         <View style = {styles.imageContainer}>
             {this.revealPhoto()}
         </View>
-        <View style={{padding:15}}>
+        <View style={{padding:10, marginBottom:10}}>
           <Text >
             {
               (caption.length==0)?
@@ -907,7 +907,7 @@ const styles = StyleSheet.create({
     padding:15,
     borderRadius:25,
     color:'white',
-    bottom:'17.5%',
+    bottom:'15%',
     fontSize:13,
     right:7.5,
     textShadowColor: 'black',

@@ -32,10 +32,7 @@ import SingleComment from './SingleComment';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import { ChevronLeft } from "react-native-feather";
 
-
  class CommentPage extends React.Component{
-
-
    state = {
      comment: '',
      showTextInput: false,
@@ -45,8 +42,6 @@ import { ChevronLeft } from "react-native-feather";
      super(props)
      this.initialiseComments()
      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-
-
    }
 
 
@@ -113,7 +108,6 @@ import { ChevronLeft } from "react-native-feather";
         postId
       )
     })
-
     SocialCommentsWebsocketInstance.connect(postId)
   }
 
@@ -121,16 +115,13 @@ import { ChevronLeft } from "react-native-feather";
     const component = this;
     setTimeout(
       function(){
-
         if (SocialCommentsWebsocketInstance.state() === 1){
-
           callback();
           return;
         } else{
             component.waitForCommentsSocketConnection(callback);
         }
       }, 100)
-
   }
 
   onPress = () => {
@@ -187,8 +178,6 @@ import { ChevronLeft } from "react-native-feather";
 
    }
 
-
-
    renderComment = ({item}) => {
      // let profilePic = ""
      const profilePic = `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
@@ -200,61 +189,42 @@ import { ChevronLeft } from "react-native-feather";
 
    renderContent = () => {
      const comments = this.props.socialComments
-
      return (
 
        <KeyboardAvoidingView
          keyboardVerticalOffset = {185}
          behavior = "height" >
-
          <View
             style = {{
              backgroundColor: 'white',
              height: "100%",
-
            }}>
-
            <FlatList
              ref = {ref => this.flatListRef = ref}
              data = {comments}
              renderItem = {this.renderComment}
              keyExtractor={(item, index) => String(index)}
               />
-
             <RealRoundedInput
               onCommentSubmit = {this.onCommentSubmit}
               onChange = {this.onCommentChange}
               value = {this.state.comment}
               onCommentFocus = {this.pressToScroll}
               />
-
             {/*
               <Button
                 onPress = {() => this.pressToScroll()}
                 title = "scroll" />
 
               */}
-
-
            </View>
-
          </KeyboardAvoidingView>
-
-
             )
    }
 
-
-
    render(){
-
      const comments = this.props.socialComments
-
-
      return (
-
-
-
        <SafeAreaView
          style ={{flex: 1}}
          >
@@ -263,9 +233,8 @@ import { ChevronLeft } from "react-native-feather";
              flex: 1,
              backgroundColor: 'white'
            }}
-           keyboardVerticalOffset = {Platform.OS === "ios" ? 0 : 30}
+           keyboardVerticalOffset = {Platform.OS === "ios" ? 0 : 25}
            behavior={Platform.OS === "ios" ? "padding" : "height"} >
-
             <View style ={{
                 height: 50,
                 justifyContent: 'center',
@@ -280,11 +249,9 @@ import { ChevronLeft } from "react-native-feather";
                   >
                   <ChevronLeft height = {30} width = {30}/>
                 </TouchableOpacity>
-
               </View>
               <Text> Comments </Text>
             </View>
-
 
              <FlatList
                ref = {ref => this.flatListRef = ref}
@@ -307,20 +274,8 @@ import { ChevronLeft } from "react-native-feather";
                   title = "scroll" />
 
                 */}
-
-
-
            </KeyboardAvoidingView>
-
        </SafeAreaView>
-
-
-
-
-
-
-
-
      )
    }
  }
@@ -392,8 +347,6 @@ const mapDispatchToProps = dispatch => {
    backgroundColor: "#CCCCCC"
  },
  image:{
-
-
    marginLeft:1
  },
  time:{
