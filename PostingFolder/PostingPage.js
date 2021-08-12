@@ -48,7 +48,7 @@ const col = 3;
 const size = width/col + margin;
 const coverScale = 1.7;
 
-const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
+const { color,Clock, cond, sub, interpolate, Extrapolate,divide, eq, add, call, set, Value, event, or } = Animated;
 
 const isHidden = true;
 
@@ -909,6 +909,17 @@ class PostingPage extends React.Component{
     // if permissions granted
     let albumsReponse = MediaLibrary.getAssetsAsync(options);
 
+    const interpolateColor = interpolate(this.absY, {
+      inputRange: [0, 150],
+      outputRange: [color('rgb(0,0,0)'), color('rgb(251,251,251)')],
+      extrapolate: Extrapolate.CLAMP
+
+    })
+
+    const animatedStyle = {
+      backgroundColor: interpolateColor
+    }
+
     console.log("albumsReponse=", albumsReponse);
 
      // Remember, if you ever want to animate an element you will have to use
@@ -971,7 +982,7 @@ class PostingPage extends React.Component{
 
 
            <ScrollView  style = {styles.imageContainerContainer}>
-             <View
+             <Animated.View
                style = {{
                  height: this.picHolderHeight(),
                }}
@@ -1055,7 +1066,7 @@ class PostingPage extends React.Component{
 
 
 
-             </View>
+             </Animated.View>
 
              <View>
                <FlatList

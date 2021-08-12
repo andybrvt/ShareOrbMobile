@@ -70,7 +70,7 @@ import AlbumHome from './CollabAlbum/AlbumHome';
 import CreateAlbum from './CollabAlbum/CreateAlbum';
 import PicAlbum from './CollabAlbum/PicAlbum';
 import InviteFriends from './CollabAlbum/InviteFriends';
-
+import GradientTest from './RandomComponents/GradientTest';
 import { Ionicons } from '@expo/vector-icons';
 import { ArrowUpCircle, Search, Home, Disc, Aperture, BookOpen, User, MessageCircle, FolderPlus} from "react-native-feather";
 import TestReanimated from './PostingFolder/TestReanimated';
@@ -275,6 +275,10 @@ class App extends Component{
     return (
       <Stack.Navigator screenOptions={{headerShown: false,}} >
         <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
+        {/*
+          <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
+
+          */}
         <Stack.Screen name = 'ProfilePage' component = {UserProfile}/>
       </Stack.Navigator>
 
@@ -342,7 +346,7 @@ class App extends Component{
       <Tab.Navigator
         initialRouteName = "Home"
         barStyle = {{
-          backgroundColor: "white",
+          backgroundColor: "black",
           height:50,
         }}
         shifting={false}
@@ -390,7 +394,7 @@ class App extends Component{
              options={{
                tabBarLabel: false,
                 tabBarIcon: ({ color }) => (
-                  <Aperture style={{bottom:5}} stroke="white" fill="#1890ff" strokeWidth={2} width={40} height={40}  />
+                  <Aperture style={{bottom:5}} stroke="black" fill="#1890ff" strokeWidth={2} width={40} height={40}  />
                 ),
                 // ...TransitionPresets.ModalSlideFromBottomIOS,
               }}

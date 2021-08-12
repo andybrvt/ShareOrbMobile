@@ -6,13 +6,14 @@ import * as authActions from '../store/actions/auth';
 import { connect } from 'react-redux';
 import Constant from 'expo-constants';
 import MainLogo from '../logo.svg';
+import MainLogo1 from '../logo1.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
 import { Search, Bell, MessageCircle, BookOpen, Sunrise} from "react-native-feather";
 import Animated from 'react-native-reanimated';
 
-const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
+const {interpolate, interpolateColors, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
 
 
 class Header extends React.Component{
@@ -71,6 +72,11 @@ class Header extends React.Component{
       extrapolateRight: Extrapolate.CLAMP,
 
     })
+    const backgroundGradient = interpolateColors(y, {
+      inputRange: [0, 400, 600],
+      outputColorRange: ["rgba(0, 0, 0, 0.85)", "skyblue", "white"],
+
+    })
 
 
 
@@ -83,23 +89,23 @@ class Header extends React.Component{
       <Animated.View
         style = {[styles.container,{
           // opacity: opacity,
-          zIndex: 99
+          zIndex: 99,
+
         }]}>
 
 
         <Animated.View style = {{
           flexDirection: "row",
           flex: 1,
-          backgroundColor: 'white',
+          backgroundColor: 'black',
           height: 50,
           position: 'absolute',
           width: "100%",
-          transform: [{
-            translateY: translateY
-          }],
+
+
           }}>
           <View style = {styles.logoContainer}>
-             <MainLogo width = {120}/>
+             <MainLogo1 width = {120}/>
           </View>
           <View style = {styles.searchProfileContainer}>
             {/*
@@ -111,7 +117,7 @@ class Header extends React.Component{
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Notifications")}>
             <Bell
-              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+              stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
           </View>
         </Animated.View>

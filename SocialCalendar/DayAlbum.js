@@ -163,8 +163,7 @@ let likeAvatarList=[]
    }
 
    renderItem = ({item}) => {
-     console.log("CCCCCCCCCFCc")
-     console.log(item)
+     
      if(item.people_like.length>0)
      {
        likeAvatarList = item.people_like.map(item => {
@@ -173,8 +172,7 @@ let likeAvatarList=[]
         };
         });
      }
-     console.log("FFFFFFFFF")
-     console.log(likeAvatarList)
+
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
      // if(this.props.data.people_like.length>0)
      // {

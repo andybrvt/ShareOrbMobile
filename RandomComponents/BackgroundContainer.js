@@ -22,7 +22,7 @@ class BackgroundContainer extends React.Component{
     return(
       <SafeAreaView style = {styles.safeArea}>
         <StatusBar
-          barStyle="dark-content"
+          barStyle="light-content"
           />
 
 
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "black",
   }
 })
 
