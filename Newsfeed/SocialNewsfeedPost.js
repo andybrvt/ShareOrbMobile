@@ -20,6 +20,8 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
+const {interpolate, Extrapolate, interpolateColors} = Animated;
+
 const FACES = [
 
   {
@@ -668,40 +670,59 @@ class SocialNewsfeedPost extends React.Component{
 
     }
 
+    const y = this.props.y;
+    const backgroundGradient = interpolateColors(y, {
+      inputRange: [0, 100],
+      outputColorRange: ["white", "black"],
+
+    })
+
 
     return (
-      <View>
-        {/*
-        <Animated.Code>
-          {() => cond(
-            this.showExtra,
-            [
-              set(this.height, this.renderContainerHeight()),
-              set(this.slide, 0),
-            ]
-            ,
-            [
-              set(this.slide, -width),
-              set(this.height, 550 +margin)
-            ]
-          )}
-        </Animated.Code>
-        */}
-        <View style = {styles.imageContainer}>
-            {this.revealPhoto()}
-        </View>
-        <View style={{padding:10, marginBottom:10}}>
-          <Text >
-            {
-              (caption.length==0)?
-              ''
-              :
-              <Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Text>
-            }
-            <Text numberofLines={1} style={{color:'black'}}>{caption.substring(0,140)}</Text>
-          </Text>
+      <View
+        style = {{
+          width: '100%',
+          alignItems: 'center'
+        }}
+        >
+        <View
+          style = {{
+            width: "95%"
+          }}
+          >
+          {/*
+          <Animated.Code>
+            {() => cond(
+              this.showExtra,
+              [
+                set(this.height, this.renderContainerHeight()),
+                set(this.slide, 0),
+              ]
+              ,
+              [
+                set(this.slide, -width),
+                set(this.height, 550 +margin)
+              ]
+            )}
+          </Animated.Code>
+          */}
+          <View style = {styles.imageContainer}>
+              {this.revealPhoto()}
+          </View>
+          <View style={{padding:15}}>
+            <Text >
+              {
+                (caption.length==0)?
+                ''
+                :
+                <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
+              }
+              <Animated.Text numberofLines={1} style={{color:'black'}}>{caption.substring(0,140)}</Animated.Text>
+            </Text>
+          </View>
         </View>
       </View>
+
     )
   }
 }
@@ -741,7 +762,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
-    elevation: 5
+    elevation: 5,
+    width: '100%',
   },
 
   miniContainer: {
@@ -761,8 +783,7 @@ const styles = StyleSheet.create({
     position: "relative",
     height: 350,
     shadowColor: '#000',
-    width:SCREEN_WIDTH-5,
-    left:1,
+    width:"100%",
     // transform: [{ scale: 0.9 }]
   },
   smallPic: {
@@ -900,7 +921,7 @@ const styles = StyleSheet.create({
     padding:15,
     borderRadius:25,
     color:'white',
-    bottom:'15%',
+    bottom:'17.5%',
     fontSize:13,
     right:7.5,
     textShadowColor: 'black',

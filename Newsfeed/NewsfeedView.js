@@ -7,7 +7,8 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  processColor
  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -25,12 +26,17 @@ import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import InfiniteScrollFlat from './InfiniteScrollFlat';
 import NewsfeedComment from './NewsfeedComment';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
+
+
+
+const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 const height = Dimensions.get('window').height
 class NewsfeedView extends React.Component{
 
   y = new Value(0);
+  color = new Value(0);
   handleLogOut = () => {
   this.props.logout()
     // this.props.navigation.navigate("Login")
@@ -131,30 +137,53 @@ class NewsfeedView extends React.Component{
     let totalLoading = this.props.totalLoad
     let showComments = this.props.showNewsfeedComments
 
+    const backgroundGradient = interpolateColors(this.y, {
+      inputRange: [0, 600],
+      outputColorRange: ["black","#e6f7ff"],
+
+    })
+
+    const backgroundStyle = {
+      backgroundColor: backgroundGradient
+    }
+
+
     return(
-        <BackgroundContainer>
-            <View>
-              {/*
-                this.props.totalLoad === 0 ?
-                <View style = {{backgroundColor: 'white'}}></View>
-                :
-                <LoadingBar
-                  step = {curLoading}
-                  steps = {totalLoading}
-                  height = {5} />
-              */}
+
+      <BackgroundContainer>
+
+          <Animated.View
+            style = {{
+              // backgroundColor: backgroundGradient
+            }}
+            >
+            {/*
+              this.props.totalLoad === 0 ?
+              <View style = {{backgroundColor: 'white'}}></View>
+              :
+              <LoadingBar
+                step = {curLoading}
+                steps = {totalLoading}
+                height = {5} />
+            */}
+
               <Header
                 y = {this.y}
                 {...this.props}/>
-              <InfiniteScrollFlat
-                y = {this.y}
-                navigation = {this.props.navigation}
-                onPagePost = {this.onPagePost}
-                viewProfile = {this.viewProfile}
-                onCommentOpen = {this.onCommentOpen}/>
 
-            </View>
-        </BackgroundContainer>
+
+            <InfiniteScrollFlat
+              y = {this.y}
+              navigation = {this.props.navigation}
+              onPagePost = {this.onPagePost}
+              viewProfile = {this.viewProfile}
+              onCommentOpen = {this.onCommentOpen}/>
+
+          </Animated.View>
+
+
+      </BackgroundContainer>
+
     )
   }
 }

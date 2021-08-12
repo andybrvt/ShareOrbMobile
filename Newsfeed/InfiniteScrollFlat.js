@@ -26,7 +26,7 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const {interpolate, Extrapolate} = Animated;
+const {interpolate, Extrapolate, interpolateColors} = Animated;
 const height = Dimensions.get('window').height;
 
 
@@ -89,6 +89,7 @@ class InfiniteScrollFlat extends React.Component{
     return(
 
         <SocialNewsfeedPost
+          y = {this.props.y}
           navigation = {this.props.navigation}
           ViewProfile = {this.props.viewProfile}
           data = {item}
@@ -114,6 +115,11 @@ class InfiniteScrollFlat extends React.Component{
       inputRange: [0, 50],
       outputRange: [50, 0],
       extrapolate: Extrapolate.CLAMP
+    })
+    const backgroundGradient = interpolateColors(y, {
+      inputRange: [0, 400, 600],
+      outputColorRange: ["rgba(0, 0, 0, 0.85)", "skyblue", "white"],
+
     })
 
     return(
