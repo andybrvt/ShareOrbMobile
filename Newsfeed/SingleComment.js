@@ -37,22 +37,23 @@ class SingleComment extends React.PureComponent{
 
         <View style = {styles.rightContainer}>
           <View>
-            <Text style = {styles.nameText}>{global.NAMEMAKE(
-                user.first_name,
-                user.last_name,
-                30
-              )}</Text>
-
-          </View>
-
-          <View style = {{marginTop: 5, marginBottom: 2}}>
+            {/*
+              {global.NAMEMAKE(
+                  user.first_name,
+                  user.last_name,
+                  30
+                )}
+            */}
+            <Text style = {styles.nameText}>{user.username+" "}</Text>
             <Text style = {styles.mainText}>{item.body} </Text>
-
           </View>
 
-          <View>
+
+
+          <View style={{flexDirection:'row', marginTop:5}}>
             <Text style = {styles.timeText}>{global.RENDER_TIMESTAMP(item.created_on)}</Text>
-          </View>
+            <Text style={{fontWeight:'bold',fontSize:12,  color:'gray', marginLeft:10}}>Reply</Text>
+        </View>
 
         </View>
 
@@ -69,27 +70,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: "100%",
     flex: 1,
-    marginTop: 10
+    padding:12.5,
   },
   leftContainer:{
     width: "15%",
+    marginTop: 5,
+    // backgroundColor:'red',
     alignItems: "center",
   },
   rightContainer: {
-    width: "70%"
+
+    width: "75%",
+    left:'5%',
   },
   timeText: {
     color: 'gray',
     fontSize: 12
   },
   mainText:{
-    fontSize: 16,
+    marginTop:5,
+    fontSize: 14,
     color: 'black',
 
   },
   nameText: {
     fontSize: 14,
-    color: "black"
+    color: "black",
+    fontWeight:'bold',
   }
 })
 

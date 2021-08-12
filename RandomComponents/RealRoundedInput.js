@@ -26,7 +26,6 @@ import { Avatar } from 'react-native-elements';
 
 
    render(){
-
      return (
        <TouchableHighlight
          // onPress = {() => this.props.onPagePost()}
@@ -35,17 +34,15 @@ import { Avatar } from 'react-native-elements';
            position: 'relative',
            width: "100%",
            height: 40,
+           paddingBottom:10,
            alignItems: "center",
            justifyContent: 'center',
          }}
          underlayColor = "gray"
          >
-
          <View style = {styles.wholeContainer}>
-
-           <View style={{width:'10%'}}>
+           <View style={{width:'12.5%'}}>
              <Avatar
-
                onPress = {() => this.props.ViewProfile(userUsername)}
                size={35}
                rounded
@@ -53,11 +50,8 @@ import { Avatar } from 'react-native-elements';
                  uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic
                }}
              />
-
            </View>
-
            <View style = {styles.midContainer}>
-
              <View
                 style = {styles.inputContainer}>
                 <TextInput
@@ -84,18 +78,16 @@ import { Avatar } from 'react-native-elements';
              <TouchableOpacity
                onPress = {() => this.onSubmit()}
                style = {styles.rightContainer}>
-               <ArrowRightCircle fill = "#1890ff" stroke = "white" width = {40} height = {40}/>
+               <ArrowRightCircle fill = "#1890ff" stroke = "white" width = {35} height = {35}/>
              </TouchableOpacity>
-
              :
              <View
                style = {styles.rightContainer}>
-               <ArrowRightCircle fill = "gray" stroke = "white" width = {40} height = {40}/>
+               <ArrowRightCircle fill = "gray" stroke = "white" width = {35} height = {35}/>
              </View>
            }
          </View>
        </TouchableHighlight>
-
      )
    }
  }
@@ -103,6 +95,9 @@ import { Avatar } from 'react-native-elements';
 const styles = StyleSheet.create({
   wholeContainer: {
     flexDirection: 'row',
+    borderTopWidth:1,
+    borderColor: '#F0F0F0F0',
+    paddingTop:10,
     // backgroundColor:'red',
   },
   leftContainer: {
@@ -126,7 +121,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     color: "gray",
     backgroundColor: "#f0f0f0",
-    borderRadius: 15,
+    borderRadius: 10,
     height: 35,
     justifyContent: "center",
     paddingLeft: 10

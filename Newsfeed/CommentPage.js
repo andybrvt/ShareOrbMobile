@@ -13,7 +13,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import Animated from 'react-native-reanimated';
@@ -238,7 +237,9 @@ import { ChevronLeft } from "react-native-feather";
             <View style ={{
                 height: 50,
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                borderBottomColor:'#F0F0F0F0',
+                borderBottomWidth:1,
               }}>
               <View style ={{
                   position: 'absolute',
@@ -250,17 +251,18 @@ import { ChevronLeft } from "react-native-feather";
                   <ChevronLeft height = {30} width = {30}/>
                 </TouchableOpacity>
               </View>
-              <Text> Comments </Text>
+              <Text> {comments.length} Comments </Text>
             </View>
-
+            <View style={{height:'85%',}}>
              <FlatList
                ref = {ref => this.flatListRef = ref}
                data = {comments}
+               style={{height:'98.5%', flexGrow:0}}
                renderItem = {this.renderComment}
                keyExtractor={(item, index) => String(index)}
                // removeClippedSubviews={false}
                 />
-
+              </View>
               <RealRoundedInput
                 onCommentSubmit = {this.onCommentSubmit}
                 onChange = {this.onCommentChange}

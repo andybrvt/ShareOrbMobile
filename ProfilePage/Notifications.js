@@ -63,7 +63,6 @@ class Notifications extends React.Component{
               />
             </View>
           <View style={{
-
               flex:6,
               flexDirection:'column',
               }}>
