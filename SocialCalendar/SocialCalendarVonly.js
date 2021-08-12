@@ -394,7 +394,7 @@ class SocialCalendarVonly extends React.Component{
 
             >
             {
-              Platform.OS !== "ios" ?
+              Platform.OS === "ios" ?
 
               <NewSocialMonth
                 month = {this.state.month_array[0]}
