@@ -55,21 +55,21 @@ class NewSocialMonth extends React.PureComponent{
       })
     }
 
-
-
     const onRefresh = this.props.navigation.addListener("focus", () =>{
-      // console.log('on refresh here')
-      //
-      // console.log(this.grabDateRange())
-      // this.getSocialCells(dateRange.start, dateRange.end)
-      // .then(data => {
-      //   console.log(data.length)
-      //   this.setState({
-      //     socialCells: data
-      //   })
-      //
-      // })
+      const newDateRange = this.grabDateRange()
+
+      console.log(dateRange)
+      this.getSocialCells(newDateRange.start, newDateRange.end)
+      .then(data => {
+        console.log(data.length)
+        this.setState({
+          socialCells: data
+        })
+
+      })
     })
+
+
 
 
   }
@@ -101,6 +101,7 @@ class NewSocialMonth extends React.PureComponent{
         })
       }
     }
+
 
 
 
@@ -144,7 +145,6 @@ class NewSocialMonth extends React.PureComponent{
     const start = dateFns.startOfMonth(curMonth)
     const end = dateFns.endOfMonth(curMonth)
 
-    console.log(curMonth, start, end)
     const startDate = dateFns.startOfWeek(start)
     const endDate = dateFns.endOfWeek(end)
     const diffWeeks = dateFns.differenceInCalendarWeeks(endDate, startDate)
