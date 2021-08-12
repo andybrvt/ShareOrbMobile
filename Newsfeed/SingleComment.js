@@ -13,7 +13,6 @@ import {
  } from 'react-native';
  import { Avatar } from 'react-native-elements';
 
-
 class SingleComment extends React.PureComponent{
 
 

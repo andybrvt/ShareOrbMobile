@@ -13,8 +13,16 @@ import {
 import { ArrowRightCircle, Plus } from "react-native-feather";
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
- class RealRoundedInput extends React.Component{
+import EmojiPicker from 'rn-emoji-keyboard';
 
+ class RealRoundedInput extends React.Component{
+   constructor(props){
+     super(props);
+     this.state = {
+       isOpen:false,
+       setIsOpen:false,
+     }
+   }
    onSubmit = () => {
      console.log('you hit here')
      this.props.onCommentSubmit()
@@ -26,6 +34,7 @@ import { Avatar } from 'react-native-elements';
 
 
    render(){
+     console.log("hi")
      return (
        <TouchableHighlight
          // onPress = {() => this.props.onPagePost()}
@@ -51,7 +60,18 @@ import { Avatar } from 'react-native-elements';
                }}
              />
            </View>
-           <View style = {styles.midContainer}>
+           <View>
+             <TouchableOpacity onPress={() => this.setState({isOpen:true})}>
+             <Text>Emoji</Text>
+             </TouchableOpacity>
+
+           <EmojiPicker
+             onEmojiSelected = {(e) => this.props.onChange(e)}
+             open={this.state.isOpen}
+             onClose={() => this.setState({isOpen: false})} />
+
+          </View>
+         <View style = {styles.midContainer}>
              <View
                 style = {styles.inputContainer}>
                 <TextInput

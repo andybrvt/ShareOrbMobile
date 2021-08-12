@@ -9,12 +9,12 @@ import * as dateFns from 'date-fns';
 // global.WS_HEADER = "ws"
 
 // Ping UACI
-// global.IP_CHANGE = "http://206.207.51.82:19002"
-// global.IMAGE_ENDPOINT = "http://206.207.51.82:19002"
-// global.WS_ENDPOINT = "206.207.51.82:19002"
-// global.POSTLIST_SPEC = 'http://206.207.51.82:19002/media/'
-// global.WS_HEADER = "ws"
-
+global.IP_CHANGE = "http://206.207.51.82:19002"
+global.IMAGE_ENDPOINT = "http://206.207.51.82:19002"
+global.WS_ENDPOINT = "206.207.51.82:19002"
+global.POSTLIST_SPEC = 'http://206.207.51.82:19002/media/'
+global.WS_HEADER = "ws"
+console.disableYellowBox = true;
 
 // Ping ethernet house
 // global.IP_CHANGE="http://192.168.1.205:19003"
