@@ -26,6 +26,7 @@ import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import InfiniteScrollFlat from './InfiniteScrollFlat';
 import NewsfeedComment from './NewsfeedComment';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 
@@ -137,8 +138,8 @@ class NewsfeedView extends React.Component{
     let showComments = this.props.showNewsfeedComments
 
     const backgroundGradient = interpolateColors(this.y, {
-      inputRange: [0, 400, 600],
-      outputColorRange: ["black", "skyblue", "white"],
+      inputRange: [0, 600],
+      outputColorRange: ["black","#e6f7ff"],
 
     })
 
@@ -150,34 +151,37 @@ class NewsfeedView extends React.Component{
     return(
 
       <BackgroundContainer>
-        <Animated.View
-          style = {{
-            backgroundColor: backgroundGradient
-          }}
-          >
-          {/*
-            this.props.totalLoad === 0 ?
-            <View style = {{backgroundColor: 'white'}}></View>
-            :
-            <LoadingBar
-              step = {curLoading}
-              steps = {totalLoading}
-              height = {5} />
-          */}
-          
-            <Header
+
+          <Animated.View
+            style = {{
+              // backgroundColor: backgroundGradient
+            }}
+            >
+            {/*
+              this.props.totalLoad === 0 ?
+              <View style = {{backgroundColor: 'white'}}></View>
+              :
+              <LoadingBar
+                step = {curLoading}
+                steps = {totalLoading}
+                height = {5} />
+            */}
+
+              <Header
+                y = {this.y}
+                {...this.props}/>
+
+
+            <InfiniteScrollFlat
               y = {this.y}
-              {...this.props}/>
+              navigation = {this.props.navigation}
+              onPagePost = {this.onPagePost}
+              viewProfile = {this.viewProfile}
+              onCommentOpen = {this.onCommentOpen}/>
+
+          </Animated.View>
 
 
-          <InfiniteScrollFlat
-            y = {this.y}
-            navigation = {this.props.navigation}
-            onPagePost = {this.onPagePost}
-            viewProfile = {this.viewProfile}
-            onCommentOpen = {this.onCommentOpen}/>
-
-        </Animated.View>
       </BackgroundContainer>
 
     )

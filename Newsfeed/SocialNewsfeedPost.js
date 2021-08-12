@@ -722,9 +722,9 @@ class SocialNewsfeedPost extends React.Component{
                 (caption.length==0)?
                 ''
                 :
-                <Animated.Text style = {{color:backgroundGradient, fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
+                <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
               }
-              <Animated.Text numberofLines={1} style={{color:backgroundGradient}}>{caption.substring(0,140)}</Animated.Text>
+              <Animated.Text numberofLines={1} style={{color:'black'}}>{caption.substring(0,140)}</Animated.Text>
             </Text>
           </View>
         </View>

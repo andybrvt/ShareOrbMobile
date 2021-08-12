@@ -97,7 +97,7 @@ class Header extends React.Component{
         <Animated.View style = {{
           flexDirection: "row",
           flex: 1,
-          backgroundColor: 'black',
+          backgroundColor: "white",
           height: 50,
           position: 'absolute',
           width: "100%",
@@ -117,7 +117,7 @@ class Header extends React.Component{
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Notifications")}>
             <Bell
-              stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+              stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
           </View>
         </Animated.View>
