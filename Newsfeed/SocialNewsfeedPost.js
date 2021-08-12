@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity,
-   ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback} from 'react-native';
+ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback} from 'react-native';
 import NewsfeedSpecCarousel from './NewsfeedSpecCarousel';
 import * as dateFns from 'date-fns';
 import { connect } from 'react-redux';
@@ -31,7 +31,6 @@ const width = Dimensions.get("window").width
 const margin = 6;
 const col = 2;
 const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
-
   const figureHorizontalDirection = (delta) =>
     delta > 0 ? SWIPE_RIGHT : SWIPE_LEFT;
   const figureVerticalDirection = (delta) =>
@@ -44,10 +43,8 @@ const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
   };
 
 class SocialNewsfeedPost extends React.Component{
-
   slide = new Value(-width);
   slideAnimation = withTimingTransition(this.slide, {duration: 300})
-
   height = new Value(550);
   heightAnimation = withTimingTransition(this.height, {duration: 200})
   constructor(props){
@@ -61,9 +58,7 @@ class SocialNewsfeedPost extends React.Component{
       swipeDirection:'',
       lastTap:null,
     }
-
     this.showExtra = new Value(false);
-
   }
 
   handleDoubleTap = (postId, userId, contentTypeId,
@@ -86,9 +81,7 @@ class SocialNewsfeedPost extends React.Component{
     }
   }
 
-
   navLikePeople(people_like) {
-
     this.props.navigation.navigate("DisplayLikeList",
       {
         likePeople:people_like,
@@ -387,12 +380,12 @@ class SocialNewsfeedPost extends React.Component{
                  <TouchableOpacity
                    activeOpacity={0.8}
                    onPress = {() => this.onPostDirect(calCell)}>
-                <Image
-                  style={styles.cover}
-                  resizeMode = "cover"
-                  source={{ uri: itemImage }}
-                  />
-              </TouchableOpacity>
+                  <Image
+                    style={styles.cover}
+                    resizeMode = "cover"
+                    source={{ uri: itemImage }}
+                    />
+                </TouchableOpacity>
               </GestureRecognizer>
 
                 <Avatar
