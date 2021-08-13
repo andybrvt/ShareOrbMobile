@@ -117,7 +117,9 @@ class Header extends React.Component{
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Notifications")}>
             <Bell
-               strokeWidth={2.5} width={27} height={27} />
+              stroke="#1890ff"
+              style={{marginRight:10}}
+               strokeWidth={2.5} width={25} height={25} />
             </TouchableOpacity>
           </View>
         </Animated.View>

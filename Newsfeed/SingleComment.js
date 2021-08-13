@@ -51,8 +51,10 @@ class SingleComment extends React.PureComponent{
 
           <View style={{flexDirection:'row', marginTop:5}}>
             <Text style = {styles.timeText}>{global.RENDER_TIMESTAMP(item.created_on)}</Text>
+            {/*
             <Text style={{fontWeight:'bold',fontSize:12,  color:'gray', marginLeft:10}}>Reply</Text>
-        </View>
+            */}
+          </View>
 
         </View>
 

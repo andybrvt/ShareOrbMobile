@@ -291,7 +291,7 @@ class CreateAlbum extends React.Component{
               </View>
              </View>
 
-
+             {/*
              <View style={styles.action3}>
                  {this.state.isEnabled?
                <Unlock stroke="black" strokeWidth={2.5} width={20} height={20} />
@@ -312,7 +312,7 @@ class CreateAlbum extends React.Component{
 
                   <Switch
                     style={{ transform: [{ scaleX:  moderateScale(1, 0.2) }, { scaleY:
-        moderateScale(1, 0.2) }] }}
+                    moderateScale(1, 0.2) }] }}
                    trackColor={{ false: "#767577", true: "#81b0ff" }}
                    thumbColor={this.state.isEnabled ? "#1890ff" : "#f4f3f4"}
                    ios_backgroundColor="#3e3e3e"
@@ -320,6 +320,7 @@ class CreateAlbum extends React.Component{
                    value={this.state.isEnabled}
                  ></Switch>
              </View>
+             */}
              <View style={{alignItems:'center', top:'12.5%'}}>
                 <Text style={{fontSize:18, bottom:30}}>Cover Pic</Text>
                 {
@@ -423,7 +424,7 @@ const styles = StyleSheet.create({
 
      alignItems: 'center',
      justifyContent: "center",
-     
+
      shadowColor:'black',
      shadowOffset:{width:0,height:2},
      shadowOpacity:0.2,

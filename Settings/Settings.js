@@ -45,12 +45,14 @@ import * as authActions from '../store/actions/auth';
                 <Text style={styles.settingWord}> User Information</Text>
             </View>
           </TouchableHighlight>
+          {/* Add in later
           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigatePrivacy()}>
             <View style={{flexDirection:'row', padding:20}}>
              <Lock stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
                <Text style={styles.settingWord}> Privacy</Text>
            </View>
           </TouchableHighlight>
+          */}
         <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.handleLogOut()}>
           <View style={{flexDirection:'row', padding:20}}>
            <LogOut stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>

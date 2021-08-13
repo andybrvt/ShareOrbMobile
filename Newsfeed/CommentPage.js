@@ -29,7 +29,7 @@ import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 import RealRoundedInput from '../RandomComponents/RealRoundedInput';
 import SingleComment from './SingleComment';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
-import { ChevronLeft } from "react-native-feather";
+import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
  class CommentPage extends React.Component{
    state = {
@@ -239,10 +239,10 @@ import { ChevronLeft } from "react-native-feather";
              flex: 1,
              backgroundColor:'white',
            }}
-           keyboardVerticalOffset = {Platform.OS === "ios" ? 0 : 60}
+           keyboardVerticalOffset = {Platform.OS === "ios" ? 0 : 40}
            behavior={Platform.OS === "ios" ? "padding" : "height"} >
             <View style ={{
-                height: 40,
+                height: '7.5%',
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderBottomColor:'#f0f0f0',
@@ -255,7 +255,7 @@ import { ChevronLeft } from "react-native-feather";
                 <TouchableOpacity
                 onPress = {() => this.onBackNav()}
                   >
-                  <ChevronLeft height = {30} width = {30}/>
+                  <ArrowLeft stroke="black" height = {30} width = {30}/>
                 </TouchableOpacity>
               </View>
               <Text> {comments.length} Comments </Text>
