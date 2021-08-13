@@ -49,7 +49,7 @@ export const CHANGE_PROFILE_PIC = 'CHANGE_PROFILE_PIC';
 
 // This has to do with the social calendar
 export const FETCH_SOCIAL_CAL_CELL_PAGE = 'FETCH_SOCIAL_CAL_CELL_PAGE';
-
+export const SEND_SOCIAL_CAL_CELL_LIKE_UNLIKE = "SEND_SOCIAL_CAL_CELL_LIKE_UNLIKE";
 
 // This will be used for the chats list (hold all the chats)
 export const SET_CHATS = "SET_CHATS";

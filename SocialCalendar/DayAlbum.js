@@ -163,7 +163,10 @@ let likeAvatarList=[]
    }
 
    renderItem = ({item}) => {
-     
+
+     let peopleLikeId = [];
+
+
      if(item.people_like.length>0)
      {
        likeAvatarList = item.people_like.map(item => {
@@ -171,6 +174,10 @@ let likeAvatarList=[]
           imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
         };
         });
+
+        for(let i = 0; i< item.people_like.length; i++){
+          peopleLikeId.push(item.people_like[i].id)
+        }
      }
 
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
@@ -223,19 +230,50 @@ let likeAvatarList=[]
             </Text>
           </View>
           <View style={{bottom:'40%', right:'4%', position:'absolute'}}>
-            <View style = {styles.justifyCenter}>
-              <Heart
-                fill="white"
-                 stroke = "white"
-                 width ={25}
-                 height = {25}
-                 style={{right:5}}
-              />
-              <Text  style = {styles.statNum}>
-                {item.people_like.length}
-              </Text>
 
-            </View>
+            {
+              peopleLikeId.includes(this.props.userId) ?
+
+              <TouchableOpacity
+
+                >
+                <View style = {styles.justifyCenter}>
+                  <Heart
+                    fill="red"
+                     stroke = "red"
+                     width ={25}
+                     height = {25}
+                     style={{right:5}}
+                  />
+                  <Text  style = {styles.statNum}>
+                    {item.people_like.length}
+                  </Text>
+
+                </View>
+              </TouchableOpacity>
+
+              :
+
+              <TouchableOpacity
+                onPress ={() => this.sendLike(item.id, this.props.userId)}
+                >
+                <View style = {styles.justifyCenter}>
+                  <Heart
+                    fill="white"
+                     stroke = "white"
+                     width ={25}
+                     height = {25}
+                     style={{right:5}}
+                  />
+                  <Text  style = {styles.statNum}>
+                    {item.people_like.length}
+                  </Text>
+
+                </View>
+              </TouchableOpacity>
+            }
+
+
           </View>
           <View style={{bottom:'25%', right:'4%', position:'absolute'}}>
             <View style = {styles.justifyCenter}>

@@ -128,7 +128,8 @@ class App extends Component{
     )
 
     SocialCalCellPageWebSocketInstance.addCallbacks(
-      this.props.fetchSocialCalCellPage.bind(this)
+      this.props.fetchSocialCalCellPage.bind(this),
+      this.props.sendSocialCalCellLikeUnlike.bind(this)
     )
 
     NotificationWebSocketInstance.addCallbacks(
@@ -776,6 +777,7 @@ const mapDispatchToProps = dispatch => {
 
     setChats: chats => dispatch(messageActions.setChats(chats)),
     fetchSocialCalCellPage:socialCalCellObj => dispatch(socialActions.fetchSocialCalCellPage(socialCalCellObj)),
+    sendSocialCalCellLikeUnlike: socialItem => dispatch(socialActions.sendSocialCalCellLikeUnlike(socialItem)),
 
     openShowCamera: () => dispatch(authActions.openShowCamera()),
 

@@ -142,7 +142,7 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
-        
+
             <SocialCalendarVonly
               userId = {this.props.currentId}
               navigation = {this.props.navigation}
@@ -197,7 +197,6 @@ const styles = StyleSheet.create({
 
   },
   viewStyle: {
-    // backgroundColor:'red',
 
 
     height:30,
