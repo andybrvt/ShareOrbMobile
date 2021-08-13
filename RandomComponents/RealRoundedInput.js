@@ -10,7 +10,7 @@ import {
   TextInput,
   TouchableHighlight
  } from 'react-native';
-import { ArrowRightCircle, Plus } from "react-native-feather";
+import { ArrowRightCircle, Plus, Smile} from "react-native-feather";
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
 import EmojiPicker from 'rn-emoji-keyboard';
@@ -42,9 +42,9 @@ import EmojiPicker from 'rn-emoji-keyboard';
            // backgroundColor: 'red',
            position: 'relative',
            width: "100%",
-           height: 40,
-           paddingBottom:10,
+           height: '4.5%',
            alignItems: "center",
+
            justifyContent: 'center',
          }}
          underlayColor = "gray"
@@ -52,7 +52,6 @@ import EmojiPicker from 'rn-emoji-keyboard';
          <View style = {styles.wholeContainer}>
            <View style={{width:'12.5%'}}>
              <Avatar
-               onPress = {() => this.props.ViewProfile(userUsername)}
                size={35}
                rounded
                source = {{
@@ -60,16 +59,20 @@ import EmojiPicker from 'rn-emoji-keyboard';
                }}
              />
            </View>
-           <View>
+
+           <View style={{justifyContent:'center', width:'10%'}}>
              <TouchableOpacity onPress={() => this.setState({isOpen:true})}>
-             <Text>Emoji</Text>
+               <Smile
+                 stroke = "#f0f0f0"
+                 fill="white"
+                 width = {25}
+                 height = {25}
+                  />
              </TouchableOpacity>
-
-           <EmojiPicker
-             onEmojiSelected = {(e) => this.props.onChange(e)}
-             open={this.state.isOpen}
-             onClose={() => this.setState({isOpen: false})} />
-
+             <EmojiPicker
+               onEmojiSelected = {(e) => this.props.onEmojiChange(e)}
+               open={this.state.isOpen}
+               onClose={() => this.setState({isOpen: false})} />
           </View>
          <View style = {styles.midContainer}>
              <View
@@ -116,8 +119,9 @@ const styles = StyleSheet.create({
   wholeContainer: {
     flexDirection: 'row',
     borderTopWidth:1,
-    borderColor: '#F0F0F0F0',
+    borderColor: '#f0f0f0',
     paddingTop:10,
+    backgroundColor:'white'
     // backgroundColor:'red',
   },
   leftContainer: {
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
   },
   midContainer: {
     // backgroundColor: "blue",
-    width: "75%",
+    width: "65%",
 
   },
   rightContainer: {

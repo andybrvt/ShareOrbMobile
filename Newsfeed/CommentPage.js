@@ -51,9 +51,15 @@ import { ChevronLeft } from "react-native-feather";
      })
    }
 
+   onEmojiChange = e =>{
+     let temp=e.emoji
+     this.setState({
+       comment: this.state.comment+temp,
+     })
+   }
+
    onCommentSubmit = () => {
      // use to submit the comments into the websocket
-
      const comment = this.state.comment
      if(this.state.comment.length > 0){
        const cellId = this.props.route.params.postId
@@ -207,6 +213,7 @@ import { ChevronLeft } from "react-native-feather";
             <RealRoundedInput
               onCommentSubmit = {this.onCommentSubmit}
               onChange = {this.onCommentChange}
+
               value = {this.state.comment}
               onCommentFocus = {this.pressToScroll}
               />
@@ -225,20 +232,20 @@ import { ChevronLeft } from "react-native-feather";
      const comments = this.props.socialComments
      return (
        <SafeAreaView
-         style ={{flex: 1}}
+         style ={{flex: 1, backgroundColor:'white'}}
          >
          <KeyboardAvoidingView
            style = {{
              flex: 1,
-             backgroundColor: 'white'
+             backgroundColor:'white',
            }}
-           keyboardVerticalOffset = {Platform.OS === "ios" ? 0 : 25}
+           keyboardVerticalOffset = {Platform.OS === "ios" ? 0 : 60}
            behavior={Platform.OS === "ios" ? "padding" : "height"} >
             <View style ={{
-                height: 50,
+                height: 40,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderBottomColor:'#F0F0F0F0',
+                borderBottomColor:'#f0f0f0',
                 borderBottomWidth:1,
               }}>
               <View style ={{
@@ -266,6 +273,7 @@ import { ChevronLeft } from "react-native-feather";
               <RealRoundedInput
                 onCommentSubmit = {this.onCommentSubmit}
                 onChange = {this.onCommentChange}
+                onEmojiChange = {this.onEmojiChange}
                 value = {this.state.comment}
                 onCommentFocus = {this.pressToScroll}
                 />
