@@ -147,8 +147,9 @@ let likeAvatarList=[]
 
    }
 
-   sendUnLike = (cellId, personLike) => {
-     console.log('send unlike')
+   sendUnLike = (cellId, personUnlike) => {
+
+     SocialCalCellPageWebSocketInstance.sendSocialCalCellUnlike(cellId, personUnlike)
    }
 
    onHomeNav = () => {
@@ -235,6 +236,7 @@ let likeAvatarList=[]
               peopleLikeId.includes(this.props.userId) ?
 
               <TouchableOpacity
+                onPress ={() => this.sendUnLike(item.id, this.props.userId)}
 
                 >
                 <View style = {styles.justifyCenter}>

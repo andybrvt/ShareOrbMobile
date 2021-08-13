@@ -78,6 +78,12 @@ class WebSocketSocialCalCellPage{
       // add some call back here
       this.callbacks['send_social_cal_cell_like_unlike'](socialCalItem)
     }
+    if(command === "send_social_cal_cell_unlike"){
+      const socialCalItem = parsedData.socialItem
+
+      // add some call back here
+      this.callbacks['send_social_cal_cell_like_unlike'](socialCalItem)
+    }
     // if(command === 'send_social_cal_cell_like_unlike'){
     //   //This will send a like and unlike to the redux so it can show it in the front end
     //
@@ -159,18 +165,24 @@ class WebSocketSocialCalCellPage{
   //This is for liking the social cal cell
   // cellId to get the cell and person like would just be the id of the person
   // liking the post
-
-
-  console.log(cellId, personLike)
   this.sendSocialCalCellInfo({
     command: "send_social_cal_cell_like",
     cellId: cellId,
     personLike: personLike,
 
 
-  })
+    })
 
-}
+  }
+
+  sendSocialCalCellUnlike =(cellId, personUnlike) =>{
+    this.sendSocialCalCellInfo({
+      command: 'send_social_cal_cell_unlike',
+      cellId: cellId,
+      personUnlike: personUnlike
+    })
+
+  }
 
 
 
