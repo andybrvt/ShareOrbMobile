@@ -53,17 +53,17 @@ class SocialCalendarTap extends React.Component{
 
 
     const onRefresh = this.props.navigation.addListener("focus", () =>{
-      // console.log('on refresh here')
-      //
-      // console.log(this.grabDateRange())
-      // this.getSocialCells(dateRange.start, dateRange.end)
-      // .then(data => {
-      //   console.log(data.length)
-      //   this.setState({
-      //     socialCells: data
-      //   })
-      //
-      // })
+      const newDateRange = this.grabDateRange()
+
+      console.log(dateRange)
+      this.getSocialCells(newDateRange.start, newDateRange.end)
+      .then(data => {
+        console.log(data.length)
+        this.setState({
+          socialCells: data
+        })
+
+      })
     })
 
 
@@ -199,6 +199,8 @@ class SocialCalendarTap extends React.Component{
         formattedDate = dateFns.format(day, dateFormat);
 
         if(toDoStuff.length > 0){
+          let info = toDoStuff[0]
+
           days.push(
             <View
 
@@ -287,6 +289,9 @@ class SocialCalendarTap extends React.Component{
 
 
   } else if(diffWeeks === 5) {
+
+    let info = toDoStuff[0]
+
       while(day<= endDate){
 
         for(let item = 0; item < cells.length; item++){

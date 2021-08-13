@@ -186,18 +186,23 @@ class CameraScreen extends React.Component{
   }
 
   onCancelPhoto(){
+
     this.showFinal.setValue(false)
 
     setTimeout(() =>  this.setState({
         isOpen: false,
         imagePreview: null,
         caption: "",
-        showCaptionModal: false
+        showCaptionModal: false,
+        isGallery: false
       }), 1 )
 
   }
 
   openPhoto =()=> {
+    this.setState({
+      isGallery: true
+    })
     this.props.closeShowCamera();
 
 
@@ -237,6 +242,9 @@ class CameraScreen extends React.Component{
 
    }
    if(pickerResult.cancelled){
+     this.setState({
+       isGallery: false
+     })
      this.props.openShowCamera()
    }
 
@@ -408,7 +416,7 @@ class CameraScreen extends React.Component{
                       height: '100%',
                       width: "100%",
                       transform: [
-                        {scaleX: this.state.isGallery ? this.state.type === "front" ? -1 : 1  : 1}
+                        {scaleX: !this.state.isGallery ? (this.state.type === "front" ? -1 : 1)  : 1}
                       ]
                     }}
 
