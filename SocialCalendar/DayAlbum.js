@@ -152,6 +152,12 @@ let likeAvatarList=[]
      SocialCalCellPageWebSocketInstance.sendSocialCalCellUnlike(cellId, personUnlike)
    }
 
+   onCommentOpen = (postId) => {
+     this.props.navigation.navigate("Comments", {
+       postId: postId
+     })
+   }
+
    onHomeNav = () => {
      // this function will be use to navigate back
      // to the home page
@@ -278,19 +284,25 @@ let likeAvatarList=[]
 
           </View>
           <View style={{bottom:'25%', right:'4%', position:'absolute'}}>
-            <View style = {styles.justifyCenter}>
-              <MessageCircle
-                fill="white"
-               stroke = "white"
-               // fill="red"
-               width ={27.5}
-               height = {27.5}
-               style={{right:5}}
-                />
-                <Text  style = {styles.statNum}>
-                  {item.get_socialCalItemComment.length}
-                </Text>
-            </View>
+
+            <TouchableOpacity
+              onPress = {() => this.onCommentOpen(item.id)}
+              >
+              <View style = {styles.justifyCenter}>
+                <MessageCircle
+                  fill="white"
+                 stroke = "white"
+                 // fill="red"
+                 width ={27.5}
+                 height = {27.5}
+                 style={{right:5}}
+                  />
+                  <Text  style = {styles.statNum}>
+                    {item.get_socialCalItemComment.length}
+                  </Text>
+              </View>
+            </TouchableOpacity>
+
           </View>
 
           <Text style={styles.albumTitle}>
