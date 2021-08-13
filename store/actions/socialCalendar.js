@@ -9,3 +9,11 @@ export const fetchSocialCalCellPage = (socialCalCellObj) =>{
     socialCalCellObj: socialCalCellObj
   }
 }
+
+
+export const sendSocialCalCellLikeUnlike = (socialItem) => {
+  return {
+    type: actionTypes.SEND_SOCIAL_CAL_CELL_LIKE_UNLIKE,
+    socialItem: socialItem
+  }
+}

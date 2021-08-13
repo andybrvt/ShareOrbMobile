@@ -15,11 +15,26 @@ const fetchSocialCalCellPage = (state, action) => {
   })
 }
 
+const sendSocialCalCellLikeUnlike = (state, action) => {
+  return updateObject(state, {
+    socialCalCellInfo: {
+      ...state.socialCalCellInfo,
+      get_socialCalItems: state.socialCalCellInfo.get_socialCalItems.map(
+        item => item.id === action.socialItem.id ? {
+          ...action.socialItem
+        } : item
+      )
+    }
+  })
+}
+
 const reducer = (state = initialState, action) => {
 
   switch(action.type){
     case actionTypes.FETCH_SOCIAL_CAL_CELL_PAGE:
       return fetchSocialCalCellPage(state, action);
+    case actionTypes.SEND_SOCIAL_CAL_CELL_LIKE_UNLIKE:
+      return sendSocialCalCellLikeUnlike(state, action);
     default:
       return state;
   }

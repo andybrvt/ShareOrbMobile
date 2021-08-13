@@ -136,8 +136,15 @@ let likeAvatarList=[]
      SocialCalCellPageWebSocketInstance.sendSocialCalCellLike(cellId, personLike)
    }
 
-   sendUnLike = (cellId, personLike) => {
-     console.log('send unlike')
+   sendUnLike = (cellId, personUnlike) => {
+
+     SocialCalCellPageWebSocketInstance.sendSocialCalCellUnlike(cellId, personUnlike)
+   }
+
+   onCommentOpen = (postId) => {
+     this.props.navigation.navigate("Comments", {
+       postId: postId
+     })
    }
 
    onHomeNav = () => {
@@ -152,9 +159,8 @@ let likeAvatarList=[]
 
    renderItem = ({item}) => {
 
+     let peopleLikeId = [];
 
-     console.log("BBBBBBBBBBB")
-     console.log(item)
 
      if(item.people_like.length>0)
      {
@@ -163,6 +169,10 @@ let likeAvatarList=[]
           imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
         };
         });
+
+        for(let i = 0; i< item.people_like.length; i++){
+          peopleLikeId.push(item.people_like[i].id)
+        }
      }
      let dt=new Date(item.created_at)
      let dtDateOnly1 = dateFns.addHours(new Date(item.created_at), new Date(item.created_at).getTimezoneOffset()/60)
@@ -206,6 +216,7 @@ let likeAvatarList=[]
                 />
             </Text>
           </View>
+<<<<<<< HEAD
           */}
           <View style={{bottom:'30%', right:'4%', position:'absolute'}}>
             <View style = {styles.justifyCenter}>
@@ -235,6 +246,75 @@ let likeAvatarList=[]
                   {item.get_socialCalItemComment.length}
                 </Text>
             </View>
+=======
+          <View style={{bottom:'40%', right:'4%', position:'absolute'}}>
+
+            {
+              peopleLikeId.includes(this.props.userId) ?
+
+              <TouchableOpacity
+                onPress ={() => this.sendUnLike(item.id, this.props.userId)}
+
+                >
+                <View style = {styles.justifyCenter}>
+                  <Heart
+                    fill="red"
+                     stroke = "red"
+                     width ={25}
+                     height = {25}
+                     style={{right:5}}
+                  />
+                  <Text  style = {styles.statNum}>
+                    {item.people_like.length}
+                  </Text>
+
+                </View>
+              </TouchableOpacity>
+
+              :
+
+              <TouchableOpacity
+                onPress ={() => this.sendLike(item.id, this.props.userId)}
+                >
+                <View style = {styles.justifyCenter}>
+                  <Heart
+                    fill="white"
+                     stroke = "white"
+                     width ={25}
+                     height = {25}
+                     style={{right:5}}
+                  />
+                  <Text  style = {styles.statNum}>
+                    {item.people_like.length}
+                  </Text>
+
+                </View>
+              </TouchableOpacity>
+            }
+
+
+          </View>
+          <View style={{bottom:'25%', right:'4%', position:'absolute'}}>
+
+            <TouchableOpacity
+              onPress = {() => this.onCommentOpen(item.id)}
+              >
+              <View style = {styles.justifyCenter}>
+                <MessageCircle
+                  fill="white"
+                 stroke = "white"
+                 // fill="red"
+                 width ={27.5}
+                 height = {27.5}
+                 style={{right:5}}
+                  />
+                  <Text  style = {styles.statNum}>
+                    {item.get_socialCalItemComment.length}
+                  </Text>
+              </View>
+            </TouchableOpacity>
+
+>>>>>>> 6380bc840b2540be6804f81809eeddcdde1e293e
           </View>
 
         </TouchableOpacity>
