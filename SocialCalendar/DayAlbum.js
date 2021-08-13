@@ -80,13 +80,10 @@ let likeAvatarList=[]
          cellId
        )
      })
-
      SocialCalCellPageWebSocketInstance.connect(cellId)
-
    }
 
    componentDidMount(){
-
      if(this.props.socialCalCell){
        if(this.props.socialCalCell.get_socialCalItems){
          this.setState({
@@ -94,13 +91,11 @@ let likeAvatarList=[]
            coverPicDay:this.props.socialCalCell.get_socialCalItems[0].itemImage,
          })
        }
-
      }
    }
 
 
    componentDidUpdate(prevProps){
-
      if(this.props.socialCalCell !== prevProps.socialCalCell){
        if(this.props.socialCalCell){
          if(this.props.socialCalCell.get_socialCalItems){
@@ -108,9 +103,7 @@ let likeAvatarList=[]
              curBackgroundPic: this.props.socialCalCell.get_socialCalItems[0].itemImage
            })
          }
-
        }
-
      }
    }
 
@@ -118,9 +111,7 @@ let likeAvatarList=[]
      const component = this;
      setTimeout(
        function(){
-
          if (SocialCalCellPageWebSocketInstance.state() === 1){
-
            callback();
            return;
          } else{
@@ -142,9 +133,7 @@ let likeAvatarList=[]
 
 
    sendLike = (cellId, personLike) => {
-
      SocialCalCellPageWebSocketInstance.sendSocialCalCellLike(cellId, personLike)
-
    }
 
    sendUnLike = (cellId, personLike) => {
@@ -158,12 +147,15 @@ let likeAvatarList=[]
 
    editAlbum = () => {
      this.props.navigation.navigate("PostingPage",
-
      );
    }
 
    renderItem = ({item}) => {
-     
+
+
+     console.log("BBBBBBBBBBB")
+     console.log(item)
+
      if(item.people_like.length>0)
      {
        likeAvatarList = item.people_like.map(item => {
@@ -172,45 +164,37 @@ let likeAvatarList=[]
         };
         });
      }
-
+     let dt=new Date(item.created_at)
+     let dtDateOnly1 = dateFns.addHours(new Date(item.created_at), new Date(item.created_at).getTimezoneOffset()/60)
+     let utc2=dateFns.format(dtDateOnly1, 'h:mma');
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
-     // if(this.props.data.people_like.length>0)
-     // {
-     //   likeAvatarList = this.props.data.people_like.map(item => {
-     //    return {
-     //      imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
-     //    };
-     //    });
-     // }
-
      return(
+       <View style={{minHeight:150, marginBottom:10}}>
        <View style={{
            // backgroundColor: 'red',
            width:'100%',
-           height:300,
-           marginBottom:25, // change to
            padding:10,
-
          }}>
 
         <TouchableOpacity
           activeOpacity={0.6}
           // onPress = {() => this.navAlbum(item.id)}
-          >
+         >
           <Image
             resizeMode="cover"
-            style={{width:'100%', height:'90%', borderRadius:5, }}
+            style={{width:'100%', height:250, borderRadius:5, backgroundColor:'green' }}
             source = {{
               uri: `${global.IP_CHANGE}`+item.itemImage
             }}>
           </Image>
 
-          <View style={{bottom:'15%', left:'4%', position:'absolute'}}>
+          <View style={{bottom:'5%', left:'4%', position:'absolute'}}>
             <FacePile
               size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
               containerStyle={{height:40}}
                overlap={0.1} />
           </View>
+          {/*
           <View style={{top:'7.5%', right:'4.5%', position:'absolute'}}>
             <Text style={styles.videoFooterUserName}>
               <MoreVertical
@@ -222,7 +206,8 @@ let likeAvatarList=[]
                 />
             </Text>
           </View>
-          <View style={{bottom:'40%', right:'4%', position:'absolute'}}>
+          */}
+          <View style={{bottom:'30%', right:'4%', position:'absolute'}}>
             <View style = {styles.justifyCenter}>
               <Heart
                 fill="white"
@@ -234,10 +219,9 @@ let likeAvatarList=[]
               <Text  style = {styles.statNum}>
                 {item.people_like.length}
               </Text>
-
             </View>
           </View>
-          <View style={{bottom:'25%', right:'4%', position:'absolute'}}>
+          <View style={{bottom:'10%', right:'4%', position:'absolute'}}>
             <View style = {styles.justifyCenter}>
               <MessageCircle
                 fill="white"
@@ -247,28 +231,25 @@ let likeAvatarList=[]
                height = {27.5}
                style={{right:5}}
                 />
-                <Text  style = {styles.statNum}>
+                <Text style = {styles.statNum}>
                   {item.get_socialCalItemComment.length}
                 </Text>
             </View>
           </View>
 
-          <Text style={styles.albumTitle}>
-            {item.title}
-          </Text>
         </TouchableOpacity>
-
-        <View style={{top:'100%',position:'absolute', flexDirection:'row', padding:20}}>
-          <Text style={{fontWeight:'bold', color:'white', fontSize:15}}>8:32PM </Text>
-        <Text style={{color:'white'}}>{item.caption}</Text></View>
-
-
         </View>
+        <View style={{flexDirection:'row', padding:15, flexWrap: 'wrap', }}>
+          <Text style={{fontWeight:'bold', color:'white', fontSize:15}}>
+            {utc2+" "}
+           </Text>
+          <Text style={{color:'white'}}>{item.caption}</Text>
+        </View>
+      </View>
      )
    }
 
    viewProfile = (username) => {
-
      if(username === this.props.username){
        this.props.navigation.navigate("Profile");
      } else {
@@ -276,15 +257,11 @@ let likeAvatarList=[]
          username: username
        })
      }
-
    }
 
    changeBackground = e =>{
-     console.log(e)
-
      this.setState({
        curBackgroundPic: this.props.socialCalCell.get_socialCalItems[e].itemImage
-
      })
    }
 
@@ -298,7 +275,6 @@ let likeAvatarList=[]
        <View
          style={{
            height: 50,
-
            width:'97.5%',
            backgroundColor: "white",
            padding:20,
@@ -448,7 +424,7 @@ let likeAvatarList=[]
          </View>
          <FlatList
 
-            contentContainerStyle={{paddingBottom:40}}
+            contentContainerStyle={{paddingBottom:10}}
             showsVerticalScrollIndicator={false}
             data = {this.props.socialCalCell.get_socialCalItems}
             renderItem ={(item) => this.renderItem(item)}
@@ -512,27 +488,7 @@ let likeAvatarList=[]
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.4)',
   },
-   // {bottom:'17.5%', color:'white', fontSize:17, padding:10}
-   albumTitle2:{
-     bottom:'25%',
-     color:'white',
-     fontSize:15,
 
-     padding:10,
-     textShadowColor: 'black',
-     textShadowOffset: {width: -1, height: 1},
-     textShadowRadius: 10
-   },
-   albumTitle:{
-
-     color:'white',
-     // backgroundColor:'red',
-     fontSize:15,
-     padding:20,
-     textShadowColor: 'black',
-     textShadowOffset: {width: -1, height: 1},
-     textShadowRadius: 10
-   },
    dayNumTag: {
      color:'white',
      fontSize:30,
@@ -634,20 +590,6 @@ let likeAvatarList=[]
    },
 
 
-   tagCSS10: {
-     position:'absolute',
-     backgroundColor: 'rgba(0,0,0,.6)',
-     padding:15,
-     borderRadius:25,
-     color:'white',
-
-     fontSize:13,
-     right:15,
-     top:50,
-     textAlign:'right',
-     // fontWeight:'bold',
-
-   },
 
    openContainer:{
      flexDirection:'row',

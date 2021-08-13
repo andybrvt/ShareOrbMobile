@@ -291,7 +291,7 @@ class CreateAlbum extends React.Component{
               </View>
              </View>
 
-             {/*
+             {/* take out for now, public/private
              <View style={styles.action3}>
                  {this.state.isEnabled?
                <Unlock stroke="black" strokeWidth={2.5} width={20} height={20} />
