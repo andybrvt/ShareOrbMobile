@@ -162,6 +162,7 @@ let likeAvatarList=[]
      let peopleLikeId = [];
 
 
+
      if(item.people_like.length>0)
      {
        likeAvatarList = item.people_like.map(item => {
@@ -216,37 +217,11 @@ let likeAvatarList=[]
                 />
             </Text>
           </View>
-<<<<<<< HEAD
+
           */}
-          <View style={{bottom:'30%', right:'4%', position:'absolute'}}>
-            <View style = {styles.justifyCenter}>
-              <Heart
-                fill="white"
-                 stroke = "white"
-                 width ={25}
-                 height = {25}
-                 style={{right:5}}
-              />
-              <Text  style = {styles.statNum}>
-                {item.people_like.length}
-              </Text>
-            </View>
-          </View>
-          <View style={{bottom:'10%', right:'4%', position:'absolute'}}>
-            <View style = {styles.justifyCenter}>
-              <MessageCircle
-                fill="white"
-               stroke = "white"
-               // fill="red"
-               width ={27.5}
-               height = {27.5}
-               style={{right:5}}
-                />
-                <Text style = {styles.statNum}>
-                  {item.get_socialCalItemComment.length}
-                </Text>
-            </View>
-=======
+
+
+
           <View style={{bottom:'40%', right:'4%', position:'absolute'}}>
 
             {
@@ -314,11 +289,9 @@ let likeAvatarList=[]
               </View>
             </TouchableOpacity>
 
->>>>>>> 6380bc840b2540be6804f81809eeddcdde1e293e
           </View>
 
         </TouchableOpacity>
-        </View>
         <View style={{flexDirection:'row', padding:15, flexWrap: 'wrap', }}>
           <Text style={{fontWeight:'bold', color:'white', fontSize:15}}>
             {utc2+" "}
@@ -326,6 +299,7 @@ let likeAvatarList=[]
           <Text style={{color:'white'}}>{item.caption}</Text>
         </View>
       </View>
+    </View>
      )
    }
 
