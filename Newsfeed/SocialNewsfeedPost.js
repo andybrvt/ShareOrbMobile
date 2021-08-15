@@ -649,6 +649,7 @@ class SocialNewsfeedPost extends React.Component{
     let actionText = ""
     let caption=""
 
+    console.log(this.props.data)
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post
@@ -663,8 +664,7 @@ class SocialNewsfeedPost extends React.Component{
         }
       }
 
-      console.log("AAAAAAAAB")
-      console.log(this.props.data.creator)
+
       if(this.props.data.creator){
         if(this.props.data.creator.profile_picture){
           profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.creator.profile_picture

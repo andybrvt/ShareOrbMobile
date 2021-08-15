@@ -1,9 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import Constants from 'expo-constants';
+import * as ExpoNotifications from 'expo-notifications';
+
 
 import Routes from './Routes'
 import { NavigationContainer, createAppContainer } from '@react-navigation/native';
@@ -88,10 +91,27 @@ const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
 
+ExpoNotifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+
 class App extends Component{
-    state = {
+
+
+  state = {
     fontsLoaded: true,
+    expoPushToken: "",
   };
+
+
+
+
+
   constructor(props){
     super(props)
     // Since you want to show chats at the beginning of your
@@ -162,9 +182,63 @@ class App extends Component{
     this.setState({ fontsLoaded: true });
   }
 
+  registerForPushNotificationsAsync = async() => {
+    if(Constants.isDevice){
+      // this function will be used to grab the notifications status
+      const { status: existingStatus } = await ExpoNotifications.getPermissionsAsync();
+
+      let finalStatus = existingStatus;
+      if(existingStatus !== "granted"){
+        // if it is not already granted then you will go out and request it
+        const {status} = await ExpoNotifications.requestPermissionsAsync();
+        finalStatus = status;
+
+      }
+
+      if(finalStatus !== "granted"){
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+
+      const token = (await ExpoNotifications.getExpoPushTokenAsync()).data
+
+      console.log(token)
+      authAxios.post(`${global.IP_CHANGE}`+'/userprofile/addNotificationToken',{
+        token: token
+      })
+      this.setState({
+        expoPushToken:token
+      })
+
+      this.props.authAddNotificationToken(token)
+
+      // probally gotta save the notification token for each person
+      // in their user data
+
+    } else {
+      alert('Must use physical device for Push Notifications');
+
+    }
+
+    if(Platform.OS === "android"){
+        Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+
+
+  }
+
+
+
   componentDidMount(){
     this.props.onTryAutoSignup();
     //this.loadFonts();
+
+    this.registerForPushNotificationsAsync()
   }
 
   componentDidUpdate(prevProps){
@@ -464,276 +538,283 @@ class App extends Component{
     return(
       <PaperProvider>
         <SafeAreaProvider>
-          <NavigationContainer>
-            {
-              !this.props.loading && this.props.username ?
-                <Stack.Navigator
 
-                  mode = "modal"
-                  //keep this here, its important
-                  // headerMode ="none"
-                  initialRouteName = "tabs"
-                  screenOptions={{
-                    gestureEnabled: true
-                    // headerShown: false,
-                  }}
-                    >
+          {
+            <NavigationContainer>
+              {
+                !this.props.loading && this.props.username ?
+                  <Stack.Navigator
 
-                    <Stack.Screen
-                      options={{headerShown: false, }}
-                      name = "tabs" component= {this.createTabStack}/>
-                    <Stack.Screen
-
-                      name = "FollowTab" component= {this.followerFollowingTab}
-                      options={{
-                        headerStyle:{
-                          shadowColor:'#fff', //ios
-                          elevation:0,        // android
-
-                        },
-
-                         ...TransitionPresets.SlideFromRightIOS,
-                                        }}
-                      />
-
-                    <Stack.Screen
-
-                      name = "PFollowTab" component= {this.pFollowerFollowingTab}
-                      options={{
-                        headerStyle:{
-                          shadowColor:'#fff', //ios
-                          elevation:0,        // android
-
-                        },
-                        title: 'Your Info',
-
-                         ...TransitionPresets.SlideFromRightIOS,
-                                        }}
-                      />
-
-                  <Stack.Screen
-                    options={{
-                      headerShown: true,
-                      gestureEnabled: true,
-                      gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
+                    mode = "modal"
+                    //keep this here, its important
+                    // headerMode ="none"
+                    initialRouteName = "tabs"
+                    screenOptions={{
+                      gestureEnabled: true
+                      // headerShown: false,
                     }}
-                    name = 'PostingPage' component = {PostingPage}/>
-                  <Stack.Screen
-                    options={{
-                      headerShown: true,
-                      gestureEnabled: true,
-                      gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
-                    }}
-                    name = 'CameraScreenTrue' component = {CameraScreen}/>
+                      >
 
-                  <Stack.Screen
-                      name = 'Comments'
+                      <Stack.Screen
+                        options={{headerShown: false, }}
+                        name = "tabs" component= {this.createTabStack}/>
+                      <Stack.Screen
+
+                        name = "FollowTab" component= {this.followerFollowingTab}
+                        options={{
+                          headerStyle:{
+                            shadowColor:'#fff', //ios
+                            elevation:0,        // android
+
+                          },
+
+                           ...TransitionPresets.SlideFromRightIOS,
+                                          }}
+                        />
+
+                      <Stack.Screen
+
+                        name = "PFollowTab" component= {this.pFollowerFollowingTab}
+                        options={{
+                          headerStyle:{
+                            shadowColor:'#fff', //ios
+                            elevation:0,        // android
+
+                          },
+                          title: 'Your Info',
+
+                           ...TransitionPresets.SlideFromRightIOS,
+                                          }}
+                        />
+
+                    <Stack.Screen
                       options={{
-
-                        headerShown: false,
-                        // cardStyle: { backgroundColor: 'transparent' },
-                        // cardOverlayEnabled: true,
-                        // cardStyleInterpolator: ({ current: { progress } }) => ({
-                        //   cardStyle: {
-                        //     opacity: progress.interpolate({
-                        //       inputRange: [0, 0.5, 0.9, 1],
-                        //       outputRange: [0, 0.25, 0.7, 1],
-                        //     }),
-                        //   },
-                        //   overlayStyle: {
-                        //     opacity: progress.interpolate({
-                        //       inputRange: [0, 1],
-                        //       outputRange: [0, 0.5],
-                        //       extrapolate: 'clamp',
-                        //     }),
-                        //   },
-                        // }),
+                        headerShown: true,
+                        gestureEnabled: true,
+                        gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
                       }}
-                      // mode="modal"
-                      component = {CommentPage}/>
-                  <Stack.Screen
-                    options={{
-                      headerStyle:{
-                        shadowColor:'#fff', //ios
-                        elevation:0,        // android
+                      name = 'PostingPage' component = {PostingPage}/>
+                    <Stack.Screen
+                      options={{
+                        headerShown: true,
+                        gestureEnabled: true,
+                        gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
+                      }}
+                      name = 'CameraScreenTrue' component = {CameraScreen}/>
 
-                      },
-                       ...TransitionPresets.SlideFromRightIOS,
-                                      }}
-                     name = 'MessageFriend' component = {MessageFriend}/>
+                    <Stack.Screen
+                        name = 'Comments'
+                        options={{
+
+                          headerShown: false,
+                          // cardStyle: { backgroundColor: 'transparent' },
+                          // cardOverlayEnabled: true,
+                          // cardStyleInterpolator: ({ current: { progress } }) => ({
+                          //   cardStyle: {
+                          //     opacity: progress.interpolate({
+                          //       inputRange: [0, 0.5, 0.9, 1],
+                          //       outputRange: [0, 0.25, 0.7, 1],
+                          //     }),
+                          //   },
+                          //   overlayStyle: {
+                          //     opacity: progress.interpolate({
+                          //       inputRange: [0, 1],
+                          //       outputRange: [0, 0.5],
+                          //       extrapolate: 'clamp',
+                          //     }),
+                          //   },
+                          // }),
+                        }}
+                        // mode="modal"
+                        component = {CommentPage}/>
+                    <Stack.Screen
+                      options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+
+                        },
+                         ...TransitionPresets.SlideFromRightIOS,
+                                        }}
+                       name = 'MessageFriend' component = {MessageFriend}/>
+                       <Stack.Screen
+                         options={{
+                           headerStyle:{
+                             shadowColor:'#fff', //ios
+                             elevation:0,        // android
+                           },
+                           title: 'Chats',
+                            ...TransitionPresets.SlideFromRightIOS,
+                          }}
+                       name = 'Chats' component = {Chats}/>
+
+                       <Stack.Screen
+                         options={{
+                           headerStyle:{
+                             shadowColor:'#fff', //ios
+                             elevation:0,        // android
+                           },
+                           title: 'Notifications',
+                            ...TransitionPresets.SlideFromRightIOS,
+                          }}
+                          name = 'Notifications' component = {Notifications}/>
                      <Stack.Screen
                        options={{
                          headerStyle:{
                            shadowColor:'#fff', //ios
                            elevation:0,        // android
                          },
-                         title: 'Chats',
+                         title: 'Edit Profile',
                           ...TransitionPresets.SlideFromRightIOS,
                         }}
-                     name = 'Chats' component = {Chats}/>
 
-                     <Stack.Screen
-                       options={{
-                         headerStyle:{
-                           shadowColor:'#fff', //ios
-                           elevation:0,        // android
-                         },
-                         title: 'Notifications',
-                          ...TransitionPresets.SlideFromRightIOS,
-                        }}
-                        name = 'Notifications' component = {Notifications}/>
+                        name = 'EditProfile' component = {EditProfile}/>
+                        <Stack.Screen
+                          options={{
+                            headerStyle:{
+                              shadowColor:'#fff', //ios
+                              elevation:0,        // android
+                            },
+                            title: 'Liked By',
+                             ...TransitionPresets.SlideFromRightIOS,
+                           }}
+
+                           name = 'DisplayLikeList' component = {DisplayLikeList}/>
+                    <Stack.Screen
+                      options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+                        },
+                        title: 'Followers',
+                         ...TransitionPresets.SlideFromRightIOS,
+                       }}
+
+                       name = 'Followers' component = {Followers}/>
                    <Stack.Screen
                      options={{
                        headerStyle:{
                          shadowColor:'#fff', //ios
                          elevation:0,        // android
                        },
-                       title: 'Edit Profile',
+                       title: 'Following',
                         ...TransitionPresets.SlideFromRightIOS,
                       }}
+                      name = 'Following' component = {Following}/>
+                   <Stack.Screen
+                     options={{
+                       headerShown: false,
+                       title: 'Show Day',
+                        ...TransitionPresets.SlideFromRightIOS,
+                                       }}
+                      name = 'DayAlbum' component = {DayAlbum}/>
+                      <Stack.Screen
+                        options={{
+                          headerStyle:{
+                            shadowColor:'#fff', //ios
+                            elevation:0,        // android
 
-                      name = 'EditProfile' component = {EditProfile}/>
+                          },
+                          title: 'Create Album',
+                          ...TransitionPresets.SlideFromRightIOS,
+                                          }}
+                         name = 'CreateAlbum' component = {CreateAlbum}/>
+                         <Stack.Screen
+                           options={{
+                             headerStyle:{
+                               shadowColor:'#fff', //ios
+                               elevation:0,        // android
+
+                             },
+                             title: 'PicAlbum',
+                             ...TransitionPresets.SlideFromRightIOS,
+                                             }}
+                            name = 'PicAlbum' component = {PicAlbum}/>
+                         <Stack.Screen
+                           options={{
+                             headerStyle:{
+                               shadowColor:'#fff', //ios
+                               elevation:0,        // android
+
+                             },
+                             title: 'Invite Friends',
+                             ...TransitionPresets.ModalSlideFromBottomIOS,
+                                             }}
+                            name = 'InviteFriends' component = {InviteFriends}/>
+                   <Stack.Screen
+                     options={{
+                       title: 'Search Friends',
+                                       }}
+                      name = 'ChatSearch' component = {ChatSearch}/>
+                    <Stack.Screen
+                      options={{
+                        title: 'Your Name',
+                      }}
+                      name = 'ViewProfile' component = {ViewProfile}/>
+                    <Stack.Screen
+                      options={{
+                        headerStyle:{
+                          shadowColor:'#fff', //ios
+                          elevation:0,        // android
+                        },
+                        title: 'Settings',
+                         ...TransitionPresets.SlideFromRightIOS,
+                       }}
+                       name = 'Settings' component = {Settings}/>
+                     <Stack.Screen
+                       options={{
+                         headerStyle:{
+                           shadowColor:'#fff', //ios
+                           elevation:0,        // android
+                         },
+                         title: 'Privacy',
+                          ...TransitionPresets.SlideFromRightIOS,
+                        }}
+                        name = 'Privacy' component = {Privacy}/>
                       <Stack.Screen
                         options={{
                           headerStyle:{
                             shadowColor:'#fff', //ios
                             elevation:0,        // android
                           },
-                          title: 'Liked By',
+                          title: 'User Info',
                            ...TransitionPresets.SlideFromRightIOS,
                          }}
-
-                         name = 'DisplayLikeList' component = {DisplayLikeList}/>
-                  <Stack.Screen
-                    options={{
-                      headerStyle:{
-                        shadowColor:'#fff', //ios
-                        elevation:0,        // android
-                      },
-                      title: 'Followers',
-                       ...TransitionPresets.SlideFromRightIOS,
-                     }}
-
-                     name = 'Followers' component = {Followers}/>
-                 <Stack.Screen
-                   options={{
-                     headerStyle:{
-                       shadowColor:'#fff', //ios
-                       elevation:0,        // android
-                     },
-                     title: 'Following',
-                      ...TransitionPresets.SlideFromRightIOS,
-                    }}
-                    name = 'Following' component = {Following}/>
-                 <Stack.Screen
-                   options={{
-                     headerShown: false,
-                     title: 'Show Day',
-                      ...TransitionPresets.SlideFromRightIOS,
-                                     }}
-                    name = 'DayAlbum' component = {DayAlbum}/>
-                    <Stack.Screen
-                      options={{
-                        headerStyle:{
-                          shadowColor:'#fff', //ios
-                          elevation:0,        // android
-
-                        },
-                        title: 'Create Album',
-                        ...TransitionPresets.SlideFromRightIOS,
-                                        }}
-                       name = 'CreateAlbum' component = {CreateAlbum}/>
-                       <Stack.Screen
-                         options={{
-                           headerStyle:{
-                             shadowColor:'#fff', //ios
-                             elevation:0,        // android
-
-                           },
-                           title: 'PicAlbum',
-                           ...TransitionPresets.SlideFromRightIOS,
-                                           }}
-                          name = 'PicAlbum' component = {PicAlbum}/>
-                       <Stack.Screen
-                         options={{
-                           headerStyle:{
-                             shadowColor:'#fff', //ios
-                             elevation:0,        // android
-
-                           },
-                           title: 'Invite Friends',
-                           ...TransitionPresets.ModalSlideFromBottomIOS,
-                                           }}
-                          name = 'InviteFriends' component = {InviteFriends}/>
-                 <Stack.Screen
-                   options={{
-                     title: 'Search Friends',
-                                     }}
-                    name = 'ChatSearch' component = {ChatSearch}/>
-                  <Stack.Screen
-                    options={{
-                      title: 'Your Name',
-                    }}
-                    name = 'ViewProfile' component = {ViewProfile}/>
-                  <Stack.Screen
-                    options={{
-                      headerStyle:{
-                        shadowColor:'#fff', //ios
-                        elevation:0,        // android
-                      },
-                      title: 'Settings',
-                       ...TransitionPresets.SlideFromRightIOS,
-                     }}
-                     name = 'Settings' component = {Settings}/>
-                   <Stack.Screen
-                     options={{
-                       headerStyle:{
-                         shadowColor:'#fff', //ios
-                         elevation:0,        // android
-                       },
-                       title: 'Privacy',
-                        ...TransitionPresets.SlideFromRightIOS,
-                      }}
-                      name = 'Privacy' component = {Privacy}/>
+                         name = 'UserInfo' component = {UserInfo}/>
                     <Stack.Screen
                       options={{
                         headerStyle:{
                           shadowColor:'#fff', //ios
                           elevation:0,        // android
                         },
-                        title: 'User Info',
+                        title: 'Bio',
                          ...TransitionPresets.SlideFromRightIOS,
-                       }}
-                       name = 'UserInfo' component = {UserInfo}/>
-                  <Stack.Screen
-                    options={{
-                      headerStyle:{
-                        shadowColor:'#fff', //ios
-                        elevation:0,        // android
-                      },
-                      title: 'Bio',
-                       ...TransitionPresets.SlideFromRightIOS,
-                                      }}
+                                        }}
 
 
-                      name = 'EditBio' component = {EditBio}/>
-                  <Stack.Screen
-                    name = "ImageBrowserScreen"
-                    options={{
-                      title: 'Selected 0 files',
-                    }}
-                    component = {ImageBrowserScreen} />
+                        name = 'EditBio' component = {EditBio}/>
+                    <Stack.Screen
+                      name = "ImageBrowserScreen"
+                      options={{
+                        title: 'Selected 0 files',
+                      }}
+                      component = {ImageBrowserScreen} />
 
-                  <Stack.Screen
-                    name = "otherProfile"
-                    component = {Profile}
-                     />
+                    <Stack.Screen
+                      name = "otherProfile"
+                      component = {Profile}
+                       />
 
-                </Stack.Navigator>
-                :
-                <Routes {...this.props} />
+                  </Stack.Navigator>
+                  :
+                  <Routes {...this.props} />
+              }
+            </NavigationContainer>
+
+
             }
-          </NavigationContainer>
+
+
         </SafeAreaProvider>
       </PaperProvider>
       )
@@ -746,6 +827,7 @@ class App extends Component{
 
 const mapStateToProps = state => {
   return {
+    notificationToken: state.auth.notificationToken,
     isAuthenticated: state.auth.token !== null,
     token: state.auth.token,
     username: state.auth.username,
@@ -786,7 +868,8 @@ const mapDispatchToProps = dispatch => {
 
     fetchColabAlbum: album => dispatch(colabAlbumActions.fetchColabAlbum(album)),
     fetchTimeLineColab: (albums) => dispatch(colabAlbumActions.fetchTimeLineColab(albums)),
-    fetchExpiringColab: (albums) => dispatch(colabAlbumActions.fetchExpiringColab(albums))
+    fetchExpiringColab: (albums) => dispatch(colabAlbumActions.fetchExpiringColab(albums)),
+    authAddNotificationToken: (token) => dispatch(authActions.authAddNotificationToken(token))
   }
 }
 
