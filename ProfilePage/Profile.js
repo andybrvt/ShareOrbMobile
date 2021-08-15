@@ -26,18 +26,6 @@ class Profile extends React.Component{
     }
   }
 
-  ViewChats = () => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
-    this.props.navigation.navigate("Chats")
-  }
-
-  ViewNoti = () => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
-    this.props.navigation.navigate("Notifications")
-  }
-
   ViewProfile = () => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption

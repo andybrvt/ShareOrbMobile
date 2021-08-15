@@ -23,7 +23,7 @@ import { connect } from 'react-redux';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
-import { Bell, User, ArrowRight, ChevronLeft} from "react-native-feather";
+import { Bell, User, ArrowRight, ChevronLeft, ArrowLeft} from "react-native-feather";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as dateFns from 'date-fns';
 import * as ImagePicker from 'expo-image-picker';
@@ -42,7 +42,6 @@ import * as exploreActions from '../store/actions/explore';
        bio = ""
      }
      this.props.navigation.navigate("EditBio");
-
    }
 
 
@@ -155,6 +154,7 @@ import * as exploreActions from '../store/actions/explore';
      const tempVal = e;
 
      if(tempVal !== this.props.firstName){
+
        this.props.navigation.setOptions({
          headerRight: () => this.renderSave()
        })
@@ -202,9 +202,11 @@ import * as exploreActions from '../store/actions/explore';
     <TouchableOpacity
       onPress = {() => this.props.navigation.goBack(0)}
       >
-      <ChevronLeft
-        height = {35}
-        width = {35}
+      <ArrowLeft
+        style={{left:10}}
+        stroke="black"
+        height = {25}
+        width = {25}
         />
     </TouchableOpacity>
   )

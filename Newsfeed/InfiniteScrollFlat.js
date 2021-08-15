@@ -151,7 +151,7 @@ class InfiniteScrollFlat extends React.Component{
                   }}>
                   <Image source={require('./noPosts1.png')} style = {{height: 200, width: 250, resizeMode : 'stretch',}} />
               <TouchableOpacity
-                onPress = {() => this.props.navigation.navigate("Upload")}
+                onPress = {() => this.props.openShowCamera()}
                 >
                 <View style = {{
                   backgroundColor: "#1890ff",
@@ -201,6 +201,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadMoreSocialPost: (post) => dispatch(socialNewsfeedActions.loadMoreSocialPost(post)),
+    openShowCamera: () => dispatch(authActions.openShowCamera()),
   }
 }
 
