@@ -282,6 +282,10 @@ class SocialNewsfeedPost extends React.Component{
           ownerId = this.props.data.creator.id
 
         }
+
+        if(this.props.data.created_at) {
+          postCreatedAt=this.props.data.created_at
+        }
       }
 
       if(this.props.data.calCell){
@@ -326,6 +330,9 @@ class SocialNewsfeedPost extends React.Component{
        // likeAvatarList.push({'imageURL':'http://i.imgur.com/f93vCxM.gif'}]),
     }
 
+    console.log("POSTTTTTTTTTT")
+    console.log(this.props.data)
+
     // if(this.props.data) {
     //
     //   contentTypeId = this.props.data.id
@@ -342,9 +349,15 @@ class SocialNewsfeedPost extends React.Component{
     //
     // }
 
-    let timestamp=""
+
     let socialMonth=""
     let socialDay=""
+
+
+    let timestamp=new Date(postCreatedAt)
+    let dtDateOnly1 = dateFns.addHours(new Date(postCreatedAt), new Date(postCreatedAt).getTimezoneOffset()/60)
+    let utc3=dateFns.format(dtDateOnly1, 'h:mma');
+
     // timestamp=postCreatedAt
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
     // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
@@ -536,7 +549,11 @@ class SocialNewsfeedPost extends React.Component{
                   </View>
                 </TouchableWithoutFeedback>
 
-
+                <View style = {styles.tagCSS3}>
+                    <View style = {styles.justifyCenter}>
+                      <Text style={styles.videoFooterUserName}>{utc3}</Text>
+                    </View>
+                </View>
                   {/*
                   <View style = {styles.justifyCenter}>
                     <Navigation2
@@ -936,7 +953,7 @@ const styles = StyleSheet.create({
     padding:9,
     borderRadius:25,
     color:'white',
-    bottom:'20%',
+    bottom:'10%',
     fontSize:13,
     right:7.5,
     textAlign:'right',
