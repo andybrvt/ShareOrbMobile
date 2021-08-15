@@ -246,6 +246,12 @@ class App extends Component{
       })
 
     }
+
+    if(notiType === "comment"){
+      this.refContainer.navigate('Comments', {
+        postId: response.notification.request.trigger.payload.body.itemId
+      })
+    }
   };
 
   componentDidMount(){

@@ -84,10 +84,14 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
       ), 1000)
 
 
-       // FOR LATER
        // if(userId !== commentHost){
-       //   NotificationWebSocketInstance.sendNotification(notificationObject)
-       //
+         // NotificationWebSocketInstance.sendNotification(notificationObject)
+
+         global.SEND_COMMENT_NOTIFICATION(
+           this.props.commentHostNotiToken,
+           this.props.currentUser,
+           cellId
+         )
        // }
 
        this.setState({
@@ -230,6 +234,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
    render(){
      const comments = this.props.socialComments
+     console.log(this.props)
      return (
        <SafeAreaView
          style ={{flex: 1, backgroundColor:'white'}}
@@ -296,7 +301,8 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
      profilepic: state.auth.profilePic,
      socialComments: state.socialNewsfeed.socialComments,
      commentHost: state.socialNewsfeed.commentHost,
-     cellDate: state.socialNewsfeed.cellDate
+     cellDate: state.socialNewsfeed.cellDate,
+     commentHostNotiToken: state.socialNewsfeed.commentHostNotiToken
    }
  }
 

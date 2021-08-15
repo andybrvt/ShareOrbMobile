@@ -237,14 +237,17 @@ global.SEND_LIKE_NOTIFICATION = async(
 
 }
 
-global.SEND_COMMENT_NOTIFICATION = async(expoPushToken, sender) => {
+global.SEND_COMMENT_NOTIFICATION = async(expoPushToken, sender, itemId) => {
   if(expoPushToken !== ""){
     const message = {
       to: expoPushToken,
       sound: "default",
       title: sender + ' commented on your post',
       body: 'Come check it out!',
-      data: { someData: 'newsfeed' },
+      data: {
+        type: "comment",
+        itemId: itemId
+      },
     }
 
     await fetch('https://exp.host/--/api/v2/push/send', {
