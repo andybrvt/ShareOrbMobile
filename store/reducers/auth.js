@@ -3,6 +3,7 @@ import { updateObject } from "../utility";
 //
 const initialState ={
   token: null,
+  notificationToken: "",
   error: null,
   loading: true,
   username: null,
@@ -164,6 +165,12 @@ const closeShowCamera = (state, action) => {
   })
 }
 
+const authAddNotificationToken = (state, action) => {
+  return updateObject(state, {
+    notificationToken: action.token
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.AUTH_START:
@@ -198,6 +205,8 @@ const reducer = (state = initialState, action) => {
       return openShowCamera(state,action);
     case actionTypes.CLOSE_SHOW_CAMERA:
       return closeShowCamera(state, action);
+    case actionTypes.AUTH_ADD_NOTIFICATION_TOKEN:
+      return authAddNotificationToken(state, action);
     default:
       return state;
   }

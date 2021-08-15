@@ -262,3 +262,11 @@ export const closeShowCamera = () => {
     type: actionTypes.CLOSE_SHOW_CAMERA
   }
 }
+
+
+export const authAddNotificationToken = (token) => {
+  return {
+    type: actionTypes.AUTH_ADD_NOTIFICATION_TOKEN,
+    token: token
+  }
+}
