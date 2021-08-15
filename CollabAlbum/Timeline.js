@@ -105,14 +105,12 @@ class Timeline extends React.Component{
                <View style = {{
                    flexDirection:'column',
                    height:'100%',
-                   top:'50%'
+                   top:'25%'
                  }}>
                <View style = {{
                    alignItems: 'center',
                  }}>
-                 <Folder
-                   stroke = "gainsboro"
-                    />
+                   <Image source={require('./collabFriends.png')} style = {{height: 200, width: 250, resizeMode : 'stretch',}} />
                   <Text style = {{color: 'gainsboro', fontSize:20}}>No Shared Albums with Friends</Text>
                </View>
              </View>

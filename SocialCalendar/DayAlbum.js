@@ -56,7 +56,6 @@ let likeAvatarList=[]
  ];
 
  class DayAlbum extends React.Component{
-
    constructor(props){
      super(props);
      this.state = {
@@ -70,8 +69,6 @@ let likeAvatarList=[]
    }
 
    initializeDayAlbum(){
-     console.log('cellid here')
-
      // used to connect to the websocket
      const cellId = this.props.route.params.cellId
      console.log(cellId)
@@ -93,7 +90,6 @@ let likeAvatarList=[]
        }
      }
    }
-
 
    componentDidUpdate(prevProps){
      if(this.props.socialCalCell !== prevProps.socialCalCell){
@@ -124,9 +120,6 @@ let likeAvatarList=[]
      this.props.navigation.navigate("DisplayLikeList",
      {
        likePeople:likePeople,
-         // comments: socialComments,
-         // caption: dayCaption,
-         // profilePic:profilePic,
      }
     )
    }
@@ -157,12 +150,16 @@ let likeAvatarList=[]
      );
    }
 
+   navLikePeople(people_like) {
+     this.props.navigation.navigate("DisplayLikeList",
+       {
+         likePeople:people_like,
+         }
+     );
+   }
+
    renderItem = ({item}) => {
-
      let peopleLikeId = [];
-
-
-
      if(item.people_like.length>0)
      {
        likeAvatarList = item.people_like.map(item => {
@@ -170,7 +167,6 @@ let likeAvatarList=[]
           imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
         };
         });
-
         for(let i = 0; i< item.people_like.length; i++){
           peopleLikeId.push(item.people_like[i].id)
         }
@@ -186,11 +182,6 @@ let likeAvatarList=[]
            width:'100%',
            padding:10,
          }}>
-
-        <TouchableOpacity
-          activeOpacity={0.6}
-          // onPress = {() => this.navAlbum(item.id)}
-         >
           <Image
             resizeMode="cover"
             style={{width:'100%', height:250, borderRadius:5, backgroundColor:'green' }}
@@ -198,12 +189,14 @@ let likeAvatarList=[]
               uri: `${global.IP_CHANGE}`+item.itemImage
             }}>
           </Image>
-
-          <View style={{bottom:'5%', left:'4%', position:'absolute'}}>
+          <View style={{bottom:'20%', left:'2.5%', position:'absolute', width:50, height:50}}>
+            <TouchableOpacity
+              onPress={() => this.navLikePeople(item.people_like)}>
             <FacePile
               size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
               containerStyle={{height:40}}
                overlap={0.1} />
+           </TouchableOpacity>
           </View>
           {/*
           <View style={{top:'7.5%', right:'4.5%', position:'absolute'}}>
@@ -217,19 +210,12 @@ let likeAvatarList=[]
                 />
             </Text>
           </View>
-
           */}
-
-
-
-          <View style={{bottom:'40%', right:'4%', position:'absolute'}}>
-
+          <View style={{bottom:'40%', right:'6%', position:'absolute'}}>
             {
               peopleLikeId.includes(this.props.userId) ?
-
               <TouchableOpacity
                 onPress ={() => this.sendUnLike(item.id, this.props.userId)}
-
                 >
                 <View style = {styles.justifyCenter}>
                   <Heart
@@ -242,15 +228,11 @@ let likeAvatarList=[]
                   <Text  style = {styles.statNum}>
                     {item.people_like.length}
                   </Text>
-
                 </View>
               </TouchableOpacity>
-
               :
-
               <TouchableOpacity
-                onPress ={() => this.sendLike(item.id, this.props.userId)}
-                >
+                onPress ={() => this.sendLike(item.id, this.props.userId)}>
                 <View style = {styles.justifyCenter}>
                   <Heart
                     fill="white"
@@ -262,15 +244,11 @@ let likeAvatarList=[]
                   <Text  style = {styles.statNum}>
                     {item.people_like.length}
                   </Text>
-
                 </View>
               </TouchableOpacity>
             }
-
-
           </View>
-          <View style={{bottom:'25%', right:'4%', position:'absolute'}}>
-
+          <View style={{bottom:'25%', right:'6%', position:'absolute'}}>
             <TouchableOpacity
               onPress = {() => this.onCommentOpen(item.id)}
               >
@@ -288,10 +266,8 @@ let likeAvatarList=[]
                   </Text>
               </View>
             </TouchableOpacity>
-
           </View>
 
-        </TouchableOpacity>
         <View style={{flexDirection:'row', padding:15, flexWrap: 'wrap', }}>
           <Text style={{fontWeight:'bold', color:'white', fontSize:15}}>
             {utc2+" "}
@@ -333,7 +309,6 @@ let likeAvatarList=[]
            backgroundColor: "white",
            padding:20,
            marginBottom:20,
-
          }}
        >
        <View style={{flexDirection:'row'}}>
@@ -367,7 +342,6 @@ let likeAvatarList=[]
     // const test1=format(test, 'dd');
     // const test2=format(test, 'MMMM');
     let user=""
-
      if(this.props.socialCalCell){
        const cell = this.props.socialCalCell
 
@@ -409,8 +383,6 @@ let likeAvatarList=[]
          socialMonth = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM")
          socialDay = dateFns.format(new Date(getYear, getMonth, getDay), "d")
        }
-
-
      }
 
      if(likePost.length > 0){
@@ -431,7 +403,6 @@ let likeAvatarList=[]
              width ={35}
              height = {35}
             />
-
           </TouchableOpacity>
           <View style = {styles.chatInfoHolder} >
             <Avatar
@@ -477,7 +448,6 @@ let likeAvatarList=[]
                </View>
          </View>
          <FlatList
-
             contentContainerStyle={{paddingBottom:10}}
             showsVerticalScrollIndicator={false}
             data = {this.props.socialCalCell.get_socialCalItems}
@@ -485,10 +455,6 @@ let likeAvatarList=[]
             keyExtractor={(item, index) => String(index)}
             // ItemSeparatorComponent = { this.FlatListItemSeparator }
           />
-
-
-
-
             <View  style={styles.openContainer}>
               {/* day caption
               <View style={styles.firstContainer}>

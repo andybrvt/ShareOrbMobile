@@ -356,17 +356,19 @@ class CameraScreen extends React.Component{
 
             {
               this.state.imagePreview !== null ?
-
               <Modal  animationType = "fade" visible = {this.state.isOpen}>
-
                 <Animated.View style = {{
                     position: 'absolute',
                     backgroundColor: 'white',
-
-                    // left: "50%",
-                    // transform: [
-                    //   {translateX: "-50%"}
-                    // ],
+                    borderRadius:20,
+                    // android shadow
+                    elevation:20,
+                    shadowColor: '#52006A',
+                    // ios shadow
+                    shadowColor: '#171717',
+                    shadowOffset: {width: -2, height: 4},
+                    shadowOpacity: 0.2,
+                    shadowRadius: 3,
                     alignSelf: 'center',
                     zIndex: 99,
                     transform: [
@@ -376,35 +378,31 @@ class CameraScreen extends React.Component{
                   <KeyboardAvoidingView
                     style = {{
                       padding: 20,
-                      backgroundColor: 'white',
+                      backgroundColor: 'transparent',
                       width: width*0.8,
-                      alignItems: 'center'
+                      alignItems: 'center',
                     }}
                     behavior = "height"
-                    keyboardVerticalOffset = {100}
+                    keyboardVerticalOffset = {10}
                     >
-
-                   <Text>Write a caption here today</Text>
+                    <Text style={{fontSize:18, paddingBottom:10}}> Caption</Text>
                    <View
                      style = {{
                        backgroundColor: "whitesmoke",
-                       padding: 20,
+                       padding: 10,
                        borderRadius:10,
-                       width: "100%"
+                       width: "100%",
                      }}
                      >
-
                      <TextInput
                        value = {this.state.caption}
                        onChangeText = {this.changeCaption}
-                       placeholder = "Write something here"
+                       placeholder = "Write something here..."
                        multiline = {true}
                        ref={(input) => { this.textInput = input; }}
                         />
                    </View>
-
                  </KeyboardAvoidingView>
-
                 </Animated.View>
 
                 <TouchableWithoutFeedback
@@ -419,8 +417,7 @@ class CameraScreen extends React.Component{
                         {scaleX: !this.state.isGallery ? (this.state.type === "front" ? -1 : 1)  : 1}
                       ]
                     }}
-
-                     />
+                    />
 
                 </TouchableWithoutFeedback>
 
@@ -428,16 +425,20 @@ class CameraScreen extends React.Component{
                  onPress = {() => this.onCancelPhoto()}
                  style = {{
                    position: 'absolute',
-                   top: 20,
-                   left: 10
+                   top: '5%',
+                   left:'5%',
                  }}>
+                 <X
+                   style={{top:0, position:'absolute'}}
+                   strokeWidth={4}
+                   stroke = "#d9d9d9"
+                   height = {40}
+                   width = {40}/>
                  <X
                    stroke = 'white'
                    height = {40}
                    width = {40}/>
                </TouchableOpacity>
-
-
 
                <TouchableOpacity
                  style = {styles.submitBtn}
@@ -448,35 +449,36 @@ class CameraScreen extends React.Component{
                        fontSize: 20
                      }}> Save  </Text>
                </TouchableOpacity>
-
               </Modal>
 
               :
 
               <Camera
-                autoFocus
+                autoFocus={"on"}
                 ref = {node => {this.cameraRef = node}}
                 type = {this.state.type}
                 ratio={"16:9"}
                 skipProcessing={true}
                 flashMode = {this.state.showFlash}
                 style = {{flex: 1}}>
-
-
-
-
                     <TouchableOpacity
                       onPress = {() => this.onRedirect()}
                       style = {{
                         position: 'absolute',
-
                         top: '5%',
                         left:'5%',
                       }}
                       >
                       <ArrowLeft
+                        style={{top:0, position:'absolute'}}
+                        strokeWidth={3}
+                        stroke = "#d9d9d9"
+                        width = {40} height = {40} />
+                      <ArrowLeft
+                        strokeWidth={2}
                         stroke = "white"
                         width = {40} height = {40} />
+
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -488,9 +490,17 @@ class CameraScreen extends React.Component{
                         alignSelf: 'flex-start',
                       }}
                       >
+
                       <Grid
+                        style={{top:0, position:'absolute'}}
+                        strokeWidth={3}
+                        stroke = "#d9d9d9"
+                        width = {40} height = {40} />
+                      <Grid
+                        strokeWidth={2}
                         stroke = "white"
-                        width = {40} height = {40}/>
+                        width = {40} height = {40} />
+
                     </TouchableOpacity>
 
 
@@ -503,11 +513,18 @@ class CameraScreen extends React.Component{
                         onPress = {() => this.onFlash()}
                         style ={{
                           position: 'absolute',
-                          top: '10%',
-                          right: '5%',
+                          top: '5%',
+                          right:'5%',
                         }}>
                         <Zap
+                          style={{top:0, position:'absolute'}}
+                          stroke = "#d9d9d9"
+                          strokeWidth={3}
+                          width = {30}
+                          height = {30} />
+                        <Zap
                           stroke = "white"
+                          strokeWidth={2}
                           width = {30}
                           height = {30} />
                       </TouchableOpacity>
@@ -519,11 +536,19 @@ class CameraScreen extends React.Component{
                         style ={{
                           // position: 'relative',
                           position: 'absolute',
-                          top: '10%',
-                          right: '5%',
+                          top: '5%',
+                          right:'5%',
                           // top: 100
                         }}>
                         <ZapOff
+                          style={{top:0, position:'absolute'}}
+                          stroke = "#d9d9d9"
+                          strokeWidth={3}
+                          width = {30}
+
+                          height = {30} />
+                        <ZapOff
+                          strokeWidth={2}
                           stroke = "white"
                           width = {30}
                           height = {30} />
@@ -537,14 +562,20 @@ class CameraScreen extends React.Component{
                       style ={{
                         // position: 'relative',
                         position: 'absolute',
-                        top: '20%',
+                        top: '15%',
                         right: '5%',
                         // top: 100
                       }}>
+
                       <Repeat
+                        style={{top:0, position:'absolute'}}
+                        strokeWidth={3}
+                        stroke = "#d9d9d9"
+                        width = {30} height = {30} />
+                      <Repeat
+                        strokeWidth={2}
                         stroke = "white"
-                        width = {30}
-                        height = {30} />
+                        width = {30} height = {30} />
                     </TouchableOpacity>
 
 
@@ -610,6 +641,8 @@ const mapDispatchToProps = dispatch => {
 
 
 const styles = StyleSheet.create({
+
+
   notAllowed: {
     flex: 1,
     alignItems: 'center',
@@ -620,8 +653,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5
-
+    borderRadius: 5,
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation:10,
   },
   btnText: {
     color: "white"

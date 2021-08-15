@@ -97,7 +97,8 @@ class Header extends React.Component{
         <Animated.View style = {{
           flexDirection: "row",
           flex: 1,
-          backgroundColor: "white",
+
+          backgroundColor: Platform.OS === "ios" ? "white" : "black",
           height: 50,
           position: 'absolute',
           width: "100%",
@@ -114,12 +115,18 @@ class Header extends React.Component{
                 style={{right:25}}
                 stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
               */}
+              <View style={{position:'absolute', right:'95%', top:'15%',}}>
+                <View style={styles.notiCircle}>
+
+                </View>
+              </View>
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Notifications")}>
+
             <Bell
               stroke="#1890ff"
               style={{marginRight:10}}
-               strokeWidth={2.5} width={25} height={25} />
+               strokeWidth={2.5} width={20} height={20} />
             </TouchableOpacity>
           </View>
         </Animated.View>
@@ -132,6 +139,13 @@ class Header extends React.Component{
 }
 
 const styles = StyleSheet.create({
+  notiCircle: {
+    position:'absolute',
+    height: 10,
+    width: 10,
+    borderRadius: 1000,
+    backgroundColor:'red',
+  },
   container: {
     // backgroundColor:"red",
     position: "relative",

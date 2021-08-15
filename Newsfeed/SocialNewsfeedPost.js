@@ -428,7 +428,7 @@ class SocialNewsfeedPost extends React.Component{
                   </Text>
               </View>
               */}
-              <View style={{left:'5%', bottom:'5%', position:'absolute'}}>
+              <View style={{left:'1%', bottom:'1%', position:'absolute', width:50, height:50}}>
                 <TouchableOpacity
                   onPress={() => this.navLikePeople(like_people)}>
                     <FacePile numFaces={3} circleStyle={{backgroundColor:'red'}} faces={likeAvatarList} overlap={1}
@@ -953,7 +953,7 @@ const styles = StyleSheet.create({
     padding:9,
     borderRadius:25,
     color:'white',
-    bottom:'10%',
+    bottom:'5%',
     fontSize:13,
     right:7.5,
     textAlign:'right',

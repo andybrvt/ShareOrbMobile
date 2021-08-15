@@ -242,7 +242,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
            keyboardVerticalOffset = {Platform.OS === "ios" ? 0 : 40}
            behavior={Platform.OS === "ios" ? "padding" : "height"} >
             <View style ={{
-                height: '7.5%',
+                height: 50,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderBottomColor:'#f0f0f0',
