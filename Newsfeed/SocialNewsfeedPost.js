@@ -63,18 +63,15 @@ class SocialNewsfeedPost extends React.Component{
     this.showExtra = new Value(false);
   }
 
-  handleDoubleTap = (postId, userId, contentTypeId,
-  ownerId,
-  cellDate) => {
+  handleDoubleTap = (postId, userId, ownerId, notificationToken) => {
     const now = Date.now();
     const DOUBLE_PRESS_DELAY = 300;
     if (this.state.lastTap && (now - this.state.lastTap) < DOUBLE_PRESS_DELAY) {
       this.onLike(
         postId,
         userId,
-        contentTypeId,
         ownerId,
-        cellDate
+        notificationToken
       )
     } else {
       this.setState({
@@ -96,12 +93,14 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   // New like that likes the single day post
-  onLike = (socialItemId, personLike, ownerId) => {
+  onLike = (socialItemId, personLike, ownerId, notificationToken) => {
 
     WebSocketSocialNewsfeedInstance.sendSinglePostLike(
       socialItemId,
       personLike,
     )
+    global.SEND_LIKE_NOTIFICATION(notificationToken, this.props.currentUser)
+
 
   }
 
@@ -265,6 +264,7 @@ class SocialNewsfeedPost extends React.Component{
     let itemImage = "";
     let calComment = 0;
 
+    let notificationToken = "";
     if(this.props.data){
       if(this.props.data.creator){
 
@@ -281,6 +281,9 @@ class SocialNewsfeedPost extends React.Component{
         if(this.props.data.creator.id){
           ownerId = this.props.data.creator.id
 
+        }
+        if(this.props.data.creator.notificationToken){
+          notificationToken = this.props.data.creator.notificationToken;
         }
 
         if(this.props.data.created_at) {
@@ -330,8 +333,7 @@ class SocialNewsfeedPost extends React.Component{
        // likeAvatarList.push({'imageURL':'http://i.imgur.com/f93vCxM.gif'}]),
     }
 
-    console.log("POSTTTTTTTTTT")
-    console.log(this.props.data)
+
 
     // if(this.props.data) {
     //
@@ -517,6 +519,7 @@ class SocialNewsfeedPost extends React.Component{
                           postId,
                           this.props.userId,
                           ownerId,
+                          notificationToken
                         )}
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>

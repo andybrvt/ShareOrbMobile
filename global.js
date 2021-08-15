@@ -203,13 +203,13 @@ global.FILE_NAME_GETTER = (fileURI) => {
 
 }
 
-global.SEND_PUSH_NOTIFICATION = async(expoPushToken) => {
+global.SEND_LIKE_NOTIFICATION = async(expoPushToken, sender) => {
   if(expoPushToken !== ""){
     const message = {
       to: expoPushToken,
       sound: "default",
-      title: 'Original Title',
-      body: 'And here is the body!',
+      title: sender + ' liked your post!',
+      body: 'Click to check it out!',
       data: { someData: 'goes here' },
     }
 
@@ -221,7 +221,34 @@ global.SEND_PUSH_NOTIFICATION = async(expoPushToken) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(message),
-    });
+    })
+
+
+  }
+
+}
+
+global.SEND_COMMENT_NOTIFICATION = async(expoPushToken, sender) => {
+  if(expoPushToken !== ""){
+    const message = {
+      to: expoPushToken,
+      sound: "default",
+      title: sender + ' commented on your post',
+      body: 'Come check it out!',
+      data: { someData: 'goes here' },
+    }
+
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    })
+
+
   }
 
 }
