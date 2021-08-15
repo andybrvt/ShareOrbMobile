@@ -242,7 +242,7 @@ class SocialNewsfeedPost extends React.Component{
     let cellMonth = "";
     let cellDay = "";
     let location = "";
-
+    let userUsername="";
 
     let post = {};
 
@@ -280,8 +280,14 @@ class SocialNewsfeedPost extends React.Component{
         }
         if(this.props.data.creator.id){
           ownerId = this.props.data.creator.id
-
         }
+
+        if(this.props.data.creator.username){
+          userUsername = this.props.data.creator.username
+        }
+
+
+
         if(this.props.data.creator.notificationToken){
           notificationToken = this.props.data.creator.notificationToken;
         }
@@ -644,7 +650,7 @@ class SocialNewsfeedPost extends React.Component{
 
   render(){
     let like_people = []
-    let profilePic = ''
+    let profilePic = ""
     let userUsername = ""
     let firstName=""
     let lastName=""
@@ -652,7 +658,6 @@ class SocialNewsfeedPost extends React.Component{
     let actionText = ""
     let caption=""
 
-    console.log(this.props.data)
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post
@@ -668,19 +673,17 @@ class SocialNewsfeedPost extends React.Component{
       }
 
 
-      if(this.props.data.creator){
-        if(this.props.data.creator.profile_picture){
-          profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.creator.profile_picture
-        }
+      if(this.props.data.creator.profile_picture){
+        profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.creator.profile_picture
+      }
 
 
-        if(this.props.data.creator.id){
-          userId = this.props.data.creator.id
-        }
+      if(this.props.data.creator.id){
+        userId = this.props.data.creator.id
+      }
 
-        if(this.props.data.creator.username){
-          userUsername = this.props.data.creator.username
-        }
+      if(this.props.data.creator.username){
+        userUsername = this.props.data.creator.username
       }
 
       if(this.props.data.caption){

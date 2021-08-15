@@ -507,7 +507,6 @@ class App extends Component{
             <Tab.Screen
                name="Profile"
                component={Profile}
-
                options={{
 
                  tabBarLabel: false,
@@ -525,13 +524,10 @@ class App extends Component{
                      if(this.props.username === null){
                        // e.preventDefault();
                        this.props.grabUserCredentials()
-
-
                      }
                    },
                  }}
                 />
-
       </Tab.Navigator>
     )
   }
@@ -554,7 +550,6 @@ class App extends Component{
               {
                 !this.props.loading && this.props.username ?
                   <Stack.Navigator
-
                     mode = "modal"
                     //keep this here, its important
                     // headerMode ="none"
@@ -562,39 +557,33 @@ class App extends Component{
                     screenOptions={{
                       gestureEnabled: true
                       // headerShown: false,
-                    }}
-                      >
+                    }}>
 
                       <Stack.Screen
                         options={{headerShown: false, }}
                         name = "tabs" component= {this.createTabStack}/>
                       <Stack.Screen
-
                         name = "FollowTab" component= {this.followerFollowingTab}
                         options={{
                           headerStyle:{
                             shadowColor:'#fff', //ios
                             elevation:0,        // android
-
                           },
-
-                           ...TransitionPresets.SlideFromRightIOS,
-                                          }}
-                        />
+                          ...TransitionPresets.SlideFromLeftIOS,
+                        }}
+                      />
 
                       <Stack.Screen
-
+                        initialRouteName = "Profile"
                         name = "PFollowTab" component= {this.pFollowerFollowingTab}
                         options={{
                           headerStyle:{
                             shadowColor:'#fff', //ios
                             elevation:0,        // android
-
                           },
                           title: 'Your Info',
-
-                           ...TransitionPresets.SlideFromRightIOS,
-                                          }}
+                           ...TransitionPresets.SlideFromLeftIOS,
+                          }}
                         />
 
                     <Stack.Screen
@@ -675,6 +664,7 @@ class App extends Component{
                            elevation:0,        // android
                          },
                          title: 'Edit Profile',
+                    
                           ...TransitionPresets.SlideFromRightIOS,
                         }}
 
@@ -810,10 +800,7 @@ class App extends Component{
                       }}
                       component = {ImageBrowserScreen} />
 
-                    <Stack.Screen
-                      name = "otherProfile"
-                      component = {Profile}
-                       />
+
 
                   </Stack.Navigator>
                   :
