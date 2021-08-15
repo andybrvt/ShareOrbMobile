@@ -8,6 +8,7 @@ const initialState = {
   showFinalModal: false,
   socialComments: {},
   commentHost: null,
+  commentHostNotiToken: "",
   cellDate: new Date()
 }
 
@@ -77,7 +78,8 @@ const loadSocialComments = (state, action) => {
   return  updateObject(state, {
     socialComments: action.socialComments.socialComments,
     commentHost: action.socialComments.ownerId,
-    cellDate: action.socialComments.cellDate
+    cellDate: action.socialComments.cellDate,
+    commentHostNotiToken: action.socialComments.notiToken
   })
 }
 
@@ -91,7 +93,8 @@ const unloadSocialComments = (state, action) => {
     return updateObject(state, {
       socialComments: {},
       commentHost: null,
-      cellDate: new Date()
+      cellDate: new Date(),
+      commentHostNotiToken: ""
     })
 }
 

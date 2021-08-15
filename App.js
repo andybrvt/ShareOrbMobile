@@ -90,7 +90,6 @@ const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
-
 ExpoNotifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -202,7 +201,6 @@ class App extends Component{
 
       const token = (await ExpoNotifications.getExpoPushTokenAsync()).data
 
-      console.log(token)
       authAxios.post(`${global.IP_CHANGE}`+'/userprofile/addNotificationToken',{
         token: token
       })
@@ -238,7 +236,22 @@ class App extends Component{
   };
 
  handleNotificationResponse = response => {
-    console.log(response);
+   console.log('here is the response')
+    const notiType = response.notification.request.trigger.payload.body.type;
+
+    if(notiType === "like"){
+      // you want to direct it to the post with the like
+      this.refContainer.navigate('DayAlbum', {
+        cellId: response.notification.request.trigger.payload.body.dayId
+      })
+
+    }
+
+    if(notiType === "comment"){
+      this.refContainer.navigate('Comments', {
+        postId: response.notification.request.trigger.payload.body.itemId
+      })
+    }
   };
 
   componentDidMount(){
@@ -540,13 +553,16 @@ class App extends Component{
     // you will get a serpate navigation for the login and sign up but hwne you are
     // auth you get the bottom bar
 
+
     if (this.state.fontsLoaded) {
     return(
       <PaperProvider>
         <SafeAreaProvider>
 
           {
-            <NavigationContainer>
+            <NavigationContainer
+              ref = {ref => this.refContainer = ref}
+              >
               {
                 !this.props.loading && this.props.username ?
                   <Stack.Navigator

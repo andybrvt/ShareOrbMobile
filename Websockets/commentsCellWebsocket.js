@@ -68,7 +68,8 @@ class WebsocketCellComments{
       const commentObj = {
         socialComments: socialComments,
         ownerId: parsedData.owenrId,
-        cellDate: parsedData.cellDate
+        cellDate: parsedData.cellDate,
+        notiToken: parsedData.ownerNotiToken
       }
       this.callbacks['fetch_social_comments'](commentObj)
     }
