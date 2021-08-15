@@ -92,7 +92,17 @@ let likeAvatarList=[]
    }
 
    componentDidUpdate(prevProps){
+
+
      if(this.props.socialCalCell !== prevProps.socialCalCell){
+
+       if(this.props.route.params.postId){
+
+         const index = this.findIndex(this.props.route.params.postId);
+         console.log(index)
+         this.onScroll(index)
+       }
+
        if(this.props.socialCalCell){
          if(this.props.socialCalCell.get_socialCalItems){
            this.setState({
@@ -101,6 +111,16 @@ let likeAvatarList=[]
          }
        }
      }
+   }
+
+   findIndex = (postId) => {
+
+     for(let i = 0; i < this.props.socialCalCell.get_socialCalItems.length; i++){
+       if(this.props.socialCalCell.get_socialCalItems[i].id === postId){
+         return i;
+       }
+     }
+
    }
 
    waitForDayAlbumSocketConnection(callback){
@@ -184,7 +204,7 @@ let likeAvatarList=[]
          }}>
           <Image
             resizeMode="cover"
-            style={{width:'100%', height:250, borderRadius:5, backgroundColor:'green' }}
+            style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
             source = {{
               uri: `${global.IP_CHANGE}`+item.itemImage
             }}>
@@ -297,6 +317,10 @@ let likeAvatarList=[]
 
    onRedirect = () => {
      this.props.navigation.goBack();
+   }
+
+   onScroll = (value) => {
+     this.flatListRef.scrollToIndex({ index: value })
    }
 
    FlatListItemSeparator = () => {
@@ -448,6 +472,7 @@ let likeAvatarList=[]
                </View>
          </View>
          <FlatList
+            ref = {ref => this.flatListRef = ref}
             contentContainerStyle={{paddingBottom:10}}
             showsVerticalScrollIndicator={false}
             data = {this.props.socialCalCell.get_socialCalItems}
@@ -455,6 +480,12 @@ let likeAvatarList=[]
             keyExtractor={(item, index) => String(index)}
             // ItemSeparatorComponent = { this.FlatListItemSeparator }
           />
+
+        <Button
+          title = "scroll"
+          onPress = {() => this.onScroll()}
+          />
+
             <View  style={styles.openContainer}>
               {/* day caption
               <View style={styles.firstContainer}>
