@@ -93,13 +93,24 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   // New like that likes the single day post
-  onLike = (socialItemId, personLike, ownerId, notificationToken) => {
+  onLike = (
+     socialItemId,
+     personLike,
+     ownerId,
+     notificationToken,
+     calCell,
+   ) => {
 
     WebSocketSocialNewsfeedInstance.sendSinglePostLike(
       socialItemId,
       personLike,
     )
-    global.SEND_LIKE_NOTIFICATION(notificationToken, this.props.currentUser)
+    global.SEND_LIKE_NOTIFICATION(
+      notificationToken,
+      this.props.currentUser,
+      socialItemId,
+      calCell
+    )
 
 
   }
@@ -519,7 +530,8 @@ class SocialNewsfeedPost extends React.Component{
                           postId,
                           this.props.userId,
                           ownerId,
-                          notificationToken
+                          notificationToken,
+                          calCell
                         )}
                         style = {styles.tagCSS1}>
                         <View style = {styles.justifyCenter}>
@@ -652,7 +664,6 @@ class SocialNewsfeedPost extends React.Component{
     let actionText = ""
     let caption=""
 
-    console.log(this.props.data)
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post

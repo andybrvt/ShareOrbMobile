@@ -203,14 +203,23 @@ global.FILE_NAME_GETTER = (fileURI) => {
 
 }
 
-global.SEND_LIKE_NOTIFICATION = async(expoPushToken, sender) => {
+global.SEND_LIKE_NOTIFICATION = async(
+  expoPushToken,
+  sender,
+  itemId,
+  dayId
+) => {
   if(expoPushToken !== ""){
     const message = {
       to: expoPushToken,
       sound: "default",
       title: sender + ' liked your post!',
       body: 'Click to check it out!',
-      data: { someData: 'goes here' },
+      data: {
+        type: "like",
+        itemId: itemId,
+        dayId: dayId
+       },
     }
 
     await fetch('https://exp.host/--/api/v2/push/send', {
