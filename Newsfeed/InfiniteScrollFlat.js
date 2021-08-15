@@ -7,6 +7,7 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  Image,
   Dimensions,
   RefreshControl
  } from 'react-native';
@@ -23,7 +24,7 @@ import { User } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
-
+import {noPosts} from './noPosts.svg';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const {interpolate, Extrapolate, interpolateColors} = Animated;
@@ -142,28 +143,21 @@ class InfiniteScrollFlat extends React.Component{
               }
             >
             <View style = {{
-                top: 50,
+                top: '20%',
                 height: height-100,
                 alignItems: 'center',
                 // justifyContent: 'center'
                 // flex: 1,
                   }}>
-
-              <User
-                strokeWidth = {1}
-                stroke = "black"
-                height ={70}
-                width = {70}
-                />
-              <Text>No Posts</Text>
+                  <Image source={require('./noPosts1.png')} style = {{height: 200, width: 250, resizeMode : 'stretch',}} />
               <TouchableOpacity
-                onPress = {() => this.props.navigation.navigate("Explore")}
+                onPress = {() => this.props.navigation.navigate("Upload")}
                 >
                 <View style = {{
                   backgroundColor: "#1890ff",
                   padding: 15,
                   borderRadius: 15}}>
-                  <Text style = {{color: 'white'}}>Let's follow some people</Text>
+                  <Text style = {{color: 'white'}}>Be the first one to post</Text>
                 </View>
               </TouchableOpacity>
 
@@ -184,7 +178,7 @@ class InfiniteScrollFlat extends React.Component{
             onEndReached = {() => this.loadSocialPost()}
             onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
-
+            style={{top:10}}
              />
         }
 

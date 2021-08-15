@@ -178,14 +178,12 @@ const height = Dimensions.get('window').height
                 <View style = {{
                     flexDirection:'column',
                     height:'100%',
-                    top:'50%'
+                    top:'25%'
                   }}>
                 <View style = {{
                     alignItems: 'center',
                   }}>
-                  <Folder
-                    stroke = "gainsboro"
-                     />
+                    <Image source={require('./expiringPic.png')} style = {{height: 200, width: 250, resizeMode : 'stretch',}} />
                    <Text style = {{color: 'gainsboro', fontSize:20}}>No Pending Albums with Friends</Text>
                 </View>
               </View>
