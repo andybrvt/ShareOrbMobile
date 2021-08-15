@@ -226,19 +226,29 @@ class App extends Component{
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: '#FF231F7C',
+        priority: "max"
       });
     }
 
 
   }
 
+  handleNotification = notification => {
+    this.setState({ notification: notification });
+  };
 
+ handleNotificationResponse = response => {
+    console.log(response);
+  };
 
   componentDidMount(){
     this.props.onTryAutoSignup();
     //this.loadFonts();
 
     this.registerForPushNotificationsAsync()
+    ExpoNotifications.addNotificationReceivedListener(this.handleNotification);
+
+    ExpoNotifications.addNotificationResponseReceivedListener(this.handleNotificationResponse);
   }
 
   componentDidUpdate(prevProps){

@@ -235,7 +235,7 @@ global.SEND_COMMENT_NOTIFICATION = async(expoPushToken, sender) => {
       sound: "default",
       title: sender + ' commented on your post',
       body: 'Come check it out!',
-      data: { someData: 'goes here' },
+      data: { someData: 'newsfeed' },
     }
 
     await fetch('https://exp.host/--/api/v2/push/send', {
