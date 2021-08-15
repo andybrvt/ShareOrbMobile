@@ -115,11 +115,14 @@ class Header extends React.Component{
                 style={{right:25}}
                 stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
               */}
-              <View style={{position:'absolute', right:'95%', top:'15%',}}>
-                <View style={styles.notiCircle}>
+              {/*
+                <View style={{position:'absolute', right:'95%', top:'15%',}}>
+                  <View style={styles.notiCircle}>
 
+                  </View>
                 </View>
-              </View>
+                */}
+
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Notifications")}>
 
