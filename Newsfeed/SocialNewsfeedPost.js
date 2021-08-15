@@ -234,10 +234,11 @@ class SocialNewsfeedPost extends React.Component{
     return finalHeight
   }
 
-  onPostDirect = (cellId) => {
+  onPostDirect = (cellId, postId) => {
 
     this.props.navigation.navigate("DayAlbum", {
-      cellId
+      cellId,
+      postId
     })
   }
 
@@ -407,7 +408,7 @@ class SocialNewsfeedPost extends React.Component{
                  }}>
                  <TouchableOpacity
                    activeOpacity={0.8}
-                   onPress = {() => this.onPostDirect(calCell)}>
+                   onPress = {() => this.onPostDirect(calCell, postId)}>
                   <Image
                     style={styles.cover}
                     resizeMode = "cover"
