@@ -11,9 +11,8 @@ import * as dateFns from 'date-fns';
 import DayAlbum from './DayAlbum';
 import  authAxios from '../util';
 import * as Animatable from 'react-native-animatable';
-
+import * as authActions from '../store/actions/auth';
 const width = Dimensions.get("window").width
-
 class NewSocialMonth extends React.PureComponent{
 
   state = {
@@ -39,6 +38,11 @@ class NewSocialMonth extends React.PureComponent{
       this.props.navigation.navigate("DayAlbum", {
         cellId: cellId
       })
+  }
+
+  openCamera = () => {
+    this.props.navigation.navigate("Upload")
+    this.props.openShowCamera()
   }
 
 
@@ -213,7 +217,7 @@ class NewSocialMonth extends React.PureComponent{
                 ]}>
                 {
                   (dateFns.isSameDay(day, new Date()))?
-                  <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
+                  <TouchableOpacity onPress = {() => this.openCamera()}
                     style = {styles.currentMiniBox}>
                   <View>
                     {
@@ -232,7 +236,7 @@ class NewSocialMonth extends React.PureComponent{
                     </View>
                     </TouchableOpacity>
                   :
-                  <View onPress = {() => this.props.navigation.navigate("PostingPage")}
+                  <View onPress = {() => this.openCamera()}
                     style = {styles.miniBox}>
                   <View>
                   {
@@ -310,12 +314,12 @@ class NewSocialMonth extends React.PureComponent{
           } else {
             days.push(
               <View
-                // onPress = {() => this.props.navigation.navigate("PostingPage")}
+                // onPress = {() => this.openCamera()}
                 key = {i}
                 style = {[styles.monthCell]}>
                 {
                   (dateFns.isSameDay(day, new Date()))?
-                  <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
+                  <TouchableOpacity onPress = {() => this.openCamera()}
                     style = {styles.currentMiniBox}>
                   <View>
                     {
@@ -334,7 +338,7 @@ class NewSocialMonth extends React.PureComponent{
                     </View>
                     </TouchableOpacity>
                   :
-                  <View onPress = {() => this.props.navigation.navigate("PostingPage")}
+                  <View onPress = {() => this.openCamera()}
                     style = {styles.miniBox}>
                   <View>
                   {
