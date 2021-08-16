@@ -206,10 +206,10 @@ let likeAvatarList=[]
             resizeMode="cover"
             style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
             source = {{
-              uri: `${global.IP_CHANGE}`+item.itemImage
+              uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
             }}>
           </Image>
-          <View style={{bottom:'20%', left:'2.5%', position:'absolute', width:50, height:50}}>
+          <View style={{top: 210, left:'2.5%', position:'absolute', width:50, height:50}}>
             <TouchableOpacity
               onPress={() => this.navLikePeople(item.people_like)}>
             <FacePile
@@ -231,7 +231,7 @@ let likeAvatarList=[]
             </Text>
           </View>
           */}
-          <View style={{bottom:'40%', right:'6%', position:'absolute'}}>
+          <View style={{top: 180, right:'6%', position:'absolute'}}>
             {
               peopleLikeId.includes(this.props.userId) ?
               <TouchableOpacity
@@ -268,7 +268,7 @@ let likeAvatarList=[]
               </TouchableOpacity>
             }
           </View>
-          <View style={{bottom:'25%', right:'6%', position:'absolute'}}>
+          <View style={{top: 215, right:'6%', position:'absolute'}}>
             <TouchableOpacity
               onPress = {() => this.onCommentOpen(item.id)}
               >
@@ -342,6 +342,11 @@ let likeAvatarList=[]
      </View>
      );
    }
+
+   getItemLayout(data, index){
+     return {length: 300, offset: 300 * index, index }
+   }
+
    render(){
      console.log(' here in the day album')
      let {
@@ -478,12 +483,8 @@ let likeAvatarList=[]
             data = {this.props.socialCalCell.get_socialCalItems}
             renderItem ={(item) => this.renderItem(item)}
             keyExtractor={(item, index) => String(index)}
+            getItemLayout = {this.getItemLayout.bind(this)}
             // ItemSeparatorComponent = { this.FlatListItemSeparator }
-          />
-
-        <Button
-          title = "scroll"
-          onPress = {() => this.onScroll()}
           />
 
             <View  style={styles.openContainer}>
