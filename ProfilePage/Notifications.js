@@ -18,6 +18,8 @@ import { Avatar } from 'react-native-elements';
 import { MoreVertical} from "react-native-feather";
 import { connect } from 'react-redux';
 import * as dateFns from 'date-fns';
+import * as authActions from '../store/actions/auth';
+import authAxios from '../util';
 
 
 class Notifications extends React.Component{
@@ -41,6 +43,18 @@ class Notifications extends React.Component{
     postId: postId
   })
  }
+
+ componentDidMount(){
+
+   authAxios.post(`${global.IP_CHANGE}/userprofile/resetNotificationSeen`, {
+      curId: this.props.userId
+    }).then(res => {
+
+      // Now you will call the redux to reset the value of the notification
+      this.props.resetNotificationSeen()
+
+    })
+}
 
 
  renderItem = ({item}) => {
@@ -282,6 +296,13 @@ class Notifications extends React.Component{
 const mapStateToProps = state => {
   return {
     notifications: state.notifications.notifications,
+    userId: state.auth.id
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    resetNotificationSeen: () => dispatch(authActions.resetNotificationSeen())
   }
 }
 
@@ -325,4 +346,4 @@ const styles = StyleSheet.create({
  },
  });
 
-export default connect(mapStateToProps, null)(Notifications);
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

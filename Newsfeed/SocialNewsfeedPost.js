@@ -18,6 +18,8 @@ import NotificationWebSocketInstance from  '../Websockets/notificationWebsocket'
 import { Navigation2, Heart, MessageCircle } from "react-native-feather";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+import authAxios from '../util';
+
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 const {interpolate, Extrapolate, interpolateColors} = Animated;
