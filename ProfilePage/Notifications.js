@@ -35,6 +35,13 @@ class Notifications extends React.Component{
    })
  }
 
+ openDayAlbum = (itemId, postId) => {
+  this.props.navigation.navigate("DayAlbum", {
+    cellId: itemId,
+    postId: postId
+  })
+ }
+
 
  renderItem = ({item}) => {
    const timestamp = Math.round((new Date().getTime() - new Date(item.timestamp).getTime())/60000)
@@ -114,7 +121,12 @@ class Notifications extends React.Component{
    }
    if(item.type === "send_social_cell_like"){
      return(
-       <TouchableOpacity>
+       <TouchableOpacity
+         onPress = {() => this.openDayAlbum(
+           item.eventId,
+           item.itemId
+         )}
+         >
          <View style={styles.notiContainer}>
            <View style={styles.frontNotiSpace}>
              <Avatar
@@ -213,6 +225,8 @@ class Notifications extends React.Component{
 
      notifications = this.props.notifications
    }
+
+   console.log(this.props.notifications)
 
    return (
      <BackgroundContainer>
