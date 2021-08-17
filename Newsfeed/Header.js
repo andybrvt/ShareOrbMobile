@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet,TextInput, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, Button, StyleSheet,TextInput,Switch, TouchableWithoutFeedback } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -17,30 +17,29 @@ const {interpolate, interpolateColors, Extrapolate, diffClamp, cond, lessOrEq} =
 
 
 class Header extends React.Component{
-
   constructor(props) {
     super(props);
     this.state = {
-      showSearchBar: false, // control what ever to render the searchbar or just the icon
+      showSearchBar: false, //
+      isEnabled:false,
     };
   }
 
+  toggleSwitch = () => {
+    this.setState({
+      isEnabled:!this.state.isEnabled,
+    })
+  }
 
   handleSearch = () => {
     this.setState({
       showSearchBar: !this.state.showSearchBar,
     });
   }
-  handleLogOut = () => {
-    this.props.logout()
-    this.props.navigation.navigate("Login")
-  }
 
   ViewNoti = () => {
     this.props.navigation.navigate("Notifications")
   }
-
-
 
   ViewChats = () => {
     this.props.navigation.navigate("Notifications")
@@ -48,62 +47,44 @@ class Header extends React.Component{
 
 
   render(){
-
-
     let profilePic = ""
-
     if(this.props.profilePic){
       profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profilePic
     }
-
     const y = this.props.y;
     const diff = diffClamp(y, 0, 200)
-
     const final = cond(lessOrEq(y, 0.1), y, diff)
     const opacity = interpolate(final, {
       inputRange: [0, 200],
       outputRange: [ 1, 0],
       extrapolateRight: Extrapolate.CLAMP,
     });
-
     const translateY = interpolate(final, {
       inputRange: [0, 200],
       outputRange: [ 0, -80],
       extrapolateRight: Extrapolate.CLAMP,
-
     })
     const backgroundGradient = interpolateColors(y, {
       inputRange: [0, 400, 600],
       outputColorRange: ["rgba(0, 0, 0, 0.85)", "skyblue", "white"],
-
     })
 
-
-
     return(
-
       <View style = {{
           zIndex: 99,
           height:0
         }}>
       <Animated.View
         style = {[styles.container,{
-          // opacity: opacity,
-          zIndex: 99,
-
+        zIndex: 99,
         }]}>
-
-
         <Animated.View style = {{
           flexDirection: "row",
           flex: 1,
-
-          backgroundColor: Platform.OS === "ios" ? "white" : "black",
+          backgroundColor: Platform.OS === "ios" ? "white" : "white",
           height: 50,
           position: 'absolute',
           width: "100%",
-
-
           }}>
           <View style = {styles.logoContainer}>
              <MainLogo1 width = {120}/>
@@ -123,25 +104,58 @@ class Header extends React.Component{
                 </View>
                 */}
 
+                {/*
+
+                {this.props.condition?
+                  <View>
+                  <TouchableOpacity
+                    style={{marginRight:20}}
+                     style={styles.loginBtn} onPress={() => this.props.changeFeed()}>
+
+                    <Text style={{color:'white', fontSize:15, padding:10}}>Public</Text>
+                  </TouchableOpacity>
+                </View>
+                :
+
+                <TouchableOpacity
+                  style={{marginRight:10}}
+                   style={styles.loginBtn} onPress={() => this.props.changeFeed()}>
+
+                  <Text style={{color:'white', fontSize:15, padding:5}}>Personal</Text>
+                </TouchableOpacity>
+              }*/}
+
+
+
+
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Notifications")}>
-
-            <Bell
+              <Bell
               stroke="#1890ff"
-              style={{marginRight:10}}
-               strokeWidth={2.5} width={20} height={20} />
+              style={{marginLeft:10}}
+              strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
           </View>
         </Animated.View>
-
       </Animated.View>
-
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+
+  loginBtn: {
+    position: "relative",
+    marginRight:10,
+    borderRadius: 5,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+
+    backgroundColor: "#1890ff",
+  },
+
   notiCircle: {
     position:'absolute',
     height: 10,
@@ -160,7 +174,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "gray",
   },
   logoContainer: {
-    flex: 6,
+    flex: 3,
     justifyContent: "center",
     // alignItems: ,
     // backgroundColor: "red",
@@ -173,7 +187,8 @@ const styles = StyleSheet.create({
     flex: 1,
 
     flexDirection: "row",
-
+    marginRight:25,
+    // backgroundColor:'red',
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor:'blue'

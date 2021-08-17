@@ -32,8 +32,6 @@ const height = Dimensions.get('window').height;
 
 
 class InfiniteScrollFlat extends React.Component{
-
-
   state = {
     refreshing: false,
     start: 6,
@@ -50,10 +48,7 @@ class InfiniteScrollFlat extends React.Component{
       curDate,
       6
     )
-
-
     this.setState({refreshing: false});
-
   }
 
   openCamera = () => {
@@ -135,16 +130,14 @@ class InfiniteScrollFlat extends React.Component{
         >
         {
           post.length === 0 ?
-
-          <ScrollView
-            showsVerticalScrollIndicator = {false}
+            <ScrollView
+              showsVerticalScrollIndicator = {false}
               refreshControl = {
-                <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this.onRefresh}
-                />
-              }
-            >
+              <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+              />
+            }>
             <View style = {{
                 top: '20%',
                 height: height-100,

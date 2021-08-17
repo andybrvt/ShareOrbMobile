@@ -27,20 +27,26 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import InfiniteScrollFlat from './InfiniteScrollFlat';
 import NewsfeedComment from './NewsfeedComment';
 import { LinearGradient } from 'expo-linear-gradient';
-
-
-
+import PersonalNewsFeed from './PersonalNewsFeed';
 
 const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 const height = Dimensions.get('window').height
 class NewsfeedView extends React.Component{
-
   y = new Value(0);
   color = new Value(0);
   handleLogOut = () => {
   this.props.logout()
     // this.props.navigation.navigate("Login")
   }
+
+  changeFeed = () => {
+    this.setState({
+      newsFeedCondition: !this.state.newsFeedCondition,
+    });
+
+  }
+
+
 
   componentDidMount = () => {
   }
@@ -60,7 +66,8 @@ class NewsfeedView extends React.Component{
       id: '',
       postShow:false,
       eventShow:false,
-      upperStart: 6
+      upperStart: 6,
+      newsFeedCondition:true,
     }
     this.myRef = React.createRef();
     this.commentRef = React.createRef();
@@ -133,6 +140,8 @@ class NewsfeedView extends React.Component{
   }
 
   render(){
+    console.log("FEDDDDDDDDDfDDDDDD")
+    console.log(this.state.newsFeedCondition)
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
     let showComments = this.props.showNewsfeedComments
@@ -168,16 +177,24 @@ class NewsfeedView extends React.Component{
             */}
 
               <Header
+                changeFeed={this.changeFeed.bind(this)}
+                condition={this.state.newsFeedCondition}
                 y = {this.y}
                 {...this.props}/>
+              {this.state.newsFeedCondition?
+                <InfiniteScrollFlat
+                  y = {this.y}
+                  navigation = {this.props.navigation}
+                  onPagePost = {this.onPagePost}
+                  viewProfile = {this.viewProfile}
+                  onCommentOpen = {this.onCommentOpen}/>
+              :
+              <PersonalNewsFeed
+                navigation = {this.props.navigation}
+                />
+            }
 
 
-            <InfiniteScrollFlat
-              y = {this.y}
-              navigation = {this.props.navigation}
-              onPagePost = {this.onPagePost}
-              viewProfile = {this.viewProfile}
-              onCommentOpen = {this.onCommentOpen}/>
 
           </Animated.View>
 

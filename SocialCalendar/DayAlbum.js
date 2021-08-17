@@ -144,6 +144,15 @@ let likeAvatarList=[]
      // to the home page
    }
 
+   ViewProfile = (username) => {
+     // This fucntion will be used to navigate to the post page
+     // that you can use to post pictures and write caption
+     this.props.navigation.navigate("ProfilePage", {
+       username: username
+     })
+   }
+
+
    editAlbum = () => {
      this.props.navigation.navigate("PostingPage",
      );
@@ -412,14 +421,20 @@ let likeAvatarList=[]
              height = {35}
             />
           </TouchableOpacity>
+
           <View style = {styles.chatInfoHolder} >
+
+            <TouchableOpacity>
             <Avatar
+
             rounded
               source = {{
                 uri: `${global.IMAGE_ENDPOINT}`+user.profile_picture,
               }}
               size = {40}
                />
+
+           </TouchableOpacity>
              <View style = {styles.chatInfo}>
                <View style = {styles.chatNameContainer}>
                  <Text style = {styles.chatName}>{userName}</Text>

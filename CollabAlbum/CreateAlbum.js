@@ -60,21 +60,16 @@ class CreateAlbum extends React.Component{
   }
 
   toggleSwitch = () => {
-
     this.setState({
       isEnabled:!this.state.isEnabled,
     })
-
   }
-
 
   handleCaptionChange = e => {
     this.setState({
       caption: e
     })
-
     this.checkReady()
-
   }
 
 

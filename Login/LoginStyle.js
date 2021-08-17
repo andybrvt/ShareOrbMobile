@@ -46,13 +46,24 @@ export default StyleSheet.create({
 
   loginBtn: {
     position: "relative",
-    width: "80%",
-    borderRadius: 25,
-    height: 50,
+    width: "70%",
+    borderRadius: 10,
+    height: 35,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 50,
     backgroundColor: "#1890ff",
+  },
+
+  signUpBtn: {
+    position: "relative",
+    width: "70%",
+    borderRadius: 10,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+    backgroundColor: "#d9d9d9",
   },
   loginText: {
     color: 'white',

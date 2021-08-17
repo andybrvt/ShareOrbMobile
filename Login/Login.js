@@ -129,15 +129,12 @@ class Login extends React.Component{
                style = {styles.loginBtn}>
               <Text style = {styles.loginText}> Login</Text>
             </TouchableOpacity>
-            <View style= {{
-                marginTop: 20,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center"}}>
-              <Button
+            <TouchableOpacity
                 onPress = {() =>this.props.navigation.navigate('Signup')}
-                 title = "Sign up" />
-            </View>
+               style = {styles.signUpBtn}>
+              <Text style = {{color:'black'}}> Sign Up</Text>
+            </TouchableOpacity>
+
           </View>
         </View>
       </TouchableWithoutFeedback>

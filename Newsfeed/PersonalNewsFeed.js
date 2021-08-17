@@ -5,33 +5,21 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  Dimensions,
-  Image,
-  Animated,
-  TouchableOpacity,
-  TouchableHighlight,
-  ImageBackground,
-  RefreshControl
+  Dimensions
  } from 'react-native';
- import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
-import FacePile from 'react-native-face-pile';
 import authAxios from '../util';
+import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import * as dateFns from 'date-fns';
-import { Folder } from "react-native-feather";
-import { connect } from 'react-redux';
-
-let likeAvatarList=[]
-const height = Dimensions.get('window').height
-class Timeline extends React.Component{
+ class PersonalNewsFeed extends React.Component{
    state = {
      albums: [],
      refreshing: false,
    }
    componentDidMount(){
-     authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getAlbums')
+     authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getLiveAlbums')
      .then(res => {
        this.setState({
          albums: res.data
@@ -41,7 +29,7 @@ class Timeline extends React.Component{
 
    onRefresh = () => {
      this.setState({refreshing: true})
-     authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getAlbums')
+     authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getLiveAlbums')
      .then(res => {
        this.setState({
          albums: res.data
@@ -56,13 +44,17 @@ class Timeline extends React.Component{
      );
    }
    renderItem = ({item}) => {
-     const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
+     // const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
+     {/*
      likeAvatarList=item.person.map(item => {
         return {
           imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
         };
       });
+      */}
      return(
+       <View>
+       {/*
        <View style={{
            width:'100%',
            height:250,
@@ -76,27 +68,34 @@ class Timeline extends React.Component{
               uri: item.coverPic
             }}>
           </Image>
+          */}
+          {/*
           <View style={{top:'2.5%', right:'7.5%', position:'absolute'}}>
             <FacePile
               size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
               containerStyle={{height:40}}
                overlap={0.1} />
           </View>
+          */}
+          {/*
           <Text style={styles.albumTitle}>
             {item.title}
           </Text>
         </TouchableOpacity>
         </View>
+        */}
+        <View><Text>hi</Text></View>
+        </View>
      )
    }
-
    render(){
      var likeAvatarList=[];
      let albums = [];
-     // albums=[{"title":"test"}]
-     if(this.props.timeLine){
-       albums = this.props.timeLine
-     }
+     albums.push({"title":"hi"})
+     // if(this.props.timeLine){
+     //   albums = this.props.timeLine
+     // }
+     console.log(albums)
      return (
        <View style={{
           height:'100%',
@@ -111,7 +110,9 @@ class Timeline extends React.Component{
                <View style = {{
                    alignItems: 'center',
                  }}>
+                 {/*
                    <Image source={require('./collabFriends.png')} style = {{height: 200, width: 250, resizeMode : 'stretch',}} />
+                   */}
                   <Text style = {{color: 'gainsboro', fontSize:20}}>No Shared Albums with Friends</Text>
                </View>
              </View>
@@ -131,6 +132,7 @@ class Timeline extends React.Component{
      )
    }
  }
+
 
  const styles = StyleSheet.create({
    expiringImageLook:{
@@ -167,10 +169,4 @@ class Timeline extends React.Component{
 
  })
 
-const mapStateToProps = state => {
-  return{
-    timeLine: state.colabAlbum.timeLine
-  }
-}
-
- export default connect(mapStateToProps, null)(Timeline);
+ export default PersonalNewsFeed;
