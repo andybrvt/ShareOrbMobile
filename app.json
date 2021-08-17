@@ -21,13 +21,9 @@
       "assets/**"
     ],
     "android": {
-<<<<<<< HEAD
       "package": "com.pinghsu520.ShareOrbMobile",
       "versionCode": 2
-=======
-      "versionCode":2
-      "package": "com.pinghsu520.ShareOrbMobile"
->>>>>>> 331f54ca0913a46dbcc5d756eca7ab25d4821ac4
+
     },
     "ios": {
       "supportsTablet": true,
