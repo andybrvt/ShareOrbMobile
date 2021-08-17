@@ -22,6 +22,7 @@ import * as dateFns from 'date-fns';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import LoadingBar from '../RandomComponents/LoadingBar';
+import AppIntro from '../Login/AppIntro';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import InfiniteScrollFlat from './InfiniteScrollFlat';
@@ -106,27 +107,31 @@ class NewsfeedView extends React.Component{
 }
 
   componentDidUpdate(prevProps){
-    const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
 
-    WebSocketSocialNewsfeedInstance.disconnect()
-    if(this.props.isAuthenticated){
-      this.waitForSocialNewsfeedSocketConnection(() => {
-            // Fetch stuff here
-        WebSocketSocialNewsfeedInstance.fetchSocialPost(
-          this.props.id,
-          curDate,
-          this.state.upperStart)
-      })
-      WebSocketSocialNewsfeedInstance.connect()
+    if(prevProps !== this.props){
+      const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+
+      WebSocketSocialNewsfeedInstance.disconnect()
+      if(this.props.isAuthenticated){
+        this.waitForSocialNewsfeedSocketConnection(() => {
+              // Fetch stuff here
+          WebSocketSocialNewsfeedInstance.fetchSocialPost(
+            this.props.id,
+            curDate,
+            this.state.upperStart)
+        })
+        WebSocketSocialNewsfeedInstance.connect()
+      }
+
+
+    if(this.props.curLoad >= this.props.totalLoad && this.props.totalLoad > 0){
+      setTimeout(() => {
+        this.props.authZeroTotalLoad()
+        this.props.authZeroCurLoad()
+      }, 2000)
+      }
     }
 
-
-  if(this.props.curLoad >= this.props.totalLoad && this.props.totalLoad > 0){
-    setTimeout(() => {
-      this.props.authZeroTotalLoad()
-      this.props.authZeroCurLoad()
-    }, 2000)
-    }
   }
 
   ComponentWillUnmount(){
@@ -138,6 +143,8 @@ class NewsfeedView extends React.Component{
       postId: postId
     })
   }
+
+
 
   render(){
     console.log("FEDDDDDDDDDfDDDDDD")
@@ -157,24 +164,29 @@ class NewsfeedView extends React.Component{
     }
 
 
+
+
+
+
+
     return(
 
       <BackgroundContainer>
+
+
+
 
           <Animated.View
             style = {{
               // backgroundColor: backgroundGradient
             }}
             >
-            {/*
-              this.props.totalLoad === 0 ?
-              <View style = {{backgroundColor: 'white'}}></View>
-              :
-              <LoadingBar
-                step = {curLoading}
-                steps = {totalLoading}
-                height = {5} />
-            */}
+
+            <AppIntro
+              visible = {this.props.showIntialInstructions}
+              unShow = {this.props.unShowIntialInstructions}
+              />
+
 
               <Header
                 changeFeed={this.changeFeed.bind(this)}
@@ -200,6 +212,8 @@ class NewsfeedView extends React.Component{
 
 
       </BackgroundContainer>
+
+
 
     )
   }
@@ -249,7 +263,7 @@ const mapStateToProps = state => {
     curLoad: state.auth.curLoad,
     totalLoad: state.auth.totalLoad,
     showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments,
-
+    showIntialInstructions: state.auth.showIntialInstructions
   }
 }
 
@@ -258,7 +272,8 @@ const mapDispatchToProps = dispatch => {
     logout: () => dispatch(authActions.logout()),
     authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
-    newsFeedCommentSec: () => dispatch(socialNewsfeedActions.newsFeedCommentSec())
+    newsFeedCommentSec: () => dispatch(socialNewsfeedActions.newsFeedCommentSec()),
+    unShowIntialInstructions: (bool) => dispatch(authActions.unShowIntialInstructions(bool))
   }
 }
 

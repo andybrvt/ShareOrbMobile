@@ -258,7 +258,10 @@ class App extends Component{
     this.props.onTryAutoSignup();
     //this.loadFonts();
 
-    this.registerForPushNotificationsAsync()
+    if(this.props.isAuthenticated){
+      this.registerForPushNotificationsAsync()
+
+    }
     ExpoNotifications.addNotificationReceivedListener(this.handleNotification);
 
     ExpoNotifications.addNotificationResponseReceivedListener(this.handleNotificationResponse);
@@ -269,6 +272,8 @@ class App extends Component{
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
       // grab the userinfromation
+
+
       this.props.grabUserCredentials()
       if(parseInt(this.props.id) !== parseInt(prevProps.id) && this.props.id !== null && this.props.username !== null){
 
@@ -680,7 +685,7 @@ class App extends Component{
                            elevation:0,        // android
                          },
                          title: 'Edit Profile',
-                    
+
                           ...TransitionPresets.SlideFromRightIOS,
                         }}
 

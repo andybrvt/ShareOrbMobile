@@ -270,3 +270,10 @@ export const authAddNotificationToken = (token) => {
     token: token
   }
 }
+
+export const unShowIntialInstructions = (bool) => {
+  return {
+    type: actionTypes.UNSHOW_INITIAL_INSTRUCTIONS,
+    bool: bool
+  }
+}
