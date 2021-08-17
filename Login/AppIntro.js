@@ -154,7 +154,7 @@ class AppIntro extends React.Component{
                 top: '7%'
               }}>
               <Text style = {styles.welcomeText}>
-                Photos saves to picture calendar
+                One album a day. 24 hours
               </Text>
 
             </View>
@@ -196,7 +196,7 @@ class AppIntro extends React.Component{
               top: '7%'
             }}>
             <Text style = {styles.welcomeText}>
-              Just take a photo, jorunal, and share!
+              Just take a photo, journal, and share!
             </Text>
 
           </View>
@@ -207,7 +207,8 @@ class AppIntro extends React.Component{
               height: "70%",
               width: width*0.6,
               borderRadius: 10,
-              overflow: 'hidden'
+              overflow: 'hidden',
+              backgroundColor:'red',
             }}
             >
             <Image
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     color: "white",
-    fontSize: 20,
+    fontSize: 22.5,
     top: '7%'
   },
   headerText: {
