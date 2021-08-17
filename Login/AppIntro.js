@@ -36,6 +36,15 @@ class AppIntro extends React.Component{
     curIndex: 0,
   }
 
+  close = () =>  {
+    authAxios.post(`${global.IP_CHANGE}`+'/userprofile/unShowIntialInstructions/'+this.props.id)
+    .then(res => {
+      this.props.navigation.navigate("tabs")
+    })
+    .catch(err => {
+      alert(err)
+    })
+  }
 
 
   renderItem(item, index){
@@ -212,13 +221,7 @@ class AppIntro extends React.Component{
                />
           </View>
           <TouchableOpacity
-             onPress = {() => {
-               console.log('show here')
-               authAxios.post(`${global.IP_CHANGE}`+'/userprofile/unShowIntialInstructions')
-               .then(res => {
-                 this.props.unShow(res.data)
-               })
-             }}
+             onPress = {() => this.close()}
              style = {styles.loginBtn}>
             <Text style = {styles.loginText}>Let's go!</Text>
           </TouchableOpacity>
@@ -254,12 +257,11 @@ class AppIntro extends React.Component{
 
   render(){
 
+
     return(
       <View style = {{flex: 1}}>
 
-        <Modal
-          visible = {this.props.visible}
-          >
+
           <SafeAreaView style = {styles.container}>
 
               <FlatList
@@ -285,7 +287,6 @@ class AppIntro extends React.Component{
 
           </SafeAreaView>
 
-        </Modal>
 
 
       </View>

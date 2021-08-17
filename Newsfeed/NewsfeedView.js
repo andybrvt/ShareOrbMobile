@@ -29,6 +29,8 @@ import InfiniteScrollFlat from './InfiniteScrollFlat';
 import NewsfeedComment from './NewsfeedComment';
 import { LinearGradient } from 'expo-linear-gradient';
 import PersonalNewsFeed from './PersonalNewsFeed';
+import authAxios from '../util';
+
 
 const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 const height = Dimensions.get('window').height
@@ -144,6 +146,17 @@ class NewsfeedView extends React.Component{
     })
   }
 
+  unShow = () => {
+    authAxios.post(`${global.IP_CHANGE}`+'/userprofile/unShowIntialInstructions/'+this.props.id)
+    .then(res => {
+      this.props.unShowIntialInstructions(false)
+    })
+    .catch(err => {
+      alert(err)
+    })
+
+  }
+
 
 
   render(){
@@ -174,7 +187,10 @@ class NewsfeedView extends React.Component{
       <BackgroundContainer>
 
 
-
+        <AppIntro
+          visible = {this.props.showIntialInstructions}
+          unShow = {this.unShow}
+          />
 
           <Animated.View
             style = {{
@@ -182,10 +198,7 @@ class NewsfeedView extends React.Component{
             }}
             >
 
-            <AppIntro
-              visible = {this.props.showIntialInstructions}
-              unShow = {this.props.unShowIntialInstructions}
-              />
+
 
 
               <Header

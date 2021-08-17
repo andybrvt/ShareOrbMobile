@@ -28,6 +28,7 @@ import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
 import Explore from './Explore/Explore';
 import Friends from './Friends';
 import Login from './Login/Login';
+import AppIntro from './Login/AppIntro';
 import Signup from './Signup/Signup';
 import Chats from './Chats/Chats';
 import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
@@ -574,7 +575,7 @@ class App extends Component{
                     mode = "modal"
                     //keep this here, its important
                     // headerMode ="none"
-                    initialRouteName = "tabs"
+                    initialRouteName = {this.props.showIntialInstructions ? "intro" : "tab"}
                     screenOptions={{
                       gestureEnabled: true
                       // headerShown: false,
@@ -583,6 +584,9 @@ class App extends Component{
                       <Stack.Screen
                         options={{headerShown: false, }}
                         name = "tabs" component= {this.createTabStack}/>
+                      <Stack.Screen
+                        options={{headerShown: false, }}
+                        name = "intro" component= {AppIntro}/>
                       <Stack.Screen
                         name = "FollowTab" component= {this.followerFollowingTab}
                         options={{
@@ -852,6 +856,7 @@ const mapStateToProps = state => {
     id: state.auth.id,
     loading: state.auth.loading,
     showFinalModal: state.socialNewsfeed.showFinalModal,
+    showIntialInstructions: state.auth.showIntialInstructions
 
   }
 }
