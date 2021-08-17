@@ -56,11 +56,14 @@ class InfiniteScrollFlat extends React.Component{
 
   }
 
-  loadSocialPost = () => {
+  openCamera = () => {
+    this.props.navigation.navigate("Upload")
+    this.props.openShowCamera()
+  }
 
+  loadSocialPost = () => {
     console.log('hit here')
     const {start, addMore} = this.state;
-
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSocial/`+curDate+"/"+start+'/'+addMore)
     .then( res => {
@@ -151,7 +154,7 @@ class InfiniteScrollFlat extends React.Component{
                   }}>
                   <Image source={require('./noPosts1.png')} style = {{height: 200, width: 250, resizeMode : 'stretch',}} />
               <TouchableOpacity
-                onPress = {() => this.props.openShowCamera()}
+                onPress = {() => this.openCamera()}
                 >
                 <View style = {{
                   backgroundColor: "#1890ff",

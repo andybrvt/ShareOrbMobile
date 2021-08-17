@@ -13,6 +13,9 @@ import { connect } from "react-redux";
 import * as dateFns from 'date-fns';
 import authAxios from '../util';
 import { ChevronLeft, ChevronRight } from "react-native-feather";
+import * as authActions from '../store/actions/auth';
+
+
 
 const width = Dimensions.get("window").width
 
@@ -21,13 +24,15 @@ class SocialCalendarTap extends React.Component{
 
   constructor(props){
     super(props)
-
     this.state = {
         currentDate: new Date(),
         socialCells: {}
     }
+  }
 
-
+  openCamera = () => {
+    this.props.navigation.navigate("Upload")
+    this.props.openShowCamera()
   }
 
   viewDay = (cellId) => {
@@ -234,11 +239,11 @@ class SocialCalendarTap extends React.Component{
         } else {
           days.push(
             <View
-              // onPress = {() => this.props.navigation.navigate("PostingPage")}
+              // onPress = {() => this.openCamera()}
               style = {[styles.monthCell]}>
               {
                 (dateFns.isSameDay(day, new Date()))?
-                <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
+                <TouchableOpacity onPress = {() => this.openCamera()}
                   style = {styles.currentMiniBox}>
                 <View>
                   {
@@ -257,7 +262,7 @@ class SocialCalendarTap extends React.Component{
                   </View>
                   </TouchableOpacity>
                 :
-                <View onPress = {() => this.props.navigation.navigate("PostingPage")}
+                <View onPress = {() => this.openCamera()}
                   style = {styles.miniBox}>
                 <View>
                 {
@@ -334,11 +339,10 @@ class SocialCalendarTap extends React.Component{
         } else {
           days.push(
             <View
-              // onPress = {() => this.props.navigation.navigate("PostingPage")}
               style = {[styles.monthCell]}>
               {
                 (dateFns.isSameDay(day, new Date()))?
-                <TouchableOpacity onPress = {() => this.props.navigation.navigate("PostingPage")}
+                <TouchableOpacity onPress = {() => this.openCamera()}
                   style = {styles.currentMiniBox}>
                 <View>
                   {
@@ -357,7 +361,7 @@ class SocialCalendarTap extends React.Component{
                   </View>
                   </TouchableOpacity>
                 :
-                <View onPress = {() => this.props.navigation.navigate("PostingPage")}
+                <View onPress = {() => this.openCamera()}
                   style = {styles.miniBox}>
                 <View>
                 {
@@ -419,8 +423,14 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    openShowCamera: () => dispatch(authActions.openShowCamera()),
+  }
+}
 
-export default connect(mapStateToProps)(SocialCalendarTap);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SocialCalendarTap);
 
 
 
