@@ -415,7 +415,7 @@ class SocialCalendarTap extends React.Component{
 
 const mapStateToProps = state => {
   return{
-    userId: state.auth.id
+    // userId: state.auth.id
   }
 }
 

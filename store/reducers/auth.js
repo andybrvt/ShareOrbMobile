@@ -89,6 +89,7 @@ const authZeroTotalLoad = (state, action) => {
 
 
 const authLogout = (state, action) => {
+
   return updateObject(state, {
     token: null,
     error: null,
@@ -115,6 +116,7 @@ const authLogout = (state, action) => {
 };
 
 const addCredentials = (state, action) => {
+  console.log(action)
   return updateObject(state, {
     username: action.username,
     id: action.id,
@@ -171,6 +173,12 @@ const authAddNotificationToken = (state, action) => {
   })
 }
 
+const unShowIntialInstructions = (state, action) => {
+  return updateObject(state, {
+    showIntialInstructions: action.bool
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.AUTH_START:
@@ -207,6 +215,8 @@ const reducer = (state = initialState, action) => {
       return closeShowCamera(state, action);
     case actionTypes.AUTH_ADD_NOTIFICATION_TOKEN:
       return authAddNotificationToken(state, action);
+      case actionTypes.UNSHOW_INITIAL_INSTRUCTIONS:
+      return unShowIntialInstructions(state, action);
     default:
       return state;
   }
