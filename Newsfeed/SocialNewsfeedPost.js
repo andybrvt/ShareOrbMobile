@@ -101,6 +101,16 @@ class SocialNewsfeedPost extends React.Component{
      calCell,
    ) => {
 
+     const notificationObject = {
+       command: 'social_like_notification',
+       actor: personLike,
+       recipient: ownerId,
+       socialItemId: socialItemId,
+     }
+
+    NotificationWebSocketInstance.sendNotification(notificationObject)
+
+
     WebSocketSocialNewsfeedInstance.sendSinglePostLike(
       socialItemId,
       personLike,

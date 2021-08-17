@@ -57,6 +57,7 @@ class WebSocketNotifications {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
 
+    console.log(parsedData)
     if (command === 'notifications') {
         const notifications = JSON.parse(parsedData.notifications);
         this.callbacks['notifications'](notifications)
@@ -140,6 +141,8 @@ class WebSocketNotifications {
   }
 
   sendNotification(data) {
+
+    console.log('stuff here right now')
     // this is good, it only sends 1 time
     // This will recieve information from onClickSend from PersonalProfile.js
     // and will send it to the userprofile.consumers
