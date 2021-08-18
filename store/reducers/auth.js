@@ -179,6 +179,12 @@ const unShowIntialInstructions = (state, action) => {
   })
 }
 
+const resetNotificationSeen = (state, action) => {
+  return updateObject(state, {
+    notificationSeen:  0
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.AUTH_START:
@@ -215,8 +221,10 @@ const reducer = (state = initialState, action) => {
       return closeShowCamera(state, action);
     case actionTypes.AUTH_ADD_NOTIFICATION_TOKEN:
       return authAddNotificationToken(state, action);
-      case actionTypes.UNSHOW_INITIAL_INSTRUCTIONS:
+    case actionTypes.UNSHOW_INITIAL_INSTRUCTIONS:
       return unShowIntialInstructions(state, action);
+    case actionTypes.RESET_NOTIFCATION_SEEN:
+      return resetNotificationSeen(state, action);
     default:
       return state;
   }

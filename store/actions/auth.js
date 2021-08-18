@@ -277,3 +277,11 @@ export const unShowIntialInstructions = (bool) => {
     bool: bool
   }
 }
+
+export const resetNotificationSeen = () => {
+  // this will reset the notification count when you open the notification
+  // up
+  return {
+    type: actionTypes.RESET_NOTIFCATION_SEEN
+  }
+}

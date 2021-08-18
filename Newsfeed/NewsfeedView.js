@@ -160,8 +160,8 @@ class NewsfeedView extends React.Component{
 
 
   render(){
-    console.log("FEDDDDDDDDDfDDDDDD")
-    console.log(this.state.newsFeedCondition)
+    console.log(this.props.notificationSeen)
+
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
     let showComments = this.props.showNewsfeedComments
@@ -276,7 +276,8 @@ const mapStateToProps = state => {
     curLoad: state.auth.curLoad,
     totalLoad: state.auth.totalLoad,
     showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments,
-    showIntialInstructions: state.auth.showIntialInstructions
+    showIntialInstructions: state.auth.showIntialInstructions,
+    notificationSeen: state.auth.notificationSeen
   }
 }
 

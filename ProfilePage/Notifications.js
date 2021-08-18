@@ -18,6 +18,8 @@ import { Avatar } from 'react-native-elements';
 import { MoreVertical} from "react-native-feather";
 import { connect } from 'react-redux';
 import * as dateFns from 'date-fns';
+import * as authActions from '../store/actions/auth';
+import authAxios from '../util';
 
 
 class Notifications extends React.Component{
@@ -41,6 +43,18 @@ class Notifications extends React.Component{
     postId: postId
   })
  }
+
+ componentDidMount(){
+
+   authAxios.post(`${global.IP_CHANGE}/userprofile/resetNotificationSeen`, {
+      curId: this.props.userId
+    }).then(res => {
+
+      // Now you will call the redux to reset the value of the notification
+      this.props.resetNotificationSeen()
+
+    })
+}
 
 
  renderItem = ({item}) => {
@@ -156,6 +170,41 @@ class Notifications extends React.Component{
        </TouchableOpacity>
      )
    }
+   if(item.type === "send_social_cell_comment"){
+     return(
+       <TouchableOpacity
+         onPress = {() => this.openDayAlbum(
+           item.eventId,
+           item.itemId
+         )}
+         >
+         <View style={styles.notiContainer}>
+           <View style={styles.frontNotiSpace}>
+             <Avatar
+               onPress = {() => this.ViewProfile(item.actor.username)}
+               size={40}
+               rounded
+               source = {{
+                 uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
+               }}
+             />
+           </View>
+           <View style={styles.midNotiSpace}>
+               <View style={styles.wrapNoti}>
+                 <Text style = {{fontWeight: 'bold'}}>{item.actor.username} </Text>
+                 <Text>commented on your album
+                </Text>
+               </View>
+           </View>
+           <View style={{flex:0}}>
+             <Text style={styles.notiTimeStamp}>
+               {global.RENDER_TIMESTAMP(item.timestamp)}
+             </Text>
+           </View>
+         </View>
+       </TouchableOpacity>
+     )
+   }
    if(item.type === "accept_follow_request"){
      return(
        <TouchableOpacity>
@@ -247,6 +296,13 @@ class Notifications extends React.Component{
 const mapStateToProps = state => {
   return {
     notifications: state.notifications.notifications,
+    userId: state.auth.id
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    resetNotificationSeen: () => dispatch(authActions.resetNotificationSeen())
   }
 }
 
@@ -290,4 +346,4 @@ const styles = StyleSheet.create({
  },
  });
 
-export default connect(mapStateToProps, null)(Notifications);
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

@@ -47,6 +47,8 @@ class Header extends React.Component{
 
 
   render(){
+    console.log('notificaiton here')
+    console.log(this.props.notificationSeen)
     let profilePic = ""
     if(this.props.profilePic){
       profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profilePic
@@ -96,13 +98,23 @@ class Header extends React.Component{
                 style={{right:25}}
                 stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
               */}
-              {/*
-                <View style={{position:'absolute', right:'95%', top:'15%',}}>
-                  <View style={styles.notiCircle}>
 
-                  </View>
-                </View>
-                */}
+                {
+                  this.props.notificationSeen > 0 ?
+
+
+                    <View style={{position:'absolute', right:'95%', top:'15%',}}>
+                      <View style={styles.notiCircle}>
+
+                      </View>
+                    </View>
+
+                    :
+
+                  null
+
+                }
+
 
 
 

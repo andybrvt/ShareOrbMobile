@@ -70,7 +70,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
          command: "social_comment_notification",
          actor: userId,
          recipient:commentHost,
-         cellDate: cellDate
+         socialItemId:cellId
        }
        // Now do the websocket here
        SocialCommentsWebsocketInstance.sendComment(
@@ -85,7 +85,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
 
        // if(userId !== commentHost){
-         // NotificationWebSocketInstance.sendNotification(notificationObject)
+         NotificationWebSocketInstance.sendNotification(notificationObject)
 
          global.SEND_COMMENT_NOTIFICATION(
            this.props.commentHostNotiToken,
