@@ -206,7 +206,7 @@ class NewsfeedView extends React.Component{
                 condition={this.state.newsFeedCondition}
                 y = {this.y}
                 {...this.props}/>
-              {this.state.newsFeedCondition?
+              {!this.state.newsFeedCondition?
                 <InfiniteScrollFlat
                   y = {this.y}
                   navigation = {this.props.navigation}

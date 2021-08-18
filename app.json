@@ -21,7 +21,6 @@
       "assets/**"
     ],
     "android": {
-      "versionCode":2
       "package": "com.pinghsu520.ShareOrbMobile"
     },
     "ios": {

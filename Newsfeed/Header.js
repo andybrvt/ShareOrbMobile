@@ -104,12 +104,12 @@ class Header extends React.Component{
                 </View>
                 */}
 
-                {/*
+
 
                 {this.props.condition?
                   <View>
                   <TouchableOpacity
-                    style={{marginRight:20}}
+                    style={{marginRight:10}}
                      style={styles.loginBtn} onPress={() => this.props.changeFeed()}>
 
                     <Text style={{color:'white', fontSize:15, padding:10}}>Public</Text>
@@ -123,10 +123,10 @@ class Header extends React.Component{
 
                   <Text style={{color:'white', fontSize:15, padding:5}}>Personal</Text>
                 </TouchableOpacity>
-              }*/}
+              }
 
 
-
+              {/*
 
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Notifications")}>
@@ -135,6 +135,7 @@ class Header extends React.Component{
               style={{marginLeft:10}}
               strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
+          */}
           </View>
         </Animated.View>
       </Animated.View>
