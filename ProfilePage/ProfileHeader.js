@@ -56,16 +56,11 @@ class ProfileHeader extends React.Component{
   // }
 
   onFollow = (follower, following) => {
-
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
     const followingLength = this.props.following.length
-
-
     ExploreWebSocketInstance.sendFollowing(follower,following);
     //update user credentials and then send out notifications
-
     if(followingLength === 0){
-
         // if the person doesn't have any followers already
         //  you wanna rerun so that newsfeed shows up
         WebSocketSocialNewsfeedInstance.fetchSocialPost(
@@ -78,24 +73,12 @@ class ProfileHeader extends React.Component{
       actor: follower,
       recipient: following
     }
-
     NotificationWebSocketInstance.sendNotification(notificationObject);
-
-
-
-  }
-
-  ViewProfile = () => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
-    this.props.navigation.navigate("Settings")
   }
 
   onUnfollow = (follower, following) => {
     ExploreWebSocketInstance.sendUnFollowing(follower, following);
-
   }
-
   renderProfilePic = () => {
 
     let profileImage = null
@@ -153,9 +136,7 @@ class ProfileHeader extends React.Component{
     console.log(bio)
 
     return (
-    <View style={{
-        flexDirection:'column',
-        }}>
+    <View>
         <View>
 
           <View style={styles.profileInfoHeader}>
@@ -174,11 +155,7 @@ class ProfileHeader extends React.Component{
                 />
 
               </View>
-              <View style={{position:'absolute', right:0}}>
-                <Settings
-                       onPress = {() => this.ViewProfile()}
-                       stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
-              </View>
+
               <View style={{flex:1.5,justifyContent:'center', marginLeft:30, }}>
 
                 <Text style = {styles.name}>{name}</Text>
