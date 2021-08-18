@@ -59,6 +59,15 @@ let likeAvatarList=[]
      SocialCalCellPageWebSocketInstance.connect(cellId)
    }
 
+
+   ViewProfile = (username) => {
+     // This fucntion will be used to navigate to the post page
+     // that you can use to post pictures and write caption
+     this.props.navigation.navigate("ProfilePage", {
+       username: username
+     })
+   }
+
    componentDidMount(){
      if(this.props.socialCalCell){
        if(this.props.socialCalCell.get_socialCalItems){
@@ -424,7 +433,9 @@ let likeAvatarList=[]
 
           <View style = {styles.chatInfoHolder} >
 
-            <TouchableOpacity>
+
+            
+
             <Avatar
 
             rounded
@@ -434,7 +445,7 @@ let likeAvatarList=[]
               size = {40}
                />
 
-           </TouchableOpacity>
+
              <View style = {styles.chatInfo}>
                <View style = {styles.chatNameContainer}>
                  <Text style = {styles.chatName}>{userName}</Text>

@@ -183,7 +183,7 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
-
+            
             <TabView
               navigationState = {this.state}
               renderScene = {this._renderScene}
