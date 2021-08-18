@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: 1.8,
+    flex: 1.65,
   },
   profileHeader: {
 
