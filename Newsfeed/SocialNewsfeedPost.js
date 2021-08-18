@@ -255,6 +255,7 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   revealPhoto = () =>{
+
     // This function will be use to render the pictures
     // within thew newsfeed post. If there are only one photo
     // it iwill only show one photo, if there are more ti will
@@ -289,6 +290,9 @@ class SocialNewsfeedPost extends React.Component{
     let calComment = 0;
 
     let notificationToken = "";
+    let goal = "";
+
+
     if(this.props.data){
       if(this.props.data.creator){
 
@@ -327,7 +331,9 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.id){
         postId = this.props.data.id
       }
-
+      if(this.props.data.goal){
+        goal = this.props.data.goal
+      }
 
       if(this.props.data.itemImage){
         itemImage = `${global.IMAGE_ENDPOINT}`+this.props.data.itemImage;
@@ -521,6 +527,19 @@ class SocialNewsfeedPost extends React.Component{
                   </View>
               </View>
               */}
+
+              {
+                goal.goal ?
+
+                <View style = {styles.goalContainer}>
+                  <Text style = {styles.goalText}>{global.CAPITALIZE(goal.goal)}</Text>
+                </View>
+
+                :
+
+                null
+
+              }
 
 
                     {
@@ -725,6 +744,7 @@ class SocialNewsfeedPost extends React.Component{
 
     })
 
+    console.log(this.props.data)
 
     return (
       <View
@@ -1104,5 +1124,19 @@ const styles = StyleSheet.create({
 
   bottomLikeCommentContainer: {
     padding:10,
+  },
+  goalContainer: {
+    position: 'absolute',
+    padding: 12,
+    borderRadius: 30,
+    backgroundColor: "#000000aa",
+    top: "3%",
+    alignSelf: 'flex-end',
+    right: '3%'
+  },
+  goalText: {
+    textAlign: 'right',
+    color:'white'
   }
+
 })
