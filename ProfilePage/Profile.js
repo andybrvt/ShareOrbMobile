@@ -1,5 +1,15 @@
 import React from 'react';
-import { Text, Platform, SafeAreaView, View, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
+import {
+  Text,
+  Platform,
+  SafeAreaView,
+  View,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity
+ } from 'react-native';
 import ProfileHeader from './ProfileHeader';
 import { connect } from "react-redux";
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
@@ -11,8 +21,9 @@ import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
 import SocialCalendarTap from '../SocialCalendar/SocialCalendarTap';
 import { Tag, Bookmark, Search, ChevronRight, Settings
-  ,MessageCircle, UserPlus} from "react-native-feather";
-
+  ,MessageCircle, UserPlus, Users, Clock} from "react-native-feather";
+import { TabView, SceneMap } from 'react-native-tab-view';
+import GoalContainer from '../GoalAlbum/GoalContainer';
 
 // This will be the bulk of the profile page
 // this will be used for current user
@@ -22,7 +33,11 @@ class Profile extends React.Component{
     super(props);
 
     this.state = {
-
+      index: 0,
+      routes: [
+        { key: 'first', title: 'Calendar' },
+        { key: 'second', title: 'Goals' },
+      ]
     }
   }
 
@@ -89,6 +104,42 @@ class Profile extends React.Component{
 
   }
 
+  _renderScene = SceneMap({
+    first: () =>   <SocialCalendarVonly userId = {this.props.currentId} navigation = {this.props.navigation}/>,
+  second: () => <GoalContainer  userId = {this.props.currentId} navigation = {this.props.navigation}/>,
+  });
+
+  _handleIndexChange = (index) => this.setState({ index });
+
+  _renderTabBar = (props) => {
+    const inputRange = props.navigationState.routes.map((x, i) => i);
+    return (
+      <View style={styles.tabBar}>
+        {
+        props.navigationState.routes.map((route, i) => {
+        return (
+          <TouchableOpacity
+            style={styles.tabItem}
+            onPress={() => this.setState({ index: i })}>
+            <View style={{flexDirection:'row'}}>
+              {(i==1)?
+                 <Clock
+                   style={{right:10}}
+                   stroke="black" strokeWidth={2.5} width={20} height={20} />
+              :
+               <Users
+                 style={{right:10}}
+                 stroke="black" strokeWidth={2.5} width={20} height={20} />
+              }
+              <Text style={{fontSize:14}}>{route.title}</Text>
+            </View>
+          </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
+
   render(){
 
     const screenWidth = Math.round(Dimensions.get('window').width);
@@ -102,6 +153,8 @@ class Profile extends React.Component{
       bio: this.props.bio,
       get_followers: this.props.followers
     }
+
+
 
     return (
       <BackgroundContainer>
@@ -131,10 +184,13 @@ class Profile extends React.Component{
         </View>
         <View style = {styles.socialCalContainer}>
 
-            <SocialCalendarVonly
-              userId = {this.props.currentId}
-              navigation = {this.props.navigation}
-              />
+            <TabView
+              navigationState = {this.state}
+              renderScene = {this._renderScene}
+              renderTabBar={this._renderTabBar}
+              onIndexChange={this._handleIndexChange}
+               />
+
 
 
 
@@ -171,7 +227,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: 1.7,
+    flex: 2.3,
   },
   profileHeader: {
 
@@ -207,6 +263,18 @@ const styles = StyleSheet.create({
   },
   contentStyle: {
     paddingHorizontal: 16,
+  },
+  tabBar: {
+    flexDirection: 'row',
+    borderBottomColor: '#FFFFFF',
+    elevation:1,
+    borderBottomWidth: 1,
+
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 15,
   },
 
 })

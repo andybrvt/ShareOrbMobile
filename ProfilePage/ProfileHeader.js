@@ -247,11 +247,14 @@ class ProfileHeader extends React.Component{
          </View>
      </View>
 
+     {/*
        <View style = {styles.bioContainer}>
          <Text style = {styles.bio}> {bio}</Text>
 
        </View>
-       {/*
+
+       */}
+              {/*
         <View style = {styles.streakBubble}>
           <FontAwesomeIcon
                            style = {{
