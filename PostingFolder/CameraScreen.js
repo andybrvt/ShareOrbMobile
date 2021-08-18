@@ -225,7 +225,8 @@ class CameraScreen extends React.Component{
         imagePreview: null,
         caption: "",
         showCaptionModal: false,
-        isGallery: false
+        isGallery: false,
+        selectedGoal: {}
       }), 1 )
 
   }
@@ -373,6 +374,12 @@ class CameraScreen extends React.Component{
     })
   }
 
+  onClearSelectedGoal = () => {
+    this.setState({
+      selectedGoal: {}
+    })
+  }
+
   render(){
 
     return(
@@ -462,6 +469,7 @@ class CameraScreen extends React.Component{
                 </TouchableWithoutFeedback>
 
                 <GoalDropDown
+                  cancel = {this.onClearSelectedGoal}
                   data = {this.state.goals}
                   showGoals = {this.state.showGoals}
                   onClose = {this.closeShowGoals}
@@ -488,7 +496,7 @@ class CameraScreen extends React.Component{
                </TouchableOpacity>
 
                {
-                 !this.state.selectedGoal.goal  ?
+                 this.state.selectedGoal.goal  ?
 
                  <View
                    style ={{
@@ -512,7 +520,7 @@ class CameraScreen extends React.Component{
                      <Text style = {{
                          color: 'white',
                          textAlign: 'right'
-                       }}>these are</Text>
+                       }}>{this.state.selectedGoal.goal}</Text>
                    </View>
 
                    <View style = {{

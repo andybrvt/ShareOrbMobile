@@ -96,6 +96,7 @@ class GoalDropDown extends React.Component{
                  />
 
                <Button
+                 onPress = {() => this.props.cancel()}
                  title = "none"
                   />
             </View>

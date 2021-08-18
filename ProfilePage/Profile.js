@@ -183,7 +183,7 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
-            
+
             <TabView
               navigationState = {this.state}
               renderScene = {this._renderScene}
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: 2.3,
+    flex: 1.8,
   },
   profileHeader: {
 
