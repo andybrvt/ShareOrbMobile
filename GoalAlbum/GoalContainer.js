@@ -34,10 +34,20 @@ class GoalContainer extends React.Component{
   }
 
   renderItem = ({item}) =>{
-
+    console.log("ITEMMMMMMM goal ")
+    console.log(item.get_socialCalItems[0].itemImage)
     return(
       <View>
         <Text> stuff here </Text>
+
+          <Image
+            style = {styles.smallImage}
+            resizeMode = "cover"
+            source = {{
+
+              uri: `${global.IMAGE_ENDPOINT}`+item.get_socialCalItems[0].itemImage,
+            }}
+             />
       </View>
     )
   }
@@ -56,5 +66,15 @@ class GoalContainer extends React.Component{
     )
   }
 }
+
+const styles = StyleSheet.create({
+smallImage: {
+  width: 200,
+  height: 200,
+  borderRadius: 15,
+  backgroundColor: 'lightgray',
+
+},
+})
 
 export default GoalContainer;

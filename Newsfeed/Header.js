@@ -116,7 +116,7 @@ class Header extends React.Component{
                 }
 
 
-
+                
 
                 {this.props.condition?
                   <View>

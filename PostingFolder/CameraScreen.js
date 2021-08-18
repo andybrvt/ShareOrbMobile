@@ -208,6 +208,14 @@ class CameraScreen extends React.Component{
 
   }
 
+  // 20 sec video test
+  handleLongPress = async () => {
+        // Before starting to recording, setup a timer that calls stopRecording() after 20s IF the camera is still recording, otherwise, no need to call stop
+        // setTimeout(() => this.state.capturing && this.camera.stopRecording(), 20*1000);
+        // const videoData = await this.cameraRef.recordAsync();
+        this.setState({ capturing: true});
+    };
+
   onCancelPhoto(){
 
     this.showFinal.setValue(false)
@@ -698,8 +706,9 @@ class CameraScreen extends React.Component{
 
 
                   <TouchableOpacity
+                    onLongPress = {() => this.handleLongPress()}
                     onPress = {() => this.takePicture()}
-                    style = {styles.captureBtn}></TouchableOpacity>
+                    style = {[(this.state.capturing)&&styles.captureBtnActive,styles.captureBtn]}></TouchableOpacity>
 
 
 
@@ -789,6 +798,17 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     alignSelf: 'center',
     borderColor: 'white'
+  },
+
+  captureBtnActive: {
+    position: 'absolute',
+    bottom: '5%',
+    width: 90,
+    height: 90,
+    borderRadius: 100,
+    borderWidth: 5,
+    alignSelf: 'center',
+    borderColor: 'red'
   },
   submitBtn: {
     position: 'absolute',
