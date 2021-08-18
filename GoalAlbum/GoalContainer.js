@@ -34,8 +34,7 @@ class GoalContainer extends React.Component{
   }
 
   renderItem = ({item}) =>{
-    console.log("ITEMMMMMMM goal ")
-    console.log(item.get_socialCalItems[0].itemImage)
+
     return(
       <View>
         <Text> stuff here </Text>

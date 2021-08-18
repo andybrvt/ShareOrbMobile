@@ -27,7 +27,9 @@ class GoalDropDown extends React.Component{
   renderItem = ({item}) => {
 
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress = {() => this.props.select(item)}
+        >
         <View style = {{
             alignItems: 'center',
             justifyContent: 'center',
@@ -92,6 +94,11 @@ class GoalDropDown extends React.Component{
                  height = {30}
                  width = {30}
                  />
+
+               <Button
+                 onPress = {() => this.props.cancel()}
+                 title = "none"
+                  />
             </View>
 
 

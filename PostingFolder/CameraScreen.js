@@ -225,7 +225,8 @@ class CameraScreen extends React.Component{
         imagePreview: null,
         caption: "",
         showCaptionModal: false,
-        isGallery: false
+        isGallery: false,
+        selectedGoal: {}
       }), 1 )
 
   }
@@ -367,6 +368,18 @@ class CameraScreen extends React.Component{
     this.props.navigation.goBack();
   }
 
+  onSelectGoal = (goal) => {
+    this.setState({
+      selectedGoal: goal
+    })
+  }
+
+  onClearSelectedGoal = () => {
+    this.setState({
+      selectedGoal: {}
+    })
+  }
+
   render(){
 
     return(
@@ -456,9 +469,11 @@ class CameraScreen extends React.Component{
                 </TouchableWithoutFeedback>
 
                 <GoalDropDown
+                  cancel = {this.onClearSelectedGoal}
                   data = {this.state.goals}
                   showGoals = {this.state.showGoals}
                   onClose = {this.closeShowGoals}
+                  select = {this.onSelectGoal}
                   />
 
                <TouchableOpacity
@@ -480,32 +495,83 @@ class CameraScreen extends React.Component{
                    width = {40}/>
                </TouchableOpacity>
 
-               <TouchableOpacity
-                 onPress = {() => this.openShowGoals()}
-                 style ={{
-                   // position: 'relative',
-                   position: 'absolute',
-                   top: '5%',
-                   right:'5%',
-                   // top: 100
-                 }}
-                 >
-                 <Circle
-                   style={{top:0, position:'absolute'}}
-                   stroke = "#d9d9d9"
-                   strokeWidth={3}
-                   width = {40}
-                   height = {40}
-                    />
+               {
+                 this.state.selectedGoal.goal  ?
 
-                <Circle
-                  strokeWidth={2}
-                  stroke = "white"
-                  width = {40}
-                  height = {40}
-                   />
+                 <View
+                   style ={{
+                     // position: 'relative',
+                     position: 'absolute',
+                     top: '4%',
+                     right: '2%',
+                     alignSelf: 'flex-end',
 
-               </TouchableOpacity>
+                     backgroundColor: '#000000aa',
+                     padding: 20,
+                     borderRadius: 30,
+                     flexDirection: 'row'
+                     // top: 100
+                   }}
+                   >
+
+
+
+                   <View>
+                     <Text style = {{
+                         color: 'white',
+                         textAlign: 'right'
+                       }}>{this.state.selectedGoal.goal}</Text>
+                   </View>
+
+                   <View style = {{
+                       height: 20,
+                       width: 40
+                     }}>
+
+                   </View>
+
+                 </View>
+
+                 :
+
+                 null
+
+
+
+
+               }
+
+                 <TouchableOpacity
+                   onPress = {() => this.openShowGoals()}
+                   style ={{
+                     // position: 'relative',
+                     position: 'absolute',
+                     top: '5%',
+                     right:'5%',
+                     // top: 100
+                   }}
+                   >
+                   <Circle
+                     style={{top:0, position:'absolute'}}
+                     stroke = "#d9d9d9"
+                     strokeWidth={3}
+                     width = {40}
+                     height = {40}
+                      />
+
+                    <Circle
+                      strokeWidth={2}
+                      stroke = "white"
+                      width = {40}
+                      height = {40}
+                       />
+
+                 </TouchableOpacity>
+
+
+
+
+
 
                <TouchableOpacity
                  style = {styles.submitBtn}

@@ -204,7 +204,54 @@ class NewSocialMonth extends React.PureComponent{
                         </TouchableOpacity>
                       </View>
                     :
-                      <Text style = {{color: 'red'}}> {formattedDate}</Text>
+                    <View
+                      key = {i}
+                      style = {{
+                        width: width/7,
+                        height: width/7
+                      }}
+                      >
+                      {
+                        (dateFns.isSameDay(day, new Date()))?
+                        <TouchableOpacity onPress = {() => this.openCamera()}
+                          style = {styles.currentMiniBox}>
+                        <View>
+                          {
+                            dateFns.isSameMonth(day, curMonth) ?
+                            <Text style = {{
+                                fontSize:12,
+                                color: 'black',
+                                fontWeight: 'bold'
+                              }}> {formattedDate}</Text>
+                            :
+                            <Text style = {{
+                                fontSize:12,
+                                color: "#8c8c8c"
+                              }}>{formattedDate}</Text>
+                          }
+                          </View>
+                          </TouchableOpacity>
+                        :
+                        <View onPress = {() => this.openCamera()}
+                          style = {styles.miniBox}>
+                        <View>
+                        {
+                          dateFns.isSameMonth(day, curMonth) ?
+                          <Text style = {{
+                              fontSize:12,
+                              color: 'black',
+                              fontWeight: 'bold'
+                            }}> {formattedDate}</Text>
+                          :
+                          <Text style = {{
+                              fontSize:12,
+                              color: "#8c8c8c"
+                            }}>{formattedDate}</Text>
+                        }
+                        </View>
+                        </View>
+                      }
+                    </View>
                     }
                 </View>
               </View>
@@ -385,10 +432,7 @@ class NewSocialMonth extends React.PureComponent{
     const {socialCells} = this.state;
     return(
       <View style = {styles.centerMonth}>
-          
-          <Text style = {styles.monthTitle}>
-            {formatMonth}
-          </Text>
+
           {this.initializedMonth(this.props.month, this.props.year, socialCells)}
       </View>
     )
@@ -482,5 +526,6 @@ const styles = StyleSheet.create({
     borderColor: "#1890ff"
   },
   imageHolder: {
+    flex:1,
   }
 })
