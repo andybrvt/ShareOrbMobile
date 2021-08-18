@@ -385,6 +385,7 @@ class NewSocialMonth extends React.PureComponent{
     const {socialCells} = this.state;
     return(
       <View style = {styles.centerMonth}>
+          
           <Text style = {styles.monthTitle}>
             {formatMonth}
           </Text>

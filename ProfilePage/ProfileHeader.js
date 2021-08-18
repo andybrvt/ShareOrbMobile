@@ -7,13 +7,14 @@ import { Avatar } from 'react-native-elements';
 import Followers from './Followers';
 import Following from './Following';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHeart, faComment, faBookmark, } from '@fortawesome/free-regular-svg-icons';
+import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons';
 import { faFire } from '@fortawesome/free-solid-svg-icons';
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import * as dateFns from 'date-fns';
-
+import { Tag, Bookmark, Search, ChevronRight, Settings
+  ,MessageCircle, UserPlus, Users, Clock} from "react-native-feather";
 
 class ProfileHeader extends React.Component{
 
@@ -84,6 +85,12 @@ class ProfileHeader extends React.Component{
 
   }
 
+  ViewProfile = () => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+    this.props.navigation.navigate("Settings")
+  }
+
   onUnfollow = (follower, following) => {
     ExploreWebSocketInstance.sendUnFollowing(follower, following);
 
@@ -150,7 +157,9 @@ class ProfileHeader extends React.Component{
         flexDirection:'column',
         }}>
         <View>
+
           <View style={styles.profileInfoHeader}>
+
               <View style={{
                  flex:1,
                   alignItems: 'center',
@@ -165,8 +174,13 @@ class ProfileHeader extends React.Component{
                 />
 
               </View>
-
+              <View style={{position:'absolute', right:0}}>
+                <Settings
+                       onPress = {() => this.ViewProfile()}
+                       stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
+              </View>
               <View style={{flex:1.5,justifyContent:'center', marginLeft:30, }}>
+
                 <Text style = {styles.name}>{name}</Text>
                 <Text style = {styles.username}>@{username}</Text>
                 {
@@ -247,13 +261,12 @@ class ProfileHeader extends React.Component{
          </View>
      </View>
 
-     {/*
+
        <View style = {styles.bioContainer}>
          <Text style = {styles.bio}> {bio}</Text>
 
        </View>
 
-       */}
               {/*
         <View style = {styles.streakBubble}>
           <FontAwesomeIcon

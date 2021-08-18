@@ -41,12 +41,6 @@ class Profile extends React.Component{
     }
   }
 
-  ViewProfile = () => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
-    this.props.navigation.navigate("Settings")
-  }
-
   initialiseProfile() {
 
       this.waitForSocketConnection(() => {
@@ -158,7 +152,9 @@ class Profile extends React.Component{
 
     return (
       <BackgroundContainer>
+        {/*
         <View style={styles.viewStyle}>
+
           <View style={{top: 10,flex:1, justifyContent:'center', paddingLeft: 10}}>
             <Text style={styles.textStyle}>{this.props.username}</Text>
           </View>
@@ -169,21 +165,21 @@ class Profile extends React.Component{
              alignItems:'flex-end', padding:15}}>
              <View style={{flexDirection:'row'}}>
 
-               <Settings
-                 onPress = {() => this.ViewProfile()}
-                 stroke="black" strokeWidth={2.5} width={25} height={25}/>
+
              </View>
           </View>
         </View>
+        */}
         <View style = {styles.profileHeader}>
           <ProfileHeader
             navigation={this.props.navigation}
             profile = {profile}
             {...this.props}
             />
+
         </View>
         <View style = {styles.socialCalContainer}>
-            
+
             <TabView
               navigationState = {this.state}
               renderScene = {this._renderScene}
@@ -227,7 +223,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: 2.3,
+    flex: 1.8,
   },
   profileHeader: {
 
@@ -266,10 +262,9 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    borderBottomColor: '#FFFFFF',
+    // borderBottomColor: '#FFFFFF',
+    // borderBottomWidth: 1,
     elevation:1,
-    borderBottomWidth: 1,
-
   },
   tabItem: {
     flex: 1,

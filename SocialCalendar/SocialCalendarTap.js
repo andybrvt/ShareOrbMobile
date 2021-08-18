@@ -408,9 +408,11 @@ class SocialCalendarTap extends React.Component{
     const {socialCells} = this.state;
     return(
       <View style = {styles.centerMonth}>
+        {/*
         <Text style = {styles.monthTitle}>
           {formatMonth}
         </Text>
+        */}
         {this.initializedMonth(this.props.month, this.props.year, socialCells)}
       </View>
     )

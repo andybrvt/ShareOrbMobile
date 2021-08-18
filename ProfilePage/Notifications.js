@@ -20,6 +20,8 @@ import { connect } from 'react-redux';
 import * as dateFns from 'date-fns';
 import * as authActions from '../store/actions/auth';
 import authAxios from '../util';
+import { Tag, Bookmark, Search, ChevronRight, Settings, Sliders
+  ,MessageCircle, UserPlus, Users, Clock} from "react-native-feather";
 
 
 class Notifications extends React.Component{
@@ -279,14 +281,39 @@ class Notifications extends React.Component{
 
    return (
      <BackgroundContainer>
-       <View style = {{flex: 1}}>
-         <FlatList
-           data = {notifications}
-           renderItem = {this.renderItem}
-           keyExtractor={(item, index) => String(index)}
+       <View>
+         <View style={{ flexDirection:'row', padding:15}}>
+           <View style={{flexDirection:'row', width:'90%'}}>
+             <Avatar
 
-            />
-       </View>
+               onPress = {() => this.ViewProfile(item.actor.username)}
+               size={27.5}
+               rounded
+               source = {{
+                 uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic,
+               }}
+             />
+           <Text style={{fontSize:20, fontWeight:'bold', marginLeft:20}}>Notifications</Text>
+        </View>
+
+          <View>
+            <Sliders
+             // onPress = {() => this.ViewProfile()}
+             stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
+         </View>
+         </View>
+
+
+
+         <View style = {{flex: 1}}>
+           <FlatList
+             data = {notifications}
+             renderItem = {this.renderItem}
+             keyExtractor={(item, index) => String(index)}
+
+              />
+         </View>
+        </View>
      </BackgroundContainer>
 
    )
@@ -296,7 +323,9 @@ class Notifications extends React.Component{
 const mapStateToProps = state => {
   return {
     notifications: state.notifications.notifications,
-    userId: state.auth.id
+    userId: state.auth.id,
+    profilePic: state.auth.profilePic,
+
   }
 }
 
