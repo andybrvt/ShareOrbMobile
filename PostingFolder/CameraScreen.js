@@ -19,7 +19,7 @@ import {
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import { Zap, ZapOff, X, ArrowLeft, Grid, Repeat} from "react-native-feather";
+import { Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
@@ -30,6 +30,7 @@ import Animated, {Easing} from 'react-native-reanimated';
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
+import GoalDropDown from './GoalDropDown';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
@@ -60,15 +61,36 @@ class CameraScreen extends React.Component{
     showCaptionModal: false,
     caption:"",
     isGallery: false,
-    capturing:false,
+    goals: [],
+    selectedGoal: {},
+    showGoals: false
   }
 
   componentDidMount(){
     this.allowPermissions()
 
+    const curId = this.props.curUserId
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/goalList/`+curId)
+    .then( res => {
+      this.setState({
+        goals: res.data
+      })
+    })
+
   }
 
-  componentDidUpdate(){
+
+
+  openShowGoals = () => {
+    this.setState({
+      showGoals: true
+    })
+  }
+
+  closeShowGoals = () => {
+    this.setState({
+      showGoals: false
+    })
   }
 
   onWriteCaption =() =>{
@@ -384,6 +406,7 @@ class CameraScreen extends React.Component{
                       {translateY: this.slideAnimation}
                     ]
                   }}>
+
                   <KeyboardAvoidingView
                     style = {{
                       padding: 20,
@@ -428,7 +451,15 @@ class CameraScreen extends React.Component{
                     }}
                     />
 
+
+
                 </TouchableWithoutFeedback>
+
+                <GoalDropDown
+                  data = {this.state.goals}
+                  showGoals = {this.state.showGoals}
+                  onClose = {this.closeShowGoals}
+                  />
 
                <TouchableOpacity
                  onPress = {() => this.onCancelPhoto()}
@@ -447,6 +478,33 @@ class CameraScreen extends React.Component{
                    stroke = 'white'
                    height = {40}
                    width = {40}/>
+               </TouchableOpacity>
+
+               <TouchableOpacity
+                 onPress = {() => this.openShowGoals()}
+                 style ={{
+                   // position: 'relative',
+                   position: 'absolute',
+                   top: '5%',
+                   right:'5%',
+                   // top: 100
+                 }}
+                 >
+                 <Circle
+                   style={{top:0, position:'absolute'}}
+                   stroke = "#d9d9d9"
+                   strokeWidth={3}
+                   width = {40}
+                   height = {40}
+                    />
+
+                <Circle
+                  strokeWidth={2}
+                  stroke = "white"
+                  width = {40}
+                  height = {40}
+                   />
+
                </TouchableOpacity>
 
                <TouchableOpacity
@@ -564,6 +622,7 @@ class CameraScreen extends React.Component{
                       </TouchableOpacity>
 
                     }
+
 
 
                     <TouchableOpacity
