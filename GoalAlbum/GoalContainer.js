@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   ImageBackground,
+  FlatList
  } from 'react-native';
 import authAxios from '../util';
 
@@ -22,17 +23,35 @@ class GoalContainer extends React.Component{
   }
 
   componentDidMount(){
-    authAxios.get(`${global.IP_CHANGE}/mySocialCal/goalList`)
+    const userId = this.props.userId
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/goalList/`+userId)
     .then( res => {
       console.log(res.data)
+      this.setState({
+        goals: res.data
+      })
     })
+  }
+
+  renderItem = ({item}) =>{
+
+    return(
+      <View>
+        <Text> stuff here </Text>
+      </View>
+    )
   }
 
   render(){
 
     return(
       <View>
-        <Text>stuff here</Text>
+        <FlatList
+          data = {this.state.goals}
+          renderItem = {(item) => this.renderItem(item)}
+          keyExtractor={(item, index) => String(index)}
+
+           />
       </View>
     )
   }
