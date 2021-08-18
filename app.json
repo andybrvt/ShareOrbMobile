@@ -23,7 +23,6 @@
     "android": {
       "package": "com.pinghsu520.ShareOrbMobile",
       "versionCode": 2
-
     },
     "ios": {
       "supportsTablet": true,

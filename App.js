@@ -76,7 +76,7 @@ import PicAlbum from './CollabAlbum/PicAlbum';
 import InviteFriends from './CollabAlbum/InviteFriends';
 import GradientTest from './RandomComponents/GradientTest';
 import { Ionicons } from '@expo/vector-icons';
-import { ArrowUpCircle, Search, Home, Disc, Aperture, BookOpen, User, MessageCircle, FolderPlus} from "react-native-feather";
+import { ArrowUpCircle, Search, Home, Disc, Aperture, Bell, BookOpen, User, MessageCircle, FolderPlus} from "react-native-feather";
 import TestReanimated from './PostingFolder/TestReanimated';
 import DayAlbum from './SocialCalendar/DayAlbum.js';
 import Test from './PostingFolder/Test';
@@ -510,6 +510,8 @@ class App extends Component{
               }
             })}
               />
+
+            {/*
          <Tab.Screen
            name="AlbumHome"
            component={AlbumHome}
@@ -521,7 +523,19 @@ class App extends Component{
               ),
             }}
             />
+`           */}
 
+          <Tab.Screen
+            name="Notifications"
+            component={Notifications}
+            options={{
+               tabBarLabel: 'Notifications',
+               tabBarLabel: false,
+               tabBarIcon: ({ color }) => (
+                   <Bell stroke={color} strokeWidth={2} width={25} height={25} />
+               ),
+             }}
+             />
 
             <Tab.Screen
                name="Profile"
@@ -564,7 +578,6 @@ class App extends Component{
     return(
       <PaperProvider>
         <SafeAreaProvider>
-
           {
             <NavigationContainer
               ref = {ref => this.refContainer = ref}
@@ -580,7 +593,6 @@ class App extends Component{
                       gestureEnabled: true
                       // headerShown: false,
                     }}>
-
                       <Stack.Screen
                         options={{headerShown: false, }}
                         name = "tabs" component= {this.createTabStack}/>
@@ -597,7 +609,6 @@ class App extends Component{
                           ...TransitionPresets.SlideFromLeftIOS,
                         }}
                       />
-
                       <Stack.Screen
                         initialRouteName = "Profile"
                         name = "PFollowTab" component= {this.pFollowerFollowingTab}
@@ -610,7 +621,6 @@ class App extends Component{
                            ...TransitionPresets.SlideFromLeftIOS,
                           }}
                         />
-
                     <Stack.Screen
                       options={{
                         headerShown: true,
@@ -629,7 +639,6 @@ class App extends Component{
                     <Stack.Screen
                         name = 'Comments'
                         options={{
-
                           headerShown: false,
                           // cardStyle: { backgroundColor: 'transparent' },
                           // cardOverlayEnabled: true,
@@ -740,7 +749,7 @@ class App extends Component{
                             elevation:0,        // android
 
                           },
-                          title: 'Create Album',
+                          title: 'Create Group',
                           ...TransitionPresets.SlideFromRightIOS,
                                           }}
                          name = 'CreateAlbum' component = {CreateAlbum}/>

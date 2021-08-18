@@ -15,7 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import { ArrowRight,PlusCircle, XCircle, Unlock, Lock, Users, X, Search, Edit2, Navigation2} from "react-native-feather";
+import { ArrowRight,PlusCircle, XCircle, Unlock, Lock, Users, X, Search, Edit2, Navigation2, Info} from "react-native-feather";
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { moderateScale } from 'react-native-size-matters';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
@@ -25,7 +25,7 @@ import * as colabAlbumActions from '../store/actions/colabAlbum';
 import * as ImagePicker from 'expo-image-picker';
 import  authAxios from '../util';
 import * as dateFns from 'date-fns';
-
+import { Avatar } from 'react-native-elements';
 
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
@@ -235,7 +235,33 @@ class PicAlbum extends React.Component{
 
 
    render(){
+     this.props.navigation.setOptions({
+   headerTitle: () => (
+     <View style={{flexDirection:"row", alignItems:'center'}}>
+       <Avatar
+         size={40}
+         rounded
+         source = {{
+           uri: `https://images.unsplash.com/photo-1569173112611-52a7cd38bea9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80`
+         }}
+       />
 
+     <Text style={{marginLeft:10, color: 'black', fontWeight: 'bold', fontSize:18}}>
+           Hsu Family
+       </Text>
+      <View style={{flex:1, alignItems:'flex-end', justifyContent:'center'}}>
+      <Info style={{right:5}} stroke="#1890ff"
+         strokeWidth={2.5} width={25} height={25} />
+       </View>
+  </View>
+),
+headerStyle: {
+  // backgroundColor: 'red', //Set Header color
+  shadowColor:'#fff', //ios
+  elevation:0,
+  height:70,
+},
+ })
      let currentAlbum = [];
      let created_at = new Date();
      if(this.props.colabAlbum){
@@ -248,6 +274,11 @@ class PicAlbum extends React.Component{
        }
 
      }
+
+     let groupInfo= this.props.route.params.groupInfo
+     console.log("LLLLLLMNNNNNNNNNNNN")
+     console.log(groupInfo)
+     console.log("EnD")
      const {tempPictures} = this.state;
 
      let finalAlbum = [...currentAlbum, ...tempPictures];
@@ -306,8 +337,9 @@ class PicAlbum extends React.Component{
            {
              finalAlbum.length === 0 ?
 
-             <View>
-               <Text> there is no photos here </Text>
+             <View style={{top:'0%'}}>
+              
+               <Text> there is no photos here</Text>
              </View>
 
              :

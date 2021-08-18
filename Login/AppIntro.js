@@ -85,6 +85,7 @@ class AppIntro extends React.Component{
             }}>
           <Text style = {{
               top: '20%',
+              padding:30,
               color: 'white',
               fontSize: 35
             }}>
@@ -112,19 +113,21 @@ class AppIntro extends React.Component{
             alignItems: 'center'
             }}>
           <View style = {{
-              top: '7%'
+              top: '2.5%'
             }}>
+            <View style={{padding:30}}>
             <Text style = {styles.welcomeText}>
-              Newsfeed empties every 24 hours
+              Start Fresh. Your feed empties every 24 hours
             </Text>
+            </View>
 
           </View>
 
           <View
             style = {{
-              top: '15%',
-              height: "70%",
-              width: width*0.6,
+              top: '5%',
+              height: "65%",
+              width: width*0.75,
               borderRadius: 10,
               overflow: 'hidden'
             }}
@@ -150,20 +153,22 @@ class AppIntro extends React.Component{
             width: width,
             alignItems: 'center'
             }}>
+
             <View style = {{
-                top: '7%'
+                top: '2.5%'
               }}>
+              <View style={{padding:30}}>
               <Text style = {styles.welcomeText}>
-                One album a day. 24 hours
+                  Build your album. One album a day
               </Text>
+              </View>
 
             </View>
-
             <View
               style = {{
-                top: '15%',
-                height: "70%",
-                width: width*0.6,
+                top: '5%',
+                height: "65%",
+                width: width*0.75,
                 borderRadius: 10,
                 overflow: 'hidden'
               }}
@@ -193,22 +198,24 @@ class AppIntro extends React.Component{
             alignItems: 'center'
             }}>
           <View style = {{
-              top: '7%'
+              top: '2.5%'
             }}>
-            <Text style = {styles.welcomeText}>
-              Just take a photo, journal, and share!
-            </Text>
+            <View style={{padding:30}}>
+              <Text style = {styles.welcomeText}>
+                Just take a photo, journal, and share!
+              </Text>
+            </View>
 
           </View>
 
           <View
             style = {{
-              top: '15%',
-              height: "70%",
-              width: width*0.6,
+              top: '2.5%',
+              height: "60%",
+              width: width*0.75,
               borderRadius: 10,
               overflow: 'hidden',
-              backgroundColor:'red',
+
             }}
             >
             <Image
@@ -311,8 +318,10 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   welcomeText: {
+    left:'7.5%',
+    padding:5,
     color: "white",
-    fontSize: 22.5,
+    fontSize: 27.5,
     top: '7%'
   },
   headerText: {
@@ -339,7 +348,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: '#1890ff',
-    fontSize: 14
+    fontSize: 18,
   },
 
 

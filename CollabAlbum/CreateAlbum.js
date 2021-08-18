@@ -216,14 +216,13 @@ class CreateAlbum extends React.Component{
              <View style={styles.action}>
 
                 <TextInput
-                 placeholder="Describe your album"
+                 placeholder="Group Name"
                  autoCapitalize="sentences"
                  numberOfLines={2}
                  placeholderTextColor="#d9d9d9"
                  autoCorrect={false}
                  style={[
                    styles.textInput,
-
                  ]}
                  onChangeText = {this.handleCaptionChange}
                  value = {caption}
@@ -245,7 +244,7 @@ class CreateAlbum extends React.Component{
                     <Text style={[
                        styles.bioInput,
                        ]}>
-                       <Text>Invite Friends</Text>
+                       <Text>Invite People</Text>
                     </Text>
                   </View>
                 <TouchableOpacity onPress={() => this.showInvite()}>
@@ -317,7 +316,7 @@ class CreateAlbum extends React.Component{
              </View>
              */}
              <View style={{alignItems:'center', top:'12.5%'}}>
-                <Text style={{fontSize:18, bottom:30}}>Cover Pic</Text>
+                <Text style={{fontSize:18, bottom:30}}>Group Picture</Text>
                 {
                   this.state.coverPic === "" ?
 
