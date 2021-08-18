@@ -21,7 +21,7 @@ import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
 import SocialCalendarTap from '../SocialCalendar/SocialCalendarTap';
 import { Tag, Bookmark, Search, ChevronRight, Settings
-  ,MessageCircle, UserPlus, Users, Clock} from "react-native-feather";
+  ,MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
 import { TabView, SceneMap } from 'react-native-tab-view';
 import GoalContainer from '../GoalAlbum/GoalContainer';
 
@@ -39,12 +39,6 @@ class Profile extends React.Component{
         { key: 'second', title: 'Goals' },
       ]
     }
-  }
-
-  ViewProfile = () => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
-    this.props.navigation.navigate("Settings")
   }
 
   initialiseProfile() {
@@ -100,8 +94,13 @@ class Profile extends React.Component{
       )
     })
     ExploreWebSocketInstance.connect(String(this.props.route.params.username))
+    }
   }
 
+  ViewProfile = () => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+    this.props.navigation.navigate("Settings")
   }
 
   _renderScene = SceneMap({
@@ -123,13 +122,13 @@ class Profile extends React.Component{
             onPress={() => this.setState({ index: i })}>
             <View style={{flexDirection:'row'}}>
               {(i==1)?
-                 <Clock
+                 <Clipboard
                    style={{right:10}}
-                   stroke="black" strokeWidth={2.5} width={20} height={20} />
+                   stroke="black" strokeWidth={2} width={20} height={20} />
               :
-               <Users
+               <Calendar
                  style={{right:10}}
-                 stroke="black" strokeWidth={2.5} width={20} height={20} />
+                 stroke="black" strokeWidth={2} width={20} height={20} />
               }
               <Text style={{fontSize:14}}>{route.title}</Text>
             </View>
@@ -141,7 +140,6 @@ class Profile extends React.Component{
   };
 
   render(){
-
     const screenWidth = Math.round(Dimensions.get('window').width);
     const profile = {
       username: this.props.username,
@@ -158,7 +156,9 @@ class Profile extends React.Component{
 
     return (
       <BackgroundContainer>
+        {/*
         <View style={styles.viewStyle}>
+
           <View style={{top: 10,flex:1, justifyContent:'center', paddingLeft: 10}}>
             <Text style={styles.textStyle}>{this.props.username}</Text>
           </View>
@@ -169,11 +169,15 @@ class Profile extends React.Component{
              alignItems:'flex-end', padding:15}}>
              <View style={{flexDirection:'row'}}>
 
-               <Settings
-                 onPress = {() => this.ViewProfile()}
-                 stroke="black" strokeWidth={2.5} width={25} height={25}/>
+
              </View>
           </View>
+        </View>
+        */}
+        <View style={{position:'absolute', padding:20, right:0}}>
+          <Settings
+                 onPress = {() => this.ViewProfile()}
+                 stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
         </View>
         <View style = {styles.profileHeader}>
           <ProfileHeader
@@ -181,6 +185,7 @@ class Profile extends React.Component{
             profile = {profile}
             {...this.props}
             />
+
         </View>
         <View style = {styles.socialCalContainer}>
 
@@ -266,10 +271,9 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    borderBottomColor: '#FFFFFF',
+    // borderBottomColor: '#FFFFFF',
+    // borderBottomWidth: 1,
     elevation:1,
-    borderBottomWidth: 1,
-
   },
   tabItem: {
     flex: 1,

@@ -68,8 +68,8 @@ class GoalContainer extends React.Component{
 
 const styles = StyleSheet.create({
 smallImage: {
-  width: 200,
-  height: 200,
+  width: 75,
+  height: 75,
   borderRadius: 15,
   backgroundColor: 'lightgray',
 

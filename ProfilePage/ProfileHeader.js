@@ -7,13 +7,14 @@ import { Avatar } from 'react-native-elements';
 import Followers from './Followers';
 import Following from './Following';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHeart, faComment, faBookmark, } from '@fortawesome/free-regular-svg-icons';
+import { faHeart, faComment, faBookmark} from '@fortawesome/free-regular-svg-icons';
 import { faFire } from '@fortawesome/free-solid-svg-icons';
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import * as dateFns from 'date-fns';
-
+import { Tag, Bookmark, Search, ChevronRight, Settings
+  ,MessageCircle, UserPlus, Users, Clock} from "react-native-feather";
 
 class ProfileHeader extends React.Component{
 
@@ -55,16 +56,11 @@ class ProfileHeader extends React.Component{
   // }
 
   onFollow = (follower, following) => {
-
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
     const followingLength = this.props.following.length
-
-
     ExploreWebSocketInstance.sendFollowing(follower,following);
     //update user credentials and then send out notifications
-
     if(followingLength === 0){
-
         // if the person doesn't have any followers already
         //  you wanna rerun so that newsfeed shows up
         WebSocketSocialNewsfeedInstance.fetchSocialPost(
@@ -77,18 +73,12 @@ class ProfileHeader extends React.Component{
       actor: follower,
       recipient: following
     }
-
     NotificationWebSocketInstance.sendNotification(notificationObject);
-
-
-
   }
 
   onUnfollow = (follower, following) => {
     ExploreWebSocketInstance.sendUnFollowing(follower, following);
-
   }
-
   renderProfilePic = () => {
 
     let profileImage = null
@@ -146,11 +136,11 @@ class ProfileHeader extends React.Component{
     console.log(bio)
 
     return (
-    <View style={{
-        flexDirection:'column',
-        }}>
+    <View>
         <View>
+
           <View style={styles.profileInfoHeader}>
+
               <View style={{
                  flex:1,
                   alignItems: 'center',
@@ -167,6 +157,7 @@ class ProfileHeader extends React.Component{
               </View>
 
               <View style={{flex:1.5,justifyContent:'center', marginLeft:30, }}>
+
                 <Text style = {styles.name}>{name}</Text>
                 <Text style = {styles.username}>@{username}</Text>
                 {
@@ -247,13 +238,12 @@ class ProfileHeader extends React.Component{
          </View>
      </View>
 
-     {/*
+
        <View style = {styles.bioContainer}>
          <Text style = {styles.bio}> {bio}</Text>
 
        </View>
 
-       */}
               {/*
         <View style = {styles.streakBubble}>
           <FontAwesomeIcon
