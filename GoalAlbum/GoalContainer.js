@@ -53,11 +53,12 @@ class GoalContainer extends React.Component{
       <TouchableOpacity
         onPress = {() => this.onGoalPageDirect(item.id)}
         >
+
       <View style={styles.goalCard}>
         <View style={{width:'90%', }}>
           <Text style={{padding:10, fontSize:16,}}>{item.goal}</Text>
         </View>
-        */}
+
         <View style={{flexDirection:'row',}}>
           <View style={{flexDirection:'column', alignItems:'center',}}>
               <Text style = {{color:'black', fontWeight:'bold', fontSize:14}}>

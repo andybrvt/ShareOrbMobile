@@ -14,6 +14,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 import authAxios from '../util';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Avatar } from 'react-native-elements';
+import * as dateFns from 'date-fns';
 
 
 const width = Dimensions.get("window").width
