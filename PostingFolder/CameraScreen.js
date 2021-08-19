@@ -386,7 +386,16 @@ class CameraScreen extends React.Component{
     // run teh create function for goals here and then
     // add it into the state of goal list
     console.log(goal)
-
+    const userId = this.props.curUserId
+    authAxios.post(`${global.IP_CHANGE}/mySocialCal/createGoal/`+userId,
+      {
+        body: goal
+      }
+    ).then(res => {
+      this.setState({
+        goals: [...this.state.goals, res.data],
+      })
+    })
   }
 
   render(){
