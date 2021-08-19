@@ -835,6 +835,9 @@ class App extends Component{
                       component = {ImageBrowserScreen} />
 
                     <Stack.Screen
+                      options = {{
+                        headerShown: false
+                      }}
                       name = "goalPage"
                       component = {GoalPage}
                        />

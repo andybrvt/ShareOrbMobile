@@ -33,34 +33,46 @@ class GoalContainer extends React.Component{
     })
   }
 
+  onGoalPageDirect =(goalId) => {
+
+    this.props.navigation.navigate("goalPage", {
+      goalId: goalId
+    })
+  }
+
   renderItem = ({item}) =>{
     console.log("ITEM!!!!!!!")
     console.log(item)
     return(
-      <View style={styles.goalCard}>
-        <View style={{width:'90%', }}>
-          <Text style={{padding:10, fontSize:16,}}>{item.goal}</Text>
-        </View>
-        <View style={{flexDirection:'row', paddingLeft:10,}}>
-      {item.get_socialCalItems.map((item2,index) => {
-          return(
-            <View key = {index}>
-
-              <Image
-                style = {styles.smallImage}
-                resizeMode = "cover"
-                source = {{
-                  uri: `${global.IMAGE_ENDPOINT}`+item2.itemImage,
-                }}
-               />
-
-            </View>
-          )
-          })}
+      <TouchableOpacity
+        onPress = {() => this.onGoalPageDirect(item.id)}
+        >
+        <View style={styles.goalCard}>
+          <View style={{width:'90%', }}>
+            <Text style={{padding:10, fontSize:16,}}>{item.goal}</Text>
           </View>
+          <View style={{flexDirection:'row', paddingLeft:10,}}>
+        {item.get_socialCalItems.map((item2,index) => {
+            return(
+              <View key = {index}>
 
-      </View>
-    )
+                <Image
+                  style = {styles.smallImage}
+                  resizeMode = "cover"
+                  source = {{
+                    uri: `${global.IMAGE_ENDPOINT}`+item2.itemImage,
+                  }}
+                 />
+
+              </View>
+            )
+            })}
+            </View>
+
+        </View>
+
+      </TouchableOpacity>
+          )
   }
 
   render(){
