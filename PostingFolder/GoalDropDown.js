@@ -97,6 +97,12 @@ class GoalDropDown extends React.Component{
     })
   }
 
+  closeCreateGoal =()=> {
+    this.setState({
+      showCreateGoal: false
+    })
+  }
+
   closeFunction = () => {
     if(this.state.showKeyboard === true){
       Keyboard.dismiss()
@@ -191,6 +197,7 @@ class GoalDropDown extends React.Component{
 
                     <Button
                       title = "cancel"
+                      onPress = {() => this.closeCreateGoal()}
                       />
 
                     <Button
