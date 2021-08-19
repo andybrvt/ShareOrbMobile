@@ -45,6 +45,9 @@ class GoalContainer extends React.Component{
     console.log(item)
     let cap=item.get_socialCalItems.length-4
     return(
+      <TouchableOpacity
+        onPress = {() => this.onGoalPageDirect(item.id)}
+        >
       <View style={styles.goalCard}>
         <View style={{width:'90%', }}>
           <Text style={{padding:10, fontSize:16,}}>{item.goal}</Text>
