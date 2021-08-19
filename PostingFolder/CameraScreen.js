@@ -382,6 +382,13 @@ class CameraScreen extends React.Component{
     })
   }
 
+  onSaveNewGoal = (goal) => {
+    // run teh create function for goals here and then
+    // add it into the state of goal list
+    console.log(goal)
+
+  }
+
   render(){
 
     return(
@@ -476,6 +483,7 @@ class CameraScreen extends React.Component{
                   showGoals = {this.state.showGoals}
                   onClose = {this.closeShowGoals}
                   select = {this.onSelectGoal}
+                  save = {this.onSaveNewGoal}
                   />
 
                <TouchableOpacity

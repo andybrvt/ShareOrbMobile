@@ -99,7 +99,8 @@ class GoalDropDown extends React.Component{
 
   closeCreateGoal =()=> {
     this.setState({
-      showCreateGoal: false
+      showCreateGoal: false,
+      newGoal: ''
     })
   }
 
@@ -116,6 +117,11 @@ class GoalDropDown extends React.Component{
     this.setState({
       newGoal: e
     })
+  }
+
+  onSave = () => {
+    const goal = this.state.newGoal
+    this.props.save(goal)
   }
 
   render(){
@@ -168,25 +174,36 @@ class GoalDropDown extends React.Component{
 
                   }}
                   >
-                  <View
+                  <TouchableOpacity
+                    onPress = {() => this.textInput.focus()}
                     style = {{
-                      backgroundColor: 'gray',
-                      top: '20%',
                       width: '100%',
-                      padding: 15,
-                      borderRadius: 30
+                      top: '20%',
+
                     }}
                     >
-                    <TextInput
+                    <View
                       style = {{
-                        color: "white"
+                        backgroundColor: 'gray',
+                        width: '100%',
+                        padding: 15,
+                        borderRadius: 30
                       }}
-                      placeholder = "Write a goal"
-                      value = {this.state.newGoal}
-                      onChangeText = {this.onChange}
-                       />
+                      >
+                      <TextInput
+                        style = {{
+                          color: "white"
+                        }}
+                        placeholder = "Write a goal"
+                        value = {this.state.newGoal}
+                        onChangeText = {this.onChange}
+                        ref={(input) => { this.textInput = input; }}
 
-                  </View>
+                         />
+
+                    </View>
+
+                  </TouchableOpacity>
 
                   <View
                     style = {{
@@ -201,6 +218,7 @@ class GoalDropDown extends React.Component{
                       />
 
                     <Button
+                      onPress = {() => this.onSave()}
                       title = "save"
                       disabled = {this.state.newGoal.length === 0}
                       />
