@@ -16,10 +16,18 @@ import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
  class DisplayLikeList extends React.Component{
 
+   selectItem = (username) => {
+     // This fucntion will be used to navigate to the post page
+     // that you can use to post pictures and write caption
+     this.props.navigation.navigate("ProfilePage", {
+       username: username
+     })
+   }
+
    renderItem = ({item}) => {
      let userFollowing=this.props.following
      return (
-       <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
+       <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item.username)}>
          <View style = {styles.chatBox}>
            <View style={{flexDirection:'row'}}>
              <View style = {styles.chatInfoHolder} >

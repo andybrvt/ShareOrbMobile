@@ -34,20 +34,22 @@ class GoalContainer extends React.Component{
   }
 
   renderItem = ({item}) =>{
-
     return(
-      <View>
-        <Text> stuff here </Text>
-
-          <Image
-            style = {styles.smallImage}
-            resizeMode = "cover"
-            source = {{
-
-              uri: `${global.IMAGE_ENDPOINT}`+item.get_socialCalItems[0].itemImage,
-            }}
-             />
-      </View>
+      <View style={styles.goalCard}>
+        {item.get_socialCalItems.map((item2,index) => {
+          return(
+            <View style={{ }} key = {index}>
+              <Image
+                style = {styles.smallImage}
+                resizeMode = "cover"
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+item2.itemImage,
+                }}
+               />
+            </View>
+          )
+          })}
+        </View>
     )
   }
 
@@ -56,6 +58,7 @@ class GoalContainer extends React.Component{
     return(
       <View>
         <FlatList
+
           data = {this.state.goals}
           renderItem = {(item) => this.renderItem(item)}
           keyExtractor={(item, index) => String(index)}
@@ -67,13 +70,30 @@ class GoalContainer extends React.Component{
 }
 
 const styles = StyleSheet.create({
-smallImage: {
-  width: 75,
-  height: 75,
-  borderRadius: 15,
-  backgroundColor: 'lightgray',
+  goalCard: {
+    left:'20%',
+    padding:10,
+    flexDirection:'row',
+    width:'90%',
+    borderTopColor:'red',
+    borderTopWidth:1 ,
+    borderRadius:15,
+    borderRightColor:'red',
+    borderRightWidth:1,
+    borderBottomColor:'red',
+    borderBottomWidth:1,
+    borderLeftColor:'red',
+    borderLeftWidth:1,
+    marginTop:15,
+  },
 
-},
+  smallImage: {
+    marginRight:10,
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: 'lightgray',
+    },
 })
 
 export default GoalContainer;
