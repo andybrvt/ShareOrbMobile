@@ -9,13 +9,14 @@ import {
   Dimensions,
   Keyboard,
   KeyboardAvoidingView,
-  TouchableOpacity,
+
   TouchableHighlight,
   ImageBackground,
   TouchableWithoutFeedback
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Avatar } from 'react-native-elements';
+import {TouchableOpacity} from 'react-native-gesture-handler';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -90,7 +91,7 @@ import * as exploreActions from '../store/actions/explore';
 
 
    handleTakeProfile = async() => {
-
+     console.log("hi")
      let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
      if(permissionResult.granted === false){
@@ -200,8 +201,10 @@ import * as exploreActions from '../store/actions/explore';
 
   renderBack = () => (
     <TouchableOpacity
+
       onPress = {() => this.props.navigation.goBack(0)}
       >
+      
       <ArrowLeft
         style={{left:10}}
         stroke="black"
@@ -295,6 +298,7 @@ import * as exploreActions from '../store/actions/explore';
        </View>
        <TouchableOpacity
          onPress = {this.handleTakeProfile}
+
          style={styles.panelButton} >
          <Text style={styles.panelButtonTitle}>Take Photo</Text>
        </TouchableOpacity>
@@ -304,9 +308,9 @@ import * as exploreActions from '../store/actions/explore';
          <Text style={styles.panelButtonTitle}>Choose From Library</Text>
        </TouchableOpacity>
        <TouchableOpacity
-         style={styles.panelButton}
+         style={styles.panelButton1}
          onPress={() => this.bs.current.snapTo(1)}>
-         <Text style={styles.panelButtonTitle}>Cancel</Text>
+         <Text style={styles.panelButtonTitle1}>Cancel</Text>
        </TouchableOpacity>
      </View>
   );
@@ -323,24 +327,20 @@ import * as exploreActions from '../store/actions/explore';
 
 
    render(){
-
      let profilePic = '';
      if(this.props.profile_picture){
        profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profile_picture
      }
-
      const {firstName, lastName, username} = this.state
-
-     console.log('edit profile')
-     console.log(this.props)
      return (
        <BackgroundContainer>
          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-           <View style={{height:'100%'}}>
+           <View style={{height:'95%'}}>
              <View style={{alignItems: 'center'}}>
             <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
               <View
                 style={{
+                  height:125,
                   top:10,
                   borderRadius: 15,
                   justifyContent: 'center',
@@ -356,6 +356,7 @@ import * as exploreActions from '../store/actions/explore';
                   />
               </View>
             </TouchableOpacity>
+
             <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
               {this.props.firstName+" "+this.props.lastName}
             </Text>
@@ -510,6 +511,12 @@ const styles = StyleSheet.create({
     // shadowRadius: 5,
     // shadowOpacity: 0.4,
   },
+  panelButtonTitle: {
+    color:'white'
+  },
+  panelButtonTitle1: {
+
+  },
 
   headerFont:{
     paddingLeft:10, fontSize:15, color:"#666666",
@@ -539,10 +546,17 @@ const styles = StyleSheet.create({
    panelButton: {
     padding: 13,
     borderRadius: 10,
-    backgroundColor: '#FF6347',
+    backgroundColor: '#1890ff',
     alignItems: 'center',
     marginVertical: 7,
     },
+    panelButton1: {
+     padding: 13,
+     borderRadius: 10,
+     backgroundColor: '#F0F0F0',
+     alignItems: 'center',
+     marginVertical: 7,
+     },
    textInput: {
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -5,

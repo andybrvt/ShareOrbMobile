@@ -28,10 +28,8 @@ import GoalContainer from '../GoalAlbum/GoalContainer';
 // This will be the bulk of the profile page
 // this will be used for current user
 class Profile extends React.Component{
-
   constructor(props){
     super(props);
-
     this.state = {
       index: 0,
       routes: [
@@ -42,7 +40,6 @@ class Profile extends React.Component{
   }
 
   initialiseProfile() {
-
       this.waitForSocketConnection(() => {
           ExploreWebSocketInstance.fetchProfile(
             this.props.route.params.username
@@ -74,15 +71,12 @@ class Profile extends React.Component{
     if(this.props.route.params.username !== null){
         this.initialiseProfile()
     }
-
   }
 
   // Probally dont need this is because its taken from the auth
   componentDidUpdate(prevProps){
     if(prevProps.route.params.username !== this.props.route.params.username){
-
     // this.props.closeProfile()
-
     // we will be fetching the profile however since we are gonna render the
     // months a bit differently, we will pull the information a bit more differnet
     // than that of the website. We will just get the profile stuff and then
@@ -121,10 +115,11 @@ class Profile extends React.Component{
             style={styles.tabItem}
             onPress={() => this.setState({ index: i })}>
             <View style={{flexDirection:'row'}}>
-              {(i==1)?
-                 <Clipboard
-                   style={{right:10}}
-                   stroke="black" strokeWidth={2} width={20} height={20} />
+              {
+                (i==1)?
+               <Clipboard
+                 style={{right:10}}
+                 stroke="black" strokeWidth={2} width={20} height={20} />
               :
                <Calendar
                  style={{right:10}}
@@ -156,7 +151,7 @@ class Profile extends React.Component{
 
     return (
       <BackgroundContainer>
-        {/*
+
         <View style={styles.viewStyle}>
 
           <View style={{top: 10,flex:1, justifyContent:'center', paddingLeft: 10}}>
@@ -173,11 +168,11 @@ class Profile extends React.Component{
              </View>
           </View>
         </View>
-        */}
+
         <View style={{position:'absolute', padding:20, right:0}}>
           <Settings
-                 onPress = {() => this.ViewProfile()}
-                 stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
+           onPress = {() => this.ViewProfile()}
+           stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
         </View>
         <View style = {styles.profileHeader}>
           <ProfileHeader
@@ -185,20 +180,14 @@ class Profile extends React.Component{
             profile = {profile}
             {...this.props}
             />
-
         </View>
         <View style = {styles.socialCalContainer}>
-
             <TabView
               navigationState = {this.state}
               renderScene = {this._renderScene}
               renderTabBar={this._renderTabBar}
               onIndexChange={this._handleIndexChange}
                />
-
-
-
-
         </View>
       </BackgroundContainer>
     )
@@ -206,7 +195,6 @@ class Profile extends React.Component{
 }
 
 const mapStateToProps = state => {
-
   return {
     currentId: state.auth.id,
     currentUser: state.auth.username,
@@ -232,7 +220,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: 1.65,
+
+    flex: Platform.OS === 'ios' ? 1.65: 1.45,
   },
   profileHeader: {
 
@@ -271,14 +260,15 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    // borderBottomColor: '#FFFFFF',
-    // borderBottomWidth: 1,
     elevation:1,
   },
   tabItem: {
     flex: 1,
     alignItems: 'center',
-    padding: 15,
+    padding: 10,
+    borderBottomColor: '#F0F0F0',
+    borderBottomWidth: 1,
+    // backgroundColor:'red',
   },
 
 })
