@@ -469,7 +469,7 @@ class SocialNewsfeedPost extends React.Component{
               <View style={{left:'1%', bottom:'1%', position:'absolute', width:50, height:50}}>
                 <TouchableOpacity
                   onPress={() => this.navLikePeople(like_people)}>
-                    <FacePile numFaces={3} circleStyle={{backgroundColor:'red'}} faces={likeAvatarList} overlap={1}
+                    <FacePile numFaces={3} faces={likeAvatarList} overlap={1}
                        circleSize={15} />
                 </TouchableOpacity>
               </View>
@@ -777,8 +777,8 @@ class SocialNewsfeedPost extends React.Component{
           <View style = {styles.imageContainer}>
               {this.revealPhoto()}
           </View>
-          <View style={{padding:15}}>
-            <Text >
+          <View style={{padding:10}}>
+            <Text>
               {
                 (caption.length==0)?
                 ''

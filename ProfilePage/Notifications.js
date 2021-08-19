@@ -287,7 +287,7 @@ class Notifications extends React.Component{
              <Avatar
 
                onPress = {() => this.ViewProfile(item.actor.username)}
-               size={27.5}
+               size={30}
                rounded
                source = {{
                  uri: `${global.IMAGE_ENDPOINT}`+this.props.profilePic,
