@@ -7,12 +7,16 @@ import { Text,
    Image,
    TouchableOpacity,
    SafeAreaView,
-   FlatList
+   FlatList,
+   StatusBar
 } from 'react-native';
-import { ChevronLeft } from "react-native-feather";
+import { ChevronLeft, ArrowLeft } from "react-native-feather";
 import authAxios from '../util';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { Avatar } from 'react-native-elements';
 
+
+const width = Dimensions.get("window").width
 
 class GoalPage extends React.Component{
 
@@ -45,14 +49,26 @@ class GoalPage extends React.Component{
     return(
       <View style = {styles.itemCard}>
 
-        <View>
+        <View style = {{
+            height: width*0.8,
+            width: '100%',
+            backgroundColor: 'pink'
+          }}>
           <Image
+            style = {{
+              width: '100%',
+              height: '100%'
+            }}
               resizeMode = "cover"
               source = {{
                 uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
               }}
              />
 
+        </View>
+
+        <View>
+          <Text>item.caption</Text>
         </View>
       </View>
     )
@@ -62,34 +78,136 @@ class GoalPage extends React.Component{
   render(){
 
     const { goal } = this.state;
-    console.log(this.props);
-    const goalItem = goal.get_socialCalItems
+    console.log(this.state);
+    let goalTitle = '';
+    let goalItem = [];
+    let goalAvatar = '';
+    let firstName = "";
+    let lastName = "";
+    let goalOwnerUsername = "";
+    if(goal.goal){
+      goalTitle = goal.goal;
+    }
+    if(goal.get_socialCalItems){
+      goalItem = goal.get_socialCalItems;
+    }
+    if(goal.owner){
+      if(goal.owner.username){
+        goalOwnerUsername = goal.owner.username;
+      }
+      if(goal.owner.profile_picture){
+        goalAvatar = `${global.IMAGE_ENDPOINT}`+goal.owner.profile_picture;
+      }
+      if(goal.owner.first_name){
+        firstName = goal.owner.first_name;
+      }
+      if(goal.owner.last_name){
+        lastName = goal.owner.last_name;
+      }
+
+    }
+
+
     return(
       <SafeAreaView
         style = {{
-          flex: 1
+          flex: 1,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)'
         }}
         >
+
+        <StatusBar
+          barStyle="light-content"
+          />
+
         <View
           style = {{
             flex: 1
           }}
           >
 
-          <TouchableOpacity
-            onPress = {() => this.props.navigation.goBack(0)}
-            >
-            <ChevronLeft height = {40} width = {40} />
+          <View style = {styles.header}>
 
-          </TouchableOpacity>
 
-          <Carousel
-            data = {goalItem}
-            renderItem = {(item) => this.renderItem(item)}
-            keyExtractor={(item, index) => String(index)}
-            sliderWidth = {100}
-            itemWidth = {100}
-             />
+            <View style = {styles.chatInfoHolder} >
+              <TouchableOpacity
+                style = {{
+                }}
+                onPress = {() => this.props.navigation.goBack(0)}
+                >
+                <ArrowLeft
+                  stroke = "white"
+                  height = {40}
+                  width = {40} />
+
+              </TouchableOpacity>
+              <Avatar
+
+              rounded
+                source = {{
+                  uri: goalAvatar,
+                }}
+                size = {40}
+                 />
+
+
+               <View style = {styles.chatInfo}>
+                 <View style = {styles.chatNameContainer}>
+                   <Text style = {styles.chatName}>{goalOwnerUsername}</Text>
+                 </View>
+                 <Text style = {styles.chatText}> {firstName+" "+lastName} </Text>
+               </View>
+            </View>
+
+            <View style = {{
+                flex:1,
+                right: 20
+              }}>
+              <View style = {{
+                  alignSelf: 'flex-end',
+                  alignItems: 'center'
+                }}>
+                <Text style = {styles.videoFooterUserName}>
+                  August
+                </Text>
+                <Text style = {styles.dayNumTag}>
+                  20
+                </Text>
+              </View>
+
+            </View>
+
+          </View>
+
+          <View style ={styles.middle}>
+            <View>
+              <Text style = {styles.goalTitle}>
+                {global.CAPITALIZE(goalTitle)}
+              </Text>
+            </View>
+
+            <View style = {{
+                alignItems:'center',
+                marginTop: 20,
+              }}>
+              <Text style = {styles.goalLength}>{goalItem.length} entries</Text>
+              <Text style = {styles.goalStart}>Started: 8-9-2021</Text>
+
+            </View>
+
+
+          </View>
+
+          <View style = {styles.bottom}>
+            <Carousel
+              data = {goalItem}
+              renderItem = {(item) => this.renderItem(item)}
+              keyExtractor={(item, index) => String(index)}
+              sliderWidth = {width}
+              itemWidth = {width*0.8}
+               />
+
+          </View>
 
         </View>
 
@@ -102,8 +220,97 @@ export default GoalPage;
 
 const styles = StyleSheet.create({
   itemCard: {
-    height: 100,
-    width: 100,
+    height: '70%',
+    width: '100%',
     backgroundColor: 'gray'
-  }
+  },
+  header: {
+    flexDirection: 'row',
+    height: 70,
+    justifyContent: 'center',
+    alignItems:'center'
+  },
+  middle: {
+    flex:1,
+    alignItems: 'center'
+  },
+  bottom: {
+    flex:3
+  },
+  videoFooterUserName: {
+    color:'white',
+    fontSize:14,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+    // fontWeight:'bold',
+  },
+  dayNumTag: {
+    color:'white',
+    fontSize:30,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+    // fontWeight:'bold',
+
+  },
+  goalTitle: {
+    color: 'white',
+    fontSize:30,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+  },
+  goalLength:{
+    color: 'white',
+    fontSize: 15,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+  },
+  goalStart: {
+    color: 'white',
+    fontSize: 15,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+
+  },
+  chatInfoHolder:{
+    left:10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems:'center',
+    flex:1,
+  },
+
+  chatInfo: {
+    justifyContent: "center",
+    marginLeft: 10,
+    // backgroundColor:'red',
+  },
+  chatNameContainer: {
+    flexDirection: "row"
+  },
+  chatName: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight:'bold',
+
+    left:5,
+  },
+
+  chatText: {
+    marginTop: 0,
+    color: 'white',
+    fontWeight: '400'
+  },
 })

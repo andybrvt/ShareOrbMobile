@@ -10,7 +10,8 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  StatusBar
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -418,99 +419,110 @@ let likeAvatarList=[]
      }
 
      return (
-       <View style={{width:'100%', height:'100%', backgroundColor: 'rgba(0, 0, 0, 0.85)'}}>
-         <View style={{padding:15, flexDirection:'row', alignItems:'center', borderBottomColor:'#434343', borderBottomWidth:1}}>
+       <SafeAreaView
+         style = {{
+           backgroundColor: 'rgba(0, 0, 0, 1)'
+         }}
+         >
 
-           <TouchableOpacity
-
-             onPress = {() => this.onRedirect()}>
-           <ArrowLeft
-             stroke='white'
-             width ={35}
-             height = {35}
-            />
-          </TouchableOpacity>
-
-          <View style = {styles.chatInfoHolder} >
-
-
-            
-
-            <Avatar
-
-            rounded
-              source = {{
-                uri: `${global.IMAGE_ENDPOINT}`+user.profile_picture,
-              }}
-              size = {40}
-               />
-
-
-             <View style = {styles.chatInfo}>
-               <View style = {styles.chatNameContainer}>
-                 <Text style = {styles.chatName}>{userName}</Text>
-               </View>
-               <Text style = {styles.chatText}> {firstName+" "+lastName} </Text>
-             </View>
-          </View>
-          {/*
-           <Avatar
-             style={styles.close}
-            onPress = {() => this.viewProfile(this.props.socialCalCell.socialCalUser.username)}
-             size={40}
-             rounded
-             source = {{
-             uri: `${global.IMAGE_ENDPOINT}`+this.props.socialCalCell.socialCalUser.profile_picture,
-           }}
+         <StatusBar
+           barStyle="light-content"
            />
-         <View>
-             <Text style = {styles.DayAlbumUserName}>
-               {firstName+" "+lastName}
-              </Text>
-              <Text style = {styles.DayAlbumUserName}>
-                {userName}
-              </Text>
-            </View>
-            */}
-            <View style = {styles.testWhere2}>
-                   <Text style = {styles.videoFooterUserName}>
-                     {socialMonth}
-                   </Text>
-                   <Text style = {styles.dayNumTag}>
-                     {socialDay}
-                   </Text>
-               </View>
-         </View>
-         <FlatList
-            ref = {ref => this.flatListRef = ref}
-            contentContainerStyle={{paddingBottom:10}}
-            showsVerticalScrollIndicator={false}
-            data = {this.props.socialCalCell.get_socialCalItems}
-            renderItem ={(item) => this.renderItem(item)}
-            keyExtractor={(item, index) => String(index)}
-            getItemLayout = {this.getItemLayout.bind(this)}
-            // ItemSeparatorComponent = { this.FlatListItemSeparator }
-          />
+         <View style={{width:'100%', height:'100%', backgroundColor: 'rgba(0, 0, 0, 0.85)'}}>
+           <View style={{padding:15, flexDirection:'row', alignItems:'center', borderBottomColor:'#434343', borderBottomWidth:1}}>
 
-            <View  style={styles.openContainer}>
-              {/* day caption
-              <View style={styles.firstContainer}>
-                <View>
-                  <Text  style = {styles.DayCaption}>
-                    <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
-                    &nbsp; {dayCaption}</Text>
-                </View>
+             <TouchableOpacity
+
+               onPress = {() => this.onRedirect()}>
+             <ArrowLeft
+               stroke='white'
+               width ={35}
+               height = {35}
+              />
+            </TouchableOpacity>
+
+            <View style = {styles.chatInfoHolder} >
+
+
+
+
+              <Avatar
+
+              rounded
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+user.profile_picture,
+                }}
+                size = {40}
+                 />
+
+
+               <View style = {styles.chatInfo}>
+                 <View style = {styles.chatNameContainer}>
+                   <Text style = {styles.chatName}>{userName}</Text>
+                 </View>
+                 <Text style = {styles.chatText}> {firstName+" "+lastName} </Text>
+               </View>
+            </View>
+            {/*
+             <Avatar
+               style={styles.close}
+              onPress = {() => this.viewProfile(this.props.socialCalCell.socialCalUser.username)}
+               size={40}
+               rounded
+               source = {{
+               uri: `${global.IMAGE_ENDPOINT}`+this.props.socialCalCell.socialCalUser.profile_picture,
+             }}
+             />
+           <View>
+               <Text style = {styles.DayAlbumUserName}>
+                 {firstName+" "+lastName}
+                </Text>
+                <Text style = {styles.DayAlbumUserName}>
+                  {userName}
+                </Text>
               </View>
               */}
-              {/* day container like
-              <TouchableOpacity style={styles.secondContainer} onPress={()=> this.viewLikeList(this.props.socialCalCell.people_like)}>
-                  <FacePile size={2} numFaces={3} faces={temp} circleSize={17.5}
-                    containerStyle={{height:40}}
-                     overlap={0.1} />
-              </TouchableOpacity>
-              */}
-            </View>
-       </View>
+              <View style = {styles.testWhere2}>
+                     <Text style = {styles.videoFooterUserName}>
+                       {socialMonth}
+                     </Text>
+                     <Text style = {styles.dayNumTag}>
+                       {socialDay}
+                     </Text>
+                 </View>
+           </View>
+           <FlatList
+              ref = {ref => this.flatListRef = ref}
+              contentContainerStyle={{paddingBottom:10}}
+              showsVerticalScrollIndicator={false}
+              data = {this.props.socialCalCell.get_socialCalItems}
+              renderItem ={(item) => this.renderItem(item)}
+              keyExtractor={(item, index) => String(index)}
+              getItemLayout = {this.getItemLayout.bind(this)}
+              // ItemSeparatorComponent = { this.FlatListItemSeparator }
+            />
+
+              <View  style={styles.openContainer}>
+                {/* day caption
+                <View style={styles.firstContainer}>
+                  <View>
+                    <Text  style = {styles.DayCaption}>
+                      <Text style = {styles.bottomDayAlbumName}>{userName}</Text>
+                      &nbsp; {dayCaption}</Text>
+                  </View>
+                </View>
+                */}
+                {/* day container like
+                <TouchableOpacity style={styles.secondContainer} onPress={()=> this.viewLikeList(this.props.socialCalCell.people_like)}>
+                    <FacePile size={2} numFaces={3} faces={temp} circleSize={17.5}
+                      containerStyle={{height:40}}
+                       overlap={0.1} />
+                </TouchableOpacity>
+                */}
+              </View>
+         </View>
+       </SafeAreaView>
+
      )
    }
  }
