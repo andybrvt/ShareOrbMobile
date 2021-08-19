@@ -24,7 +24,8 @@ class GoalPage extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      goal: {}
+      goal: {},
+      activeSlide: 0
     }
   }
 
@@ -86,11 +87,21 @@ class GoalPage extends React.Component{
     let firstName = "";
     let lastName = "";
     let goalOwnerUsername = "";
+    let startDate = "";
+    let curEntry = {};
+    let curMonth = "";
+    let curDate = "";
     if(goal.goal){
       goalTitle = goal.goal;
     }
     if(goal.get_socialCalItems){
       goalItem = goal.get_socialCalItems;
+      curEntry = goal.get_socialCalItems[this.state.activeSlide]
+      curMonth = dateFns.format(new Date(curEntry.created_at), "MMMM")
+      curDate = dateFns.format(new Date(curEntry.created_at), "dd")
+    }
+    if(goal.created_at){
+      startDate = dateFns.format(new Date(goal.created_at), "MM-dd-yyyy")
     }
     if(goal.owner){
       if(goal.owner.username){
@@ -169,10 +180,10 @@ class GoalPage extends React.Component{
                   alignItems: 'center'
                 }}>
                 <Text style = {styles.videoFooterUserName}>
-                  August
+                  {curMonth}
                 </Text>
                 <Text style = {styles.dayNumTag}>
-                  20
+                  {curDate}
                 </Text>
               </View>
 
@@ -192,7 +203,7 @@ class GoalPage extends React.Component{
                 marginTop: 20,
               }}>
               <Text style = {styles.goalLength}>{goalItem.length} entries</Text>
-              <Text style = {styles.goalStart}>Started: 8-9-2021</Text>
+              <Text style = {styles.goalStart}>Started: {startDate}</Text>
 
             </View>
 
@@ -206,6 +217,8 @@ class GoalPage extends React.Component{
               keyExtractor={(item, index) => String(index)}
               sliderWidth = {width}
               itemWidth = {width*0.8}
+              onSnapToItem={(index) => this.setState({activeSlide:index}) }
+
                />
 
           </View>
