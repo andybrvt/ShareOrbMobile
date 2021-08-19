@@ -43,31 +43,40 @@ class GoalContainer extends React.Component{
   renderItem = ({item}) =>{
     console.log("ITEM!!!!!!!")
     console.log(item)
+    let cap=item.get_socialCalItems.length-4
     return(
-      <TouchableOpacity
-        onPress = {() => this.onGoalPageDirect(item.id)}
-        >
-        <View style={styles.goalCard}>
-          <View style={{width:'90%', }}>
-            <Text style={{padding:10, fontSize:16,}}>{item.goal}</Text>
+      <View style={styles.goalCard}>
+        <View style={{width:'90%', }}>
+          <Text style={{padding:10, fontSize:16,}}>{item.goal}</Text>
+        </View>
+        <View style={{flexDirection:'row',}}>
+          <View style={{flexDirection:'row', paddingLeft:10, width:'90%'}}>
+            {item.get_socialCalItems.slice(0,4).map((item2,index) => {
+                return(
+                  <View key = {index}>
+
+                    <Image
+                      style = {styles.smallImage}
+                      resizeMode = "cover"
+                      source = {{
+                        uri: `${global.IMAGE_ENDPOINT}`+item2.itemImage,
+                      }}
+                     />
+
+                  </View>
+                )
+              })}
           </View>
-          <View style={{flexDirection:'row', paddingLeft:10,}}>
-        {item.get_socialCalItems.map((item2,index) => {
-            return(
-              <View key = {index}>
+          <View style={styles.roundButton1}>{ cap>0?
+            <Text>+ {cap}</Text>
+          :
+          <Text style={{fontSize:20, color:'white'}}>{item.get_socialCalItems.length}</Text>
+          }
+          </View>
+        </View>
 
-                <Image
-                  style = {styles.smallImage}
-                  resizeMode = "cover"
-                  source = {{
-                    uri: `${global.IMAGE_ENDPOINT}`+item2.itemImage,
-                  }}
-                 />
 
-              </View>
-            )
-            })}
-            </View>
+
 
         </View>
 
@@ -92,6 +101,18 @@ class GoalContainer extends React.Component{
 }
 
 const styles = StyleSheet.create({
+
+  roundButton1: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100,
+    right:10,
+    bottom:10,
+    backgroundColor: '#1890ff',
+  },
   goalCard: {
     left:'5%',
     paddingBottom:10,
