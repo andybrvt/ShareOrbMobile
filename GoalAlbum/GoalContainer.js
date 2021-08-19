@@ -34,11 +34,18 @@ class GoalContainer extends React.Component{
   }
 
   renderItem = ({item}) =>{
+    console.log("ITEM!!!!!!!")
+    console.log(item)
     return(
       <View style={styles.goalCard}>
-        {item.get_socialCalItems.map((item2,index) => {
+        <View style={{width:'90%', }}>
+          <Text style={{padding:10, fontSize:16,}}>{item.goal}</Text>
+        </View>
+        <View style={{flexDirection:'row', paddingLeft:10,}}>
+      {item.get_socialCalItems.map((item2,index) => {
           return(
-            <View style={{ }} key = {index}>
+            <View key = {index}>
+
               <Image
                 style = {styles.smallImage}
                 resizeMode = "cover"
@@ -46,10 +53,13 @@ class GoalContainer extends React.Component{
                   uri: `${global.IMAGE_ENDPOINT}`+item2.itemImage,
                 }}
                />
+
             </View>
           )
           })}
-        </View>
+          </View>
+
+      </View>
     )
   }
 
@@ -58,7 +68,7 @@ class GoalContainer extends React.Component{
     return(
       <View>
         <FlatList
-
+          style={{marginTop:10}}
           data = {this.state.goals}
           renderItem = {(item) => this.renderItem(item)}
           keyExtractor={(item, index) => String(index)}
@@ -71,9 +81,11 @@ class GoalContainer extends React.Component{
 
 const styles = StyleSheet.create({
   goalCard: {
-    left:'20%',
-    padding:10,
-    flexDirection:'row',
+    left:'5%',
+    paddingBottom:10,
+    paddingLeft:10,
+    paddingRight:10,
+
     width:'90%',
     borderTopColor:'red',
     borderTopWidth:1 ,

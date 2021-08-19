@@ -63,6 +63,7 @@ import * as exploreActions from '../store/actions/explore';
      // and have an onchange for the inputs
 
      this.props.navigation.setOptions({
+
        headerLeft: () => this.renderBack()
      })
      this.setState({
@@ -201,10 +202,10 @@ import * as exploreActions from '../store/actions/explore';
 
   renderBack = () => (
     <TouchableOpacity
-
+      style={{width:50}}
       onPress = {() => this.props.navigation.goBack(0)}
       >
-      
+
       <ArrowLeft
         style={{left:10}}
         stroke="black"
