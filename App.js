@@ -83,7 +83,7 @@ import Test from './PostingFolder/Test';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useScrollToTop } from '@react-navigation/native';
 import authAxios from './util';
-
+import GoalPage from './GoalAlbum/GoalPage';
 import * as dateFns from 'date-fns';
 
 
@@ -833,6 +833,14 @@ class App extends Component{
                         title: 'Selected 0 files',
                       }}
                       component = {ImageBrowserScreen} />
+
+                    <Stack.Screen
+                      options = {{
+                        headerShown: false
+                      }}
+                      name = "goalPage"
+                      component = {GoalPage}
+                       />
 
 
 

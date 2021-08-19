@@ -33,6 +33,13 @@ class GoalContainer extends React.Component{
     })
   }
 
+  onGoalPageDirect =(goalId) => {
+
+    this.props.navigation.navigate("goalPage", {
+      goalId: goalId
+    })
+  }
+
   renderItem = ({item}) =>{
     console.log("ITEM!!!!!!!")
     console.log(item)
@@ -71,8 +78,10 @@ class GoalContainer extends React.Component{
 
 
 
-      </View>
-    )
+        </View>
+
+      </TouchableOpacity>
+          )
   }
 
   render(){
