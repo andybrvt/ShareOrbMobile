@@ -122,6 +122,7 @@ class GoalDropDown extends React.Component{
   onSave = () => {
     const goal = this.state.newGoal
     this.props.save(goal)
+    this.closeCreateGoal()
   }
 
   render(){
