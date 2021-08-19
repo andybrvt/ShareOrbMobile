@@ -91,6 +91,8 @@ class CameraScreen extends React.Component{
     this.setState({
       showGoals: false
     })
+    console.log("Hit here")
+    // console.log(this.state.showGoals)
   }
 
   onWriteCaption =() =>{

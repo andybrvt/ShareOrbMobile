@@ -14,7 +14,7 @@ import {
   FlatList
  } from 'react-native';
 import authAxios from '../util';
-
+import * as dateFns from 'date-fns';
 
 class GoalContainer extends React.Component{
 
@@ -41,20 +41,40 @@ class GoalContainer extends React.Component{
   }
 
   renderItem = ({item}) =>{
-    console.log("ITEM!!!!!!!")
+    console.log("ITEM!!!!!")
     console.log(item)
+    let dt=new Date(item.created_at)
+    let dtDateOnly1 = dateFns.addHours(new Date(item.created_at), new Date(item.created_at).getTimezoneOffset()/60)
+    let utc2=dateFns.format(dtDateOnly1, 'h:mma');
+    const socialMonth = dateFns.format(new Date(item.created_at), 'MMMM');
+    const socialDay = dateFns.format(new Date(item.created_at), 'dd');
     let cap=item.get_socialCalItems.length-4
     return(
-      <View style={styles.goalCard}>
-        <View style={{width:'90%', }}>
-          <Text style={{padding:10, fontSize:16,}}>{item.goal}</Text>
+      <TouchableOpacity
+       onPress = {() => this.onGoalPageDirect(item.id)}
+       >
+       <View style={styles.goalCard}>
+
+
+        {/*
+        <View style={{width:'90%', flexDirection:'row', padding:10, }}>
+          <Text style={{fontSize:16, fontWeight:'bold'}}> {month} </Text>
+          <Text style={{fontSize:16,}}> {item.goal}</Text>
         </View>
+        */}
         <View style={{flexDirection:'row',}}>
-          <View style={{flexDirection:'row', paddingLeft:10, width:'90%'}}>
+          <View style={{flexDirection:'column', alignItems:'center',}}>
+              <Text style = {{color:'black', fontWeight:'bold', fontSize:14}}>
+                {socialMonth}
+              </Text>
+              <Text style ={{color:'black', fontWeight:'bold', fontSize:24}}>
+                {socialDay}
+              </Text>
+          </View>
+          <View style={{flexDirection:'row', paddingLeft:20, width:'75%'}}>
             {item.get_socialCalItems.slice(0,4).map((item2,index) => {
                 return(
                   <View key = {index}>
-
                     <Image
                       style = {styles.smallImage}
                       resizeMode = "cover"
@@ -62,26 +82,20 @@ class GoalContainer extends React.Component{
                         uri: `${global.IMAGE_ENDPOINT}`+item2.itemImage,
                       }}
                      />
-
                   </View>
                 )
               })}
           </View>
-          <View style={styles.roundButton1}>{ cap>0?
-            <Text>+ {cap}</Text>
+          <View style={{alignItems:'center'}}>{ cap>0?
+            <Text>+{cap}</Text>
           :
-          <Text style={{fontSize:20, color:'white'}}>{item.get_socialCalItems.length}</Text>
+          <Text style={{fontSize:20, color:'black'}}>{item.get_socialCalItems.length}</Text>
           }
           </View>
         </View>
-
-
-
-
-        </View>
-
-      </TouchableOpacity>
-          )
+      </View>
+    </TouchableOpacity>
+    )
   }
 
   render(){
@@ -115,20 +129,20 @@ const styles = StyleSheet.create({
   },
   goalCard: {
     left:'5%',
-    paddingBottom:10,
-    paddingLeft:10,
-    paddingRight:10,
+    padding:10,
 
+    backgroundColor:'#f7f7f7',
+    elevation:50,
     width:'90%',
-    borderTopColor:'red',
-    borderTopWidth:1 ,
     borderRadius:15,
-    borderRightColor:'red',
-    borderRightWidth:1,
-    borderBottomColor:'red',
-    borderBottomWidth:1,
-    borderLeftColor:'red',
-    borderLeftWidth:1,
+    // borderTopColor:'red',
+    // borderTopWidth:1 ,
+    // borderRightColor:'red',
+    // borderRightWidth:1,
+    // borderBottomColor:'red',
+    // borderBottomWidth:1,
+    // borderLeftColor:'red',
+    // borderLeftWidth:1,
     marginTop:15,
   },
 

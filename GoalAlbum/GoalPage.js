@@ -79,7 +79,8 @@ class GoalPage extends React.Component{
           <TouchableOpacity
             onPress = {() => this.props.navigation.goBack(0)}
             >
-            <ChevronLeft height = {40} width = {40} />
+            <ChevronLeft
+              height = {40} width = {40} />
 
           </TouchableOpacity>
 
