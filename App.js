@@ -252,6 +252,19 @@ class App extends Component{
         postId: response.notification.request.trigger.payload.body.itemId
       })
     }
+
+    if(notiType === "follow"){
+      const username = response.notification.request.trigger.payload.body.username;
+
+      if(username !== this.props.username){
+        this.refContainer.navigate("ProfilePage", {
+          username: response.notification.request.trigger.payload.body.username
+        })
+      } else {
+        this.refContainer.navigate("Profile")
+      }
+
+    }
   };
 
   componentDidMount(){

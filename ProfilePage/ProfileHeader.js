@@ -55,7 +55,7 @@ class ProfileHeader extends React.Component{
   //
   // }
 
-  onFollow = (follower, following) => {
+  onFollow = (follower, following, notiToken) => {
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
     const followingLength = this.props.following.length
     ExploreWebSocketInstance.sendFollowing(follower,following);
@@ -74,6 +74,12 @@ class ProfileHeader extends React.Component{
       recipient: following
     }
     NotificationWebSocketInstance.sendNotification(notificationObject);
+
+    global.SEND_FOLLOW_NOTIFICAITON(
+      notiToken,
+      this.props.currentUser,
+      this.props.currentId
+    )
   }
 
   onUnfollow = (follower, following) => {
@@ -90,10 +96,13 @@ class ProfileHeader extends React.Component{
     let following = []
     let fulfollowing = []
     let profileId = 0
-
+    let notiToken = ""
     console.log('headers')
     console.log(this.props.profile)
     if(this.props.profile){
+      if(this.props.profile.notificationToken){
+        notiToken = this.props.profile.notificationToken
+      }
       if(this.props.profile.profile_picture){
         profileImage = `${global.IMAGE_ENDPOINT}`+this.props.profile.profile_picture
       }
@@ -188,7 +197,8 @@ class ProfileHeader extends React.Component{
                 <TouchableOpacity
                   onPress={() => this.onFollow(
                     this.props.currentId,
-                    profileId
+                    profileId,
+                    notiToken
                   )}>
                   <View style={styles.editButton}>
                      <Text style={{color:'white',}}>Follow</Text>
@@ -265,6 +275,9 @@ class ProfileHeader extends React.Component{
 
 
   render(){
+
+    console.log('profile header')
+    console.log(this.props)
     let username = ''
     let firstName = ''
     let lastName = ''
