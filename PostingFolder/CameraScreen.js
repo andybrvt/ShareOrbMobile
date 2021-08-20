@@ -612,7 +612,7 @@ class CameraScreen extends React.Component{
                 ref = {node => {this.cameraRef = node}}
                 type = {this.state.type}
                 ratio={"16:9"}
-                skipProcessing={true}
+                skipProcessing={false}
                 flashMode = {this.state.showFlash}
                 style = {{flex: 1}}>
                     <TouchableOpacity
