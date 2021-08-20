@@ -16,12 +16,17 @@ import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
  class DisplayLikeList extends React.Component{
 
-   selectItem = (username) => {
+      selectItem = (username) => {
      // This fucntion will be used to navigate to the post page
      // that you can use to post pictures and write caption
-     this.props.navigation.navigate("ProfilePage", {
-       username: username
-     })
+     if(username !== this.props.username){
+       this.props.navigation.navigate("ProfilePage", {
+         username: username
+       })
+     } else {
+       this.props.navigation.navigate("Profile")
+     }
+
    }
 
    renderItem = ({item}) => {
@@ -67,6 +72,8 @@ import { Avatar } from 'react-native-elements';
 
    render(){
      let likeList=this.props.route.params.likePeople
+     console.log("FFFFFFFFF")
+     console.log(likeList)
 
      return (
        <BackgroundContainer>

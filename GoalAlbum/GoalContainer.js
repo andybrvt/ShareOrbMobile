@@ -51,23 +51,27 @@ class GoalContainer extends React.Component{
     let cap=item.get_socialCalItems.length-4
     return(
       <TouchableOpacity
+        activeOpacity={0.6}
         onPress = {() => this.onGoalPageDirect(item.id)}
         >
 
       <View style={styles.goalCard}>
-        <View style={{width:'90%', }}>
-          <Text style={{padding:10, fontSize:16,}}>{item.goal}</Text>
+        <View style={{marginLeft:'15%', width:'90%', }}>
+          <Text style={{padding:10, fontSize:15, }}>{item.goal}</Text>
+        </View>
+        <View style={{flexDirection:'column', position:'absolute', top:0, backgroundColor:'red'}}>
+            <Text style = {{color:'black', fontWeight:'bold', fontSize:24}}>
+              {socialMonth.substring(0,3)}
+            </Text>
+            <Text style ={{color:'black', fontWeight:'bold', fontSize:34}}>
+              {socialDay}
+            </Text>
         </View>
 
-        <View style={{flexDirection:'row',}}>
-          <View style={{flexDirection:'column', alignItems:'center',}}>
-              <Text style = {{color:'black', fontWeight:'bold', fontSize:14}}>
-                {socialMonth}
-              </Text>
-              <Text style ={{color:'black', fontWeight:'bold', fontSize:24}}>
-                {socialDay}
-              </Text>
-          </View>
+        <View style={{flexDirection:'row'}}>
+
+
+
           <View style={{flexDirection:'row', paddingLeft:20, width:'75%'}}>
             {item.get_socialCalItems.slice(0,4).map((item2,index) => {
                 return(
@@ -100,7 +104,7 @@ class GoalContainer extends React.Component{
     return(
       <View>
         <FlatList
-          style={{marginTop:10}}
+
           data = {this.state.goals}
           renderItem = {(item) => this.renderItem(item)}
           keyExtractor={(item, index) => String(index)}
@@ -126,9 +130,8 @@ const styles = StyleSheet.create({
   },
   goalCard: {
     left:'5%',
-    padding:10,
 
-    backgroundColor:'#f7f7f7',
+    backgroundColor:'#F0F0F0',
     elevation:50,
     width:'90%',
     borderRadius:15,

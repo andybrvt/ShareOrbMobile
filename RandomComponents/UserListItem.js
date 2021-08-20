@@ -15,7 +15,7 @@ import { Search,} from "react-native-feather";
 
 class UserListItem extends React.Component{
 
-  // viewProfile = (username) => {
+  // ViewProfile = (username) => {
   //   this.props.navigation.navigate('ProfilePage',{
   //     username: username
   //   })
@@ -35,7 +35,7 @@ class UserListItem extends React.Component{
         >
         <View style={{
             top:10,
-            
+
            flexDirection:'row',
            padding:10}}>
           <View style={{flex:1}}>

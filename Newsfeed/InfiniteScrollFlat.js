@@ -90,7 +90,7 @@ class InfiniteScrollFlat extends React.Component{
         <SocialNewsfeedPost
           y = {this.props.y}
           navigation = {this.props.navigation}
-          ViewProfile = {this.props.viewProfile}
+          ViewProfile = {this.props.ViewProfile}
           data = {item}
           onCommentOpen = {this.props.onCommentOpen}
 

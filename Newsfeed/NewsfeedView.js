@@ -54,12 +54,17 @@ class NewsfeedView extends React.Component{
   componentDidMount = () => {
   }
 
-  viewProfile = (username) => {
+  ViewProfile = (username) => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-    this.props.navigation.navigate("ProfilePage", {
-      username: username
-    })
+    if(username !== this.props.username){
+      this.props.navigation.navigate("ProfilePage", {
+        username: username
+      })
+    } else {
+      this.props.navigation.navigate("Profile")
+    }
+
   }
 
   constructor(props){
@@ -211,7 +216,7 @@ class NewsfeedView extends React.Component{
                   y = {this.y}
                   navigation = {this.props.navigation}
                   onPagePost = {this.onPagePost}
-                  viewProfile = {this.viewProfile}
+                  ViewProfile = {this.ViewProfile}
                   onCommentOpen = {this.onCommentOpen}/>
               :
               <PersonalNewsFeed

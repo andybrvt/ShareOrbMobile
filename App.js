@@ -51,7 +51,7 @@ import CameraScreen from './PostingFolder/CameraScreen';
 import NewPostingPage from './PostingFolder/NewPostingPage';
 import TestDrag from './PostingFolder/TestDrag';
 import Profile from './ProfilePage/Profile';
-import UserProfile from './ProfilePage/UserProfile';
+import ProfilePage from './ProfilePage/ProfilePage';
 import ViewProfile from './ProfilePage/ViewProfile';
 import EditProfile from './ProfilePage/EditProfile';
 import Notifications from './ProfilePage/Notifications';
@@ -397,12 +397,16 @@ class App extends Component{
   createHomeStack = () =>{
     return (
       <Stack.Navigator screenOptions={{headerShown: false,}} >
-        <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
+        <Stack.Screen
+
+          name = "newsfeed" component= {NewsfeedView}/>
         {/*
           <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
 
           */}
-        <Stack.Screen name = 'ProfilePage' component = {UserProfile}/>
+        <Stack.Screen
+          options={{...TransitionPresets.SlideFromRightIOS,}}
+          name = 'ProfilePage' component = {ProfilePage}/>
       </Stack.Navigator>
 
     )
@@ -560,7 +564,6 @@ class App extends Component{
                name="Profile"
                component={Profile}
                options={{
-
                  tabBarLabel: false,
                   tabBarIcon: ({ color }) => (
                     <User stroke={color} strokeWidth={2} width={25} height={25} />
@@ -647,6 +650,7 @@ class App extends Component{
                         gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
                       }}
                       name = 'PostingPage' component = {PostingPage}/>
+
                     <Stack.Screen
                       options={{
                         headerShown: true,
@@ -654,7 +658,6 @@ class App extends Component{
                         gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
                       }}
                       name = 'CameraScreenTrue' component = {CameraScreen}/>
-
                     <Stack.Screen
                         name = 'Comments'
                         options={{
@@ -799,11 +802,7 @@ class App extends Component{
                        title: 'Search Friends',
                                        }}
                       name = 'ChatSearch' component = {ChatSearch}/>
-                    <Stack.Screen
-                      options={{
-                        title: 'Your Name',
-                      }}
-                      name = 'ViewProfile' component = {ViewProfile}/>
+
                     <Stack.Screen
                       options={{
                         headerStyle:{

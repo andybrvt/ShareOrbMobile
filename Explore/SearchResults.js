@@ -24,7 +24,7 @@ class SearchResults extends React.Component{
 
     return(
       <TouchableOpacity
-        onPress = {() => this.props.viewProfile(item.username)}
+        onPress = {() => this.props.ViewProfile(item.username)}
         >
         <View style={{
            flexDirection:'row',
