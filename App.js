@@ -602,6 +602,8 @@ class App extends Component{
                       gestureEnabled: true
                       // headerShown: false,
                     }}>
+
+
                       <Stack.Screen
                         options={{headerShown: false, }}
                         name = "tabs" component= {this.createTabStack}/>
@@ -618,6 +620,13 @@ class App extends Component{
                           ...TransitionPresets.SlideFromLeftIOS,
                         }}
                       />
+                    {/* */}
+                      <Stack.Screen
+                        options={{
+                          headerShown: false,
+                          ...TransitionPresets.SlideFromRightIOS,
+                        }}
+                        name = 'ProfilePage2' component = {ProfilePage}/>
                       <Stack.Screen
                         initialRouteName = "Profile"
                         name = "PFollowTab" component= {this.pFollowerFollowingTab}
@@ -746,44 +755,43 @@ class App extends Component{
                       name = 'Following' component = {Following}/>
                    <Stack.Screen
                      options={{
-                       headerShown: false,
-                       title: 'Show Day',
-                        ...TransitionPresets.SlideFromRightIOS,
+                     headerShown: false,
+                     title: 'Show Day',
+                      ...TransitionPresets.SlideFromRightIOS,
+                     }}
+                    name = 'DayAlbum' component = {DayAlbum}/>
+                    <Stack.Screen
+                    options={{
+                      headerStyle:{
+                        shadowColor:'#fff', //ios
+                        elevation:0,        // android
+                      },
+                      title: 'Create Group',
+                      ...TransitionPresets.SlideFromRightIOS,
+                                      }}
+                     name = 'CreateAlbum' component = {CreateAlbum}/>
+                    <Stack.Screen
+                     options={{
+                       headerStyle:{
+                         shadowColor:'#fff', //ios
+                         elevation:0,        // android
+
+                       },
+                       title: 'PicAlbum',
+                       ...TransitionPresets.SlideFromRightIOS,
                                        }}
-                      name = 'DayAlbum' component = {DayAlbum}/>
-                      <Stack.Screen
-                        options={{
-                          headerStyle:{
-                            shadowColor:'#fff', //ios
-                            elevation:0,        // android
+                      name = 'PicAlbum' component = {PicAlbum}/>
+                   <Stack.Screen
+                     options={{
+                       headerStyle:{
+                         shadowColor:'#fff', //ios
+                         elevation:0,        // android
 
-                          },
-                          title: 'Create Group',
-                          ...TransitionPresets.SlideFromRightIOS,
-                                          }}
-                         name = 'CreateAlbum' component = {CreateAlbum}/>
-                         <Stack.Screen
-                           options={{
-                             headerStyle:{
-                               shadowColor:'#fff', //ios
-                               elevation:0,        // android
-
-                             },
-                             title: 'PicAlbum',
-                             ...TransitionPresets.SlideFromRightIOS,
-                                             }}
-                            name = 'PicAlbum' component = {PicAlbum}/>
-                         <Stack.Screen
-                           options={{
-                             headerStyle:{
-                               shadowColor:'#fff', //ios
-                               elevation:0,        // android
-
-                             },
-                             title: 'Invite Friends',
-                             ...TransitionPresets.ModalSlideFromBottomIOS,
-                                             }}
-                            name = 'InviteFriends' component = {InviteFriends}/>
+                       },
+                       title: 'Invite Friends',
+                       ...TransitionPresets.ModalSlideFromBottomIOS,
+                                       }}
+                      name = 'InviteFriends' component = {InviteFriends}/>
                    <Stack.Screen
                      options={{
                        title: 'Search Friends',
