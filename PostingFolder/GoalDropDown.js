@@ -234,6 +234,7 @@ class GoalDropDown extends React.Component{
                 :
 
                 <FlatList
+                  
                   data = {this.props.data}
                   renderItem = {this.renderItem}
                   keyExtractor={(item, index) => String(index)}

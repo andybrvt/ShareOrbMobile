@@ -297,7 +297,7 @@ let likeAvatarList=[]
      )
    }
 
-   viewProfile = (username) => {
+   ViewProfile = (username) => {
      if(username === this.props.username){
        this.props.navigation.navigate("Profile");
      } else {
@@ -466,7 +466,7 @@ let likeAvatarList=[]
             {/*
              <Avatar
                style={styles.close}
-              onPress = {() => this.viewProfile(this.props.socialCalCell.socialCalUser.username)}
+              onPress = {() => this.ViewProfile(this.props.socialCalCell.socialCalUser.username)}
                size={40}
                rounded
                source = {{
