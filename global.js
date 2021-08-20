@@ -213,7 +213,7 @@ global.SEND_LIKE_NOTIFICATION = async(
     const message = {
       to: expoPushToken,
       sound: "default",
-      title: sender + ' liked your post!',
+      title: global.CAPITALIZE(sender) + ' liked your post!',
       body: 'Click to check it out!',
       data: {
         type: "like",
@@ -242,7 +242,7 @@ global.SEND_COMMENT_NOTIFICATION = async(expoPushToken, sender, itemId) => {
     const message = {
       to: expoPushToken,
       sound: "default",
-      title: sender + ' commented on your post',
+      title: global.CAPITALIZE(sender) + ' commented on your post',
       body: 'Come check it out!',
       data: {
         type: "comment",
@@ -263,6 +263,33 @@ global.SEND_COMMENT_NOTIFICATION = async(expoPushToken, sender, itemId) => {
 
   }
 
+}
+
+global.SEND_FOLLOW_NOTIFICAITON = async(expoPushToken, sender, senderId) => {
+  if(expoPushToken !== ""){
+    const message = {
+      to: expoPushToken,
+      sound: "default",
+      title: global.CAPITALIZE(sender) + ' followed you',
+      body: 'Come check it out!',
+      data: {
+        type: "follow",
+        username: sender
+      },
+    }
+
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    })
+
+
+  }
 }
 
 
