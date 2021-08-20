@@ -52,9 +52,11 @@ class GoalPage extends React.Component{
       <View style = {styles.itemCard}>
 
         <View style = {{
-            height: width*0.8,
+            height: width*0.9,
             width: '100%',
-            backgroundColor: 'pink'
+            backgroundColor: 'pink',
+            borderRadius: 10,
+            overflow: "hidden"
           }}>
           <Image
             style = {{
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
   itemCard: {
     height: '70%',
     width: '100%',
-    backgroundColor: 'gray'
+
   },
   header: {
     flexDirection: 'row',

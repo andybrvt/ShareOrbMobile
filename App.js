@@ -237,7 +237,6 @@ class App extends Component{
   };
 
  handleNotificationResponse = response => {
-   console.log('here is the response')
     const notiType = response.notification.request.trigger.payload.body.type;
 
     if(notiType === "like"){
@@ -273,6 +272,13 @@ class App extends Component{
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
       // grab the userinfromation
+
+      if(this.props.notificationToken.length === 0){
+
+        // this is if there is not notification token so you wanna add a new one
+        console.log('right here bor bor bor ')
+        this.registerForPushNotificationsAsync()
+      }
 
 
       this.props.grabUserCredentials()

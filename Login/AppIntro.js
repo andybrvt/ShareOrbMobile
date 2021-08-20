@@ -243,7 +243,6 @@ class AppIntro extends React.Component{
 
   unShowInstructions = () =>{
 
-      console.log('stuff here')
 
 
   }
@@ -318,11 +317,11 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   welcomeText: {
-    left:'7.5%',
     padding:5,
     color: "white",
     fontSize: 27.5,
-    top: '7%'
+    top: '7%',
+    textAlign: 'center'
   },
   headerText: {
     color: 'white'

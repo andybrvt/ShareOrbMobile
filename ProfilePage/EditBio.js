@@ -32,7 +32,6 @@ class EditBio extends React.Component{
       contentBio: e
     })
     if(e !== this.props.bio){
-      console.log('stuff here')
       this.props.navigation.setOptions({
         headerRight: () => this.renderSave()
       })
