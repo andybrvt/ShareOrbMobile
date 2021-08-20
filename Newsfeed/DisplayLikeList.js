@@ -20,7 +20,7 @@ import { Avatar } from 'react-native-elements';
      // This fucntion will be used to navigate to the post page
      // that you can use to post pictures and write caption
      if(username !== this.props.username){
-       this.props.navigation.navigate("ProfilePage", {
+       this.props.navigation.navigate("ProfilePage2", {
          username: username
        })
      } else {

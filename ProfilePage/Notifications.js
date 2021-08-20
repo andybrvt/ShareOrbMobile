@@ -295,12 +295,13 @@ class Notifications extends React.Component{
              />
            <Text style={{fontSize:20, fontWeight:'bold', marginLeft:20}}>Notifications</Text>
         </View>
-
+        {/*
           <View>
             <Sliders
              // onPress = {() => this.ViewProfile()}
              stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
          </View>
+         */}
          </View>
 
 
