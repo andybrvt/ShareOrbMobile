@@ -71,9 +71,6 @@ class Login extends React.Component{
   render(){
     const { error, loading, token } = this.props;
 
-    console.log('stuff here')
-    console.log(error)
-
     if(token){
       this.props.navigation.navigate("LoadingScreen")
     }
