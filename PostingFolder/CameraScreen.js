@@ -286,11 +286,7 @@ class CameraScreen extends React.Component{
   }
 
   onSavePhoto = (image) => {
-    // upload just one picture
-    // console.log('save image')
-    //
-    // you gonnna need the userid to get the cells and then the date to
-    // filter out the cell
+
     const ownerId = this.props.curUserId;
     const caption = this.state.caption;
     const goalId = this.state.selectedGoal.id;
@@ -311,16 +307,10 @@ class CameraScreen extends React.Component{
 
     ).then(res => {
 
-      this.props.authAddCurLoad()
-
-      if(res.data.coverPicChange){
-
 
         const coverPicForm = new FormData();
+        coverPicForm.append('cellId', res.data.cellId)
 
-        coverPicForm.append('cellId', res.data.cell.id)
-        coverPicForm.append('createdCell', res.data.created)
-        // you
         coverPicForm.append('coverImage', imageFile)
 
         this.props.authAddTotalLoad()
@@ -335,17 +325,39 @@ class CameraScreen extends React.Component{
 
         })
 
-      }
+      // this.props.authAddCurLoad()
+      //
+      // if(res.data.coverPicChange){
+      //
+      //
+      //
+      //   coverPicForm.append('createdCell', res.data.created)
+      //   // you
+      //   coverPicForm.append('coverImage', imageFile)
+      //
+      //   this.props.authAddTotalLoad()
+      //   authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
+      //     coverPicForm,
+      //     {headers: {"content-type": "multipart/form-data"}}
+      //
+      //   ).then(res => {
+      //     // put loading here
+      //
+      //     this.props.authAddCurLoad()
+      //
+      //   })
+      //
+      // }
 
-      this.props.authAddTotalLoad()
+      // this.props.authAddTotalLoad()
 
-      WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
-        ownerId,
-        res.data.cell.id,
-        res.data.created
-      )
+      // WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
+      //   ownerId,
+      //   res.data.cell.id,
+      //   res.data.created
+      // )
 
-      this.props.authAddCurLoad()
+      // this.props.authAddCurLoad()
 
       // if(this.props.curLoad >= this.props.totalLoad){
       //   // if they are equal or larger you will just set it back to zero

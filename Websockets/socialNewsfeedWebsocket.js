@@ -48,6 +48,8 @@ class WebSocketSocialNewsfeed{
   const parsedData = JSON.parse(data);
   const command = parsedData.command;
   // Make the different calls here
+  console.log('the data here')
+  console.log(parsedData)
   if(command === "fetch_social_posts"){
     const curSocialCalCellList = JSON.parse(parsedData.curSocialCalCell)
     let curSocialCell = {}
@@ -204,6 +206,8 @@ class WebSocketSocialNewsfeed{
 
   // This will run when you have already made a cell and everything is updated
   // make an axios call and then send it through the here
+
+  console.log('DOES IT GO HERE')
   this.sendPostsInfo({
     curId: curId,
     socialCalCellId: cellId,
