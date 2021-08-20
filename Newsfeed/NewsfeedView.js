@@ -137,6 +137,8 @@ class NewsfeedView extends React.Component{
         this.props.authZeroCurLoad()
       }, 2000)
       }
+
+
     }
 
   }
