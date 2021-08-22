@@ -576,6 +576,7 @@ class CameraScreen extends React.Component{
 
                }
 
+               {/*
                  <TouchableOpacity
                    onPress = {() => this.openShowGoals()}
                    style ={{
@@ -602,6 +603,8 @@ class CameraScreen extends React.Component{
                        />
 
                  </TouchableOpacity>
+
+                 */}
 
 
 

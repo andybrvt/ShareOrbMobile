@@ -99,7 +99,7 @@ class Profile extends React.Component{
   }
 
   _renderScene = SceneMap({
-    first: () =>   <SocialCalendarVonly openShowCamera = {this.props.openShowCamera} userId = {this.props.currentId} navigation = {this.props.navigation}/>,
+    first: () =>  <SocialCalendarVonly openShowCamera = {this.props.openShowCamera} userId = {this.props.currentId} navigation = {this.props.navigation} currentId = {this.props.currentId}/>,
   second: () => <GoalContainer  userId = {this.props.currentId} navigation = {this.props.navigation}/>,
   });
 

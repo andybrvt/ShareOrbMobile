@@ -146,6 +146,7 @@ class UserProfile extends React.Component{
           <SocialCalendarVonly
             navigation = {this.props.navigation}
             userId = {userId}
+            currentId = {this.props.currentId}
             />
         </View>
       </BackgroundContainer>

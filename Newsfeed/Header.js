@@ -47,7 +47,7 @@ class Header extends React.Component{
 
 
   render(){
-  
+
     let profilePic = ""
     if(this.props.profilePic){
       profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profilePic
@@ -98,26 +98,12 @@ class Header extends React.Component{
                 stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
               */}
 
-                {
-                  this.props.notificationSeen > 0 ?
-
-
-                    <View style={{position:'absolute', right:'95%', top:'15%',}}>
-                      <View style={styles.notiCircle}>
-
-                      </View>
-                    </View>
-
-                    :
-
-                  null
-
-                }
 
 
 
 
-                {this.props.condition?
+
+                {/*this.props.condition?
                   <View>
                   <TouchableOpacity
                     style={{marginRight:10}}
@@ -134,7 +120,7 @@ class Header extends React.Component{
 
                   <Text style={{color:'white', fontSize:15, padding:5}}>Personal</Text>
                 </TouchableOpacity>
-              }
+              */}
 
 
               {/*

@@ -12,6 +12,9 @@ import DayAlbum from './DayAlbum';
 import  authAxios from '../util';
 import * as Animatable from 'react-native-animatable';
 import * as authActions from '../store/actions/auth';
+import { connect } from "react-redux";
+
+
 const width = Dimensions.get("window").width
 class NewSocialMonth extends React.PureComponent{
 
@@ -41,8 +44,11 @@ class NewSocialMonth extends React.PureComponent{
   }
 
   openCamera = () => {
-    this.props.navigation.navigate("Upload")
-    this.props.openShowCamera()
+    if(this.props.userId === this.props.currentId){
+      this.props.navigation.navigate("Upload")
+      this.props.openShowCamera()
+    }
+
   }
 
 
@@ -436,6 +442,9 @@ class NewSocialMonth extends React.PureComponent{
     )
   }
 }
+
+
+
 
 export default NewSocialMonth;
 

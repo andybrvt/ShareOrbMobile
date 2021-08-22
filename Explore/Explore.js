@@ -116,7 +116,7 @@ class Explore extends React.Component{
     })
   }
 
-  ViewProfile = (username) => {
+  viewProfile = (username) => {
     this.setState({
       searchValue: "",
       showSearch: false
@@ -218,7 +218,7 @@ class Explore extends React.Component{
           {
             this.state.showSearch ?
             <SearchResults
-              viewProfile = {this.ViewProfile}
+              viewProfile = {this.viewProfile}
               data = {this.state.searched}
                />
 

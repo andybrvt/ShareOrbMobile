@@ -402,6 +402,7 @@ class SocialCalendarVonly extends React.Component{
                 year = {this.state.year_array[0]}
                 navigation = {this.props.navigation}
                 userId = {this.props.userId}
+                currentId = {this.props.currentId}
                 navigation = {this.props.navigation}
                  />
 
@@ -413,6 +414,7 @@ class SocialCalendarVonly extends React.Component{
                  year = {this.state.year_array[0]}
                  navigation = {this.props.navigation}
                  userId = {this.props.userId}
+                 currentId = {this.props.currentId}
                  navigation = {this.props.navigation}
                  />
 
@@ -447,6 +449,7 @@ class SocialCalendarVonly extends React.Component{
                 year = {this.state.year_array[1]}
                 navigation = {this.props.navigation}
                 userId = {this.props.userId}
+                currentId = {this.props.currentId}
                 navigation = {this.props.navigation}
                  />
 
@@ -458,6 +461,7 @@ class SocialCalendarVonly extends React.Component{
                  year = {this.state.year_array[1]}
                  navigation = {this.props.navigation}
                  userId = {this.props.userId}
+                 currentId = {this.props.currentId}
                  navigation = {this.props.navigation}
                  />
 
@@ -491,6 +495,7 @@ class SocialCalendarVonly extends React.Component{
                 year = {this.state.year_array[2]}
                 navigation = {this.props.navigation}
                 userId = {this.props.userId}
+                currentId = {this.props.currentId}
                 navigation = {this.props.navigation}
                  />
 
@@ -502,6 +507,7 @@ class SocialCalendarVonly extends React.Component{
                  year = {this.state.year_array[2]}
                  navigation = {this.props.navigation}
                  userId = {this.props.userId}
+                 currentId = {this.props.currentId}
                  navigation = {this.props.navigation}
                   />
 

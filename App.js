@@ -554,9 +554,45 @@ class App extends Component{
                tabBarLabel: 'Notifications',
                tabBarLabel: false,
                tabBarIcon: ({ color }) => (
-                   <Bell stroke={color} strokeWidth={2} width={25} height={25} />
+                 <View>
+                   {
+                     this.props.notificationSeen > 0 ?
+
+
+                       <View style={{position:'absolute', right:'0%', top:'0%',}}>
+                         <View style={styles.notiCircle}>
+
+                         </View>
+                       </View>
+
+                       :
+
+                     null
+
+                   }
+                      <Bell stroke={color} strokeWidth={2} width={25} height={25} />
+                 </View>
+
                ),
              }}
+             listeners={{
+                tabPress: e => {
+                  // Prevent default action
+
+                   if(this.props.notificationSeen > 0 ){
+                     authAxios.post(`${global.IP_CHANGE}/userprofile/resetNotificationSeen`, {
+                        curId: this.props.id
+                      }).then(res => {
+
+                        // Now you will call the redux to reset the value of the notification
+
+                        this.props.resetNotificationSeen()
+
+                      })
+                   }
+
+                },
+              }}
              />
 
             <Tab.Screen
@@ -594,7 +630,7 @@ class App extends Component{
     // you will get a serpate navigation for the login and sign up but hwne you are
     // auth you get the bottom bar
 
-
+    console.log(this.props)
     if (this.state.fontsLoaded) {
     return(
       <PaperProvider>
@@ -898,8 +934,8 @@ const mapStateToProps = state => {
     id: state.auth.id,
     loading: state.auth.loading,
     showFinalModal: state.socialNewsfeed.showFinalModal,
-    showIntialInstructions: state.auth.showIntialInstructions
-
+    showIntialInstructions: state.auth.showIntialInstructions,
+    notificationSeen: state.auth.notificationSeen
   }
 }
 
@@ -934,7 +970,9 @@ const mapDispatchToProps = dispatch => {
     fetchColabAlbum: album => dispatch(colabAlbumActions.fetchColabAlbum(album)),
     fetchTimeLineColab: (albums) => dispatch(colabAlbumActions.fetchTimeLineColab(albums)),
     fetchExpiringColab: (albums) => dispatch(colabAlbumActions.fetchExpiringColab(albums)),
-    authAddNotificationToken: (token) => dispatch(authActions.authAddNotificationToken(token))
+    authAddNotificationToken: (token) => dispatch(authActions.authAddNotificationToken(token)),
+    resetNotificationSeen: () => dispatch(authActions.resetNotificationSeen())
+
   }
 }
 
@@ -946,5 +984,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  notiCircle: {
+    position:'absolute',
+    height: 10,
+    width: 10,
+    borderRadius: 1000,
+    backgroundColor:'red',
   },
 });
