@@ -80,6 +80,9 @@ class NewsfeedView extends React.Component{
     this.myRef = React.createRef();
     this.commentRef = React.createRef();
     if(this.props.isAuthenticated){
+
+      // this only hits once
+      console.log('hit once only')
       this.initialiseSocialNewsfeed()
     }
   }
@@ -118,16 +121,16 @@ class NewsfeedView extends React.Component{
     if(prevProps !== this.props){
       const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
 
-      WebSocketSocialNewsfeedInstance.disconnect()
+      // WebSocketSocialNewsfeedInstance.disconnect()
       if(this.props.isAuthenticated){
-        this.waitForSocialNewsfeedSocketConnection(() => {
-              // Fetch stuff here
-          WebSocketSocialNewsfeedInstance.fetchSocialPost(
-            this.props.id,
-            curDate,
-            this.state.upperStart)
-        })
-        WebSocketSocialNewsfeedInstance.connect()
+        // this.waitForSocialNewsfeedSocketConnection(() => {
+        //       // Fetch stuff here
+        //   WebSocketSocialNewsfeedInstance.fetchSocialPost(
+        //     this.props.id,
+        //     curDate,
+        //     this.state.upperStart)
+        // })
+        // WebSocketSocialNewsfeedInstance.connect()
       }
 
 
@@ -167,7 +170,6 @@ class NewsfeedView extends React.Component{
 
 
   render(){
-    console.log(this.props.notificationSeen)
 
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad

@@ -108,7 +108,6 @@ class GoalDropDown extends React.Component{
     if(this.state.showKeyboard === true){
       Keyboard.dismiss()
     } else {
-      console.log("CLOSEEEEEEEE")
       this.props.onClose()
     }
   }
@@ -129,7 +128,6 @@ class GoalDropDown extends React.Component{
   render(){
 
     const showGoals1 = this.props.showGoals;
-    console.log( showGoals1)
     return(
       <TouchableWithoutFeedback
         onPress = {() => this.closeFunction()}
@@ -234,7 +232,7 @@ class GoalDropDown extends React.Component{
                 :
 
                 <FlatList
-                  
+
                   data = {this.props.data}
                   renderItem = {this.renderItem}
                   keyExtractor={(item, index) => String(index)}

@@ -165,7 +165,6 @@ const height = Dimensions.get('window').height
        albums = this.props.expiring;
      }
 
-     console.log(albums)
      return (
        <View style={{
            flex: 1,

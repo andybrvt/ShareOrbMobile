@@ -82,7 +82,6 @@ class GoalPage extends React.Component{
   render(){
 
     const { goal } = this.state;
-    console.log(this.state);
     let goalTitle = '';
     let goalItem = [];
     let goalAvatar = '';

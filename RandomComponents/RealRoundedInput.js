@@ -24,7 +24,6 @@ import EmojiPicker from 'rn-emoji-keyboard';
      }
    }
    onSubmit = () => {
-     console.log('you hit here')
      this.props.onCommentSubmit()
    }
 
@@ -34,7 +33,6 @@ import EmojiPicker from 'rn-emoji-keyboard';
 
 
    render(){
-     console.log("hi")
      return (
        <TouchableHighlight
          // onPress = {() => this.props.onPagePost()}

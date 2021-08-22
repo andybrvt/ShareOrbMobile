@@ -27,7 +27,6 @@ import {
    }
 
    onAction = () => {
-     console.log('start this')
    }
 
    componentDidMount(){

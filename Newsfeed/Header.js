@@ -47,8 +47,7 @@ class Header extends React.Component{
 
 
   render(){
-    console.log('notificaiton here')
-    console.log(this.props.notificationSeen)
+  
     let profilePic = ""
     if(this.props.profilePic){
       profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profilePic
@@ -116,7 +115,7 @@ class Header extends React.Component{
                 }
 
 
-                
+
 
                 {this.props.condition?
                   <View>

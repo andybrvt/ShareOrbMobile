@@ -57,7 +57,6 @@ class WebSocketNotifications {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
 
-    console.log(parsedData)
     if (command === 'notifications') {
         const notifications = JSON.parse(parsedData.notifications);
         this.callbacks['notifications'](notifications)

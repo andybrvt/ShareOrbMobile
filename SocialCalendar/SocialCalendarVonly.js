@@ -397,6 +397,7 @@ class SocialCalendarVonly extends React.Component{
               Platform.OS === "ios" ?
 
               <NewSocialMonth
+                openShowCamera = {this.props.openShowCamera}
                 month = {this.state.month_array[0]}
                 year = {this.state.year_array[0]}
                 navigation = {this.props.navigation}
@@ -407,6 +408,7 @@ class SocialCalendarVonly extends React.Component{
                :
 
                <SocialCalendarTap
+                 openShowCamera = {this.props.openShowCamera}
                  month = {this.state.month_array[0]}
                  year = {this.state.year_array[0]}
                  navigation = {this.props.navigation}
@@ -440,6 +442,7 @@ class SocialCalendarVonly extends React.Component{
               Platform.OS === "ios" ?
 
               <NewSocialMonth
+                openShowCamera = {this.props.openShowCamera}
                 month = {this.state.month_array[1]}
                 year = {this.state.year_array[1]}
                 navigation = {this.props.navigation}
@@ -450,6 +453,7 @@ class SocialCalendarVonly extends React.Component{
                :
 
                <SocialCalendarTap
+                 openShowCamera = {this.props.openShowCamera}
                  month = {this.state.month_array[1]}
                  year = {this.state.year_array[1]}
                  navigation = {this.props.navigation}
@@ -482,6 +486,7 @@ class SocialCalendarVonly extends React.Component{
               Platform.OS === "ios" ?
 
               <NewSocialMonth
+                openShowCamera = {this.props.openShowCamera}
                 month = {this.state.month_array[2]}
                 year = {this.state.year_array[2]}
                 navigation = {this.props.navigation}
@@ -492,6 +497,7 @@ class SocialCalendarVonly extends React.Component{
                :
 
                <SocialCalendarTap
+                 openShowCamera = {this.props.openShowCamera}
                  month = {this.state.month_array[2]}
                  year = {this.state.year_array[2]}
                  navigation = {this.props.navigation}

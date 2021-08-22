@@ -45,7 +45,6 @@ class EditBio extends React.Component{
 
   onHandleSaveBio = () => {
 
-    // console.log('save stuff here')
     const userId = this.props.userId
     const username = this.props.username
     var data = new FormData();

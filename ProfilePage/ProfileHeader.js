@@ -97,8 +97,7 @@ class ProfileHeader extends React.Component{
     let fulfollowing = []
     let profileId = 0
     let notiToken = ""
-    console.log('headers')
-    console.log(this.props.profile)
+
     if(this.props.profile){
       if(this.props.profile.notificationToken){
         notiToken = this.props.profile.notificationToken
@@ -141,8 +140,6 @@ class ProfileHeader extends React.Component{
       }
     }
 
-    console.log(' here is the bio ')
-    console.log(bio)
 
     return (
     <View>
@@ -276,8 +273,7 @@ class ProfileHeader extends React.Component{
 
   render(){
 
-    console.log('profile header')
-    console.log(this.props)
+
     let username = ''
     let firstName = ''
     let lastName = ''

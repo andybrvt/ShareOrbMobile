@@ -94,7 +94,6 @@ class Explore extends React.Component{
     axios.get(`${global.IP_CHANGE}/mySocialCal/exploreDay/`+start+'/'+end)
     .then( res => {
 
-      console.log(res.data)
 
       this.setState({
           exploreCells: exploreCells.concat(res.data),

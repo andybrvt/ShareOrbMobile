@@ -95,7 +95,6 @@ class Signup extends React.Component{
   }
 
   onDobChange = (event, selectedDate) => {
-    console.log(dateFns.format(selectedDate, "yyyy-MM-dd"))
     this.setState({
       dob: selectedDate
     })

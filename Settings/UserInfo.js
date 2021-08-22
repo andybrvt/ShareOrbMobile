@@ -25,8 +25,7 @@ import { connect } from 'react-redux';
    }
 
    render(){
-     console.log("HEEHEHEHEHEHE")
-     console.log(this.props)
+
      return (
        <BackgroundContainer>
          <View style={styles.action}>
@@ -73,7 +72,6 @@ import { connect } from 'react-redux';
  }
 
 const mapStateToProps = state => {
-  console.log(state.auth)
    return {
      dob: state.auth.dob,
      userId: state.auth.id,

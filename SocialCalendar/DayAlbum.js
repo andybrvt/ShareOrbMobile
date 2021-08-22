@@ -51,7 +51,6 @@ let likeAvatarList=[]
    initializeDayAlbum(){
      // used to connect to the websocket
      const cellId = this.props.route.params.cellId
-     console.log(cellId)
      this.waitForDayAlbumSocketConnection(() => {
        SocialCalCellPageWebSocketInstance.fetchSocialCalCellInfo(
          cellId
@@ -88,7 +87,6 @@ let likeAvatarList=[]
        if(this.props.route.params.postId){
 
          const index = this.findIndex(this.props.route.params.postId);
-         console.log(index)
          this.onScroll(index)
        }
 
@@ -346,7 +344,6 @@ let likeAvatarList=[]
    }
 
    render(){
-     console.log(' here in the day album')
      let {
        profilePic,
        firstName,
@@ -388,7 +385,6 @@ let likeAvatarList=[]
        dayCaption = cell.dayCaption
        coverPic = cell.coverPic
 
-       console.log('here are teh comments')
        if(this.props.socialCalCell.get_socialCalComment){
          socialComments = this.props.socialCalCell.get_socialCalComment
        }
@@ -400,8 +396,7 @@ let likeAvatarList=[]
        if(this.props.socialCalCell.socialCaldate){
          let today=new Date(this.props.socialCalCell.socialCaldate)
          let utc = dateFns.addHours(today, today.getTimezoneOffset()/60)
-         // console.log(utc, new Date())
-         // console.log(dateFns.isSameDay(utc, new Date() ))
+      
          sameDay = dateFns.isSameDay(utc, new Date());
          let dataList=this.props.socialCalCell.socialCaldate.split("-")
          let getYear=dataList[0]

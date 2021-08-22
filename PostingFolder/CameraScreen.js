@@ -24,6 +24,7 @@ import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import * as authActions from '../store/actions/auth';
+import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import * as ImagePicker from 'expo-image-picker';
 import InputModal from '../RandomComponents/InputModal';
 import Animated, {Easing} from 'react-native-reanimated';
@@ -91,8 +92,7 @@ class CameraScreen extends React.Component{
     this.setState({
       showGoals: false
     })
-    console.log("Hit here")
-    // console.log(this.state.showGoals)
+
   }
 
   onWriteCaption =() =>{
@@ -121,7 +121,6 @@ class CameraScreen extends React.Component{
 
 
   changeCaption = e => {
-    console.log(e)
     this.setState({
       caption:e
     })
@@ -307,7 +306,10 @@ class CameraScreen extends React.Component{
 
     ).then(res => {
 
+      // either put a props here that updates the newsfeed
 
+        console.log(res.data.item)
+        this.props.addFirstSocialCellPost(res.data.item)
         const coverPicForm = new FormData();
         coverPicForm.append('cellId', res.data.cellId)
 
@@ -323,6 +325,7 @@ class CameraScreen extends React.Component{
 
           this.props.authAddCurLoad()
 
+          // or put one here
         })
 
       // this.props.authAddCurLoad()
@@ -399,7 +402,6 @@ class CameraScreen extends React.Component{
   onSaveNewGoal = (goal) => {
     // run teh create function for goals here and then
     // add it into the state of goal list
-    console.log(goal)
     const userId = this.props.curUserId
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/createGoal/`+userId,
       {
@@ -802,7 +804,7 @@ const mapDispatchToProps = dispatch => {
     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
 
     openShowCamera: () => dispatch(authActions.openShowCamera()),
-
+    addFirstSocialCellPost: (post) => dispatch(socialNewsfeedActions.addFirstSocialCellPost(post))
   }
 }
 

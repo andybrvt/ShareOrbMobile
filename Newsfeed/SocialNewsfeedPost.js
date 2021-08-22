@@ -278,7 +278,7 @@ class SocialNewsfeedPost extends React.Component{
     let commentList = [];
     let peopleLikeId = []
 
-    let postCreatedAt="";
+    let postCreatedAt= new Date();
     let contentTypeId="";
     let ownerId = "";
     let cellDate = "";
@@ -292,6 +292,7 @@ class SocialNewsfeedPost extends React.Component{
     let notificationToken = "";
     let goal = "";
 
+    let utc3 = dateFns.format(new Date(), 'h:mma');
 
     if(this.props.data){
       if(this.props.data.creator){
@@ -322,6 +323,13 @@ class SocialNewsfeedPost extends React.Component{
 
         if(this.props.data.created_at) {
           postCreatedAt=this.props.data.created_at
+          console.log(new Date(this.props.data.created_at).getTimezoneOffset()/60)
+          if(!isNaN(new Date(this.props.data.created_at).getTimezoneOffset()/60)){
+            const dtDateOnly1 = dateFns.addHours(new Date(this.props.data.created_at), new Date(this.props.data.created_at).getTimezoneOffset()/60)
+            utc3=dateFns.format(new Date(dtDateOnly1), 'h:mma');
+
+          }
+
         }
       }
 
@@ -365,7 +373,6 @@ class SocialNewsfeedPost extends React.Component{
        });
 
        // likeAvatarList.push({"imageURL":"http://i.imgur.com/f93vCxM.gif"});
-       // console.log(likeAvatarList)
        // likeAvatarList.push({'imageURL':'http://i.imgur.com/f93vCxM.gif'}]),
     }
 
@@ -392,9 +399,8 @@ class SocialNewsfeedPost extends React.Component{
     let socialDay=""
 
 
-    let timestamp=new Date(postCreatedAt)
-    let dtDateOnly1 = dateFns.addHours(new Date(postCreatedAt), new Date(postCreatedAt).getTimezoneOffset()/60)
-    let utc3=dateFns.format(dtDateOnly1, 'h:mma');
+
+    //
 
     // timestamp=postCreatedAt
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
@@ -744,7 +750,6 @@ class SocialNewsfeedPost extends React.Component{
 
     })
 
-    console.log(this.props.data)
 
     return (
       <View

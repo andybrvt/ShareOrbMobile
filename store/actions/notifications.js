@@ -9,7 +9,6 @@ export const setNotifications = notifications => {
 };
 
 export const newNotification = notification => {
-  console.log(notification)
   return {
     type: actionTypes.NEW_NOTIFICATION,
     notification: notification

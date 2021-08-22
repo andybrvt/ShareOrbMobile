@@ -116,7 +116,6 @@ const authLogout = (state, action) => {
 };
 
 const addCredentials = (state, action) => {
-  console.log(action)
   return updateObject(state, {
     username: action.username,
     id: action.id,

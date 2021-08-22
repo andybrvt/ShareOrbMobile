@@ -276,9 +276,7 @@ headerStyle: {
      }
 
      let groupInfo= this.props.route.params.groupInfo
-     console.log("LLLLLLMNNNNNNNNNNNN")
-     console.log(groupInfo)
-     console.log("EnD")
+     
      const {tempPictures} = this.state;
 
      let finalAlbum = [...currentAlbum, ...tempPictures];
@@ -338,7 +336,7 @@ headerStyle: {
              finalAlbum.length === 0 ?
 
              <View style={{top:'0%'}}>
-              
+
                <Text> there is no photos here</Text>
              </View>
 

@@ -60,10 +60,8 @@ class SocialCalendarTap extends React.Component{
     const onRefresh = this.props.navigation.addListener("focus", () =>{
       const newDateRange = this.grabDateRange()
 
-      console.log(dateRange)
       this.getSocialCells(newDateRange.start, newDateRange.end)
       .then(data => {
-        console.log(data.length)
         this.setState({
           socialCells: data
         })

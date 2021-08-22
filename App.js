@@ -289,7 +289,6 @@ class App extends Component{
       if(this.props.notificationToken.length === 0){
 
         // this is if there is not notification token so you wanna add a new one
-        console.log('right here bor bor bor ')
         this.registerForPushNotificationsAsync()
       }
 

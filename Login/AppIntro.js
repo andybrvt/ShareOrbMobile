@@ -48,7 +48,6 @@ class AppIntro extends React.Component{
 
 
   renderItem(item, index){
-    console.log(this.props)
     if(index === 0){
       return (
         <View style = {{
