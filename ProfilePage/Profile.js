@@ -183,12 +183,20 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
+          <SocialCalendarVonly
+            openShowCamera = {this.props.openShowCamera}
+            userId = {this.props.currentId}
+            navigation = {this.props.navigation}
+            currentId = {this.props.currentId}/>
+          {/*
             <TabView
               navigationState = {this.state}
               renderScene = {this._renderScene}
               renderTabBar={this._renderTabBar}
               onIndexChange={this._handleIndexChange}
                />
+            */}
+
         </View>
       </BackgroundContainer>
     )
