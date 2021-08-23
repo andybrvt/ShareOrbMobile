@@ -79,6 +79,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ArrowUpCircle, Search, Home, Disc, Aperture, Bell, BookOpen, User, MessageCircle, FolderPlus} from "react-native-feather";
 import TestReanimated from './PostingFolder/TestReanimated';
 import DayAlbum from './SocialCalendar/DayAlbum.js';
+import FullImage from './SocialCalendar/FullImage.js';
 import Test from './PostingFolder/Test';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useScrollToTop } from '@react-navigation/native';
@@ -637,9 +638,15 @@ class App extends Component{
                       <Stack.Screen
                         options={{
                           headerShown: false,
-                          ...TransitionPresets.SlideFromRightIOS,
                         }}
-                        name = 'ProfilePage2' component = {ProfilePage}/>
+                        name = 'FullImage' component = {FullImage}/>
+
+                        <Stack.Screen
+                          options={{
+                            headerShown: false,
+                            ...TransitionPresets.SlideFromRightIOS,
+                          }}
+                          name = 'ProfilePage2' component = {ProfilePage}/>
                       <Stack.Screen
                         initialRouteName = "Profile"
                         name = "PFollowTab" component= {this.pFollowerFollowingTab}
