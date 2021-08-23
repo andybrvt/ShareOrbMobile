@@ -24,6 +24,7 @@ import TrendingList from './TrendingList';
 import SuggestedList from './SuggestedList';
 import Animated from 'react-native-reanimated';
 import SearchResults from './SearchResults';
+import InvitePage from './InvitePage';
 const { Value } = Animated;
 
 const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
@@ -189,6 +190,7 @@ class Explore extends React.Component{
 
         <View style = {{
             flex: 1,
+            backgroundColor: '#1890ff'
           }}>
 
 
@@ -224,12 +226,7 @@ class Explore extends React.Component{
 
             :
 
-            <SuggestedList
-              loadMore = {this.loadMore}
-              navigation = {this.props.navigation}
-              y = {this.y}
-              cells = {exploreCells}
-              />
+            <InvitePage />
 
 
           }
