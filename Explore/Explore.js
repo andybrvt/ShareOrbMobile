@@ -190,7 +190,6 @@ class Explore extends React.Component{
 
         <View style = {{
             flex: 1,
-            backgroundColor: '#1890ff'
           }}>
 
 

@@ -67,7 +67,7 @@ class InvitePage extends React.Component{
                   top: '20%'
                 }}>
                 <Text style = {{
-                  color: 'white',
+                  color: '#1890ff',
                   fontSize:30,
                   // textShadowColor: 'rgba(0, 0, 0, 0.75)',
                   // textShadowColor: 'black',
@@ -126,7 +126,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     zIndex: 9999,
-    backgroundColor: "white",
+    backgroundColor: "#1890ff",
+  },
+  loginText: {
+    color: 'white',
+    fontSize: 18,
   },
 })
 
