@@ -68,11 +68,12 @@ let likeAvatarList=[]
      })
    }
 
-   navFullImage = () => {
+   navFullImage = (item) => {
      // This fucntion will be used to navigate to the post page
      // that you can use to post pictures and write caption
      this.props.navigation.navigate("FullImage", {
        // username: username
+       imageInfo: item,
      })
    }
 
@@ -206,7 +207,7 @@ let likeAvatarList=[]
            width:'100%',
            padding:10,
          }}>
-         <TouchableOpacity onPress ={() => this.navFullImage()} >
+         <TouchableOpacity onPress ={() => this.navFullImage(item)} >
             <Image
               resizeMode="cover"
               style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
@@ -406,7 +407,7 @@ let likeAvatarList=[]
        if(this.props.socialCalCell.socialCaldate){
          let today=new Date(this.props.socialCalCell.socialCaldate)
          let utc = dateFns.addHours(today, today.getTimezoneOffset()/60)
-      
+
          sameDay = dateFns.isSameDay(utc, new Date());
          let dataList=this.props.socialCalCell.socialCaldate.split("-")
          let getYear=dataList[0]

@@ -502,6 +502,8 @@ class CameraScreen extends React.Component{
 
                 </TouchableWithoutFeedback>
 
+                {/*
+
                 <GoalDropDown
                   cancel = {this.onClearSelectedGoal}
                   data = {this.state.goals}
@@ -510,7 +512,7 @@ class CameraScreen extends React.Component{
                   select = {this.onSelectGoal}
                   save = {this.onSaveNewGoal}
                   />
-
+               */}
                <TouchableOpacity
                  onPress = {() => this.onCancelPhoto()}
                  style = {{
