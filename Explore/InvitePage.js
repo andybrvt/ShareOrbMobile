@@ -14,6 +14,8 @@ import {
   Keyboard
  } from 'react-native';
 import TextInputError from '../RandomComponents/TextInputError'
+import authAxios from '../util';
+
 
 const email = value =>
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
@@ -31,6 +33,22 @@ class InvitePage extends React.Component{
     }
   }
 
+  checkErrors = () => {
+    const {emailError} = this.state
+    const {email} = this.state
+
+    if(emailError){
+      return true;
+    }
+
+    if(!email){
+      return true;
+    }
+
+    return false;
+
+  }
+
   validate = (fieldName, value) => {
 
     if(fieldName === "email"){
@@ -40,7 +58,17 @@ class InvitePage extends React.Component{
       }
     }
 
+  }
 
+
+  submitInvite = () => {
+
+    const email = this.state.email
+
+    console.log(email);
+    authAxios.post(`${global.IP_CHANGE}`+'/userprofile/onInviteListAdd',{
+      email: email
+    })
 
   }
 
@@ -97,10 +125,25 @@ class InvitePage extends React.Component{
                  alignItems: 'center',
                  top: '40%'
                }}>
-               <TouchableOpacity
-                  style = {styles.loginBtn}>
-                 <Text style = {styles.loginText}> Login</Text>
-               </TouchableOpacity>
+
+               {
+                 this.checkErrors() ?
+
+                 <View
+                    style = {styles.loginBtnDisabled}>
+                   <Text style = {styles.loginText}> Login</Text>
+                 </View>
+
+                 :
+
+                 <TouchableOpacity
+                    onPress = {() => this.submitInvite()}
+                    style = {styles.loginBtn}>
+                   <Text style = {styles.loginText}> Login</Text>
+                 </TouchableOpacity>
+
+               }
+
              </View>
 
            </View>
@@ -127,6 +170,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     zIndex: 9999,
     backgroundColor: "#1890ff",
+  },
+  loginBtnDisabled: {
+    position: "absolute",
+    width: "80%",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 9999,
+    backgroundColor: "gainsboro",
   },
   loginText: {
     color: 'white',
