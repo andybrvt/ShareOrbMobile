@@ -34,12 +34,19 @@ class Notifications extends React.Component{
  ViewProfile = (username) => {
    // This fucntion will be used to navigate to the post page
    // that you can use to post pictures and write caption
-   this.props.navigation.navigate("ProfilePage", {
-     username: username
-   })
+   if(username === this.props.username){
+     this.props.navigation.navigate("Profile");
+
+   } else {
+     this.props.navigation.navigate("ProfilePage", {
+       username: username
+     })
+   }
+
  }
 
  openDayAlbum = (itemId, postId) => {
+
   this.props.navigation.navigate("DayAlbum", {
     cellId: itemId,
     postId: postId
@@ -277,7 +284,7 @@ class Notifications extends React.Component{
      notifications = this.props.notifications
    }
 
-   console.log(this.props.notifications)
+   console.log(this.props.notifications.length)
 
    return (
      <BackgroundContainer>
@@ -306,7 +313,7 @@ class Notifications extends React.Component{
 
 
 
-         <View style = {{flex: 1}}>
+         <View>
            <FlatList
              data = {notifications}
              renderItem = {this.renderItem}
@@ -326,7 +333,7 @@ const mapStateToProps = state => {
     notifications: state.notifications.notifications,
     userId: state.auth.id,
     profilePic: state.auth.profilePic,
-
+    username: state.auth.username
   }
 }
 

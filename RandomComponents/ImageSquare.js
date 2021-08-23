@@ -135,7 +135,6 @@ class ImageSquare extends React.Component{
   //     frameTime: new Value(0) // is the current frame of time over the process of the animation
   //   };
   //
-  //   console.log(state)
   //
   //   const config = {
   //     duration: 3000,

@@ -92,7 +92,6 @@ import * as exploreActions from '../store/actions/explore';
 
 
    handleTakeProfile = async() => {
-     console.log("hi")
      let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
      if(permissionResult.granted === false){
@@ -250,7 +249,6 @@ import * as exploreActions from '../store/actions/explore';
 
    uploadProfileImage(imageUri){
 
-     console.log('it goes here')
      let userId = ""
      if(this.props.userId){
         userId = this.props.userId
@@ -259,7 +257,6 @@ import * as exploreActions from '../store/actions/explore';
      var data = new FormData();
 
      const filePackage = global.FILE_NAME_GETTER(imageUri)
-     console.log(filePackage)
 
      data.append('profile_picture', filePackage)
      data.append('username', this.props.username)

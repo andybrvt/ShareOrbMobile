@@ -26,7 +26,6 @@ class GoalContainer extends React.Component{
     const userId = this.props.userId
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/goalList/`+userId)
     .then( res => {
-      console.log(res.data)
       this.setState({
         goals: res.data
       })
@@ -41,8 +40,7 @@ class GoalContainer extends React.Component{
   }
 
   renderItem = ({item}) =>{
-    console.log("ITEM!!!!!")
-    console.log(item)
+
     let dt=new Date(item.created_at)
     let dtDateOnly1 = dateFns.addHours(new Date(item.created_at), new Date(item.created_at).getTimezoneOffset()/60)
     let utc2=dateFns.format(dtDateOnly1, 'h:mma');

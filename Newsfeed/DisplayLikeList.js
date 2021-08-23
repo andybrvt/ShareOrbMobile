@@ -72,8 +72,7 @@ import { Avatar } from 'react-native-elements';
 
    render(){
      let likeList=this.props.route.params.likePeople
-     console.log("FFFFFFFFF")
-     console.log(likeList)
+
 
      return (
        <BackgroundContainer>

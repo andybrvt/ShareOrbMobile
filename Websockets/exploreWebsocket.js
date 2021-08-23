@@ -89,7 +89,6 @@ class WebSocketExplore{
       const cellId = parsedData.socialCalCellObj.id
       if(parsedData.created){
         // For new cell with new event
-        console.log(socialCalCellObj)
         this.callbacks['add_social_cell'](socialCalCellObj)
       } else {
         // For old cell with new event
@@ -98,7 +97,6 @@ class WebSocketExplore{
     } else if (command == 'add_user_social_event'){
       // STATUS REDONE
 
-      console.log(parsedData)
       const socialEventList = parsedData.socialEventList
       const socialCellId = parsedData.socialCellId
 

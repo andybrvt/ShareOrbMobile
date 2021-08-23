@@ -130,11 +130,9 @@ class PostingPage extends React.Component{
         }
       }
       */}
-      console.log("WWWWWWWWWWW")
 
 
-      console.log("LL")
-      console.log(this.state.grabImages)
+
 
 
      if(this.props.curSocialCalCell){
@@ -892,11 +890,8 @@ class PostingPage extends React.Component{
     //   sortBy:['creationTime'],
     //   mediaType:['photo', 'video'],
     // })
-    // console.log("AAAAAAAAAAAA")
-    // console.log(album)
-    // console.log("BBBBBBBBBBBBBBB")
-    // console.log(photosTemp)
-    // console.log(this.state.grabImages)
+
+
 
 
 
@@ -920,7 +915,6 @@ class PostingPage extends React.Component{
       backgroundColor: interpolateColor
     }
 
-    console.log("albumsReponse=", albumsReponse);
 
      // Remember, if you ever want to animate an element you will have to use
      // animated.view

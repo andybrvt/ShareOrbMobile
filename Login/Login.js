@@ -38,7 +38,6 @@ class Login extends React.Component{
 
   handleUserName = e => {
     const tempVal = e
-    console.log(e)
     this.setState({
       username: tempVal
     })

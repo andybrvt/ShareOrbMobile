@@ -94,7 +94,6 @@ class Explore extends React.Component{
     axios.get(`${global.IP_CHANGE}/mySocialCal/exploreDay/`+start+'/'+end)
     .then( res => {
 
-      console.log(res.data)
 
       this.setState({
           exploreCells: exploreCells.concat(res.data),
@@ -117,7 +116,7 @@ class Explore extends React.Component{
     })
   }
 
-  ViewProfile = (username) => {
+  viewProfile = (username) => {
     this.setState({
       searchValue: "",
       showSearch: false
@@ -219,7 +218,7 @@ class Explore extends React.Component{
           {
             this.state.showSearch ?
             <SearchResults
-              viewProfile = {this.ViewProfile}
+              viewProfile = {this.viewProfile}
               data = {this.state.searched}
                />
 

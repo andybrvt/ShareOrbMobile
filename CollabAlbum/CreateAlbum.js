@@ -190,7 +190,6 @@ class CreateAlbum extends React.Component{
 
    render(){
      const {caption, invitedPeople, coverPic} = this.state
-     console.log(invitedPeople)
 
      // if(
      //   caption !== "" &&

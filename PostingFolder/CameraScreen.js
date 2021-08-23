@@ -24,6 +24,7 @@ import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import * as authActions from '../store/actions/auth';
+import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import * as ImagePicker from 'expo-image-picker';
 import InputModal from '../RandomComponents/InputModal';
 import Animated, {Easing} from 'react-native-reanimated';
@@ -91,8 +92,7 @@ class CameraScreen extends React.Component{
     this.setState({
       showGoals: false
     })
-    console.log("Hit here")
-    // console.log(this.state.showGoals)
+
   }
 
   onWriteCaption =() =>{
@@ -121,7 +121,6 @@ class CameraScreen extends React.Component{
 
 
   changeCaption = e => {
-    console.log(e)
     this.setState({
       caption:e
     })
@@ -286,11 +285,7 @@ class CameraScreen extends React.Component{
   }
 
   onSavePhoto = (image) => {
-    // upload just one picture
-    // console.log('save image')
-    //
-    // you gonnna need the userid to get the cells and then the date to
-    // filter out the cell
+
     const ownerId = this.props.curUserId;
     const caption = this.state.caption;
     const goalId = this.state.selectedGoal.id;
@@ -311,16 +306,13 @@ class CameraScreen extends React.Component{
 
     ).then(res => {
 
-      this.props.authAddCurLoad()
+      // either put a props here that updates the newsfeed
 
-      if(res.data.coverPicChange){
-
-
+        console.log(res.data.item)
+        this.props.addFirstSocialCellPost(res.data.item)
         const coverPicForm = new FormData();
+        coverPicForm.append('cellId', res.data.cellId)
 
-        coverPicForm.append('cellId', res.data.cell.id)
-        coverPicForm.append('createdCell', res.data.created)
-        // you
         coverPicForm.append('coverImage', imageFile)
 
         this.props.authAddTotalLoad()
@@ -333,19 +325,42 @@ class CameraScreen extends React.Component{
 
           this.props.authAddCurLoad()
 
+          // or put one here
         })
 
-      }
+      // this.props.authAddCurLoad()
+      //
+      // if(res.data.coverPicChange){
+      //
+      //
+      //
+      //   coverPicForm.append('createdCell', res.data.created)
+      //   // you
+      //   coverPicForm.append('coverImage', imageFile)
+      //
+      //   this.props.authAddTotalLoad()
+      //   authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
+      //     coverPicForm,
+      //     {headers: {"content-type": "multipart/form-data"}}
+      //
+      //   ).then(res => {
+      //     // put loading here
+      //
+      //     this.props.authAddCurLoad()
+      //
+      //   })
+      //
+      // }
 
-      this.props.authAddTotalLoad()
+      // this.props.authAddTotalLoad()
 
-      WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
-        ownerId,
-        res.data.cell.id,
-        res.data.created
-      )
+      // WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
+      //   ownerId,
+      //   res.data.cell.id,
+      //   res.data.created
+      // )
 
-      this.props.authAddCurLoad()
+      // this.props.authAddCurLoad()
 
       // if(this.props.curLoad >= this.props.totalLoad){
       //   // if they are equal or larger you will just set it back to zero
@@ -387,7 +402,6 @@ class CameraScreen extends React.Component{
   onSaveNewGoal = (goal) => {
     // run teh create function for goals here and then
     // add it into the state of goal list
-    console.log(goal)
     const userId = this.props.curUserId
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/createGoal/`+userId,
       {
@@ -562,6 +576,7 @@ class CameraScreen extends React.Component{
 
                }
 
+               {/*
                  <TouchableOpacity
                    onPress = {() => this.openShowGoals()}
                    style ={{
@@ -588,6 +603,8 @@ class CameraScreen extends React.Component{
                        />
 
                  </TouchableOpacity>
+
+                 */}
 
 
 
@@ -790,7 +807,7 @@ const mapDispatchToProps = dispatch => {
     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
 
     openShowCamera: () => dispatch(authActions.openShowCamera()),
-
+    addFirstSocialCellPost: (post) => dispatch(socialNewsfeedActions.addFirstSocialCellPost(post))
   }
 }
 

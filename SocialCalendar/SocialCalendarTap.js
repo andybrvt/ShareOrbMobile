@@ -31,8 +31,11 @@ class SocialCalendarTap extends React.Component{
   }
 
   openCamera = () => {
-    this.props.navigation.navigate("Upload")
-    this.props.openShowCamera()
+    if(this.props.userId === this.props.currentId){
+      this.props.navigation.navigate("Upload")
+      this.props.openShowCamera()
+    }
+
   }
 
   viewDay = (cellId) => {
@@ -60,10 +63,8 @@ class SocialCalendarTap extends React.Component{
     const onRefresh = this.props.navigation.addListener("focus", () =>{
       const newDateRange = this.grabDateRange()
 
-      console.log(dateRange)
       this.getSocialCells(newDateRange.start, newDateRange.end)
       .then(data => {
-        console.log(data.length)
         this.setState({
           socialCells: data
         })
@@ -419,20 +420,9 @@ class SocialCalendarTap extends React.Component{
   }
 }
 
-const mapStateToProps = state => {
-  return{
-    // userId: state.auth.id
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    openShowCamera: () => dispatch(authActions.openShowCamera()),
-  }
-}
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SocialCalendarTap);
+export default SocialCalendarTap;
 
 
 

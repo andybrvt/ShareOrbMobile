@@ -59,7 +59,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                   </View>
                 :
                 <Text></Text>
-              
+
               }
 
           </View>
@@ -77,7 +77,6 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
          data = this.props.profile.get_following
        }
      }
-     console.log(data)
 
      return (
        <BackgroundContainer>

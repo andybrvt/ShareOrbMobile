@@ -234,7 +234,6 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
    render(){
      const comments = this.props.socialComments
-     console.log(this.props)
      return (
        <SafeAreaView
          style ={{flex: 1, backgroundColor:'white'}}

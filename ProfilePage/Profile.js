@@ -24,6 +24,7 @@ import { Tag, Bookmark, Search, ChevronRight, Settings
   ,MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
 import { TabView, SceneMap } from 'react-native-tab-view';
 import GoalContainer from '../GoalAlbum/GoalContainer';
+import * as authActions from '../store/actions/auth';
 
 // This will be the bulk of the profile page
 // this will be used for current user
@@ -98,7 +99,7 @@ class Profile extends React.Component{
   }
 
   _renderScene = SceneMap({
-    first: () =>   <SocialCalendarVonly userId = {this.props.currentId} navigation = {this.props.navigation}/>,
+    first: () =>  <SocialCalendarVonly openShowCamera = {this.props.openShowCamera} userId = {this.props.currentId} navigation = {this.props.navigation} currentId = {this.props.currentId}/>,
   second: () => <GoalContainer  userId = {this.props.currentId} navigation = {this.props.navigation}/>,
   });
 
@@ -182,12 +183,20 @@ class Profile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
+          <SocialCalendarVonly
+            openShowCamera = {this.props.openShowCamera}
+            userId = {this.props.currentId}
+            navigation = {this.props.navigation}
+            currentId = {this.props.currentId}/>
+          {/*
             <TabView
               navigationState = {this.state}
               renderScene = {this._renderScene}
               renderTabBar={this._renderTabBar}
               onIndexChange={this._handleIndexChange}
                />
+            */}
+
         </View>
       </BackgroundContainer>
     )
@@ -207,6 +216,13 @@ const mapStateToProps = state => {
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,
     bio: state.auth.bio,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    openShowCamera: () => dispatch(authActions.openShowCamera()),
+
   }
 }
 
@@ -273,4 +289,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
