@@ -22,6 +22,7 @@ import { connect } from 'react-redux';
 import axios from "axios";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import BottomModal from '../RandomComponents/BottomModal';
+import AndroidDateModal from '../RandomComponents/AndroidDateModal';
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import Animated, {Easing} from 'react-native-reanimated';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
@@ -412,17 +413,16 @@ class Signup extends React.Component{
         </TouchableWithoutFeedback>
 
         {
-          Platform.OS === "android" ?
+          Platform.OS !== "android" ?
 
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={this.state.dob}
-            mode="date"
-            is24Hour = {true}
-            display="default"
-            onChange={this.onDobChange}
-            maximumDate = {new Date()}
-          />
+
+          <AndroidDateModal
+            onCancel = {this.onCloseDatePicker}
+            visible = {this.state.showDatePicker}
+            value = {this.state.dob}
+            onChange = {this.onDobChange}
+
+             />
 
           :
 
