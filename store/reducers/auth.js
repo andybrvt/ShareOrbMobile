@@ -20,7 +20,7 @@ const initialState ={
   private: false,
   sentRequestList: [],
   requestList: [],
-  showIntialInstructions: false,
+  showIntialInstructions: true,
   notificationSeen: 0,
   date_joined: null,
   bio: "",
@@ -108,7 +108,7 @@ const authLogout = (state, action) => {
     private: false,
     sentRequestList: [],
     requestList: [],
-    showIntialInstructions: false,
+    showIntialInstructions: true,
     notificationSeen: 0,
     date_joined: null,
     bio: ""

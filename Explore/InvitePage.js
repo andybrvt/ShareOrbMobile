@@ -13,7 +13,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard
  } from 'react-native';
-import TextInputError from '../RandomComponents/TextInputError'
+import TextInputError1 from '../RandomComponents/TextInputError1'
 import authAxios from '../util';
 
 
@@ -29,8 +29,21 @@ class InvitePage extends React.Component{
 
     this.state = {
       emailError: [],
-      email: ''
+      email: '',
+      inviteLeft: 0,
+      infoText: ""
     }
+  }
+
+  componentDidMount(){
+    authAxios.get(`${global.IP_CHANGE}`+'/userprofile/getInvitedNum')
+    .then( res => {
+
+
+      this.setState({
+        inviteLeft: res.data
+      })
+    })
   }
 
   checkErrors = () => {
@@ -70,6 +83,21 @@ class InvitePage extends React.Component{
       email: email
     }).then(res => {
       console.log(res.data)
+      if(res.data.created === false){
+        // this is if the email is created already
+        this.setState({
+          infoText: "You use this email already"
+        })
+      } else {
+        this.setState({
+          infoText: "Invite sent successfully",
+          inviteLeft: res.data.num,
+          email: ''
+        })
+
+
+        setTimeout(() => this.setState({infoText: ''}), 5000)
+      }
     })
 
   }
@@ -81,76 +109,96 @@ class InvitePage extends React.Component{
 
        <View style = {styles.container}>
 
+         {
+
+           this.state.inviteLeft === 0 ?
+
+           <View>
+             <Text>Looks like you are out of invites</Text>
+            <Text>{this.state.infoText}</Text>
+
+         </View>
+
+           :
 
 
-         <TouchableWithoutFeedback
-           style = {{flex: 1}}
-           onPress = {() =>Keyboard.dismiss()}
-           >
-           <View style = {{
-              flex: 1,
-              alignItems: 'center',
-              width: '100%'}}>
-
-
-              <View style = {{
-                  top: '20%'
-                }}>
-                <Text style = {{
-                  color: '#1890ff',
-                  fontSize:30,
-                  // textShadowColor: 'rgba(0, 0, 0, 0.75)',
-                  // textShadowColor: 'black',
-                  // textShadowOffset: {width: -1, height: 1},
-                  // textShadowRadius: 5,
-                  fontWeight:'bold',
-                  }}>Invite a friend</Text>
-              </View>
-
-             <View style ={{
-                 width: '80%',
-                 top: '30%'
-               }}>
-
-               <TextInputError
-                 onBlur = {() => this.setState({
-                   emailError: this.validate("email", this.state.email)})}
-                 onChangeText = {(value) => this.setState({email: value.trim()})}
-                 placeholder = "Email"
-                 error = {this.state.emailError}
-
-                 />
-             </View>
-
+           <TouchableWithoutFeedback
+             style = {{flex: 1}}
+             onPress = {() =>Keyboard.dismiss()}
+             >
              <View style = {{
-                 width: '80%',
-                 alignItems: 'center',
-                 top: '40%'
-               }}>
+                flex: 1,
+                alignItems: 'center',
+                width: '100%'}}>
 
-               {
-                 this.checkErrors() ?
 
-                 <View
-                    style = {styles.loginBtnDisabled}>
-                   <Text style = {styles.loginText}> Login</Text>
-                 </View>
+                <View style = {{
+                    top: '20%'
+                  }}>
+                  <Text style = {{
+                    color: '#1890ff',
+                    fontSize:30,
+                    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+                    // textShadowColor: 'black',
+                    // textShadowOffset: {width: -1, height: 1},
+                    // textShadowRadius: 5,
+                    fontWeight:'bold',
+                    }}>Invite a friend</Text>
+                </View>
 
-                 :
+               <View style ={{
+                   width: '80%',
+                   top: '30%'
+                 }}>
 
-                 <TouchableOpacity
-                    onPress = {() => this.submitInvite()}
-                    style = {styles.loginBtn}>
-                   <Text style = {styles.loginText}> Login</Text>
-                 </TouchableOpacity>
+                 <TextInputError1
+                   onBlur = {() => this.setState({
+                     emailError: this.validate("email", this.state.email)})}
+                   onChangeText = {(value) => this.setState({email: value.trim()})}
+                   placeholder = "Email"
+                   error = {this.state.emailError}
+                   value = {this.state.email}
+                   />
 
-               }
+                 <Text>You have {this.state.inviteLeft} invites left</Text>
+
+
+                 <Text>{this.state.infoText}</Text>
+               </View>
+
+               <View style = {{
+                   width: '80%',
+                   alignItems: 'center',
+                   top: '40%'
+                 }}>
+
+                 {
+                   this.checkErrors() ?
+
+                   <View
+                      style = {styles.loginBtnDisabled}>
+                     <Text style = {styles.loginText}> Invite</Text>
+                   </View>
+
+                   :
+
+                   <TouchableOpacity
+                      onPress = {() => this.submitInvite()}
+                      style = {styles.loginBtn}>
+                     <Text style = {styles.loginText}> Invite</Text>
+                   </TouchableOpacity>
+
+                 }
+
+               </View>
 
              </View>
 
-           </View>
+           </TouchableWithoutFeedback>
 
-         </TouchableWithoutFeedback>
+
+         }
+
 
        </View>
 
