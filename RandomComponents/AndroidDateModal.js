@@ -19,6 +19,13 @@ import {
 
 class AndroidDateModal extends React.Component{
 
+  onCancel = () => {
+    this.props.onCancel()
+  }
+
+  onAction = () => {
+    this.props.onAction()
+  }
 
   render(){
 
@@ -30,6 +37,7 @@ class AndroidDateModal extends React.Component{
           >
 
           <TouchableWithoutFeedback
+            onPress = {() => this.onCancel()}
             style = {{
               flex: 1,
               alignItems: 'center',
