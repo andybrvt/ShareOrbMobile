@@ -40,20 +40,27 @@ class AndroidDateModal extends React.Component{
             onPress = {() => this.onCancel()}
             style = {{
               flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center'
+
             }}
             >
 
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={this.props.value}
-              mode="date"
-              is24Hour = {true}
-              display="default"
-              onChange={this.props.onChange}
-              maximumDate = {new Date()}
-            />
+            <View style = {{
+                flex: 1,
+                backgroundColor: 'red',
+                alignItems: 'center',
+                justifyContent:'center',
+              }}>
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={this.props.value}
+                mode="date"
+                is24Hour = {true}
+                display="default"
+                onChange={this.props.onChange}
+                maximumDate = {new Date()}
+              />
+
+            </View>
           </TouchableWithoutFeedback>
 
         </Modal>
