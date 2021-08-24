@@ -113,9 +113,16 @@ class InvitePage extends React.Component{
 
            this.state.inviteLeft === 0 ?
 
-           <View>
-             <Text>Looks like you are out of invites</Text>
-            <Text>{this.state.infoText}</Text>
+           <View style = {{
+               flex: 1,
+               alignItems: 'center',
+               justifyContent: 'center'
+             }}>
+             <Text style = {{
+                 fontSize: 20,
+                 fontWeight: 'bold'
+               }}>Looks like you are out of invites</Text>
+             <Text>{this.state.infoText}</Text>
 
          </View>
 
@@ -148,7 +155,7 @@ class InvitePage extends React.Component{
 
                <View style ={{
                    width: '80%',
-                   top: '30%'
+                   top: '30%',
                  }}>
 
                  <TextInputError1
@@ -160,10 +167,17 @@ class InvitePage extends React.Component{
                    value = {this.state.email}
                    />
 
-                 <Text>You have {this.state.inviteLeft} invites left</Text>
+
+                 <Text style = {{
+                     textAlign: 'center',
+                     fontSize: 15,
+                     fontWeight: 'bold'
+                   }}>You have {this.state.inviteLeft} invites left</Text>
 
 
-                 <Text>{this.state.infoText}</Text>
+                 <Text style = {{
+                     textAlign: 'center'
+                   }}>{this.state.infoText}</Text>
                </View>
 
                <View style = {{
