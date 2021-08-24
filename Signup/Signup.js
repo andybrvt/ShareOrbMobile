@@ -96,9 +96,16 @@ class Signup extends React.Component{
   }
 
   onDobChange = (event, selectedDate) => {
-    this.setState({
-      dob: selectedDate
-    })
+    if(selectedDate === 'undefined'){
+      this.setState({
+        showDatePicker: false
+      })
+    } else {
+      this.setState({
+        dob: selectedDate
+      })
+    }
+
   }
 
 
