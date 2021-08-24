@@ -68,6 +68,8 @@ class InvitePage extends React.Component{
     console.log(email);
     authAxios.post(`${global.IP_CHANGE}`+'/userprofile/onInviteListAdd',{
       email: email
+    }).then(res => {
+      console.log(res.data)
     })
 
   }

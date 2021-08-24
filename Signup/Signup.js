@@ -410,13 +410,32 @@ class Signup extends React.Component{
 
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
-        <BottomModal
-          slide = {this.slideAnimation}
-          onCancel = {this.onCloseDatePicker}
-          visible = {this.state.showDatePicker}
-          value = {this.state.dob}
-          onChange = {this.onDobChange}
-           />
+
+        {
+          Platform.OS !== "android" ?
+
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={this.state.dob}
+            mode="date"
+            is24Hour = {true}
+            display="default"
+            onChange={this.onDobChange}
+            maximumDate = {new Date()}
+          />
+
+          :
+
+          <BottomModal
+            slide = {this.slideAnimation}
+            onCancel = {this.onCloseDatePicker}
+            visible = {this.state.showDatePicker}
+            value = {this.state.dob}
+            onChange = {this.onDobChange}
+             />
+
+
+        }
 
 
       </SafeAreaView>
