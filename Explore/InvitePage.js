@@ -38,8 +38,6 @@ class InvitePage extends React.Component{
   componentDidMount(){
     authAxios.get(`${global.IP_CHANGE}`+'/userprofile/getInvitedNum')
     .then( res => {
-
-
       this.setState({
         inviteLeft: res.data
       })
