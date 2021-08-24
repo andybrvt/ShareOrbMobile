@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  TouchableOpacity,
+
   TextInput,
   TouchableHighlight
  } from 'react-native';
@@ -14,7 +14,7 @@ import { ArrowRightCircle, Plus, Smile} from "react-native-feather";
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
 import EmojiPicker from 'rn-emoji-keyboard';
-
+import {TouchableOpacity} from 'react-native-gesture-handler';
  class RealRoundedInput extends React.Component{
    constructor(props){
      super(props);
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     // backgroundColor: "yellow",
-    width: "10%",
+
     alignItems: "center",
     justifyContent: "center"
   },

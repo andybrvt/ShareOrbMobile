@@ -1,5 +1,5 @@
 import { enableScreens } from 'react-native-screens';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import { createNativeStackNavigator} from 'react-native-screens/native-stack';
 import React from 'react';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import Friends from './Friends';
@@ -8,7 +8,7 @@ import LoadingScreen from './Login/LoadingScreen';
 import Signup from './Signup/Signup';
 import Explore from './Explore/Explore';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
+import { TransitionPresets} from '@react-navigation/stack';
 const Tab = createMaterialBottomTabNavigator();
 
 
@@ -31,7 +31,8 @@ class Routes extends React.Component{
 
         }
 
-        <Stack.Screen name = "Signup" component = {Signup} />
+        <Stack.Screen
+           name = "Signup" component = {Signup} />
         <Stack.Screen name = "Explore" component = {Explore} />
 
       </Stack.Navigator>

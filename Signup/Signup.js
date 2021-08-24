@@ -280,11 +280,15 @@ class Signup extends React.Component{
                showsVerticalScrollIndicator = {false}
                >
                <View style = {styles.logoContainer}>
-                 <MainLogo height = {100}  width = {200} />
-
-                 <Text>
-                   Sign up
-                 </Text>
+                 <MainLogo height = {80}  width = {180} />
+                 <TouchableOpacity>
+                   <View>
+                     <Button
+                       onPress = {() => this.props.navigation.navigate("Login")}
+                       title = "Back to Login"
+                        />
+                   </View>
+                 </TouchableOpacity>
 
                </View>
 
@@ -413,14 +417,7 @@ class Signup extends React.Component{
                }
 
 
-               <TouchableOpacity>
-                 <View>
-                   <Button
-                     onPress = {() => this.props.navigation.navigate("Login")}
-                     title = "Login"
-                      />
-                 </View>
-               </TouchableOpacity>
+
              </ScrollView>
 
 
