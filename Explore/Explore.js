@@ -224,7 +224,7 @@ class Explore extends React.Component{
                />
 
             :
-
+            
             <InvitePage />
 
 
