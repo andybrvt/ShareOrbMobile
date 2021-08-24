@@ -96,16 +96,16 @@ class Signup extends React.Component{
   }
 
   onDobChange = (event, selectedDate) => {
-    if(selectedDate === 'undefined'){
+    if(selectedDate === undefined){
       this.setState({
         showDatePicker: false
       })
-    } else {
-      this.setState({
-        dob: selectedDate
-      })
+      return
     }
-
+    this.setState({
+      dob: selectedDate,
+      showDatePicker: false
+    })
   }
 
 
@@ -237,7 +237,7 @@ class Signup extends React.Component{
   render(){
     const dobMonth=this.state.dobMonth;
     const dobDay=this.state.dobDay;
-
+    let showPicker=this.state.showDatePicker
     let error = {}
     if(this.props.errorMessage){
       error = this.props.errorMessage
@@ -420,16 +420,25 @@ class Signup extends React.Component{
         </TouchableWithoutFeedback>
 
         {
-          Platform.OS !== "android" ?
+          Platform.OS === "android" ?
+          <View>
+          {showPicker?
+            <View>
+              <DateTimePicker
+                testID="dateTimePicker"
+                value = {this.state.dob}
+                mode="date"
+                is24Hour = {true}
+                display="default"
+                onChange = {this.onDobChange}
+                maximumDate = {new Date()}
+              />
+            </View>
+            :
+            <View></View>
+          }
+          </View>
 
-
-          <AndroidDateModal
-            onCancel = {this.onCloseDatePicker}
-            visible = {this.state.showDatePicker}
-            value = {this.state.dob}
-            onChange = {this.onDobChange}
-
-             />
 
           :
 

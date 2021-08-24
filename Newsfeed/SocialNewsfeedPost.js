@@ -782,7 +782,7 @@ class SocialNewsfeedPost extends React.Component{
           <View style = {styles.imageContainer}>
               {this.revealPhoto()}
           </View>
-          <View style={{padding:10}}>
+          <View style={{minHeight:40, marginTop:10}}>
             <Text>
               {
                 (caption.length==0)?

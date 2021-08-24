@@ -292,8 +292,6 @@ class Notifications extends React.Component{
          <View style={{ flexDirection:'row', padding:15}}>
            <View style={{flexDirection:'row', width:'90%'}}>
              <Avatar
-
-               onPress = {() => this.ViewProfile(item.actor.username)}
                size={30}
                rounded
                source = {{
