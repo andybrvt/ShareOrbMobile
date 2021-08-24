@@ -102,10 +102,19 @@ class Signup extends React.Component{
       })
       return
     }
-    this.setState({
-      dob: selectedDate,
-      showDatePicker: false
-    })
+
+    if(Platform.OS =='ios'){
+      this.setState({
+        dob: selectedDate,
+      })
+    }
+    else{
+      this.setState({
+        dob: selectedDate,
+        showDatePicker: false
+      })
+    }
+
   }
 
 
@@ -259,7 +268,7 @@ class Signup extends React.Component{
 
           <KeyboardAvoidingView
             style = {styles.container}
-             behavior = "padding">
+             behavior = {Platform.OS =='ios'?"padding":"height"}>
 
              <ScrollView
                contentContainerStyle = {{
