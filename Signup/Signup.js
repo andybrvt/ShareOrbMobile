@@ -412,7 +412,7 @@ class Signup extends React.Component{
         </TouchableWithoutFeedback>
 
         {
-          Platform.OS !== "android" ?
+          Platform.OS === "android" ?
 
           <DateTimePicker
             testID="dateTimePicker"
