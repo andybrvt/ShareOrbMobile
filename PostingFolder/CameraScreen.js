@@ -607,13 +607,6 @@ class CameraScreen extends React.Component{
 
                  </TouchableOpacity>
 
-
-
-
-
-
-
-
                <TouchableOpacity
                  style = {styles.submitBtn}
                  onPress = {() => this.onSavePhoto(this.state.imagePreview)}
