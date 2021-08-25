@@ -201,7 +201,7 @@ let likeAvatarList=[]
      let utc2=dateFns.format(dtDateOnly1, 'h:mma');
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
      return(
-       <View style={{minHeight:150, marginBottom:10}}>
+       <View style={{minHeight:150, marginBottom:0}}>
        <View style={{
            // backgroundColor: 'red',
            width:'100%',
@@ -330,25 +330,7 @@ let likeAvatarList=[]
      this.flatListRef.scrollToIndex({ index: value })
    }
 
-   FlatListItemSeparator = () => {
-     return (
-       // change to 50 if caption exists
-       <View
-         style={{
-           height: 50,
-           width:'97.5%',
-           backgroundColor: "white",
-           padding:20,
-           marginBottom:20,
-         }}
-       >
-       <View style={{flexDirection:'row'}}>
-       <Text style={{fontWeight:'bold'}}>admin </Text>
-       <Text style={{color:'black'}}>swimmign in the lake</Text>
-       </View>
-     </View>
-     );
-   }
+
 
    getItemLayout(data, index){
      return {length: 300, offset: 300 * index, index }
@@ -505,7 +487,6 @@ let likeAvatarList=[]
               renderItem ={(item) => this.renderItem(item)}
               keyExtractor={(item, index) => String(index)}
               getItemLayout = {this.getItemLayout.bind(this)}
-              // ItemSeparatorComponent = { this.FlatListItemSeparator }
             />
 
               <View  style={styles.openContainer}>

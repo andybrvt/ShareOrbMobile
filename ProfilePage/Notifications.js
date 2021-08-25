@@ -347,20 +347,13 @@ const styles = StyleSheet.create({
     flexWrap:'wrap',
   },
   notiContainer:{
-    flexDirection:'row',
-    paddingRight:15,
-    paddingTop:15,
-    paddingLeft:10,
-    paddingBottom:15,
+    flexDirection:'row', padding:15
   },
   frontNotiSpace:{
-    width:'10%',
-    // backgroundColor:'green',
+    flex:1,
   },
   midNotiSpace:{
-    marginLeft:'5%',
-    width:'77.5%', marginRight:'2.5%', flexWrap:'wrap',
-    // backgroundColor:'red'
+    flex:5,
   },
   notiTimeStamp: {
     color:'#8c8c8c',

@@ -376,8 +376,6 @@ class SocialNewsfeedPost extends React.Component{
        // likeAvatarList.push({'imageURL':'http://i.imgur.com/f93vCxM.gif'}]),
     }
 
-
-
     // if(this.props.data) {
     //
     //   contentTypeId = this.props.data.id
@@ -393,15 +391,8 @@ class SocialNewsfeedPost extends React.Component{
     //   }
     //
     // }
-
-
     let socialMonth=""
     let socialDay=""
-
-
-
-    //
-
     // timestamp=postCreatedAt
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
     // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
@@ -413,7 +404,6 @@ class SocialNewsfeedPost extends React.Component{
     // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
       return (
-
         <View>
         {/*
         <Animated.View style = {{
@@ -446,7 +436,6 @@ class SocialNewsfeedPost extends React.Component{
                     />
                 </TouchableOpacity>
               </GestureRecognizer>
-
                 <Avatar
                   style={styles.close}
                   onPress = {() => this.props.ViewProfile(userUsername)}
@@ -546,8 +535,6 @@ class SocialNewsfeedPost extends React.Component{
                 null
 
               }
-
-
                     {
                       peopleLikeId.includes(this.props.userId ) ?
                       <TouchableOpacity
@@ -591,7 +578,6 @@ class SocialNewsfeedPost extends React.Component{
                         </View>
                       </TouchableOpacity>
                     }
-
                 <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
                   <View style = {styles.tagCSS2}>
                       <View style = {styles.justifyCenter}>
@@ -693,7 +679,6 @@ class SocialNewsfeedPost extends React.Component{
 
   onSwipeRight= (postId) =>{
     // this.onPostDirect(postId)
-
   }
 
 
@@ -707,7 +692,6 @@ class SocialNewsfeedPost extends React.Component{
     let userId = ""
     let actionText = ""
     let caption=""
-
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post
@@ -721,33 +705,24 @@ class SocialNewsfeedPost extends React.Component{
           actionText = " clipped picture to day"
         }
       }
-
-
       if(this.props.data.creator.profile_picture){
         profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.creator.profile_picture
       }
-
-
       if(this.props.data.creator.id){
         userId = this.props.data.creator.id
       }
-
       if(this.props.data.creator.username){
         userUsername = this.props.data.creator.username
       }
-
       if(this.props.data.caption){
         caption = this.props.data.caption
       }
-
-
     }
 
     const y = this.props.y;
     const backgroundGradient = interpolateColors(y, {
       inputRange: [0, 100],
       outputColorRange: ["white", "black"],
-
     })
 
 
@@ -782,25 +757,22 @@ class SocialNewsfeedPost extends React.Component{
           <View style = {styles.imageContainer}>
               {this.revealPhoto()}
           </View>
-          <View style={{minHeight:40, marginTop:10}}>
-            <Text>
-              {
-                (caption.length==0)?
-                ''
-                :
-                <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
-              }
-              <Animated.Text numberofLines={1} style={{color:'black'}}>{caption.substring(0,140)}</Animated.Text>
-            </Text>
-          </View>
+          {
+            (caption.length==0)?
+            <View style={{backgroundColor:'white', minHeight:10, }}>
+              <Text></Text>
+            </View>
+            :
+            <View style={{flexDirection:'row',  minHeight:10, marginBottom:20, marginTop:10}}>
+            <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
+              <Animated.Text numberofLines={1} style={{color:'black', width:'85%', backgroundColor:'white'}}>{caption.substring(0,140)}</Animated.Text>
+            </View>
+          }
         </View>
       </View>
-
     )
   }
 }
-
-
 
 const mapStateToProps = state => {
   return {
@@ -810,9 +782,7 @@ const mapStateToProps = state => {
   }
 }
 
-
 export default connect(mapStateToProps)(SocialNewsfeedPost);
-
 const styles = StyleSheet.create({
   dayNumTag: {
     color:'white',
@@ -823,7 +793,6 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     fontWeight:'bold',
     // fontWeight:'bold',
-
   },
   container: {
 
