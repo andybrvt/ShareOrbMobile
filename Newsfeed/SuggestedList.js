@@ -59,14 +59,6 @@ class SuggestedList extends React.Component{
       following: following
     })
     .then(res => {
-      console.log(res.data)
-
-      this.props.updateFollowing(res.data)
-      this.setState({
-        loading: false,
-        itemLoading: 0
-      })
-
       const notificationObject = {
         command: "send_follow_notification",
         actor: follower,
@@ -77,9 +69,18 @@ class SuggestedList extends React.Component{
 
       global.SEND_FOLLOW_NOTIFICAITON(
         notiToken,
-        follower,
-        following
+        this.props.username,
+        this.props.curId
       )
+
+      this.props.updateFollowing(res.data)
+      this.setState({
+        loading: false,
+        itemLoading: 0
+      })
+
+
+
     })
   }
 
@@ -113,11 +114,12 @@ class SuggestedList extends React.Component{
     //     </View>
     //   )
     // }
+
     console.log(item)
 
     const following = [];
-    const firstName = global.CAPITALIZE(item.first_name)
-    const lastName = global.CAPITALIZE(item.last_name)
+    const firstName = item.first_name
+    const lastName = item.last_name
 
     if(this.props.following){
       for(let i = 0; i< this.props.following.length; i++){
@@ -162,7 +164,7 @@ class SuggestedList extends React.Component{
             :
 
             <TouchableOpacity
-              onPress = {() => this.onFollow(this.props.curId, item.id)}
+              onPress = {() => this.onFollow(this.props.curId, item.id, item.notificationToken)}
               style = {styles.editButton}>
               <Text style = {{color: 'white'}}>Follow</Text>
             </TouchableOpacity>

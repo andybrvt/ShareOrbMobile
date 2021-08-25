@@ -266,6 +266,8 @@ global.SEND_COMMENT_NOTIFICATION = async(expoPushToken, sender, itemId) => {
 }
 
 global.SEND_FOLLOW_NOTIFICAITON = async(expoPushToken, sender, senderId) => {
+  console.log('soem notifications here')
+  console.log(sender, senderId)
   if(expoPushToken !== ""){
     const message = {
       to: expoPushToken,
