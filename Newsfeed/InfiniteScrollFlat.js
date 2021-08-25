@@ -162,7 +162,11 @@ class InfiniteScrollFlat extends React.Component{
         {
           post.length === 0 ?
 
-          <SuggestedList />
+          <SuggestedList
+            updateFollowing = {this.props.authAddUnaddFollowing}
+            following= {this.props.following}
+            curId = {this.props.id}
+            />
 
           :
 
@@ -194,7 +198,8 @@ const mapStateToProps = state => {
   return{
     id: state.auth.id,
     userName: state.auth.username,
-    socialPosts: state.socialNewsfeed.socialPosts
+    socialPosts: state.socialNewsfeed.socialPosts,
+    following: state.auth.following
   }
 }
 
@@ -202,6 +207,7 @@ const mapDispatchToProps = dispatch => {
   return {
     loadMoreSocialPost: (post) => dispatch(socialNewsfeedActions.loadMoreSocialPost(post)),
     openShowCamera: () => dispatch(authActions.openShowCamera()),
+    authAddUnaddFollowing: (following) => dispatch(authActions.authAddUnaddFollowing(following))
   }
 }
 

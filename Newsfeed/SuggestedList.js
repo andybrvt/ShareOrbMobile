@@ -44,6 +44,31 @@ class SuggestedList extends React.Component{
 
   }
 
+  onFollow = (follower, following) => {
+
+
+    authAxios.post(`${global.IP_CHANGE}/userprofile/onFollow`, {
+      follower: follower,
+      following: following
+    })
+    .then(res => {
+      console.log(res.data)
+      this.props.updateFollowing(res.data)
+
+    })
+  }
+
+  onUnfollow =(follower, following) => {
+    authAxios.post(`${global.IP_CHANGE}/userprofile/onUnfollow`, {
+      follower: follower,
+      following: following
+    })
+    .then(res => {
+      this.props.updateFollowing(res.data)
+
+    })
+  }
+
   renderItem = ({item, index}) => {
 
     // if(index === 0){
@@ -55,8 +80,20 @@ class SuggestedList extends React.Component{
     // }
     console.log(item)
 
+    const following = [];
     const firstName = global.CAPITALIZE(item.first_name)
     const lastName = global.CAPITALIZE(item.last_name)
+
+    if(this.props.following){
+      for(let i = 0; i< this.props.following.length; i++){
+        following.push(
+          this.props.following[i].id
+        )
+      }
+    }
+
+    console.log(following)
+
     return(
       <View style = {styles.userContainer}>
         <View style = {styles.userCards}>
@@ -69,10 +106,26 @@ class SuggestedList extends React.Component{
             <Text style = {styles.textName}>{firstName} {lastName}</Text>
           </View>
 
+          {
+            following.includes(item.id) ?
 
-          <TouchableOpacity style = {styles.editButton}>
-            <Text style = {{color: 'white'}}>Follow</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress = {() => this.onUnfollow(this.props.curId, item.id)}
+              style = {styles.editButton}>
+              <Text style = {{color: 'white'}}>Unfollow</Text>
+            </TouchableOpacity>
+
+            :
+
+            <TouchableOpacity
+              onPress = {() => this.onFollow(this.props.curId, item.id)}
+              style = {styles.editButton}>
+              <Text style = {{color: 'white'}}>Follow</Text>
+            </TouchableOpacity>
+
+
+
+          }
 
 
         </View>
