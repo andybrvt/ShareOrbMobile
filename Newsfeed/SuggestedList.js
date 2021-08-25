@@ -143,6 +143,17 @@ class SuggestedList extends React.Component{
   return newList
 }
 
+  listHeader = () => {
+
+    return(
+      <View style = {styles.headerContainer}>
+        <Image source={require('./noPosts1.png')} style = {{height: 150, width: 150, resizeMode : 'stretch',}} />
+
+        <Text style = {styles.headerText}>No posts</Text>
+      </View>
+    )
+  }
+
 
   render(){
 
@@ -152,6 +163,7 @@ class SuggestedList extends React.Component{
           flex: 1
         }}>
         <FlatList
+          ListHeaderComponent = {this.listHeader}
           numColumns = {2}
           data = {this.state.list}
           renderItem = {this.renderItem}
@@ -206,6 +218,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#1890ff",
     padding: 10
   },
+  headerContainer: {
+    width: '80%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    padding: 20
+  },
+  headerText: {
+    textAlign: 'center',
+    width: '100%',
+    color: '#1890ff',
+    fontWeight: 'bold',
+    fontSize: 25,
+  }
 
 })
 
