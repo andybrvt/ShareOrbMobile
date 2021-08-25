@@ -9,10 +9,12 @@ import {
   TouchableOpacity,
   Dimensions,
   RefreshControl,
-  Image
+  Image,
+  ActivityIndicator
  } from 'react-native';
 import axios from "axios";
 import authAxios from '../util';
+import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 
  // used in conjuction with the newsfeed view so that you
  // can folow people
@@ -25,7 +27,9 @@ class SuggestedList extends React.Component{
     super(props)
 
     this.state = {
-      list: []
+      list: [],
+      loading: false,
+      itemLoading: 0,
     }
 
   }
@@ -44,8 +48,11 @@ class SuggestedList extends React.Component{
 
   }
 
-  onFollow = (follower, following) => {
-
+  onFollow = (follower, following, notiToken) => {
+    this.setState({
+      loading: true,
+      itemLoading: following
+    })
 
     authAxios.post(`${global.IP_CHANGE}/userprofile/onFollow`, {
       follower: follower,
@@ -53,19 +60,47 @@ class SuggestedList extends React.Component{
     })
     .then(res => {
       console.log(res.data)
-      this.props.updateFollowing(res.data)
 
+      this.props.updateFollowing(res.data)
+      this.setState({
+        loading: false,
+        itemLoading: 0
+      })
+
+      const notificationObject = {
+        command: "send_follow_notification",
+        actor: follower,
+        recipient: following
+      }
+      NotificationWebSocketInstance.sendNotification(notificationObject);
+
+
+      global.SEND_FOLLOW_NOTIFICAITON(
+        notiToken,
+        follower,
+        following
+      )
     })
   }
 
   onUnfollow =(follower, following) => {
+
+    this.setState({
+      loading: true,
+      itemLoading: following
+    })
     authAxios.post(`${global.IP_CHANGE}/userprofile/onUnfollow`, {
       follower: follower,
       following: following
     })
     .then(res => {
-      this.props.updateFollowing(res.data)
 
+
+      this.props.updateFollowing(res.data)
+      this.setState({
+        loading: false,
+        itemLoading: 0
+      })
     })
   }
 
@@ -92,7 +127,6 @@ class SuggestedList extends React.Component{
       }
     }
 
-    console.log(following)
 
     return(
       <View style = {styles.userContainer}>
@@ -106,7 +140,17 @@ class SuggestedList extends React.Component{
             <Text style = {styles.textName}>{firstName} {lastName}</Text>
           </View>
 
+
           {
+            this.state.loading=== true && this.state.itemLoading === item.id ?
+
+            <View
+              style = {styles.editButton}>
+              <ActivityIndicator />
+            </View>
+
+            :
+
             following.includes(item.id) ?
 
             <TouchableOpacity
