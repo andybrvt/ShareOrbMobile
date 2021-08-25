@@ -229,23 +229,6 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				5F46C257045A4170A8CB79CE /* AntDesign.ttf in Resources */,
-				095D29E217D54384B1F42D59 /* Entypo.ttf in Resources */,
-				45DA5945F74047D1BD6FDABA /* EvilIcons.ttf in Resources */,
-				174084B2ED03462D81EC0178 /* Feather.ttf in Resources */,
-				BA3912B6404A4E4C8074169E /* FontAwesome.ttf in Resources */,
-				4E19C122E5D2427F9A84D7EB /* FontAwesome5_Brands.ttf in Resources */,
-				C3DFB1A90B484CB1B89DAFE6 /* FontAwesome5_Regular.ttf in Resources */,
-				780CC8C1FF0E4950B43FE088 /* FontAwesome5_Solid.ttf in Resources */,
-				45FD0FC2CE67485BA73B7240 /* Fontisto.ttf in Resources */,
-				1BC01DDCA3A141B9B25A8AC5 /* Foundation.ttf in Resources */,
-				E59316AD3AEB44D59550E624 /* Ionicons.ttf in Resources */,
-				DAE48A7A4C754856A7A5AA08 /* MaterialCommunityIcons.ttf in Resources */,
-				67EF6E2AFFCA43488FE41299 /* MaterialIcons.ttf in Resources */,
-				FF6B904FCB35442D8B41A16C /* Octicons.ttf in Resources */,
-				BB253CDB92484CC8B34D0EF9 /* SimpleLineIcons.ttf in Resources */,
-				261638796D5741BC94E4428D /* Zocial.ttf in Resources */,
-				E4F746F4F6814BA0A747BE1A /* ShareOrbMobile-Bridging-Header.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
