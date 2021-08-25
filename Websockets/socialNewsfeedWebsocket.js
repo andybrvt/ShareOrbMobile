@@ -19,25 +19,21 @@ class WebSocketSocialNewsfeed{
   this.socketRef = new WebSocket(path)
 
   this.socketRef.onopen = () => {
-    console.log('websocket open')
   }
   this.socketRef.onmessage = (e) => {
-    // console.log(e.data)
     this.socketNewSocialPost(e.data)
   }
 
   this.socketRef.onerror = (e) => {
-    console.log(e);
+
   }
 
   this.socketRef.onclose = () => {
-    console.log('WebSocket is closed')
     this.connect()
   }
   }
 
   disconnect() {
-    console.log('disconnected')
     this.socketRef.close();
   }
 
@@ -183,8 +179,6 @@ class WebSocketSocialNewsfeed{
 
   fetchSocialPost(userId, curDate, startIndex){
   // Because of the timezone issue we need to get timezone from front end
-
-    console.log('fetch social post')
     this.sendPostsInfo({
       userId: userId,
       curDate: curDate,
@@ -205,8 +199,6 @@ class WebSocketSocialNewsfeed{
 
   // This will run when you have already made a cell and everything is updated
   // make an axios call and then send it through the here
-
-  console.log('DOES IT GO HERE')
   this.sendPostsInfo({
     curId: curId,
     socialCalCellId: cellId,
@@ -262,7 +254,6 @@ class WebSocketSocialNewsfeed{
   updateSinglePost(socialItemId){
     // This function is used mostly to update the post after comments
 
-    console.log('update here')
     this.sendPostsInfo({
       socialItemId: socialItemId,
       command: 'update_single_post'
@@ -274,7 +265,7 @@ class WebSocketSocialNewsfeed{
     try {
       this.socketRef.send(JSON.stringify({...data}))
     } catch(err){
-      console.log(err.message);
+
     }
   }
 
@@ -289,13 +280,11 @@ class WebSocketSocialNewsfeed{
     setTimeout(
       function(){
         if (socket.readyState === 1){
-          console.log('connection is secure');
           if (callback != null) {
             callback();
           }
           return;
         } else{
-            console.log('waiting for connection...')
             recursion(callback)
         }
       }, 1)
