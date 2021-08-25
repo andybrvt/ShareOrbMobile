@@ -31,7 +31,6 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const {interpolate, Extrapolate, interpolateColors} = Animated;
 const height = Dimensions.get('window').height;
 
-
 class InfiniteScrollFlat extends React.Component{
   state = {
     refreshing: false,
@@ -43,7 +42,6 @@ class InfiniteScrollFlat extends React.Component{
   onRefresh = () => {
     this.setState({refreshing: true})
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
-
     WebSocketSocialNewsfeedInstance.fetchSocialPost(
       this.props.id,
       curDate,
@@ -63,9 +61,7 @@ class InfiniteScrollFlat extends React.Component{
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSocial/`+curDate+"/"+start+'/'+addMore)
     .then( res => {
       this.props.loadMoreSocialPost(res.data.socialPost)
-
       const hasMore = res.data.has_more;
-
       this.setState({
         hasMore:hasMore,
         loading: false,
@@ -78,15 +74,10 @@ class InfiniteScrollFlat extends React.Component{
         error: err.message
       })
     })
-
   }
 
   renderPost = ({item}) => {
-
-
-
     return(
-
         <SocialNewsfeedPost
           y = {this.props.y}
           navigation = {this.props.navigation}
@@ -100,15 +91,10 @@ class InfiniteScrollFlat extends React.Component{
   }
 
   render(){
-
     let post = [];
-
     if(this.props.socialPosts){
       post = this.props.socialPosts
     }
-
-
-
     const y = this.props.y;
     const top = interpolate(y,{
       inputRange: [0, 50],
@@ -153,10 +139,12 @@ class InfiniteScrollFlat extends React.Component{
   // </ScrollView>
 
     return(
+
       <Animated.View
         style = {{
           height: height -50,
           top: top,
+
         }}
         >
         {
@@ -183,7 +171,7 @@ class InfiniteScrollFlat extends React.Component{
             onEndReached = {() => this.loadSocialPost()}
             onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
-            style={{top:10}}
+            style={{top:10,}}
              />
         }
 

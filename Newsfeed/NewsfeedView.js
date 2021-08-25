@@ -217,6 +217,7 @@ class NewsfeedView extends React.Component{
                 {...this.props}/>
               {this.state.newsFeedCondition?
                 <InfiniteScrollFlat
+                  style={{marginBottom:400}}
                   y = {this.y}
                   navigation = {this.props.navigation}
                   onPagePost = {this.onPagePost}

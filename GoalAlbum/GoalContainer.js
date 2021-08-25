@@ -54,10 +54,7 @@ class GoalContainer extends React.Component{
         >
 
       <View style={styles.goalCard}>
-        <View style={{marginLeft:'15%', width:'90%', }}>
-          <Text style={{padding:10, fontSize:15, }}>{item.goal}</Text>
-        </View>
-        <View style={{flexDirection:'column', position:'absolute', top:0, backgroundColor:'red'}}>
+        <View style={{flexDirection:'column', position:'absolute', top:'10%'}}>
             <Text style = {{color:'black', fontWeight:'bold', fontSize:24}}>
               {socialMonth.substring(0,3)}
             </Text>
@@ -65,8 +62,11 @@ class GoalContainer extends React.Component{
               {socialDay}
             </Text>
         </View>
-
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection:'column'}}>
+        <View style={{marginLeft:'15%', width:'90%', backgroundColor:'green' }}>
+          <Text style={{padding:10, fontSize:18, fontWeight:'bold' }}>{item.goal}</Text>
+        </View>
+        <View style={{marginLeft:'15%',flexDirection:'row', backgroundColor:'blue'}}>
 
 
 
@@ -92,6 +92,9 @@ class GoalContainer extends React.Component{
           }
           </View>
         </View>
+
+        </View>
+
       </View>
     </TouchableOpacity>
     )
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
   },
   goalCard: {
     left:'5%',
-
+    flexDirection:'row',
     backgroundColor:'#F0F0F0',
     elevation:50,
     width:'90%',
