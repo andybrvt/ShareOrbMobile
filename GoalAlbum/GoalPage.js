@@ -72,7 +72,7 @@ class GoalPage extends React.Component{
         </View>
 
         <View>
-          <Text>item.caption</Text>
+          <Text style={{color:'white', fontSize:16, padding:20}}>{item.caption}</Text>
         </View>
       </View>
     )
@@ -145,13 +145,14 @@ class GoalPage extends React.Component{
             <View style = {styles.chatInfoHolder} >
               <TouchableOpacity
                 style = {{
+                  marginRight:10,
                 }}
                 onPress = {() => this.props.navigation.goBack(0)}
                 >
                 <ArrowLeft
                   stroke = "white"
-                  height = {40}
-                  width = {40} />
+                  height = {35}
+                  width = {35} />
 
               </TouchableOpacity>
               <Avatar
@@ -201,7 +202,7 @@ class GoalPage extends React.Component{
 
             <View style = {{
                 alignItems:'center',
-                marginTop: 20,
+                marginTop: 10,
               }}>
               <Text style = {styles.goalLength}>{goalItem.length} entries</Text>
               <Text style = {styles.goalStart}>Started: {startDate}</Text>
@@ -217,10 +218,9 @@ class GoalPage extends React.Component{
               renderItem = {(item) => this.renderItem(item)}
               keyExtractor={(item, index) => String(index)}
               sliderWidth = {width}
-              itemWidth = {width*0.8}
+              itemWidth = {width*0.85}
               onSnapToItem={(index) => this.setState({activeSlide:index}) }
-
-               />
+              />
 
           </View>
 
@@ -242,15 +242,17 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     height: 70,
+    // backgroundColor:'red',
     justifyContent: 'center',
     alignItems:'center'
   },
   middle: {
+    marginTop:25,
     flex:1,
     alignItems: 'center'
   },
   bottom: {
-    flex:3
+    flex:4
   },
   videoFooterUserName: {
     color:'white',
@@ -275,7 +277,7 @@ const styles = StyleSheet.create({
   },
   goalTitle: {
     color: 'white',
-    fontSize:30,
+    fontSize:28,
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},

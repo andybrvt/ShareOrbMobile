@@ -26,7 +26,6 @@ class GoalDropDown extends React.Component{
 
   constructor(props){
     super(props)
-
     this.state = {
       showCreateGoal: false,
       newGoal: ''
@@ -65,7 +64,6 @@ class GoalDropDown extends React.Component{
             justifyContent: 'center',
             height: 70,
           }}>
-
           <Text style = {{
               color: 'white'
             }}>{global.CAPITALIZE(item.goal)}</Text>
@@ -75,8 +73,6 @@ class GoalDropDown extends React.Component{
   }
 
   renderCreateGoal = () => {
-
-
     return(
       <View
         style = {{
@@ -86,7 +82,6 @@ class GoalDropDown extends React.Component{
           backgroundColor: 'white'
         }}
         >
-
       </View>
     )
   }
@@ -113,7 +108,6 @@ class GoalDropDown extends React.Component{
   }
 
   onChange = e => {
-
     this.setState({
       newGoal: e
     })
@@ -126,13 +120,11 @@ class GoalDropDown extends React.Component{
   }
 
   render(){
-
     const showGoals1 = this.props.showGoals;
     return(
       <TouchableWithoutFeedback
         onPress = {() => this.closeFunction()}
         >
-
         <View
           style = {{
             zIndex: 99,
@@ -145,7 +137,6 @@ class GoalDropDown extends React.Component{
             display: showGoals1 ? "" : 'none'
           }}
           >
-
             <View
               style = {{
                 width: '80%',
@@ -164,16 +155,12 @@ class GoalDropDown extends React.Component{
                   }}
                   >Attach a goal to this post</Text>
               </View>
-
               {
-
                 this.state.showCreateGoal ?
-
                 <View
                   style = {{
                     flex: 1,
                     alignItems: 'center',
-
                   }}
                   >
                   <TouchableOpacity
@@ -181,28 +168,23 @@ class GoalDropDown extends React.Component{
                     style = {{
                       width: '100%',
                       top: '20%',
-
                     }}
                     >
-                    <View
-                      style = {{
-                        backgroundColor: 'gray',
+                    <View style = {{
+                        backgroundColor: '#F0F0F0',
                         width: '100%',
                         padding: 15,
-                        borderRadius: 30
+                        borderRadius: 15
                       }}
                       >
                       <TextInput
                         style = {{
-                          color: "white"
+                          color: "black"
                         }}
                         placeholder = "Write a goal"
                         value = {this.state.newGoal}
                         onChangeText = {this.onChange}
-                        ref={(input) => { this.textInput = input; }}
-
-                         />
-
+                        ref={(input) => { this.textInput = input; }}/>
                     </View>
 
                   </TouchableOpacity>
@@ -257,7 +239,7 @@ class GoalDropDown extends React.Component{
                     onPress = {() => this.showCreateGoal()}
                     >
                     <Plus
-
+                      stroke="white"
                       height = {40}
                       width = {40}
                       />
@@ -266,7 +248,7 @@ class GoalDropDown extends React.Component{
 
                   <Button
                     onPress = {() => this.props.cancel()}
-                    title = "none"
+                    title = "Clear"
                      />
                 </View>
 
