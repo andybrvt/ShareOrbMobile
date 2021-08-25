@@ -155,6 +155,8 @@ class InfiniteScrollFlat extends React.Component{
             following= {this.props.following}
             curId = {this.props.id}
             username = {this.props.userName}
+            onRefresh = {this.onRefresh}
+            refreshing = {this.state.refreshing}
             />
 
           :
