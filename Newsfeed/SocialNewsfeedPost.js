@@ -19,7 +19,7 @@ import { Navigation2, Heart, MessageCircle } from "react-native-feather";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import authAxios from '../util';
-// import FastImage from 'react-native-fast-image'
+import FastImage from 'react-native-fast-image'
 
 
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
@@ -431,7 +431,7 @@ class SocialNewsfeedPost extends React.Component{
                  <TouchableOpacity
                    activeOpacity={0.8}
                    onPress = {() => this.onPostDirect(calCell, postId)}>
-                  <Image
+                  <FastImage
                     style={styles.cover}
                     resizeMode = "cover"
                     source={{ uri: itemImage }}
