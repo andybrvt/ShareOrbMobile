@@ -89,6 +89,7 @@ class CameraScreen extends React.Component{
   }
 
   closeShowGoals = () => {
+    console.log("LLLLLLLLLLLLLLL")
     this.setState({
       showGoals: false
     })

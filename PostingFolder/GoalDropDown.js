@@ -122,146 +122,153 @@ class GoalDropDown extends React.Component{
   render(){
     const showGoals1 = this.props.showGoals;
     return(
+
+
       <TouchableWithoutFeedback
         onPress = {() => this.closeFunction()}
         >
-        <View
-          style = {{
-            zIndex: 99,
-            position: 'absolute',
+        {this.props.showGoals?
+          <View
+            style = {{
+              zIndex: 99,
+              position: 'absolute',
 
-            width: width,
-            height: height,
-            alignItems: 'center',
-            justifyContent: 'center',
-            display: showGoals1 ? "" : 'none'
-          }}
-          >
-            <View
-              style = {{
-                width: '80%',
-                height: '70%',
-                backgroundColor: '#000000aa',
-                borderRadius: 20,
-                padding: 20
-              }}
-              >
-              <View>
-                <Text
-                  style = {{
-                    color: 'white',
-                    textAlign: 'center',
-                    fontSize: 20
-                  }}
-                  >Attach a goal to this post</Text>
-              </View>
-              {
-                this.state.showCreateGoal ?
-                <View
-                  style = {{
-                    flex: 1,
-                    alignItems: 'center',
-                  }}
-                  >
-                  <TouchableOpacity
-                    onPress = {() => this.textInput.focus()}
+              width: width,
+              height: height,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            >
+              <View
+                style = {{
+                  width: '80%',
+                  height: '70%',
+                  backgroundColor: '#000000aa',
+                  borderRadius: 20,
+                  padding: 20
+                }}
+                >
+                <View>
+                  <Text
                     style = {{
-                      width: '100%',
-                      top: '20%',
+                      color: 'white',
+                      textAlign: 'center',
+                      fontSize: 20
                     }}
-                    >
-                    <View style = {{
-                        backgroundColor: '#F0F0F0',
-                        width: '100%',
-                        padding: 15,
-                        borderRadius: 15
-                      }}
-                      >
-                      <TextInput
-                        style = {{
-                          color: "black"
-                        }}
-                        placeholder = "Write a goal"
-                        value = {this.state.newGoal}
-                        onChangeText = {this.onChange}
-                        ref={(input) => { this.textInput = input; }}/>
-                    </View>
-
-                  </TouchableOpacity>
-
+                    >Attach a goal to this post</Text>
+                </View>
+                {
+                  this.state.showCreateGoal ?
                   <View
                     style = {{
-                      flexDirection: 'row',
-                      top: '35%'
+                      flex: 1,
+                      alignItems: 'center',
                     }}
                     >
+                    <TouchableOpacity
+                      onPress = {() => this.textInput.focus()}
+                      style = {{
+                        width: '100%',
+                        top: '20%',
+                      }}
+                      >
+                      <View style = {{
+                          backgroundColor: '#F0F0F0',
+                          width: '100%',
+                          padding: 15,
+                          borderRadius: 15
+                        }}
+                        >
+                        <TextInput
+                          style = {{
+                            color: "black"
+                          }}
+                          placeholder = "Write a goal"
+                          value = {this.state.newGoal}
+                          onChangeText = {this.onChange}
+                          ref={(input) => { this.textInput = input; }}/>
+                      </View>
+
+                    </TouchableOpacity>
+
+                    <View
+                      style = {{
+                        flexDirection: 'row',
+                        top: '35%'
+                      }}
+                      >
+
+                      <Button
+                        title = "cancel"
+                        onPress = {() => this.closeCreateGoal()}
+                        />
+
+                      <Button
+                        onPress = {() => this.onSave()}
+                        title = "save"
+                        disabled = {this.state.newGoal.length === 0}
+                        />
+                    </View>
+
+
+                  </View>
+
+                  :
+
+                  <FlatList
+
+                    data = {this.props.data}
+                    renderItem = {this.renderItem}
+                    keyExtractor={(item, index) => String(index)}
+
+                     />
+
+
+
+                }
+
+
+                {
+                  this.state.showCreateGoal ?
+
+                  null
+
+                  :
+
+
+                  <View >
+                    <TouchableOpacity
+                      onPress = {() => this.showCreateGoal()}
+                      >
+                      <Plus
+                        stroke="white"
+                        height = {40}
+                        width = {40}
+                        />
+
+                    </TouchableOpacity>
 
                     <Button
-                      title = "cancel"
-                      onPress = {() => this.closeCreateGoal()}
-                      />
-
-                    <Button
-                      onPress = {() => this.onSave()}
-                      title = "save"
-                      disabled = {this.state.newGoal.length === 0}
-                      />
+                      onPress = {() => this.props.cancel()}
+                      title = "Clear"
+                       />
                   </View>
 
 
-                </View>
-
-                :
-
-                <FlatList
-
-                  data = {this.props.data}
-                  renderItem = {this.renderItem}
-                  keyExtractor={(item, index) => String(index)}
-
-                   />
-
-
-
-              }
-
-
-              {
-                this.state.showCreateGoal ?
-
-                null
-
-                :
-
-
-                <View >
-                  <TouchableOpacity
-                    onPress = {() => this.showCreateGoal()}
-                    >
-                    <Plus
-                      stroke="white"
-                      height = {40}
-                      width = {40}
-                      />
-
-                  </TouchableOpacity>
-
-                  <Button
-                    onPress = {() => this.props.cancel()}
-                    title = "Clear"
-                     />
-                </View>
-
-
-              }
+                }
 
 
 
 
-            </View>
+              </View>
 
 
-        </View>
+          </View>
+        :
+        <View></View>
+
+      }
+
 
       </TouchableWithoutFeedback>
 
