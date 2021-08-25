@@ -131,7 +131,7 @@ class GoalDropDown extends React.Component{
             position: 'absolute',
 
             width: width,
-            // backgroundColor:'red',
+            height: height,
             alignItems: 'center',
             justifyContent: 'center',
             display: showGoals1 ? "" : 'none'

@@ -20,10 +20,8 @@ class WebSocketNotifications {
 
   connect(username){
     const path = `${global.WS_HEADER}://${global.WS_ENDPOINT}/ws/friend-request-notification/`+username
-    console.log(path)
     this.socketRef = new WebSocket(path)
     this.socketRef.onopen = () =>{
-      console.log('websocket open')
     }
   // I guess group_send also sends it to onmessage
   // All the json.send sends to here
@@ -32,18 +30,15 @@ class WebSocketNotifications {
     }
 
     this.socketRef.onerror = (e)=> {
-      console.log(e.message);
     }
 
     this.socketRef.onclose = () => {
-      console.log('websocket is closed notification', username)
 
       // this.connect(username);
     }
   }
 
   disconnect(){
-    console.log('disconnected notification')
     this.socketRef.close();
   }
 
@@ -166,13 +161,11 @@ class WebSocketNotifications {
     setTimeout(
       function(){
         if (socket.readyState === 1){
-          console.log('connection is secure');
           if (callback != null) {
             callback();
           }
           return;
         } else{
-            console.log('waiting for connection...')
             recursion(callback)
         }
       }, 1)

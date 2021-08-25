@@ -34,6 +34,8 @@ class SuggestedList extends React.Component{
 
   }
 
+
+
   componentDidMount(){
 
     authAxios.get(`${global.IP_CHANGE}`+'/userprofile/configSuggestSuggested')
@@ -262,6 +264,8 @@ class SuggestedList extends React.Component{
           flex: 1
         }}>
         <FlatList
+          onRefresh = {()=> this.props.onRefresh()}
+          refreshing = {this.props.refreshing}
           ListHeaderComponent = {this.listHeader}
           numColumns = {2}
           data = {this.state.list}

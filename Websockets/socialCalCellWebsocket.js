@@ -25,10 +25,9 @@ class WebSocketSocialCalCellPage{
     //each one will be its own channel, this will optimize the liking and
     // commenting
     const path = `${global.WS_HEADER}://${global.WS_ENDPOINT}/ws/newSocialCalendarCellPage/`+cellId
-    console.log(path)
     this.socketRef = new WebSocket(path)
     this.socketRef.onopen = () => {
-      console.log('websocket open')
+
     }
 
     this.socketRef.onmessage = (e) => {
@@ -37,10 +36,8 @@ class WebSocketSocialCalCellPage{
       this.socketNewSocialCalCell(e.data)
     }
     this.socketRef.onerror = (e) => {
-      console.log('websocket is closed ')
     }
     this.socketRef.onclose = () => {
-      console.log('websocket is closed')
       // Similar to the event page you will not need to recall the connect agian
 
 
@@ -50,7 +47,6 @@ class WebSocketSocialCalCellPage{
   disconnect() {
     //This function will be used to disconnect with the channel when you open up
     // each calendar cal cell
-    console.log('disconnect')
     this.socketRef.close()
   }
 
@@ -63,7 +59,6 @@ class WebSocketSocialCalCellPage{
     const parsedData = JSON.parse(data);
     const command = parsedData.command
 
-    console.log(parsedData)
     if(command === 'fetch_social_cal_cell_info'){
       // This will load up the information for the social cal cell page
       const socialCalCellObj = parsedData.socialCell
@@ -211,7 +206,7 @@ class WebSocketSocialCalCellPage{
     try{
       this.socketRef.send(JSON.stringify({...data}))
     } catch (err){
-      console.log(err.message)
+
     }
   }
 
@@ -228,13 +223,11 @@ class WebSocketSocialCalCellPage{
     setTimeout(
       function(){
         if(socket.readyState === 1){
-          console.log('connection is secure');
           if(callback != null){
             callback()
           }
           return;
         } else {
-          console.log('waiting for connection...')
           recursion(callback)
         }
       }, 1)
