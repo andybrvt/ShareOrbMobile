@@ -25,6 +25,8 @@ import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import {noPosts} from './noPosts.svg';
+import SuggestedList from './SuggestedList';
+
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const {interpolate, Extrapolate, interpolateColors} = Animated;
 const height = Dimensions.get('window').height;
@@ -105,6 +107,37 @@ class InfiniteScrollFlat extends React.Component{
 
     })
 
+    // this will just be the scroll view for whne it is empty
+  //   <ScrollView
+  //     showsVerticalScrollIndicator = {false}
+  //     refreshControl = {
+  //     <RefreshControl
+  //     refreshing={this.state.refreshing}
+  //     onRefresh={this.onRefresh}
+  //     />
+  //   }>
+  //   <View style = {{
+  //       top: '20%',
+  //       height: height-100,
+  //       alignItems: 'center',
+  //       // justifyContent: 'center'
+  //       // flex: 1,
+  //         }}>
+  //         <Image source={require('./noPosts1.png')} style = {{height: 200, width: 250, resizeMode : 'stretch',}} />
+  //     <TouchableOpacity
+  //       onPress = {() => this.openCamera()}
+  //       >
+  //       <View style = {{
+  //         backgroundColor: "#1890ff",
+  //         padding: 15,
+  //         borderRadius: 15}}>
+  //         <Text style = {{color: 'white'}}>Be the first one to post</Text>
+  //       </View>
+  //     </TouchableOpacity>
+  //
+  //   </View>
+  // </ScrollView>
+
     return(
 
       <Animated.View
@@ -116,34 +149,13 @@ class InfiniteScrollFlat extends React.Component{
         >
         {
           post.length === 0 ?
-            <ScrollView
-              showsVerticalScrollIndicator = {false}
-              refreshControl = {
-              <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh}
-              />
-            }>
-            <View style = {{
-                top: '20%',
-                height: height-100,
-                alignItems: 'center',
-                // justifyContent: 'center'
-                // flex: 1,
-                  }}>
-                  <Image source={require('./noPosts1.png')} style = {{height: 200, width: 250, resizeMode : 'stretch',}} />
-              <TouchableOpacity
-                onPress = {() => this.openCamera()}
-                >
-                <View style = {{
-                  backgroundColor: "#1890ff",
-                  padding: 15,
-                  borderRadius: 15}}>
-                  <Text style = {{color: 'white'}}>Be the first one to post</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
+
+          <SuggestedList
+            updateFollowing = {this.props.authAddUnaddFollowing}
+            following= {this.props.following}
+            curId = {this.props.id}
+            />
+
           :
 
           <AnimatedFlatList
@@ -174,7 +186,8 @@ const mapStateToProps = state => {
   return{
     id: state.auth.id,
     userName: state.auth.username,
-    socialPosts: state.socialNewsfeed.socialPosts
+    socialPosts: state.socialNewsfeed.socialPosts,
+    following: state.auth.following
   }
 }
 
@@ -182,6 +195,7 @@ const mapDispatchToProps = dispatch => {
   return {
     loadMoreSocialPost: (post) => dispatch(socialNewsfeedActions.loadMoreSocialPost(post)),
     openShowCamera: () => dispatch(authActions.openShowCamera()),
+    authAddUnaddFollowing: (following) => dispatch(authActions.authAddUnaddFollowing(following))
   }
 }
 

@@ -184,6 +184,12 @@ const resetNotificationSeen = (state, action) => {
   })
 }
 
+const authAddUnaddFollowing = (state, action) => {
+  return updateObject(state, {
+    following: action.following
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.AUTH_START:
@@ -224,6 +230,8 @@ const reducer = (state = initialState, action) => {
       return unShowIntialInstructions(state, action);
     case actionTypes.RESET_NOTIFCATION_SEEN:
       return resetNotificationSeen(state, action);
+    case actionTypes.AUTH_ADD_UNADD_FOLLOWING:
+      return authAddUnaddFollowing(state, action);
     default:
       return state;
   }

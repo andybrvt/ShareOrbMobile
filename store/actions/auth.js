@@ -285,3 +285,10 @@ export const resetNotificationSeen = () => {
     type: actionTypes.RESET_NOTIFCATION_SEEN
   }
 }
+
+export const authAddUnaddFollowing = (following) => {
+  return{
+    type: actionTypes.AUTH_ADD_UNADD_FOLLOWING,
+    following: following
+  }
+}
