@@ -171,11 +171,11 @@ class Explore extends React.Component{
 
     const {trendingCells, exploreCells } = this.state;
 
-    const top = interpolate(this.y, {
-      inputRange: [0, 500, 600],
-      outputRange: [60, 60, 0],
-      extrapolateRight: Extrapolate.CLAMP
-    })
+    // const top = interpolate(this.y, {
+    //   inputRange: [0, 500, 600],
+    //   outputRange: [60, 60, 0],
+    //   extrapolateRight: Extrapolate.CLAMP
+    // })
     return  (
       <BackgroundContainer>
         {/*

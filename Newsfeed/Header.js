@@ -55,20 +55,20 @@ class Header extends React.Component{
     const y = this.props.y;
     const diff = diffClamp(y, 0, 200)
     const final = cond(lessOrEq(y, 0.1), y, diff)
-    const opacity = interpolate(final, {
-      inputRange: [0, 200],
-      outputRange: [ 1, 0],
-      extrapolateRight: Extrapolate.CLAMP,
-    });
-    const translateY = interpolate(final, {
-      inputRange: [0, 200],
-      outputRange: [ 0, -80],
-      extrapolateRight: Extrapolate.CLAMP,
-    })
-    const backgroundGradient = interpolateColors(y, {
-      inputRange: [0, 400, 600],
-      outputColorRange: ["rgba(0, 0, 0, 0.85)", "skyblue", "white"],
-    })
+    // const opacity = interpolate(final, {
+    //   inputRange: [0, 200],
+    //   outputRange: [ 1, 0],
+    //   extrapolateRight: Extrapolate.CLAMP,
+    // });
+    // const translateY = interpolate(final, {
+    //   inputRange: [0, 200],
+    //   outputRange: [ 0, -80],
+    //   extrapolateRight: Extrapolate.CLAMP,
+    // })
+    // const backgroundGradient = interpolateColors(y, {
+    //   inputRange: [0, 400, 600],
+    //   outputColorRange: ["rgba(0, 0, 0, 0.85)", "skyblue", "white"],
+    // })
 
     return(
       <View style = {{

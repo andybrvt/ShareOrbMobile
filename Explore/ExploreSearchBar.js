@@ -33,11 +33,11 @@ class ExploreSearchBar extends React.Component{
     const y = this.props.y;
     const diff = diffClamp(y, 500, 600);
 
-    const translateY = interpolate(cond(lessOrEq(y, 500), y,diff), {
-      inputRange: [0, 500, 600],
-      outputRange: [0, 0, -60],
-      extrapolate: Extrapolate.CLAMP
-    })
+    // const translateY = interpolate(cond(lessOrEq(y, 500), y,diff), {
+    //   inputRange: [0, 500, 600],
+    //   outputRange: [0, 0, -60],
+    //   extrapolate: Extrapolate.CLAMP
+    // })
 
     return(
       <Animated.View style = {styles.passwordContainer}>
@@ -46,7 +46,7 @@ class ExploreSearchBar extends React.Component{
             position: "absolute",
             width: '100%',
             height: 60,
-    
+
             // backgroundColor: "white",
             transform:[
               // {translateY: translateY}

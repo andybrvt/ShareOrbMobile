@@ -18,7 +18,7 @@ import {
 } from "react-native";
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
-import * as Permissions from 'expo-permissions';
+// import * as Permissions from 'expo-permissions';
 import { Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
@@ -170,12 +170,13 @@ class CameraScreen extends React.Component{
 
       // setTimeout(async () => {
         try{
-          const camera = await Permissions.askAsync(Permissions.CAMERA);
+          // const camera = await Permissions.askAsync(Permissions.CAMERA);
+          const camera = await Camera.requestPermissionsAsync();
 
-          if(!camera.granted){
+          if(camera.status  !== "granted"){
             alert("Permission to access camera roll is required!");
 
-            return await Permissions.askAsync(Permissions.CAMERA);
+            return await Camera.requestPermissionsAsync();
           }
 
           this.setState({

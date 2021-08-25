@@ -1,22 +1,21 @@
 {
-  "builds": {
-    "ios": {
-      "release": {
-        "schemeBuildConfiguration": "Release"
-      },
-      "development": {
-        "schemeBuildConfiguration": "Debug",
-        "distribution": "internal"
-      }
-    },
-    "android": {
-      "release": {
+  "build": {
+    "release": {
+      "android": {
         "gradleCommand": ":app:bundleRelease"
       },
-      "development": {
-        "gradleCommand": ":app:assembleDebug",
-        "distribution": "internal"
+      "ios": {
+        "buildConfiguration": "Release"
       }
+    },
+    "development": {
+      "android": {
+        "gradleCommand": ":app:assembleDebug"
+      },
+      "ios": {
+        "buildConfiguration": "Debug"
+      },
+      "distribution": "internal"
     }
   }
 }

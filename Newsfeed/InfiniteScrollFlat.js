@@ -96,11 +96,11 @@ class InfiniteScrollFlat extends React.Component{
       post = this.props.socialPosts
     }
     const y = this.props.y;
-    const top = interpolate(y,{
-      inputRange: [0, 50],
-      outputRange: [50, 0],
-      extrapolate: Extrapolate.CLAMP
-    })
+    // const top = interpolate(y,{
+    //   inputRange: [0, 50],
+    //   outputRange: [50, 0],
+    //   extrapolate: Extrapolate.CLAMP
+    // })
     const backgroundGradient = interpolateColors(y, {
       inputRange: [0, 400, 600],
       outputColorRange: ["rgba(0, 0, 0, 0.85)", "skyblue", "white"],
@@ -143,7 +143,7 @@ class InfiniteScrollFlat extends React.Component{
       <Animated.View
         style = {{
           height: height -50,
-          top: top,
+          top: 50,
 
         }}
         >
