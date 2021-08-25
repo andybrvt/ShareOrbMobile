@@ -31,6 +31,7 @@
     "expo-camera": "~11.2.2",
     "expo-dev-client": "^0.4.7",
     "expo-dev-launcher": "^0.6.7",
+    "expo-dev-menu": "^0.7.7",
     "expo-image-manipulator": "~9.2.2",
     "expo-image-picker": "~10.2.2",
     "expo-image-picker-multiple": "^1.4.1",
