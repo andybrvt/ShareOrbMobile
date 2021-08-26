@@ -112,6 +112,7 @@ class GoalContainer extends React.Component{
 
     return(
       <View>
+        
         <FlatList
           style={{marginTop:25}}
           data = {this.state.goals}
