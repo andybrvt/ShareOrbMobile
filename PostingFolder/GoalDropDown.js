@@ -132,7 +132,7 @@ class GoalDropDown extends React.Component{
             style = {{
               zIndex: 99,
               position: 'absolute',
-
+              backgroundColor: 'transparent',
               width: width,
               height: height,
               alignItems: 'center',

@@ -54,7 +54,7 @@ class GoalPage extends React.Component{
         <View style = {{
             height: width*0.9,
             width: '100%',
-            backgroundColor: 'pink',
+            backgroundColor: 'gray',
             borderRadius: 10,
             overflow: "hidden"
           }}>
