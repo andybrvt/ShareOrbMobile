@@ -431,7 +431,8 @@ class SocialNewsfeedPost extends React.Component{
                  <TouchableOpacity
                    activeOpacity={0.8}
                    onPress = {() => this.onPostDirect(calCell, postId)}>
-                  <FastImage
+                   {/*put fast image here*/}
+                  <Image
                     style={styles.cover}
                     resizeMode = "cover"
                     source={{ uri: itemImage }}
@@ -766,7 +767,7 @@ class SocialNewsfeedPost extends React.Component{
             </View>
             :
             <View style={{flexDirection:'row',  minHeight:10, marginBottom:20, marginTop:10}}>
-              <Animated.Text numberofLines={1} style={{color:'black', width:'90%', flexWrap:'wrap'}}>
+              <Animated.Text numberofLines={1} style={{color:'black', width:'92.5%', flexWrap:'wrap'}}>
                 <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
                 {caption.substring(0,140)}</Animated.Text>
             </View>
