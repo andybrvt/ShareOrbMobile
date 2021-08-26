@@ -346,6 +346,11 @@ class SocialCalendarVonly extends React.Component{
 
 
   _onHandlerStateChange = ({ nativeEvent }) => {
+       if(nativeEvent.state === State.ACTIVE){
+         console.log(this.main_index)
+         console.log(this.state.month_array[this.main_index])
+         console.log(this.state.year_array[this.main_index])
+       }
        if (nativeEvent.state === State.END) {
            // make sure to reset the tracking translateX value to get exact translation differentiate in the next scrolling/panning/swipping.
            this.old_translateX = 0

@@ -64,7 +64,8 @@ class CameraScreen extends React.Component{
     isGallery: false,
     goals: [],
     selectedGoal: {},
-    showGoals: false
+    showGoals: false,
+    height: 0,
   }
 
   componentDidMount(){
@@ -89,7 +90,6 @@ class CameraScreen extends React.Component{
   }
 
   closeShowGoals = () => {
-    console.log("LLLLLLLLLLLLLLL")
     this.setState({
       showGoals: false
     })
@@ -416,8 +416,22 @@ class CameraScreen extends React.Component{
     })
   }
 
+  additionalTop = () => {
+    const top = this.state.height;
+
+    if(top > 150){
+      return -(top-150);
+    }
+
+    else{
+      return 0;
+    }
+  }
+
+
   render(){
 
+    const showCaption = this.state.showCaptionModal;
     return(
       <View
         style = {{flex: 1}}>
@@ -437,6 +451,7 @@ class CameraScreen extends React.Component{
             {
               this.state.imagePreview !== null ?
               <Modal  animationType = "fade" visible = {this.state.isOpen}>
+
                 <Animated.View style = {{
                     position: 'absolute',
                     backgroundColor: 'white',
@@ -451,8 +466,9 @@ class CameraScreen extends React.Component{
                     shadowRadius: 3,
                     alignSelf: 'center',
                     zIndex: 99,
+                    top: this.additionalTop(),
                     transform: [
-                      {translateY: this.slideAnimation}
+                      {translateY: showCaption ? SCREEN_HEIGHT*0.3 : SCREEN_HEIGHT}
                     ]
                   }}>
 
@@ -476,6 +492,14 @@ class CameraScreen extends React.Component{
                      }}
                      >
                      <TextInput
+                       onContentSizeChange={(event) => {
+                         console.log(event)
+                          console.log(event.nativeEvent.contentSize.height)
+                          // event.preventDefult()
+                          this.setState({
+                            height: event.nativeEvent.contentSize.height
+                          })
+                       }}
                        value = {this.state.caption}
                        onChangeText = {this.changeCaption}
                        placeholder = "Write something here..."
