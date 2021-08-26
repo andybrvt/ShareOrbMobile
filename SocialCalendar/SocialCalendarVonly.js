@@ -43,7 +43,8 @@ class SocialCalendarVonly extends React.Component{
 
   state = {
       month_array: [0, 0, 0], // hold month data accordingly to each View component
-      year_array: [0, 0, 0] // hold the numbers of year accordingly to each View component
+      year_array: [0, 0, 0], // hold the numbers of year accordingly to each View component
+      currentMonth: new Date()
   }
 
   componentDidMount(){
@@ -91,6 +92,11 @@ class SocialCalendarVonly extends React.Component{
     // swipe to the right ==> go back
     if(swipe_direction === 1 ){
       //  2 0 1 --> 1 2 0
+      const backMonth = dateFns.subMonths(this.state.currentMonth, 1)
+      console.log(backMonth)
+      this.setState({
+        currentMonth: backMonth
+      })
 
 
       if(month_array[main_index] === 0){
@@ -138,6 +144,15 @@ class SocialCalendarVonly extends React.Component{
     else {
       // 2 0 1 --> 0 1 2
 
+      const nextMonth = dateFns.addMonths(this.state.currentMonth, 1)
+      console.log(nextMonth)
+      this.setState({
+        currentMonth: nextMonth
+      })
+
+
+
+
       // if the month is december then you switch years
       // since this is adding one so you good
       if(month_array[main_index] === 11){
@@ -173,6 +188,7 @@ class SocialCalendarVonly extends React.Component{
       // similar to a loop
       listener: ({nativeEvent}) => {
         // this is to set the real value
+
         this.record_translateX_array.forEach((translate, index, arr) => {
           arr[index] += nativeEvent.translationX - this.old_translateX
         })
@@ -346,11 +362,8 @@ class SocialCalendarVonly extends React.Component{
 
 
   _onHandlerStateChange = ({ nativeEvent }) => {
-       if(nativeEvent.state === State.ACTIVE){
-         console.log(this.main_index)
-         console.log(this.state.month_array[this.main_index])
-         console.log(this.state.year_array[this.main_index])
-       }
+
+
        if (nativeEvent.state === State.END) {
            // make sure to reset the tracking translateX value to get exact translation differentiate in the next scrolling/panning/swipping.
            this.old_translateX = 0
