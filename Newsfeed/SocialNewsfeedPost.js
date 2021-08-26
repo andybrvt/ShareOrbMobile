@@ -766,8 +766,9 @@ class SocialNewsfeedPost extends React.Component{
             </View>
             :
             <View style={{flexDirection:'row',  minHeight:10, marginBottom:20, marginTop:10}}>
-            <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
-              <Animated.Text numberofLines={1} style={{color:'black', width:'85%', backgroundColor:'white'}}>{caption.substring(0,140)}</Animated.Text>
+              <Animated.Text numberofLines={1} style={{color:'black', width:'90%', flexWrap:'wrap'}}>
+                <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
+                {caption.substring(0,140)}</Animated.Text>
             </View>
           }
         </View>
