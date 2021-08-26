@@ -122,8 +122,6 @@ class GoalDropDown extends React.Component{
   render(){
     const showGoals1 = this.props.showGoals;
     return(
-
-
       <TouchableWithoutFeedback
         onPress = {() => this.closeFunction()}
         >
@@ -188,16 +186,13 @@ class GoalDropDown extends React.Component{
                           onChangeText = {this.onChange}
                           ref={(input) => { this.textInput = input; }}/>
                       </View>
-
                     </TouchableOpacity>
-
                     <View
                       style = {{
                         flexDirection: 'row',
                         top: '35%'
                       }}
                       >
-
                       <Button
                         title = "cancel"
                         onPress = {() => this.closeCreateGoal()}
@@ -209,33 +204,21 @@ class GoalDropDown extends React.Component{
                         disabled = {this.state.newGoal.length === 0}
                         />
                     </View>
-
-
                   </View>
-
                   :
-
                   <FlatList
-
                     data = {this.props.data}
                     renderItem = {this.renderItem}
                     keyExtractor={(item, index) => String(index)}
 
                      />
-
-
-
                 }
 
 
                 {
                   this.state.showCreateGoal ?
-
                   null
-
                   :
-
-
                   <View >
                     <TouchableOpacity
                       onPress = {() => this.showCreateGoal()}
@@ -245,28 +228,17 @@ class GoalDropDown extends React.Component{
                         height = {40}
                         width = {40}
                         />
-
                     </TouchableOpacity>
-
                     <Button
                       onPress = {() => this.props.cancel()}
                       title = "Clear"
                        />
                   </View>
-
-
                 }
-
-
-
-
               </View>
-
-
           </View>
         :
         <View></View>
-
       }
 
 

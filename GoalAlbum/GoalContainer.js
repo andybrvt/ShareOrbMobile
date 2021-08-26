@@ -52,8 +52,8 @@ class GoalContainer extends React.Component{
         activeOpacity={0.6}
         onPress = {() => this.onGoalPageDirect(item.id)}
         >
-        <View style={{flexDirection:'row'}}>
-          <View style={{flexDirection:'column', top:'5%', left:'7.5%', right:'5%'}}>
+        <View style={{flexDirection:'row', height:100, }}>
+          <View style={{flexDirection:'column', top:'2.5%', left:'7.5%', right:'5%'}}>
             <View style={{}}>
               <Text style = {{color:'black', fontWeight:'bold', fontSize:20}}>
                 {socialMonth.substring(0,3)}
@@ -66,7 +66,7 @@ class GoalContainer extends React.Component{
           <View style={styles.goalCard}>
 
             <View style={{flexDirection:'column'}}>
-            <View style={{}}>
+            <View>
               <Text style={{padding:10, fontSize:16, fontWeight:'bold' }}>{item.goal}</Text>
             </View>
             <View style={{flexDirection:'row',}}>
@@ -140,11 +140,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#1890ff',
   },
   goalCard: {
-    bottom:'10%',
+
+    bottom:'7.5%',
     left:'5%',
     flexDirection:'row',
     backgroundColor:'#F0F0F0',
-    // elevation:50,
+    // elevation:25,
 
     borderRadius:15,
     // borderTopColor:'red',
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     // borderBottomWidth:1,
     // borderLeftColor:'red',
     // borderLeftWidth:1,
-    marginTop:15,
+    marginTop:5,
   },
 
   smallImage: {

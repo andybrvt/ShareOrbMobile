@@ -14,8 +14,15 @@ import * as dateFns from 'date-fns';
 import authAxios from '../util';
 import { ChevronLeft, ChevronRight } from "react-native-feather";
 import * as authActions from '../store/actions/auth';
-
-
+import * as Animatable from 'react-native-animatable';
+const fadeIn = {
+  from: {
+    opacity: 0,
+  },
+  to: {
+    opacity: 1,
+  },
+};
 
 const width = Dimensions.get("window").width
 
@@ -408,13 +415,20 @@ class SocialCalendarTap extends React.Component{
     const formatMonth = dateFns.format(month, 'MMMM yyyy');
     const {socialCells} = this.state;
     return(
+      <View>
       <View style = {styles.centerMonth}>
 
-        <Text style = {styles.monthTitle}>
-          {formatMonth}
-        </Text>
 
         {this.initializedMonth(this.props.month, this.props.year, socialCells)}
+      </View>
+      <View style={{position:'absolute', bottom:'40%',}}>
+        <Animatable.Text animation={"fadeOut"} >
+          <Text style = {styles.monthTitle}>
+            {formatMonth}
+          </Text>
+          </Animatable.Text>
+
+      </View>
       </View>
     )
   }
@@ -452,7 +466,7 @@ const styles = StyleSheet.create({
   },
 
   monthTitle: {
-    fontSize:18,
+    fontSize:25,
     // color:'red',
     fontWeight:'bold',
   },
