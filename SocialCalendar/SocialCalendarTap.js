@@ -15,6 +15,8 @@ import authAxios from '../util';
 import { ChevronLeft, ChevronRight } from "react-native-feather";
 import * as authActions from '../store/actions/auth';
 import * as Animatable from 'react-native-animatable';
+import FastImage from 'react-native-fast-image'
+
 const fadeIn = {
   from: {
     opacity: 0,
@@ -232,7 +234,7 @@ class SocialCalendarTap extends React.Component{
                       <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
                         <View style={styles.miniBox}>
                           <Text style = {styles.formatDateImage}> {formattedDate}</Text>
-                          <Image
+                          <FastImage
                             style = {dateFns.isSameDay(day, new Date()) ?
                               styles.smallImageGlow : styles.smallImage
                             }
@@ -337,7 +339,7 @@ class SocialCalendarTap extends React.Component{
                   toDoStuff[0].coverPic ?
                     <View>
                       <TouchableOpacity  onPress={() => this.ViewDay(toDoStuff.id)}>
-                        <Image
+                        <FastImage
                           style = {styles.smallImage}
                           resizeMode = "cover"
                           source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
@@ -464,7 +466,7 @@ const styles = StyleSheet.create({
     width: width,
   },
 
-  
+
 
   monthContainer: {
     // flexDirection: "column",

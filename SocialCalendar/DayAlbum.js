@@ -21,6 +21,8 @@ import SocialCalCellPageWebSocketInstance from '../Websockets/socialCalCellWebso
 import { connect } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import { parseISO } from 'date-fns'
+import FastImage from 'react-native-fast-image'
+
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
@@ -208,13 +210,13 @@ let likeAvatarList=[]
            padding:10,
          }}>
          <TouchableOpacity onPress ={() => this.navFullImage(item)} >
-            <Image
+            <FastImage
               resizeMode="cover"
               style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
               source = {{
                 uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
               }}>
-            </Image>
+            </FastImage>
           </TouchableOpacity>
           <View style={{top: 210, left:'2.5%', position:'absolute', width:50, height:50}}>
             <TouchableOpacity
