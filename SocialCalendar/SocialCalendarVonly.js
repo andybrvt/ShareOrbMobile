@@ -17,6 +17,8 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 // import Animated, {Easing} from 'react-native-reanimated';
 import NewSocialMonth from './NewSocialMonth';
 import SocialCalendarTap from './SocialCalendarTap';
+import * as Animatable from 'react-native-animatable';
+
 
 let {height, width} = Dimensions.get('window')
 
@@ -44,7 +46,8 @@ class SocialCalendarVonly extends React.Component{
   state = {
       month_array: [0, 0, 0], // hold month data accordingly to each View component
       year_array: [0, 0, 0], // hold the numbers of year accordingly to each View component
-      currentMonth: new Date()
+      currentMonth: new Date(),
+
   }
 
   componentDidMount(){
@@ -93,11 +96,11 @@ class SocialCalendarVonly extends React.Component{
     if(swipe_direction === 1 ){
       //  2 0 1 --> 1 2 0
       const backMonth = dateFns.subMonths(this.state.currentMonth, 1)
-      console.log(backMonth)
+      // let utc2=dateFns.format(backMonth, 'MM yyyy');
       this.setState({
         currentMonth: backMonth
       })
-
+      this.openTime()
 
       if(month_array[main_index] === 0){
 
@@ -143,13 +146,11 @@ class SocialCalendarVonly extends React.Component{
     // this is for swiping left --> go into the future
     else {
       // 2 0 1 --> 0 1 2
-
       const nextMonth = dateFns.addMonths(this.state.currentMonth, 1)
-      console.log(nextMonth)
       this.setState({
         currentMonth: nextMonth
       })
-
+      this.openTime()
 
 
 
@@ -377,12 +378,25 @@ class SocialCalendarVonly extends React.Component{
 
   }
 
+  openTime(){
 
+      this.setState({
+        condition: true,
+      }, () => setTimeout(() => this.closeTime(), 300))
+
+  }
+
+  closeTime(){
+      this.setState({
+        condition: false,
+      })
+  }
 
   render(){
 
     // So you are gonna handle the pangesture for each of the squares and it will
     // just loop through each one
+    let test=dateFns.format(this.state.currentMonth, "MMMM yyyy")
 
     return(
       <View
@@ -390,10 +404,22 @@ class SocialCalendarVonly extends React.Component{
           flex: 1,
           flexDirection: "row",
           justifyContent: "center",
-          alignItems: "center",
+
           position: "relative",
         }}
         >
+        {this.state.condition?
+          <View style={{zIndex:99}}>
+            <Animatable.Text animation={"fadeOut"} style = {styles.monthTitle}>{test}</Animatable.Text>
+
+
+          </View>
+
+        :
+        <Text></Text>
+
+      }
+
         <PanGestureHandler
           onGestureEvent={this._onGestureEvent}
           onHandlerStateChange={this._onHandlerStateChange}
@@ -542,6 +568,16 @@ class SocialCalendarVonly extends React.Component{
 
   }
 }
+
+ const styles = StyleSheet.create({
+   monthTitle: {
+     fontSize:25,
+     color:'#1890ff',
+
+     fontWeight:'bold',
+   },
+
+ });
 
 
 export default SocialCalendarVonly;

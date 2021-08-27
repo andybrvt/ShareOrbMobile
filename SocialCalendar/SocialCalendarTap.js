@@ -421,14 +421,7 @@ class SocialCalendarTap extends React.Component{
 
         {this.initializedMonth(this.props.month, this.props.year, socialCells)}
       </View>
-      <View style={{position:'absolute', bottom:'40%',}}>
-        <Animatable.Text animation={"fadeOut"} >
-          <Text style = {styles.monthTitle}>
-            {formatMonth}
-          </Text>
-          </Animatable.Text>
 
-      </View>
       </View>
     )
   }
@@ -465,11 +458,7 @@ const styles = StyleSheet.create({
     width: width,
   },
 
-  monthTitle: {
-    fontSize:25,
-    // color:'red',
-    fontWeight:'bold',
-  },
+  
 
   monthContainer: {
     // flexDirection: "column",
