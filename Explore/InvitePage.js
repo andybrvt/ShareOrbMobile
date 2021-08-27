@@ -71,6 +71,8 @@ class InvitePage extends React.Component{
 
   }
 
+  
+
 
   submitInvite = () => {
 
@@ -87,6 +89,10 @@ class InvitePage extends React.Component{
           infoText: "You use this email already"
         })
       } else {
+
+        // put the automated email send here
+
+
         this.setState({
           infoText: "Invite sent successfully",
           inviteLeft: res.data.num,
