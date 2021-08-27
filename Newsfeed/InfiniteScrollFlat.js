@@ -145,6 +145,7 @@ class InfiniteScrollFlat extends React.Component{
           height: height -50,
           top: 50,
 
+
         }}
         >
         {
@@ -162,7 +163,7 @@ class InfiniteScrollFlat extends React.Component{
           :
 
           <AnimatedFlatList
-            contentContainerStyle={{ paddingBottom: 25 }}
+            contentContainerStyle={{ paddingBottom: 100 }}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle = {16} // important for animation
             onScroll = {onScrollEvent({y})}

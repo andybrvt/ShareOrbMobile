@@ -96,11 +96,11 @@ class GoalContainer extends React.Component{
 
           </View>
           <View>
-          { item.get_socialCalItems.length<4?
+          { item.get_socialCalItems.length<=4?
             <Text></Text>
           :
           <View style={styles.roundButton1}>
-          <Text style={{fontSize:15, color:'white'}}>+{item.get_socialCalItems.length}</Text>
+          <Text style={{fontSize:15, color:'white'}}>+{item.get_socialCalItems.length-4}</Text>
           </View>
           }
           </View>

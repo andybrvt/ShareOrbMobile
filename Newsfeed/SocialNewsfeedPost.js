@@ -270,21 +270,16 @@ class SocialNewsfeedPost extends React.Component{
     let cellDay = "";
     let location = "";
     let userUsername="";
-
     let post = {};
-
     let profilePic="";
-
     let userPostImages = []
     let like_people = [];
     let commentList = [];
     let peopleLikeId = []
-
     let postCreatedAt= new Date();
     let contentTypeId="";
     let ownerId = "";
     let cellDate = "";
-
     let firstName="";
     let lastName="";
     let likeAvatarList=[]
@@ -298,11 +293,9 @@ class SocialNewsfeedPost extends React.Component{
 
     if(this.props.data){
       if(this.props.data.creator){
-
         if(this.props.data.creator.profile_picture){
           profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.creator.profile_picture
         }
-
         if(this.props.data.creator.first_name){
           firstName = this.props.data.creator.first_name;
         }
@@ -312,29 +305,21 @@ class SocialNewsfeedPost extends React.Component{
         if(this.props.data.creator.id){
           ownerId = this.props.data.creator.id
         }
-
         if(this.props.data.creator.username){
           userUsername = this.props.data.creator.username
         }
-
-
-
         if(this.props.data.creator.notificationToken){
           notificationToken = this.props.data.creator.notificationToken;
         }
-
         if(this.props.data.created_at) {
           postCreatedAt=this.props.data.created_at
           console.log(new Date(this.props.data.created_at).getTimezoneOffset()/60)
           if(!isNaN(new Date(this.props.data.created_at).getTimezoneOffset()/60)){
             const dtDateOnly1 = dateFns.addHours(new Date(this.props.data.created_at), new Date(this.props.data.created_at).getTimezoneOffset()/60)
             utc3=dateFns.format(new Date(dtDateOnly1), 'h:mma');
-
           }
-
         }
       }
-
       if(this.props.data.calCell){
         calCell = this.props.data.calCell
       }
@@ -348,17 +333,13 @@ class SocialNewsfeedPost extends React.Component{
       if(this.props.data.itemImage){
         itemImage = `${global.IMAGE_ENDPOINT}`+this.props.data.itemImage;
       }
-
-
       if(this.props.data.people_like){
         like_people = this.props.data.people_like
       }
-
       if(this.props.data.get_socialCalItemComment){
         calComment =this.props.data.get_socialCalItemComment.length
       }
     }
-
     if(like_people.length > 0){
       for(let i = 0; i< like_people.length; i++){
         peopleLikeId.push(like_people[i].id)
@@ -367,7 +348,6 @@ class SocialNewsfeedPost extends React.Component{
 
     if(this.props.data.people_like.length>0)
     {
-
       likeAvatarList = this.props.data.people_like.map(item => {
        return {
          imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
@@ -695,6 +675,10 @@ class SocialNewsfeedPost extends React.Component{
     let userId = ""
     let actionText = ""
     let caption=""
+    let calCell=""
+    let postId=""
+
+
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post
@@ -719,6 +703,12 @@ class SocialNewsfeedPost extends React.Component{
       }
       if(this.props.data.caption){
         caption = this.props.data.caption
+      }
+      if(this.props.data.calCell){
+        calCell = this.props.data.calCell
+      }
+      if(this.props.data.id){
+        postId = this.props.data.id
       }
     }
 
@@ -766,10 +756,25 @@ class SocialNewsfeedPost extends React.Component{
               <Text></Text>
             </View>
             :
-            <View style={{flexDirection:'row',  minHeight:10, marginBottom:20, marginTop:10}}>
-              <Animated.Text numberofLines={1} style={{color:'black', width:'92.5%', flexWrap:'wrap'}}>
-                <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
-                {caption.substring(0,140)}</Animated.Text>
+            <View>
+              {caption.length>140?
+                <View style={{  minHeight:10, marginBottom:20, marginTop:10}}>
+                  <TouchableOpacity onPress = {() => this.onPostDirect(calCell, postId)}>
+                    <Text style={{color:'black', width:'92.5%', flexWrap:'wrap', flexDirection:'row',}}>
+                      <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
+                      {caption.substring(0,140)}
+                      <Text style={{color:'#bfbfbf'}}> ... see more </Text>
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                :
+                <View style={{  minHeight:10, marginBottom:20, marginTop:10}}>
+                  <Text style={{color:'black', width:'92.5%', flexWrap:'wrap', flexDirection:'row',}}>
+                    <Animated.Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Animated.Text>
+                    {caption.substring(0,140)}
+                  </Text>
+                </View>
+              }
             </View>
           }
         </View>
