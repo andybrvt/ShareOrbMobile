@@ -9,8 +9,10 @@ import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
-import { ArrowLeft, Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus} from "react-native-feather";
+import { ArrowLeft, Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus, Calendar} from "react-native-feather";
 import * as authActions from '../store/actions/auth';
+import { TabView, SceneMap } from 'react-native-tab-view';
+import GoalContainer from '../GoalAlbum/GoalContainer';
 
 
 // this will be used mostly for the other person profile
@@ -23,7 +25,11 @@ class UserProfile extends React.Component{
     super(props);
 
     this.state = {
-
+      index: 0,
+      routes: [
+        { key: 'first', title: 'Calendar' },
+        { key: 'second', title: 'Goals' },
+      ]
     }
   }
 
@@ -101,6 +107,44 @@ class UserProfile extends React.Component{
     this.props.navigation.goBack();
   }
 
+  _renderScene = SceneMap({
+    first: () =>  <SocialCalendarVonly userId = {this.props.profile.id} navigation = {this.props.navigation} currentId = {this.props.currentId}/>,
+  second: () => <GoalContainer  userId = {this.props.currentId} navigation = {this.props.navigation}/>,
+  });
+
+  _handleIndexChange = (index) => this.setState({ index });
+
+
+  _renderTabBar = (props) => {
+    const inputRange = props.navigationState.routes.map((x, i) => i);
+    return (
+      <View style={styles.tabBar}>
+        {
+        props.navigationState.routes.map((route, i) => {
+        return (
+          <TouchableOpacity
+            style={styles.tabItem}
+            onPress={() => this.setState({ index: i })}>
+            <View style={{flexDirection:'row'}}>
+              {
+                (i==1)?
+               <Clipboard
+                 style={{right:10}}
+                 stroke="black" strokeWidth={2} width={20} height={20} />
+              :
+               <Calendar
+                 style={{right:10}}
+                 stroke="black" strokeWidth={2} width={20} height={20} />
+              }
+              <Text style={{fontSize:14}}>{route.title}</Text>
+            </View>
+          </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
+
   render(){
 
 
@@ -118,6 +162,8 @@ class UserProfile extends React.Component{
       }
 
     }
+
+    // you would use userId in this one
 
     return (
       <BackgroundContainer>
@@ -143,11 +189,20 @@ class UserProfile extends React.Component{
             />
         </View>
         <View style = {styles.socialCalContainer}>
-          <SocialCalendarVonly
-            navigation = {this.props.navigation}
-            userId = {userId}
-            currentId = {this.props.currentId}
-            />
+          {/*
+            <SocialCalendarVonly
+              navigation = {this.props.navigation}
+              userId = {userId}
+              currentId = {this.props.currentId}
+              />
+
+            */}
+              <TabView
+              navigationState = {this.state}
+              renderScene = {this._renderScene}
+              renderTabBar={this._renderTabBar}
+              onIndexChange={this._handleIndexChange}
+               />
         </View>
       </BackgroundContainer>
     )
@@ -215,6 +270,18 @@ const styles = StyleSheet.create({
   },
   contentStyle: {
     paddingHorizontal: 16,
+  },
+  tabBar: {
+    flexDirection: 'row',
+    elevation:1,
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 10,
+    borderBottomColor: '#F0F0F0',
+    borderBottomWidth: 1,
+    // backgroundColor:'red',
   },
 
 })

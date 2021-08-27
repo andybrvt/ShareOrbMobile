@@ -117,6 +117,13 @@ class NewSocialMonth extends React.PureComponent{
 
   }
 
+  componentWillUnmount(){
+    this.setState({
+      socialCells: []
+    })
+
+  }
+
   grabDateRange(){
     // this function is used to get the end range of the month
     const curMonth = new Date(this.props.year, this.props.month, 1);

@@ -9,14 +9,13 @@ import {
   Dimensions,
   Keyboard,
   KeyboardAvoidingView,
-
+  TouchableOpacity,
   TouchableHighlight,
   ImageBackground,
   TouchableWithoutFeedback
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Avatar } from 'react-native-elements';
-import {TouchableOpacity} from 'react-native-gesture-handler';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -281,37 +280,42 @@ import * as exploreActions from '../store/actions/explore';
      // to the home page
    }
 
-   renderInner = () => (
+   renderInner = () => {
 
-     <View style={styles.panel}>
-       <View style={{alignItems: 'center'}}>
-         <Avatar
-           size={100}
-           rounded
-           source={{
-             uri:
-               `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
-           }}
-         />
+     return(
+       <View style={styles.panel}>
+         <View style={{alignItems: 'center'}}>
+           <Avatar
+             size={100}
+             rounded
+             source={{
+               uri:
+                 `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
+             }}
+           />
+         </View>
+         <TouchableOpacity
+           onPress = {this.handleTakeProfile}
+
+           style={styles.panelButton} >
+           <Text style={styles.panelButtonTitle}>Take Photo</Text>
+         </TouchableOpacity>
+         <TouchableOpacity
+           onPress = {this.handleChooseProfile}
+           style={styles.panelButton}>
+           <Text style={styles.panelButtonTitle}>Choose From Library</Text>
+         </TouchableOpacity>
+         <TouchableOpacity
+           style={styles.panelButton1}
+           onPress={() => this.bs.current.snapTo(1)}>
+           <Text style={styles.panelButtonTitle1}>Cancel</Text>
+         </TouchableOpacity>
        </View>
-       <TouchableOpacity
-         onPress = {this.handleTakeProfile}
+     )
+   }
 
-         style={styles.panelButton} >
-         <Text style={styles.panelButtonTitle}>Take Photo</Text>
-       </TouchableOpacity>
-       <TouchableOpacity
-         onPress = {this.handleChooseProfile}
-         style={styles.panelButton}>
-         <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-       </TouchableOpacity>
-       <TouchableOpacity
-         style={styles.panelButton1}
-         onPress={() => this.bs.current.snapTo(1)}>
-         <Text style={styles.panelButtonTitle1}>Cancel</Text>
-       </TouchableOpacity>
-     </View>
-  );
+
+
 
   renderHeader = () => (
     <View style={styles.test}>

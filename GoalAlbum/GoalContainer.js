@@ -15,6 +15,8 @@ import {
  } from 'react-native';
 import authAxios from '../util';
 import * as dateFns from 'date-fns';
+import GoalSVG from './goalSVG.svg';
+
 
 class GoalContainer extends React.Component{
 
@@ -112,13 +114,30 @@ class GoalContainer extends React.Component{
 
     return(
       <View>
-        <FlatList
-          style={{marginTop:25}}
-          data = {this.state.goals}
-          renderItem = {(item) => this.renderItem(item)}
-          keyExtractor={(item, index) => String(index)}
+        {
+          this.state.goals.length === 0 ?
 
-           />
+          <View style = {{
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+            <GoalSVG height = {150} width = {150}/>
+            <Text style = {{
+                fontWeight: 'bold'
+              }}>No Goals Yet</Text>
+          </View>
+
+          :
+
+          <FlatList
+            style={{marginTop:25}}
+            data = {this.state.goals}
+            renderItem = {(item) => this.renderItem(item)}
+            keyExtractor={(item, index) => String(index)}
+
+             />
+        }
+
       </View>
     )
   }
