@@ -210,13 +210,15 @@ let likeAvatarList=[]
            padding:10,
          }}>
          <TouchableOpacity onPress ={() => this.navFullImage(item)} >
-            <FastImage
+           {/*put fast image here*/}
+
+            <Image
               resizeMode="cover"
               style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
               source = {{
                 uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
               }}>
-            </FastImage>
+            </Image>
           </TouchableOpacity>
           <View style={{top: 210, left:'2.5%', position:'absolute', width:50, height:50}}>
             <TouchableOpacity

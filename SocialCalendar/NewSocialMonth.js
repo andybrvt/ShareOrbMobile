@@ -203,7 +203,9 @@ class NewSocialMonth extends React.PureComponent{
                         <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
                           <View style={styles.miniBox}>
                             <Text style = {styles.formatDateImage}> {formattedDate}</Text>
-                            <FastImage
+                              {/*put fast image here*/}
+
+                          <Image
                               style = {dateFns.isSameDay(day, new Date()) ?
                                 styles.smallImageGlow : styles.smallImage
                               }
@@ -357,7 +359,9 @@ class NewSocialMonth extends React.PureComponent{
                     toDoStuff[0].coverPic ?
                       <View>
                         <TouchableOpacity  onPress={() => this.ViewDay(toDoStuff.id)}>
-                          <FastImage
+                          {/*put fast image here*/}
+
+                          <Image
                             style = {styles.smallImage}
                             resizeMode = "cover"
                             source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}

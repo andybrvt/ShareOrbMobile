@@ -412,7 +412,7 @@ class SocialNewsfeedPost extends React.Component{
                    activeOpacity={0.8}
                    onPress = {() => this.onPostDirect(calCell, postId)}>
                    {/*put fast image here*/}
-                  <FastImage
+                  <Image
                     style={styles.cover}
                     resizeMode = "cover"
                     source={{ uri: itemImage }}
