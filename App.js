@@ -100,6 +100,18 @@ ExpoNotifications.setNotificationHandler({
   }),
 });
 
+// ExpoNotifications.scheduleNotificationAsync({
+//   content: {
+//     title: "Come back",
+//     body: 'What did you do today to meet your goals?',
+//   },
+//   trigger: {
+//     hour: 10,
+//     minute: 0,
+//     repeats: true
+//   },
+// });
+
 
 class App extends Component{
 
@@ -238,34 +250,38 @@ class App extends Component{
   };
 
  handleNotificationResponse = response => {
+   console.log(response)
+
     const notiType = response.notification.request.trigger.payload.body.type;
+     console.log(notiType)
+     if(notiType === "like"){
+       // you want to direct it to the post with the like
+       this.refContainer.navigate('DayAlbum', {
+         cellId: response.notification.request.trigger.payload.body.dayId
+       })
 
-    if(notiType === "like"){
-      // you want to direct it to the post with the like
-      this.refContainer.navigate('DayAlbum', {
-        cellId: response.notification.request.trigger.payload.body.dayId
-      })
+     }
 
-    }
+     if(notiType === "comment"){
+       this.refContainer.navigate('Comments', {
+         postId: response.notification.request.trigger.payload.body.itemId
+       })
+     }
 
-    if(notiType === "comment"){
-      this.refContainer.navigate('Comments', {
-        postId: response.notification.request.trigger.payload.body.itemId
-      })
-    }
+     if(notiType === "follow"){
+       const username = response.notification.request.trigger.payload.body.username;
 
-    if(notiType === "follow"){
-      const username = response.notification.request.trigger.payload.body.username;
+       if(username !== this.props.username){
+         this.refContainer.navigate("ProfilePage", {
+           username: response.notification.request.trigger.payload.body.username
+         })
+       } else {
+         this.refContainer.navigate("Profile")
+       }
 
-      if(username !== this.props.username){
-        this.refContainer.navigate("ProfilePage", {
-          username: response.notification.request.trigger.payload.body.username
-        })
-      } else {
-        this.refContainer.navigate("Profile")
-      }
+     }
 
-    }
+
   };
 
   componentDidMount(){
