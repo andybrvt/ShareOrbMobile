@@ -360,6 +360,7 @@ class NewSocialMonth extends React.PureComponent{
                         <TouchableOpacity  onPress={() => this.ViewDay(toDoStuff.id)}>
                           {/* fast image*/}
                           <Image
+
                             style = {styles.smallImage}
                             resizeMode = "cover"
                             source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}
