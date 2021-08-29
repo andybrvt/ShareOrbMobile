@@ -9,12 +9,12 @@
       "ios",
       "android"
     ],
-    "icon":"./assets/images/icon.png",
-      "splash":{
-        "image":"./assets/images/splash.png",
-        "resizeMode":"contain",
-        "backgroundColor":"#1890FF"
-      },
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1890FF"
+    },
     "orientation": "portrait",
     "version": "1.0.0",
     "assetBundlePatterns": [
@@ -32,8 +32,8 @@
         "NSPhotoLibraryUsageDescription": "To access your photos",
         "NSCameraUsageDescription": "To take more pictures"
       },
-      "buildNumber": "9"
-
-    }
+      "buildNumber": "10"
+    },
+    "description": ""
   }
 }

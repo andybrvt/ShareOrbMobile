@@ -234,14 +234,10 @@ class SocialCalendarTap extends React.Component{
                       <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
                         <View style={styles.miniBox}>
                           <Text style = {styles.formatDateImage}> {formattedDate}</Text>
-<<<<<<< HEAD
-                          {/* fast image*/}
-                          <Image
-=======
-                            {/*put fast image here*/}
 
-                        <Image
->>>>>>> fad21c947a961232591f776722281e806ca7a63b
+                          {/* fast image*/}
+                          <FastImage
+
                             style = {dateFns.isSameDay(day, new Date()) ?
                               styles.smallImageGlow : styles.smallImage
                             }
@@ -346,13 +342,10 @@ class SocialCalendarTap extends React.Component{
                   toDoStuff[0].coverPic ?
                     <View>
                       <TouchableOpacity  onPress={() => this.ViewDay(toDoStuff.id)}>
-<<<<<<< HEAD
-                        {/* fast image*/}
-=======
-                        {/*put fast image here*/}
 
->>>>>>> fad21c947a961232591f776722281e806ca7a63b
-                        <Image
+                        {/* fast image*/}
+
+                        <FastImage
                           style = {styles.smallImage}
                           resizeMode = "cover"
                           source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}

@@ -11,7 +11,7 @@ import {
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import * as Contacts from 'expo-contacts';
+// import * as Contacts from 'expo-contacts';
 type RowItem = {
   id: string;
   name: string;
