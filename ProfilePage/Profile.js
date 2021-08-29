@@ -170,11 +170,19 @@ class Profile extends React.Component{
           </View>
         </View>
 
-        <View style={{position:'absolute', padding:20, right:0}}>
-          <Settings
-           onPress = {() => this.ViewProfile()}
-           stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
+        <TouchableOpacity
+          onPress = {() => this.ViewProfile()}
+          style={{
+            position:'absolute',top: 20, right:15}}
+          >
+        <View >
+
+            <Settings
+             stroke="#8c8c8c" strokeWidth={2} width={35} height={35}/>
+
+
         </View>
+        </TouchableOpacity>
         <View style = {styles.profileHeader}>
           <ProfileHeader
             navigation={this.props.navigation}

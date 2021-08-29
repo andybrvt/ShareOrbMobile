@@ -71,6 +71,10 @@ class CameraScreen extends React.Component{
   componentDidMount(){
     this.allowPermissions()
 
+    this.open = this.props.navigation.addListener('focus', () => {
+      this.props.openShowCamera()
+
+    });
     const curId = this.props.curUserId
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/goalList/`+curId)
     .then( res => {
@@ -80,6 +84,10 @@ class CameraScreen extends React.Component{
     })
 
   }
+
+  componentWillUnmount() {
+     this.open();
+   }
 
 
 

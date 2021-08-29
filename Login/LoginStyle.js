@@ -52,7 +52,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 50,
-    backgroundColor: "blue",
+    backgroundColor: "#1890ff",
   },
 
   signUpBtn: {
