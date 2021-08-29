@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "592923394313",
+    "project_id": "shareorb-56fb5",
+    "storage_bucket": "shareorb-56fb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592923394313:android:c202cdfa3219f212bb53d8",
+        "android_client_info": {
+          "package_name": "com.pinghsu520.ShareOrbMobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592923394313-invmd034ickc1h3ur7o5n5lm91j5e1cs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9ED0VxOscjmV62c3dtt3OFJjbP8rhqVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592923394313-invmd034ickc1h3ur7o5n5lm91j5e1cs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

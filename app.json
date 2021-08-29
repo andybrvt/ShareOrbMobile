@@ -21,8 +21,9 @@
       "assets/**"
     ],
     "android": {
+      "googleServicesFile": "./google-services.json",
       "package": "com.pinghsu520.ShareOrbMobile",
-      "versionCode": 3
+      "versionCode": 4
     },
     "ios": {
       "supportsTablet": true,

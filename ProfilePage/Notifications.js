@@ -115,7 +115,9 @@ class Notifications extends React.Component{
 
    if(item.type === "follow_notification"){
      return(
-       <TouchableOpacity>
+       <TouchableOpacity
+         onPress = {() => this.ViewProfile(item.actor.username)}
+         >
           <View style={styles.notiContainer}>
             <View style={styles.frontNotiSpace}>
               <Avatar
@@ -214,6 +216,7 @@ class Notifications extends React.Component{
        </TouchableOpacity>
      )
    }
+   {/*
    if(item.type === "accept_follow_request"){
      return(
        <TouchableOpacity>
@@ -260,7 +263,7 @@ class Notifications extends React.Component{
        </TouchableOpacity>
      )
    }
-
+   */}
 
  }
 
