@@ -32,6 +32,8 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import GoalDropDown from './GoalDropDown';
+import VideoPreview from './VideoPreview';
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
@@ -47,6 +49,7 @@ class CameraScreen extends React.Component{
 
   slideAnimation = withTimingTransition(this.slide, {duration: 300})
 
+  isRecording = false;
   constructor(props){
 
     super(props)
@@ -54,10 +57,13 @@ class CameraScreen extends React.Component{
   }
   state = {
     allowCamera: false,
+    allowMicrophone: false,
     type: "front",
     showFlash: "off",
     imagePreview: null,
+    videoPreview: null,
     isOpen: false,
+    isVideoOpen: false,
     pageShow: true,
     showCaptionModal: false,
     caption:"",
@@ -66,6 +72,7 @@ class CameraScreen extends React.Component{
     selectedGoal: {},
     showGoals: false,
     height: 0,
+    isRecording: false
   }
 
   componentDidMount(){
@@ -180,15 +187,21 @@ class CameraScreen extends React.Component{
         try{
           // const camera = await Permissions.askAsync(Permissions.CAMERA);
           const camera = await Camera.requestPermissionsAsync();
-
+          const microphone = await Camera.requestMicrophonePermissionsAsync();
           if(camera.status  !== "granted"){
             alert("Permission to access camera roll is required!");
 
             return await Camera.requestPermissionsAsync();
           }
+          if(microphone.status !== "granted"){
+            alert("Permission to access microphone is required!");
+
+            return await Camera.requestMicrophonePermissionsAsync();
+          }
 
           this.setState({
-            allowCamera: true
+            allowCamera: true,
+            allowMicrophone: true
           })
         }
         catch(err){
@@ -219,15 +232,51 @@ class CameraScreen extends React.Component{
 
   }
 
+  takeVideo = async() => {
+    if(!this.cameraRef){
+      return
+    }
+
+
+    try{
+
+      this.setState({isRecording: true}, async() => {
+        this.isRecording = true
+
+        const video = await this.cameraRef.recordAsync({
+          maxDuraion: 7
+        });
+
+        this.isRecording = false;
+
+        this.setState({
+          isVideoOpen: true,
+          isRecording: false,
+          videoPreview: video,
+        })
+
+      })
+
+
+    } catch {
+      console.log('error recording video')
+    }
+  }
+
   // 20 sec video test
-  handleLongPress = async () => {
+  handleLongPress = () => {
         // Before starting to recording, setup a timer that calls stopRecording() after 20s IF the camera is still recording, otherwise, no need to call stop
         // setTimeout(() => this.state.capturing && this.camera.stopRecording(), 20*1000);
         // const videoData = await this.cameraRef.recordAsync();
-        this.setState({ capturing: true});
-    };
 
-  onCancelPhoto(){
+        this.takeVideo();
+  };
+
+  handlePressOut = () => {
+    this.cameraRef.stopRecording()
+  }
+
+  onCancelPhoto =() => {
 
     this.showFinal.setValue(false)
 
@@ -237,7 +286,9 @@ class CameraScreen extends React.Component{
         caption: "",
         showCaptionModal: false,
         isGallery: false,
-        selectedGoal: {}
+        selectedGoal: {},
+        videoPreview: null,
+        isVideoOpen: false,
       }), 1 )
 
   }
@@ -653,6 +704,47 @@ class CameraScreen extends React.Component{
 
               :
 
+              this.state.videoPreview !== null ?
+
+              <Modal visible = {this.state.isVideoOpen}>
+                <View style = {styles.container}>
+
+                  <Video
+                    source={{ uri: this.state.videoPreview.uri }}
+                    style={[styles.image, { height, width }]}
+                    rate={1.0}
+                    isMuted={false}
+                    resizeMode="cover"
+                    volume={0.5}
+                    isLooping
+                    shouldPlay
+
+                     />
+
+                     <TouchableOpacity
+                       onPress = {() => this.onCancelPhoto()}
+                       style = {{
+                         position: 'absolute',
+                         top: '5%',
+                         left:'5%',
+                       }}>
+                       <X
+                         style={{top:0, position:'absolute'}}
+                         strokeWidth={4}
+                         stroke = "#d9d9d9"
+                         height = {40}
+                         width = {40}/>
+                       <X
+                         stroke = 'white'
+                         height = {40}
+                         width = {40}/>
+                     </TouchableOpacity>
+                </View>
+              </Modal>
+
+
+              :
+
               <Camera
                 autoFocus={"on"}
                 ref = {node => {this.cameraRef = node}}
@@ -661,126 +753,165 @@ class CameraScreen extends React.Component{
                 skipProcessing={false}
                 flashMode = {this.state.showFlash}
                 style = {{flex: 1}}>
-                    <TouchableOpacity
-                      onPress = {() => this.onRedirect()}
-                      style = {{
-                        position: 'absolute',
-                        top: '5%',
-                        left:'5%',
-                      }}
-                      >
-                      <ArrowLeft
-                        style={{top:0, position:'absolute'}}
-                        strokeWidth={3}
-                        stroke = "#d9d9d9"
-                        width = {40} height = {40} />
-                      <ArrowLeft
-                        strokeWidth={2}
-                        stroke = "white"
-                        width = {40} height = {40} />
 
-                    </TouchableOpacity>
+                {
+                  this.state.isRecording === true ?
 
-                    <TouchableOpacity
-                      onPress = {this.openPhoto}
-                      style = {{
-                        position: 'absolute',
-                        bottom: '5%',
-                        left: '5%',
-                        alignSelf: 'flex-start',
-                      }}
-                      >
+                  null
 
-                      <Grid
-                        style={{top:0, position:'absolute'}}
-                        strokeWidth={3}
-                        stroke = "#d9d9d9"
-                        width = {40} height = {40} />
-                      <Grid
-                        strokeWidth={2}
-                        stroke = "white"
-                        width = {40} height = {40} />
+                  :
 
-                    </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress = {() => this.onRedirect()}
+                    style = {{
+                      position: 'absolute',
+                      top: '5%',
+                      left:'5%',
+                    }}
+                    >
+                    <ArrowLeft
+                      style={{top:0, position:'absolute'}}
+                      strokeWidth={3}
+                      stroke = "#d9d9d9"
+                      width = {40} height = {40} />
+                    <ArrowLeft
+                      strokeWidth={2}
+                      stroke = "white"
+                      width = {40} height = {40} />
+
+                  </TouchableOpacity>
+                }
 
 
+                {
+                  this.state.isRecording === true ?
 
+                  null
 
-                    {
-                      this.state.showFlash === "on" ?
+                  :
 
-                      <TouchableOpacity
-                        onPress = {() => this.onFlash()}
-                        style ={{
-                          position: 'absolute',
-                          top: '5%',
-                          right:'5%',
-                        }}>
-                        <Zap
-                          style={{top:0, position:'absolute'}}
-                          stroke = "#d9d9d9"
-                          strokeWidth={3}
-                          width = {30}
-                          height = {30} />
-                        <Zap
-                          stroke = "white"
-                          strokeWidth={2}
-                          width = {30}
-                          height = {30} />
-                      </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress = {this.openPhoto}
+                    style = {{
+                      position: 'absolute',
+                      bottom: '5%',
+                      left: '5%',
+                      alignSelf: 'flex-start',
+                    }}
+                    >
 
-                      :
+                    <Grid
+                      style={{top:0, position:'absolute'}}
+                      strokeWidth={3}
+                      stroke = "#d9d9d9"
+                      width = {40} height = {40} />
+                    <Grid
+                      strokeWidth={2}
+                      stroke = "white"
+                      width = {40} height = {40} />
 
-                      <TouchableOpacity
-                        onPress = {() => this.onFlash()}
-                        style ={{
-                          // position: 'relative',
-                          position: 'absolute',
-                          top: '5%',
-                          right:'5%',
-                          // top: 100
-                        }}>
-                        <ZapOff
-                          style={{top:0, position:'absolute'}}
-                          stroke = "#d9d9d9"
-                          strokeWidth={3}
-                          width = {30}
+                  </TouchableOpacity>
 
-                          height = {30} />
-                        <ZapOff
-                          strokeWidth={2}
-                          stroke = "white"
-                          width = {30}
-                          height = {30} />
-                      </TouchableOpacity>
-
-                    }
+                }
 
 
 
-                    <TouchableOpacity
-                      onPress = {() => this.onSwitchCamera()}
-                      style ={{
-                        // position: 'relative',
-                        position: 'absolute',
-                        top: '15%',
-                        right: '5%',
-                        // top: 100
-                      }}>
 
-                      <Repeat
-                        style={{top:0, position:'absolute'}}
-                        strokeWidth={3}
-                        stroke = "#d9d9d9"
-                        width = {30} height = {30} />
-                      <Repeat
-                        strokeWidth={2}
-                        stroke = "white"
-                        width = {30} height = {30} />
-                    </TouchableOpacity>
+
+
+                {
+
+                  this.state.isRecording === true ?
+
+                  null
+
+                  :
+
+                  this.state.showFlash === "on" ?
+
+                  <TouchableOpacity
+                    onPress = {() => this.onFlash()}
+                    style ={{
+                      position: 'absolute',
+                      top: '5%',
+                      right:'5%',
+                    }}>
+                    <Zap
+                      style={{top:0, position:'absolute'}}
+                      stroke = "#d9d9d9"
+                      strokeWidth={3}
+                      width = {30}
+                      height = {30} />
+                    <Zap
+                      stroke = "white"
+                      strokeWidth={2}
+                      width = {30}
+                      height = {30} />
+                  </TouchableOpacity>
+
+                  :
+
+                  <TouchableOpacity
+                    onPress = {() => this.onFlash()}
+                    style ={{
+                      // position: 'relative',
+                      position: 'absolute',
+                      top: '5%',
+                      right:'5%',
+                      // top: 100
+                    }}>
+                    <ZapOff
+                      style={{top:0, position:'absolute'}}
+                      stroke = "#d9d9d9"
+                      strokeWidth={3}
+                      width = {30}
+
+                      height = {30} />
+                    <ZapOff
+                      strokeWidth={2}
+                      stroke = "white"
+                      width = {30}
+                      height = {30} />
+                  </TouchableOpacity>
+
+                }
+
+                {
+                  this.state.isRecording === true ?
+
+                  null
+
+                  :
+
+                  <TouchableOpacity
+                    onPress = {() => this.onSwitchCamera()}
+                    style ={{
+                      // position: 'relative',
+                      position: 'absolute',
+                      top: '15%',
+                      right: '5%',
+                      // top: 100
+                    }}>
+
+                    <Repeat
+                      style={{top:0, position:'absolute'}}
+                      strokeWidth={3}
+                      stroke = "#d9d9d9"
+                      width = {30} height = {30} />
+                    <Repeat
+                      strokeWidth={2}
+                      stroke = "white"
+                      width = {30} height = {30} />
+                  </TouchableOpacity>
+
+
+                }
+
+
 
 
                   <TouchableOpacity
+                    onPressOut = {() => this.handlePressOut()}
                     onLongPress = {() => this.handleLongPress()}
                     onPress = {() => this.takePicture()}
                     style = {[(this.state.capturing)&&styles.captureBtnActive,styles.captureBtn]}></TouchableOpacity>
@@ -843,7 +974,19 @@ const mapDispatchToProps = dispatch => {
 
 
 const styles = StyleSheet.create({
-
+  container: {
+    position: 'absolute',
+     top: 0,
+     left: 0,
+     width: '100%',
+     height: '100%',
+ },
+ image: {
+   flex: 1,
+   transform: [{
+     scaleX: -1
+   }]
+ },
 
   notAllowed: {
     flex: 1,
