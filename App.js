@@ -100,17 +100,17 @@ ExpoNotifications.setNotificationHandler({
   }),
 });
 
-ExpoNotifications.scheduleNotificationAsync({
-  content: {
-    title: "Reminder",
-    body: 'What did you do today to meet your goals?',
-  },
-  trigger: {
-    hour: 10,
-    minute: 0,
-    repeats: true
-  },
-});
+// ExpoNotifications.scheduleNotificationAsync({
+//   content: {
+//     title: "Reminder",
+//     body: 'What did you do today to meet your goals?',
+//   },
+//   trigger: {
+//     hour: 10,
+//     minute: 0,
+//     repeats: true
+//   },
+// });
 
 
 class App extends Component{
@@ -120,6 +120,34 @@ class App extends Component{
     fontsLoaded: true,
     expoPushToken: "",
   };
+
+  getNotification = async() => {
+
+    const notifications = await ExpoNotifications.getAllScheduledNotificationsAsync();
+
+    return notifications;
+  }
+
+  turnOnNotification = async() => {
+     await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Come back",
+        body: 'What did you do today to meet your goals?',
+        data: {
+          type: "active"
+        }
+      },
+      trigger: {
+        hour: 10,
+        minute: 0,
+        repeats: true
+      },
+    });
+  }
+
+  cancelNotifications = async() => {
+    await Notifications.cancelAllScheduledNotificationsAsync()
+  }
 
 
 
@@ -250,60 +278,63 @@ class App extends Component{
   };
 
  handleNotificationResponse = response => {
-   console.log(response)
-   console.log('hits here boyyy')
-   if(response.notification.request.trigger.payload){
 
-     if(response.notification.request.trigger.payload.body){
 
-       if(response.notification.request.trigger.payload.body.type){
+   if(!this.props.loading && this.props.username){
+     if(response.notification.request.trigger.payload){
 
-           const notiType = response.notification.request.trigger.payload.body.type;
-            console.log(notiType)
-            if(notiType === "like"){
-              // you want to direct it to the post with the like
-              this.refContainer.navigate('DayAlbum', {
-                cellId: response.notification.request.trigger.payload.body.dayId
-              })
+       if(response.notification.request.trigger.payload.body){
 
-            }
+         if(response.notification.request.trigger.payload.body.type){
 
-            if(notiType === "comment"){
-              this.refContainer.navigate('Comments', {
-                postId: response.notification.request.trigger.payload.body.itemId
-              })
-            }
-
-            if(notiType === "follow"){
-              const username = response.notification.request.trigger.payload.body.username;
-
-              if(username !== this.props.username){
-                this.refContainer.navigate("ProfilePage", {
-                  username: response.notification.request.trigger.payload.body.username
+             const notiType = response.notification.request.trigger.payload.body.type;
+              if(notiType === "like"){
+                // you want to direct it to the post with the like
+                this.refContainer.navigate('DayAlbum', {
+                  cellId: response.notification.request.trigger.payload.body.dayId
                 })
-              } else {
-                this.refContainer.navigate("Profile")
+
               }
 
-            }
+              if(notiType === "comment"){
+                this.refContainer.navigate('Comments', {
+                  postId: response.notification.request.trigger.payload.body.itemId
+                })
+              }
+
+              if(notiType === "follow"){
+                const username = response.notification.request.trigger.payload.body.username;
+
+                if(username !== this.props.username){
+                  this.refContainer.navigate("ProfilePage", {
+                    username: response.notification.request.trigger.payload.body.username
+                  })
+                } else {
+                  this.refContainer.navigate("Profile")
+                }
+
+              }
+
+         }
 
        }
 
      }
 
-   }
+     if(response.notification.request.content){
+       if(response.notification.request.content.data){
+        if(response.notification.request.content.data.type){
+          const type = response.notification.request.content.data.type
 
-   if(response.notification.request.content){
-     if(response.notification.request.content.data){
-      if(response.notification.request.content.data.type){
-        const type = response.notification.request.content.data.type
+          if(type === "active"){
+            this.refContainer.navigate("Upload")
+          }
 
-        if(type === "active"){
-          this.refContainer.navigate("Upload")
         }
-
-      }
+       }
      }
+
+
    }
 
 
@@ -317,6 +348,18 @@ class App extends Component{
       this.registerForPushNotificationsAsync()
 
     }
+
+    if(this.props.dailyNotification && this.getNotification().length > 1){
+      this.cancelNotifications()
+      this.turnOnNotification()
+
+    }
+
+    if(this.props.dailyNotification && this.getNotification().length === 0){
+      this.turnOnNotification()
+    }
+
+
     ExpoNotifications.addNotificationReceivedListener(this.handleNotification);
 
     ExpoNotifications.addNotificationResponseReceivedListener(this.handleNotificationResponse);
@@ -327,6 +370,17 @@ class App extends Component{
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
       // grab the userinfromation
+      if(this.props.dailyNotification && this.getNotification().length > 1){
+        this.cancelNotifications()
+        this.turnOnNotification()
+
+      }
+
+      if(this.props.dailyNotification && this.getNotification().length === 0){
+        this.turnOnNotification()
+      }
+
+
 
       if(this.props.notificationToken.length === 0){
 
@@ -672,7 +726,6 @@ class App extends Component{
     // you will get a serpate navigation for the login and sign up but hwne you are
     // auth you get the bottom bar
 
-    console.log(this.props)
     if (this.state.fontsLoaded) {
     return(
       <PaperProvider>
@@ -983,7 +1036,8 @@ const mapStateToProps = state => {
     loading: state.auth.loading,
     showFinalModal: state.socialNewsfeed.showFinalModal,
     showIntialInstructions: state.auth.showIntialInstructions,
-    notificationSeen: state.auth.notificationSeen
+    notificationSeen: state.auth.notificationSeen,
+    dailyNotification: state.auth.dailyNotification
   }
 }
 

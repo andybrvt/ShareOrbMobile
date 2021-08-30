@@ -8,13 +8,15 @@ import {
   Dimensions,
   TouchableHighlight,
   TouchableWithoutFeedback,
-  Switch
+  Switch,
+  ActivityIndicator
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { LogOut, Lock, User, Bell} from "react-native-feather";
 import { connect } from 'react-redux';
 import * as Notifications from 'expo-notifications';
+import authAxios from '../util';
 
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
@@ -26,7 +28,8 @@ import * as authActions from '../store/actions/auth';
      super(props)
 
      this.state = {
-       showNotifications: this.getNotification.length !== 0
+       showNotifications: this.props.dailyNotification,
+       loading: false
      }
    }
 
@@ -68,23 +71,47 @@ import * as authActions from '../store/actions/auth';
    getNotification = async() => {
 
      const notifications = await Notifications.getAllScheduledNotificationsAsync();
-     console.log(notifications)
+     console.log(notifications.length)
+
+     return notifications;
    }
 
    toggleChange = () => {
-     if(this.state.showNotifications === true){
+     if(this.props.dailyNotification === true){
        // if false you wanna turn it on then
-       this.cancelNotifications()
+       this.cancelNotifications();
+       this.setState({
+         loading: true
+       })
+       authAxios.post(`${global.IP_CHANGE}`+'/userprofile/showDailyNotification')
+       .then( res => {
+         this.setState({
+           loading: false
+         })
+         this.props.setDailyNoti(res.data)
+       })
+
      } else {
-       this.turnOnNotification()
+
+       this.turnOnNotification();
+       this.setState({
+         loading: true
+       })
+       authAxios.post(`${global.IP_CHANGE}`+'/userprofile/showDailyNotification')
+       .then( res => {
+         this.setState({
+           loading: false
+         })
+         this.props.setDailyNoti(res.data)
+       })
+
+
      }
-     this.setState({
-       showNotifications: !this.state.showNotifications
-     })
+
    }
 
    render(){
-
+     console.log(this.props.dailyNotification)
      return (
        <BackgroundContainer>
          <View >
@@ -116,19 +143,28 @@ import * as authActions from '../store/actions/auth';
                     justifyContent: 'center',
 
                   }}>
+                  {
+                    this.state.loading === true ?
+
+                    <ActivityIndicator />
+
+                  :
+
                   <Switch
                     trackColor={{ false: "gray", true: "#1890ff" }}
-                    thumbColor={this.state.showNotifications ? "white" : "white"}
+                    thumbColor={this.props.dailyNotification ? "white" : "white"}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={this.toggleChange}
-                    value={this.state.showNotifications}
+                    value={this.props.dailyNotification}
                      />
+
+                  }
 
                 </View>
 
             </View>
 
-            {/*
+
 
               <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.getNotification()}>
                    <View style={{flexDirection:'row', padding:20}}>
@@ -137,7 +173,7 @@ import * as authActions from '../store/actions/auth';
                   </View>
                 </TouchableHighlight>
 
-              */}
+
 
 
           {/* Add in later
@@ -183,8 +219,8 @@ import * as authActions from '../store/actions/auth';
 
      curLoad: state.auth.curLoad,
      totalLoad: state.auth.totalLoad,
-     showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments
-
+     showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments,
+     dailyNotification: state.auth.dailyNotification
    }
  }
 
@@ -193,7 +229,8 @@ import * as authActions from '../store/actions/auth';
      logout: () => dispatch(authActions.logout()),
      authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
      authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
-     newsFeedCommentSec: () => dispatch(socialNewsfeedActions.newsFeedCommentSec())
+     newsFeedCommentSec: () => dispatch(socialNewsfeedActions.newsFeedCommentSec()),
+     setDailyNoti: (bool) => dispatch(authActions.setDailyNoti(bool)),
    }
  }
 
