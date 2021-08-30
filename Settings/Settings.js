@@ -165,13 +165,17 @@ import * as authActions from '../store/actions/auth';
             </View>
 
 
-
+            {/*
               <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.getNotification()}>
                    <View style={{flexDirection:'row', padding:20}}>
                       <Bell stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
                       <Text style={styles.settingWord}>Get Notifications</Text>
                   </View>
                 </TouchableHighlight>
+
+
+              */}
+
 
 
 
