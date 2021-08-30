@@ -90,7 +90,8 @@
     "rn-emoji-keyboard": "^0.4.0",
     "styled-components": "^5.3.0",
     "symbol-observable": "^4.0.0",
-    "use-memo-one": "^1.1.2"
+    "use-memo-one": "^1.1.2",
+    "expo-av": "~9.2.3"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
