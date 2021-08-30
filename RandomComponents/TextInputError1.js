@@ -8,11 +8,12 @@ const TextInputError1 = (props) => (
   <View style = {{
     }}>
     <View style = {{
-        borderWidth: 2,
-        height: 45,
-        borderRadius: 5,
-        backgroundColor: 'white',
-        borderColor: '#1890ff'
+        // borderWidth: 2,
+        height: 40,
+        borderRadius: 10,
+        backgroundColor: '#F0F0F0',
+        // borderColor: '#1890ff'
+
       }}>
       <TextInput
         placeholder = {props.placeholder}
