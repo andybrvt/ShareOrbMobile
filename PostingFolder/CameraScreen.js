@@ -54,6 +54,7 @@ class CameraScreen extends React.Component{
   }
   state = {
     allowCamera: false,
+    allowMicrophone: false,
     type: "front",
     showFlash: "off",
     imagePreview: null,
@@ -180,15 +181,21 @@ class CameraScreen extends React.Component{
         try{
           // const camera = await Permissions.askAsync(Permissions.CAMERA);
           const camera = await Camera.requestPermissionsAsync();
-
+          const microphone = await Camera.requestMicrophonePermissionsAsync();
           if(camera.status  !== "granted"){
             alert("Permission to access camera roll is required!");
 
             return await Camera.requestPermissionsAsync();
           }
+          if(microphone.status !== "granted"){
+            alert("Permission to access microphone is required!");
+
+            return await Camera.requestMicrophonePermissionsAsync();
+          }
 
           this.setState({
-            allowCamera: true
+            allowCamera: true,
+            allowMicrophone: true
           })
         }
         catch(err){
@@ -224,8 +231,13 @@ class CameraScreen extends React.Component{
         // Before starting to recording, setup a timer that calls stopRecording() after 20s IF the camera is still recording, otherwise, no need to call stop
         // setTimeout(() => this.state.capturing && this.camera.stopRecording(), 20*1000);
         // const videoData = await this.cameraRef.recordAsync();
-        this.setState({ capturing: true});
-    };
+
+        console.log('long press here')
+  };
+
+  handlePressOut = () => {
+    console.log('out')
+  }
 
   onCancelPhoto(){
 
@@ -781,6 +793,7 @@ class CameraScreen extends React.Component{
 
 
                   <TouchableOpacity
+                    onPressOut = {() => this.handlePressOut()}
                     onLongPress = {() => this.handleLongPress()}
                     onPress = {() => this.takePicture()}
                     style = {[(this.state.capturing)&&styles.captureBtnActive,styles.captureBtn]}></TouchableOpacity>
