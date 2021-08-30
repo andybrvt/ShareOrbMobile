@@ -90,11 +90,11 @@ import * as Notifications from 'expo-notifications';
 
 
 // Andy UACI
-global.IP_CHANGE = "http://206.207.51.99:19000"
-global.IMAGE_ENDPOINT = "http://206.207.51.99:19000"
-global.WS_ENDPOINT = "206.207.51.99:19000"
-global.POSTLIST_SPEC = 'http://206.207.51.99:19000/media/'
-global.WS_HEADER = "ws"
+// global.IP_CHANGE = "http://206.207.51.99:19000"
+// global.IMAGE_ENDPOINT = "http://206.207.51.99:19000"
+// global.WS_ENDPOINT = "206.207.51.99:19000"
+// global.POSTLIST_SPEC = 'http://206.207.51.99:19000/media/'
+// global.WS_HEADER = "ws"
 
 
 // global.IP_CHANGE = "http://206.207.51.82:19002"
