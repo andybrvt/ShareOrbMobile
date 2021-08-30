@@ -34,12 +34,29 @@ import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1
 import GoalDropDown from './GoalDropDown';
 import VideoPreview from './VideoPreview';
 import { Video, AVPlaybackStatus } from 'expo-av';
-
+import Test from '../PostingFolder/Test'
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
 
 
-const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
+const { Clock,
+   cond,
+   sub,
+   divide,
+   eq,
+   add,
+   call,
+   set,
+   Value,
+   event,
+   or,
+   startClock,
+   stopClock,
+   timing,
+   Extrapolate,
+   interpolate,
+   block
+  } = Animated;
 
 
 class CameraScreen extends React.Component{
@@ -49,7 +66,47 @@ class CameraScreen extends React.Component{
 
   slideAnimation = withTimingTransition(this.slide, {duration: 300})
 
-  isRecording = false;
+  isRecording = new Value(false);
+
+  clock = new Clock();
+
+
+  runLoadingTimer = (clock) => {
+    // timer will need 3 things, the clock, state, and config
+
+    const state = {
+      finished: new Value(0), // value that it will finished at
+      position: new Value(0), //this will hold the value starting from here to the to value
+      time: new Value(0), // time will start here and go fro the duration time
+      frameTime: new Value(0)
+    }
+
+    const config = {
+      duration: 10000, // how long it will go for in ms
+      toValue: new Value(width), // this will be the value it will go to
+      easing: Easing.inOut(Easing.ease)
+    }
+
+    return block([
+      cond(this.isRecording,
+
+        startClock(clock),
+        [
+          stopClock(clock),
+          set(state.finished, new Value(0)),
+          set(state.position, new Value(0)),
+          set(state.time, new Value(0)),
+          set(state.frameTime, new Value(0))
+        ]
+
+      ),
+      timing(clock, state, config),
+      cond(state.finished, stopClock(clock)),
+      state.position
+    ])
+  }
+
+
   constructor(props){
 
     super(props)
@@ -241,13 +298,14 @@ class CameraScreen extends React.Component{
     try{
 
       this.setState({isRecording: true}, async() => {
-        this.isRecording = true
 
+        this.isRecording.setValue(true)
         const video = await this.cameraRef.recordAsync({
-          maxDuraion: 7
+          maxDuration: 10
         });
 
-        this.isRecording = false;
+        this.isRecording.setValue(false)
+
 
         this.setState({
           isVideoOpen: true,
@@ -486,6 +544,9 @@ class CameraScreen extends React.Component{
       return 0;
     }
   }
+
+
+  opacity = this.runLoadingTimer(this.clock)
 
 
   render(){
@@ -753,6 +814,22 @@ class CameraScreen extends React.Component{
                 skipProcessing={false}
                 flashMode = {this.state.showFlash}
                 style = {{flex: 1}}>
+
+
+                  <Animated.View
+                    onPress = {() => this.onRedirect()}
+                    style = {{
+                      position: 'absolute',
+                      bottom: '0%',
+                      left: 0,
+                      backgroundColor: '#1890ff',
+                      width: this.opacity,
+                      height: 10,
+                    }}
+                    >
+                  </Animated.View>
+
+
 
                 {
                   this.state.isRecording === true ?
