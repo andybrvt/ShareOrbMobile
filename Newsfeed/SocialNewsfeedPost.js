@@ -414,7 +414,7 @@ class SocialNewsfeedPost extends React.Component{
 
                    {/* fast image*/}
 
-                  <FastImage
+                  <Image
                     style={styles.cover}
                     resizeMode = "cover"
                     source={{ uri: itemImage }}

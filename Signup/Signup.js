@@ -27,7 +27,7 @@ import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1
 import Animated, {Easing} from 'react-native-reanimated';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import * as dateFns from 'date-fns';
-
+import { Search, ChevronLeft, ArrowLeft } from "react-native-feather";
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
@@ -280,20 +280,18 @@ class Signup extends React.Component{
                showsVerticalScrollIndicator = {false}
                >
                <View style = {styles.logoContainer}>
-                 <MainLogo height = {80}  width = {180} />
-                 <TouchableOpacity>
-                   <View>
-                     <Button
-                       onPress = {() => this.props.navigation.navigate("Login")}
-                       title = "Back to Login"
-                        />
-                   </View>
+                 <TouchableOpacity >
+                   <ArrowLeft
+                     onPress = {() => this.props.navigation.navigate("Login")}
+                     style={{left:10}}
+                     stroke="black" strokeWidth={2.5} width={25} height={25} />
                  </TouchableOpacity>
-
+                 <View style={{left:20}}>
+                 <Text style={styles.signUpText}>Sign Up</Text>
+                 </View>
                </View>
-
                <View style = {styles.inputContainer}>
-                 <Text>Username </Text>
+                 <Text style={styles.fieldHeader}>Username </Text>
                    <TextInputError
                      onBlur = {() => this.setState({
                        usernameError: this.validate("username", this.state.username)})}
@@ -302,10 +300,9 @@ class Signup extends React.Component{
                      error = {this.state.usernameError}
                      />
                </View>
-
                <View style = {styles.duoInputContainer}>
                  <View style = {styles.smallInputContainer}>
-                   <Text >First Name </Text>
+                   <Text style={styles.fieldHeader}>First Name </Text>
                      <TextInputError
                        onBlur = {() => this.setState({
                          firstNameError: this.validate("firstName", this.state.firstName)})}
@@ -316,7 +313,7 @@ class Signup extends React.Component{
                  </View>
 
                  <View style = {[{marginLeft: 5},styles.smallInputContainer]}>
-                   <Text >Last Name </Text>
+                   <Text style={styles.fieldHeader}>Last Name </Text>
                      <TextInputError
                        onBlur = {() => this.setState({
                          lastNameError: this.validate("lastName", this.state.lastName)})}
@@ -329,7 +326,7 @@ class Signup extends React.Component{
                </View>
 
                <View style = {styles.inputContainer}>
-                 <Text>Birthday </Text>
+                 <Text style={styles.fieldHeader}>Birthday </Text>
                  <TouchableOpacity
                    onPress = {() => this.openDatePicker()}
                    >
@@ -337,7 +334,7 @@ class Signup extends React.Component{
                        borderWidth: 2,
                        height: 45,
                        borderRadius: 5,
-                       backgroundColor: 'white',
+                       backgroundColor: 'whitesmoke',
                        borderColor: '#1890ff',
                        justifyContent: 'center'
                      }}>
@@ -350,7 +347,7 @@ class Signup extends React.Component{
                </View>
 
                <View style = {styles.inputContainer}>
-                 <Text>Email </Text>
+                 <Text style={styles.fieldHeader}>Email </Text>
                    <TextInputError
                      onBlur = {() => this.setState({
                        emailError: this.validate("email", this.state.email)})}
@@ -364,7 +361,7 @@ class Signup extends React.Component{
 
 
                <View style = {styles.inputContainer}>
-                 <Text >Password </Text>
+                 <Text style={styles.fieldHeader}>Password </Text>
                    <TextInputError
                      onBlur = {() => this.setState({
                        passwordError: this.validate("password", this.state.password)})}
@@ -377,7 +374,7 @@ class Signup extends React.Component{
                </View>
 
                <View style = {styles.inputContainer}>
-                 <Text >Password </Text>
+                 <Text style={styles.fieldHeader}>Confirm Password </Text>
                    <TextInputError
                      onBlur = {() => this.setState({
                        passwordConfirmError: this.validate("passwordConfirm", this.state.passwordConfirm)})}
@@ -394,7 +391,7 @@ class Signup extends React.Component{
 
                  <View
                    // onPress = {() => this.handleSubmit()}
-                   style = {styles.signUpButtonDisabled}
+                   style = {styles.signUpBtn}
                    >
                      <Text style = {{
                          color: 'white'
@@ -405,7 +402,7 @@ class Signup extends React.Component{
                  :
                  <TouchableOpacity
                    onPress = {() => this.handleSubmit()}
-                   style = {styles.signUpButton}
+                   style = {styles.signUpBtnAuth}
                    >
                      <Text style = {{
                          color: 'white'
@@ -507,7 +504,34 @@ export default connect(mapStateToProps, mapDispatchToProps)(Signup);
 
 
 const styles = StyleSheet.create({
-
+  signUpText:{
+    fontSize:20,
+    fontWeight:'bold',
+  },
+  signUpBtn: {
+    position: "relative",
+    width: "80%",
+    borderRadius: 10,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 50,
+    backgroundColor:'#F0F0F0',
+  },
+  signUpBtnAuth: {
+    position: "relative",
+    width: "80%",
+    borderRadius: 10,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 50,
+    backgroundColor: "#1890ff",
+  },
+  fieldHeader:{
+    fontWeight:'bold',
+    fontSize:14,
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -515,11 +539,14 @@ const styles = StyleSheet.create({
     width: width
   },
   logoContainer:{
+    top:'7.5%',
     width: width*0.8,
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection:'row',
   },
   inputContainer: {
     // height: height*0.09,
+    top:'30%',
     width: width*0.8,
     position: 'relative'
     // alignItems: 'center'
