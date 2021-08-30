@@ -33,6 +33,8 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1';
 import GoalDropDown from './GoalDropDown';
 import VideoPreview from './VideoPreview';
+import { Video, AVPlaybackStatus } from 'expo-av';
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
 
@@ -274,7 +276,7 @@ class CameraScreen extends React.Component{
     this.cameraRef.stopRecording()
   }
 
-  onCancelPhoto(){
+  onCancelPhoto =() => {
 
     this.showFinal.setValue(false)
 
@@ -284,7 +286,9 @@ class CameraScreen extends React.Component{
         caption: "",
         showCaptionModal: false,
         isGallery: false,
-        selectedGoal: {}
+        selectedGoal: {},
+        videoPreview: null,
+        isVideoOpen: false,
       }), 1 )
 
   }
@@ -703,9 +707,39 @@ class CameraScreen extends React.Component{
               this.state.videoPreview !== null ?
 
               <Modal visible = {this.state.isVideoOpen}>
-                <VideoPreview
-                  video = {this.state.videoPreview}
-                   />
+                <View style = {styles.container}>
+
+                  <Video
+                    source={{ uri: this.state.videoPreview.uri }}
+                    style={[styles.image, { height, width }]}
+                    rate={1.0}
+                    isMuted={false}
+                    resizeMode="cover"
+                    volume={0.5}
+                    isLooping
+                    shouldPlay
+
+                     />
+
+                     <TouchableOpacity
+                       onPress = {() => this.onCancelPhoto()}
+                       style = {{
+                         position: 'absolute',
+                         top: '5%',
+                         left:'5%',
+                       }}>
+                       <X
+                         style={{top:0, position:'absolute'}}
+                         strokeWidth={4}
+                         stroke = "#d9d9d9"
+                         height = {40}
+                         width = {40}/>
+                       <X
+                         stroke = 'white'
+                         height = {40}
+                         width = {40}/>
+                     </TouchableOpacity>
+                </View>
               </Modal>
 
 
@@ -940,7 +974,19 @@ const mapDispatchToProps = dispatch => {
 
 
 const styles = StyleSheet.create({
-
+  container: {
+    position: 'absolute',
+     top: 0,
+     left: 0,
+     width: '100%',
+     height: '100%',
+ },
+ image: {
+   flex: 1,
+   transform: [{
+     scaleX: -1
+   }]
+ },
 
   notAllowed: {
     flex: 1,
