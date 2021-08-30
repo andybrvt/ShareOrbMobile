@@ -8,6 +8,8 @@
 	  <string>This app requires camera access to run the function properly</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>For saving a photo.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Invite your friends to make connections</string>
     <key>NSMicrophoneUsageDescription</key>
 	  <string>This app requires microphone access to run the function properly</string>
     <key>CFBundleDevelopmentRegion</key>
@@ -27,7 +29,7 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>10</string>
+    <string>11</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>

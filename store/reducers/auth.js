@@ -26,8 +26,9 @@ const initialState ={
   bio: "",
   curLoad: 0,
   totalLoad: 0,
-
   showCamera: false,
+  dailyNotification: true,
+
 }
 
 const authStart = (state, action) => {
@@ -111,7 +112,8 @@ const authLogout = (state, action) => {
     showIntialInstructions: true,
     notificationSeen: 0,
     date_joined: null,
-    bio: ""
+    bio: "",
+    dailyNotification: true
   });
 };
 
@@ -133,7 +135,8 @@ const addCredentials = (state, action) => {
     showIntialInstructions: action.showIntialInstructions,
     notificationSeen: action.notificationSeen,
     date_joined: action.date_joined,
-    bio: action.bio
+    bio: action.bio,
+    dailyNotification: action.dailyNotification
   });
 };
 
@@ -190,6 +193,13 @@ const authAddUnaddFollowing = (state, action) => {
   })
 }
 
+const setDailyNoti = (state, action) => {
+  return updateObject(state, {
+    dailyNotification: action.bool
+  })
+}
+
+
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case actionTypes.AUTH_START:
@@ -232,6 +242,8 @@ const reducer = (state = initialState, action) => {
       return resetNotificationSeen(state, action);
     case actionTypes.AUTH_ADD_UNADD_FOLLOWING:
       return authAddUnaddFollowing(state, action);
+    case actionTypes.SET_DAILY_NOTI:
+      return setDailyNoti(state, action);
     default:
       return state;
   }

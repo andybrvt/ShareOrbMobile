@@ -179,7 +179,9 @@ export const grabUserCredentials = () => {
          res.data.showIntialInstructions,
          res.data.notificationSeen,
          res.data.date_joined,
-         res.data.bio
+         res.data.bio,
+         res.data.dailyNotification,
+
       ))
     })
     .catch(err => {
@@ -204,7 +206,9 @@ export const addCredentials = (
    showIntialInstructions,
    notificationSeen,
    date_joined,
-   bio
+   bio,
+   dailyNotification,
+
  ) => {
 
   return {
@@ -224,7 +228,8 @@ export const addCredentials = (
     showIntialInstructions: showIntialInstructions,
     notificationSeen: notificationSeen,
     date_joined: date_joined,
-    bio: bio
+    bio: bio,
+    dailyNotification: dailyNotification
   };
 };
 
@@ -290,5 +295,12 @@ export const authAddUnaddFollowing = (following) => {
   return{
     type: actionTypes.AUTH_ADD_UNADD_FOLLOWING,
     following: following
+  }
+}
+
+export const setDailyNoti = (bool) => {
+  return{
+    type: actionTypes.SET_DAILY_NOTI,
+    bool: bool
   }
 }
