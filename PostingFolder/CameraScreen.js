@@ -304,7 +304,6 @@ class CameraScreen extends React.Component{
           maxDuration: 10
         });
 
-        this.isRecording.setValue(false)
 
 
         this.setState({
@@ -312,6 +311,9 @@ class CameraScreen extends React.Component{
           isRecording: false,
           videoPreview: video,
         })
+
+
+        this.isRecording.setValue(false)
 
       })
 
@@ -549,8 +551,9 @@ class CameraScreen extends React.Component{
   opacity = this.runLoadingTimer(this.clock)
 
 
-  render(){
 
+  render(){
+    console.log(this.state.videoPreview !== null)
     const showCaption = this.state.showCaptionModal;
     return(
       <View
@@ -630,23 +633,26 @@ class CameraScreen extends React.Component{
                  </KeyboardAvoidingView>
                 </Animated.View>
 
-                <TouchableWithoutFeedback
-                  onPress = {() => this.onWriteCaption()}
-                  >
-                  <Image
-                    source = {{uri:this.state.imagePreview}}
-                    style = {{
-                      height: '100%',
-                      width: "100%",
-                      transform: [
-                        {scaleX: !this.state.isGallery ? (this.state.type === "front" ? -1 : 1)  : 1}
-                      ]
-                    }}
-                    />
 
 
 
-                </TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback
+                    onPress = {() => this.onWriteCaption()}
+                    >
+
+                      <Image
+                        source = {{uri:this.state.imagePreview}}
+                        style = {{
+                          height: '100%',
+                          width: "100%",
+                          transform: [
+                            {scaleX: !this.state.isGallery ? (this.state.type === "front" ? -1 : 1)  : 1}
+                          ]
+                        }}
+                        />
+
+                  </TouchableWithoutFeedback>
+
 
 
 
@@ -769,6 +775,7 @@ class CameraScreen extends React.Component{
 
               <Modal visible = {this.state.isVideoOpen}>
                 <View style = {styles.container}>
+
 
                   <Video
                     source={{ uri: this.state.videoPreview.uri }}
@@ -1052,9 +1059,10 @@ const mapDispatchToProps = dispatch => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-     top: 0,
-     left: 0,
+    // flex: 1,
+    // position: 'absolute',
+    //  top: 0,
+    //  left: 0,
      width: '100%',
      height: '100%',
  },
