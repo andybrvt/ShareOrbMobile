@@ -242,7 +242,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: 2,
+
+    flex: Platform.OS === 'ios' ? 2: 1.45,
   },
   profileHeader: {
     flex: 1,
