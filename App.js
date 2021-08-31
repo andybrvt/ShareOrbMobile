@@ -377,7 +377,7 @@ class App extends Component{
 
     }
 
-    if(this.props.dailyNotification && this.getNotification().length > 1){
+    if(this.props.dailyNotification && this.getNotification().length > 3){
       this.cancelNotifications()
       this.turnOnNotification()
 
@@ -398,7 +398,7 @@ class App extends Component{
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
       // grab the userinfromation
-      if(this.props.dailyNotification && this.getNotification().length > 1){
+      if(this.props.dailyNotification && this.getNotification().length > 3){
         this.cancelNotifications()
         this.turnOnNotification()
 
