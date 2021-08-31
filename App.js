@@ -131,18 +131,46 @@ class App extends Component{
   turnOnNotification = async() => {
      await Notifications.scheduleNotificationAsync({
       content: {
-        title: "Come back",
-        body: 'What did you do today to meet your goals?',
+        title: "Good morning",
+        body: 'Start your morning off right with some journaling!',
         data: {
           type: "active"
         }
       },
       trigger: {
-        hour: 10,
+        hour: 7,
         minute: 0,
         repeats: true
       },
     });
+    await Notifications.scheduleNotificationAsync({
+     content: {
+       title: "Reminder",
+       body: 'What did you do today to meet your goals?',
+       data: {
+         type: "active"
+       }
+     },
+     trigger: {
+       hour: 13,
+       minute: 0,
+       repeats: true
+     },
+   });
+   await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Good afternoon",
+      body: 'How did your day go? Let your friends know!',
+      data: {
+        type: "active"
+      }
+    },
+    trigger: {
+      hour: 19,
+      minute: 0,
+      repeats: true
+    },
+  });
   }
 
   cancelNotifications = async() => {

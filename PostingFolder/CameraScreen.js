@@ -503,6 +503,12 @@ class CameraScreen extends React.Component{
 
   }
 
+
+  onSaveVideo = (video) => {
+      console.log('save video')
+  }
+
+
   onRedirect = () => {
     this.props.closeShowCamera();
     this.props.navigation.goBack();
@@ -776,18 +782,82 @@ class CameraScreen extends React.Component{
               <Modal visible = {this.state.isVideoOpen}>
                 <View style = {styles.container}>
 
+                  <Animated.View style = {{
+                      position: 'absolute',
+                      backgroundColor: 'white',
+                      borderRadius:20,
+                      // android shadow
+                      elevation:20,
+                      shadowColor: '#52006A',
+                      // ios shadow
+                      shadowColor: '#171717',
+                      shadowOffset: {width: -2, height: 4},
+                      shadowOpacity: 0.2,
+                      shadowRadius: 3,
+                      alignSelf: 'center',
+                      zIndex: 99,
+                      top: this.additionalTop(),
+                      transform: [
+                        {translateY: showCaption ? SCREEN_HEIGHT*0.3 : SCREEN_HEIGHT}
+                      ]
+                    }}>
 
-                  <Video
-                    source={{ uri: this.state.videoPreview.uri }}
-                    style={[styles.image, { height, width }]}
-                    rate={1.0}
-                    isMuted={false}
-                    resizeMode="cover"
-                    volume={0.5}
-                    isLooping
-                    shouldPlay
+                    <KeyboardAvoidingView
+                      style = {{
+                        padding: 20,
+                        backgroundColor: 'transparent',
+                        width: width*0.8,
+                        alignItems: 'center',
+                      }}
+                      behavior = "height"
+                      keyboardVerticalOffset = {10}
+                      >
+                      <Text style={{fontSize:18, paddingBottom:10}}> Caption</Text>
+                     <View
+                       style = {{
+                         backgroundColor: "whitesmoke",
+                         padding: 10,
+                         borderRadius:10,
+                         width: "100%",
+                       }}
+                       >
+                       <TextInput
+                         onContentSizeChange={(event) => {
+                           console.log(event)
+                            console.log(event.nativeEvent.contentSize.height)
+                            // event.preventDefult()
+                            this.setState({
+                              height: event.nativeEvent.contentSize.height
+                            })
+                         }}
+                         value = {this.state.caption}
+                         onChangeText = {this.changeCaption}
+                         placeholder = "Write something here..."
+                         multiline = {true}
+                         ref={(input) => { this.textInput = input; }}
+                          />
+                     </View>
+                   </KeyboardAvoidingView>
+                  </Animated.View>
 
-                     />
+                  <TouchableWithoutFeedback
+                    style = {{flex: 1}}
+                    onPress = {() => this.onWriteCaption()}
+
+                    >
+                    <Video
+                      source={{ uri: this.state.videoPreview.uri }}
+                      style={[styles.image, { height, width }]}
+                      rate={1.0}
+                      isMuted={false}
+                      resizeMode="cover"
+                      volume={0.5}
+                      isLooping
+                      shouldPlay
+
+                       />
+
+                  </TouchableWithoutFeedback>
 
                      <TouchableOpacity
                        onPress = {() => this.onCancelPhoto()}
@@ -806,6 +876,43 @@ class CameraScreen extends React.Component{
                          stroke = 'white'
                          height = {40}
                          width = {40}/>
+                     </TouchableOpacity>
+
+                     <TouchableOpacity
+                       onPress = {() => this.openShowGoals()}
+                       style ={{
+                         // position: 'relative',
+                         position: 'absolute',
+                         top: '5%',
+                         right:'5%',
+                         // top: 100
+                       }}
+                       >
+                       <Circle
+                         style={{top:0, position:'absolute'}}
+                         stroke = "#d9d9d9"
+                         strokeWidth={3}
+                         width = {40}
+                         height = {40}
+                          />
+
+                        <Circle
+                          strokeWidth={2}
+                          stroke = "white"
+                          width = {40}
+                          height = {40}
+                           />
+
+                     </TouchableOpacity>
+
+                     <TouchableOpacity
+                       style = {styles.submitBtn}
+                       onPress = {() => this.onSaveVideo(this.state.videoPreview)}
+                       >
+                         <Text style = {{
+                             color: 'white',
+                             fontSize: 20
+                           }}> Save  </Text>
                      </TouchableOpacity>
                 </View>
               </Modal>
