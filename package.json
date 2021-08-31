@@ -64,7 +64,7 @@
     "react-native-image-picker": "^3.5.0",
     "react-native-paper": "^4.7.2",
     "react-native-popup-confirm-toast": "^2.0.2",
-    "react-native-reanimated": "~2.2.0",
+    "react-native-reanimated": "^1.13.1",
     "react-native-redash": "^16.0.11",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
