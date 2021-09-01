@@ -35,7 +35,9 @@ class InfiniteScrollFlat extends React.Component{
     refreshing: false,
     start: 6,
     addMore: 5,
-    hasMore: true
+    hasMore: true,
+    currentMonth: dateFns.format(new Date(), "MMMM"),
+    currentDay: dateFns.format(new Date(), "d")
   }
 
   onRefresh = () => {
@@ -88,6 +90,31 @@ class InfiniteScrollFlat extends React.Component{
 
     )
   }
+
+  onViewableItemsChanged = ({ viewableItems, changed }) => {
+    if(viewableItems && viewableItems.length > 0){
+
+      if(viewableItems[1]){
+        const currentItem = viewableItems[1];
+        if(currentItem.isViewable){
+          if(currentItem.isViewable === true){
+            const date= viewableItems[1].item.created_at
+            this.setState({
+              currentMonth: dateFns.format(new Date(date), "MMMM"),
+              currentDay: dateFns.format(new Date(date), "d")
+            })
+          }
+        }
+
+      }
+
+
+    }
+
+
+
+   // console.log("Changed in this iteration", changed);
+ }
 
   render(){
     let post = [];
@@ -147,12 +174,15 @@ class InfiniteScrollFlat extends React.Component{
         }}
         >
 
-        <Header />
+        <Header
+          currentMonth = {this.state.currentMonth}
+          currentDay = {this.state.currentDay}
+           />
         {
           post.length === 0 ?
 
           <SuggestedList
-            style={{top:50,}}
+            style={{top:70,}}
             updateFollowing = {this.props.authAddUnaddFollowing}
             following= {this.props.following}
             curId = {this.props.id}
@@ -164,18 +194,19 @@ class InfiniteScrollFlat extends React.Component{
           :
 
           <AnimatedFlatList
+            onViewableItemsChanged={this.onViewableItemsChanged }
             contentContainerStyle={{ paddingBottom: 100 }}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle = {16} // important for animation
             onScroll = {onScrollEvent({y})}
             data = {post}
             renderItem = {this.renderPost}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={(item, index) => String(index)}
             onEndReachedThreshold={0.5}
             onEndReached = {() => this.loadSocialPost()}
             onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
-            style={{top:50,}}
+            style={{top:70,}}
              />
         }
 

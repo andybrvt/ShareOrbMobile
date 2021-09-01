@@ -485,7 +485,7 @@ let likeAvatarList=[]
                      <Text style = {styles.dayNumTag}>
                        {socialDay}
                      </Text>
-                 </View>
+              </View>
            </View>
            <FlatList
               ref = {ref => this.flatListRef = ref}

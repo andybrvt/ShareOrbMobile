@@ -237,7 +237,7 @@ import * as authActions from '../store/actions/auth';
  const styles = StyleSheet.create({
    settingWord: {
      left:5,
-     color:'blue',
+     color:'black',
      fontSize:16,
    },
  });

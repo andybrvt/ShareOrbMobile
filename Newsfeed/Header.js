@@ -83,12 +83,21 @@ class Header extends React.Component{
           flexDirection: "row",
           flex: 1,
           backgroundColor: Platform.OS === "ios" ? "white" : "white",
-          height: 50,
+          height: 70,
           position: 'absolute',
           width: "100%",
           }}>
           <View style = {styles.logoContainer}>
              <MainLogo1 width = {120}/>
+          </View>
+
+          <View style = {styles.testWhere2}>
+                 <Text style = {styles.videoFooterUserName}>
+                   {this.props.currentMonth}
+                 </Text>
+                 <Text style = {styles.dayNumTag}>
+                   {this.props.currentDay}
+                 </Text>
           </View>
           <View style = {styles.searchProfileContainer}>
             {/*
@@ -143,6 +152,14 @@ class Header extends React.Component{
 
 const styles = StyleSheet.create({
 
+  testWhere2:{
+    position:'absolute',
+    padding:10,
+    right:0,
+    width:'30%',
+    flexDirection:'column',
+    alignItems:'center',
+  },
   loginBtn: {
     position: "relative",
     marginRight:10,
@@ -190,26 +207,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor:'blue'
-  }
-})
-//
-// const mapStateToProps = state => {
-//   return {
-//     isAuthenticated: state.auth.token !== null,
-//     token: state.auth.token,
-//     username: state.auth.username,
-//     id: state.auth.id,
-//
-//
-//   }
-// }
-//
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     logout: () => dispatch(authActions.logout())
-//
-//   }
-// }
+  },
+  dayNumTag: {
+    color:'#1890ff',
+    fontSize:30,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    // textShadowColor: 'black',
+    // textShadowOffset: {width: -1, height: 1},
+    // textShadowRadius: 5,
+    fontWeight:'bold',
+    // fontWeight:'bold',
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Header);
+  },
+  videoFooterUserName: {
+    color:'#1890ff',
+    fontSize:14,
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    // textShadowColor: 'black',
+    // textShadowOffset: {width: -1, height: 1},
+    // textShadowRadius: 5,
+    fontWeight:'bold',
+    // fontWeight:'bold',
+  },
+})
+
+
 export default(Header);
