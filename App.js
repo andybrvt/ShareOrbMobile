@@ -129,7 +129,6 @@ class App extends Component{
   }
 
   turnOnNotification = async() => {
-    console.log('notification gets turned on')
      await ExpoNotifications.scheduleNotificationAsync({
       content: {
         title: "Good morning",
@@ -418,36 +417,40 @@ class App extends Component{
       }
 
 
-      this.props.grabUserCredentials()
+      if(prevProps !== this.props){
+        // might just put the user in a dictionary but we will see
+          this.props.grabUserCredentials()
+      }
+
       if(parseInt(this.props.id) !== parseInt(prevProps.id) && this.props.id !== null && this.props.username !== null){
 
-        authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getLiveAlbums')
-        .then(res => {
+        // authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getLiveAlbums')
+        // .then(res => {
+        //
+        //   this.props.fetchExpiringColab(res.data);
+        //
+        // })
 
-          this.props.fetchExpiringColab(res.data);
-
-        })
-
-        authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getAlbums')
-        .then(res => {
-
-          this.props.fetchTimeLineColab(res.data);
-
-
-        })
+        // authAxios.get(`${global.IP_CHANGE}`+'/colabAlbum/getAlbums')
+        // .then(res => {
+        //
+        //   this.props.fetchTimeLineColab(res.data);
+        //
+        //
+        // })
         // Now this will see if there is a person logged in
         // Now if you want to connect to the chat,
         // since there is an inital connection you have to disconnect it
-        ChatSidePanelWebSocketInstance.disconnect();
-        this.waitForChatsSocketConnection(() =>{
-          ChatSidePanelWebSocketInstance.fetchChats(
-            this.props.id
-          )
-        })
+        // ChatSidePanelWebSocketInstance.disconnect();
+        // this.waitForChatsSocketConnection(() =>{
+        //   ChatSidePanelWebSocketInstance.fetchChats(
+        //     this.props.id
+        //   )
+        // })
 
 
         // Now you can try to connect
-        ChatSidePanelWebSocketInstance.connect(this.props.id)
+        // ChatSidePanelWebSocketInstance.connect(this.props.id)
 
         NotificationWebSocketInstance.disconnect()
 

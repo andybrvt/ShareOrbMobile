@@ -171,7 +171,6 @@ class NewsfeedView extends React.Component{
   render(){
 
 
-    console.log(this.props, "in the newsfeed")
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
     let showComments = this.props.showNewsfeedComments
