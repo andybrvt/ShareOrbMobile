@@ -27,14 +27,11 @@ type RowItem = {
    }
 
    componentDidMount() {
-     console.log("FFFFFFF")
      this.grabContacts()
-     console.log("GGGGGGGGG")
 
    }
 
    grabContacts= async () => {
-     console.log("got ifffffffffnaaaaaaaaaaa")
      const { status } = await Contacts.requestPermissionsAsync();
       if (status === 'granted') {
         const { data } = await Contacts.getContactsAsync({
@@ -53,10 +50,8 @@ type RowItem = {
 
 
    render(){
-     console.log("EEEEEEEEEEEEE")
      let test=this.state.data
-     console.log(test)
-     console.log("ENDdddddddddddddddddddd")
+
      return (
        <BackgroundContainer>
 

@@ -26,7 +26,6 @@ import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import {noPosts} from './noPosts.svg';
 import SuggestedList from './SuggestedList';
-
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const {interpolate, Extrapolate, interpolateColors} = Animated;
 const height = Dimensions.get('window').height;
@@ -142,16 +141,18 @@ class InfiniteScrollFlat extends React.Component{
 
       <Animated.View
         style = {{
-          height: height -50,
-          top: 50,
+          height: height,
 
 
         }}
         >
+
+        <Header />
         {
           post.length === 0 ?
 
           <SuggestedList
+            style={{top:50,}}
             updateFollowing = {this.props.authAddUnaddFollowing}
             following= {this.props.following}
             curId = {this.props.id}
@@ -174,7 +175,7 @@ class InfiniteScrollFlat extends React.Component{
             onEndReached = {() => this.loadSocialPost()}
             onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
-            style={{top:10,}}
+            style={{top:50,}}
              />
         }
 

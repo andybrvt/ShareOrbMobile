@@ -82,7 +82,6 @@ class NewsfeedView extends React.Component{
     if(this.props.isAuthenticated){
 
       // this only hits once
-      console.log('hit once only')
       this.initialiseSocialNewsfeed()
     }
   }
@@ -171,6 +170,8 @@ class NewsfeedView extends React.Component{
 
   render(){
 
+
+    console.log(this.props, "in the newsfeed")
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
     let showComments = this.props.showNewsfeedComments
@@ -201,6 +202,7 @@ class NewsfeedView extends React.Component{
           unShow = {this.unShow}
           />
 
+
           <Animated.View
             style = {{
               // backgroundColor: backgroundGradient
@@ -209,13 +211,16 @@ class NewsfeedView extends React.Component{
 
 
 
+            {/*
 
               <Header
                 changeFeed={this.changeFeed.bind(this)}
                 condition={this.state.newsFeedCondition}
                 y = {this.y}
                 {...this.props}/>
-              {this.state.newsFeedCondition?
+
+              */}
+            {this.state.newsFeedCondition?
                 <InfiniteScrollFlat
                   style={{marginBottom:400}}
                   y = {this.y}

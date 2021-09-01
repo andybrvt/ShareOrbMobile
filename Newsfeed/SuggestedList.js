@@ -40,7 +40,6 @@ class SuggestedList extends React.Component{
 
     authAxios.get(`${global.IP_CHANGE}`+'/userprofile/configSuggestSuggested')
     .then(res => {
-      console.log(res.data)
       const newList = this.onRemoveDuplicates(res.data.focusList, res.data.userList)
       this.setState({
           list:newList,
@@ -117,7 +116,6 @@ class SuggestedList extends React.Component{
     //   )
     // }
 
-    console.log(item)
 
     const following = [];
     const firstName = item.first_name
@@ -192,7 +190,6 @@ class SuggestedList extends React.Component{
     // check if the value of list1 is duplicate
     const length = newList.length
     for(let j = 0; j< length; j++){
-      console.log('try here')
       if(newList[j].id === list1[i].id){
         //f the idea for any of the values exist within
         // the newlist you will stop this current loop
@@ -201,7 +198,6 @@ class SuggestedList extends React.Component{
 
       }
 
-      console.log("does hit here")
       //if it makes it to the end without breaking then
       // add it in
 
@@ -231,7 +227,6 @@ class SuggestedList extends React.Component{
 
     }
     if(duplicate2 === false){
-      console.log("does it ever it here")
         newList.push(list2[i])
     } else {
       duplicate2 = false
