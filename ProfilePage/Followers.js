@@ -34,6 +34,15 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
    renderItem = ({item}) => {
 
+     const following = [];
+
+     if(this.props.following){
+       for(let i = 0; i< this.props.following.length; i++){
+         following.push(
+           this.props.following[i].id
+         )
+       }
+     }
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
@@ -54,22 +63,33 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                 </View>
              </View>
              {
-               (this.props.following.length>0)?
-                 <View>
-                   {
-                    (this.props.following.some((loopItem) => loopItem.username === item.username)) ?
-                     <View style={{flex:1, justifyContent:"center"}}>
-                       <View style={styles.editButton}>
-                          <Text style={{color:'white',}}>Following</Text>
-                        </View>
-                     </View>:
-                     <Text></Text>
-                    }
-                  </View>
-                :
-                <Text></Text>
+               item.id === this.props.curId ?
 
-              }
+               null
+
+               :
+
+
+               following.includes(item.id) ?
+
+
+               <View style={{flex:0.5, justifyContent:"center"}}>
+                 <View style={styles.editButton}>
+                    <Text style={{color:'white',}}>Unfollow</Text>
+                  </View>
+               </View>
+
+               :
+
+               <View style={{flex:0.5, justifyContent:"center"}}>
+                 <View style={styles.editButton}>
+                    <Text style={{color:'white',}}>Follow</Text>
+                  </View>
+               </View>
+
+
+             }
+
           </View>
          </View>
        </TouchableHighlight>
@@ -109,7 +129,8 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
    return {
      following:state.auth.following,
      followers:state.auth.followers,
-     profile: state.explore.profile
+     profile: state.explore.profile,
+     curId: state.auth.id
    }
  }
 

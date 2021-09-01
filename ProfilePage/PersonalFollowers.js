@@ -34,6 +34,8 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
    renderItem = ({item}) => {
 
+  
+
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
@@ -53,22 +55,13 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                   <Text style = {styles.chatText}> {item.first_name+" "+item.last_name} </Text>
                 </View>
              </View>
-             {
-               (this.props.following.length>0)?
-                 <View>
-                   {
-                    !(this.props.following.some((loopItem) => loopItem.username === item.username)) ?
-                     <View style={{flex:1, justifyContent:"center"}}>
-                       <View style={styles.editButton}>
-                          <Text style={{color:'white',}}>Follow</Text>
-                        </View>
-                     </View>:
-                     <Text></Text>
-                    }
-                  </View>
-                :
-                <Text></Text>
-              }
+
+
+
+
+
+
+
 
           </View>
          </View>
