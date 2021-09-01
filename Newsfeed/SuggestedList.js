@@ -89,7 +89,6 @@ class SuggestedList extends React.Component{
   ViewProfile = (username) => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-    console.log("hi")
     if(username !== this.props.username){
       this.props.navigation.navigate("ProfilePage", {
         username: username
@@ -143,8 +142,7 @@ class SuggestedList extends React.Component{
         )
       }
     }
-    console.log("WWWWWWW")
-    console.log(item.username)
+
 
     return(
       <View style = {styles.userContainer}>

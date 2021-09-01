@@ -33,7 +33,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
    }
 
    renderItem = ({item}) => {
-  
+
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
