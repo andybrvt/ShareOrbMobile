@@ -39,22 +39,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                   <Text style = {styles.chatText}> {item.first_name+" "+item.last_name} </Text>
                 </View>
              </View>
-             {
-               (this.props.following.length>0)?
-                 <View>
-                   {
-                    (this.props.following.some((loopItem) => loopItem.username === item.username)) ?
-                     <View style={{flex:1, justifyContent:"center"}}>
-                       <View style={styles.editButton}>
-                          <Text style={{color:'white',}}>Following</Text>
-                        </View>
-                     </View>:
-                     <Text></Text>
-                    }
-                  </View>
-                :
-                <Text></Text>
-              }
+
           </View>
          </View>
        </TouchableHighlight>
@@ -73,10 +58,10 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
      return (
        <BackgroundContainer>
-         <View >
+         <View style = {{flex: 1}}>
          <FlatList
            keyExtractor={(item, index) => String(index)}
-           style = {{marginTop:5}}
+           style = {{marginTop:0, flex: 1}}
            data = {this.props.following}
            renderItem = {this.renderItem}
            ItemSeparatorComponent = { this.FlatListItemSeparator }
