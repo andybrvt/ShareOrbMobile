@@ -45,7 +45,7 @@ class SuggestedList extends React.Component{
     const cells = this.props.cells
 
     const y = this.props.y;
-    
+
     return(
       <Animated.View style = {styles.exploreTheDayContainer}>
 

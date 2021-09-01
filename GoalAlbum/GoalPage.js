@@ -8,6 +8,7 @@ import { Text,
    TouchableOpacity,
    SafeAreaView,
    FlatList,
+   ScrollView,
    StatusBar
 } from 'react-native';
 import { ChevronLeft, ArrowLeft } from "react-native-feather";
@@ -52,7 +53,7 @@ class GoalPage extends React.Component{
       <View style = {styles.itemCard}>
 
         <View style = {{
-            height: width*0.9,
+            height: width,
             width: '100%',
             backgroundColor: 'gray',
             borderRadius: 10,
@@ -70,10 +71,17 @@ class GoalPage extends React.Component{
              />
 
         </View>
+        <View style={{
+    height:'32.5%', marginTop:10, padding:5,}}>
+       <ScrollView >
+         <View>
+         <Text style={{color:'white', fontSize:16,}}>
+           {item.caption}
+         </Text>
+         </View>
+       </ScrollView>
+ </View>
 
-        <View>
-          <Text style={{color:'white', fontSize:16, padding:20}}>{item.caption}</Text>
-        </View>
       </View>
     )
   }
@@ -175,11 +183,14 @@ class GoalPage extends React.Component{
 
             <View style = {{
                 flex:1,
-                right: 20
+
               }}>
               <View style = {{
                   alignSelf: 'flex-end',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  marginTop:5,
+                  padding:20,
+                  // backgroundColor:'red'
                 }}>
                 <Text style = {styles.videoFooterUserName}>
                   {curMonth}
@@ -247,12 +258,12 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   middle: {
-    marginTop:25,
+    marginTop:10,
     flex:1,
     alignItems: 'center'
   },
   bottom: {
-    flex:4
+    flex:5
   },
   videoFooterUserName: {
     color:'white',
