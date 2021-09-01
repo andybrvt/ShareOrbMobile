@@ -71,18 +71,16 @@ class InvitePage extends React.Component{
 
   }
 
-  
+
 
 
   submitInvite = () => {
 
     const email = this.state.email
 
-    console.log(email);
     authAxios.post(`${global.IP_CHANGE}`+'/userprofile/onInviteListAdd',{
       email: email
     }).then(res => {
-      console.log(res.data)
       if(res.data.created === false){
         // this is if the email is created already
         this.setState({

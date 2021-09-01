@@ -10,12 +10,21 @@ import * as Notifications from 'expo-notifications';
 // global.WS_HEADER = "ws"
 
 // Ping UACI
+<<<<<<< HEAD
 global.IP_CHANGE = "http://206.207.51.136:19002"
 global.IMAGE_ENDPOINT = "http://206.207.51.136:19002"
 global.WS_ENDPOINT = "206.207.51.136:19002"
 global.POSTLIST_SPEC = 'http://206.207.51.136:19002/media/'
 global.WS_HEADER = "ws"
 console.disableYellowBox = true;
+=======
+// global.IP_CHANGE = "http://206.207.51.121:19002"
+// global.IMAGE_ENDPOINT = "http://206.207.51.121:19002"
+// global.WS_ENDPOINT = "206.207.51.121:19002"
+// global.POSTLIST_SPEC = 'http://206.207.51.121:19002/media/'
+// global.WS_HEADER = "ws"
+// console.disableYellowBox = true;
+>>>>>>> ce5249a42dbe07e640b3047e2b25ef0aa8338262
 
 // Ping ethernet house
 // global.IP_CHANGE="http://192.168.1.205:19003"
@@ -90,11 +99,11 @@ console.disableYellowBox = true;
 
 
 // Andy UACI
-// global.IP_CHANGE = "http://206.207.51.99:19000"
-// global.IMAGE_ENDPOINT = "http://206.207.51.99:19000"
-// global.WS_ENDPOINT = "206.207.51.99:19000"
-// global.POSTLIST_SPEC = 'http://206.207.51.99:19000/media/'
-// global.WS_HEADER = "ws"
+global.IP_CHANGE = "http://206.207.51.138:19000"
+global.IMAGE_ENDPOINT = "http://206.207.51.138:19000"
+global.WS_ENDPOINT = "206.207.51.138:19000"
+global.POSTLIST_SPEC = 'http://206.207.51.138:19000/media/'
+global.WS_HEADER = "ws"
 
 
 // global.IP_CHANGE = "http://206.207.51.82:19002"
@@ -266,8 +275,6 @@ global.SEND_COMMENT_NOTIFICATION = async(expoPushToken, sender, itemId) => {
 }
 
 global.SEND_FOLLOW_NOTIFICAITON = async(expoPushToken, sender, senderId) => {
-  console.log('soem notifications here')
-  console.log(sender, senderId)
   if(expoPushToken !== ""){
     const message = {
       to: expoPushToken,

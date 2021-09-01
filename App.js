@@ -129,7 +129,8 @@ class App extends Component{
   }
 
   turnOnNotification = async() => {
-     await Notifications.scheduleNotificationAsync({
+    console.log('notification gets turned on')
+     await ExpoNotifications.scheduleNotificationAsync({
       content: {
         title: "Good morning",
         body: 'Start your morning off right with some journaling!',
@@ -143,7 +144,7 @@ class App extends Component{
         repeats: true
       },
     });
-    await Notifications.scheduleNotificationAsync({
+    await ExpoNotifications.scheduleNotificationAsync({
      content: {
        title: "Reminder",
        body: 'What did you do today to meet your goals?',
@@ -157,7 +158,7 @@ class App extends Component{
        repeats: true
      },
    });
-   await Notifications.scheduleNotificationAsync({
+   await ExpoNotifications.scheduleNotificationAsync({
     content: {
       title: "Good afternoon",
       body: 'How did your day go? Let your friends know!',
@@ -174,7 +175,7 @@ class App extends Component{
   }
 
   cancelNotifications = async() => {
-    await Notifications.cancelAllScheduledNotificationsAsync()
+    await ExpoNotifications.cancelAllScheduledNotificationsAsync()
   }
 
 
@@ -377,7 +378,7 @@ class App extends Component{
 
     }
 
-    if(this.props.dailyNotification && this.getNotification().length > 1){
+    if(this.props.dailyNotification && this.getNotification().length !== 3){
       this.cancelNotifications()
       this.turnOnNotification()
 
@@ -398,7 +399,7 @@ class App extends Component{
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
       // grab the userinfromation
-      if(this.props.dailyNotification && this.getNotification().length > 1){
+      if(this.props.dailyNotification && this.getNotification().length !== 3){
         this.cancelNotifications()
         this.turnOnNotification()
 

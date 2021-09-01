@@ -208,6 +208,9 @@ import * as authActions from '../store/actions/auth';
 
 
 
+
+
+
           {/* Add in later
           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigatePrivacy()}>
             <View style={{flexDirection:'row', padding:20}}>
@@ -234,7 +237,7 @@ import * as authActions from '../store/actions/auth';
  const styles = StyleSheet.create({
    settingWord: {
      left:5,
-     color:'black',
+     color:'blue',
      fontSize:16,
    },
  });
