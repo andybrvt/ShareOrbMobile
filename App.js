@@ -242,6 +242,14 @@ class App extends Component{
     await Font.loadAsync({
       // Load a font `Montserrat` from a static resource
       Montserrat: require('./assets/fonts/Montserrat.ttf'),
+
+      'Avenir': require('./assets/fonts/Avenir-Regular.ttf'),
+      'Nunito': require('./assets/fonts/Nunito-Regular.ttf'),
+      'Raleway': require('./assets/fonts/Raleway-Regular.ttf'),
+      'Lato': require('./assets/fonts/Lato-Regular.ttf'),
+      'FuturaBook': require('./assets/fonts/Futura-Book.ttf'),
+      'Raleway': require('./assets/fonts/Raleway-Regular.ttf'),
+      'Raleway-SemiBold': require('./assets/fonts/Raleway-SemiBold.ttf'),
       // Any string can be used as the fontFamily name. Here we use an object to provide more control
       'Montserrat-SemiBold': {
         uri: require('./assets/fonts/Montserrat-SemiBold.ttf'),
@@ -370,7 +378,7 @@ class App extends Component{
 
   componentDidMount(){
     this.props.onTryAutoSignup();
-    //this.loadFonts();
+    this.loadFonts();
 
     if(this.props.isAuthenticated){
       this.registerForPushNotificationsAsync()
