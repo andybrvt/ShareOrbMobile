@@ -10,7 +10,8 @@ import {
   Dimensions,
   RefreshControl,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableWithoutFeedback
  } from 'react-native';
 import axios from "axios";
 import authAxios from '../util';
@@ -86,6 +87,20 @@ class SuggestedList extends React.Component{
     })
   }
 
+  ViewProfile = (username) => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+    console.log("hi")
+    if(username !== this.props.username){
+      this.props.navigation.navigate("ProfilePage", {
+        username: username
+      })
+    } else {
+      this.props.navigation.navigate("Profile")
+    }
+
+  }
+
   onUnfollow =(follower, following) => {
 
     this.setState({
@@ -130,19 +145,23 @@ class SuggestedList extends React.Component{
         )
       }
     }
-
+    console.log("WWWWWWW")
+    console.log(item.username)
 
     return(
       <View style = {styles.userContainer}>
         <View style = {styles.userCards}>
-          <Image
-            style = {styles.userImage}
-            resizeMode = "cover"
-            source = {{uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture}}
-            />
-          <View style = {styles.userName}>
-            <Text style = {styles.textName}>{firstName} {lastName}</Text>
-          </View>
+          {/* <TouchableWithoutFeedback onPress = {() => this.ViewProfile(item.username)}>*/}
+            <Image
+              style = {styles.userImage}
+              resizeMode = "cover"
+              source = {{uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture}}
+              />
+            <View style = {styles.userName}>
+              <Text style = {styles.textName}>{firstName} {lastName}</Text>
+            </View>
+            {/*</TouchableWithoutFeedback>*/}
+
 
 
           {
