@@ -32,6 +32,8 @@ class SuggestedList extends React.Component{
       list: [],
       loading: false,
       itemLoading: 0,
+      start: 10,
+      addMore: 6,
     }
 
   }
@@ -84,6 +86,19 @@ class SuggestedList extends React.Component{
 
 
 
+    })
+  }
+
+  onLoadMorePeople = () => {
+    const {start, addMore} = this.state;
+    authAxios.get(`${global.IP_CHANGE}/userprofile/loadMoreSuggested/`+start+'/'+addMore)
+    .then( res => {
+
+      const oldList = this.state.list
+      const newList = this.onRemoveDuplicates(oldList, res.data)
+      this.setState({
+        list: newList
+      })
     })
   }
 
@@ -281,7 +296,8 @@ class SuggestedList extends React.Component{
           data = {this.state.list}
           renderItem = {this.renderItem}
           keyExtractor={(item, index) => String(index)}
-
+          onEndReachedThreshold = {0.2}
+          onEndReached = {()=> this.onLoadMorePeople()}
           />
 
       </View>
