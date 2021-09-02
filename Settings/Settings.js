@@ -23,34 +23,26 @@ import authAxios from '../util';
  // pictures
 import * as authActions from '../store/actions/auth';
  class Settings extends React.Component{
-
    constructor(props){
      super(props)
-
      this.state = {
        showNotifications: this.props.dailyNotification,
        loading: false
      }
    }
-
-
    navigateUserInfo = () => {
      this.props.navigation.navigate("UserInfo")
    }
-
    navigatePrivacy = () => {
      this.props.navigation.navigate("Privacy")
    }
-
    handleLogOut = () => {
      this.props.logout()
      // this.props.navigation.navigate("Login")
    }
-
    cancelNotifications = async() => {
      await Notifications.cancelAllScheduledNotificationsAsync()
    }
-
    turnOnNotification = async() => {
      await Notifications.scheduleNotificationAsync({
       content: {
@@ -97,10 +89,7 @@ import * as authActions from '../store/actions/auth';
    }
 
    getNotification = async() => {
-
      const notifications = await Notifications.getAllScheduledNotificationsAsync();
-     console.log(notifications.length)
-
      return notifications;
    }
 
@@ -118,7 +107,6 @@ import * as authActions from '../store/actions/auth';
          })
          this.props.setDailyNoti(res.data)
        })
-
      } else {
 
        this.turnOnNotification();
@@ -132,10 +120,7 @@ import * as authActions from '../store/actions/auth';
          })
          this.props.setDailyNoti(res.data)
        })
-
-
      }
-
    }
 
    render(){
@@ -239,6 +224,7 @@ import * as authActions from '../store/actions/auth';
      left:5,
      color:'black',
      fontSize:16,
+     fontFamily:'Nunito-SemiBold',
    },
  });
 

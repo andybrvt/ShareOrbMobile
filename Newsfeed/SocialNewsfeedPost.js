@@ -352,26 +352,7 @@ class SocialNewsfeedPost extends React.Component{
          imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
        };
        });
-
-       // likeAvatarList.push({"imageURL":"http://i.imgur.com/f93vCxM.gif"});
-       // likeAvatarList.push({'imageURL':'http://i.imgur.com/f93vCxM.gif'}]),
     }
-
-    // if(this.props.data) {
-    //
-    //   contentTypeId = this.props.data.id
-    //
-    //
-    //   if(this.props.data.post) {
-    //
-    //     post = this.props.data.post
-    //     if(this.props.data.post.get_socialCalItems) {
-    //       userPostImages = this.props.data.post.get_socialCalItems;
-    //     }
-    //
-    //   }
-    //
-    // }
     let socialMonth=""
     let socialDay=""
     // timestamp=postCreatedAt
@@ -452,66 +433,18 @@ class SocialNewsfeedPost extends React.Component{
                        circleSize={15} />
                 </TouchableOpacity>
               </View>
-              {/*
-              <View style={{backgroundColor:'red'}}>
-                <View style={{backgroundColor:'blue'}}>
-                  <Text>hi</Text>
-                </View>
-                <View style={{backgroundColor:'green'}}>
-                  <FacePile size={2} numFaces={3} faces={FACES} circleSize={17.5}
-                    containerStyle={{height:40}}
-                     overlap={0.1} />
-                </View>
-              </View>
-              */}
 
-              {/*
-              <View style={{flexDirection:'row'}}>
-                {likeAvatarList.length==1?
-                  <View style={{padding:10, width:'87.5%'}}>
-                    <Text>
-                      {
-                        (caption.length==0)?
-                        ''
-                        :
-                        <Text style = {{color:'black', fontWeight:'bold'}}> {userUsername+" "}</Text>
-                      }
-                      <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
-                    </Text>
-                  </View>
-                  :
-
-
-                  <View style={{padding:10, width:'80%'}}>
-                    <Text >
-                      {
-                        (caption.length==0)?
-                        ''
-                        :
-                        <Text style = {styles.videoFooterUserName}> {userUsername+" "}</Text>
-                      }
-                      <Text numberofLines={1} style = {styles.videoFooter}>{caption.substring(0,140)}</Text>
-                    </Text>
-                  </View>
-                }
-                  <View>
-                    <TouchableOpacity
-                      onPress={() => this.navLikePeople(like_people)}>
-                        <FacePile
-                        size={2} numFaces={2} faces={likeAvatarList}
-                        circleSize={15}
-                        containerStyle={{height:40}}
-                         overlap={0.1} />
-                    </TouchableOpacity>
-                  </View>
-              </View>
-              */}
 
               {
                 goal.goal ?
 
                 <View style = {styles.goalContainer}>
-                  <Text style = {styles.goalText}>{global.CAPITALIZE(goal.goal)}</Text>
+                  {goal.goal.length<25?
+                      <Text style = {styles.goalText}>{(goal.goal)}</Text>
+                    :
+                    <Text style={styles.goalText}>{ (goal.goal).substring(0,25)}...</Text>
+                  }
+
                 </View>
 
                 :
@@ -583,18 +516,6 @@ class SocialNewsfeedPost extends React.Component{
                       <Text style={styles.videoFooterUserName}>{utc3}</Text>
                     </View>
                 </View>
-                  {/*
-                  <View style = {styles.justifyCenter}>
-                    <Navigation2
-                      stroke = "white"
-                      fill="white"
-                      width ={30}
-                      height = {30}
-                      style={{left:5}}
-                       />
-                     <Text style = {styles.statNum}>  {userPostImages.length}</Text>
-                  </View>
-                  */}
 
             </View>
             {/*
@@ -882,7 +803,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
-    fontWeight:'bold',
+    fontFamily:'Nunito-Bold',
     left:5,
     // fontWeight:'bold',
   },
@@ -890,21 +811,15 @@ const styles = StyleSheet.create({
   videoFooterUserName: {
     color:'white',
     fontSize:15,
+    fontFamily:'Nunito-Bold',
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
-    fontWeight:'bold',
+
     // fontWeight:'bold',
   },
 
-
-  // const UserName = styled.Text`
-	// font-size: 17px;
-	// color: rgba(255, 255, 255, 1);
-	// text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
-	// font-weight: bold;
-	// letter-spacing: -0.3px;
 
   // Example:
   // text-shadow: -1px 1px 10px rgba(0, 0, 0, 0.75)
@@ -1122,7 +1037,8 @@ const styles = StyleSheet.create({
   },
   goalText: {
     textAlign: 'right',
-    color:'white'
+    color:'white',
+    fontFamily:'Nunito-SemiBold',
   }
 
 })

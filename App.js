@@ -132,7 +132,7 @@ class App extends Component{
      await ExpoNotifications.scheduleNotificationAsync({
       content: {
         title: "Good morning",
-        body: 'Start your morning off right with some journaling!',
+        body: 'Start your morning off with a post!',
         data: {
           type: "active"
         }
@@ -145,7 +145,7 @@ class App extends Component{
     });
     await ExpoNotifications.scheduleNotificationAsync({
      content: {
-       title: "Reminder",
+       // title: "Reminder",
        body: 'What did you do today to meet your goals?',
        data: {
          type: "active"
@@ -159,7 +159,7 @@ class App extends Component{
    });
    await ExpoNotifications.scheduleNotificationAsync({
     content: {
-      title: "Good afternoon",
+      title: "Good evening",
       body: 'How did your day go? Let your friends know!',
       data: {
         type: "active"

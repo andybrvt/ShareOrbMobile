@@ -54,22 +54,21 @@ class GoalContainer extends React.Component{
         activeOpacity={0.6}
         onPress = {() => this.onGoalPageDirect(item.id)}
         >
-        <View style={{flexDirection:'row', height:100, }}>
+        <View style={{flexDirection:'row', height:100,marginTop:10,}}>
           <View style={{flexDirection:'column', top:'2.5%', left:'7.5%', right:'5%'}}>
             <View style={{}}>
-              <Text style = {{color:'black', fontWeight:'bold', fontSize:20}}>
+              <Text style = {{fontFamily:'Nunito-Bold', fontSize:20}}>
                 {socialMonth.substring(0,3)}
               </Text>
-              <Text style ={{color:'black', fontWeight:'bold', fontSize:34}}>
+              <Text style ={{fontSize:34, fontFamily:'Nunito-Bold'}}>
                 {socialDay}
               </Text>
               </View>
           </View>
           <View style={styles.goalCard}>
-
             <View style={{flexDirection:'column'}}>
             <View>
-              <Text style={{padding:10, fontSize:16, fontWeight:'bold' }}>{item.goal}</Text>
+              <Text style={{padding:10, fontSize:16,fontFamily:'Nunito-Bold' }}>{item.goal}</Text>
             </View>
             <View style={{flexDirection:'row',}}>
               <View style={{flexDirection:'row', paddingLeft:10, paddingBottom:10, width:'80%'}}>
@@ -88,12 +87,8 @@ class GoalContainer extends React.Component{
                   })}
 
               </View>
-
-
             </View>
-
             </View>
-
           </View>
           <View>
           { item.get_socialCalItems.length<=4?
@@ -105,7 +100,6 @@ class GoalContainer extends React.Component{
           }
           </View>
         </View>
-
     </TouchableOpacity>
     )
   }
@@ -130,7 +124,7 @@ class GoalContainer extends React.Component{
           :
 
           <FlatList
-            style={{marginTop:25}}
+            contentContainerStyle={{paddingTop:10}}
             data = {this.state.goals}
             renderItem = {(item) => this.renderItem(item)}
             keyExtractor={(item, index) => String(index)}

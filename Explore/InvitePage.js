@@ -174,7 +174,6 @@ class InvitePage extends React.Component{
                     color: '#1890ff',
                     fontSize:30,
                     fontWeight:'bold',
-
                   }}>
                    Skip the waitlist
                  </Text>
