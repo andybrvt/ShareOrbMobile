@@ -120,13 +120,13 @@ class Profile extends React.Component{
                 (i==1)?
                <Clipboard
                  style={{right:10}}
-                 stroke="black" strokeWidth={2} width={20} height={20} />
+                 stroke="#bfbfbf" strokeWidth={2} width={20} height={20} />
               :
                <Calendar
                  style={{right:10}}
-                 stroke="black" strokeWidth={2} width={20} height={20} />
+                 stroke="#bfbfbf" strokeWidth={2} width={20} height={20} />
               }
-              <Text style={{fontSize:14}}>{route.title}</Text>
+              <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>{route.title}</Text>
             </View>
           </TouchableOpacity>
           );
@@ -230,6 +230,9 @@ const mapDispatchToProps = dispatch => {
 }
 
 const styles = StyleSheet.create({
+  title:{
+    color:'red',
+  },
   backgroundColor: {
     flex:1,
     backgroundColor:"#1890ff"
@@ -266,8 +269,8 @@ const styles = StyleSheet.create({
   },
   textStyle:{
     fontSize:20,
-    fontWeight:'bold',
     justifyContent:'flex-start',
+    fontFamily:'Nunito-Bold',
   },
 
   separator: {

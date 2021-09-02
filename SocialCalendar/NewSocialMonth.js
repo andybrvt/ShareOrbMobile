@@ -485,6 +485,7 @@ const styles = StyleSheet.create({
   },
   monthTitle: {
     top:0,
+    fontFamily:'Nunito-SemiBold',
     fontSize:18,
     // color:'red',
     fontWeight:'bold',

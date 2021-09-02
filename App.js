@@ -247,7 +247,6 @@ class App extends Component{
       'Nunito': require('./assets/fonts/Nunito-Regular.ttf'),
       'Nunito-SemiBold': require('./assets/fonts/Nunito-SemiBold.ttf'),
       'Nunito-Bold': require('./assets/fonts/Nunito-Bold.ttf'),
-      'Nunito': require('./assets/fonts/Nunito-Regular.ttf'),
       'Raleway': require('./assets/fonts/Raleway-Regular.ttf'),
       'Lato': require('./assets/fonts/Lato-Regular.ttf'),
       'FuturaBook': require('./assets/fonts/Futura-Book.ttf'),

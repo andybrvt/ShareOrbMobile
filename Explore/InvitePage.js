@@ -142,7 +142,10 @@ class InvitePage extends React.Component{
 
 
                 <View style = {{
-                    top: '20%'
+                    top: '20%',
+
+                    padding:20,
+                    // backgroundColor:'red',
                   }}>
                   <Text style = {{
                     color: '#1890ff',
@@ -152,12 +155,22 @@ class InvitePage extends React.Component{
                     // textShadowOffset: {width: -1, height: 1},
                     // textShadowRadius: 5,
                     fontWeight:'bold',
-                    }}>Invite a friend</Text>
+                    paddingLeft:20,
+                    paddingRight:20,
+                  }}>Invite a friend</Text>
+                  <Text style = {{
+                    color: '#1890ff',
+                    fontSize:30,
+                    fontWeight:'bold',
+
+                  }}>
+                   Skip the waitlist
+                 </Text>
                 </View>
 
                <View style ={{
                    width: '80%',
-                   top: '30%',
+                   top: '20%',
                  }}>
 
                  <TextInputError1
@@ -170,12 +183,14 @@ class InvitePage extends React.Component{
                    />
 
 
-                 <Text style = {{
-                     textAlign: 'center',
-                     fontSize: 15,
-                     fontWeight: 'bold'
-                   }}>You have {this.state.inviteLeft} invites left</Text>
 
+                 <Text style = {{
+                     textAlign: 'center',}}>There are currently 172 people in line </Text>
+                     <Text style = {{
+                         textAlign: 'center',
+                         fontSize: 15,
+                         fontWeight: 'bold'
+                       }}>You have {this.state.inviteLeft} invites left</Text>
 
                  <Text style = {{
                      textAlign: 'center'

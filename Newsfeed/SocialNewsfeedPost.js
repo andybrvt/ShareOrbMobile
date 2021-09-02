@@ -762,8 +762,8 @@ class SocialNewsfeedPost extends React.Component{
               {caption.length>140?
                 <View style={{  minHeight:10, marginBottom:20, marginTop:10}}>
                   <TouchableOpacity onPress = {() => this.onPostDirect(calCell, postId)}>
-                    <Text style={{color:'black', width:'92.5%', flexWrap:'wrap', flexDirection:'row', fontFamily:'Nunito-SemiBold'}}>
-                      <Animated.Text style = {{color:'black', fontFamily:'Nunito-Bold'}}> {userUsername+" "}</Animated.Text>
+                    <Text style={{width:'92.5%', flexWrap:'wrap', flexDirection:'row', fontFamily:'Nunito-SemiBold'}}>
+                      <Animated.Text style = {{fontFamily:'Nunito-Bold'}}> {userUsername+" "}</Animated.Text>
                       {caption.substring(0,140)}
                       <Text style={{color:'#bfbfbf'}}> ... see more </Text>
                     </Text>
@@ -771,8 +771,10 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
                 :
                 <View style={{  minHeight:10, marginBottom:20, marginTop:10}}>
-                  <Text style={{fontSize:15, color:'black', width:'92.5%', flexWrap:'wrap', flexDirection:'row',  fontFamily:'Nunito-SemiBold'}}>
-                    <Animated.Text style = {{color:'black', fontFamily:'Nunito-Bold'}}> {userUsername+" "}</Animated.Text>
+                  <Text style={{fontSize:15, width:'92.5%', flexWrap:'wrap', flexDirection:'row',  fontFamily:'Nunito-SemiBold'}}>
+              
+                    <Text style = {{fontSize:15, fontFamily:'Nunito-Bold'}}> {userUsername+" "}</Text>
+
                     {caption.substring(0,140)}
                   </Text>
                 </View>

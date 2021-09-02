@@ -171,7 +171,7 @@ class ProfileHeader extends React.Component{
 
                   <TouchableOpacity onPress={() => this.editPageClick()}>
                     <View style={styles.editButton}>
-                       <Text style={{color:'white',}}>Edit Profile</Text>
+                       <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Edit Profile</Text>
                      </View>
                  </TouchableOpacity>
 
@@ -185,7 +185,7 @@ class ProfileHeader extends React.Component{
                      profileId
                    )}>
                    <View style={styles.editButton}>
-                      <Text style={{color:'white',}}>Unfollow</Text>
+                      <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Unfollow</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -198,7 +198,7 @@ class ProfileHeader extends React.Component{
                     notiToken
                   )}>
                   <View style={styles.editButton}>
-                     <Text style={{color:'white',}}>Follow</Text>
+                     <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Follow</Text>
                    </View>
                </TouchableOpacity>
 
@@ -440,7 +440,8 @@ const styles = StyleSheet.create({
   followerFollowingHeader: {
     color: "grey",
     alignItems: 'center',
-    fontSize:14
+    fontSize:14,
+    fontFamily:'Nunito-SemiBold',
   },
 
   followerFollowingNum: {
@@ -489,12 +490,15 @@ const styles = StyleSheet.create({
   name:{
     fontSize: 20,
     color: "black",
+    fontFamily:'Nunito-SemiBold',
   },
   username:{
     fontSize: 14,
     color: "gray",
+    fontFamily:'Nunito-SemiBold',
   },
   bio: {
-    fontSize: 15
+    fontSize: 15,
+    fontFamily:'Nunito-SemiBold',
   }
 });

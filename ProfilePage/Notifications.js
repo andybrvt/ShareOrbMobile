@@ -131,8 +131,8 @@ class Notifications extends React.Component{
             </View>
           <View style={styles.midNotiSpace}>
             <View style={styles.wrapNoti}>
-              <Text style = {{fontWeight: 'bold'}}>{item.actor.username}</Text>
-              <Text> followed you</Text>
+              <Text style = {styles.notiFontBold}>{item.actor.username}</Text>
+              <Text style = {styles.notiFont}> followed you</Text>
             </View>
           </View>
             <View style={{flex:0}}>
@@ -165,9 +165,9 @@ class Notifications extends React.Component{
            </View>
            <View style={styles.midNotiSpace}>
                <View style={styles.wrapNoti}>
-                 <Text style = {{fontWeight: 'bold'}}>{item.actor.username} </Text>
-                 <Text>liked your
-                   <Text style = {{fontWeight: 'bold'}}> {albumDate} </Text>
+                 <Text style = {styles.notiFontBold}>{item.actor.username} </Text>
+                 <Text style={styles.notiFont}>liked your
+                   <Text style = {styles.notiFontBold}> {albumDate} </Text>
                    album
                 </Text>
                </View>
@@ -202,8 +202,8 @@ class Notifications extends React.Component{
            </View>
            <View style={styles.midNotiSpace}>
                <View style={styles.wrapNoti}>
-                 <Text style = {{fontWeight: 'bold'}}>{item.actor.username} </Text>
-                 <Text>commented on your album
+                 <Text style = {styles.notiFontBold}>{item.actor.username} </Text>
+                 <Text style={styles.notiFont}>commented on your album
                 </Text>
                </View>
            </View>
@@ -348,6 +348,13 @@ const styles = StyleSheet.create({
   wrapNoti:{
     flexDirection:'row',
     flexWrap:'wrap',
+
+  },
+  notiFontBold:{
+    fontFamily:'Nunito-Bold',
+  },
+  notiFont:{
+    fontFamily:'Nunito-SemiBold',
   },
   notiContainer:{
     flexDirection:'row', padding:15

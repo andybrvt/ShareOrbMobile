@@ -573,7 +573,7 @@ class SocialCalendarVonly extends React.Component{
    monthTitle: {
      fontSize:25,
      color:'#1890ff',
-
+     fontFamily:'Nunito-SemiBold',
      fontWeight:'bold',
    },
 

@@ -130,13 +130,13 @@ class ProfilePage extends React.Component{
                 (i==1)?
                <Clipboard
                  style={{right:10}}
-                 stroke="black" strokeWidth={2} width={20} height={20} />
+                 stroke="#bfbfbf" strokeWidth={2} width={20} height={20} />
               :
                <Calendar
                  style={{right:10}}
-                 stroke="black" strokeWidth={2} width={20} height={20} />
+                 stroke="#bfbfbf" strokeWidth={2} width={20} height={20} />
               }
-              <Text style={{fontSize:14}}>{route.title}</Text>
+              <Text style={{fontSize:14,}}>{route.title}</Text>
             </View>
           </TouchableOpacity>
           );
