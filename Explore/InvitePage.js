@@ -31,7 +31,8 @@ class InvitePage extends React.Component{
       emailError: [],
       email: '',
       inviteLeft: 0,
-      infoText: ""
+      infoText: "",
+      inviteNum:0
     }
   }
 
@@ -42,6 +43,8 @@ class InvitePage extends React.Component{
         inviteLeft: res.data
       })
     })
+
+    this.getWaitListNum()
   }
 
   checkErrors = () => {
@@ -105,12 +108,17 @@ class InvitePage extends React.Component{
   }
 
   getWaitListNum = () => {
-
+    authAxios.get(`${global.IP_CHANGE}`+'/userprofile/onWaitListGet')
+    .then( res => {
+      this.setState({
+        inviteNum: res.data
+      })
+    })
   }
 
 
    render(){
-
+     console.log(this.state)
      // You will need to get the current number of poeple on the wait list
      return(
 
@@ -223,7 +231,7 @@ class InvitePage extends React.Component{
                  }}>
 
                  <Text style = {{
-                     textAlign: 'center',}}>There are currently 172 people in line </Text>
+                     textAlign: 'center',}}>There are currently {this.state.inviteNum} people in line </Text>
                      <Text style = {{
                          textAlign: 'center',
                          fontSize: 15,
