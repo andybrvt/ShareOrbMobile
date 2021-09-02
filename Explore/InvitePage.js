@@ -190,7 +190,7 @@ class InvitePage extends React.Component{
                          textAlign: 'center',
                          fontSize: 15,
                          fontWeight: 'bold'
-                       }}>You have {this.state.inviteLeft} invites left</Text>
+                       }}>{this.state.inviteLeft} invites left</Text>
 
                  <Text style = {{
                      textAlign: 'center'

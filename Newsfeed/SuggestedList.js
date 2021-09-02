@@ -272,7 +272,6 @@ class SuggestedList extends React.Component{
 
     return(
       <View style = {{
-          paddingBottom: 70,
           flex: 1
         }}>
         <FlatList
