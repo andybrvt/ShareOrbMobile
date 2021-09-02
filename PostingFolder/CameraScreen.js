@@ -251,9 +251,11 @@ class CameraScreen extends React.Component{
             return await Camera.requestPermissionsAsync();
           }
           if(microphone.status !== "granted"){
-            alert("Permission to access microphone is required!");
 
-            return await Camera.requestMicrophonePermissionsAsync();
+            // PUT BACK ONCE VIDEO IS UP
+            // alert("Permission to access microphone is required!");
+
+            // return await Camera.requestMicrophonePermissionsAsync();
           }
 
           this.setState({

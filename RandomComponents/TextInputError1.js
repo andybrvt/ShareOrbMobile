@@ -6,11 +6,12 @@ import {View, TextInput, Text} from 'react-native';
 
 const TextInputError1 = (props) => (
   <View style = {{
+      width: '80%'
     }}>
     <View style = {{
         // borderWidth: 2,
+        // width: '80%',
         height: 40,
-        borderRadius: 10,
         backgroundColor: '#F0F0F0',
         // borderColor: '#1890ff'
 

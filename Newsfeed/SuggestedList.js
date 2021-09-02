@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import authAxios from '../util';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
+import InvitePage from '../Explore/InvitePage';
 
  // used in conjuction with the newsfeed view so that you
  // can folow people
@@ -31,6 +32,8 @@ class SuggestedList extends React.Component{
       list: [],
       loading: false,
       itemLoading: 0,
+      start: 10,
+      addMore: 6,
     }
 
   }
@@ -83,6 +86,19 @@ class SuggestedList extends React.Component{
 
 
 
+    })
+  }
+
+  onLoadMorePeople = () => {
+    const {start, addMore} = this.state;
+    authAxios.get(`${global.IP_CHANGE}/userprofile/loadMoreSuggested/`+start+'/'+addMore)
+    .then( res => {
+
+      const oldList = this.state.list
+      const newList = this.onRemoveDuplicates(oldList, res.data)
+      this.setState({
+        list: newList
+      })
     })
   }
 
@@ -260,9 +276,7 @@ class SuggestedList extends React.Component{
 
     return(
       <View style = {styles.headerContainer}>
-        <Image source={require('./noPosts1.png')} style = {{height: 150, width: 150, resizeMode : 'stretch',}} />
-
-        <Text style = {styles.headerText}>No posts</Text>
+      <InvitePage />
       </View>
     )
   }
@@ -272,17 +286,19 @@ class SuggestedList extends React.Component{
 
     return(
       <View style = {{
-          paddingBottom: 70,
           flex: 1
         }}>
         <FlatList
-          onRefresh = {()=> this.props.onRefresh()}
-          refreshing = {this.props.refreshing}
+          // onRefresh = {()=> this.props.onRefresh()}
+          // refreshing = {this.props.refreshing}
           ListHeaderComponent = {this.listHeader}
           numColumns = {2}
           data = {this.state.list}
           renderItem = {this.renderItem}
           keyExtractor={(item, index) => String(index)}
+          onEndReachedThreshold = {0.2}
+          onEndReached = {()=> this.onLoadMorePeople()}
+          showsVerticalScrollIndicator={false}
 
           />
 
@@ -334,10 +350,9 @@ const styles = StyleSheet.create({
     padding: 10
   },
   headerContainer: {
-    width: '80%',
+    width: '100%',
     alignSelf: 'center',
     alignItems: 'center',
-    padding: 20
   },
   headerText: {
     textAlign: 'center',

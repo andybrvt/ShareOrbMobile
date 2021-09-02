@@ -21,7 +21,8 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather";
 import ExploreSearchBar from './ExploreSearchBar';
 import TrendingList from './TrendingList';
-import SuggestedList from './SuggestedList';
+// import SuggestedList from './SuggestedList';
+import SuggestedList from '../Newsfeed/SuggestedList';
 import Animated from 'react-native-reanimated';
 import SearchResults from './SearchResults';
 import InvitePage from './InvitePage';
@@ -47,6 +48,7 @@ class Explore extends React.Component{
   constructor(props){
     super(props)
     this.state = {
+     refreshing: false,
      searchText:'',
      trendingCells: [],
      exploreCells: [],
@@ -164,6 +166,10 @@ class Explore extends React.Component{
 
  }
 
+ onRefresh = () => {
+   console.log('empty refresh')
+ }
+
 
 
 
@@ -225,7 +231,14 @@ class Explore extends React.Component{
 
             :
 
-            <InvitePage />
+            <SuggestedList
+              updateFollowing = {this.props.authAddUnaddFollowing}
+              following= {this.props.following}
+              curId = {this.props.id}
+              username = {this.props.username}
+              onRefresh = {this.onRefresh}
+              refreshing = {this.state.refreshing}
+               />
 
 
           }
@@ -243,11 +256,21 @@ class Explore extends React.Component{
 
 const mapStateToProps = state => {
   return {
-    username: state.auth.username
+    username: state.auth.username,
+    following: state.auth.following,
+    id: state.auth.id,
+
   }
 }
 
-export default Explore;
+const mapDispatchToProps = dispatch => {
+  return {
+    authAddUnaddFollowing: (following) => dispatch(authActions.authAddUnaddFollowing(following))
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Explore);
 
 const styles = StyleSheet.create({
 
