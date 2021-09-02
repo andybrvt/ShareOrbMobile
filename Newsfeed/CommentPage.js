@@ -36,13 +36,11 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
      comment: '',
      showTextInput: false,
    }
-
    constructor(props){
      super(props)
      this.initialiseComments()
      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
    }
-
 
    onCommentChange = e =>{
      const tempVal = e;
@@ -188,7 +186,6 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
    }
 
    renderComment = ({item}) => {
-     // let profilePic = ""
      const profilePic = `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
      const user = item.commentUser
      return(
@@ -199,7 +196,6 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
    renderContent = () => {
      const comments = this.props.socialComments
      return (
-
        <KeyboardAvoidingView
          keyboardVerticalOffset = {185}
          behavior = "height" >
@@ -217,27 +213,19 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
             <RealRoundedInput
               onCommentSubmit = {this.onCommentSubmit}
               onChange = {this.onCommentChange}
-
               value = {this.state.comment}
               onCommentFocus = {this.pressToScroll}
               />
-            {/*
-              <Button
-                onPress = {() => this.pressToScroll()}
-                title = "scroll" />
-
-              */}
            </View>
          </KeyboardAvoidingView>
-            )
+          )
    }
 
    render(){
      const comments = this.props.socialComments
      return (
        <SafeAreaView
-         style ={{flex: 1, backgroundColor:'white'}}
-         >
+         style ={{flex: 1, backgroundColor:'white'}}>
          <KeyboardAvoidingView
            style = {{
              flex: 1,
@@ -257,12 +245,11 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
                   left: 10
                 }}>
                 <TouchableOpacity
-                onPress = {() => this.onBackNav()}
-                  >
+                onPress = {() => this.onBackNav()}>
                   <ArrowLeft stroke="black" height = {30} width = {30}/>
                 </TouchableOpacity>
               </View>
-              <Text> {comments.length} Comments </Text>
+              <Text style={{fontFamily:'Nunito-SemiBold',}}> {comments.length} Comments </Text>
             </View>
             <View style={{height:'85%',}}>
              <FlatList
@@ -281,13 +268,6 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
                 value = {this.state.comment}
                 onCommentFocus = {this.pressToScroll}
                 />
-
-              {/*
-                <Button
-                  onPress = {() => this.pressToScroll()}
-                  title = "scroll" />
-
-                */}
            </KeyboardAvoidingView>
        </SafeAreaView>
      )

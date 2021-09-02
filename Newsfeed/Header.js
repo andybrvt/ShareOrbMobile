@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     // textShadowColor: 'black',
     // textShadowOffset: {width: -1, height: 1},
     // textShadowRadius: 5,
-    fontWeight:'bold',
+    fontFamily:'Nunito-Bold',
     // fontWeight:'bold',
 
   },
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     // textShadowColor: 'black',
     // textShadowOffset: {width: -1, height: 1},
     // textShadowRadius: 5,
-    fontWeight:'bold',
+    fontFamily:'Nunito-Bold',
     // fontWeight:'bold',
   },
 })

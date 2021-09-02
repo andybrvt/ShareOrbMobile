@@ -304,10 +304,10 @@ let likeAvatarList=[]
           </View>
 
         <View style={{flexDirection:'row', padding:15, flexWrap: 'wrap', }}>
-          <Text style={{fontWeight:'bold', color:'white', fontSize:15}}>
+          <Text style={{fontFamily:'Nunito-Bold', color:'white', fontSize:15}}>
             {utc2+" "}
            </Text>
-          <Text style={{color:'white'}}>{item.caption}</Text>
+          <Text style={{color:'white', fontFamily:'Nunito-SemiBold'}}>{item.caption}</Text>
         </View>
       </View>
     </View>
@@ -438,20 +438,13 @@ let likeAvatarList=[]
             </TouchableOpacity>
 
             <View style = {styles.chatInfoHolder} >
-
-
-
-
               <Avatar
-
               rounded
                 source = {{
                   uri: `${global.IMAGE_ENDPOINT}`+user.profile_picture,
                 }}
                 size = {40}
                  />
-
-
                <View style = {styles.chatInfo}>
                  <View style = {styles.chatNameContainer}>
                    <Text style = {styles.chatName}>{userName}</Text>
@@ -560,7 +553,7 @@ let likeAvatarList=[]
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
-     fontWeight:'bold',
+     fontFamily:'Nunito-Bold',
      // fontWeight:'bold',
 
    },
@@ -571,7 +564,7 @@ let likeAvatarList=[]
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 5,
-     fontWeight:'bold',
+     fontFamily:'Nunito-Bold',
      // fontWeight:'bold',
    },
    testWhere2:{
@@ -705,7 +698,6 @@ let likeAvatarList=[]
      // backgroundColor:'red',
      color:'white',
 
-
      fontWeight:'600',
      fontSize:15,
      textShadowColor: 'black',
@@ -784,15 +776,15 @@ let likeAvatarList=[]
    chatName: {
      fontSize: 18,
      color: 'white',
-     fontWeight:'bold',
-
+     fontFamily:'Nunito-Bold',
      left:5,
    },
 
    chatText: {
      marginTop: 0,
      color: 'white',
-     fontWeight: '400'
+     fontFamily:'Nunito-SemiBold',
+     fontWeight: '400',
    },
 
 
