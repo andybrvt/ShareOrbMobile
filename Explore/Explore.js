@@ -232,6 +232,7 @@ class Explore extends React.Component{
             :
 
             <SuggestedList
+              navigation = {this.props.navigation}
               updateFollowing = {this.props.authAddUnaddFollowing}
               following= {this.props.following}
               curId = {this.props.id}

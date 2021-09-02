@@ -538,12 +538,11 @@ class App extends Component{
 
           name = "newsfeed" component= {NewsfeedView}/>
         {/*
-          <Stack.Screen name = "newsfeed" component= {NewsfeedView}/>
-
+          <Stack.Screen
+            options={{...TransitionPresets.SlideFromRightIOS,}}
+            name = 'ProfilePage' component = {ProfilePage}/>
           */}
-        <Stack.Screen
-          options={{...TransitionPresets.SlideFromRightIOS,}}
-          name = 'ProfilePage' component = {ProfilePage}/>
+
       </Stack.Navigator>
 
     )
@@ -805,7 +804,10 @@ class App extends Component{
                           ...TransitionPresets.SlideFromLeftIOS,
                         }}
                       />
-                    {/* */}
+                      <Stack.Screen
+                        options={{...TransitionPresets.SlideFromRightIOS, headerShown: false,}}
+                        name = 'ProfilePage' component = {ProfilePage}/>
+
                       <Stack.Screen
                         options={{
                           headerShown: false,

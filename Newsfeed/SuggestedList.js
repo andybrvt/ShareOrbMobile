@@ -162,8 +162,9 @@ class SuggestedList extends React.Component{
 
     return(
       <View style = {styles.userContainer}>
+        <TouchableWithoutFeedback onPress = {() => this.ViewProfile(item.username)}>
+
         <View style = {styles.userCards}>
-          {/* <TouchableWithoutFeedback onPress = {() => this.ViewProfile(item.username)}>*/}
             <Image
               style = {styles.userImage}
               resizeMode = "cover"
@@ -172,7 +173,6 @@ class SuggestedList extends React.Component{
             <View style = {styles.userName}>
               <Text style = {styles.textName}>{firstName} {lastName}</Text>
             </View>
-            {/*</TouchableWithoutFeedback>*/}
 
 
 
@@ -208,6 +208,8 @@ class SuggestedList extends React.Component{
 
 
         </View>
+      </TouchableWithoutFeedback>
+
       </View>
     )
   }
