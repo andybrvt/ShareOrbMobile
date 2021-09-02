@@ -313,7 +313,6 @@ class SocialNewsfeedPost extends React.Component{
         }
         if(this.props.data.created_at) {
           postCreatedAt=this.props.data.created_at
-          console.log(new Date(this.props.data.created_at).getTimezoneOffset()/60)
           if(!isNaN(new Date(this.props.data.created_at).getTimezoneOffset()/60)){
             const dtDateOnly1 = dateFns.addHours(new Date(this.props.data.created_at), new Date(this.props.data.created_at).getTimezoneOffset()/60)
             utc3=dateFns.format(new Date(dtDateOnly1), 'h:mma');
@@ -772,7 +771,7 @@ class SocialNewsfeedPost extends React.Component{
                 :
                 <View style={{  minHeight:10, marginBottom:20, marginTop:10}}>
                   <Text style={{fontSize:15, width:'92.5%', flexWrap:'wrap', flexDirection:'row',  fontFamily:'Nunito-SemiBold'}}>
-              
+
                     <Text style = {{fontSize:15, fontFamily:'Nunito-Bold'}}> {userUsername+" "}</Text>
 
                     {caption.substring(0,140)}

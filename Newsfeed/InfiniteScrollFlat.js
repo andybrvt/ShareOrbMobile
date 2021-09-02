@@ -99,9 +99,11 @@ class InfiniteScrollFlat extends React.Component{
         if(currentItem.isViewable){
           if(currentItem.isViewable === true){
             const date= viewableItems[1].item.created_at
+            const offSet = new Date().getTimezoneOffset()/60;
+            const newDate = dateFns.addHours(new Date(date), offSet)
             this.setState({
-              currentMonth: dateFns.format(new Date(date), "MMMM"),
-              currentDay: dateFns.format(new Date(date), "d")
+              currentMonth: dateFns.format(newDate, "MMMM"),
+              currentDay: dateFns.format(newDate, "d")
             })
           }
         }
