@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import authAxios from '../util';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
+import InvitePage from '../Explore/InvitePage';
 
  // used in conjuction with the newsfeed view so that you
  // can folow people
@@ -260,9 +261,7 @@ class SuggestedList extends React.Component{
 
     return(
       <View style = {styles.headerContainer}>
-        <Image source={require('./noPosts1.png')} style = {{height: 150, width: 150, resizeMode : 'stretch',}} />
-
-        <Text style = {styles.headerText}>No posts</Text>
+      <InvitePage />
       </View>
     )
   }
@@ -333,10 +332,9 @@ const styles = StyleSheet.create({
     padding: 10
   },
   headerContainer: {
-    width: '80%',
+    width: '100%',
     alignSelf: 'center',
     alignItems: 'center',
-    padding: 20
   },
   headerText: {
     textAlign: 'center',

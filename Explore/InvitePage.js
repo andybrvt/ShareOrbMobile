@@ -142,9 +142,8 @@ class InvitePage extends React.Component{
 
 
                 <View style = {{
-                    top: '20%',
 
-                    padding:20,
+                    padding:25,
                     // backgroundColor:'red',
                   }}>
                   <Text style = {{
@@ -170,19 +169,53 @@ class InvitePage extends React.Component{
 
                <View style ={{
                    width: '80%',
-                   top: '20%',
                  }}>
 
-                 <TextInputError1
-                   onBlur = {() => this.setState({
-                     emailError: this.validate("email", this.state.email)})}
-                   onChangeText = {(value) => this.setState({email: value.trim()})}
-                   placeholder = "Email"
-                   error = {this.state.emailError}
-                   value = {this.state.email}
-                   />
+                 <View style = {{
+                     height: 40,
+                     borderRadius: 10,
+                     overflow: "hidden",
+                     width: '100%',
+                     flexDirection: 'row'}}>
+
+                   <TextInputError1
+                     onBlur = {() => this.setState({
+                       emailError: this.validate("email", this.state.email)})}
+                     onChangeText = {(value) => this.setState({email: value.trim()})}
+                     placeholder = "Email"
+                     error = {this.state.emailError}
+                     value = {this.state.email}
+                     />
+
+                   {
+                     this.checkErrors() ?
+
+                     <View
+                        style = {styles.loginBtnDisabled}>
+                       <Text style = {styles.loginText}> Invite</Text>
+                     </View>
+
+                     :
+
+                     <TouchableOpacity
+                        onPress = {() => this.submitInvite()}
+                        style = {styles.loginBtn}>
+                       <Text style = {styles.loginText}> Invite</Text>
+                     </TouchableOpacity>
+
+                   }
+                 </View>
 
 
+
+
+               </View>
+
+               <View style = {{
+                   width: '80%',
+                   alignItems: 'center',
+                   top: '5%'
+                 }}>
 
                  <Text style = {{
                      textAlign: 'center',}}>There are currently 172 people in line </Text>
@@ -195,31 +228,6 @@ class InvitePage extends React.Component{
                  <Text style = {{
                      textAlign: 'center'
                    }}>{this.state.infoText}</Text>
-               </View>
-
-               <View style = {{
-                   width: '80%',
-                   alignItems: 'center',
-                   top: '40%'
-                 }}>
-
-                 {
-                   this.checkErrors() ?
-
-                   <View
-                      style = {styles.loginBtnDisabled}>
-                     <Text style = {styles.loginText}> Invite</Text>
-                   </View>
-
-                   :
-
-                   <TouchableOpacity
-                      onPress = {() => this.submitInvite()}
-                      style = {styles.loginBtn}>
-                     <Text style = {styles.loginText}> Invite</Text>
-                   </TouchableOpacity>
-
-                 }
 
                </View>
 
@@ -240,23 +248,21 @@ class InvitePage extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
     alignItems: 'center',
+    padding: 10
   },
   loginBtn: {
-    position: "absolute",
-    width: "80%",
-    borderRadius: 25,
-    height: 50,
+    width: "20%",
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
     zIndex: 9999,
     backgroundColor: "#1890ff",
   },
   loginBtnDisabled: {
-    position: "absolute",
-    width: "80%",
-    borderRadius: 25,
-    height: 50,
+    width: "20%",
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
     zIndex: 9999,
