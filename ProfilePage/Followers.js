@@ -7,18 +7,34 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicator
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
+import authAxios from '../util';
+import * as authActions from '../store/actions/auth';
+import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
+
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
 
  class Followers extends React.Component{
+
+
+   constructor(props){
+     super(props)
+
+     this.state = {
+       loading: false,
+       itemLoading: 0,
+     }
+
+   }
 
    onHomeNav = () => {
      // this function will be use to navigate back
@@ -32,8 +48,78 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
      })
    }
 
+   onUnfollow = (follower, following) => {
+     this.setState({
+       loading: true,
+       itemLoading: following
+     })
+
+     authAxios.post(`${global.IP_CHANGE}/userprofile/onUnfollow`, {
+       follower: follower,
+       following: following
+     })
+     .then(res => {
+
+
+       this.props.authAddUnaddFollowing(res.data)
+       this.setState({
+         loading: false,
+         itemLoading: 0
+       })
+
+     })
+   }
+
+   onFollow = (follower, following, notiToken) => {
+
+     console.log(follower, following, notiToken)
+     this.setState({
+       loading: true,
+       itemLoading: following
+     })
+
+     authAxios.post(`${global.IP_CHANGE}/userprofile/onFollow`, {
+       follower: follower,
+       following: following
+     })
+     .then(res => {
+       const notificationObject = {
+         command: "send_follow_notification",
+         actor: follower,
+         recipient: following
+       }
+       NotificationWebSocketInstance.sendNotification(notificationObject);
+
+       global.SEND_FOLLOW_NOTIFICAITON(
+         notiToken,
+         this.props.username,
+         this.props.curId
+       )
+
+       this.props.authAddUnaddFollowing(res.data)
+
+       this.setState({
+         loading: false,
+         itemLoading: 0
+       })
+
+
+
+     })
+   }
+
+
    renderItem = ({item}) => {
 
+     const following = [];
+
+     if(this.props.following){
+       for(let i = 0; i< this.props.following.length; i++){
+         following.push(
+           this.props.following[i].id
+         )
+       }
+     }
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
@@ -54,22 +140,50 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
                 </View>
              </View>
              {
-               (this.props.following.length>0)?
-                 <View>
-                   {
-                    (this.props.following.some((loopItem) => loopItem.username === item.username)) ?
-                     <View style={{flex:1, justifyContent:"center"}}>
-                       <View style={styles.editButton}>
-                          <Text style={{color:'white',}}>Following</Text>
-                        </View>
-                     </View>:
-                     <Text></Text>
-                    }
-                  </View>
-                :
-                <Text></Text>
 
-              }
+               item.id === this.props.curId ?
+
+               null
+
+               :
+
+               this.state.loading === true && this.state.itemLoading === item.id ?
+
+               <View style={{flex:0.5, justifyContent:"center"}}>
+                 <TouchableOpacity
+                   style={styles.editButton}>
+                   <ActivityIndicator />
+
+                  </TouchableOpacity>
+               </View>
+
+               :
+
+
+               following.includes(item.id) ?
+
+
+               <View style={{flex:0.5, justifyContent:"center"}}>
+                 <TouchableOpacity
+                   onPress = {() => this.onUnfollow(this.props.curId, item.id)}
+                   style={styles.editButton}>
+                    <Text style={{color:'white',}}>Unfollow</Text>
+                  </TouchableOpacity>
+               </View>
+
+               :
+
+               <View style={{flex:0.5, justifyContent:"center"}}>
+                 <TouchableOpacity
+                   onPress ={() => this.onFollow(this.props.curId, item.id, item.notificationToken)}
+                   style={styles.editButton}>
+                    <Text style={{color:'white',}}>Follow</Text>
+                  </TouchableOpacity>
+               </View>
+
+
+             }
+
           </View>
          </View>
        </TouchableHighlight>
@@ -109,7 +223,17 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
    return {
      following:state.auth.following,
      followers:state.auth.followers,
-     profile: state.explore.profile
+     profile: state.explore.profile,
+     curId: state.auth.id,
+     username: state.auth.username
+
+   }
+ }
+
+ const mapDispatchToProps = dispatch => {
+   return {
+     authAddUnaddFollowing: (following) => dispatch(authActions.authAddUnaddFollowing(following))
+
    }
  }
 
@@ -177,4 +301,4 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
   })
 
 
- export default connect(mapStateToProps, null)(Followers);
+ export default connect(mapStateToProps, mapDispatchToProps)(Followers);
