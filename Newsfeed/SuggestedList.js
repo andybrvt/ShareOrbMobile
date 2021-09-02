@@ -289,8 +289,8 @@ class SuggestedList extends React.Component{
           flex: 1
         }}>
         <FlatList
-          onRefresh = {()=> this.props.onRefresh()}
-          refreshing = {this.props.refreshing}
+          // onRefresh = {()=> this.props.onRefresh()}
+          // refreshing = {this.props.refreshing}
           ListHeaderComponent = {this.listHeader}
           numColumns = {2}
           data = {this.state.list}
@@ -298,6 +298,8 @@ class SuggestedList extends React.Component{
           keyExtractor={(item, index) => String(index)}
           onEndReachedThreshold = {0.2}
           onEndReached = {()=> this.onLoadMorePeople()}
+          showsVerticalScrollIndicator={false}
+
           />
 
       </View>
