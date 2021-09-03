@@ -508,6 +508,7 @@ class CameraScreen extends React.Component{
 
   onSaveVideo = (video) => {
       console.log('save video')
+      console.log(video)
   }
 
 
