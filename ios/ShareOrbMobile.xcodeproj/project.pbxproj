@@ -257,9 +257,6 @@
 				7203BFD1D5CA4BE9B14969FF /* Montserrat.ttf in Resources */,
 				5421F5AF2C7946D3A56EF5F1 /* Raleway-Regular.ttf in Resources */,
 				09502FD8C2F14B0DA3260750 /* Raleway-SemiBold.ttf in Resources */,
-				88E2A31F298C4F69952EA3CB /* Avenir Regular.ttf in Resources */,
-				FAB25BEF2EAD470FB6BA867F /* Avenir-Regular.ttf in Resources */,
-				F7797FFE15104B9F9768600F /* Futura Book font.ttf in Resources */,
 				0893255F5DD94D0B921DE504 /* Lato-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
