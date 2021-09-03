@@ -181,7 +181,7 @@ class InfiniteScrollFlat extends React.Component{
           currentDay = {this.state.currentDay}
            />
         {
-          post.length !== 0 ?
+          post.length === 0 ?
 
           <ScrollView
             refreshControl = {
