@@ -166,14 +166,14 @@ class InvitePage extends React.Component{
                     // textShadowColor: 'black',
                     // textShadowOffset: {width: -1, height: 1},
                     // textShadowRadius: 5,
-                    fontWeight:'bold',
+                    fontFamily:'Nunito-Bold',
                     paddingLeft:20,
                     paddingRight:20,
                   }}>Invite a friend</Text>
                   <Text style = {{
                     color: '#1890ff',
                     fontSize:30,
-                    fontWeight:'bold',
+                    fontFamily:'Nunito-Bold',
                   }}>
                    Skip the waitlist
                  </Text>
@@ -229,12 +229,12 @@ class InvitePage extends React.Component{
                    top: '5%'
                  }}>
 
-                 <Text style = {{
+                 <Text style = {{fontFamily:'Nunito-SemiBold',
                      textAlign: 'center',}}>There are currently {this.state.inviteNum} people in line </Text>
                      <Text style = {{
+                         fontFamily:'Nunito-Bold',
                          textAlign: 'center',
                          fontSize: 15,
-                         fontWeight: 'bold'
                        }}>{this.state.inviteLeft} invites left</Text>
 
                  <Text style = {{

@@ -136,7 +136,7 @@ class ProfilePage extends React.Component{
                  style={{right:10}}
                  stroke="#bfbfbf" strokeWidth={2} width={20} height={20} />
               }
-              <Text style={{fontSize:14,}}>{route.title}</Text>
+              <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>{route.title}</Text>
             </View>
           </TouchableOpacity>
           );
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   },
   textStyle:{
     fontSize:20,
-    fontWeight:'bold',
+    fontFamily:'Nunito-Bold',
     justifyContent:'flex-start',
   },
 

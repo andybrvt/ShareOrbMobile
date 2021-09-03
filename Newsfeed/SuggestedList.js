@@ -191,7 +191,7 @@ class SuggestedList extends React.Component{
             <TouchableOpacity
               onPress = {() => this.onUnfollow(this.props.curId, item.id)}
               style = {styles.editButton}>
-              <Text style = {{color: 'white'}}>Unfollow</Text>
+              <Text style = {{color: 'white', fontFamily:'Nunito-Bold'}}>Unfollow</Text>
             </TouchableOpacity>
 
             :
@@ -199,7 +199,7 @@ class SuggestedList extends React.Component{
             <TouchableOpacity
               onPress = {() => this.onFollow(this.props.curId, item.id, item.notificationToken)}
               style = {styles.editButton}>
-              <Text style = {{color: 'white'}}>Follow</Text>
+              <Text style = {{color: 'white',  fontFamily:'Nunito-Bold'}}>Follow</Text>
             </TouchableOpacity>
 
 
@@ -317,10 +317,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   userCards: {
-    width: '95%',
-    height: '95%',
+    width: '92.5%',
+    height: '90%',
     backgroundColor: 'gray',
-    borderRadius: 30,
+    borderRadius: 20,
     overflow: 'hidden'
   },
   userImage: {
@@ -335,14 +335,14 @@ const styles = StyleSheet.create({
   },
   textName: {
     fontSize: 20,
-    fontWeight: 'bold',
+     fontFamily:'Nunito-Bold',
     color: 'white'
   },
   editButton: {
     position: 'absolute',
     alignItems: 'center',
     paddingVertical: 5,
-    width:'90%',
+    width:'75%',
     borderRadius: 20,
     bottom: '5%',
     backgroundColor: '#1890ff',
