@@ -243,13 +243,11 @@ class App extends Component{
       // Load a font `Montserrat` from a static resource
       Montserrat: require('./assets/fonts/Montserrat.ttf'),
 
-      'Avenir': require('./assets/fonts/Avenir-Regular.ttf'),
       'Nunito': require('./assets/fonts/Nunito-Regular.ttf'),
       'Nunito-SemiBold': require('./assets/fonts/Nunito-SemiBold.ttf'),
       'Nunito-Bold': require('./assets/fonts/Nunito-Bold.ttf'),
       'Raleway': require('./assets/fonts/Raleway-Regular.ttf'),
       'Lato': require('./assets/fonts/Lato-Regular.ttf'),
-      'FuturaBook': require('./assets/fonts/Futura-Book.ttf'),
       'Raleway': require('./assets/fonts/Raleway-Regular.ttf'),
       'Raleway-SemiBold': require('./assets/fonts/Raleway-SemiBold.ttf'),
       // Any string can be used as the fontFamily name. Here we use an object to provide more control
