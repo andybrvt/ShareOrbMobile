@@ -24,7 +24,7 @@ import { User } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
-import {noPosts} from './noPosts.svg';
+import NoPosts from './noPosts.svg';
 import SuggestedList from './SuggestedList';
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const {interpolate, Extrapolate, interpolateColors} = Animated;
@@ -181,18 +181,25 @@ class InfiniteScrollFlat extends React.Component{
           currentDay = {this.state.currentDay}
            />
         {
-          post.length === 0 ?
+          post.length !== 0 ?
 
-          <SuggestedList
-            style={{top:70,}}
-            updateFollowing = {this.props.authAddUnaddFollowing}
-            following= {this.props.following}
-            curId = {this.props.id}
-            username = {this.props.userName}
-            onRefresh = {this.onRefresh}
-            refreshing = {this.state.refreshing}
-            navigation = {this.props.navigation}
-            />
+          <ScrollView
+            refreshControl = {
+                <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+                />
+              }
+            style = {{top: 70}}>
+            <View style = {{
+                alignItems: 'center'
+              }}>
+              <NoPosts width = {250} height = {250} />
+                <Text style = {{fontSize:25}}>No post</Text>
+
+          </View>
+
+          </ScrollView>
 
           :
 
