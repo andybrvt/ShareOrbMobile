@@ -922,7 +922,51 @@ class CameraScreen extends React.Component{
                          height = {40}
                          width = {40}/>
                      </TouchableOpacity>
+                     {
+                       this.state.selectedGoal.goal  ?
 
+                       <View
+                         style ={{
+                           // position: 'relative',
+                           position: 'absolute',
+                           top: '4%',
+                           right: '2%',
+                           alignSelf: 'flex-end',
+
+                           backgroundColor: '#000000aa',
+                           padding: 20,
+                           borderRadius: 30,
+                           flexDirection: 'row'
+                           // top: 100
+                         }}
+                         >
+
+
+
+                         <View>
+                           <Text style = {{
+                               color: 'white',
+                               textAlign: 'right'
+                             }}>{this.state.selectedGoal.goal}</Text>
+                         </View>
+
+                         <View style = {{
+                             height: 20,
+                             width: 40
+                           }}>
+
+                         </View>
+
+                       </View>
+
+                       :
+
+                       null
+
+
+
+
+                     }
                      <TouchableOpacity
                        onPress = {() => this.openShowGoals()}
                        style ={{
@@ -950,6 +994,7 @@ class CameraScreen extends React.Component{
 
                      </TouchableOpacity>
 
+
                      <TouchableOpacity
                        style = {styles.submitBtn}
                        onPress = {() => this.onSaveVideo(this.state.videoPreview)}
@@ -960,6 +1005,14 @@ class CameraScreen extends React.Component{
                            }}> Save  </Text>
                      </TouchableOpacity>
                 </View>
+                <GoalDropDown
+                  cancel = {this.onClearSelectedGoal}
+                  data = {this.state.goals}
+                  showGoals = {this.state.showGoals}
+                  onClose = {this.closeShowGoals}
+                  select = {this.onSelectGoal}
+                  save = {this.onSaveNewGoal}
+                  />
               </Modal>
 
 
