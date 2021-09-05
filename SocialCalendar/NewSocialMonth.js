@@ -14,6 +14,7 @@ import * as Animatable from 'react-native-animatable';
 import * as authActions from '../store/actions/auth';
 import { connect } from "react-redux";
 import FastImage from 'react-native-fast-image'
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 
 const width = Dimensions.get("window").width
@@ -156,7 +157,8 @@ class NewSocialMonth extends React.PureComponent{
   }
 
   initializedMonth = (month, year, cells) => {
-
+    console.log(cells)
+    console.log('these are the month')
     const curMonth = new Date(year, month, 1);
     const start = dateFns.startOfMonth(curMonth)
     const end = dateFns.endOfMonth(curMonth)
@@ -198,6 +200,29 @@ class NewSocialMonth extends React.PureComponent{
                 >
                 <View style = {styles.imageHolder}>
                   {
+                    toDoStuff[0].coverVid !== null ?
+
+                    <View>
+                      <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
+                        <View style={styles.miniBox}>
+                          <Text style = {styles.formatDateImage}> {formattedDate}</Text>
+                          {/* fast image*/}
+                          <Video
+                            style = {dateFns.isSameDay(day, new Date()) ?
+                              styles.smallImageGlow : styles.smallImage
+                            }
+                            rate = {15}
+                            shouldPlay
+                            resizeMode = "cover"
+                            source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverVid}` }}
+                            />
+                        </View>
+
+                      </TouchableOpacity>
+                    </View>
+
+                    :
+
                     toDoStuff[0].coverPic ?
                       <View>
                         <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
@@ -355,6 +380,27 @@ class NewSocialMonth extends React.PureComponent{
                   styles.currentMiniBox : styles.miniBox
                 ]}>
                   {
+                    toDoStuff[0].coverVid !== null ?
+
+                    <View>
+                      <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
+                        <View style={styles.miniBox}>
+                          <Text style = {styles.formatDateImage}> {formattedDate}</Text>
+                          <Video
+                            style = {dateFns.isSameDay(day, new Date()) ?
+                              styles.smallImageGlow : styles.smallImage
+                            }
+
+                            resizeMode = "cover"
+                            source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverVid}` }}
+                            />
+                        </View>
+
+                      </TouchableOpacity>
+                    </View>
+
+                    :
+
                     toDoStuff[0].coverPic ?
                       <View>
                         <TouchableOpacity  onPress={() => this.ViewDay(toDoStuff.id)}>

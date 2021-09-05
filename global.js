@@ -11,12 +11,12 @@ import * as Notifications from 'expo-notifications';
 
 // Ping UACI
 
-global.IP_CHANGE = "http://206.207.51.136:19002"
-global.IMAGE_ENDPOINT = "http://206.207.51.136:19002"
-global.WS_ENDPOINT = "206.207.51.136:19002"
-global.POSTLIST_SPEC = 'http://206.207.51.136:19002/media/'
-global.WS_HEADER = "ws"
-console.disableYellowBox = true;
+// global.IP_CHANGE = "http://206.207.51.136:19002"
+// global.IMAGE_ENDPOINT = "http://206.207.51.136:19002"
+// global.WS_ENDPOINT = "206.207.51.136:19002"
+// global.POSTLIST_SPEC = 'http://206.207.51.136:19002/media/'
+// global.WS_HEADER = "ws"
+// console.disableYellowBox = true;
 
 
 // Ping ethernet house
@@ -92,11 +92,11 @@ console.disableYellowBox = true;
 
 
 // Andy UACI
-// global.IP_CHANGE = "http://206.207.51.138:19000"
-// global.IMAGE_ENDPOINT = "http://206.207.51.138:19000"
-// global.WS_ENDPOINT = "206.207.51.138:19000"
-// global.POSTLIST_SPEC = 'http://206.207.51.138:19000/media/'
-// global.WS_HEADER = "ws"
+global.IP_CHANGE = "http://206.207.51.138:19000"
+global.IMAGE_ENDPOINT = "http://206.207.51.138:19000"
+global.WS_ENDPOINT = "206.207.51.138:19000"
+global.POSTLIST_SPEC = 'http://206.207.51.138:19000/media/'
+global.WS_HEADER = "ws"
 
 
 // global.IP_CHANGE = "http://206.207.51.82:19002"
@@ -194,7 +194,8 @@ global.FILE_NAME_GETTER = (fileURI) => {
   const fileName = fileURI.split("/").pop()
 
   let match = /\.(\w+)$/.exec(fileName);
-  let type = match ? `image/${match[1]}` : `image`;
+  console.log(match[1],  "is there a match here")
+  let type = match ? match[1] === "mov" ? "mov" : `image/${match[1]}` : `image`;
 
 
   return {

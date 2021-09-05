@@ -424,7 +424,7 @@ class CameraScreen extends React.Component{
     formData.append('curDateTime', curDateTime);
     formData.append("caption", caption);
     formData.append('goalId', goalId);
-    this.props.authAddTotalLoad()
+    // this.props.authAddTotalLoad()
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSinglePic/`+ownerId,
       formData,
       {headers: {"content-type": "multipart/form-data"}}
@@ -433,7 +433,6 @@ class CameraScreen extends React.Component{
 
       // either put a props here that updates the newsfeed
 
-        console.log(res.data.item)
         this.props.addFirstSocialCellPost(res.data.item)
         const coverPicForm = new FormData();
         coverPicForm.append('cellId', res.data.cellId)
@@ -510,6 +509,50 @@ class CameraScreen extends React.Component{
 
   onSaveVideo = (video) => {
       console.log('save video')
+      console.log(video)
+
+      const ownerId = this.props.curUserId;
+      const caption = this.state.caption;
+      const goalId = this.state.selectedGoal.id;
+      const curDate = dateFns.format(new Date(), "yyyy-MM-dd");
+      const curDateTime = dateFns.format(new Date(), "yyyy-MM-dd HH:mm:ss")
+      // const curDateTime = new Date();
+      const formData = new FormData();
+      const videoFile = global.FILE_NAME_GETTER(video.uri);
+      formData.append("curDate", curDate)
+      formData.append("video", videoFile)
+      formData.append('curDateTime', curDateTime);
+      formData.append("caption", caption);
+      formData.append('goalId', goalId);
+
+      authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSingleVid/`+ownerId,
+        formData,
+        {headers: {"content-type": "multipart/form-data"}}
+
+      ).then(res =>{
+        console.log(res.data)
+        this.props.addFirstSocialCellPost(res.data.item)
+        const coverPicForm = new FormData();
+        coverPicForm.append('cellId', res.data.cellId)
+
+        coverPicForm.append('coverVideo', videoFile)
+
+        authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverVid/`+ownerId,
+          coverPicForm,
+          {headers: {"content-type": "multipart/form-data"}}
+
+        ).then( res => {
+
+        })
+
+
+      })
+
+      this.onCancelPhoto();
+      this.props.navigation.navigate("newsfeed");
+
+      setTimeout(() => {this.props.closeShowCamera()}, 1000);
+
   }
 
 
@@ -1109,8 +1152,8 @@ class CameraScreen extends React.Component{
 
 
                   <TouchableOpacity
-                    // onPressOut = {() => this.handlePressOut()}
-                    // onLongPress = {() => this.handleLongPress()}
+                    onPressOut = {() => this.handlePressOut()}
+                    onLongPress = {() => this.handleLongPress()}
                     onPress = {() => this.takePicture()}
                     style = {[(this.state.capturing)&&styles.captureBtnActive,styles.captureBtn]}></TouchableOpacity>
 

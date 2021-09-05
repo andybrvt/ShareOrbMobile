@@ -97,9 +97,11 @@ class SuggestedList extends React.Component{
       const oldList = this.state.list
       const newList = this.onRemoveDuplicates(oldList, res.data)
       this.setState({
-        list: newList
+        list: newList,
+        start: start+addMore
       })
     })
+    
   }
 
   ViewProfile = (username) => {

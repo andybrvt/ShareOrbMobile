@@ -118,7 +118,6 @@ class InvitePage extends React.Component{
 
 
    render(){
-     console.log(this.state)
      // You will need to get the current number of poeple on the wait list
      return(
 
