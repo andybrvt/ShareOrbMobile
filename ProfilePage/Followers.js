@@ -167,7 +167,7 @@ import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
                  <TouchableOpacity
                    onPress = {() => this.onUnfollow(this.props.curId, item.id)}
                    style={styles.editButton}>
-                    <Text style={{color:'white',}}>Unfollow</Text>
+                    <Text style={{color:'white', fontFamily:'Nunito-SemiBold'}}>Unfollow</Text>
                   </TouchableOpacity>
                </View>
 
@@ -177,7 +177,7 @@ import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
                  <TouchableOpacity
                    onPress ={() => this.onFollow(this.props.curId, item.id, item.notificationToken)}
                    style={styles.editButton}>
-                    <Text style={{color:'white',}}>Follow</Text>
+                    <Text style={{color:'white', fontFamily:'Nunito-SemiBold'}}>Follow</Text>
                   </TouchableOpacity>
                </View>
 

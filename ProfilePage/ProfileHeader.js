@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
     color: "black",
     alignItems: 'center',
     fontSize:18,
-    fontWeight: 'bold'
+    fontFamily:'Nunito-Bold',
   },
 
 

@@ -682,8 +682,7 @@ class SocialNewsfeedPost extends React.Component{
         <View
           style = {{
             width: "95%"
-          }}
-          >
+          }}>
           {/*
           <Animated.Code>
             {() => cond(
@@ -705,7 +704,7 @@ class SocialNewsfeedPost extends React.Component{
           </View>
           {
             (caption.length==0)?
-            <View style={{backgroundColor:'white', minHeight:10, }}>
+            <View style={{minHeight:10, }}>
               <Text></Text>
             </View>
             :
@@ -722,12 +721,12 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
                 :
                 <View style={{  minHeight:10, marginBottom:20, marginTop:10}}>
-                  <Text style={{fontSize:15, width:'92.5%', flexWrap:'wrap', flexDirection:'row',  fontFamily:'Nunito-SemiBold'}}>
-
+                  <View style={{flexDirection:'row'}}>
                     <Text style = {{fontSize:15, fontFamily:'Nunito-Bold'}}> {userUsername+" "}</Text>
-
-                    {caption.substring(0,140)}
-                  </Text>
+                    <Text style={{fontSize:15, width:'92.5%', flexWrap:'wrap', flexDirection:'row',  fontFamily:'Nunito-SemiBold'}}>
+                      {caption.substring(0,140)}
+                    </Text>
+                  </View>
                 </View>
               }
             </View>

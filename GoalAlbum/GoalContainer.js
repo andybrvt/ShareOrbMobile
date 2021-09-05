@@ -95,7 +95,7 @@ class GoalContainer extends React.Component{
             <Text></Text>
           :
           <View style={styles.roundButton1}>
-          <Text style={{fontSize:15, color:'white'}}>+{item.get_socialCalItems.length-4}</Text>
+          <Text style={{fontSize:15, color:'white', fontFamily:'Nunito-SemiBold'}}>+{item.get_socialCalItems.length-4}</Text>
           </View>
           }
           </View>

@@ -65,7 +65,8 @@ class GoalDropDown extends React.Component{
             height: 70,
           }}>
           <Text style = {{
-              color: 'white'
+              color: 'white',
+              fontFamily:'Nunito-SemiBold'
             }}>{global.CAPITALIZE(item.goal)}</Text>
         </View>
       </TouchableOpacity>
@@ -151,7 +152,9 @@ class GoalDropDown extends React.Component{
                     style = {{
                       color: 'white',
                       textAlign: 'center',
-                      fontSize: 20
+                      fontSize: 20,
+                      fontFamily:'Nunito-SemiBold',
+                      marginBottom:10,
                     }}
                     >Attach a goal to this post</Text>
                 </View>
@@ -178,9 +181,7 @@ class GoalDropDown extends React.Component{
                         }}
                         >
                         <TextInput
-                          style = {{
-                            color: "black"
-                          }}
+                          style={{fontFamily:'Nunito', color:'#595959', fontSize:15}}
                           placeholder = "Write a goal"
                           value = {this.state.newGoal}
                           onChangeText = {this.onChange}
@@ -219,14 +220,15 @@ class GoalDropDown extends React.Component{
                   this.state.showCreateGoal ?
                   null
                   :
-                  <View >
+                  <View>
                     <TouchableOpacity
+                      style={{padding:10}}
                       onPress = {() => this.showCreateGoal()}
                       >
                       <Plus
                         stroke="white"
-                        height = {40}
-                        width = {40}
+                        height = {35}
+                        width = {35}
                         />
                     </TouchableOpacity>
                     <Button

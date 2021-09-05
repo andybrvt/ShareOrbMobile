@@ -336,15 +336,16 @@ const styles = StyleSheet.create({
       bottom: "20%"
   },
   textName: {
-    fontSize: 20,
+    fontSize: 18,
      fontFamily:'Nunito-Bold',
-    color: 'white'
+    color: 'white',
+    marginBottom:10,
   },
   editButton: {
     position: 'absolute',
     alignItems: 'center',
     paddingVertical: 5,
-    width:'75%',
+    width:'60%',
     borderRadius: 20,
     bottom: '5%',
     backgroundColor: '#1890ff',

@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   videoFooterUserName: {
     color:'#1890ff',
-    fontSize:14,
+    fontSize:15,
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     // textShadowColor: 'black',
     // textShadowOffset: {width: -1, height: 1},

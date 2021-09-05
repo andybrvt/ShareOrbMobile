@@ -825,7 +825,9 @@ class App extends Component{
                           headerStyle:{
                             shadowColor:'#fff', //ios
                             elevation:0,        // android
+                            fontFamily:'Nunito-Bold',
                           },
+
                           title: 'Your Info',
                            ...TransitionPresets.SlideFromLeftIOS,
                           }}
