@@ -103,7 +103,7 @@ class GoalPage extends React.Component{
     if(goal.goal){
       goalTitle = goal.goal;
     }
-    if(goal.get_socialCalItems){
+    if(goal.get_socialCalItems && goal.get_socialCalItems.length >0){
       goalItem = goal.get_socialCalItems;
       curEntry = goal.get_socialCalItems[this.state.activeSlide]
       curMonth = dateFns.format(new Date(curEntry.created_at), "MMMM")
@@ -224,14 +224,30 @@ class GoalPage extends React.Component{
           </View>
 
           <View style = {styles.bottom}>
-            <Carousel
-              data = {goalItem}
-              renderItem = {(item) => this.renderItem(item)}
-              keyExtractor={(item, index) => String(index)}
-              sliderWidth = {width}
-              itemWidth = {width*0.85}
-              onSnapToItem={(index) => this.setState({activeSlide:index}) }
-              />
+            {
+              goalItem.length > 0 ?
+
+              <Carousel
+                data = {goalItem}
+                renderItem = {(item) => this.renderItem(item)}
+                keyExtractor={(item, index) => String(index)}
+                sliderWidth = {width}
+                itemWidth = {width*0.85}
+                onSnapToItem={(index) => this.setState({activeSlide:index}) }
+                />
+
+              :
+
+              <View style = {{
+                  alignSelf: 'center',
+                  top: '20%'
+                }}>
+                <Text style = {styles.goalStart}>No Entries Yet</Text>
+              </View>
+
+
+            }
+
 
           </View>
 
