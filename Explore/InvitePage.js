@@ -178,18 +178,15 @@ class InvitePage extends React.Component{
                    Skip the waitlist
                  </Text>
                 </View>
-
                <View style ={{
                    width: '80%',
                  }}>
-
                  <View style = {{
                      height: 40,
                      borderRadius: 10,
                      overflow: "hidden",
                      width: '100%',
                      flexDirection: 'row'}}>
-
                    <TextInputError1
                      onBlur = {() => this.setState({
                        emailError: this.validate("email", this.state.email)})}
@@ -198,61 +195,41 @@ class InvitePage extends React.Component{
                      error = {this.state.emailError}
                      value = {this.state.email}
                      />
-
                    {
                      this.checkErrors() ?
-
                      <View
                         style = {styles.loginBtnDisabled}>
                        <Text style = {styles.loginText}> Invite</Text>
                      </View>
-
                      :
-
                      <TouchableOpacity
                         onPress = {() => this.submitInvite()}
                         style = {styles.loginBtn}>
                        <Text style = {styles.loginText}> Invite</Text>
                      </TouchableOpacity>
-
                    }
                  </View>
-
-
-
-
                </View>
-
                <View style = {{
                    width: '80%',
                    alignItems: 'center',
                    top: '5%'
                  }}>
-
                  <Text style = {{fontFamily:'Nunito-SemiBold',
-                     textAlign: 'center',}}>There are currently {this.state.inviteNum} people in line </Text>
+                     textAlign: 'center',}}>There are currently {this.state.inviteNum} people in line!</Text>
                      <Text style = {{
                          fontFamily:'Nunito-Bold',
                          textAlign: 'center',
                          fontSize: 15,
                        }}>{this.state.inviteLeft} invites left</Text>
-
                  <Text style = {{
                      textAlign: 'center'
                    }}>{this.state.infoText}</Text>
-
                </View>
-
              </View>
-
            </TouchableWithoutFeedback>
-
-
          }
-
-
        </View>
-
      )
    }
  }
@@ -282,7 +259,8 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 14,
+    fontFamily:'Nunito-SemiBold',
   },
 })
 

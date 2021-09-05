@@ -164,7 +164,7 @@ import * as authActions from '../store/actions/auth';
                  <TouchableOpacity
                    onPress = {() => this.onUnfollow(this.props.curId, item.id)}
                    style={styles.editButton}>
-                    <Text style={{color:'white',}}>Unfollow</Text>
+                    <Text style={{color:'white', fontFamily:'Nunito-SemiBold'}}>Unfollow</Text>
                   </TouchableOpacity>
                </View>
 
@@ -174,7 +174,7 @@ import * as authActions from '../store/actions/auth';
                  <TouchableOpacity
                    onPress ={() => this.onFollow(this.props.curId, item.id, item.notificationToken)}
                    style={styles.editButton}>
-                    <Text style={{color:'white',}}>Follow</Text>
+                    <Text style={{color:'white',fontFamily:'Nunito-SemiBold'}}>Follow</Text>
                   </TouchableOpacity>
                </View>
 
@@ -281,15 +281,14 @@ import * as authActions from '../store/actions/auth';
    chatName: {
      fontSize: 15,
      color: 'black',
-     fontWeight:'bold',
-
+     fontFamily:'Nunito-Bold',
      left:5,
    },
 
    chatText: {
      marginTop: 0,
      color: 'gray',
-     fontWeight: '400'
+     fontFamily:'Nunito-SemiBold'
    },
 
  })

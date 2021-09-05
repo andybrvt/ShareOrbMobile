@@ -34,7 +34,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
    renderItem = ({item}) => {
 
-  
+
 
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
@@ -149,7 +149,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
     chatName: {
       fontSize: 15,
       color: 'black',
-      fontWeight:'bold',
+      fontFamily:'Nunito-Bold',
 
       left:5,
     },
@@ -157,7 +157,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
     chatText: {
       marginTop: 0,
       color: 'gray',
-      fontWeight: '400'
+      fontFamily:'Nunito-SemiBold'
     },
 
   })

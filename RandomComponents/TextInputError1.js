@@ -13,8 +13,6 @@ const TextInputError1 = (props) => (
         // width: '80%',
         height: 40,
         backgroundColor: '#F0F0F0',
-        // borderColor: '#1890ff'
-
       }}>
       <TextInput
         placeholder = {props.placeholder}
@@ -23,8 +21,9 @@ const TextInputError1 = (props) => (
         secureTextEntry={props.secureTextEntry}
         style = {{
           height: 40,
-          fontSize: 15,
-          marginLeft: 7
+          fontSize: 14,
+          marginLeft: 10,
+          fontFamily:'Nunito-SemiBold',
         }}
         value = {props.value}
          />

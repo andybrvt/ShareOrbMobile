@@ -157,8 +157,10 @@ class CameraScreen extends React.Component{
 
   openShowGoals = () => {
     this.setState({
-      showGoals: true
+      showGoals: true,
+      showCaptionModal:false,
     })
+    Keyboard.dismiss()
   }
 
   closeShowGoals = () => {
@@ -613,10 +615,10 @@ class CameraScreen extends React.Component{
                     behavior = "height"
                     keyboardVerticalOffset = {10}
                     >
-                    <Text style={{fontSize:18, paddingBottom:10}}> Caption</Text>
+                    <Text style={{fontSize:16, paddingBottom:10, fontFamily:'Nunito-Bold'}}> Thoughts</Text>
                    <View
                      style = {{
-                       backgroundColor: "whitesmoke",
+                       // backgroundColor: "whitesmoke",
                        padding: 10,
                        borderRadius:10,
                        width: "100%",
@@ -631,6 +633,7 @@ class CameraScreen extends React.Component{
                             height: event.nativeEvent.contentSize.height
                           })
                        }}
+                       style={{fontFamily:'Nunito', color:'#595959', fontSize:15}}
                        value = {this.state.caption}
                        onChangeText = {this.changeCaption}
                        placeholder = "Write something here..."
@@ -716,7 +719,8 @@ class CameraScreen extends React.Component{
                    <View>
                      <Text style = {{
                          color: 'white',
-                         textAlign: 'right'
+                         textAlign: 'right',
+                         fontFamily:'Nunito-SemiBold'
                        }}>{this.state.selectedGoal.goal}</Text>
                    </View>
 
@@ -753,15 +757,15 @@ class CameraScreen extends React.Component{
                      style={{top:0, position:'absolute'}}
                      stroke = "#d9d9d9"
                      strokeWidth={3}
-                     width = {40}
-                     height = {40}
+                     width = {35}
+                     height = {35}
                       />
 
                     <Circle
                       strokeWidth={2}
                       stroke = "white"
-                      width = {40}
-                      height = {40}
+                      width = {35}
+                      height = {35}
                        />
 
                  </TouchableOpacity>
@@ -772,7 +776,8 @@ class CameraScreen extends React.Component{
                  >
                    <Text style = {{
                        color: 'white',
-                       fontSize: 20
+                       fontSize: 20,
+                       fontFamily:'Nunito-SemiBold',
                      }}> Save  </Text>
                </TouchableOpacity>
               </Modal>
@@ -894,15 +899,15 @@ class CameraScreen extends React.Component{
                          style={{top:0, position:'absolute'}}
                          stroke = "#d9d9d9"
                          strokeWidth={3}
-                         width = {40}
-                         height = {40}
+                         width = {35}
+                         height = {35}
                           />
 
                         <Circle
                           strokeWidth={2}
                           stroke = "white"
-                          width = {40}
-                          height = {40}
+                          width = {35}
+                          height = {35}
                            />
 
                      </TouchableOpacity>
@@ -1224,9 +1229,9 @@ const styles = StyleSheet.create({
   },
   submitBtn: {
     position: 'absolute',
-    padding: 15,
+    padding: 12.5,
     backgroundColor: '#1890ff',
-    borderRadius: 20,
+    borderRadius: 15,
     alignSelf: 'flex-end',
     bottom: 25,
     right: 20

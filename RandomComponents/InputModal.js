@@ -43,7 +43,7 @@ import {
          keyboardVerticalOffset = {100}
          >
 
-        <Text>Write a caption here today</Text>
+        <Text style={{fontFamily:'Nunito-SemiBold'}}>Write a caption here today</Text>
         <View
           style = {{
             backgroundColor: "whitesmoke",
@@ -54,6 +54,7 @@ import {
           >
 
           <TextInput
+            style={{fontFamily:'Nunito-SemiBold'}}
             placeholder = "Write something here"
             multiline = {true}
              />
