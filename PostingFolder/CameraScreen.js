@@ -313,7 +313,7 @@ class CameraScreen extends React.Component{
         this.setState({
           isVideoOpen: true,
           isRecording: false,
-          videoPreview: video,
+          videoPreview: video.uri,
         })
 
 
@@ -385,15 +385,44 @@ class CameraScreen extends React.Component{
      aspect: [4, 3],
      quality: 1,
      base64: true,
+     videoMaxDuration: 10,
    });
 
    if(!pickerResult.cancelled){
      this.props.openShowCamera()
      // setTimeout(() =>
-     this.setState({
-       isOpen: true,
-       imagePreview: pickerResult.uri
-     })
+
+     if(pickerResult.type === "image"){
+
+       this.setState({
+         isOpen: true,
+         imagePreview: pickerResult.uri
+       })
+
+     }
+     if(pickerResult.type === "video"){
+
+       if(pickerResult.duration/1000 > 10){
+
+          setTimeout(() => alert("Video duration cannot be over 10 seconds"), 300)
+          // return
+       } else {
+
+         console.log(pickerResult.uri)
+         setTimeout(() => {
+           this.setState({
+             isVideoOpen: true,
+             isRecording: false,
+             videoPreview: pickerResult.uri
+           })
+         }, 300)
+
+
+       }
+
+     }
+
+
 
     // , 100)
 
@@ -518,7 +547,7 @@ class CameraScreen extends React.Component{
       const curDateTime = dateFns.format(new Date(), "yyyy-MM-dd HH:mm:ss")
       // const curDateTime = new Date();
       const formData = new FormData();
-      const videoFile = global.FILE_NAME_GETTER(video.uri);
+      const videoFile = global.FILE_NAME_GETTER(video);
       formData.append("curDate", curDate)
       formData.append("video", videoFile)
       formData.append('curDateTime', curDateTime);
@@ -530,7 +559,6 @@ class CameraScreen extends React.Component{
         {headers: {"content-type": "multipart/form-data"}}
 
       ).then(res =>{
-        console.log(res.data)
         this.props.addFirstSocialCellPost(res.data.item)
         const coverPicForm = new FormData();
         coverPicForm.append('cellId', res.data.cellId)
@@ -606,7 +634,7 @@ class CameraScreen extends React.Component{
 
 
   render(){
-    console.log(this.state.videoPreview !== null)
+    console.log(this.state.videoPreview)
     const showCaption = this.state.showCaptionModal;
     return(
       <View
@@ -669,8 +697,6 @@ class CameraScreen extends React.Component{
                      >
                      <TextInput
                        onContentSizeChange={(event) => {
-                         console.log(event)
-                          console.log(event.nativeEvent.contentSize.height)
                           // event.preventDefult()
                           this.setState({
                             height: event.nativeEvent.contentSize.height
@@ -873,8 +899,6 @@ class CameraScreen extends React.Component{
                        >
                        <TextInput
                          onContentSizeChange={(event) => {
-                           console.log(event)
-                            console.log(event.nativeEvent.contentSize.height)
                             // event.preventDefult()
                             this.setState({
                               height: event.nativeEvent.contentSize.height
@@ -896,7 +920,7 @@ class CameraScreen extends React.Component{
 
                     >
                     <Video
-                      source={{ uri: this.state.videoPreview.uri }}
+                      source={{ uri: this.state.videoPreview }}
                       style={[styles.image, { height, width }]}
                       rate={1.0}
                       isMuted={false}
