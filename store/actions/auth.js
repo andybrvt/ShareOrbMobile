@@ -146,7 +146,6 @@ export const grabUserCredentials = () => {
   return dispatch => {
     authAxios.get(`${global.IP_CHANGE}/userprofile/grabCurrentUser/`)
     .then(res => {
-      console.log(res.data, "stuffasfasdfasdfasdf")
 
       // AsyncStorage.setItem("username", username);
       // AsyncStorage.setItem("id", id);

@@ -213,7 +213,7 @@ let likeAvatarList=[]
 
            {/* fast image*/}
 
-            <FastImage
+            <Image
               resizeMode="cover"
               style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
               source = {{
@@ -222,7 +222,7 @@ let likeAvatarList=[]
 
             {/* fast image*/}
 
-          </FastImage>
+          </Image>
           </TouchableOpacity>
           <View style={{top: 210, left:'2.5%', position:'absolute', width:50, height:50}}>
             <TouchableOpacity

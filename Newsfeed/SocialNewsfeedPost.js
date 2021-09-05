@@ -20,6 +20,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import authAxios from '../util';
 import FastImage from 'react-native-fast-image'
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
@@ -284,6 +285,7 @@ class SocialNewsfeedPost extends React.Component{
     let lastName="";
     let likeAvatarList=[]
     let itemImage = "";
+    let video = "";
     let calComment = 0;
 
     let notificationToken = "";
@@ -331,6 +333,15 @@ class SocialNewsfeedPost extends React.Component{
 
       if(this.props.data.itemImage){
         itemImage = `${global.IMAGE_ENDPOINT}`+this.props.data.itemImage;
+      }
+      if(this.props.data.video){
+        if(this.props.data.video !== null){
+          console.log(video, 'this is the video')
+          video = `${global.IMAGE_ENDPOINT}`+this.props.data.video;
+          // video taken from the local site does not work but the videos
+          // taken from pretty much any where else works (sounds good to me)
+        }
+
       }
       if(this.props.data.people_like){
         like_people = this.props.data.people_like
@@ -393,12 +404,32 @@ class SocialNewsfeedPost extends React.Component{
                    onPress = {() => this.onPostDirect(calCell, postId)}>
 
                    {/* fast image*/}
+                   {
+                     video === "" ?
 
-                  <FastImage
-                    style={styles.cover}
-                    resizeMode = "cover"
-                    source={{ uri: itemImage }}
-                    />
+                     <Image
+                       style={styles.cover}
+                       resizeMode = "cover"
+                       source={{ uri: itemImage }}
+                       />
+
+                     :
+
+                     <Video
+                       style = {styles.cover}
+                       source={{ uri: "http://206.207.51.138:19000/media/post_video/2021/09/FEE23893-093D-47BB-95B6-17C08867CFDA.mov" }}
+                       rate={1.0}
+                       isMuted={true}
+                       resizeMode="cover"
+                       isLooping
+                       shouldPlay
+                       volume={0.5}
+
+
+                        />
+
+                   }
+
                 </TouchableOpacity>
               </GestureRecognizer>
                 <Avatar
