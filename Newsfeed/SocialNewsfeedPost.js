@@ -417,7 +417,7 @@ class SocialNewsfeedPost extends React.Component{
 
                      <Video
                        style = {styles.cover}
-                       source={{ uri: "http://206.207.51.138:19000/media/post_video/2021/09/FEE23893-093D-47BB-95B6-17C08867CFDA.mov" }}
+                       source={{ uri: video }}
                        rate={1.0}
                        isMuted={true}
                        resizeMode="cover"

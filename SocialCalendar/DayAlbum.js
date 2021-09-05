@@ -22,6 +22,8 @@ import { connect } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import { parseISO } from 'date-fns'
 import FastImage from 'react-native-fast-image'
+import { Video, AVPlaybackStatus } from 'expo-av';
+
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
  // this class will be a page on its own where
@@ -209,21 +211,49 @@ let likeAvatarList=[]
            width:'100%',
            padding:10,
          }}>
-         <TouchableOpacity onPress ={() => this.navFullImage(item)} >
+         {
+           item.video !== null ?
 
-           {/* fast image*/}
+           <TouchableOpacity >
 
-            <Image
-              resizeMode="cover"
-              style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
-              source = {{
-                uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
-              }}>
 
-            {/* fast image*/}
+              <Video
+                resizeMode="cover"
+                style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+item.video
+                }}
+                rate={1.0}
+                isMuted={false}
+                volume={0.5}
+                isLooping
+                shouldPlay
+                >
 
-          </Image>
-          </TouchableOpacity>
+
+            </Video>
+            </TouchableOpacity>
+
+            :
+
+            <TouchableOpacity onPress ={() => this.navFullImage(item)} >
+
+              {/* fast image*/}
+
+               <Image
+                 resizeMode="cover"
+                 style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
+                 source = {{
+                   uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
+                 }}>
+
+               {/* fast image*/}
+
+             </Image>
+             </TouchableOpacity>
+
+         }
+
           <View style={{top: 210, left:'2.5%', position:'absolute', width:50, height:50}}>
             <TouchableOpacity
               onPress={() => this.navLikePeople(item.people_like)}>
