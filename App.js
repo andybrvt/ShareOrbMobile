@@ -273,7 +273,7 @@ class App extends Component{
       }
 
       if(finalStatus !== "granted"){
-        alert('Failed to get push token for push notification!');
+        // alert('Failed to get push token for push notification!');
         return;
       }
 

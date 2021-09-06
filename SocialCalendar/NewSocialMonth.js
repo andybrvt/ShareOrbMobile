@@ -206,12 +206,12 @@ class NewSocialMonth extends React.PureComponent{
                       <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
                         <View style={styles.miniBox}>
                           <Text style = {styles.formatDateImage}> {formattedDate}</Text>
-                          {/* fast image*/}
                           <Video
                             style = {dateFns.isSameDay(day, new Date()) ?
                               styles.smallImageGlow : styles.smallImage
                             }
-                            rate = {15}
+                            rate = {1}
+                            isMuted = {true}
                             shouldPlay
                             resizeMode = "cover"
                             source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverVid}` }}
@@ -229,7 +229,7 @@ class NewSocialMonth extends React.PureComponent{
                           <View style={styles.miniBox}>
                             <Text style = {styles.formatDateImage}> {formattedDate}</Text>
                             {/* fast image*/}
-                            <Image
+                            <FastImage
                               style = {dateFns.isSameDay(day, new Date()) ?
                                 styles.smallImageGlow : styles.smallImage
                               }
@@ -391,6 +391,9 @@ class NewSocialMonth extends React.PureComponent{
                               styles.smallImageGlow : styles.smallImage
                             }
 
+                            rate = {1}
+                            isMuted = {true}
+                            shouldPlay
                             resizeMode = "cover"
                             source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverVid}` }}
                             />
@@ -405,7 +408,7 @@ class NewSocialMonth extends React.PureComponent{
                       <View>
                         <TouchableOpacity  onPress={() => this.ViewDay(toDoStuff.id)}>
                           {/* fast image*/}
-                          <Image
+                          <FastImage
 
                             style = {styles.smallImage}
                             resizeMode = "cover"

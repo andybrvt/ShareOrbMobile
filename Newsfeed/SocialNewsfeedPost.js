@@ -15,13 +15,13 @@ import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1
 import BottomSheet from 'reanimated-bottom-sheet';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import NotificationWebSocketInstance from  '../Websockets/notificationWebsocket';
-import { Navigation2, Heart, MessageCircle } from "react-native-feather";
+import { Navigation2, Heart, MessageCircle, VolumeX, Volume2 } from "react-native-feather";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import authAxios from '../util';
 import FastImage from 'react-native-fast-image'
 import { Video, AVPlaybackStatus } from 'expo-av';
-
+import InViewPort from "../RandomComponents/InViewPort";
 
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
@@ -64,6 +64,8 @@ class SocialNewsfeedPost extends React.Component{
       backgroundColor: '#fff',
       swipeDirection:'',
       lastTap:null,
+      isMuted: true,
+      showMute: false,
     }
     this.showExtra = new Value(false);
   }
@@ -257,6 +259,41 @@ class SocialNewsfeedPost extends React.Component{
     })
   }
 
+  playVideo = () => {
+    this.setState({
+      showMute: true
+    })
+    if(this.video){
+      this.video.playAsync();
+    }
+  }
+
+  pauseVideo = () => {
+    this.setState({
+      showMute: false
+    })
+    if(this.video){
+      this.video.pauseAsync();
+    }
+  }
+
+  handlePlaying = (isVisible) => {
+    isVisible ? this.playVideo() : this.pauseVideo();
+  }
+
+  unMute = () => {
+    this.setState({
+      isMuted: false
+    })
+  }
+
+
+  mute = () => {
+    this.setState({
+      isMuted: true
+    })
+  }
+
   revealPhoto = () =>{
 
     // This function will be use to render the pictures
@@ -336,7 +373,6 @@ class SocialNewsfeedPost extends React.Component{
       }
       if(this.props.data.video){
         if(this.props.data.video !== null){
-          console.log(video, 'this is the video')
           video = `${global.IMAGE_ENDPOINT}`+this.props.data.video;
           // video taken from the local site does not work but the videos
           // taken from pretty much any where else works (sounds good to me)
@@ -407,7 +443,7 @@ class SocialNewsfeedPost extends React.Component{
                    {
                      video === "" ?
 
-                     <Image
+                     <FastImage
                        style={styles.cover}
                        resizeMode = "cover"
                        source={{ uri: itemImage }}
@@ -415,18 +451,69 @@ class SocialNewsfeedPost extends React.Component{
 
                      :
 
-                     <Video
-                       style = {styles.cover}
-                       source={{ uri: video }}
-                       rate={1.0}
-                       isMuted={true}
-                       resizeMode="cover"
-                       isLooping
-                       shouldPlay
-                       volume={0.5}
+                     <InViewPort
+                       onChange = {this.handlePlaying}
+                       >
+                       <Video
+                         ref={ref => {this.video = ref}}
+                         style = {styles.cover}
+                         source={{
+                           // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                           uri: video
+                         }}
+                         rate={1.0}
+                         isMuted={this.state.isMuted}
+                         resizeMode="cover"
+                         isLooping
+                         // shouldPlay
+                         volume={0.5}
 
 
-                        />
+                          />
+
+                        {
+                          !this.state.showMute ?
+
+                          null
+
+                          :
+
+                          this.state.isMuted ?
+
+                          <TouchableOpacity
+                            onPress = {() => this.unMute()}
+                            style = {styles.tagCSS4}>
+                            <View style = {styles.justifyCenter}>
+                              <VolumeX
+                                stroke = "white"
+                                width = {27.5}
+                                height = {27.5}
+                                 />
+
+                            </View>
+                          </TouchableOpacity>
+
+                          :
+
+                          <TouchableOpacity
+                            onPress = {()=> this.mute()}
+                            style = {styles.tagCSS4}>
+                            <View style = {styles.justifyCenter}>
+                              <Volume2
+                                stroke = "white"
+                                width = {27.5}
+                                height = {27.5}
+                                 />
+
+                            </View>
+                          </TouchableOpacity>
+
+                        }
+
+
+
+
+                     </InViewPort>
 
                    }
 
@@ -943,6 +1030,24 @@ const styles = StyleSheet.create({
     fontSize:13,
     right:7.5,
     textAlign:'right',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+  },
+
+  tagCSS4: {
+    position:'absolute',
+    // backgroundColor: 'rgba(0,0,0,.6)',
+    padding:15,
+    borderRadius:25,
+    color:'white',
+    bottom:'45%',
+    justifyContent: 'center',
+    fontSize:13,
+    right:7.5,
+    zIndex:1,
+    flex:1,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,

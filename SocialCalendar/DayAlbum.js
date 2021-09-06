@@ -23,7 +23,7 @@ import Carousel from 'react-native-snap-carousel';
 import { parseISO } from 'date-fns'
 import FastImage from 'react-native-fast-image'
 import { Video, AVPlaybackStatus } from 'expo-av';
-
+import DayAlbumPost from './DayAlbumPost';
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
  // this class will be a page on its own where
@@ -139,6 +139,8 @@ let likeAvatarList=[]
 
 
    sendLike = (cellId, personLike) => {
+     console.log('send a like')
+     console.log(cellId, personLike)
      SocialCalCellPageWebSocketInstance.sendSocialCalCellLike(cellId, personLike)
    }
 
@@ -173,6 +175,8 @@ let likeAvatarList=[]
    }
 
    renderItem = ({item}) => {
+
+
      let peopleLikeId = [];
      if(item.people_like.length>0)
      {
