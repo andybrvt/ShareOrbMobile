@@ -171,7 +171,7 @@ class InfiniteScrollFlat extends React.Component{
       <Animated.View
         style = {{
           height: height,
-
+          paddingBottom: 100
 
         }}
         >

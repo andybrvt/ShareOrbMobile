@@ -23,7 +23,7 @@
     "android": {
       "googleServicesFile": "./google-services.json",
       "package": "com.pinghsu520.ShareOrbMobile",
-      "versionCode": 7
+      "versionCode": 8
     },
     "ios": {
       "supportsTablet": true,
