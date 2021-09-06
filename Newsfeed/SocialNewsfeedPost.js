@@ -441,7 +441,9 @@ class SocialNewsfeedPost extends React.Component{
                     uri: profilePic
                   }}
                 />
-
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress = {() => this.onPostDirect(calCell, postId)}></TouchableOpacity>
               <View style = {styles.testWhere}>
                 <Text style = {styles.videoFooterUserName}>
                   {global.NAMEMAKE(firstName, lastName)}
@@ -710,21 +712,23 @@ class SocialNewsfeedPost extends React.Component{
             :
             <View>
               {caption.length>140?
-                <View style={{  minHeight:10, marginBottom:20, marginTop:10}}>
+                <View style={{  minHeight:10, marginBottom:20, marginTop:10, paddingLeft:5}}>
                   <TouchableOpacity onPress = {() => this.onPostDirect(calCell, postId)}>
-                    <Text style={{width:'92.5%', flexWrap:'wrap', flexDirection:'row', fontFamily:'Nunito-SemiBold'}}>
-                      <Animated.Text style = {{fontFamily:'Nunito-Bold'}}> {userUsername+" "}</Animated.Text>
-                      {caption.substring(0,140)}
-                      <Text style={{color:'#bfbfbf'}}> ... see more </Text>
-                    </Text>
+                    <View style={{flexDirection:'row', width:'92.5%', flexWrap:'wrap',}}>
+                      <Text>
+                        <Text style = {{fontFamily:'Nunito-Bold'}}>{userUsername}</Text>
+                        <Text style={{fontFamily:'Nunito-SemiBold'}}> {caption.substring(0,140)}</Text>
+                        <Text style={{color:'#bfbfbf'}}> ... see more </Text>
+                      </Text>
+                    </View>
                   </TouchableOpacity>
                 </View>
                 :
-                <View style={{  minHeight:10, marginBottom:20, marginTop:10}}>
-                  <View style={{flexDirection:'row'}}>
-                    <Text style = {{fontSize:15, fontFamily:'Nunito-Bold'}}> {userUsername+" "}</Text>
-                    <Text style={{fontSize:15, width:'92.5%', flexWrap:'wrap', flexDirection:'row',  fontFamily:'Nunito-SemiBold'}}>
-                      {caption.substring(0,140)}
+                <View style={{minHeight:10, marginBottom:20, marginTop:10,paddingLeft:5,}}>
+                  <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', }}>
+                    <Text>
+                      <Text style = {{fontSize:15, fontFamily:'Nunito-Bold', }}>{userUsername+" "}</Text>
+                      <Text style={{fontFamily:'Nunito-SemiBold'}}>{caption.substring(0,140)}</Text>
                     </Text>
                   </View>
                 </View>
@@ -799,8 +803,8 @@ const styles = StyleSheet.create({
     position:'absolute',
     top:'1%',
     padding:10,
-    left:40,
-    width:'65%',
+    left:'12%',
+    width:'50%',
      // backgroundColor:'red',
   },
   testWhere2:{

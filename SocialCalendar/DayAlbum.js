@@ -64,13 +64,6 @@ let likeAvatarList=[]
    }
 
 
-   ViewProfile = (username) => {
-     // This fucntion will be used to navigate to the post page
-     // that you can use to post pictures and write caption
-     this.props.navigation.navigate("ProfilePage", {
-       username: username
-     })
-   }
 
    navFullImage = (item) => {
      // This fucntion will be used to navigate to the post page
@@ -163,14 +156,6 @@ let likeAvatarList=[]
    onHomeNav = () => {
      // this function will be use to navigate back
      // to the home page
-   }
-
-   ViewProfile = (username) => {
-     // This fucntion will be used to navigate to the post page
-     // that you can use to post pictures and write caption
-     this.props.navigation.navigate("ProfilePage", {
-       username: username
-     })
    }
 
 
@@ -458,7 +443,7 @@ let likeAvatarList=[]
            <View style={{padding:15, flexDirection:'row', alignItems:'center', borderBottomColor:'#434343', borderBottomWidth:1}}>
 
              <TouchableOpacity
-
+               style={{width:60, }}
                onPress = {() => this.onRedirect()}>
              <ArrowLeft
                stroke='white'
@@ -788,7 +773,6 @@ let likeAvatarList=[]
    },
 
    chatInfoHolder:{
-     left:10,
      display: 'flex',
      flexDirection: 'row',
      alignItems:'center',

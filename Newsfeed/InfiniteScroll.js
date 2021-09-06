@@ -25,7 +25,7 @@ class InfiniteScroll extends React.Component{
               <View>
                 {post.map((j,index) => {
                   return(
-                    <View style={{top:25}} key = {index}>
+                    <View style={{top:25, }} key = {index}>
                       {
                         j.post.get_socialCalItems ?
 
@@ -48,7 +48,6 @@ class InfiniteScroll extends React.Component{
                 <Text> There are no post</Text>
               </View>
             }
-
       </View>
     )
   }
