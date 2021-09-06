@@ -317,7 +317,6 @@ let likeAvatarList=[]
               </View>
             </TouchableOpacity>
           </View>
-
         <View style={{flexDirection:'row', padding:15, flexWrap: 'wrap', }}>
           <Text style={{fontFamily:'Nunito-Bold', color:'white', fontSize:15}}>
             {utc2+" "}
@@ -333,7 +332,7 @@ let likeAvatarList=[]
      if(username === this.props.username){
        this.props.navigation.navigate("Profile");
      } else {
-       this.props.navigation.navigate("ProfilePage", {
+       this.props.navigation.navigate("ProfilePage2", {
          username: username
        })
      }
@@ -435,7 +434,6 @@ let likeAvatarList=[]
            backgroundColor: 'rgba(0, 0, 0, 1)'
          }}
          >
-
          <StatusBar
            barStyle="light-content"
            />
@@ -451,7 +449,8 @@ let likeAvatarList=[]
                height = {35}
               />
             </TouchableOpacity>
-
+            <TouchableOpacity
+              onPress = {() => this.ViewProfile(userName)}>
             <View style = {styles.chatInfoHolder} >
               <Avatar
               rounded
@@ -467,43 +466,25 @@ let likeAvatarList=[]
                  <Text style = {styles.chatText}> {firstName+" "+lastName} </Text>
                </View>
             </View>
-            {/*
-             <Avatar
-               style={styles.close}
-              onPress = {() => this.ViewProfile(this.props.socialCalCell.socialCalUser.username)}
-               size={40}
-               rounded
-               source = {{
-               uri: `${global.IMAGE_ENDPOINT}`+this.props.socialCalCell.socialCalUser.profile_picture,
-             }}
-             />
-           <View>
-               <Text style = {styles.DayAlbumUserName}>
-                 {firstName+" "+lastName}
-                </Text>
-                <Text style = {styles.DayAlbumUserName}>
-                  {userName}
-                </Text>
-              </View>
-              */}
-              <View style = {styles.testWhere2}>
-                     <Text style = {styles.videoFooterUserName}>
-                       {socialMonth}
-                     </Text>
-                     <Text style = {styles.dayNumTag}>
-                       {socialDay}
-                     </Text>
-              </View>
-           </View>
-           <FlatList
-              ref = {ref => this.flatListRef = ref}
-              contentContainerStyle={{paddingBottom:10}}
-              showsVerticalScrollIndicator={false}
-              data = {this.props.socialCalCell.get_socialCalItems}
-              renderItem ={(item) => this.renderItem(item)}
-              keyExtractor={(item, index) => String(index)}
-              getItemLayout = {this.getItemLayout.bind(this)}
-            />
+            </TouchableOpacity>
+            <View style = {styles.testWhere2}>
+               <Text style = {styles.videoFooterUserName}>
+                 {socialMonth}
+               </Text>
+               <Text style = {styles.dayNumTag}>
+                 {socialDay}
+               </Text>
+            </View>
+            </View>
+             <FlatList
+                ref = {ref => this.flatListRef = ref}
+                contentContainerStyle={{paddingBottom:10}}
+                showsVerticalScrollIndicator={false}
+                data = {this.props.socialCalCell.get_socialCalItems}
+                renderItem ={(item) => this.renderItem(item)}
+                keyExtractor={(item, index) => String(index)}
+                getItemLayout = {this.getItemLayout.bind(this)}
+              />
 
               <View  style={styles.openContainer}>
                 {/* day caption

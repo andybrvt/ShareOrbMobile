@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+// import * as Sharing from 'expo-sharing';
 // This page will use mostly to introduce the user to
 // what we are about and the
 
@@ -14,7 +14,8 @@ import {
   ScrollView,
   Dimensions,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Share
  } from 'react-native';
 import newfeedpic from '../newfeedpic.jpg';
 import profilepic from '../profilepic.jpg';
@@ -25,16 +26,29 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import authAxios from '../util';
 import PhoneContacts from './PhoneContacts';
-
+import { Avatar } from 'react-native-elements';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
 class AppIntro extends React.Component{
 
   state = {
-    stuff:[0, 1, 2, 3, 4, 5],
+    stuff:[0, 1, 2, 3, 4],
     curIndex: 0,
   }
+
+  shareMessage = () => {
+    //Here is the Share API
+    Share.share({
+      // message: inputValue.toString(),
+      message:"Join ShareOrb with my code: N24FJFE"
+    })
+      //after successful share return result
+      .then((result) => console.log(result))
+      //If any thing goes wrong it comes here
+      .catch((errorMsg) => console.log(errorMsg));
+  };
+
   close = () =>  {
     authAxios.post(`${global.IP_CHANGE}`+'/userprofile/unShowIntialInstructions/'+this.props.id)
     .then(res => {
@@ -57,9 +71,10 @@ class AppIntro extends React.Component{
           <Text style = {{
               top: '10%',
               color: 'white',
+              fontFamily:'Nunito-Bold',
               fontSize: 30
             }}>
-            Welcome to ShareOrb
+            Welcome to ShareOrb!
           </Text>
           <View style = {{
               top: '30%'
@@ -74,10 +89,10 @@ class AppIntro extends React.Component{
 
             }}>
           <Text style = {{
-              top: '10%',
               padding:30,
               color: 'white',
-              fontSize: 35
+              fontSize: 35,
+              fontFamily:'Nunito-Bold',
             }}>
             The social journal that believes...
           </Text>
@@ -86,7 +101,8 @@ class AppIntro extends React.Component{
             }}>
             <Text style = {{
                 color: 'white',
-                fontSize: 25
+                fontSize: 25,
+                fontFamily:'Nunito-Bold',
               }}>we are what we do everyday </Text>
           </View>
         </View>
@@ -98,34 +114,40 @@ class AppIntro extends React.Component{
       return(
         <View style = {{flex: 1,
             width: width,
-            alignItems: 'center'
+
             }}>
+            <View style = {{
+                top: '2.5%'
+              }}>
+
+              <Text style = {styles.skipText}>
+                Skip
+              </Text>
+
+            </View>
           <View style = {{
               top: '2.5%'
             }}>
             <View style={{padding:30}}>
             <Text style = {styles.welcomeText}>
-              Start Fresh. Your feed empties every 24 hours
+              (switch with page 4)
+              Add a profile picture
             </Text>
             </View>
+            <TouchableOpacity>
+            <View style={{alignItems: 'center'}}>
+              <Avatar
+                size={100}
+                rounded
+                source={{
+                  uri:
+                    `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
+                }}
+              />
+            </View>
+            </TouchableOpacity>
           </View>
-          <View
-            style = {{
-              top: '5%',
-              height: "65%",
-              width: width*0.75,
-              borderRadius: 10,
-              overflow: 'hidden'
-            }}>
-            <Image
-              resizeMode = "cover"
-              style = {{
-                width: "100%",
-                height: '100%'
-              }}
-              source = {newfeedpic}
-               />
-          </View>
+
         </View>
       )
     }
@@ -134,35 +156,59 @@ class AppIntro extends React.Component{
       return(
         <View style = {{flex: 1,
             width: width,
-            alignItems: 'center'
+
             }}>
             <View style = {{
                 top: '2.5%'
               }}>
-              <View style={{padding:30}}>
-              <Text style = {styles.welcomeText}>
-                  Build your album. One album a day
+
+              <Text style = {styles.skipText}>
+                Skip
               </Text>
-              </View>
+
             </View>
-            <View
-              style = {{
-                top: '5%',
-                height: "65%",
-                width: width*0.75,
-                borderRadius: 10,
-                overflow: 'hidden'
-              }}
-              >
-              <Image
-                resizeMode = "cover"
-                style = {{
-                  width: "100%",
-                  height: '100%'
+          <View style = {{
+              top: '2.5%'
+            }}>
+            <View style={{padding:30}}>
+            <Text style = {styles.welcomeText}>
+              Might Delete
+            </Text>
+            </View>
+
+            <View style={{alignItems: 'center'}}>
+              <Avatar
+                size={150}
+                rounded
+                source={{
+                  uri:
+                    `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
                 }}
-                source = {profilepic}
-                 />
+              />
             </View>
+            <Text style = {styles.welcomeText}>
+              Ping Hsu
+            </Text>
+            <Text style = {styles.welcomeText}>
+              Journaling is more fun with friends
+            </Text>
+            <Text style = {styles.welcomeText}>
+              N693FD
+            </Text>
+            <Text style = {styles.welcomeText}>
+              5 invites left
+            </Text>
+
+
+          </View>
+          <TouchableOpacity
+            style={{position:'absolute', bottom:'5%'}}
+            onPress={this.shareMessage}
+            >
+          <Text style = {styles.welcomeText}>
+            Button here: Share Invites
+          </Text>
+        </TouchableOpacity>
         </View>
       )
     }
@@ -290,7 +336,7 @@ class AppIntro extends React.Component{
 
                <Pagination
                  activeDotIndex = {this.state.curIndex}
-                 dotsLength = {5}
+                 dotsLength = {4}
                  dotColor ={'white'}
                  inactiveDotColor = {'white'}
                   />
@@ -321,11 +367,19 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   welcomeText: {
-    padding:5,
+  padding:5,
     color: "white",
     fontSize: 27.5,
     top: '7%',
     textAlign: 'center'
+  },
+  skipText: {
+    position:'absolute',
+    padding:5,
+    color: "white",
+    fontFamily:'Nunito-Bold',
+    fontSize: 17.5,
+    right: '2.5%',
   },
   headerText: {
     color: 'white'
