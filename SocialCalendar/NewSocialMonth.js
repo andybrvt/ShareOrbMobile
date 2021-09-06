@@ -206,7 +206,6 @@ class NewSocialMonth extends React.PureComponent{
                       <TouchableOpacity  onPress={() => this.viewDay(info.id)}>
                         <View style={styles.miniBox}>
                           <Text style = {styles.formatDateImage}> {formattedDate}</Text>
-                          {/* fast image*/}
                           <Video
                             style = {dateFns.isSameDay(day, new Date()) ?
                               styles.smallImageGlow : styles.smallImage

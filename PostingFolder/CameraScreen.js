@@ -409,13 +409,15 @@ class CameraScreen extends React.Component{
        } else {
 
          console.log(pickerResult.uri)
-         setTimeout(() => {
-           this.setState({
-             isVideoOpen: true,
-             isRecording: false,
-             videoPreview: pickerResult.uri
-           })
-         }, 300)
+         // setTimeout(() => {
+         //   this.setState({
+         //     isVideoOpen: true,
+         //     isRecording: false,
+         //     videoPreview: pickerResult.uri
+         //   })
+         // }, 300)
+         setTimeout(() => alert("Videos are not ready yet"), 300)
+
 
 
        }
@@ -1229,8 +1231,8 @@ class CameraScreen extends React.Component{
 
 
                   <TouchableOpacity
-                    onPressOut = {() => this.handlePressOut()}
-                    onLongPress = {() => this.handleLongPress()}
+                    // onPressOut = {() => this.handlePressOut()}
+                    // onLongPress = {() => this.handleLongPress()}
                     onPress = {() => this.takePicture()}
                     style = {[(this.state.capturing)&&styles.captureBtnActive,styles.captureBtn]}></TouchableOpacity>
 
