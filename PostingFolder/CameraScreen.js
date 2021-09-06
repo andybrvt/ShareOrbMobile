@@ -1231,8 +1231,8 @@ class CameraScreen extends React.Component{
 
 
                   <TouchableOpacity
-                    // onPressOut = {() => this.handlePressOut()}
-                    // onLongPress = {() => this.handleLongPress()}
+                    onPressOut = {() => this.handlePressOut()}
+                    onLongPress = {() => this.handleLongPress()}
                     onPress = {() => this.takePicture()}
                     style = {[(this.state.capturing)&&styles.captureBtnActive,styles.captureBtn]}></TouchableOpacity>
 

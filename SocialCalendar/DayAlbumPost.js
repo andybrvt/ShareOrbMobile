@@ -19,6 +19,7 @@ import {
  ArrowLeftCircle,Bookmark, ChevronsUp, ChevronsDown, Edit2, VolumeX, Volume2
  } from "react-native-feather";
  import InViewPort from "../RandomComponents/InViewPort";
+ import FastImage from 'react-native-fast-image'
 
  let likeAvatarList=[]
 
@@ -127,7 +128,7 @@ import {
 
               {/* fast image*/}
 
-               <Image
+               <FastImage
                  resizeMode="cover"
                  style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
                  source = {{
@@ -136,7 +137,7 @@ import {
 
                {/* fast image*/}
 
-             </Image>
+             </FastImage>
              </TouchableOpacity>
 
          }
