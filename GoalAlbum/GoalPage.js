@@ -16,6 +16,7 @@ import authAxios from '../util';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Avatar } from 'react-native-elements';
 import * as dateFns from 'date-fns';
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 
 const width = Dimensions.get("window").width
@@ -59,16 +60,43 @@ class GoalPage extends React.Component{
             borderRadius: 10,
             overflow: "hidden"
           }}>
-          <Image
-            style = {{
-              width: '100%',
-              height: '100%'
-            }}
-              resizeMode = "cover"
-              source = {{
-                uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
+
+          {
+            item.video !== null ?
+
+            <Video
+              style = {{
+                width: '100%',
+                height: '100%'
               }}
-             />
+                resizeMode = "cover"
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+item.video
+                }}
+                rate={1.0}
+                isMuted={false}
+                volume={0.5}
+                isLooping
+                shouldPlay
+
+               />
+
+             :
+
+             <Image
+               style = {{
+                 width: '100%',
+                 height: '100%'
+               }}
+                 resizeMode = "cover"
+                 source = {{
+                   uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
+                 }}
+                />
+
+          }
+
+
 
         </View>
         <View style={{
