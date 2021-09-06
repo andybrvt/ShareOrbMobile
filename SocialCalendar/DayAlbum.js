@@ -23,7 +23,7 @@ import Carousel from 'react-native-snap-carousel';
 import { parseISO } from 'date-fns'
 import FastImage from 'react-native-fast-image'
 import { Video, AVPlaybackStatus } from 'expo-av';
-
+import DayAlbumPost from './DayAlbumPost';
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
  // this class will be a page on its own where
@@ -139,6 +139,8 @@ let likeAvatarList=[]
 
 
    sendLike = (cellId, personLike) => {
+     console.log('send a like')
+     console.log(cellId, personLike)
      SocialCalCellPageWebSocketInstance.sendSocialCalCellLike(cellId, personLike)
    }
 
@@ -173,6 +175,8 @@ let likeAvatarList=[]
    }
 
    renderItem = ({item}) => {
+
+
      let peopleLikeId = [];
      if(item.people_like.length>0)
      {
@@ -190,142 +194,15 @@ let likeAvatarList=[]
      let utc2=dateFns.format(dtDateOnly1, 'h:mma');
      const month = dateFns.format(new Date(item.created_at), 'MMMM yyyy');
      return(
-       <View style={{minHeight:150, marginBottom:0}}>
-       <View style={{
-           // backgroundColor: 'red',
-           width:'100%',
-           padding:10,
-         }}>
-         {
-           item.video !== null ?
-
-           <TouchableOpacity >
-
-
-              <Video
-                resizeMode="cover"
-                style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
-                source = {{
-                  uri: `${global.IMAGE_ENDPOINT}`+item.video
-                }}
-                rate={1.0}
-                isMuted={false}
-                volume={0.5}
-                isLooping
-                shouldPlay
-                >
-
-
-            </Video>
-            </TouchableOpacity>
-
-            :
-
-            <TouchableOpacity onPress ={() => this.navFullImage(item)} >
-
-              {/* fast image*/}
-
-               <Image
-                 resizeMode="cover"
-                 style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
-                 source = {{
-                   uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
-                 }}>
-
-               {/* fast image*/}
-
-             </Image>
-             </TouchableOpacity>
-
-         }
-
-          <View style={{top: 210, left:'2.5%', position:'absolute', width:50, height:50}}>
-            <TouchableOpacity
-              onPress={() => this.navLikePeople(item.people_like)}>
-            <FacePile
-              size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
-              containerStyle={{height:40}}
-               overlap={0.1} />
-           </TouchableOpacity>
-          </View>
-          {/*
-          <View style={{top:'7.5%', right:'4.5%', position:'absolute'}}>
-            <Text style={styles.videoFooterUserName}>
-              <MoreVertical
-               stroke = "white"
-               // fill="red"
-               width ={27.5}
-               height = {27.5}
-               style={{right:5}}
-                />
-            </Text>
-          </View>
-          */}
-          <View style={{top: 180, right:'6%', position:'absolute'}}>
-            {
-              peopleLikeId.includes(this.props.userId) ?
-              <TouchableOpacity
-                onPress ={() => this.sendUnLike(item.id, this.props.userId)}
-                >
-                <View style = {styles.justifyCenter}>
-                  <Heart
-                    fill="red"
-                     stroke = "red"
-                     width ={25}
-                     height = {25}
-                     style={{right:5}}
-                  />
-                  <Text  style = {styles.statNum}>
-                    {item.people_like.length}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              :
-              <TouchableOpacity
-                onPress ={() => this.sendLike(item.id, this.props.userId)}>
-                <View style = {styles.justifyCenter}>
-                  <Heart
-                    fill="white"
-                     stroke = "white"
-                     width ={25}
-                     height = {25}
-                     style={{right:5}}
-                  />
-                  <Text  style = {styles.statNum}>
-                    {item.people_like.length}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            }
-          </View>
-          <View style={{top: 215, right:'6%', position:'absolute'}}>
-            <TouchableOpacity
-              onPress = {() => this.onCommentOpen(item.id)}
-              >
-              <View style = {styles.justifyCenter}>
-                <MessageCircle
-                  fill="white"
-                 stroke = "white"
-                 // fill="red"
-                 width ={27.5}
-                 height = {27.5}
-                 style={{right:5}}
-                  />
-                  <Text  style = {styles.statNum}>
-                    {item.get_socialCalItemComment.length}
-                  </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-
-        <View style={{flexDirection:'row', padding:15, flexWrap: 'wrap', }}>
-          <Text style={{fontFamily:'Nunito-Bold', color:'white', fontSize:15}}>
-            {utc2+" "}
-           </Text>
-          <Text style={{color:'white', fontFamily:'Nunito-SemiBold'}}>{item.caption}</Text>
-        </View>
-      </View>
-    </View>
+       <DayAlbumPost
+         item = {item}
+         navFullImage = {this.navFullImage}
+         navLikePeople = {this.navLikePeople}
+         sendUnLike = {this.sendUnLike}
+         sendLike = {this.sendLike}
+         onCommentOpen = {this.onCommentOpen}
+         {...this.props}
+          />
      )
    }
 
