@@ -30,6 +30,7 @@ import NewsfeedComment from './NewsfeedComment';
 import { LinearGradient } from 'expo-linear-gradient';
 import PersonalNewsFeed from './PersonalNewsFeed';
 import authAxios from '../util';
+import * as Progress from 'react-native-progress';
 
 
 const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
