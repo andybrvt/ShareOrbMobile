@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet,TextInput,Switch, TouchableWithoutFeedback } from 'react-native';
+import { Text, Dimensions, View, Button, StyleSheet,TextInput,Switch, TouchableWithoutFeedback } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -12,8 +12,10 @@ import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { Avatar } from 'react-native-paper';
 import { Search, Bell, MessageCircle, BookOpen, Sunrise} from "react-native-feather";
 import Animated from 'react-native-reanimated';
+import * as Progress from 'react-native-progress';
 
 const {interpolate, interpolateColors, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
+const width = Dimensions.get("window").width
 
 
 class Header extends React.Component{
@@ -87,6 +89,17 @@ class Header extends React.Component{
           position: 'absolute',
           width: "100%",
           }}>
+
+          <Progress.Bar
+            animationType = "timing"
+            borderWidth = {0}
+            style = {{
+              position: 'absolute',
+              bottom: '0%',
+              left: 0,
+            }}
+            progress = {this.props.curLoad} width = {width}
+             />
           <View style = {styles.logoContainer}>
              <MainLogo1 width = {120}/>
           </View>

@@ -476,36 +476,43 @@ class CameraScreen extends React.Component{
     formData.append('curDateTime', curDateTime);
     formData.append("caption", caption);
     formData.append('goalId', goalId);
-    // this.props.authAddTotalLoad()
+
+    this.props.authAddCurLoad()
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSinglePic/`+ownerId,
       formData,
       {headers: {"content-type": "multipart/form-data"}}
 
     ).then(res => {
 
-      // either put a props here that updates the newsfeed
 
         this.props.addFirstSocialCellPost(res.data.item)
         const coverPicForm = new FormData();
         coverPicForm.append('cellId', res.data.cellId)
-
         coverPicForm.append('coverImage', imageFile)
 
-        this.props.authAddTotalLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+
+
         authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
           coverPicForm,
           {headers: {"content-type": "multipart/form-data"}}
 
         ).then(res => {
-          // put loading here
 
           this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
 
-          // or put one here
+          setTimeout(() => this.props.authZeroCurLoad(), 1000);
+
         })
 
-      // this.props.authAddCurLoad()
-      //
+
       // if(res.data.coverPicChange){
       //
       //
@@ -540,7 +547,6 @@ class CameraScreen extends React.Component{
 
       // if(this.props.curLoad >= this.props.totalLoad){
       //   // if they are equal or larger you will just set it back to zero
-      //   this.props.authZeroCurLoad()
       //   this.props.authZeroTotalLoad()
       //
       // }

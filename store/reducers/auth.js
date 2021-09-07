@@ -65,10 +65,11 @@ const authFail = (state, action) => {
 
 const authAddCurLoad = (state, action) => {
   return updateObject(state, {
-    curLoad: state.curLoad + 1
+    curLoad: state.curLoad + 0.1
   })
 }
 
+// DELETE LATER
 const authAddTotalLoad = (state, action) => {
   return updateObject(state, {
     totalLoad: state.totalLoad + 1
@@ -81,6 +82,7 @@ const authZeroCurLoad = (state, action) => {
   })
 }
 
+// DELETE LATER
 const authZeroTotalLoad = (state, action) => {
   return updateObject(state, {
     totalLoad: 0

@@ -179,6 +179,7 @@ class InfiniteScrollFlat extends React.Component{
         <Header
           currentMonth = {this.state.currentMonth}
           currentDay = {this.state.currentDay}
+          curLoad = {this.props.curLoad}
            />
         {
           post.length === 0 ?
@@ -233,7 +234,8 @@ const mapStateToProps = state => {
     id: state.auth.id,
     userName: state.auth.username,
     socialPosts: state.socialNewsfeed.socialPosts,
-    following: state.auth.following
+    following: state.auth.following,
+    curLoad: state.auth.curLoad
   }
 }
 
