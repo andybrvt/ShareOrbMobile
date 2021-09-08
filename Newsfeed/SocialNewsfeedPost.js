@@ -546,13 +546,28 @@ class SocialNewsfeedPost extends React.Component{
                   </Text>
               </View>
               */}
-              <View style={{left:'1%', bottom:'1%', position:'absolute', width:50, height:50}}>
-                <TouchableOpacity
-                  onPress={() => this.navLikePeople(like_people)}>
-                    <FacePile numFaces={3} faces={likeAvatarList} overlap={1}
-                       circleSize={15} />
-                </TouchableOpacity>
-              </View>
+              {
+
+                (like_people.length>3)?
+                <View style={{left:'4%', bottom:'0%', position:'absolute', width:50, height:50}}>
+                  <TouchableOpacity
+                    onPress={() => this.navLikePeople(like_people)}>
+                      <FacePile numFaces={3} faces={likeAvatarList} overlap={1}
+                         circleSize={15} />
+                  </TouchableOpacity>
+                </View>
+                :
+
+                <View style={{left:'0%', bottom:'0%', position:'absolute', width:50, height:50, }}>
+                  <TouchableOpacity
+                    onPress={() => this.navLikePeople(like_people)}>
+                      <FacePile numFaces={3} faces={likeAvatarList} overlap={1}
+                         circleSize={15} />
+                  </TouchableOpacity>
+                </View>
+
+              }
+
 
 
               {

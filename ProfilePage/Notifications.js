@@ -368,6 +368,7 @@ const styles = StyleSheet.create({
   notiTimeStamp: {
     color:'#8c8c8c',
     fontSize:12,
+    fontFamily:'Nunito-SemiBold',
   },
  editButton: {
    alignItems: 'center',

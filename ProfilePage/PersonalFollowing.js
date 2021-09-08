@@ -57,7 +57,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
                <View style={{flex:0.5, justifyContent:"center"}}>
                  <View style={styles.editButton}>
-                    <Text style={{color:'white',}}>Unfollow</Text>
+                    <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Unfollow</Text>
                   </View>
                </View>
 
@@ -65,7 +65,7 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
                <View style={{flex:0.5, justifyContent:"center"}}>
                  <View style={styles.editButton}>
-                    <Text style={{color:'white',}}>Follow</Text>
+                    <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Follow</Text>
                   </View>
                </View>
 
