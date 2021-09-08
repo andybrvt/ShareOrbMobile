@@ -12,6 +12,7 @@ import {
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
+import Random from './randomPhoto.svg';
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
@@ -31,11 +32,16 @@ const width = Dimensions.get('window').width
       toValue: 1,
       duration: 3000,
     }).start();
+    this.fadeAway();
   }
 
 
   fadeAway = () => {
-    
+    Animated.timing(this.opacity,{
+      toValue: 0,
+      duration:3200,
+      useNativeDriver: true
+    }).start();
   }
 
    render(){
@@ -93,7 +99,10 @@ const width = Dimensions.get('window').width
                    fontWeight: 'bold',
                    color: 'white'
                  }}>First Post of the Day!</Text>
-
+               <Random
+                 width = {100}
+                 height = {100}
+                 />
 
 
 
