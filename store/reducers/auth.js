@@ -28,7 +28,7 @@ const initialState ={
   totalLoad: 0,
   showCamera: false,
   dailyNotification: true,
-
+  showFirstPostModal: false,
 }
 
 const authStart = (state, action) => {
