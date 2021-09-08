@@ -37,6 +37,7 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import Test from '../PostingFolder/Test'
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
+import * as Progress from 'react-native-progress';
 
 
 const { Clock,
@@ -129,10 +130,15 @@ class CameraScreen extends React.Component{
     selectedGoal: {},
     showGoals: false,
     height: 0,
-    isRecording: false
+    isRecording: false,
+    counter: 0,
+    timer: null,
   }
 
   componentDidMount(){
+
+
+
     this.allowPermissions()
 
     this.open = this.props.navigation.addListener('focus', () => {
@@ -151,6 +157,12 @@ class CameraScreen extends React.Component{
 
   componentWillUnmount() {
      this.open();
+   }
+
+   tick = () => {
+     this.setState({
+       counter: this.state.counter + 0.1
+     })
    }
 
 
@@ -303,21 +315,30 @@ class CameraScreen extends React.Component{
 
       this.setState({isRecording: true}, async() => {
 
-        this.isRecording.setValue(true)
+        let timer = setInterval(this.tick, 1000);
+        this.setState({
+          timer
+        })
+
+        // this.isRecording.setValue(true)
         const video = await this.cameraRef.recordAsync({
           maxDuration: 10
         });
 
+        // this.clearInterval(this.state.timer);
 
+        clearInterval(this.state.timer);
 
         this.setState({
           isVideoOpen: true,
           isRecording: false,
           videoPreview: video.uri,
+          timer: null,
+          counter: 0
         })
 
 
-        this.isRecording.setValue(false)
+        // this.isRecording.setValue(false)
 
       })
 
@@ -455,36 +476,43 @@ class CameraScreen extends React.Component{
     formData.append('curDateTime', curDateTime);
     formData.append("caption", caption);
     formData.append('goalId', goalId);
-    // this.props.authAddTotalLoad()
+
+    this.props.authAddCurLoad()
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSinglePic/`+ownerId,
       formData,
       {headers: {"content-type": "multipart/form-data"}}
 
     ).then(res => {
 
-      // either put a props here that updates the newsfeed
 
         this.props.addFirstSocialCellPost(res.data.item)
         const coverPicForm = new FormData();
         coverPicForm.append('cellId', res.data.cellId)
-
         coverPicForm.append('coverImage', imageFile)
 
-        this.props.authAddTotalLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+
+
         authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
           coverPicForm,
           {headers: {"content-type": "multipart/form-data"}}
 
         ).then(res => {
-          // put loading here
 
           this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
 
-          // or put one here
+          setTimeout(() => this.props.authZeroCurLoad(), 1000);
+
         })
 
-      // this.props.authAddCurLoad()
-      //
+
       // if(res.data.coverPicChange){
       //
       //
@@ -519,7 +547,6 @@ class CameraScreen extends React.Component{
 
       // if(this.props.curLoad >= this.props.totalLoad){
       //   // if they are equal or larger you will just set it back to zero
-      //   this.props.authZeroCurLoad()
       //   this.props.authZeroTotalLoad()
       //
       // }
@@ -556,6 +583,8 @@ class CameraScreen extends React.Component{
       formData.append("caption", caption);
       formData.append('goalId', goalId);
 
+      this.props.authAddCurLoad()
+
       authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSingleVid/`+ownerId,
         formData,
         {headers: {"content-type": "multipart/form-data"}}
@@ -567,11 +596,26 @@ class CameraScreen extends React.Component{
 
         coverPicForm.append('coverVideo', videoFile)
 
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+
+
         authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverVid/`+ownerId,
           coverPicForm,
           {headers: {"content-type": "multipart/form-data"}}
 
         ).then( res => {
+
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+
+          setTimeout(() => this.props.authZeroCurLoad(), 1000);
+
 
         })
 
@@ -1058,19 +1102,30 @@ class CameraScreen extends React.Component{
                 flashMode = {this.state.showFlash}
                 style = {{flex: 1}}>
 
-
+                <Progress.Bar
+                  animationType = "timing"
+                  borderWidth = {0}
+                  style = {{
+                    position: 'absolute',
+                    bottom: '0%',
+                    left: 0,
+                  }}
+                  progress = {this.state.counter} width = {width}/>
+                {/*
                   <Animated.View
-                    onPress = {() => this.onRedirect()}
-                    style = {{
-                      position: 'absolute',
-                      bottom: '0%',
-                      left: 0,
-                      backgroundColor: '#1890ff',
-                      width: this.opacity,
-                      height: 10,
-                    }}
-                    >
-                  </Animated.View>
+                      onPress = {() => this.onRedirect()}
+                      style = {{
+                        position: 'absolute',
+                        bottom: '0%',
+                        left: 0,
+                        backgroundColor: '#1890ff',
+                        width: this.opacity,
+                        height: 10,
+                      }}
+                      >
+                    </Animated.View>
+
+                  */}
 
 
 
