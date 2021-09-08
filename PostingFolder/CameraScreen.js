@@ -296,8 +296,17 @@ class CameraScreen extends React.Component{
 
       this.setState({
         isOpen: true,
-        imagePreview: pic.uri
+        imagePreview: pic.uri,
       })
+
+      setTimeout(() => {
+        this.setState({
+          showCaptionModal: true
+        })
+        this.textInput.focus()
+
+      }, 1000)
+
     } catch {
       console.log('error taking pictures')
     }
@@ -336,6 +345,14 @@ class CameraScreen extends React.Component{
           timer: null,
           counter: 0
         })
+
+        setTimeout(() => {
+          this.setState({
+            showCaptionModal: true
+          })
+          this.textInput.focus()
+
+        }, 1000)
 
 
         // this.isRecording.setValue(false)
