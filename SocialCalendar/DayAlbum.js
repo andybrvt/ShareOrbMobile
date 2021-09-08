@@ -244,7 +244,7 @@ let likeAvatarList=[]
          }
 
          {likeAvatarList.length>3?
-           <View style={{bottom:'15%', left:'6%', position:'absolute', width:50, height:50}}>
+           <View style={{top:210, left:'6%', position:'absolute', width:50, height:50}}>
              <TouchableOpacity
                onPress={() => this.navLikePeople(item.people_like)}>
              <FacePile
@@ -255,7 +255,7 @@ let likeAvatarList=[]
            </View>
 
          :
-         <View style={{bottom:'15%', left:'2.5%', position:'absolute', width:50, height:50}}>
+         <View style={{top:210, left:'2.5%', position:'absolute', width:50, height:50}}>
            <TouchableOpacity
              onPress={() => this.navLikePeople(item.people_like)}>
            <FacePile
