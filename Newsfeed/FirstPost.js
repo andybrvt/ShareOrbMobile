@@ -1,5 +1,5 @@
 import { Animated } from 'react-native';
-import Animation from 'lottie-react-native';
+import LottieView from 'lottie-react-native';
 import React from 'react';
 import {
   Text,
@@ -28,6 +28,8 @@ const width = Dimensions.get('window').width
     };
   }
    componentDidMount() {
+     // this.animation.play();
+
 
     Animated.timing(this.state.progress, {
       toValue: 1,
@@ -76,14 +78,17 @@ const width = Dimensions.get('window').width
                alignItems: 'center',
                justifyContent: 'center'
              }}>
-             <Animation
+             <LottieView
               style={{
                 width: width,
                 height: height,
                 position: 'absolute'
               }}
-              // loop={true}
-              // autoPlay={true}
+              // autoPlay
+              // loop
+              // ref={animation => {
+              //    this.animation = animation;
+              //  }}
               source={require('./data3.json')}
               progress={this.state.progress}
             />
