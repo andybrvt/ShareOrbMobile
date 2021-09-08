@@ -26,6 +26,10 @@ import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import NoPosts from './noPosts.svg';
 import SuggestedList from './SuggestedList';
+import FirstPost from './FirstPost';
+
+
+
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const {interpolate, Extrapolate, interpolateColors} = Animated;
 const height = Dimensions.get('window').height;
@@ -175,6 +179,8 @@ class InfiniteScrollFlat extends React.Component{
 
         }}
         >
+
+        <FirstPost></FirstPost>
 
         <Header
           currentMonth = {this.state.currentMonth}

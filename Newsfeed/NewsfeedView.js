@@ -202,6 +202,7 @@ class NewsfeedView extends React.Component{
           />
 
 
+
           <Animated.View
             style = {{
               // backgroundColor: backgroundGradient
