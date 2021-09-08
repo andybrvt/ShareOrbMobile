@@ -204,7 +204,7 @@ class NewsfeedView extends React.Component{
           />
 
         {
-          !this.props.showFirstPostModal ?
+          this.props.showFirstPostModal ?
 
           <FirstPost
             visible = {this.props.showFirstPostModal}
