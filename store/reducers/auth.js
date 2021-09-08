@@ -201,6 +201,18 @@ const setDailyNoti = (state, action) => {
   })
 }
 
+const authShowFirstPostModal = (state, action) => {
+  return updateObject(state, {
+    showFirstPostModal: true
+  })
+}
+
+const authUnshowFirstPostModal = (state, action) => {
+  return updateObject(state, {
+    showFirstPostModal: false
+  })
+}
+
 
 const reducer = (state = initialState, action) => {
   switch(action.type){
@@ -246,6 +258,10 @@ const reducer = (state = initialState, action) => {
       return authAddUnaddFollowing(state, action);
     case actionTypes.SET_DAILY_NOTI:
       return setDailyNoti(state, action);
+    case actionTypes.AUTH_SHOW_FIRST_POST_MODAL:
+      return authShowFirstPostModal(state, action)
+    case actionTypes.AUTH_UNSHOW_FIRST_POST_MODAL:
+      return authUnshowFirstPostModal(state, action)
     default:
       return state;
   }

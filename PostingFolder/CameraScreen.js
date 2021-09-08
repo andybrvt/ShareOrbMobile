@@ -296,8 +296,17 @@ class CameraScreen extends React.Component{
 
       this.setState({
         isOpen: true,
-        imagePreview: pic.uri
+        imagePreview: pic.uri,
       })
+
+      setTimeout(() => {
+        this.setState({
+          showCaptionModal: true
+        })
+        this.textInput.focus()
+
+      }, 1000)
+
     } catch {
       console.log('error taking pictures')
     }
@@ -336,6 +345,14 @@ class CameraScreen extends React.Component{
           timer: null,
           counter: 0
         })
+
+        setTimeout(() => {
+          this.setState({
+            showCaptionModal: true
+          })
+          this.textInput.focus()
+
+        }, 1000)
 
 
         // this.isRecording.setValue(false)
@@ -430,14 +447,14 @@ class CameraScreen extends React.Component{
        } else {
 
          console.log(pickerResult.uri)
-         // setTimeout(() => {
-         //   this.setState({
-         //     isVideoOpen: true,
-         //     isRecording: false,
-         //     videoPreview: pickerResult.uri
-         //   })
-         // }, 300)
-         setTimeout(() => alert("Videos are not ready yet"), 300)
+         setTimeout(() => {
+           this.setState({
+             isVideoOpen: true,
+             isRecording: false,
+             videoPreview: pickerResult.uri
+           })
+         }, 300)
+         // setTimeout(() => alert("Videos are not ready yet"), 300)
 
 
 
@@ -509,6 +526,13 @@ class CameraScreen extends React.Component{
           this.props.authAddCurLoad()
 
           setTimeout(() => this.props.authZeroCurLoad(), 1000);
+
+          if(res.data === 1){
+            // run the
+            setTimeout(() => this.props.authShowFirstPostModal(), 1200);
+
+          }
+
 
         })
 
@@ -616,6 +640,11 @@ class CameraScreen extends React.Component{
 
           setTimeout(() => this.props.authZeroCurLoad(), 1000);
 
+          if(res.data === 1){
+            // run the
+            setTimeout(() => this.props.authShowFirstPostModal(), 1200);
+
+          }
 
         })
 
@@ -1342,7 +1371,9 @@ const mapDispatchToProps = dispatch => {
     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
 
     openShowCamera: () => dispatch(authActions.openShowCamera()),
-    addFirstSocialCellPost: (post) => dispatch(socialNewsfeedActions.addFirstSocialCellPost(post))
+    addFirstSocialCellPost: (post) => dispatch(socialNewsfeedActions.addFirstSocialCellPost(post)),
+    authShowFirstPostModal: () => dispatch(authActions.authShowFirstPostModal()),
+
   }
 }
 
