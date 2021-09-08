@@ -583,6 +583,8 @@ class CameraScreen extends React.Component{
       formData.append("caption", caption);
       formData.append('goalId', goalId);
 
+      this.props.authAddCurLoad()
+
       authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSingleVid/`+ownerId,
         formData,
         {headers: {"content-type": "multipart/form-data"}}
@@ -594,11 +596,26 @@ class CameraScreen extends React.Component{
 
         coverPicForm.append('coverVideo', videoFile)
 
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+
+
         authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverVid/`+ownerId,
           coverPicForm,
           {headers: {"content-type": "multipart/form-data"}}
 
         ).then( res => {
+
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+          this.props.authAddCurLoad()
+
+          setTimeout(() => this.props.authZeroCurLoad(), 1000);
+
 
         })
 
