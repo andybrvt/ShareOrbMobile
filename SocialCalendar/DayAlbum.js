@@ -243,15 +243,32 @@ let likeAvatarList=[]
 
          }
 
-          <View style={{top: 210, left:'2.5%', position:'absolute', width:50, height:50}}>
-            <TouchableOpacity
-              onPress={() => this.navLikePeople(item.people_like)}>
-            <FacePile
-              size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
-              containerStyle={{height:40}}
-               overlap={0.1} />
-           </TouchableOpacity>
-          </View>
+         {likeAvatarList.length>3?
+           <View style={{bottom:'15%', left:'6%', position:'absolute', width:50, height:50}}>
+             <TouchableOpacity
+               onPress={() => this.navLikePeople(item.people_like)}>
+             <FacePile
+               size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
+               containerStyle={{height:40}}
+                overlap={0.1} />
+            </TouchableOpacity>
+           </View>
+
+         :
+         <View style={{bottom:'15%', left:'2.5%', position:'absolute', width:50, height:50}}>
+           <TouchableOpacity
+             onPress={() => this.navLikePeople(item.people_like)}>
+           <FacePile
+             size={2.5} numFaces={3} faces={likeAvatarList} circleSize={14}
+             containerStyle={{height:40}}
+              overlap={0.1} />
+          </TouchableOpacity>
+         </View>
+
+
+        }
+
+
           {/*
           <View style={{top:'7.5%', right:'4.5%', position:'absolute'}}>
             <Text style={styles.videoFooterUserName}>
@@ -265,7 +282,7 @@ let likeAvatarList=[]
             </Text>
           </View>
           */}
-          <View style={{top: 180, right:'6%', position:'absolute'}}>
+          <View style={{top: 180, right:'7.5%', position:'absolute'}}>
             {
               peopleLikeId.includes(this.props.userId) ?
               <TouchableOpacity
@@ -302,7 +319,7 @@ let likeAvatarList=[]
               </TouchableOpacity>
             }
           </View>
-          <View style={{top: 215, right:'6%', position:'absolute'}}>
+          <View style={{top: 215, right:'7.5%', position:'absolute'}}>
             <TouchableOpacity
               onPress = {() => this.onCommentOpen(item.id)}
               >
@@ -321,11 +338,13 @@ let likeAvatarList=[]
               </View>
             </TouchableOpacity>
           </View>
-        <View style={{flexDirection:'row', padding:15, flexWrap: 'wrap', }}>
-          <Text style={{fontFamily:'Nunito-Bold', color:'white', fontSize:15}}>
-            {utc2+" "}
-           </Text>
-          <Text style={{color:'white', fontFamily:'Nunito-SemiBold'}}>{item.caption}</Text>
+        <View style={{flexDirection:'row', paddingTop:15, paddingLeft:5, paddingRight:10, flexWrap: 'wrap',}}>
+          <Text>
+            <Text style={{fontFamily:'Nunito-Bold', color:'white', fontSize:15}}>
+              {utc2+" "}
+             </Text>
+            <Text style={{color:'white', fontFamily:'Nunito-SemiBold'}}>{item.caption}</Text>
+          </Text>
         </View>
       </View>
     </View>
