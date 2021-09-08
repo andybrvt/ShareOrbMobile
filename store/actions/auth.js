@@ -303,3 +303,15 @@ export const setDailyNoti = (bool) => {
     bool: bool
   }
 }
+
+export const authShowFirstPostModal =() => {
+  return {
+    type: actionTypes.AUTH_SHOW_FIRST_POST_MODAL
+  }
+}
+
+export const authUnshowFirstPostModal =() => {
+  return {
+    type: actionTypes.AUTH_UNSHOW_FIRST_POST_MODAL
+  }
+}

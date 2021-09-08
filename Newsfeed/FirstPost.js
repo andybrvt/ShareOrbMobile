@@ -28,11 +28,16 @@ const width = Dimensions.get('window').width
     };
   }
    componentDidMount() {
+
     Animated.timing(this.state.progress, {
       toValue: 1,
       duration: 3000,
+      useNativeDriver: true
+
     }).start();
     this.fadeAway();
+
+    setTimeout(() => this.props.unShow, 4000)
   }
 
 

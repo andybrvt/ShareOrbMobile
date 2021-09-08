@@ -203,7 +203,20 @@ class NewsfeedView extends React.Component{
           unShow = {this.unShow}
           />
 
-          <FirstPost />
+        {
+          this.props.showFirstPostModal ?
+
+          <FirstPost
+            visible = {this.props.showFirstPostModal}
+            unShow = {this.props.authUnshowFirstPostModal}
+            show = {this.props.authShowFirstPostModal}
+             />
+
+           :
+
+           null
+
+        }
 
 
 
@@ -298,7 +311,8 @@ const mapStateToProps = state => {
     totalLoad: state.auth.totalLoad,
     showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments,
     showIntialInstructions: state.auth.showIntialInstructions,
-    notificationSeen: state.auth.notificationSeen
+    notificationSeen: state.auth.notificationSeen,
+    showFirstPostModal: state.auth.showFirstPostModal
   }
 }
 
@@ -308,7 +322,9 @@ const mapDispatchToProps = dispatch => {
     authZeroCurLoad: () => dispatch(authActions.authZeroCurLoad()),
     authZeroTotalLoad: () => dispatch(authActions.authZeroTotalLoad()),
     newsFeedCommentSec: () => dispatch(socialNewsfeedActions.newsFeedCommentSec()),
-    unShowIntialInstructions: (bool) => dispatch(authActions.unShowIntialInstructions(bool))
+    unShowIntialInstructions: (bool) => dispatch(authActions.unShowIntialInstructions(bool)),
+    authShowFirstPostModal: () => dispatch(authActions.authShowFirstPostModal()),
+    authUnshowFirstPostModal: () => dispatch(authActions.authUnshowFirstPostModal()),
   }
 }
 
