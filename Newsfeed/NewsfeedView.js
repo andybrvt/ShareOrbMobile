@@ -31,6 +31,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import PersonalNewsFeed from './PersonalNewsFeed';
 import authAxios from '../util';
 import * as Progress from 'react-native-progress';
+import FirstPost from './FirstPost';
 
 
 const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
@@ -202,6 +203,9 @@ class NewsfeedView extends React.Component{
           unShow = {this.unShow}
           />
 
+          <FirstPost />
+
+
 
 
           <Animated.View
@@ -238,6 +242,7 @@ class NewsfeedView extends React.Component{
 
 
           </Animated.View>
+
 
 
       </BackgroundContainer>

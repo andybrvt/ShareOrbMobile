@@ -180,7 +180,6 @@ class InfiniteScrollFlat extends React.Component{
         }}
         >
 
-        <FirstPost></FirstPost>
 
         <Header
           currentMonth = {this.state.currentMonth}
