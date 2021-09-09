@@ -4,6 +4,7 @@ import React from 'react';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import Friends from './Friends';
 import Login from './Login/Login';
+import AppIntro from './Login/AppIntro';
 import LoadingScreen from './Login/LoadingScreen';
 import Signup from './Signup/Signup';
 import Explore from './Explore/Explore';
@@ -24,6 +25,12 @@ class Routes extends React.Component{
           this.props.isAuthenticated === true ?
 
           <Stack.Screen name = "LoadingScreen" component = {LoadingScreen} />
+
+          :
+
+          this.props.isInvited === true ?
+
+          <Stack.Screen name = "AppIntro" component = {AppIntro}/>
 
           :
 

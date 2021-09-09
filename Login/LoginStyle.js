@@ -39,9 +39,8 @@ export default StyleSheet.create({
     alignItems: "center",
     position: "relative",
     top: "10%",
-    height: "35%",
+    height: "25%",
     // flex: 1,
-    // backgroundColor: 'red'
   },
 
   loginBtn: {
@@ -56,10 +55,11 @@ export default StyleSheet.create({
   },
 
   signUpBtn: {
+    flexDirection: 'row',
     position: "relative",
     width: "70%",
     borderRadius: 10,
-    height: 35,
+    height: 50,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 10,
@@ -75,6 +75,13 @@ export default StyleSheet.create({
     height: 40,
     borderBottomWidth: 2,
     borderBottomColor: "gainsboro",
+
+  },
+  inviteInput: {
+    width: "75%",
+    height: 40,
+    marginLeft:20,
+
   },
   inputHolder:{
     width: "80%"
