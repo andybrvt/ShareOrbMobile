@@ -29,6 +29,10 @@ import authAxios from '../util';
 import PhoneContacts from './PhoneContacts';
 import { Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
+import { Mic, Bell, Unlock, Lock, User, Video} from "react-native-feather";
+import { Camera } from 'expo-camera';
+
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -38,6 +42,8 @@ class AppIntro extends React.Component{
   state = {
     stuff:[0, 1, 2, 3, 4],
     curIndex: 0,
+    allowCamera: false,
+    allowMicrophone: false
   }
 
   createTwoButtonAlert = () =>
@@ -53,6 +59,34 @@ class AppIntro extends React.Component{
         { text: "Skip", style:'destructive', onPress: () => console.log("OK Pressed") }
       ]
     );
+
+    allowCameraPermissions = async() => {
+      try{
+        const camera = await Camera.requestPermissionsAsync();
+        // const microphone = await Camera.requestMicrophonePermissionsAsync();
+        if(camera.status  == "granted"){
+          this.setState({
+            allowCamera: true,
+          })
+        }
+      }
+      catch(err){
+        alert(err)
+      }
+    }
+    allowMicrophonePermissions = async() => {
+          try{
+            const camera = await Camera.requestMicrophonePermissionsAsync();
+            if(camera.status  == "granted"){
+              this.setState({
+                allowMicrophone: true,
+              })
+            }
+          }
+          catch(err){
+            alert(err)
+          }
+    }
 
   shareMessage = () => {
     //Here is the Share API
@@ -333,7 +367,7 @@ class AppIntro extends React.Component{
         </View>
       )
     }
-    */}
+
 
     if(index === 3){
       return(
@@ -368,7 +402,7 @@ class AppIntro extends React.Component{
                     `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
                 }}
               />
-            <View style={{width:'90%'}}>
+            <View style={{alignItems: 'center'}}>
                 <Text style = {styles.welcomeText}>
                   {this.props.firstName} {this.props.lastName}
                 </Text>
@@ -376,9 +410,14 @@ class AppIntro extends React.Component{
                   Invite some friends
                 </Text>
               </View>
+
               <Text style = {styles.welcomeText}>
-                N693FD
+                Your Code:&nbsp;
+                <Text  style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
+                  N693FD
+                </Text>
               </Text>
+
               <Text style = {styles.welcomeText}>
                 5 invites left
               </Text>
@@ -386,6 +425,7 @@ class AppIntro extends React.Component{
 
 
           </View>
+          <View style={{alignItems: 'center', top:'25%'}}>
 
           <TouchableOpacity
             style={styles.loginBtn}
@@ -395,9 +435,11 @@ class AppIntro extends React.Component{
             Share Invites
           </Text>
         </TouchableOpacity>
+      </View>
         </View>
       )
     }
+    */}
 
     if(index === 4){
       return(
@@ -405,37 +447,121 @@ class AppIntro extends React.Component{
             width: width,
             alignItems: 'center'
             }}>
-          <View style = {{
-              top: '2.5%'
-            }}>
+          <View>
             <View style={{padding:30}}>
               <Text style = {styles.welcomeText}>
-                Just take a photo, journal, and share!
+                Enable Permissions
               </Text>
+              <View style={{textAlign:'center', top:20}}>
+              <Text style={styles.permissionsText}>
+                For the best experience, we'll need you to allow a few permissions to get started
+              </Text>
+              </View>
             </View>
           </View>
           <View
             style = {{
-              top: '2.5%',
-              height: "60%",
-              width: width*0.75,
+              height: "70%",
+              width: width*0.85,
               borderRadius: 10,
               overflow: 'hidden',
             }}
             >
-            <Image
-              resizeMode = "cover"
-              style = {{
-                width: "100%",
-                height: '100%'
-              }}
-              source = {postingpic}
-               />
+            <TouchableOpacity onPress={this.allowCameraPermissions}>
+              <View style={{flexDirection:'row'}}>
+                <View style={{justifyContent:'center'}}>
+                  <Video stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
+                </View>
+                <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
+                  <Text style={styles.headerText}>
+                    Camera
+                  </Text>
+                  <Text style={styles.permissionsText}>
+                    Lets you take pictures and videos on the spot
+                  </Text>
+                </View>
+                { !this.state.allowCamera?
+                  <View style={{justifyContent:'center'}}>
+                    <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                  </View>
+                :
+                  <View style={{justifyContent:'center'}}>
+                    <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                  </View>
+                }
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={this.allowMicrophonePermissions}>
+              <View style={{flexDirection:'row'}}>
+              <View style={{justifyContent:'center'}}>
+                <Mic stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
+              </View>
+              <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
+                <Text style={styles.headerText}>
+                  Microphone
+                </Text>
+                <Text style={styles.permissionsText}>
+                  Enable audio for posts
+                </Text>
+              </View>
+              { !this.state.allowMicrophone?
+                <View style={{justifyContent:'center'}}>
+                  <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                </View>
+              :
+                <View style={{justifyContent:'center'}}>
+                  <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                </View>
+              }
+            </View>
+            </TouchableOpacity>
+            <View style={{flexDirection:'row'}}>
+              <View style={{justifyContent:'center'}}>
+                <Bell stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
+              </View>
+              <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
+                <Text style={styles.headerText}>
+                  Notifications
+                </Text>
+                <Text style={styles.permissionsText}>
+                  Keeps you in the loop
+                </Text>
+              </View>
+              <View style={{justifyContent:'center'}}>
+                <Lock stroke="white" strokeWidth={2} width={27.5} height={27.5}  />
+              </View>
+            </View>
+            <View style={{flexDirection:'row'}}>
+              <View style={{justifyContent:'center'}}>
+                <User stroke="white" strokeWidth={2} width={27.5} height={27.5} />
+              </View>
+              <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
+                <Text style={styles.headerText}>
+                  Contacts
+                </Text>
+                <Text style={styles.permissionsText}>
+                  Find friends and let them find you
+                </Text>
+              </View>
+              { !this.state.allowMicrophone?
+                <View style={{justifyContent:'center'}}>
+                  <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                </View>
+              :
+                <View style={{justifyContent:'center'}}>
+                  <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                </View>
+              }
+            </View>
+            <View style={{flexDirection:'row'}}>
+
+            </View>
           </View>
           <TouchableOpacity
              onPress = {() => this.close()}
              style = {styles.loginBtn}>
-            <Text style = {styles.loginText}>Let's go!</Text>
+            <Text style = {styles.loginText}>Let's Go!</Text>
           </TouchableOpacity>
         </View>
       )
@@ -511,6 +637,16 @@ class AppIntro extends React.Component{
 
 
 const styles = StyleSheet.create({
+  headerText:{
+    color:'white',
+    fontSize:17,
+    fontFamily:'Nunito-Bold',
+  },
+  permissionsText:{
+    color:'white',
+    fontSize:15,
+    fontFamily:'Nunito',
+  },
   container: {
     flex:1,
     backgroundColor: "#1890ff",
@@ -533,14 +669,12 @@ const styles = StyleSheet.create({
   },
   skipText: {
     // position:'absolute',
-    padding:5,
+    padding:10,
     color: "white",
     fontFamily:'Nunito-Bold',
-    fontSize: 20,
+    fontSize: 15,
   },
-  headerText: {
-    color: 'white'
-  },
+
   header2Text: {
     color: 'white',
     fontSize: 25,
@@ -556,13 +690,14 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    top: '91%',
+    top: '90%',
     zIndex: 9999,
     backgroundColor: "white",
   },
   loginText: {
     color: '#1890ff',
     fontSize: 18,
+    fontFamily:'Nunito-Bold',
   },
 
 
