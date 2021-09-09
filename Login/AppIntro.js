@@ -13,7 +13,6 @@ import {
   Modal,
   ScrollView,
   Dimensions,
-  Image,
   TouchableOpacity,
   Share,
   Alert
@@ -29,10 +28,10 @@ import authAxios from '../util';
 import PhoneContacts from './PhoneContacts';
 import { Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
-import { Mic, Bell, Unlock, Lock, User, Video} from "react-native-feather";
+import { Mic, Bell, Unlock, Lock, User, Video, Image} from "react-native-feather";
 import { Camera } from 'expo-camera';
-
-
+import * as ExpoNotifications from 'expo-notifications';
+import * as ImagePicker from 'expo-image-picker';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -43,7 +42,9 @@ class AppIntro extends React.Component{
     stuff:[0, 1, 2, 3, 4],
     curIndex: 0,
     allowCamera: false,
-    allowMicrophone: false
+    allowMicrophone: false,
+    allowNotifications:false,
+    allowGallery:false,
   }
 
   createTwoButtonAlert = () =>
@@ -60,7 +61,7 @@ class AppIntro extends React.Component{
       ]
     );
 
-    allowCameraPermissions = async() => {
+   allowCameraPermissions = async() => {
       try{
         const camera = await Camera.requestPermissionsAsync();
         // const microphone = await Camera.requestMicrophonePermissionsAsync();
@@ -75,17 +76,44 @@ class AppIntro extends React.Component{
       }
     }
     allowMicrophonePermissions = async() => {
-          try{
-            const camera = await Camera.requestMicrophonePermissionsAsync();
-            if(camera.status  == "granted"){
-              this.setState({
-                allowMicrophone: true,
-              })
-            }
-          }
-          catch(err){
-            alert(err)
-          }
+      try{
+        const camera = await Camera.requestMicrophonePermissionsAsync();
+        if(camera.status  == "granted"){
+          this.setState({
+            allowMicrophone: true,
+          })
+        }
+      }
+      catch(err){
+        alert(err)
+      }
+    }
+    allowNotificationPermissions = async() => {
+      try{
+        const noti = await ExpoNotifications.requestPermissionsAsync();
+        if(noti.status  == "granted"){
+          this.setState({
+            allowNotifications: true,
+          })
+        }
+      }
+      catch(err){
+        alert(err)
+      }
+    }
+
+    allowGalleryPermissions = async() => {
+      try{
+        const noti = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if(noti.status  == "granted"){
+          this.setState({
+            allowGallery: true,
+          })
+        }
+      }
+      catch(err){
+        alert(err)
+      }
     }
 
   shareMessage = () => {
@@ -367,7 +395,7 @@ class AppIntro extends React.Component{
         </View>
       )
     }
-
+    */}
 
     if(index === 3){
       return(
@@ -391,8 +419,13 @@ class AppIntro extends React.Component{
               top: '2.5%'
             }}>
             <View style={{padding:30}}>
-            </View>
+              <Text style = {styles.welcomeText}>
+                Invite Friends
+              </Text>
+              <View style={{textAlign:'center', top:20}}>
 
+              </View>
+            </View>
             <View style={{alignItems: 'center'}}>
               <Avatar
                 size={150}
@@ -402,44 +435,35 @@ class AppIntro extends React.Component{
                     `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
                 }}
               />
-            <View style={{alignItems: 'center'}}>
+              <View style={{alignItems: 'center'}}>
                 <Text style = {styles.welcomeText}>
                   {this.props.firstName} {this.props.lastName}
                 </Text>
-                <Text style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
-                  Invite some friends
-                </Text>
               </View>
-
               <Text style = {styles.welcomeText}>
                 Your Code:&nbsp;
                 <Text  style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
                   N693FD
                 </Text>
               </Text>
-
               <Text style = {styles.welcomeText}>
                 5 invites left
               </Text>
             </View>
-
-
           </View>
-          <View style={{alignItems: 'center', top:'25%'}}>
 
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={this.shareMessage}
-            >
-          <Text style = {styles.loginText}>
-            Share Invites
-          </Text>
-        </TouchableOpacity>
-      </View>
+          <View style={{alignItems: 'center', top:'20%'}}>
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={this.shareMessage}>
+              <Text style = {styles.loginText}>
+                Share Invites
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )
     }
-    */}
 
     if(index === 4){
       return(
@@ -516,47 +540,55 @@ class AppIntro extends React.Component{
               }
             </View>
             </TouchableOpacity>
-            <View style={{flexDirection:'row'}}>
-              <View style={{justifyContent:'center'}}>
-                <Bell stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
-              </View>
-              <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
-                <Text style={styles.headerText}>
-                  Notifications
-                </Text>
-                <Text style={styles.permissionsText}>
-                  Keeps you in the loop
-                </Text>
-              </View>
-              <View style={{justifyContent:'center'}}>
-                <Lock stroke="white" strokeWidth={2} width={27.5} height={27.5}  />
-              </View>
-            </View>
-            <View style={{flexDirection:'row'}}>
-              <View style={{justifyContent:'center'}}>
-                <User stroke="white" strokeWidth={2} width={27.5} height={27.5} />
-              </View>
-              <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
-                <Text style={styles.headerText}>
-                  Contacts
-                </Text>
-                <Text style={styles.permissionsText}>
-                  Find friends and let them find you
-                </Text>
-              </View>
-              { !this.state.allowMicrophone?
+            <TouchableOpacity onPress={this.allowNotificationPermissions}>
+              <View style={{flexDirection:'row'}}>
                 <View style={{justifyContent:'center'}}>
-                  <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                  <Bell stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
                 </View>
-              :
-                <View style={{justifyContent:'center'}}>
-                  <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
+                  <Text style={styles.headerText}>
+                    Notifications
+                  </Text>
+                  <Text style={styles.permissionsText}>
+                    Keeps you in the loop
+                  </Text>
                 </View>
-              }
-            </View>
-            <View style={{flexDirection:'row'}}>
+                { !this.state.allowNotifications?
+                  <View style={{justifyContent:'center'}}>
+                    <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                  </View>
+                :
+                  <View style={{justifyContent:'center'}}>
+                    <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                  </View>
+                }
+              </View>
+            </TouchableOpacity>
 
-            </View>
+            <TouchableOpacity onPress={this.allowGalleryPermissions}>
+              <View style={{flexDirection:'row'}}>
+                <View style={{justifyContent:'center'}}>
+                  <Image stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
+                </View>
+                <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
+                  <Text style={styles.headerText}>
+                    Storage
+                  </Text>
+                  <Text style={styles.permissionsText}>
+                    Access pictures and videos from your gallery to post
+                  </Text>
+                </View>
+                { !this.state.allowGallery?
+                  <View style={{justifyContent:'center'}}>
+                    <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                  </View>
+                :
+                  <View style={{justifyContent:'center'}}>
+                    <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
+                  </View>
+                }
+              </View>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
              onPress = {() => this.close()}
@@ -569,7 +601,7 @@ class AppIntro extends React.Component{
 
 
 
-    
+
 
 
 
