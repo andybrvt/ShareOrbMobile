@@ -31,7 +31,7 @@ import { Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Mic, Bell, Unlock, Lock, User, Video} from "react-native-feather";
 import { Camera } from 'expo-camera';
-
+import SlideWrap from './SlideWrap';
 
 
 const width = Dimensions.get("window").width
@@ -43,7 +43,11 @@ class AppIntro extends React.Component{
     stuff:[0, 1, 2, 3, 4],
     curIndex: 0,
     allowCamera: false,
-    allowMicrophone: false
+    allowMicrophone: false,
+    one: false,
+    two: false,
+    three: false,
+    four: false
   }
 
   createTwoButtonAlert = () =>
@@ -440,7 +444,18 @@ class AppIntro extends React.Component{
       )
     }
     */}
+    if(index === 1){
+      return(
+        <View
+          style = {{
+            width: width
+          }}
+          >
+          <Text>Intro video here</Text>
+        </View>
+      )
 
+    }
     if(index === 4){
       return(
         <View style = {{flex: 1,
@@ -569,7 +584,7 @@ class AppIntro extends React.Component{
 
 
 
-    
+
 
 
 
@@ -596,6 +611,17 @@ class AppIntro extends React.Component{
     })
   }
 
+  openModal = (modalNum) => {
+    // this function will open a specific modal
+    if(modalNum === 'one'){
+      this.setState({
+        one:true
+      })
+    }
+
+
+  }
+
 
   render(){
     console.log("ESTTTTTTTTTTTTTTTTt")
@@ -607,6 +633,38 @@ class AppIntro extends React.Component{
 
           <SafeAreaView style = {styles.container}>
 
+            <View style = {styles.singleSlide}>
+              <Text>video page</Text>
+              <Button
+                title = "one"
+                onPress = {() => this.openModal('one')}
+                 />
+            </View>
+
+            <SlideWrap
+              visible = {this.state.one}
+               >
+              <Text>first and last</Text>
+            </SlideWrap>
+            <SlideWrap
+              visible = {this.state.two}
+              >
+              <Text>birthday</Text>
+            </SlideWrap>
+            <SlideWrap
+              visible = {this.state.three}
+              >
+              <Text>username and profile</Text>
+            </SlideWrap>
+            <SlideWrap
+              visible = {this.state.four}
+              >
+              <Text>password</Text>
+            </SlideWrap>
+
+
+
+            {/*
               <FlatList
                 pagingEnabled
                 onViewableItemsChanged={this.onViewableItemsChanged }
@@ -627,6 +685,9 @@ class AppIntro extends React.Component{
                  inactiveDotColor = {'white'}
                   />
 
+              */}
+
+
 
           </SafeAreaView>
 
@@ -640,6 +701,11 @@ class AppIntro extends React.Component{
 
 
 const styles = StyleSheet.create({
+  singleSlide: {
+    height: height,
+    width: width,
+    position: 'absolute'
+  },
   headerText:{
     color:'white',
     fontSize:17,
