@@ -171,56 +171,35 @@ class NewsfeedView extends React.Component{
 
 
   render(){
-
-
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
     let showComments = this.props.showNewsfeedComments
-
     const backgroundGradient = interpolateColors(this.y, {
       inputRange: [0, 600],
       outputColorRange: ["black","#e6f7ff"],
-
     })
 
     const backgroundStyle = {
       backgroundColor: backgroundGradient
     }
 
-
-
-
-
-
-
     return(
-
       <BackgroundContainer>
-
-
         <AppIntro
+          {...this.props}
           visible = {this.props.showIntialInstructions}
           unShow = {this.unShow}
           />
-
         {
           this.props.showFirstPostModal ?
-
           <FirstPost
             visible = {this.props.showFirstPostModal}
             unShow = {this.props.authUnshowFirstPostModal}
             show = {this.props.authShowFirstPostModal}
              />
-
            :
-
            null
-
         }
-
-
-
-
           <Animated.View
             style = {{
               // backgroundColor: backgroundGradient

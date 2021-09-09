@@ -15,7 +15,8 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  Share
+  Share,
+  Alert
  } from 'react-native';
 import newfeedpic from '../newfeedpic.jpg';
 import profilepic from '../profilepic.jpg';
@@ -38,6 +39,20 @@ class AppIntro extends React.Component{
     stuff:[0, 1, 2, 3, 4],
     curIndex: 0,
   }
+
+  createTwoButtonAlert = () =>
+    Alert.alert(
+      "Are you sure?",
+      "ShareOrb is more fun with friends",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Skip", style:'destructive', onPress: () => console.log("OK Pressed") }
+      ]
+    );
 
   shareMessage = () => {
     //Here is the Share API
@@ -62,7 +77,7 @@ class AppIntro extends React.Component{
   }
 
   renderItem(item, index){
-
+    {/*
     if(index === 1){
       return(
         <View>
@@ -224,8 +239,9 @@ class AppIntro extends React.Component{
     </View>
   )
 }
+    */}
 
-{/*
+    {/*
     if(index === 1){
       return(
         <View>
@@ -317,6 +333,7 @@ class AppIntro extends React.Component{
         </View>
       )
     }
+    */}
 
     if(index === 3){
       return(
@@ -325,21 +342,21 @@ class AppIntro extends React.Component{
 
             }}>
             <View style = {{
-                top: '2.5%'
+                top: '2.5%',
+                right:'2.5%',
+                position:'absolute',
               }}>
-
-              <Text style = {styles.skipText}>
-                Skip
-              </Text>
+              <TouchableOpacity onPress={this.createTwoButtonAlert}>
+                <Text style = {styles.skipText}>
+                  Skip
+                </Text>
+              </TouchableOpacity>
 
             </View>
           <View style = {{
               top: '2.5%'
             }}>
             <View style={{padding:30}}>
-            <Text style = {styles.welcomeText}>
-              Might Delete
-            </Text>
             </View>
 
             <View style={{alignItems: 'center'}}>
@@ -351,21 +368,23 @@ class AppIntro extends React.Component{
                     `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
                 }}
               />
-            </View>
-            <View style={{width:'0%'}}>
+            <View style={{width:'90%'}}>
+                <Text style = {styles.welcomeText}>
+                  {this.props.firstName} {this.props.lastName}
+                </Text>
+                <Text style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
+                  Invite some friends
+                </Text>
+              </View>
               <Text style = {styles.welcomeText}>
-                {this.props.firstName} {this.props.lastName}
+                N693FD
               </Text>
               <Text style = {styles.welcomeText}>
-                Journaling is more fun with friends
+                5 invites left
               </Text>
             </View>
-            <Text style = {styles.welcomeText}>
-              N693FD
-            </Text>
-            <Text style = {styles.welcomeText}>
-              5 invites left
-            </Text>
+
+
           </View>
 
           <TouchableOpacity
@@ -421,7 +440,7 @@ class AppIntro extends React.Component{
         </View>
       )
     }
-  */}
+
 
 
 
@@ -513,12 +532,11 @@ const styles = StyleSheet.create({
     fontFamily:'Nunito-SemiBold',
   },
   skipText: {
-    position:'absolute',
+    // position:'absolute',
     padding:5,
     color: "white",
     fontFamily:'Nunito-Bold',
-    fontSize: 17.5,
-    right: '2.5%',
+    fontSize: 20,
   },
   headerText: {
     color: 'white'
