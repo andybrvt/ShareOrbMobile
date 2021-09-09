@@ -21,6 +21,7 @@ import SvgUri from 'react-native-svg-uri';
 import { connect } from "react-redux";
 import { authLogin } from "../store/actions/auth";
 import * as ImagePicker from 'expo-image-picker';
+import { ArrowRightCircle } from "react-native-feather";
 
 
 
@@ -29,7 +30,8 @@ class Login extends React.Component{
   state = {
     username: "",
     paassword: "",
-    login: false
+    login: false,
+    inviteCode: ""
   }
 
   handleClick = () => {
@@ -125,13 +127,45 @@ class Login extends React.Component{
                style = {styles.loginBtn}>
               <Text style = {styles.loginText}> Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-                onPress = {() =>this.props.navigation.navigate('Signup')}
+
+            <Text>
+              or
+            </Text>
+            {/*
+              <TouchableOpacity
+                  onPress = {() =>this.props.navigation.navigate('Signup')}
+                 style = {styles.signUpBtn}>
+                <Text style = {{color:'black'}}> Sign Up</Text>
+              </TouchableOpacity>
+
+              */}
+            <View
                style = {styles.signUpBtn}>
-              <Text style = {{color:'black'}}> Sign Up</Text>
-            </TouchableOpacity>
+               <TextInput
+                 autoCapitalize="none"
+                 secureTextEntry={true}
+                 onChangeText = {this.handlePasword}
+                 style = {styles.inviteInput}
+                 placeholder = "Enter invite code"
+                 value = {this.state.password}
+                 />
+
+               <TouchableOpacity style = {{
+                   width: "25%",
+                   alignItems: 'center'
+                 }}>
+                 <ArrowRightCircle />
+               </TouchableOpacity>
+
+
+
+            </View>
+
+
+
 
           </View>
+
         </View>
       </TouchableWithoutFeedback>
     )

@@ -15,7 +15,8 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  Share
+  Share,
+  Alert
  } from 'react-native';
 import newfeedpic from '../newfeedpic.jpg';
 import profilepic from '../profilepic.jpg';
@@ -27,6 +28,8 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import authAxios from '../util';
 import PhoneContacts from './PhoneContacts';
 import { Avatar } from 'react-native-elements';
+import { connect } from "react-redux";
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -36,6 +39,20 @@ class AppIntro extends React.Component{
     stuff:[0, 1, 2, 3, 4],
     curIndex: 0,
   }
+
+  createTwoButtonAlert = () =>
+    Alert.alert(
+      "Are you sure?",
+      "ShareOrb is more fun with friends",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Skip", style:'destructive', onPress: () => console.log("OK Pressed") }
+      ]
+    );
 
   shareMessage = () => {
     //Here is the Share API
@@ -60,169 +77,171 @@ class AppIntro extends React.Component{
   }
 
   renderItem(item, index){
-//     if(index === 1){
-//   return(
-//     <View>
-//     <View style = {{
-//         flex: 1,
-//         width: width,
-//         alignItems: 'center'
-//       }}>
-//       <Text style = {{
-//           top: '10%',
-//           color: 'white',
-//           fontSize: 30
-//         }}>
-//         Welcome to ShareOrb
-//       </Text>
-//       <View style = {{
-//           top: '30%'
-//         }}>
-//         <Frame height = {125} width = {125}/>
-//       </View>
-//     </View>
-//     <View style = {{
-//         flex: 1,
-//         width: width,
-//         alignItems: 'center',
-//
-//         }}>
-//       <Text style = {{
-//           top: '10%',
-//           padding:30,
-//           color: 'white',
-//           fontSize: 35
-//         }}>
-//         The social journal that believes...
-//       </Text>
-//       <View style = {{
-//           top: '20%'
-//         }}>
-//         <Text style = {{
-//             color: 'white',
-//             fontSize: 25
-//           }}>we are what we do everyday </Text>
-//       </View>
-//     </View>
-//     </View>
-//   )
-// }
-//
-// if(index === 2){
-//   return(
-//     <View style = {{flex: 1,
-//         width: width,
-//         alignItems: 'center'
-//         }}>
-//       <View style = {{
-//           top: '2.5%'
-//         }}>
-//         <View style={{padding:30}}>
-//         <Text style = {styles.welcomeText}>
-//           Start Fresh. Your feed empties every 24 hours
-//         </Text>
-//         </View>
-//       </View>
-//       <View
-//         style = {{
-//           top: '5%',
-//           height: "65%",
-//           width: width*0.75,
-//           borderRadius: 10,
-//           overflow: 'hidden'
-//         }}>
-//         <Image
-//           resizeMode = "cover"
-//           style = {{
-//             width: "100%",
-//             height: '100%'
-//           }}
-//           source = {newfeedpic}
-//            />
-//       </View>
-//     </View>
-//   )
-// }
-//
-// if(index === 3){
-//   return(
-//     <View style = {{flex: 1,
-//         width: width,
-//         alignItems: 'center'
-//         }}>
-//         <View style = {{
-//             top: '2.5%'
-//           }}>
-//           <View style={{padding:30}}>
-//           <Text style = {styles.welcomeText}>
-//               Build your album. One album a day
-//           </Text>
-//           </View>
-//         </View>
-//         <View
-//           style = {{
-//             top: '5%',
-//             height: "65%",
-//             width: width*0.75,
-//             borderRadius: 10,
-//             overflow: 'hidden'
-//           }}
-//           >
-//           <Image
-//             resizeMode = "cover"
-//             style = {{
-//               width: "100%",
-//               height: '100%'
-//             }}
-//             source = {profilepic}
-//              />
-//         </View>
-//     </View>
-//   )
-// }
-//
-// if(index === 4){
-//   return(
-//     <View style = {{flex: 1,
-//         width: width,
-//         alignItems: 'center'
-//         }}>
-//       <View style = {{
-//           top: '2.5%'
-//         }}>
-//         <View style={{padding:30}}>
-//           <Text style = {styles.welcomeText}>
-//             Just take a photo, journal, and share!
-//           </Text>
-//         </View>
-//       </View>
-//       <View
-//         style = {{
-//           top: '2.5%',
-//           height: "60%",
-//           width: width*0.75,
-//           borderRadius: 10,
-//           overflow: 'hidden',
-//         }}
-//         >
-//         <Image
-//           resizeMode = "cover"
-//           style = {{
-//             width: "100%",
-//             height: '100%'
-//           }}
-//           source = {postingpic}
-//            />
-//       </View>
-//       <TouchableOpacity
-//          onPress = {() => this.close()}
-//          style = {styles.loginBtn}>
-//         <Text style = {styles.loginText}>Let's go!</Text>
-//       </TouchableOpacity>
-//     </View>
-//   )
-// }
+    {/*
+    if(index === 1){
+      return(
+        <View>
+        <View style = {{
+            flex: 1,
+            width: width,
+            alignItems: 'center'
+          }}>
+          <Text style = {{
+              top: '10%',
+              color: 'white',
+              fontSize: 30
+            }}>
+            Welcome to ShareOrb
+          </Text>
+          <View style = {{
+              top: '30%'
+            }}>
+            <Frame height = {125} width = {125}/>
+          </View>
+        </View>
+        <View style = {{
+            flex: 1,
+            width: width,
+            alignItems: 'center',
 
+            }}>
+          <Text style = {{
+              top: '10%',
+              padding:30,
+              color: 'white',
+              fontSize: 35
+            }}>
+            The social journal that believes...
+          </Text>
+          <View style = {{
+              top: '20%'
+            }}>
+            <Text style = {{
+                color: 'white',
+                fontSize: 25
+              }}>we are what we do everyday </Text>
+          </View>
+        </View>
+        </View>
+      )
+    }
+    if(index === 2){
+      return(
+        <View style = {{flex: 1,
+            width: width,
+            alignItems: 'center'
+            }}>
+          <View style = {{
+              top: '2.5%'
+            }}>
+            <View style={{padding:30}}>
+            <Text style = {styles.welcomeText}>
+              Start Fresh. Your feed empties every 24 hours
+            </Text>
+            </View>
+          </View>
+          <View
+            style = {{
+              top: '5%',
+              height: "65%",
+              width: width*0.75,
+              borderRadius: 10,
+              overflow: 'hidden'
+            }}>
+            <Image
+              resizeMode = "cover"
+              style = {{
+                width: "100%",
+                height: '100%'
+              }}
+              source = {newfeedpic}
+               />
+          </View>
+        </View>
+      )
+    }
+
+    if(index === 3){
+      return(
+        <View style = {{flex: 1,
+            width: width,
+            alignItems: 'center'
+            }}>
+            <View style = {{
+                top: '2.5%'
+              }}>
+              <View style={{padding:30}}>
+              <Text style = {styles.welcomeText}>
+                  Build your album. One album a day
+              </Text>
+              </View>
+            </View>
+            <View
+              style = {{
+                top: '5%',
+                height: "65%",
+                width: width*0.75,
+                borderRadius: 10,
+                overflow: 'hidden'
+              }}
+              >
+              <Image
+                resizeMode = "cover"
+                style = {{
+                  width: "100%",
+                  height: '100%'
+                }}
+                source = {profilepic}
+                 />
+            </View>
+        </View>
+      )
+    }
+
+    if(index === 4){
+  return(
+    <View style = {{flex: 1,
+        width: width,
+        alignItems: 'center'
+        }}>
+      <View style = {{
+          top: '2.5%'
+        }}>
+        <View style={{padding:30}}>
+          <Text style = {styles.welcomeText}>
+            Just take a photo, journal, and share!
+          </Text>
+        </View>
+      </View>
+      <View
+        style = {{
+          top: '2.5%',
+          height: "60%",
+          width: width*0.75,
+          borderRadius: 10,
+          overflow: 'hidden',
+        }}
+        >
+        <Image
+          resizeMode = "cover"
+          style = {{
+            width: "100%",
+            height: '100%'
+          }}
+          source = {postingpic}
+           />
+      </View>
+      <TouchableOpacity
+         onPress = {() => this.close()}
+         style = {styles.loginBtn}>
+        <Text style = {styles.loginText}>Let's go!</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
+    */}
+
+    {/*
     if(index === 1){
       return(
         <View>
@@ -314,6 +333,7 @@ class AppIntro extends React.Component{
         </View>
       )
     }
+    */}
 
     if(index === 3){
       return(
@@ -322,21 +342,21 @@ class AppIntro extends React.Component{
 
             }}>
             <View style = {{
-                top: '2.5%'
+                top: '2.5%',
+                right:'2.5%',
+                position:'absolute',
               }}>
-
-              <Text style = {styles.skipText}>
-                Skip
-              </Text>
+              <TouchableOpacity onPress={this.createTwoButtonAlert}>
+                <Text style = {styles.skipText}>
+                  Skip
+                </Text>
+              </TouchableOpacity>
 
             </View>
           <View style = {{
               top: '2.5%'
             }}>
             <View style={{padding:30}}>
-            <Text style = {styles.welcomeText}>
-              Might Delete
-            </Text>
             </View>
 
             <View style={{alignItems: 'center'}}>
@@ -348,28 +368,31 @@ class AppIntro extends React.Component{
                     `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
                 }}
               />
+            <View style={{width:'90%'}}>
+                <Text style = {styles.welcomeText}>
+                  {this.props.firstName} {this.props.lastName}
+                </Text>
+                <Text style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
+                  Invite some friends
+                </Text>
+              </View>
+              <Text style = {styles.welcomeText}>
+                N693FD
+              </Text>
+              <Text style = {styles.welcomeText}>
+                5 invites left
+              </Text>
             </View>
-            <Text style = {styles.welcomeText}>
-              Ping Hsu
-            </Text>
-            <Text style = {styles.welcomeText}>
-              Journaling is more fun with friends
-            </Text>
-            <Text style = {styles.welcomeText}>
-              N693FD
-            </Text>
-            <Text style = {styles.welcomeText}>
-              5 invites left
-            </Text>
 
 
           </View>
+
           <TouchableOpacity
-            style={{position:'absolute', bottom:'5%'}}
+            style={styles.loginBtn}
             onPress={this.shareMessage}
             >
-          <Text style = {styles.welcomeText}>
-            Button here: Share Invites
+          <Text style = {styles.loginText}>
+            Share Invites
           </Text>
         </TouchableOpacity>
         </View>
@@ -418,40 +441,11 @@ class AppIntro extends React.Component{
       )
     }
 
-  
-    {/*
-    if(index === 5){
-      return(
-        <View>
-        <View style={{right:25, position:'absolute'}}><Text style = {styles.welcomeText}> Skip</Text></View>
-        <View style = {{flex: 1,
-            width: width,
-            alignItems: 'center'
-            }}>
-          <View style = {{
-              top: '2.5%'
-            }}>
 
-            <View style={{padding:30}}>
-              <Text style = {styles.welcomeText}>
-                Invite Friends
-              </Text>
-            </View>
 
-          </View>
+    
 
-          <PhoneContacts/>
-          <TouchableOpacity
-             onPress = {() => this.close()}
-             style = {styles.loginBtn}>
-            <Text style = {styles.loginText}>Let's go!</Text>
-          </TouchableOpacity>
 
-        </View>
-        </View>
-      )
-    }
-    */}
 
 
   }
@@ -478,7 +472,8 @@ class AppIntro extends React.Component{
 
 
   render(){
-
+    console.log("ESTTTTTTTTTTTTTTTTt")
+    console.log(this.props)
 
     return(
       <View style = {{flex: 1}}>
@@ -536,15 +531,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 27.5,
     top: '7%',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily:'Nunito-SemiBold',
   },
   skipText: {
-    position:'absolute',
+    // position:'absolute',
     padding:5,
     color: "white",
     fontFamily:'Nunito-Bold',
-    fontSize: 17.5,
-    right: '2.5%',
+    fontSize: 20,
   },
   headerText: {
     color: 'white'
@@ -577,4 +572,15 @@ const styles = StyleSheet.create({
 
 })
 
-export default AppIntro;
+
+const mapStateToProps = state => {
+  return {
+    firstName: state.auth.firstName,
+    lastName: state.auth.lastName,
+    userId: state.auth.id,
+    username: state.auth.username
+  }
+}
+
+
+ export default connect(mapStateToProps, null)(AppIntro)
