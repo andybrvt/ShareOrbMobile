@@ -20,6 +20,14 @@ export const authSuccess = (token) => {
   }
 }
 
+export const authInviteSuccess = (token) => {
+  // will be run if you invite is successful
+  return {
+    type: actionTypes.AUTH_INVITE_SUCCESS,
+    token: token
+  }
+}
+
 export const authDoneLoading = () => {
   return {
     type: actionTypes.AUTH_DONE_LOADING
@@ -68,6 +76,20 @@ export const authZeroTotalLoad = () => {
 
 }
 
+
+export const authInvited = (token) => {
+  // used to set the invite token into AsyncStorage
+
+  return dispatch => {
+    AsyncStorage.setItem('inviToken', token)
+    console.log('it goes here')
+    dispatch(authInviteSuccess(token))
+
+  }
+
+}
+
+
 export const authLogin = (username, password) => {
   // This function will be used to login in
 
@@ -80,18 +102,7 @@ export const authLogin = (username, password) => {
     .then(res => {
       const token = res.data.key
       AsyncStorage.setItem('token', token)
-
-
-      // This auth axios will run and get the token and then you will
-      // add the token into the local storage
-
-      // This is to add the token into redux
       dispatch(authSuccess(token))
-      // window.location.reload(true);
-
-      // Now we will get the current user
-
-      // return axios.get(`${global.IP_CHANGE}/userprofile/current-user`)
 
     })
     .catch(err => {
@@ -123,11 +134,30 @@ export const authCheckState = () => {
   AsyncStorage.getItem('token')
   .then(res => {
       // res here will return the token
-
-      if(res === undefined){
+      console.log(res, 'stuff here')
+      if(res === null){
         // Check if there is token already existing,
         // if not you will log out
-        dispatch(logout());
+
+        // if the token is not saved on the phone then you will then check
+        // if they have the invite key
+        AsyncStorage.getItem('inviToken')
+        .then(res => {
+
+          console.log(res, 'here is the invitoken')
+          if(res === null){
+            // if you don't have a invite token saved you will get logged out
+            dispatch(logout());
+          } else {
+
+            // direct you to the tutorial page by show that you have a invite token
+            dispatch(authInviteSuccess(res))
+          }
+
+
+
+        })
+
       } else {
 
 

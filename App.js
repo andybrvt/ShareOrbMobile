@@ -1081,7 +1081,8 @@ const mapStateToProps = state => {
     showFinalModal: state.socialNewsfeed.showFinalModal,
     showIntialInstructions: state.auth.showIntialInstructions,
     notificationSeen: state.auth.notificationSeen,
-    dailyNotification: state.auth.dailyNotification
+    dailyNotification: state.auth.dailyNotification,
+    isInvited: state.auth.inviToken !== null,
   }
 }
 
