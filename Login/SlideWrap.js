@@ -14,6 +14,7 @@ import {
   Alert,
   Animated
  } from 'react-native';
+ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
  const width = Dimensions.get("window").width
  const height = Dimensions.get("window").height
@@ -60,12 +61,16 @@ class SlideWrap extends React.Component{
           width: width,
           height: height,
           position: 'absolute',
-          backgroundColor: 'red',
+          backgroundColor: "#1890ff",
+
           transform: [
             {translateX:this.modalX}
           ]
         }}>
-        {this.props.children}
+        <SafeAreaView>
+          {this.props.children}
+
+        </SafeAreaView>
 
       </Animated.View>
     )

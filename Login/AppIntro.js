@@ -33,6 +33,9 @@ import { Camera } from 'expo-camera';
 import * as ExpoNotifications from 'expo-notifications';
 import * as ImagePicker from 'expo-image-picker';
 import SlideWrap from './SlideWrap';
+import Permissions from './Permissions';
+import BasicSignUp from './BasicSignUp';
+import BirthdaySlide from './BirthdaySlide';
 
 
 const width = Dimensions.get("window").width
@@ -50,7 +53,11 @@ class AppIntro extends React.Component{
     one: false,
     two: false,
     three: false,
-    four: false
+    four: false,
+    five: false,
+    firstName: "",
+    lastName: "",
+    dob: new Date(),
   }
 
   createTwoButtonAlert = () =>
@@ -642,14 +649,91 @@ class AppIntro extends React.Component{
         one:true
       })
     }
+    if(modalNum === 'two'){
+      this.setState({
+        two:true
+      })
+    }
+    if(modalNum === 'three'){
+      this.setState({
+        three:true
+      })
+    }
+    if(modalNum === 'four'){
+      this.setState({
+        four:true
+      })
+    }
+    if(modalNum === 'five'){
+      this.setState({
+        five:true
+      })
+    }
 
+
+
+
+  }
+
+  closeModal = (modalNum) => {
+    if(modalNum === 'one'){
+      this.setState({
+        one:false
+      })
+    }
+    if(modalNum === 'two'){
+      this.setState({
+        two:false
+      })
+    }
+    if(modalNum === 'three'){
+      this.setState({
+        three:false
+      })
+    }
+    if(modalNum === 'four'){
+      this.setState({
+        four:false
+      })
+    }
+    if(modalNum === 'five'){
+      this.setState({
+        five:false
+      })
+    }
+  }
+
+  onNameChange = e => {
+    this.setState({
+      firstName: e
+    })
+  }
+
+  onDobChange = (event, selectedDate) => {
+    if(selectedDate === undefined){
+      this.setState({
+        showDatePicker: false
+      })
+      return
+    }
+
+    if(Platform.OS =='ios'){
+      this.setState({
+        dob: selectedDate,
+      })
+    }
+    else{
+      this.setState({
+        dob: selectedDate,
+        showDatePicker: false
+      })
+    }
 
   }
 
 
   render(){
-    console.log("ESTTTTTTTTTTTTTTTTt")
-    console.log(this.props)
+
 
     return(
       <View style = {{flex: 1}}>
@@ -668,23 +752,77 @@ class AppIntro extends React.Component{
             <SlideWrap
               visible = {this.state.one}
                >
-              <Text>first and last</Text>
+
+              <BasicSignUp
+                visible = {this.state.one}
+                prompt = {"What is your name?"}
+                value = {this.state.firstName}
+                onChange = {this.onNameChange}
+                closeModal = {this.closeModal}
+                openModal = {this.openModal}
+                closeNum = {'one'}
+                openNum = {'two'}
+                 />
+
+
             </SlideWrap>
             <SlideWrap
               visible = {this.state.two}
               >
-              <Text>birthday</Text>
+
+              <BirthdaySlide
+                value = {this.state.dob}
+                onChange = {this.onDobChange}
+                closeModal = {this.closeModal}
+                closeNum = {"two"}
+                openModal = {this.openModal}
+                openNum = {"three"}
+                 />
+
+
+
             </SlideWrap>
             <SlideWrap
               visible = {this.state.three}
               >
               <Text>username and profile</Text>
+                <Button
+                  title = "close"
+                  onPress = {() => this.closeModal("three")}
+                   />
+
+                 <Button
+                   title = "next"
+                   onPress = {() => this.openModal("four")}
+                    />
             </SlideWrap>
             <SlideWrap
               visible = {this.state.four}
               >
               <Text>password</Text>
+                <Button
+                  title = "close"
+                  onPress = {() => this.closeModal("four")}
+                   />
+
+                 <Button
+                   title = "next"
+                   onPress = {() => this.openModal("five")}
+                    />
             </SlideWrap>
+
+            <SlideWrap
+              visible = {this.state.five}
+              >
+              <Permissions />
+                <Button
+                  title = "close"
+                  onPress = {() => this.closeModal("five")}
+                   />
+
+
+            </SlideWrap>
+
 
 
 
