@@ -57,10 +57,11 @@ class BasicSignUp extends React.Component{
         <View style = {{
             height: height,
             width: width,
-            backgroundColor: '#1890ff'
+            backgroundColor: '#1890ff',
+            alignItems: 'center'
           }}>
 
-            <View>
+            <View >
               <Button
                 title = "back"
                 onPress = {() => this.props.closeModal(this.props.closeNum)}
@@ -69,14 +70,14 @@ class BasicSignUp extends React.Component{
             </View>
 
             <View>
-              <Text style = {{
-                  color: 'white'
-                }}>{this.props.prompt}</Text>
+              <Text style = {styles.promptText}>{this.props.prompt}</Text>
             </View>
 
             <View>
               <TextInput
-                style = {{color: 'white'}}
+                style = {{
+                  backgroundColor: 'red',
+                  color: 'white'}}
                 ref={(input) => { this.textInput = input; }}
                 onChangeText = {this.props.onChange}
                 value = {this.props.value}
@@ -107,5 +108,22 @@ class BasicSignUp extends React.Component{
     )
   }
 }
+
+const styles = StyleSheet.create({
+  promptText: {
+    color: 'white',
+    fontSize: 25,
+  },
+  topContainer: {
+
+  },
+  midContainer: {
+
+  },
+  bottomContainer: {
+  }
+
+
+})
 
 export default BasicSignUp;

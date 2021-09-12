@@ -756,7 +756,6 @@ class AppIntro extends React.Component{
                   // ref={video}
                   style={{width:height, height:width-1, transform: [{ rotate: '270deg' }], }}
                   source = {test}
-                  useNativeControls
                   resizeMode="contain"
                   isLooping
                   shouldPlay={true}
