@@ -28,7 +28,7 @@ import authAxios from '../util';
 import PhoneContacts from './PhoneContacts';
 import { Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
-import { Mic, Bell, Unlock, Lock, User, Video, Image} from "react-native-feather";
+import { Mic, Bell, Unlock, Lock, User, Aperture, Image} from "react-native-feather";
 import { Camera } from 'expo-camera';
 import * as ExpoNotifications from 'expo-notifications';
 import * as ImagePicker from 'expo-image-picker';
@@ -36,8 +36,8 @@ import SlideWrap from './SlideWrap';
 import Permissions from './Permissions';
 import BasicSignUp from './BasicSignUp';
 import BirthdaySlide from './BirthdaySlide';
-
-
+import { Video, AVPlaybackStatus } from 'expo-av';
+import test from './test.mp4';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -414,7 +414,6 @@ class AppIntro extends React.Component{
       return(
         <View style = {{flex: 1,
             width: width,
-
             }}>
             <View style = {{
                 top: '2.5%',
@@ -508,7 +507,7 @@ class AppIntro extends React.Component{
             <TouchableOpacity onPress={this.allowCameraPermissions}>
               <View style={{flexDirection:'row'}}>
                 <View style={{justifyContent:'center'}}>
-                  <Video stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
+                  <Aperture stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
                 </View>
                 <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
                   <Text style={styles.headerText}>
@@ -612,19 +611,9 @@ class AppIntro extends React.Component{
         </View>
       )
     }
-
-
-
-
-
-
-
-
   }
 
   unShowInstructions = () =>{
-
-
 
   }
 
@@ -716,7 +705,6 @@ class AppIntro extends React.Component{
       })
       return
     }
-
     if(Platform.OS =='ios'){
       this.setState({
         dob: selectedDate,
@@ -728,31 +716,37 @@ class AppIntro extends React.Component{
         showDatePicker: false
       })
     }
-
   }
 
 
   render(){
-
-
     return(
       <View style = {{flex: 1}}>
-
-
           <SafeAreaView style = {styles.container}>
-
-            <View style = {styles.singleSlide}>
+            <View>
               <Text>video page</Text>
+              <View style={{flex:3, backgroundColor:'red', justifyContent:'center', alignItems:'center'}}>
+                <Video
+                  // ref={video}
+                  style={{width:height, height:width-1, transform: [{ rotate: '270deg' }], }}
+                  source = {test}
+                  useNativeControls
+                  resizeMode="contain"
+                  isLooping
+                  shouldPlay={true}
+                />
+              </View>
+              <View style={{height:'10%', justifyContent:'center', alignItems:'center'}}>
               <Button
-                title = "one"
+
+                title = "Let's Go"
                 onPress = {() => this.openModal('one')}
                  />
+               </View>
             </View>
-
             <SlideWrap
               visible = {this.state.one}
                >
-
               <BasicSignUp
                 visible = {this.state.one}
                 prompt = {"What is your name?"}
@@ -763,8 +757,6 @@ class AppIntro extends React.Component{
                 closeNum = {'one'}
                 openNum = {'two'}
                  />
-
-
             </SlideWrap>
             <SlideWrap
               visible = {this.state.two}
@@ -866,7 +858,7 @@ const styles = StyleSheet.create({
   singleSlide: {
     height: height,
     width: width,
-    position: 'absolute'
+   backgroundColor:'green'
   },
   headerText:{
     color:'white',
