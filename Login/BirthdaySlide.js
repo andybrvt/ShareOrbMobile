@@ -29,8 +29,12 @@ import { ArrowRightCircle, Plus, Mail, UserPlus } from "react-native-feather";
            title = "close"
            onPress = {() => this.props.closeModal(this.props.closeNum)}
             />
-         <Text>Birthday</Text>
-         <Text>{dateFns.format(this.props.value, "MMMM dd yyyy")}</Text>
+          <Text style = {{
+              color: 'white'
+            }}>Birthday</Text>
+          <Text style = {{
+              color: 'white'
+            }}>{dateFns.format(this.props.value, "MMMM dd yyyy")}</Text>
          <DateTimePicker
            testID="dateTimePicker"
            value = {this.props.value}

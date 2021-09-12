@@ -27,14 +27,18 @@ class SlideWrap extends React.Component{
   openModal(){
     Animated.timing(this.modalX, {
       duration: 300,
-      toValue: 0
+      toValue: 0,
+      useNativeDriver: true
+
     }).start()
   }
 
   closeModal(){
     Animated.timing(this.modalX, {
       duration: 300,
-      toValue: width
+      toValue: width,
+      useNativeDriver: true
+
     }).start()
   }
 
