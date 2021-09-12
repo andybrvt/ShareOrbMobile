@@ -38,6 +38,8 @@ import BasicSignUp from './BasicSignUp';
 import BirthdaySlide from './BirthdaySlide';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import test from './test.mp4';
+import ProfilePicSlide from './ProfilePicSlide';
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 

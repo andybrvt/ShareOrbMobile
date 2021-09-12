@@ -18,7 +18,7 @@ import pic from './default.png';
 class ProfilePicSlide extends React.Component{
 
   next = () => {
-    
+
     this.props.openModal(this.props.openNum)
   }
 
