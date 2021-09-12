@@ -36,7 +36,7 @@ import SlideWrap from './SlideWrap';
 import Permissions from './Permissions';
 import BasicSignUp from './BasicSignUp';
 import BirthdaySlide from './BirthdaySlide';
-import UsernameSlide from './UsernameSlide';
+import ProfilePicSlide from './ProfilePicSlide';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -58,6 +58,7 @@ class AppIntro extends React.Component{
     firstName: "",
     lastName: "",
     dob: new Date(),
+    username: ""
   }
 
   createTwoButtonAlert = () =>
@@ -731,6 +732,11 @@ class AppIntro extends React.Component{
 
   }
 
+  onUsernameChange = e => {
+    this.setState({
+      username: e
+    })
+  }
 
   render(){
 
@@ -786,8 +792,16 @@ class AppIntro extends React.Component{
               visible = {this.state.three}
               >
 
-              <UsernameSlide />
-              <Text>username and profile</Text>
+              <BasicSignUp
+                visible = {this.state.one}
+                prompt = {"What do your username?"}
+                value = {this.state.username}
+                onChange = {this.onUsernameChange}
+                closeModal = {this.closeModal}
+                openModal = {this.openModal}
+                closeNum = {'three'}
+                openNum = {'four'}
+                 />
                 <Button
                   title = "close"
                   onPress = {() => this.closeModal("three")}
