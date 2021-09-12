@@ -22,7 +22,7 @@ import { ArrowRightCircle, Plus, Mail, UserPlus } from "react-native-feather";
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
-
+// used for general 1 line text input
 class BasicSignUp extends React.Component{
 
   componentDidUpdate(prevProps){

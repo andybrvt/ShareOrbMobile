@@ -53,7 +53,8 @@ class Permissions extends React.Component{
 
   render(){
     return(
-      <View style = {{flex: 1,
+      <View style = {{
+          // flex: 1,
           width: width,
           alignItems: 'center'
           }}>
