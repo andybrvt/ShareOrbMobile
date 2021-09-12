@@ -36,7 +36,7 @@ import SlideWrap from './SlideWrap';
 import Permissions from './Permissions';
 import BasicSignUp from './BasicSignUp';
 import BirthdaySlide from './BirthdaySlide';
-
+import UsernameSlide from './UsernameSlide';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -785,6 +785,8 @@ class AppIntro extends React.Component{
             <SlideWrap
               visible = {this.state.three}
               >
+
+              <UsernameSlide />
               <Text>username and profile</Text>
                 <Button
                   title = "close"
