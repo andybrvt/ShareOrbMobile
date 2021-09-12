@@ -72,7 +72,7 @@ class Notifications extends React.Component{
    let getYear=dataList[0]
    let getMonth=dataList[1]-1
    let getDay=dataList[2]
-   let albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM dd")
+   let albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM d")
 
 
    if(item.type === "comment_notification"){
@@ -98,7 +98,7 @@ class Notifications extends React.Component{
               }}>
             <View style = {{flexDirection: 'row'}}>
               <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
-              <Text>commented on your post. </Text>
+              <Text>commented on your post </Text>
             </View>
             <View style = {{marginTop: 10}}>
               <Text>
