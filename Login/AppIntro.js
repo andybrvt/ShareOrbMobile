@@ -757,7 +757,7 @@ class AppIntro extends React.Component{
                   style={{width:height, height:width-1, transform: [{ rotate: '270deg' }], }}
                   source = {test}
                   resizeMode="contain"
-                  isLooping
+                  
                   shouldPlay={true}
                 />
               </View>
