@@ -55,10 +55,12 @@ class AppIntro extends React.Component{
     three: false,
     four: false,
     five: false,
+    six: false,
     firstName: "",
     lastName: "",
     dob: new Date(),
-    username: ""
+    username: "",
+    password: "",
   }
 
   createTwoButtonAlert = () =>
@@ -670,6 +672,11 @@ class AppIntro extends React.Component{
         five:true
       })
     }
+    if(modalNum === 'six'){
+      this.setState({
+        six:true
+      })
+    }
 
 
 
@@ -700,6 +707,11 @@ class AppIntro extends React.Component{
     if(modalNum === 'five'){
       this.setState({
         five:false
+      })
+    }
+    if(modalNum === 'six'){
+      this.setState({
+        six:false
       })
     }
   }
@@ -735,6 +747,12 @@ class AppIntro extends React.Component{
   onUsernameChange = e => {
     this.setState({
       username: e
+    })
+  }
+
+  onPasswordChange = e => {
+    this.setState({
+      password:e
     })
   }
 
@@ -793,7 +811,7 @@ class AppIntro extends React.Component{
               >
 
               <BasicSignUp
-                visible = {this.state.one}
+                visible = {this.state.three}
                 prompt = {"What do your username?"}
                 value = {this.state.username}
                 onChange = {this.onUsernameChange}
@@ -815,25 +833,47 @@ class AppIntro extends React.Component{
             <SlideWrap
               visible = {this.state.four}
               >
+              <ProfilePicSlide
+                closeModal = {this.closeModal}
+                openModal = {this.openModal}
+                closeNum = {'four'}
+                openNum = {'five'}
+                />
+
+            </SlideWrap>
+            <SlideWrap
+              visible = {this.state.five}
+              >
+              <BasicSignUp
+                visible = {this.state.five}
+                prompt = {"Now your password"}
+                value = {this.state.password}
+                onChange = {this.onPasswordChange}
+                closeModal = {this.closeModal}
+                openModal = {this.openModal}
+                closeNum = {'five'}
+                openNum = {'six'}
+                 />
               <Text>password</Text>
                 <Button
                   title = "close"
-                  onPress = {() => this.closeModal("four")}
+                  onPress = {() => this.closeModal("five")}
                    />
 
                  <Button
                    title = "next"
-                   onPress = {() => this.openModal("five")}
+                   onPress = {() => this.openModal("six")}
                     />
             </SlideWrap>
 
+
             <SlideWrap
-              visible = {this.state.five}
+              visible = {this.state.six}
               >
               <Permissions />
                 <Button
                   title = "close"
-                  onPress = {() => this.closeModal("five")}
+                  onPress = {() => this.closeModal("six")}
                    />
 
 

@@ -13,16 +13,17 @@ import {
 import { Avatar } from 'react-native-elements';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowRightCircle, Plus, Mail, UserPlus } from "react-native-feather";
-
+import pic from './default.png';
 
 class ProfilePicSlide extends React.Component{
 
   next = () => {
-    Keyboard.dismiss()
+    
     this.props.openModal(this.props.openNum)
   }
 
   render(){
+    console.log(pic)
     return(
       <View>
 
@@ -38,22 +39,11 @@ class ProfilePicSlide extends React.Component{
           <Avatar
             size = {35}
             rounded
+            source = {pic}
              />
         </View>
 
-        <View>
-          <Text style = {{color: 'white'}}>What do you want to call yourself</Text>
 
-        </View>
-        <View>
-          <TextInput
-            style = {{color: 'white'}}
-            ref={(input) => { this.textInput = input; }}
-            onChangeText = {this.props.onChange}
-            value = {this.props.value}
-
-            />
-        </View>
 
         <View>
           <TouchableOpacity
