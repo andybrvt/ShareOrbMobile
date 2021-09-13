@@ -34,6 +34,7 @@ import * as ExpoNotifications from 'expo-notifications';
 import * as ImagePicker from 'expo-image-picker';
 import SlideWrap from './SlideWrap';
 import Permissions from './Permissions';
+import InvitePeople from './InvitePeople';
 import BasicSignUp from './BasicSignUp';
 import BirthdaySlide from './BirthdaySlide';
 import { Video, AVPlaybackStatus } from 'expo-av';
@@ -58,27 +59,13 @@ class AppIntro extends React.Component{
     four: false,
     five: false,
     six: false,
+    seven:false,
     firstName: "",
     lastName: "",
     dob: new Date(),
     username: "",
     password: "",
   }
-
-  createTwoButtonAlert = () =>
-    Alert.alert(
-      "Are you sure?",
-      "ShareOrb is more fun with friends",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "Skip", style:'destructive', onPress: () => console.log("OK Pressed") }
-      ]
-    );
-
    allowCameraPermissions = async() => {
       try{
         const camera = await Camera.requestPermissionsAsync();
@@ -134,17 +121,7 @@ class AppIntro extends React.Component{
       }
     }
 
-  shareMessage = () => {
-    //Here is the Share API
-    Share.share({
-      // message: inputValue.toString(),
-      message:"Join ShareOrb with my code: N24FJFE"
-    })
-      //after successful share return result
-      .then((result) => console.log(result))
-      //If any thing goes wrong it comes here
-      .catch((errorMsg) => console.log(errorMsg));
-  };
+
 
   close = () =>  {
     authAxios.post(`${global.IP_CHANGE}`+'/userprofile/unShowIntialInstructions/'+this.props.id)
@@ -157,465 +134,6 @@ class AppIntro extends React.Component{
   }
 
   renderItem(item, index){
-    {/*
-    if(index === 1){
-      return(
-        <View>
-        <View style = {{
-            flex: 1,
-            width: width,
-            alignItems: 'center'
-          }}>
-          <Text style = {{
-              top: '10%',
-              color: 'white',
-              fontSize: 30
-            }}>
-            Welcome to ShareOrb
-          </Text>
-          <View style = {{
-              top: '30%'
-            }}>
-            <Frame height = {125} width = {125}/>
-          </View>
-        </View>
-        <View style = {{
-            flex: 1,
-            width: width,
-            alignItems: 'center',
-
-            }}>
-          <Text style = {{
-              top: '10%',
-              padding:30,
-              color: 'white',
-              fontSize: 35
-            }}>
-            The social journal that believes...
-          </Text>
-          <View style = {{
-              top: '20%'
-            }}>
-            <Text style = {{
-                color: 'white',
-                fontSize: 25
-              }}>we are what we do everyday </Text>
-          </View>
-        </View>
-        </View>
-      )
-    }
-    if(index === 2){
-      return(
-        <View style = {{flex: 1,
-            width: width,
-            alignItems: 'center'
-            }}>
-          <View style = {{
-              top: '2.5%'
-            }}>
-            <View style={{padding:30}}>
-            <Text style = {styles.welcomeText}>
-              Start Fresh. Your feed empties every 24 hours
-            </Text>
-            </View>
-          </View>
-          <View
-            style = {{
-              top: '5%',
-              height: "65%",
-              width: width*0.75,
-              borderRadius: 10,
-              overflow: 'hidden'
-            }}>
-            <Image
-              resizeMode = "cover"
-              style = {{
-                width: "100%",
-                height: '100%'
-              }}
-              source = {newfeedpic}
-               />
-          </View>
-        </View>
-      )
-    }
-
-    if(index === 3){
-      return(
-        <View style = {{flex: 1,
-            width: width,
-            alignItems: 'center'
-            }}>
-            <View style = {{
-                top: '2.5%'
-              }}>
-              <View style={{padding:30}}>
-              <Text style = {styles.welcomeText}>
-                  Build your album. One album a day
-              </Text>
-              </View>
-            </View>
-            <View
-              style = {{
-                top: '5%',
-                height: "65%",
-                width: width*0.75,
-                borderRadius: 10,
-                overflow: 'hidden'
-              }}
-              >
-              <Image
-                resizeMode = "cover"
-                style = {{
-                  width: "100%",
-                  height: '100%'
-                }}
-                source = {profilepic}
-                 />
-            </View>
-        </View>
-      )
-    }
-
-    if(index === 4){
-  return(
-    <View style = {{flex: 1,
-        width: width,
-        alignItems: 'center'
-        }}>
-      <View style = {{
-          top: '2.5%'
-        }}>
-        <View style={{padding:30}}>
-          <Text style = {styles.welcomeText}>
-            Just take a photo, journal, and share!
-          </Text>
-        </View>
-      </View>
-      <View
-        style = {{
-          top: '2.5%',
-          height: "60%",
-          width: width*0.75,
-          borderRadius: 10,
-          overflow: 'hidden',
-        }}
-        >
-        <Image
-          resizeMode = "cover"
-          style = {{
-            width: "100%",
-            height: '100%'
-          }}
-          source = {postingpic}
-           />
-      </View>
-      <TouchableOpacity
-         onPress = {() => this.close()}
-         style = {styles.loginBtn}>
-        <Text style = {styles.loginText}>Let's go!</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
-    */}
-
-    {/*
-    if(index === 1){
-      return(
-        <View>
-        <View style = {{
-            flex: 1,
-            width: width,
-            alignItems: 'center'
-          }}>
-          <Text style = {{
-              top: '10%',
-              color: 'white',
-              fontFamily:'Nunito-Bold',
-              fontSize: 30
-            }}>
-            Welcome to ShareOrb!
-          </Text>
-          <View style = {{
-              top: '30%'
-            }}>
-            <Frame height = {125} width = {125}/>
-          </View>
-        </View>
-        <View style = {{
-            flex: 1,
-            width: width,
-            alignItems: 'center',
-
-            }}>
-          <Text style = {{
-              padding:30,
-              color: 'white',
-              fontSize: 35,
-              fontFamily:'Nunito-Bold',
-            }}>
-            The social journal that believes...
-          </Text>
-          <View style = {{
-              top: '20%'
-            }}>
-            <Text style = {{
-                color: 'white',
-                fontSize: 25,
-                fontFamily:'Nunito-Bold',
-              }}>we are what we do everyday </Text>
-          </View>
-        </View>
-        </View>
-      )
-    }
-
-    if(index === 2){
-      return(
-        <View style = {{flex: 1,
-            width: width,
-
-            }}>
-            <View style = {{
-                top: '2.5%'
-              }}>
-
-              <Text style = {styles.skipText}>
-                Skip
-              </Text>
-
-            </View>
-          <View style = {{
-              top: '2.5%'
-            }}>
-            <View style={{padding:30}}>
-            <Text style = {styles.welcomeText}>
-              (switch with page 4)
-              Add a profile picture
-            </Text>
-            </View>
-            <TouchableOpacity>
-            <View style={{alignItems: 'center'}}>
-              <Avatar
-                size={100}
-                rounded
-                source={{
-                  uri:
-                    `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
-                }}
-              />
-            </View>
-            </TouchableOpacity>
-          </View>
-
-        </View>
-      )
-    }
-    */}
-
-    if(index === 3){
-      return(
-        <View style = {{flex: 1,
-            width: width,
-            }}>
-            <View style = {{
-                top: '2.5%',
-                right:'2.5%',
-                position:'absolute',
-              }}>
-              <TouchableOpacity onPress={this.createTwoButtonAlert}>
-                <Text style = {styles.skipText}>
-                  Skip
-                </Text>
-              </TouchableOpacity>
-
-            </View>
-          <View style = {{
-              top: '2.5%'
-            }}>
-            <View style={{padding:30}}>
-              <Text style = {styles.welcomeText}>
-                Invite Friends
-              </Text>
-              <View style={{textAlign:'center', top:20}}>
-
-              </View>
-            </View>
-            <View style={{alignItems: 'center'}}>
-              <Avatar
-                size={150}
-                rounded
-                source={{
-                  uri:
-                    `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
-                }}
-              />
-              <View style={{alignItems: 'center'}}>
-                <Text style = {styles.welcomeText}>
-                  {this.props.firstName} {this.props.lastName}
-                </Text>
-              </View>
-              <Text style = {styles.welcomeText}>
-                Your Code:&nbsp;
-                <Text  style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
-                  N693FD
-                </Text>
-              </Text>
-              <Text style = {styles.welcomeText}>
-                5 invites left
-              </Text>
-            </View>
-          </View>
-
-          <View style={{alignItems: 'center', top:'20%'}}>
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={this.shareMessage}>
-              <Text style = {styles.loginText}>
-                Share Invites
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )
-    }
-
-
-    if(index === 4){
-      return(
-        <View style = {{flex: 1,
-            width: width,
-            alignItems: 'center'
-            }}>
-          <View>
-            <View style={{padding:30}}>
-              <Text style = {styles.welcomeText}>
-                Enable Permissions
-              </Text>
-              <View style={{textAlign:'center', top:20}}>
-              <Text style={styles.permissionsText}>
-                For the best experience, we'll need you to allow a few permissions to get started
-              </Text>
-              </View>
-            </View>
-          </View>
-          <View
-            style = {{
-              height: "70%",
-              width: width*0.85,
-              borderRadius: 10,
-              overflow: 'hidden',
-            }}
-            >
-            <TouchableOpacity onPress={this.allowCameraPermissions}>
-              <View style={{flexDirection:'row'}}>
-                <View style={{justifyContent:'center'}}>
-                  <Aperture stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
-                </View>
-                <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
-                  <Text style={styles.headerText}>
-                    Camera
-                  </Text>
-                  <Text style={styles.permissionsText}>
-                    Lets you take pictures and videos on the spot
-                  </Text>
-                </View>
-                { !this.state.allowCamera?
-                  <View style={{justifyContent:'center'}}>
-                    <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
-                  </View>
-                :
-                  <View style={{justifyContent:'center'}}>
-                    <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
-                  </View>
-                }
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={this.allowMicrophonePermissions}>
-              <View style={{flexDirection:'row'}}>
-              <View style={{justifyContent:'center'}}>
-                <Mic stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
-              </View>
-              <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
-                <Text style={styles.headerText}>
-                  Microphone
-                </Text>
-                <Text style={styles.permissionsText}>
-                  Enable audio for posts
-                </Text>
-              </View>
-              { !this.state.allowMicrophone?
-                <View style={{justifyContent:'center'}}>
-                  <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
-                </View>
-              :
-                <View style={{justifyContent:'center'}}>
-                  <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
-                </View>
-              }
-            </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.allowNotificationPermissions}>
-              <View style={{flexDirection:'row'}}>
-                <View style={{justifyContent:'center'}}>
-                  <Bell stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
-                </View>
-                <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
-                  <Text style={styles.headerText}>
-                    Notifications
-                  </Text>
-                  <Text style={styles.permissionsText}>
-                    Keeps you in the loop
-                  </Text>
-                </View>
-                { !this.state.allowNotifications?
-                  <View style={{justifyContent:'center'}}>
-                    <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
-                  </View>
-                :
-                  <View style={{justifyContent:'center'}}>
-                    <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
-                  </View>
-                }
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={this.allowGalleryPermissions}>
-              <View style={{flexDirection:'row'}}>
-                <View style={{justifyContent:'center'}}>
-                  <Image stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
-                </View>
-                <View style={{flexDirection:'column', width:'77.5%', padding:20}}>
-                  <Text style={styles.headerText}>
-                    Storage
-                  </Text>
-                  <Text style={styles.permissionsText}>
-                    Access pictures and videos from your gallery to post
-                  </Text>
-                </View>
-                { !this.state.allowGallery?
-                  <View style={{justifyContent:'center'}}>
-                    <Lock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
-                  </View>
-                :
-                  <View style={{justifyContent:'center'}}>
-                    <Unlock stroke="white" strokeWidth={2}  width={27.5} height={27.5} />
-                  </View>
-                }
-              </View>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-             onPress = {() => this.close()}
-             style = {styles.loginBtn}>
-            <Text style = {styles.loginText}>Let's Go!</Text>
-          </TouchableOpacity>
-        </View>
-      )
-    }
   }
 
   unShowInstructions = () =>{
@@ -668,6 +186,12 @@ class AppIntro extends React.Component{
         six:true
       })
     }
+    if(modalNum === 'seven'){
+      this.setState({
+        seven:true
+      })
+    }
+
 
 
 
@@ -703,6 +227,11 @@ class AppIntro extends React.Component{
     if(modalNum === 'six'){
       this.setState({
         six:false
+      })
+    }
+    if(modalNum === 'seven'){
+      this.setState({
+        seven:true
       })
     }
   }
@@ -749,28 +278,31 @@ class AppIntro extends React.Component{
     return(
       <View style = {{flex: 1}}>
           <View style = {{alignItems:'center'}}>
-            <View style={{position:'absolute', right:25, top:40, zIndex:99}}>
-            <TouchableOpacity onPress = {() => this.openModal('one')}>
-              <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}>Skip</Text>
-              </TouchableOpacity>
-            </View>
+            {(this.state.one==true||this.state.two==true||this.state.three==true||this.state.four==true
+              ||this.state.five==true||this.state.six==true||this.state.seven==true)?
+                <View><Text></Text></View>
+              :
+              <View style={{position:'absolute', right:10, top:45, zIndex:5}}>
+                <TouchableOpacity style={styles.tagCSS1} onPress = {() => this.openModal('one')}>
+                  <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}>Skip</Text>
+                </TouchableOpacity>
+              </View>
+            }
             <View>
-
               <View style={{flex:5, justifyContent:'center', alignItems:'center'}}>
                 <Video
                   // ref={video}
-                  style={{width:height, height:width, transform: [{ rotate: '270deg' }], }}
+                  style={{width:height,
+                     height: Platform.OS === 'ios' ? width : width+25,
+                     transform: [{ rotate: '270deg' }], }}
                   source = {test}
                   resizeMode="contain"
-                  autoLooping
+                  // isLooping
                   shouldPlay={true}
                 />
               </View>
-
             </View>
-            <SlideWrap
-              visible = {this.state.one}
-               >
+            <SlideWrap visible = {this.state.one}>
               <BasicSignUp
                 
                 visible = {this.state.one}
@@ -783,10 +315,7 @@ class AppIntro extends React.Component{
                 openNum = {'two'}
                  />
             </SlideWrap>
-            <SlideWrap
-              visible = {this.state.two}
-              >
-
+            <SlideWrap visible = {this.state.two}>
               <BirthdaySlide
                 value = {this.state.dob}
                 onChange = {this.onDobChange}
@@ -795,14 +324,8 @@ class AppIntro extends React.Component{
                 openModal = {this.openModal}
                 openNum = {"three"}
                  />
-
-
-
             </SlideWrap>
-            <SlideWrap
-              visible = {this.state.three}
-              >
-
+            <SlideWrap visible = {this.state.three}>
               <BasicSignUp
                 visible = {this.state.three}
                 prompt = {"What is your username?"}
@@ -811,32 +334,23 @@ class AppIntro extends React.Component{
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
                 closeNum = {'three'}
-                openNum = {'four'}
-                 />
+                openNum = {'four'}/>
                 <Button
                   title = "close"
-                  onPress = {() => this.closeModal("three")}
-                   />
-
+                  onPress = {() => this.closeModal("three")}/>
                  <Button
                    title = "next"
-                   onPress = {() => this.openModal("four")}
-                    />
+                   onPress = {() => this.openModal("four")}/>
             </SlideWrap>
-            <SlideWrap
-              visible = {this.state.four}
-              >
+            <SlideWrap visible = {this.state.four}>
               <ProfilePicSlide
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
                 closeNum = {'four'}
                 openNum = {'five'}
                 />
-
             </SlideWrap>
-            <SlideWrap
-              visible = {this.state.five}
-              >
+            <SlideWrap visible = {this.state.five}>
               <BasicSignUp
                 visible = {this.state.five}
                 prompt = {"Now your password"}
@@ -852,29 +366,33 @@ class AppIntro extends React.Component{
                   title = "close"
                   onPress = {() => this.closeModal("five")}
                    />
-
                  <Button
                    title = "next"
                    onPress = {() => this.openModal("six")}
                     />
             </SlideWrap>
 
+            <SlideWrap visible = {this.state.six}>
+              <InvitePeople
+                closeModal = {this.closeModal}
+                openModal = {this.openModal}
+                closeNum = {'six'}
+                openNum = {'seven'}
+                 />
+              <Button
+                title = "close"
+                onPress = {() => this.closeModal("six")}
+               />
+            </SlideWrap>
+            <SlideWrap visible = {this.state.seven}>
+              <Permissions
 
-            <SlideWrap
-              visible = {this.state.six}
-              >
-              <Permissions />
+                 />
                 <Button
                   title = "close"
-                  onPress = {() => this.closeModal("six")}
+                  onPress = {() => this.closeModal("seven")}
                    />
-
-
             </SlideWrap>
-
-
-
-
             {/*
               <FlatList
                 pagingEnabled
@@ -886,27 +404,17 @@ class AppIntro extends React.Component{
                 keyExtractor={(item, index) => String(index)}
                 onScroll = {this.onScroll}
                 showsHorizontalScrollIndicator={false}
-
                  />
-
                <Pagination
                  activeDotIndex = {this.state.curIndex}
                  dotsLength = {4}
                  dotColor ={'white'}
                  inactiveDotColor = {'white'}
                   />
-
               */}
-
-
-
           </View>
-
-
-
       </View>
     )
-
   }
 }
 
@@ -946,14 +454,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily:'Nunito-SemiBold',
   },
-  skipText: {
-    // position:'absolute',
-    padding:10,
-    color: "white",
-    fontFamily:'Nunito-Bold',
-    fontSize: 15,
-  },
-
   header2Text: {
     color: 'white',
     fontSize: 25,
@@ -961,23 +461,23 @@ const styles = StyleSheet.create({
   bodyText:{
     color: 'white'
   },
+  tagCSS1: {
+    padding:10,
+    backgroundColor: 'rgba(0,0,0,.4)',
+    borderRadius:25,
+    color:'white',
+    bottom:'30%',
+    justifyContent: 'center',
+    fontSize:13,
+    right:7.5,
+    zIndex:1,
+    flex:1,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    elevation:25,
+  },
 
-  loginBtn: {
-    position: "absolute",
-    width: "80%",
-    borderRadius: 25,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    top: '90%',
-    zIndex: 9999,
-    backgroundColor: "white",
-  },
-  loginText: {
-    color: '#1890ff',
-    fontSize: 18,
-    fontFamily:'Nunito-Bold',
-  },
 
 
 
