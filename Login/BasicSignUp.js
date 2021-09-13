@@ -25,17 +25,24 @@ const height = Dimensions.get("window").height
 // used for general 1 line text input
 class BasicSignUp extends React.Component{
 
-  state = {
-
+  constructor(props){
+      super(props)
+      this.state = {
+        pageHeight: 0
+      }
+      this._keyboardDidShow = this._keyboardDidShow.bind(this)
   }
+
 
   componentDidMount(){
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
   }
 
-  _keyboardDidShow(e) {
-      console.log(e.endCoordinates.height)
+  _keyboardDidShow(e){
+    this.setState({
+      pageHeight: e.endCoordinates.height
+    })
   }
 
   componentDidUpdate(prevProps){
@@ -47,7 +54,9 @@ class BasicSignUp extends React.Component{
         }
       } else {
         Keyboard.dismiss()
-
+        this.setState({
+          pageHeight: 0
+        })
       }
 
     }
@@ -64,7 +73,7 @@ class BasicSignUp extends React.Component{
     return(
 
         <View style = {{
-            height: height-271,
+            height: height-this.state.pageHeight,
             width: width,
             backgroundColor: '#1890ff',
             alignItems: 'center'
