@@ -67,62 +67,6 @@ class AppIntro extends React.Component{
     password: "",
     profilePic: "",
   }
-   allowCameraPermissions = async() => {
-      try{
-        const camera = await Camera.requestPermissionsAsync();
-        // const microphone = await Camera.requestMicrophonePermissionsAsync();
-        if(camera.status  == "granted"){
-          this.setState({
-            allowCamera: true,
-          })
-        }
-      }
-      catch(err){
-        alert(err)
-      }
-    }
-    allowMicrophonePermissions = async() => {
-      try{
-        const camera = await Camera.requestMicrophonePermissionsAsync();
-        if(camera.status  == "granted"){
-          this.setState({
-            allowMicrophone: true,
-          })
-        }
-      }
-      catch(err){
-        alert(err)
-      }
-    }
-    allowNotificationPermissions = async() => {
-      try{
-        const noti = await ExpoNotifications.requestPermissionsAsync();
-        if(noti.status  == "granted"){
-          this.setState({
-            allowNotifications: true,
-          })
-        }
-      }
-      catch(err){
-        alert(err)
-      }
-    }
-
-    allowGalleryPermissions = async() => {
-      try{
-        const noti = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if(noti.status  == "granted"){
-          this.setState({
-            allowGallery: true,
-          })
-        }
-      }
-      catch(err){
-        alert(err)
-      }
-    }
-
-
 
   close = () =>  {
     authAxios.post(`${global.IP_CHANGE}`+'/userprofile/unShowIntialInstructions/'+this.props.id)
@@ -296,7 +240,7 @@ class AppIntro extends React.Component{
               :
               <View style={{position:'absolute', right:10, top:45, zIndex:5}}>
                 <TouchableOpacity style={styles.tagCSS1} onPress = {() => this.openModal('one')}>
-                  <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}>Skip</Text>
+                  <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Skip</Text>
                 </TouchableOpacity>
               </View>
             }
@@ -305,7 +249,7 @@ class AppIntro extends React.Component{
                 <Video
                   // ref={video}
                   style={{width:height,
-                     height: Platform.OS === 'ios' ? width : width+25,
+                     height: Platform.OS === 'ios' ? width : width+35,
                      transform: [{ rotate: '270deg' }], }}
                   source = {test}
                   resizeMode="contain"
@@ -464,11 +408,11 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   tagCSS1: {
-    padding:10,
-    backgroundColor: 'rgba(0,0,0,.4)',
-    borderRadius:25,
+    padding:2.5,
+    backgroundColor: 'rgba(0,0,0,.7)',
+    borderRadius:20,
     color:'white',
-    bottom:'30%',
+    bottom:'25%',
     justifyContent: 'center',
     fontSize:13,
     right:7.5,
