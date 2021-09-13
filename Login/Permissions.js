@@ -133,7 +133,11 @@ class Permissions extends React.Component{
             borderRadius: 10,
             overflow: 'hidden',
           }}>
+<<<<<<< HEAD
           <TouchableOpacity onPress={()=>this.allowCameraPermissions()}>
+=======
+          <TouchableOpacity onPress={() => this.allowCameraPermissions()}>
+>>>>>>> 91fbae063496bea30e6214471b80d13a2c697301
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Video stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -158,7 +162,11 @@ class Permissions extends React.Component{
             </View>
           </TouchableOpacity>
 
+<<<<<<< HEAD
           <TouchableOpacity onPress={()=>this.allowMicrophonePermissions()}>
+=======
+          <TouchableOpacity onPress={() => this.allowMicrophonePermissions()}>
+>>>>>>> 91fbae063496bea30e6214471b80d13a2c697301
             <View style={{flexDirection:'row'}}>
             <View style={{justifyContent:'center'}}>
               <Mic stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -182,7 +190,7 @@ class Permissions extends React.Component{
             }
           </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>this.allowNotificationPermissions()}>
+          <TouchableOpacity onPress={() => this.allowNotificationPermissions()}>
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Bell stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -207,7 +215,11 @@ class Permissions extends React.Component{
             </View>
           </TouchableOpacity>
 
+<<<<<<< HEAD
           <TouchableOpacity onPress={()=>this.allowGalleryPermissions()}>
+=======
+          <TouchableOpacity onPress={() => this.allowGalleryPermissions()}>
+>>>>>>> 91fbae063496bea30e6214471b80d13a2c697301
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Image stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
