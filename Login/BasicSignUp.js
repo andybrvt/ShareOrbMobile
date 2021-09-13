@@ -107,8 +107,11 @@ class BasicSignUp extends React.Component{
                 style = {styles.textContainer}
                 >
                 <TextInput
+                  style = {{
+                    width: 'width'
+                  }}
                   selectionColor={'white'}
-
+                  secureTextEntry={this.props.pw}
                   style = {styles.textInput}
                   ref={(input) => { this.textInput = input; }}
                   onChangeText = {this.props.onChange}
@@ -117,6 +120,31 @@ class BasicSignUp extends React.Component{
               </View>
 
             </TouchableWithoutFeedback>
+
+            {
+              this.props.pw ?
+
+              <View style = {{
+                  position: 'absolute',
+                  top: '70%',
+                }}>
+                <Text style = {{
+                  color: 'white'
+                  }}>At least 10 characters</Text>
+                <Text style = {{
+                  color: 'white'
+                  }}>At least 1 uppercase</Text>
+                <Text style = {{
+                  color: 'white'
+                  }}>At least 1 number</Text>
+              </View>
+
+              :
+
+              null
+
+            }
+
 
             <View
               style = {styles.bottomContainer}
