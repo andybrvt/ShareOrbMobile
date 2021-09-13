@@ -65,6 +65,7 @@ class AppIntro extends React.Component{
     dob: new Date(),
     username: "",
     password: "",
+    profilePic: "",
   }
    allowCameraPermissions = async() => {
       try{
@@ -274,6 +275,12 @@ class AppIntro extends React.Component{
     })
   }
 
+  onPicChange = (pic) => {
+    this.setState({
+      profilePic:pic
+    })
+  }
+
   render(){
     return(
       <View style = {{flex: 1}}>
@@ -304,7 +311,7 @@ class AppIntro extends React.Component{
             </View>
             <SlideWrap visible = {this.state.one}>
               <BasicSignUp
-                
+
                 visible = {this.state.one}
                 prompt = {"What's your name?"}
                 value = {this.state.firstName}
@@ -344,6 +351,8 @@ class AppIntro extends React.Component{
             </SlideWrap>
             <SlideWrap visible = {this.state.four}>
               <ProfilePicSlide
+                value = {this.state.profilePic}
+                onChange = {this.onPicChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
                 closeNum = {'four'}

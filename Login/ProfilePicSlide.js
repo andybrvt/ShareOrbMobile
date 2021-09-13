@@ -43,6 +43,71 @@ class ProfilePicSlide extends React.Component{
     </View>
   );
 
+  handleTakeProfile = async() => {
+    let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if(permissionResult.granted === false){
+      alert("Permission to access camera is required!");
+      // permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      allowsMultipleSelection: true,
+      base64: true,
+
+    })
+
+
+    if(!pickerResult.cancelled){
+
+      // this.uploadProfileImage(pickerResult.uri);
+
+      this.props.onChange(pickerResult.uri);
+      this.bs.current.snapTo(1)
+
+    }
+
+  }
+
+  // handle to choose photo
+  handleChooseProfile = async() => {
+
+    // this will give permission in order to open up your camera roll
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if(permissionResult.granted === false){
+      // in the case that permission is not granted
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    // this is to pick the image
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      allowsMultipleSelection: true,
+      base64: true,
+    })
+
+    if(!pickerResult.cancelled){
+      // this is if you pick out a picture
+      // in this case you will just change the picture right away
+
+      // this.uploadProfileImage(pickerResult.uri);
+      this.props.onChange(pickerResult.uri);
+      this.bs.current.snapTo(1)
+
+    }
+
+  }
+
   renderInner =()=> {
     return(
       <View style={styles.panel}>
@@ -68,6 +133,8 @@ class ProfilePicSlide extends React.Component{
   }
 
   render(){
+
+
     return(
       <View
         style = {{
@@ -85,11 +152,26 @@ class ProfilePicSlide extends React.Component{
           onPress={() => this.bs.current.snapTo(0)}
           >
           <View style = {styles.midContainer}>
-            <Avatar
-              size = {150}
-              rounded
-              source = {pic}
-               />
+            {
+              this.props.value !== "" ?
+
+              <Avatar
+                size = {250}
+                rounded
+                source = {{
+                  uri: this.props.value
+                }}
+                 />
+
+               :
+
+               <Avatar
+                 size = {250}
+                 rounded
+                 source = {pic}
+                  />
+            }
+
           </View>
 
         </TouchableWithoutFeedback>
