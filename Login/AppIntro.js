@@ -748,8 +748,8 @@ class AppIntro extends React.Component{
   render(){
     return(
       <View style = {{flex: 1}}>
-          <SafeAreaView style = {styles.container}>
-            <View style={{position:'absolute', right:25, top:60, zIndex:99}}>
+          <View style = {{alignItems:'center'}}>
+            <View style={{position:'absolute', right:25, top:40, zIndex:99}}>
             <TouchableOpacity onPress = {() => this.openModal('one')}>
               <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}>Skip</Text>
               </TouchableOpacity>
@@ -759,7 +759,7 @@ class AppIntro extends React.Component{
               <View style={{flex:5, justifyContent:'center', alignItems:'center'}}>
                 <Video
                   // ref={video}
-                  style={{marginTop:15, width:height-30, height:width+20, transform: [{ rotate: '270deg' }], }}
+                  style={{width:height, height:width, transform: [{ rotate: '270deg' }], }}
                   source = {test}
                   resizeMode="contain"
                   autoLooping
@@ -899,7 +899,7 @@ class AppIntro extends React.Component{
 
 
 
-          </SafeAreaView>
+          </View>
 
 
 
