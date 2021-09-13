@@ -281,6 +281,11 @@ class AppIntro extends React.Component{
     })
   }
 
+  onSignupSubmit = () => {
+    console.log('sign up here')
+    const {username, firstName, lastName, password} = this.state;
+  }
+
   render(){
     return(
       <View style = {{flex: 1}}>
@@ -311,6 +316,7 @@ class AppIntro extends React.Component{
             </View>
             <SlideWrap visible = {this.state.one}>
               <BasicSignUp
+                un = {false}
                 pw = {false}
                 visible = {this.state.one}
                 prompt = {"What's your name?"}
@@ -334,6 +340,7 @@ class AppIntro extends React.Component{
             </SlideWrap>
             <SlideWrap visible = {this.state.three}>
               <BasicSignUp
+                un = {true}
                 pw = {false}
                 visible = {this.state.three}
                 prompt = {"What is your username?"}
@@ -359,6 +366,8 @@ class AppIntro extends React.Component{
             <SlideWrap visible = {this.state.five}>
               <BasicSignUp
                 pw = {true}
+                un = {false}
+                signup = {this.onSignupSubmit}
                 visible = {this.state.five}
                 prompt = {"Now your password"}
                 value = {this.state.password}

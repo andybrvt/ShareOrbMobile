@@ -16,10 +16,13 @@ import {
   Animated,
   TextInput,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
+
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
+import axios from "axios";
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -73,9 +76,71 @@ class BasicSignUp extends React.Component{
 
   }
 
+  userSubmit = () => {
+
+    this.props.signup()
+    // Keyboard.dismiss()
+    // this.props.openModal(this.props.openNum)
+  }
+
+  checkUsername = () => {
+    const username = this.props.value
+    console.log('checkuser')
+    axios.get(`${global.IP_CHANGE}`+'/userprofile/validateUsername/'+username)
+    .then(res => {
+      console.log(res.data)
+      if(res.data === true){
+        Keyboard.dismiss()
+        this.props.openModal(this.props.openNum)
+      } else {
+        Alert.alert(
+          "Username already taken",
+          "Someone else has the username already",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            { text: "OK",
+              style:'destructive',
+              onPress: () => console.log('ok')
+            }
+          ]
+
+        )
+      }
+    })
+  }
+
   next = () => {
-    Keyboard.dismiss()
-    this.props.openModal(this.props.openNum)
+    if(this.props.pw){
+      Alert.alert(
+        "Are you sure?",
+        "You cannot go back after this, but you will still be able to edit later in the future",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "Yes",
+            style:'destructive', onPress: () => this.userSubmit() }
+        ]
+
+      )
+
+    }
+
+    if(this.props.un){
+      // if username
+      this.checkUsername()
+    }
+    else {
+      Keyboard.dismiss()
+      this.props.openModal(this.props.openNum)
+    }
+
   }
 
   validate = () => {
