@@ -75,17 +75,23 @@ class InvitePeople extends React.Component{
                   </Text>
                 </View>
                 <View style={{alignItems: 'center'}}>
-                  <Avatar
-                    size={150}
-                    rounded
-                    source={{
-                      uri:
-                        `${global.IMAGE_ENDPOINT}`+this.props.profile_picture,
-                    }}
-                  />
+                  {
+                    this.props.profilePic !== "" ?
+
+                    <Avatar
+                      size={150}
+                      rounded
+                      source={{
+                        uri: this.props.profilePic
+                      }}
+                    />
+
+                  : null
+
+                  }
+
                   <View style={{alignItems: 'center'}}>
                     <Text style = {styles.welcomeText}>
-                      Ping Hsu
                       {this.props.firstName} {this.props.lastName}
                     </Text>
                   </View>

@@ -29,7 +29,9 @@ class BasicSignUp extends React.Component{
   constructor(props){
       super(props)
       this.state = {
-        pageHeight: 0
+        pageHeight: 0,
+        showPassword: this.props.pw
+
       }
       this._keyboardDidShow = this._keyboardDidShow.bind(this)
       this._keyboardDidHide = this._keyboardDidHide.bind(this)
@@ -76,6 +78,30 @@ class BasicSignUp extends React.Component{
     this.props.openModal(this.props.openNum)
   }
 
+  validate = () => {
+
+    if(this.props.value === ""){
+      return false
+    }
+    if(this.props.pw){
+      const value = this.props.value
+
+      if(value.length < 9){
+        // validate if the password is longer than 8 characters
+        return false
+      } else if(value.search(/[A-Z]/)< 0){
+        // Validates if it has an uppercase
+        return false
+      } else if(value.search(/[0-9]/)< 0){
+        // Validate if it has a number
+        return false
+      }
+    }
+
+    return true
+
+  }
+
   render(){
 
     return(
@@ -111,15 +137,32 @@ class BasicSignUp extends React.Component{
                     width: 'width'
                   }}
                   selectionColor={'white'}
-                  secureTextEntry={this.props.pw}
+                  secureTextEntry={this.state.showPassword}
                   style = {styles.textInput}
                   ref={(input) => { this.textInput = input; }}
                   onChangeText = {this.props.onChange}
                   value = {this.props.value}
                   />
-              </View>
+                {
+                  this.props.pw ?
+
+                  <Button
+                    title = "show password"
+                    onPress = {() =>{
+                      this.setState({
+                        showPassword: !this.state.showPassword
+                      })
+                    }}
+                     />
+                   :
+
+                   null
+                }
+
+                </View>
 
             </TouchableWithoutFeedback>
+
 
             {
               this.props.pw ?
@@ -164,18 +207,25 @@ class BasicSignUp extends React.Component{
 
               </View>
 
-              <View style = {styles.bottomRContainer}>
-                <TouchableOpacity
-                  onPress = {() => this.next()}
-                  >
-                  <ArrowRightCircle
-                    width = {40}
-                    height = {40}
-                    stroke = "white"
-                    />
-                </TouchableOpacity>
+              {
+                this.validate() ?
 
-              </View>
+                <View style = {styles.bottomRContainer}>
+                  <TouchableOpacity
+                    onPress = {() => this.next()}
+                    >
+                    <ArrowRightCircle
+                      width = {40}
+                      height = {40}
+                      stroke = "white"
+                      />
+                  </TouchableOpacity>
+
+                </View>
+
+                : null
+
+              }
 
 
             </View>
