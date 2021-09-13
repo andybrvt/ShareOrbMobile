@@ -10,6 +10,7 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Share,
   Alert,
   Animated,
@@ -99,18 +100,23 @@ class BasicSignUp extends React.Component{
               <Text style = {styles.promptText}>{this.props.prompt}</Text>
             </View>
 
-            <View
-              style = {styles.textContainer}
+            <TouchableWithoutFeedback
+              onPress = {() => this.textInput.focus()}
               >
-              <TextInput
-                selectionColor={'white'}
+              <View
+                style = {styles.textContainer}
+                >
+                <TextInput
+                  selectionColor={'white'}
 
-                style = {styles.textInput}
-                ref={(input) => { this.textInput = input; }}
-                onChangeText = {this.props.onChange}
-                value = {this.props.value}
-                />
-            </View>
+                  style = {styles.textInput}
+                  ref={(input) => { this.textInput = input; }}
+                  onChangeText = {this.props.onChange}
+                  value = {this.props.value}
+                  />
+              </View>
+
+            </TouchableWithoutFeedback>
 
             <View
               style = {styles.bottomContainer}
