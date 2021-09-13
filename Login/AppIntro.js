@@ -772,8 +772,9 @@ class AppIntro extends React.Component{
               visible = {this.state.one}
                >
               <BasicSignUp
+                
                 visible = {this.state.one}
-                prompt = {"What is your name?"}
+                prompt = {"What's your name?"}
                 value = {this.state.firstName}
                 onChange = {this.onNameChange}
                 closeModal = {this.closeModal}
@@ -804,7 +805,7 @@ class AppIntro extends React.Component{
 
               <BasicSignUp
                 visible = {this.state.three}
-                prompt = {"What do your username?"}
+                prompt = {"What is your username?"}
                 value = {this.state.username}
                 onChange = {this.onUsernameChange}
                 closeModal = {this.closeModal}

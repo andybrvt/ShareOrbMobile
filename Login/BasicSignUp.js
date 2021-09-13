@@ -18,7 +18,7 @@ import {
   Keyboard
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowRightCircle, Plus, Mail, UserPlus } from "react-native-feather";
+import { ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -31,6 +31,7 @@ class BasicSignUp extends React.Component{
         pageHeight: 0
       }
       this._keyboardDidShow = this._keyboardDidShow.bind(this)
+      this._keyboardDidHide = this._keyboardDidHide.bind(this)
   }
 
 
@@ -42,6 +43,12 @@ class BasicSignUp extends React.Component{
   _keyboardDidShow(e){
     this.setState({
       pageHeight: e.endCoordinates.height
+    })
+  }
+
+  _keyboardDidHide(e){
+    this.setState({
+      pageHeight: 0
     })
   }
 
@@ -96,9 +103,9 @@ class BasicSignUp extends React.Component{
               style = {styles.textContainer}
               >
               <TextInput
-                style = {{
-                  backgroundColor: 'red',
-                  color: 'white'}}
+                selectionColor={'white'}
+
+                style = {styles.textInput}
                 ref={(input) => { this.textInput = input; }}
                 onChangeText = {this.props.onChange}
                 value = {this.props.value}
@@ -107,20 +114,35 @@ class BasicSignUp extends React.Component{
 
             <View
               style = {styles.bottomContainer}
-
               >
-              <Button
-                title = "back"
-                onPress = {() => this.props.closeModal(this.props.closeNum)}
-                 />
 
-              <TouchableOpacity
-                onPress = {() => this.next()}
-                >
-                <ArrowRightCircle
-                  stroke = "white"
-                  />
-              </TouchableOpacity>
+              <View style = {styles.bottomLContainer}>
+                <TouchableOpacity
+                  onPress = {() => this.props.closeModal(this.props.closeNum)}
+
+                  >
+                  <ArrowLeftCircle
+                    width = {40}
+                    height = {40}
+                    stroke = "white"
+                    />
+                </TouchableOpacity>
+
+              </View>
+
+              <View style = {styles.bottomRContainer}>
+                <TouchableOpacity
+                  onPress = {() => this.next()}
+                  >
+                  <ArrowRightCircle
+                    width = {40}
+                    height = {40}
+                    stroke = "white"
+                    />
+                </TouchableOpacity>
+
+              </View>
+
 
             </View>
 
@@ -146,19 +168,38 @@ const styles = StyleSheet.create({
     backgroundColor: 'pink'
   },
   midContainer: {
-    height: '20%',
+    height: '25%',
     alignItems: 'center',
+    justifyContent: 'center',
     width: width,
-    backgroundColor: 'yellow'
+
   },
   textContainer: {
+    alignItems:'center',
+    justifyContent: 'center',
     height: '50%',
     width: width,
-    backgroundColor: 'purple'
+  },
+  textInput: {
+    color: 'white',
+    fontSize: 25
   },
   bottomContainer: {
+    height: '25%',
     width: width,
-    backgroundColor: 'green'
+    flexDirection:'row'
+  },
+  bottomLContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    paddingLeft: 30
+  },
+  bottomRContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingRight: 30
   }
 
 
