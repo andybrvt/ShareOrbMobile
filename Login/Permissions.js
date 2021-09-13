@@ -133,7 +133,7 @@ class Permissions extends React.Component{
             borderRadius: 10,
             overflow: 'hidden',
           }}>
-          <TouchableOpacity onPress={this.allowCameraPermissions()}>
+          <TouchableOpacity onPress={()=>this.allowCameraPermissions()}>
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Video stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -158,7 +158,7 @@ class Permissions extends React.Component{
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.allowMicrophonePermissions()}>
+          <TouchableOpacity onPress={()=>this.allowMicrophonePermissions()}>
             <View style={{flexDirection:'row'}}>
             <View style={{justifyContent:'center'}}>
               <Mic stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -182,7 +182,7 @@ class Permissions extends React.Component{
             }
           </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.allowNotificationPermissions()}>
+          <TouchableOpacity onPress={()=>this.allowNotificationPermissions()}>
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Bell stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -207,7 +207,7 @@ class Permissions extends React.Component{
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.allowGalleryPermissions()}>
+          <TouchableOpacity onPress={()=>this.allowGalleryPermissions()}>
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Image stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
