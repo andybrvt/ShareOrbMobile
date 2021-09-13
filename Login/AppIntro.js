@@ -316,6 +316,9 @@ class AppIntro extends React.Component{
 
             <SlideWrap visible = {this.state.six}>
               <InvitePeople
+                profilePic = {this.state.profilePic}
+                firstName = {this.state.firstName}
+                lastName = {this.state.lastName}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
                 closeNum = {'six'}

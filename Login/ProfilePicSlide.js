@@ -27,6 +27,7 @@ class ProfilePicSlide extends React.Component{
   constructor(props){
     super(props)
     this.bs = React.createRef()
+  
   }
   next = () => {
 
@@ -192,18 +193,28 @@ class ProfilePicSlide extends React.Component{
 
           </View>
 
-          <View style = {styles.bottomRContainer}>
-            <TouchableOpacity
-              onPress = {() => this.next()}
+          {
+            this.props.value !== "" ?
 
-              >
-              <ArrowRightCircle
-                width = {40}
-                height = {40}
-                stroke = "white"
-                 />
-            </TouchableOpacity>
-          </View>
+            <View style = {styles.bottomRContainer}>
+              <TouchableOpacity
+                onPress = {() => this.next()}
+
+                >
+                <ArrowRightCircle
+                  width = {40}
+                  height = {40}
+                  stroke = "white"
+                   />
+              </TouchableOpacity>
+            </View>
+
+            : null
+
+
+
+          }
+
 
           <BottomSheet
            ref={this.bs}
