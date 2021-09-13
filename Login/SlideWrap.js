@@ -12,7 +12,8 @@ import {
   TouchableOpacity,
   Share,
   Alert,
-  Animated
+  Animated,
+  KeyboardAvoidingView
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -61,22 +62,27 @@ class SlideWrap extends React.Component{
   render(){
 
     return(
-      <Animated.View style = {{
-          width: width,
-          height: height,
-          position: 'absolute',
-          backgroundColor: "#1890ff",
+        <Animated.View style = {{
+            width: width,
+            height: height,
+            position: 'absolute',
+            backgroundColor: "#1890ff",
 
-          transform: [
-            {translateX:this.modalX}
-          ]
-        }}>
-        <SafeAreaView>
-          {this.props.children}
+            transform: [
+              {translateX:this.modalX}
+            ]
+          }}>
 
-        </SafeAreaView>
+            <SafeAreaView>
 
-      </Animated.View>
+              {this.props.children}
+
+
+            </SafeAreaView>
+
+
+        </Animated.View>
+
     )
   }
 

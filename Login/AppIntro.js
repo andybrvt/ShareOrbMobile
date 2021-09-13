@@ -757,8 +757,7 @@ class AppIntro extends React.Component{
                   style={{width:height, height:width-1, transform: [{ rotate: '270deg' }], }}
                   source = {test}
                   resizeMode="contain"
-                  
-                  shouldPlay={true}
+                  shouldPlay={false}
                 />
               </View>
               <View style={{height:'10%', justifyContent:'center', alignItems:'center'}}>

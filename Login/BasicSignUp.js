@@ -25,6 +25,19 @@ const height = Dimensions.get("window").height
 // used for general 1 line text input
 class BasicSignUp extends React.Component{
 
+  state = {
+
+  }
+
+  componentDidMount(){
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  }
+
+  _keyboardDidShow(e) {
+      console.log(e.endCoordinates.height)
+  }
+
   componentDidUpdate(prevProps){
 
     if(prevProps.visible !== this.props.visible){
@@ -50,30 +63,29 @@ class BasicSignUp extends React.Component{
 
     return(
 
-      <KeyboardAvoidingView
-        behavior = "padding"
-        enabled
-        >
         <View style = {{
-            height: height,
+            height: height-271,
             width: width,
             backgroundColor: '#1890ff',
             alignItems: 'center'
           }}>
 
-            <View >
-              <Button
-                title = "back"
-                onPress = {() => this.props.closeModal(this.props.closeNum)}
-                 />
+            <View
+              style = {styles.topContainer}
+              >
+
 
             </View>
 
-            <View>
+            <View
+              style = {styles.midContainer}
+              >
               <Text style = {styles.promptText}>{this.props.prompt}</Text>
             </View>
 
-            <View>
+            <View
+              style = {styles.textContainer}
+              >
               <TextInput
                 style = {{
                   backgroundColor: 'red',
@@ -84,7 +96,14 @@ class BasicSignUp extends React.Component{
                 />
             </View>
 
-            <View>
+            <View
+              style = {styles.bottomContainer}
+
+              >
+              <Button
+                title = "back"
+                onPress = {() => this.props.closeModal(this.props.closeNum)}
+                 />
 
               <TouchableOpacity
                 onPress = {() => this.next()}
@@ -102,7 +121,6 @@ class BasicSignUp extends React.Component{
 
         </View>
 
-      </KeyboardAvoidingView>
 
 
     )
@@ -112,15 +130,26 @@ class BasicSignUp extends React.Component{
 const styles = StyleSheet.create({
   promptText: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 30,
   },
   topContainer: {
-
+    width: width,
+    backgroundColor: 'pink'
   },
   midContainer: {
-
+    height: '20%',
+    alignItems: 'center',
+    width: width,
+    backgroundColor: 'yellow'
+  },
+  textContainer: {
+    height: '50%',
+    width: width,
+    backgroundColor: 'purple'
   },
   bottomContainer: {
+    width: width,
+    backgroundColor: 'green'
   }
 
 
