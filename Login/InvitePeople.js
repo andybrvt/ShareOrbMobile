@@ -53,10 +53,10 @@ class InvitePeople extends React.Component{
      return(
        <View>
 
-            <View style = {{top:'2.5%'
+            <View style = {{top:'1%'
                 }}>
                 <View style = {{
-                    top: '2.5%',
+
                     right:'2.5%',
                     position:'absolute',
                   }}>
@@ -67,7 +67,7 @@ class InvitePeople extends React.Component{
                   </TouchableOpacity>
                 </View>
               <View style = {{
-                  top: '10%'
+                  top: '7.5%'
                 }}>
                 <View style={{padding:30}}>
                   <Text style = {styles.welcomeText}>
@@ -89,7 +89,7 @@ class InvitePeople extends React.Component{
                       {this.props.firstName} {this.props.lastName}
                     </Text>
                   </View>
-                  <View style={{top:'20%'}}>
+                  <View style={{top:'17.5%'}}>
                     <Text style = {styles.welcomeText}>
                       Your Code:&nbsp;
                       <Text  style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
@@ -104,11 +104,7 @@ class InvitePeople extends React.Component{
                 </View>
               </View>
             </View>
-            <View style = {{
-                top: '40%',
-                left:'12.5%',
 
-              }}>
               <TouchableOpacity
                 style={styles.loginBtn}
                 onPress={() =>this.shareMessage()}>
@@ -116,10 +112,6 @@ class InvitePeople extends React.Component{
                   Share Invites
                 </Text>
               </TouchableOpacity>
-            </View>
-
-
-
 
        </View>
 
@@ -144,10 +136,13 @@ class InvitePeople extends React.Component{
      fontSize: 15,
    },
    loginBtn: {
-     position:'absolute',
+
+
      width: "75%",
      borderRadius: 25,
      height: 50,
+     marginLeft:'15%',
+     marginTop:'40%',
      alignItems: "center",
      justifyContent: "center",
      zIndex: 9999,

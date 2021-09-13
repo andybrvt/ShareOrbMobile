@@ -48,6 +48,61 @@ class Permissions extends React.Component{
     allowGallery:false,
   }
 
+  allowCameraPermissions = async() => {
+     try{
+       const camera = await Camera.requestPermissionsAsync();
+       // const microphone = await Camera.requestMicrophonePermissionsAsync();
+       if(camera.status  == "granted"){
+         this.setState({
+           allowCamera: true,
+         })
+       }
+     }
+     catch(err){
+       alert(err)
+     }
+   }
+   allowMicrophonePermissions = async() => {
+     try{
+       const camera = await Camera.requestMicrophonePermissionsAsync();
+       if(camera.status  == "granted"){
+         this.setState({
+           allowMicrophone: true,
+         })
+       }
+     }
+     catch(err){
+       alert(err)
+     }
+   }
+   allowNotificationPermissions = async() => {
+     try{
+       const noti = await ExpoNotifications.requestPermissionsAsync();
+       if(noti.status  == "granted"){
+         this.setState({
+           allowNotifications: true,
+         })
+       }
+     }
+     catch(err){
+       alert(err)
+     }
+   }
+
+   allowGalleryPermissions = async() => {
+     try{
+       const noti = await ImagePicker.requestMediaLibraryPermissionsAsync();
+       if(noti.status  == "granted"){
+         this.setState({
+           allowGallery: true,
+         })
+       }
+     }
+     catch(err){
+       alert(err)
+     }
+   }
+
   next = () => {
     this.props.openModal(this.props.openNum)
   }
@@ -78,7 +133,7 @@ class Permissions extends React.Component{
             borderRadius: 10,
             overflow: 'hidden',
           }}>
-          <TouchableOpacity onPress={this.allowCameraPermissions}>
+          <TouchableOpacity onPress={this.allowCameraPermissions()}>
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Video stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -103,7 +158,7 @@ class Permissions extends React.Component{
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.allowMicrophonePermissions}>
+          <TouchableOpacity onPress={this.allowMicrophonePermissions()}>
             <View style={{flexDirection:'row'}}>
             <View style={{justifyContent:'center'}}>
               <Mic stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -127,7 +182,7 @@ class Permissions extends React.Component{
             }
           </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.allowNotificationPermissions}>
+          <TouchableOpacity onPress={this.allowNotificationPermissions()}>
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Bell stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -152,7 +207,7 @@ class Permissions extends React.Component{
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.allowGalleryPermissions}>
+          <TouchableOpacity onPress={this.allowGalleryPermissions()}>
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Image stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -214,7 +269,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    top: '90%',
+    top: '95%',
     zIndex: 9999,
     backgroundColor: "white",
   },
