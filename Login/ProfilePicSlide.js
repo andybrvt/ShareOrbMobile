@@ -12,8 +12,11 @@ import {
  } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowRightCircle, Plus, Mail, UserPlus } from "react-native-feather";
+import { ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
 import pic from './default.png';
+
+const width = Dimensions.get("window").width
+const height = Dimensions.get("window").height
 
 class ProfilePicSlide extends React.Component{
 
@@ -23,21 +26,23 @@ class ProfilePicSlide extends React.Component{
   }
 
   render(){
-    console.log(pic)
     return(
-      <View>
-
-        <View>
-          <Button
-            title = "back"
-            onPress = {() => this.props.closeModal(this.props.closeNum)}
-
-             />
+      <View
+        style = {{
+           height: height,
+           width: width,
+           backgroundColor: '#1890ff',
+           alignItems: 'center'
+         }}
+        >
+        <View style = {styles.topContainer}>
+          <Text style = {styles.textInput}>Pick a profile picture</Text>
         </View>
 
-        <View>
+
+        <View style = {styles.midContainer}>
           <Avatar
-            size = {35}
+            size = {150}
             rounded
             source = {pic}
              />
@@ -45,14 +50,34 @@ class ProfilePicSlide extends React.Component{
 
 
 
-        <View>
-          <TouchableOpacity
-            onPress = {() => this.next()}
-            >
-            <ArrowRightCircle
-              stroke = "white"
-               />
-          </TouchableOpacity>
+        <View style = {styles.bottomContainer}>
+          <View style = {styles.bottomLContainer}>
+            <TouchableOpacity
+              onPress = {() => this.props.closeModal(this.props.closeNum)}
+              >
+              <ArrowLeftCircle
+                width = {40}
+                height = {40}
+                stroke = "white"
+                 />
+            </TouchableOpacity>
+
+          </View>
+
+          <View style = {styles.bottomRContainer}>
+            <TouchableOpacity
+              onPress = {() => this.next()}
+
+              >
+              <ArrowRightCircle
+                width = {40}
+                height = {40}
+                stroke = "white"
+                 />
+            </TouchableOpacity>
+          </View>
+
+
         </View>
 
 
@@ -61,5 +86,42 @@ class ProfilePicSlide extends React.Component{
     )
   }
 }
+
+const styles = StyleSheet.create({
+  topContainer: {
+    width: width,
+    height: '25%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textInput: {
+    color: 'white',
+    fontSize: 25
+  },
+  midContainer:{
+    height: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width,
+  },
+  bottomContainer: {
+    height: '25%',
+    width: width,
+    flexDirection:'row'
+  },
+  bottomLContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    paddingLeft: 30
+  },
+  bottomRContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingRight: 30
+  }
+})
+
 
 export default ProfilePicSlide;
