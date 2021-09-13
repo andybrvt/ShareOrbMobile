@@ -304,7 +304,6 @@ class AppIntro extends React.Component{
             </View>
             <SlideWrap visible = {this.state.one}>
               <BasicSignUp
-                
                 visible = {this.state.one}
                 prompt = {"What's your name?"}
                 value = {this.state.firstName}
@@ -335,12 +334,7 @@ class AppIntro extends React.Component{
                 openModal = {this.openModal}
                 closeNum = {'three'}
                 openNum = {'four'}/>
-                <Button
-                  title = "close"
-                  onPress = {() => this.closeModal("three")}/>
-                 <Button
-                   title = "next"
-                   onPress = {() => this.openModal("four")}/>
+
             </SlideWrap>
             <SlideWrap visible = {this.state.four}>
               <ProfilePicSlide
@@ -361,15 +355,6 @@ class AppIntro extends React.Component{
                 closeNum = {'five'}
                 openNum = {'six'}
                  />
-              <Text>password</Text>
-                <Button
-                  title = "close"
-                  onPress = {() => this.closeModal("five")}
-                   />
-                 <Button
-                   title = "next"
-                   onPress = {() => this.openModal("six")}
-                    />
             </SlideWrap>
 
             <SlideWrap visible = {this.state.six}>
@@ -379,19 +364,11 @@ class AppIntro extends React.Component{
                 closeNum = {'six'}
                 openNum = {'seven'}
                  />
-              <Button
-                title = "close"
-                onPress = {() => this.closeModal("six")}
-               />
             </SlideWrap>
+
             <SlideWrap visible = {this.state.seven}>
               <Permissions
-
                  />
-                <Button
-                  title = "close"
-                  onPress = {() => this.closeModal("seven")}
-                   />
             </SlideWrap>
             {/*
               <FlatList

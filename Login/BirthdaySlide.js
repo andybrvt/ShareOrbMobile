@@ -86,10 +86,7 @@ const height = Dimensions.get("window").height
                   stroke = "white"
                   />
               </TouchableOpacity>
-
             </View>
-
-
           </View>
         </View>
 

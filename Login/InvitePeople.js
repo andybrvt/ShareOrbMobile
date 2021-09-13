@@ -14,8 +14,11 @@ import {
  } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as dateFns from 'date-fns';
-import { ArrowRightCircle, Plus, Mail, UserPlus } from "react-native-feather";
+import { ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
+
+const width = Dimensions.get("window").width
+const height = Dimensions.get("window").height
 
 class InvitePeople extends React.Component{
    shareMessage = () => {
@@ -40,7 +43,8 @@ class InvitePeople extends React.Component{
            onPress: () => console.log("Cancel Pressed"),
            style: "cancel"
          },
-         { text: "Skip", style:'destructive', onPress: () => console.log("OK Pressed") }
+         { text: "Skip",
+           style:'destructive', onPress: () => this.props.openModal(this.props.openNum) }
        ]
      );
 
@@ -63,15 +67,12 @@ class InvitePeople extends React.Component{
                   </TouchableOpacity>
                 </View>
               <View style = {{
-                  top: '2.5%'
+                  top: '10%'
                 }}>
                 <View style={{padding:30}}>
                   <Text style = {styles.welcomeText}>
                     Invite Friends
                   </Text>
-                  <View style={{textAlign:'center', top:20}}>
-
-                  </View>
                 </View>
                 <View style={{alignItems: 'center'}}>
                   <Avatar
@@ -84,37 +85,42 @@ class InvitePeople extends React.Component{
                   />
                   <View style={{alignItems: 'center'}}>
                     <Text style = {styles.welcomeText}>
+                      Ping Hsu
                       {this.props.firstName} {this.props.lastName}
                     </Text>
                   </View>
-                  <Text style = {styles.welcomeText}>
-                    Your Code:&nbsp;
-                    <Text  style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
-                      N693FD
-                    </Text>
-                  </Text>
-                  <Text style = {styles.welcomeText}>
-                    5 invites left
-                  </Text>
-                  <View style={{alignItems: 'center', top:'50%'}}>
-                    <TouchableOpacity
-                      style={styles.loginBtn}
-                      onPress={this.shareMessage}>
-                      <Text style = {styles.loginText}>
-                        Share Invites
+                  <View style={{top:'20%'}}>
+                    <Text style = {styles.welcomeText}>
+                      Your Code:&nbsp;
+                      <Text  style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
+                        N693FD
                       </Text>
-                    </TouchableOpacity>
+                    </Text>
+
+                    <Text style = {styles.welcomeText}>
+                      5 invites left
+                    </Text>
                   </View>
                 </View>
               </View>
             </View>
-         <TouchableOpacity
-           onPress = {() => this.props.openModal(this.props.openNum)}
-           >
-           <ArrowRightCircle
-             stroke = "white"
-             />
-         </TouchableOpacity>
+            <View style = {{
+                top: '40%',
+                left:'12.5%',
+
+              }}>
+              <TouchableOpacity
+                style={styles.loginBtn}
+                onPress={() =>this.shareMessage()}>
+                <Text style = {styles.loginText}>
+                  Share Invites
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+
+
+
        </View>
 
      )
@@ -138,21 +144,36 @@ class InvitePeople extends React.Component{
      fontSize: 15,
    },
    loginBtn: {
-     position: "absolute",
-     width: "80%",
+     position:'absolute',
+     width: "75%",
      borderRadius: 25,
      height: 50,
      alignItems: "center",
      justifyContent: "center",
-     top: '90%',
      zIndex: 9999,
      backgroundColor: "white",
    },
    loginText: {
      color: '#1890ff',
-     fontSize: 18,
+     fontSize: 20,
      fontFamily:'Nunito-Bold',
    },
+   bottomContainer: {
+     height: '25%',
+     width: width,
+     flexDirection:'row'
+   },
+   bottomLContainer: {
+     alignItems: 'flex-start',
+     justifyContent: 'center',
+     paddingLeft: 30
+   },
+   bottomRContainer: {
+
+     alignItems: 'flex-end',
+     justifyContent: 'center',
+     paddingRight: 30
+   }
  })
 
  export default InvitePeople;
