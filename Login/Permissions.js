@@ -39,7 +39,6 @@ const height = Dimensions.get("window").height
 
 
 class Permissions extends React.Component{
-
   state = {
     stuff:[0, 1, 2, 3, 4],
     curIndex: 0,
@@ -47,9 +46,11 @@ class Permissions extends React.Component{
     allowMicrophone: false,
     allowNotifications:false,
     allowGallery:false,
-
   }
 
+  next = () => {
+    this.props.openModal(this.props.openNum)
+  }
 
   render(){
     return(
@@ -76,8 +77,7 @@ class Permissions extends React.Component{
             width: width*0.85,
             borderRadius: 10,
             overflow: 'hidden',
-          }}
-          >
+          }}>
           <TouchableOpacity onPress={this.allowCameraPermissions}>
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
@@ -188,7 +188,6 @@ class Permissions extends React.Component{
 }
 
 export default Permissions;
-
 const styles = StyleSheet.create({
   welcomeText: {
     padding:5,
@@ -224,5 +223,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily:'Nunito-Bold',
   },
-
 })
