@@ -14,6 +14,9 @@ import { Avatar } from 'react-native-elements';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
 import pic from './default.png';
+import * as ImagePicker from 'expo-image-picker';
+import BottomSheet from 'reanimated-bottom-sheet';
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -76,6 +79,16 @@ class ProfilePicSlide extends React.Component{
                  />
             </TouchableOpacity>
           </View>
+
+          <BottomSheet
+           ref={this.bs}
+           snapPoints={[330, 0]}
+           renderContent={this.renderInner}
+           renderHeader={this.renderHeader}
+           initialSnap={1}
+           callbackNode={this.fall}
+           enabledGestureInteraction={true}
+         />
 
 
         </View>
