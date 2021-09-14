@@ -4,6 +4,7 @@ import {
   Platform,
   SafeAreaView,
   View,
+  Share,
   Button,
   StyleSheet,
   ScrollView,
@@ -15,7 +16,7 @@ import {
  } from 'react-native';
 import TextInputError1 from '../RandomComponents/TextInputError1'
 import authAxios from '../util';
-
+import { connect } from "react-redux";
 
 const email = value =>
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
@@ -74,6 +75,18 @@ class InvitePage extends React.Component{
 
   }
 
+  shareMessage = (codeInvite) => {
+    //Here is the Share API
+    Share.share({
+      // message: inputValue.toString(),
+      message:"Join ShareOrb with my code: "+ codeInvite
+    })
+      //after successful share return result
+      .then((result) => console.log(result))
+      //If any thing goes wrong it comes here
+      .catch((errorMsg) => console.log(errorMsg));
+  };
+
 
 
 
@@ -118,6 +131,7 @@ class InvitePage extends React.Component{
 
 
    render(){
+     let codeInvite=this.props.inviteCode
      // You will need to get the current number of poeple on the wait list
      return(
 
@@ -177,6 +191,11 @@ class InvitePage extends React.Component{
                    Skip the waitlist
                  </Text>
                 </View>
+                <TouchableOpacity onPress={()=>this.shareMessage(codeInvite)} style={styles.loginBtn1}>
+                  <Text style={{color:'white'}}>Invite</Text>
+
+                </TouchableOpacity>
+                {/*
                <View style ={{
                    width: '80%',
                  }}>
@@ -209,6 +228,7 @@ class InvitePage extends React.Component{
                    }
                  </View>
                </View>
+               */}
                <View style = {{
                    width: '80%',
                    alignItems: 'center',
@@ -233,12 +253,29 @@ class InvitePage extends React.Component{
    }
  }
 
+ const mapStateToProps = state => {
+   return {
+     inviteCode: state.auth.inviteCode
+   }
+ }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
     alignItems: 'center',
     padding: 10
+  },
+
+  loginBtn1: {
+    width: "75%",
+    borderRadius: 25,
+    height: 40,
+
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 9999,
+    backgroundColor: "#40a9ff",
   },
   loginBtn: {
     width: "20%",
@@ -263,5 +300,4 @@ const styles = StyleSheet.create({
   },
 })
 
-
-export default InvitePage;
+export default connect(mapStateToProps)(InvitePage);

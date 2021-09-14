@@ -133,7 +133,7 @@ import * as exploreActions from '../store/actions/explore';
      // this is to pick the image
      let pickerResult = await ImagePicker.launchImageLibraryAsync({
        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-       allowsEditing: true,
+       allowsEditing: false,
        aspect: [4, 3],
        quality: 1,
        allowsMultipleSelection: true,

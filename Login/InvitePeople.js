@@ -21,11 +21,11 @@ const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
 class InvitePeople extends React.Component{
-   shareMessage = () => {
+   shareMessage = (codeInvite) => {
      //Here is the Share API
      Share.share({
        // message: inputValue.toString(),
-       message:"Join ShareOrb with my code: "+ this.props.inviteCode 
+       message:"Join ShareOrb with my code: "+ codeInvite
      })
        //after successful share return result
        .then((result) => console.log(result))
@@ -50,8 +50,7 @@ class InvitePeople extends React.Component{
 
 
    render(){
-     console.log('her ein the invite people')
-     console.log(this.props)
+     let codeInvite=this.props.codeInvite
      return(
        <View>
 
@@ -74,6 +73,9 @@ class InvitePeople extends React.Component{
                 <View style={{padding:30}}>
                   <Text style = {styles.welcomeText}>
                     Invite Friends
+                  </Text>
+                  <Text style = {styles.welcomeText}>
+                    Skip the Waitlist
                   </Text>
                 </View>
                 <View style={{alignItems: 'center'}}>
@@ -100,13 +102,13 @@ class InvitePeople extends React.Component{
                   <View style={{top:'17.5%'}}>
                     <Text style = {styles.welcomeText}>
                       Your Code:&nbsp;
-                      <Text  style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
-                        {this.props.inviteCode}
+                      <Text  style={{fontSize:32.5, color:'white', fontFamily:'Nunito-Bold'}}>
+                        {this.props.codeInvite}
                       </Text>
                     </Text>
 
                     <Text style = {styles.welcomeText}>
-                      5 invites left
+                      You have only 5 invites
                     </Text>
                   </View>
                 </View>
@@ -115,7 +117,7 @@ class InvitePeople extends React.Component{
 
               <TouchableOpacity
                 style={styles.loginBtn}
-                onPress={() =>this.shareMessage()}>
+                onPress={() =>this.shareMessage(codeInvite)}>
                 <Text style = {styles.loginText}>
                   Share Invites
                 </Text>

@@ -247,6 +247,7 @@ class BasicSignUp extends React.Component{
                   style = {{
                     width: 'width'
                   }}
+                  autoCapitalize="none"
                   selectionColor={'white'}
                   secureTextEntry={this.state.showPassword}
                   style = {styles.textInput}
@@ -356,12 +357,13 @@ class BasicSignUp extends React.Component{
 const styles = StyleSheet.create({
   promptText: {
     color: 'white',
-    fontSize: 30,
+    fontSize: 27.5,
     fontFamily:'Nunito-Bold',
   },
   topContainer: {
     width: width,
-    backgroundColor: 'pink'
+    height:'10%',
+    backgroundColor: '#1890ff'
   },
   midContainer: {
     height: '25%',
@@ -373,13 +375,13 @@ const styles = StyleSheet.create({
   textContainer: {
     alignItems:'center',
     justifyContent: 'center',
-    height: '50%',
+    height: '40%',
     width: width,
     // backgroundColor:'red',
   },
   textInput: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 32.5,
     fontFamily:'Nunito-SemiBold',
   },
   bottomContainer: {

@@ -251,7 +251,7 @@ class MiniAppIntro extends React.Component{
 
             <SlideWrap visible = {this.state.one}>
               <InvitePeople
-                inviteCode = {this.props.inviteCode}
+                codeInvite = {this.props.inviteCode}
                 profilePic = {profilePic}
                 firstName = {this.props.firstName}
                 lastName = {this.props.lastName}

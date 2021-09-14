@@ -17,36 +17,22 @@ import { ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-n
 import pic from './default.png';
 import * as ImagePicker from 'expo-image-picker';
 import BottomSheet from 'reanimated-bottom-sheet';
-
-
+import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
+import { Camera } from 'expo-camera';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
 class ProfilePicSlide extends React.Component{
-
   constructor(props){
     super(props)
     this.bs = React.createRef()
-  
   }
   next = () => {
-
     this.props.openModal(this.props.openNum)
   }
 
-  renderHeader = () => (
-    <View style={styles.test}>
-    <View style={styles.header}>
-      <View style={styles.panelHeader}>
-        <View style={styles.panelHandle} />
-      </View>
-    </View>
-    </View>
-  );
-
   handleTakeProfile = async() => {
-    let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-
+    let permissionResult = await Camera.requestPermissionsAsync();
     if(permissionResult.granted === false){
       alert("Permission to access camera is required!");
       // permissionResult = await ImagePicker.requestCameraPermissionsAsync();
@@ -55,7 +41,7 @@ class ProfilePicSlide extends React.Component{
 
     let pickerResult = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
       allowsMultipleSelection: true,
@@ -65,9 +51,7 @@ class ProfilePicSlide extends React.Component{
 
 
     if(!pickerResult.cancelled){
-
       // this.uploadProfileImage(pickerResult.uri);
-
       this.props.onChange(pickerResult.uri);
       this.bs.current.snapTo(1)
 
@@ -77,13 +61,12 @@ class ProfilePicSlide extends React.Component{
 
   // handle to choose photo
   handleChooseProfile = async() => {
-
     // this will give permission in order to open up your camera roll
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if(permissionResult.granted === false){
       // in the case that permission is not granted
-      alert("Permission to access camera roll is required!");
+      alert("Permission to access library is required!");
       return;
     }
 
@@ -102,40 +85,48 @@ class ProfilePicSlide extends React.Component{
       // in this case you will just change the picture right away
 
       // this.uploadProfileImage(pickerResult.uri);
+      console.log("B")
+      console.log(pickerResult.uri)
       this.props.onChange(pickerResult.uri);
       this.bs.current.snapTo(1)
-
     }
-
   }
+
+  renderHeader = () => (
+    <View style={styles.test}>
+    <View style={styles.header}>
+      <View style={styles.panelHeader}>
+        <View style={styles.panelHandle} />
+      </View>
+    </View>
+    </View>
+  );
+
+
 
   renderInner =()=> {
     return(
       <View style={styles.panel}>
-
-        <TouchableOpacity
-          onPress = {this.handleTakeProfile}
-
+        <TouchableOpacity1
+          onPress = {()=>this.handleTakeProfile()}
           style={styles.panelButton} >
           <Text style={styles.panelButtonTitle}>Take Photo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress = {this.handleChooseProfile}
+        </TouchableOpacity1>
+        <TouchableOpacity1
+          onPress = {()=>this.handleChooseProfile()}
           style={styles.panelButton}>
           <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </TouchableOpacity1>
+        <TouchableOpacity1
           style={styles.panelButton1}
           onPress={() => this.bs.current.snapTo(1)}>
           <Text style={styles.panelButtonTitle1}>Cancel</Text>
-        </TouchableOpacity>
+        </TouchableOpacity1>
       </View>
     )
   }
 
   render(){
-
-
     return(
       <View
         style = {{
@@ -146,7 +137,7 @@ class ProfilePicSlide extends React.Component{
          }}
         >
         <View style = {styles.topContainer}>
-          <Text style = {styles.textInput}>Pick a profile picture</Text>
+          <Text style = {styles.profilePicText}>Pick a profile picture</Text>
         </View>
 
         <TouchableWithoutFeedback
@@ -155,7 +146,6 @@ class ProfilePicSlide extends React.Component{
           <View style = {styles.midContainer}>
             {
               this.props.value !== "" ?
-
               <Avatar
                 size = {250}
                 rounded
@@ -163,21 +153,15 @@ class ProfilePicSlide extends React.Component{
                   uri: this.props.value
                 }}
                  />
-
                :
-
                <Avatar
                  size = {250}
                  rounded
                  source = {pic}
                   />
             }
-
           </View>
-
         </TouchableWithoutFeedback>
-
-
 
         <View style = {styles.bottomContainer}>
           <View style = {styles.bottomLContainer}>
@@ -190,16 +174,13 @@ class ProfilePicSlide extends React.Component{
                 stroke = "white"
                  />
             </TouchableOpacity>
-
           </View>
 
           {
             this.props.value !== "" ?
-
             <View style = {styles.bottomRContainer}>
               <TouchableOpacity
                 onPress = {() => this.next()}
-
                 >
                 <ArrowRightCircle
                   width = {40}
@@ -208,14 +189,8 @@ class ProfilePicSlide extends React.Component{
                    />
               </TouchableOpacity>
             </View>
-
             : null
-
-
-
           }
-
-
           <BottomSheet
            ref={this.bs}
            snapPoints={[250, 0]}
@@ -225,13 +200,8 @@ class ProfilePicSlide extends React.Component{
            callbackNode={this.fall}
            enabledGestureInteraction={true}
          />
-
-
         </View>
-
-
       </View>
-
     )
   }
 }
@@ -243,9 +213,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textInput: {
+  profilePicText: {
     color: 'white',
-    fontSize: 25
+    fontSize: 27.5,
+    fontFamily:'Nunito-Bold',
   },
   midContainer:{
     height: '50%',

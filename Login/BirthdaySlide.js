@@ -30,7 +30,7 @@ const height = Dimensions.get("window").height
           <View style = {styles.topContainer}>
             <Text style = {{
                 color: 'white',
-                fontSize: 25,
+                fontSize: 27.5,
                 fontFamily:'Nunito-Bold'
 
               }}>When is your birthday?</Text>
@@ -39,7 +39,8 @@ const height = Dimensions.get("window").height
           <View style = {styles.midContainer}>
             <Text style = {{
                 color: 'white',
-                fontFamily:'Nunito-SemiBold'
+                fontSize:32.5,
+                fontFamily:'Nunito-Bold'
               }}>{dateFns.format(this.props.value, "MMMM dd, yyyy")}</Text>
           </View>
           {this.props.currSlide==false?
@@ -71,6 +72,7 @@ const height = Dimensions.get("window").height
                   maximumDate = {new Date()}
                   textColor = 'white'
                   />
+
                 :
                 null
             }
@@ -117,7 +119,7 @@ const height = Dimensions.get("window").height
 const styles = StyleSheet.create({
   topContainer: {
     width: width,
-    height: '30%',
+    height: '40%',
     alignItems: 'center',
     justifyContent: 'center',
   },
