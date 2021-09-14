@@ -164,12 +164,7 @@ class Permissions extends React.Component{
             </View>
           </TouchableOpacity>
 
-<<<<<<< HEAD
           <TouchableOpacity onPress={()=>this.allowMicrophonePermissions()}>
-=======
-
-          <TouchableOpacity onPress={() => this.allowMicrophonePermissions()}>
->>>>>>> ab1fc0e636c6b2b18b188122f722295db3e86a25
             <View style={{flexDirection:'row'}}>
             <View style={{justifyContent:'center'}}>
               <Mic stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
@@ -218,14 +213,8 @@ class Permissions extends React.Component{
             </View>
           </TouchableOpacity>
 
-<<<<<<< HEAD
           <TouchableOpacity onPress={()=>this.allowGalleryPermissions()}>
-=======
-
-          <TouchableOpacity onPress={()=>this.allowGalleryPermissions()}>
-
->>>>>>> ab1fc0e636c6b2b18b188122f722295db3e86a25
-            <View style={{flexDirection:'row'}}>
+          <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
                 <Image stroke="white" strokeWidth={1.5} width={27.5} height={27.5} />
               </View>
