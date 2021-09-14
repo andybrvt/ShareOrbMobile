@@ -52,6 +52,11 @@ const height = Dimensions.get("window").height
 
 class AppIntro extends React.Component{
 
+  constructor(props) {
+    super(props);
+    this.video = React.createRef();
+  }
+
   state = {
     stuff:[0, 1, 2, 3, 4],
     curIndex: 0,
@@ -74,6 +79,16 @@ class AppIntro extends React.Component{
     username: "",
     password: "",
     profilePic: "",
+    videoPlaying:true,
+    resumeOnce:false,
+  }
+
+  resumeVid = () =>  {
+    console.log("Hfffffffffffffffffffff")
+    this.setState({
+      videoPlaying: true
+    })
+    this.video.current.playAsync()
   }
 
   close = () =>  {
@@ -84,13 +99,6 @@ class AppIntro extends React.Component{
     .catch(err => {
       alert(err)
     })
-  }
-
-  renderItem(item, index){
-  }
-
-  unShowInstructions = () =>{
-
   }
 
   onViewableItemsChanged = ({ viewableItems, changed }) => {
@@ -111,8 +119,11 @@ class AppIntro extends React.Component{
     // this function will open a specific modal
     if(modalNum === 'one'){
       this.setState({
-        one:true
+        one:true,
+        videoPlaying:false,
+        resumeOnce:true,
       })
+      this.video.current.pauseAsync()
     }
     if(modalNum === 'two'){
       this.setState({
@@ -144,11 +155,6 @@ class AppIntro extends React.Component{
         seven:true
       })
     }
-
-
-
-
-
   }
 
   closeModal = (modalNum) => {
@@ -268,15 +274,26 @@ class AppIntro extends React.Component{
                 <View><Text></Text></View>
               :
               <View style={{position:'absolute', right:10, top:45, zIndex:5}}>
-                <TouchableOpacity style={styles.tagCSS1} onPress = {() => this.openModal('one')}>
-                  <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Skip</Text>
-                </TouchableOpacity>
+                {this.state.resumeOnce==true?
+                  <View >
+                    <TouchableOpacity style={styles.tagCSS1} onPress = {() => this.openModal('one')}>
+                      <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Next</Text>
+                    </TouchableOpacity>
+                  </View>
+                  :
+                  <View >
+                    <TouchableOpacity style={styles.tagCSS1} onPress = {() => this.openModal('one')}>
+                      <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Skip</Text>
+                    </TouchableOpacity>
+                  </View>
+                }
+
               </View>
             }
             <View>
               <View style={{flex:5, justifyContent:'center', alignItems:'center'}}>
                 <Video
-                  // ref={video}
+                  ref={this.video}
                   style={{width:height,
                      height: Platform.OS === 'ios' ? width : width+35,
                      transform: [{ rotate: '270deg' }], }}
@@ -285,7 +302,21 @@ class AppIntro extends React.Component{
                   // isLooping
                   shouldPlay={true}
                 />
+                <View>
+
+                {this.state.videoPlaying==false?
+                  <TouchableOpacity onPress={()=>this.resumeVid()}>
+                    <Text style={{fontSize:18, color:'white'}}>Resume</Text>
+                  </TouchableOpacity>
+                :
+                <Text></Text>
+                }
+                </View>
               </View>
+            </View>
+
+            <View>
+              <Text></Text>
             </View>
             <SlideWrap visible = {this.state.one}>
               <BasicSignUp
@@ -470,7 +501,6 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     elevation:25,
   },
-
 
 
 
