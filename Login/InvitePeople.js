@@ -50,6 +50,8 @@ class InvitePeople extends React.Component{
 
 
    render(){
+     console.log('her ein the invite people')
+     console.log(this.props)
      return(
        <View>
 
@@ -99,7 +101,7 @@ class InvitePeople extends React.Component{
                     <Text style = {styles.welcomeText}>
                       Your Code:&nbsp;
                       <Text  style={{fontSize:35, color:'white', fontFamily:'Nunito-Bold'}}>
-                        N693FD
+                        {this.props.inviteCode}
                       </Text>
                     </Text>
 

@@ -29,7 +29,9 @@ const initialState ={
   showCamera: false,
   dailyNotification: true,
   showFirstPostModal: false,
-  inviToken: null
+  inviToken: null,
+  inviteCode: ""
+
 }
 
 const authStart = (state, action) => {
@@ -127,7 +129,8 @@ const authLogout = (state, action) => {
     showCamera: false,
     dailyNotification: true,
     showFirstPostModal: false,
-    inviToken: null
+    inviToken: null,
+    inviteCode: ""
   });
 };
 
@@ -150,7 +153,8 @@ const addCredentials = (state, action) => {
     notificationSeen: action.notificationSeen,
     date_joined: action.date_joined,
     bio: action.bio,
-    dailyNotification: action.dailyNotification
+    dailyNotification: action.dailyNotification,
+    inviteCode: action.inviteCode
   });
 };
 

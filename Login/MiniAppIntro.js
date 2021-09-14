@@ -218,7 +218,7 @@ class MiniAppIntro extends React.Component{
                 />
                 <View>
 
-            
+
                 </View>
               </View>
             </View>
@@ -233,6 +233,7 @@ class MiniAppIntro extends React.Component{
               <View style = {{height: height, width: width,  backgroundColor: "#1890ff"}}>
                 <SafeAreaView>
                   <InvitePeople
+                    codeInvite = {this.props.inviteCode}
                     profilePic = {profilePic}
                     firstName = {this.props.firstName}
                     lastName = {this.props.lastName}
@@ -250,6 +251,7 @@ class MiniAppIntro extends React.Component{
 
             <SlideWrap visible = {this.state.one}>
               <InvitePeople
+                inviteCode = {this.props.inviteCode}
                 profilePic = {profilePic}
                 firstName = {this.props.firstName}
                 lastName = {this.props.lastName}
@@ -306,7 +308,7 @@ const mapStateToProps = state => {
     isInvited: state.auth.inviToken !== null,
     id: state.auth.id,
     username: state.auth.username,
-
+    inviteCode: state.auth.inviteCode
   }
 }
 const mapDispatchToProps = dispatch => {
