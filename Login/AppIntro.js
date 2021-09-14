@@ -260,7 +260,7 @@ class AppIntro extends React.Component{
       const token = res.data.key;
       console.log(token)
       AsyncStorage.setItem('token', token)
-      // this.props.authSuccess(token);
+      this.props.authSuccess(token);
 
       // change userprofile picture
     })
@@ -402,22 +402,28 @@ class AppIntro extends React.Component{
                  />
             </SlideWrap>
 
-            <SlideWrap visible = {this.state.seven}>
-              <InvitePeople
-                profilePic = {this.state.profilePic}
-                firstName = {this.state.firstName}
-                lastName = {this.state.lastName}
-                closeModal = {this.closeModal}
-                openModal = {this.openModal}
-                closeNum = {'seven'}
-                openNum = {'eight'}
-                 />
-            </SlideWrap>
+            {/*
 
-            <SlideWrap visible = {this.state.eight}>
-              <Permissions
-                 />
-            </SlideWrap>
+              <SlideWrap visible = {this.state.seven}>
+                <InvitePeople
+                  profilePic = {this.state.profilePic}
+                  firstName = {this.state.firstName}
+                  lastName = {this.state.lastName}
+                  closeModal = {this.closeModal}
+                  openModal = {this.openModal}
+                  closeNum = {'seven'}
+                  openNum = {'eight'}
+                   />
+              </SlideWrap>
+
+              <SlideWrap visible = {this.state.eight}>
+                <Permissions
+                   />
+              </SlideWrap>
+              
+              */}
+
+
             {/*
               <FlatList
                 pagingEnabled

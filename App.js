@@ -758,7 +758,8 @@ class App extends Component{
   }
 
   render(){
-
+    console.log(this.props.username, 'here in teh app')
+    console.log(this.props.loading, 'loadhin gher ')
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth
@@ -789,9 +790,7 @@ class App extends Component{
                       <Stack.Screen
                         options={{headerShown: false, }}
                         name = "tabs" component= {this.createTabStack}/>
-                      <Stack.Screen
-                        options={{headerShown: false, }}
-                        name = "intro" component= {AppIntro}/>
+                    
                       <Stack.Screen
                         name = "FollowTab" component= {this.followerFollowingTab}
                         options={{
