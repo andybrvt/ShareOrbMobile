@@ -84,7 +84,6 @@ class AppIntro extends React.Component{
   }
 
   resumeVid = () =>  {
-    console.log("Hfffffffffffffffffffff")
     this.setState({
       videoPlaying: true
     })
@@ -247,7 +246,7 @@ class AppIntro extends React.Component{
 
   onSignupSubmit = () => {
     console.log('sign up here')
-    const {username, firstName, lastName, email, dob, password} = this.state;
+    const { profilePic, username, firstName, lastName, email, dob, password} = this.state;
     return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
       username: username,
       first_name: firstName,
@@ -259,10 +258,22 @@ class AppIntro extends React.Component{
     }).then(res => {
       const token = res.data.key;
       console.log(token)
-      AsyncStorage.setItem('token', token)
-      this.props.authSuccess(token);
+      const formData = new FormData();
+      const newPic = global.FILE_NAME_GETTER(profilePic)
 
-      // change userprofile picture
+
+      formData.append("profilePic", newPic)
+
+
+      AsyncStorage.setItem('token', token)
+
+      authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePic`,
+        formData
+      ).then( res => {
+        this.props.authSuccess(token);
+
+      })
+      // change userprofile picture using username
     })
   }
 
@@ -420,7 +431,7 @@ class AppIntro extends React.Component{
                 <Permissions
                    />
               </SlideWrap>
-              
+
               */}
 
 
