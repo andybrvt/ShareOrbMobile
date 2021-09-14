@@ -311,6 +311,7 @@ const styles = StyleSheet.create({
   promptText: {
     color: 'white',
     fontSize: 30,
+    fontFamily:'Nunito-Bold',
   },
   topContainer: {
     width: width,
@@ -328,10 +329,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: '50%',
     width: width,
+    // backgroundColor:'red',
   },
   textInput: {
     color: 'white',
-    fontSize: 25
+    fontSize: 25,
+    fontFamily:'Nunito-SemiBold',
   },
   bottomContainer: {
     height: '25%',

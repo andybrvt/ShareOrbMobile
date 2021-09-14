@@ -24,42 +24,62 @@ const height = Dimensions.get("window").height
 
 
    render(){
-
      return(
 
        <View >
-         <Button
-           title = "close"
-           onPress = {() => this.props.closeModal(this.props.closeNum)}
-            />
           <View style = {styles.topContainer}>
             <Text style = {{
                 color: 'white',
-                fontSize: 25
+                fontSize: 25,
+                fontFamily:'Nunito-Bold'
 
               }}>When is your birthday?</Text>
           </View>
 
           <View style = {styles.midContainer}>
             <Text style = {{
-                color: 'white'
-              }}>{dateFns.format(this.props.value, "MMMM dd yyyy")}</Text>
+                color: 'white',
+                fontFamily:'Nunito-SemiBold'
+              }}>{dateFns.format(this.props.value, "MMMM dd, yyyy")}</Text>
           </View>
+          {this.props.currSlide==false?
+            <View><Text></Text></View>
+          :
+          <View>
+            {
+              Platform.OS === "ios" ?
+              <DateTimePicker
+                testID="dateTimePicker"
+                value = {this.props.value}
+                mode="date"
+                is24Hour={true}
+                display="spinner"
+                onChange = {this.props.onChange}
+                maximumDate = {new Date()}
+                textColor = 'white'
+                />
+                :
+                this.props.showBirthdayAndroid?
 
-
-          <View >
-            <DateTimePicker
-              testID="dateTimePicker"
-              value = {this.props.value}
-              mode="date"
-              is24Hour={true}
-              display="spinner"
-              onChange = {this.props.onChange}
-              maximumDate = {new Date()}
-              textColor = 'white'
-              />
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value = {this.props.value}
+                  mode="date"
+                  is24Hour={true}
+                  display="spinner"
+                  onChange = {this.props.onChange}
+                  maximumDate = {new Date()}
+                  textColor = 'white'
+                  />
+                :
+                null
+            }
 
           </View>
+          }
+
+
+
 
           <View style = {styles.bottomContainer}>
 
@@ -97,7 +117,7 @@ const height = Dimensions.get("window").height
 const styles = StyleSheet.create({
   topContainer: {
     width: width,
-    height: '10%',
+    height: '30%',
     alignItems: 'center',
     justifyContent: 'center',
   },
