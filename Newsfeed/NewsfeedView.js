@@ -185,11 +185,15 @@ class NewsfeedView extends React.Component{
 
     return(
       <BackgroundContainer>
-        <AppIntro
-          {...this.props}
-          visible = {this.props.showIntialInstructions}
-          unShow = {this.unShow}
-          />
+        {/*
+          // You can put the mini invite and video here
+          <AppIntro
+            {...this.props}
+            visible = {this.props.showIntialInstructions}
+            unShow = {this.unShow}
+            />
+          */}
+
         {
           this.props.showFirstPostModal ?
           <FirstPost

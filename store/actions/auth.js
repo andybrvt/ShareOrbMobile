@@ -118,6 +118,7 @@ export const authLogin = (username, password) => {
 
 export const logout = () => {
   AsyncStorage.removeItem("token")
+  AsyncStorage.removeItem("inviToken")
   return {
     type: actionTypes.AUTH_LOGOUT
   }
@@ -128,13 +129,11 @@ export const authCheckState = () => {
   return dispatch => {
 
     const token = AsyncStorage.getItem("token")
-
     // since this is async storage and is a promise  you have to
     // do a . then  in order to get the value
   AsyncStorage.getItem('token')
   .then(res => {
       // res here will return the token
-      console.log(res, 'stuff here')
       if(res === null){
         // Check if there is token already existing,
         // if not you will log out
@@ -144,7 +143,6 @@ export const authCheckState = () => {
         AsyncStorage.getItem('inviToken')
         .then(res => {
 
-          console.log(res, 'here is the invitoken')
           if(res === null){
             // if you don't have a invite token saved you will get logged out
             dispatch(logout());
@@ -160,8 +158,22 @@ export const authCheckState = () => {
 
       } else {
 
-
         // if you have a token stored then you will put it into the redux
+        AsyncStorage.getItem('inviToken')
+        .then(res => {
+
+          if(res === null){
+            // if you don't have a invite token saved you will get logged out
+            // dispatch(logout());
+          } else {
+
+            // direct you to the tutorial page by show that you have a invite token
+            dispatch(authInviteSuccess(res))
+          }
+
+
+
+        })
         dispatch(authSuccess(res))
         dispatch(grabUserCredentials())
 

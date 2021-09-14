@@ -29,6 +29,7 @@ import Explore from './Explore/Explore';
 import Friends from './Friends';
 import Login from './Login/Login';
 import AppIntro from './Login/AppIntro';
+import MiniAppIntro from './Login/MiniAppIntro';
 import Signup from './Signup/Signup';
 import Chats from './Chats/Chats';
 import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
@@ -758,7 +759,8 @@ class App extends Component{
   }
 
   render(){
-
+    console.log(this.props.username, 'here in teh app')
+    console.log(this.props.loading, 'loadhin gher ')
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth
@@ -791,7 +793,9 @@ class App extends Component{
                         name = "tabs" component= {this.createTabStack}/>
                       <Stack.Screen
                         options={{headerShown: false, }}
-                        name = "intro" component= {AppIntro}/>
+                        name = "intro" component= {MiniAppIntro}/>
+
+
                       <Stack.Screen
                         name = "FollowTab" component= {this.followerFollowingTab}
                         options={{

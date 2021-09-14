@@ -15,7 +15,9 @@ import {
   Dimensions,
   TouchableOpacity,
   Share,
-  Alert
+  Alert,
+  AsyncStorage
+
  } from 'react-native';
 import newfeedpic from '../newfeedpic.jpg';
 import profilepic from '../profilepic.jpg';
@@ -40,6 +42,11 @@ import BirthdaySlide from './BirthdaySlide';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import test from './test.mp4';
 import ProfilePicSlide from './ProfilePicSlide';
+import * as actions from '../store/actions/auth';
+import axios from "axios";
+import * as dateFns from 'date-fns';
+import * as authActions from '../store/actions/auth';
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -65,9 +72,11 @@ class AppIntro extends React.Component{
     five: false,
     six: false,
     seven:false,
+    eight: false,
     firstName: "",
     lastName: "",
     dob: new Date(),
+    email: "",
     username: "",
     password: "",
     profilePic: "",
@@ -77,7 +86,6 @@ class AppIntro extends React.Component{
   }
 
   resumeVid = () =>  {
-    console.log("Hfffffffffffffffffffff")
     this.setState({
       videoPlaying: true
     })
@@ -222,6 +230,12 @@ class AppIntro extends React.Component{
     })
   }
 
+  onEmailChange = e => {
+    this.setState({
+      email:e
+    })
+  }
+
   onPasswordChange = e => {
     this.setState({
       password:e
@@ -236,7 +250,35 @@ class AppIntro extends React.Component{
 
   onSignupSubmit = () => {
     console.log('sign up here')
-    const {username, firstName, lastName, password} = this.state;
+    const { profilePic, username, firstName, lastName, email, dob, password} = this.state;
+    return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
+      username: username,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      dob: dateFns.format(dob, "yyyy-MM-dd"),
+      password1: password,
+      password2: password
+    }).then(res => {
+      const token = res.data.key;
+      console.log(token)
+      const formData = new FormData();
+      const newPic = global.FILE_NAME_GETTER(profilePic)
+
+
+      formData.append("profilePic", newPic)
+
+
+      AsyncStorage.setItem('token', token)
+
+      authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePic`,
+        formData
+      ).then( res => {
+        this.props.authSuccess(token);
+
+      })
+      // change userprofile picture using username
+    })
   }
 
   render(){
@@ -297,6 +339,7 @@ class AppIntro extends React.Component{
               <BasicSignUp
                 un = {false}
                 pw = {false}
+                em = {false}
                 visible = {this.state.one}
                 prompt = {"What's your name?"}
                 value = {this.state.firstName}
@@ -324,6 +367,7 @@ class AppIntro extends React.Component{
               <BasicSignUp
                 un = {true}
                 pw = {false}
+                em = {false}
                 visible = {this.state.three}
                 prompt = {"What is your username?"}
                 value = {this.state.username}
@@ -335,37 +379,41 @@ class AppIntro extends React.Component{
 
             </SlideWrap>
             <SlideWrap visible = {this.state.four}>
+              <BasicSignUp
+                un = {false}
+                pw = {false}
+                em = {true}
+                visible = {this.state.four}
+                prompt = {"What is your email?"}
+                value = {this.state.email}
+                onChange = {this.onEmailChange}
+                closeModal = {this.closeModal}
+                openModal = {this.openModal}
+                closeNum = {'four'}
+                openNum = {'five'}/>
+
+            </SlideWrap>
+            <SlideWrap visible = {this.state.five}>
               <ProfilePicSlide
 
                 value = {this.state.profilePic}
                 onChange = {this.onPicChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
-                closeNum = {'four'}
-                openNum = {'five'}
+                closeNum = {'five'}
+                openNum = {'six'}
                 />
             </SlideWrap>
-            <SlideWrap visible = {this.state.five}>
+            <SlideWrap visible = {this.state.six}>
               <BasicSignUp
                 pw = {true}
                 un = {false}
+                em = {false}
                 signup = {this.onSignupSubmit}
-                visible = {this.state.five}
+                visible = {this.state.six}
                 prompt = {"Now your password"}
                 value = {this.state.password}
                 onChange = {this.onPasswordChange}
-                closeModal = {this.closeModal}
-                openModal = {this.openModal}
-                closeNum = {'five'}
-                openNum = {'six'}
-                 />
-            </SlideWrap>
-
-            <SlideWrap visible = {this.state.six}>
-              <InvitePeople
-                profilePic = {this.state.profilePic}
-                firstName = {this.state.firstName}
-                lastName = {this.state.lastName}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
                 closeNum = {'six'}
@@ -373,10 +421,28 @@ class AppIntro extends React.Component{
                  />
             </SlideWrap>
 
-            <SlideWrap visible = {this.state.seven}>
-              <Permissions
-                 />
-            </SlideWrap>
+            {/*
+
+              <SlideWrap visible = {this.state.seven}>
+                <InvitePeople
+                  profilePic = {this.state.profilePic}
+                  firstName = {this.state.firstName}
+                  lastName = {this.state.lastName}
+                  closeModal = {this.closeModal}
+                  openModal = {this.openModal}
+                  closeNum = {'seven'}
+                  openNum = {'eight'}
+                   />
+              </SlideWrap>
+
+              <SlideWrap visible = {this.state.eight}>
+                <Permissions
+                   />
+              </SlideWrap>
+
+              */}
+
+
             {/*
               <FlatList
                 pagingEnabled
@@ -475,6 +541,13 @@ const mapStateToProps = state => {
     username: state.auth.username
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    authSuccess: (token) => dispatch(actions.authSuccess(token)),
+
+  }
+}
 
 
- export default connect(mapStateToProps, null)(AppIntro)
+
+ export default connect(mapStateToProps, mapDispatchToProps)(AppIntro)

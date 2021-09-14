@@ -101,8 +101,9 @@ const authLogout = (state, action) => {
 
   return updateObject(state, {
     token: null,
+    notificationToken: "",
     error: null,
-    loading: false,
+    loading: true,
     username: null,
     id: null,
     firstName: '',
@@ -121,7 +122,12 @@ const authLogout = (state, action) => {
     notificationSeen: 0,
     date_joined: null,
     bio: "",
-    dailyNotification: true
+    curLoad: 0,
+    totalLoad: 0,
+    showCamera: false,
+    dailyNotification: true,
+    showFirstPostModal: false,
+    inviToken: null
   });
 };
 
