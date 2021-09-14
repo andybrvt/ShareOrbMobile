@@ -161,8 +161,12 @@ class MiniAppIntro extends React.Component{
     }
 
     return(
-      <View style = {{flex: 1}}>
-        <View style = {{alignItems: 'center'}}>
+      <View style = {{
+
+            flex: 1}}>
+        <View style = {{
+
+              alignItems: 'center'}}>
 
           {
             this.props.isInvited ?
@@ -201,7 +205,7 @@ class MiniAppIntro extends React.Component{
             :
 
             <View>
-              <View style={{flex:5, justifyContent:'center', alignItems:'center'}}>
+              <View style={{height: height, justifyContent:'center', alignItems:'center'}}>
                 <Video
                   ref={this.video}
                   style={{width:height,
@@ -214,13 +218,7 @@ class MiniAppIntro extends React.Component{
                 />
                 <View>
 
-                {this.state.videoPlaying==false?
-                  <TouchableOpacity onPress={()=>this.resumeVid()}>
-                    <Text style={{fontSize:18, color:'white'}}>Resume</Text>
-                  </TouchableOpacity>
-                :
-                <Text></Text>
-                }
+            
                 </View>
               </View>
             </View>
