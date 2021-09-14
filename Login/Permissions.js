@@ -66,6 +66,7 @@ class Permissions extends React.Component{
      try{
        const camera = await Camera.requestMicrophonePermissionsAsync();
        if(camera.status  == "granted"){
+         console.log("hre")
          this.setState({
            allowMicrophone: true,
          })
@@ -113,6 +114,8 @@ class Permissions extends React.Component{
 
 
   render(){
+
+    const{allowCamera, allowMicrophone, allowNotifications, allowGallery} = this.state
     return(
       <View style = {{
           // flex: 1,
@@ -238,12 +241,23 @@ class Permissions extends React.Component{
             </View>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-           onPress = {() => this.close()}
-           style = {styles.loginBtn}>
-          <Text style = {styles.loginText}>Let's Go!</Text>
-        </TouchableOpacity>
-      </View>
+
+        {
+          allowCamera && allowMicrophone && allowNotifications && allowGallery ?
+
+          <TouchableOpacity
+             onPress = {() => this.close()}
+             style = {styles.loginBtn}>
+            <Text style = {styles.loginText}>Let's Go!</Text>
+          </TouchableOpacity>
+
+          :
+
+          null
+
+
+        }
+        </View>
     )
   }
 }
@@ -279,8 +293,24 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     backgroundColor: "white",
   },
+  loginBtnDisabled: {
+    position: "absolute",
+    width: "80%",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    top: '95%',
+    zIndex: 9999,
+    backgroundColor: "gray",
+  },
   loginText: {
     color: '#1890ff',
+    fontSize: 18,
+    fontFamily:'Nunito-Bold',
+  },
+  loginTextDisabled: {
+    color: 'lightgray',
     fontSize: 18,
     fontFamily:'Nunito-Bold',
   },
