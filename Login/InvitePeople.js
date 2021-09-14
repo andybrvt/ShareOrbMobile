@@ -25,7 +25,7 @@ class InvitePeople extends React.Component{
      //Here is the Share API
      Share.share({
        // message: inputValue.toString(),
-       message:"Join ShareOrb with my code: N24FJFE"
+       message:"Join ShareOrb with my code: "+ this.props.inviteCode 
      })
        //after successful share return result
        .then((result) => console.log(result))
