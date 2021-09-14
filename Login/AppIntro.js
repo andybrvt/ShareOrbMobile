@@ -247,11 +247,12 @@ class AppIntro extends React.Component{
 
   onSignupSubmit = () => {
     console.log('sign up here')
-    const {username, firstName, lastName, dob, password} = this.state;
+    const {username, firstName, lastName, email, dob, password} = this.state;
     return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
       username: username,
       first_name: firstName,
       last_name: lastName,
+      email: email,
       dob: dateFns.format(dob, "yyyy-MM-dd"),
       password1: password,
       password2: password
@@ -360,7 +361,7 @@ class AppIntro extends React.Component{
             </SlideWrap>
             <SlideWrap visible = {this.state.four}>
               <BasicSignUp
-                un = {true}
+                un = {false}
                 pw = {false}
                 em = {true}
                 visible = {this.state.four}

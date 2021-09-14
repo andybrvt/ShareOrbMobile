@@ -103,11 +103,7 @@ class BasicSignUp extends React.Component{
           "Username already taken",
           "Someone else has the username already",
           [
-            {
-              text: "Cancel",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel"
-            },
+
             { text: "OK",
               style:'destructive',
               onPress: () => console.log('ok')
@@ -122,6 +118,35 @@ class BasicSignUp extends React.Component{
   checkEmail = () => {
     console.log('email here')
     const email = this.props.value;
+    axios.get(`${global.IP_CHANGE}`+'/userprofile/validateEmail', {
+      params: {
+        email: email
+      }
+    })
+    .then(res => {
+      console.log(res.data)
+      if(res.data === true){
+        Keyboard.dismiss()
+        this.props.openModal(this.props.openNum)
+      } else {
+        Alert.alert(
+          "Email already taken",
+          "Email in use already",
+          [
+
+            { text: "OK",
+              style:'destructive',
+              onPress: () => console.log('ok')
+            }
+          ]
+
+        )
+      }
+
+
+    })
+
+
   }
 
   next = () => {
