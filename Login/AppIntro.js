@@ -82,6 +82,7 @@ class AppIntro extends React.Component{
     profilePic: "",
     videoPlaying:true,
     resumeOnce:false,
+    showDatePicker: true,
   }
 
   resumeVid = () =>  {
@@ -208,6 +209,7 @@ class AppIntro extends React.Component{
       })
       return
     }
+    else{
     if(Platform.OS =='ios'){
       this.setState({
         dob: selectedDate,
@@ -218,6 +220,7 @@ class AppIntro extends React.Component{
         dob: selectedDate,
         showDatePicker: false
       })
+    }
     }
   }
 
@@ -279,6 +282,7 @@ class AppIntro extends React.Component{
   }
 
   render(){
+    let showPicker=this.state.showDatePicker
     return(
       <View style = {{flex: 1}}>
           <View style = {{alignItems:'center'}}>
@@ -348,6 +352,9 @@ class AppIntro extends React.Component{
             </SlideWrap>
             <SlideWrap visible = {this.state.two}>
               <BirthdaySlide
+                {...this.props}
+                showBirthdayAndroid={this.state.showDatePicker}
+                currSlide={this.state.two}
                 value = {this.state.dob}
                 onChange = {this.onDobChange}
                 closeModal = {this.closeModal}
