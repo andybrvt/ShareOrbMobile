@@ -26,6 +26,12 @@ import axios from "axios";
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
+
+const email = value =>
+  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+    ? 'Invalid email address'
+    : undefined
+
 // used for general 1 line text input
 class BasicSignUp extends React.Component{
 
@@ -113,6 +119,11 @@ class BasicSignUp extends React.Component{
     })
   }
 
+  checkEmail = () => {
+    console.log('email here')
+    const email = this.props.value;
+  }
+
   next = () => {
     if(this.props.pw){
       Alert.alert(
@@ -132,9 +143,12 @@ class BasicSignUp extends React.Component{
 
     }
 
-    if(this.props.un){
+    else if(this.props.un){
       // if username
       this.checkUsername()
+    } else if(this.props.em){
+      this.checkEmail()
+
     }
     else {
       Keyboard.dismiss()
@@ -159,6 +173,13 @@ class BasicSignUp extends React.Component{
         return false
       } else if(value.search(/[0-9]/)< 0){
         // Validate if it has a number
+        return false
+      }
+    }
+
+    if(this.props.em){
+      const value = this.props.value
+      if(email(value)){
         return false
       }
     }
