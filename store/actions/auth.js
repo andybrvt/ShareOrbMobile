@@ -159,6 +159,21 @@ export const authCheckState = () => {
       } else {
 
         // if you have a token stored then you will put it into the redux
+        AsyncStorage.getItem('inviToken')
+        .then(res => {
+
+          if(res === null){
+            // if you don't have a invite token saved you will get logged out
+            // dispatch(logout());
+          } else {
+
+            // direct you to the tutorial page by show that you have a invite token
+            dispatch(authInviteSuccess(res))
+          }
+
+
+
+        })
         dispatch(authSuccess(res))
         dispatch(grabUserCredentials())
 

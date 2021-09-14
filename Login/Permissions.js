@@ -107,6 +107,11 @@ class Permissions extends React.Component{
     this.props.openModal(this.props.openNum)
   }
 
+  close = () => {
+    this.props.onClose()
+  }
+
+
   render(){
     return(
       <View style = {{

@@ -121,7 +121,9 @@ const authLogout = (state, action) => {
     notificationSeen: 0,
     date_joined: null,
     bio: "",
-    dailyNotification: true
+    dailyNotification: true,
+    inviToken: null
+
   });
 };
 

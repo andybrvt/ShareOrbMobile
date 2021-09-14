@@ -29,6 +29,7 @@ import Explore from './Explore/Explore';
 import Friends from './Friends';
 import Login from './Login/Login';
 import AppIntro from './Login/AppIntro';
+import MiniAppIntro from './Login/MiniAppIntro';
 import Signup from './Signup/Signup';
 import Chats from './Chats/Chats';
 import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
@@ -790,7 +791,11 @@ class App extends Component{
                       <Stack.Screen
                         options={{headerShown: false, }}
                         name = "tabs" component= {this.createTabStack}/>
-                    
+                      <Stack.Screen
+                        options={{headerShown: false, }}
+                        name = "intro" component= {MiniAppIntro}/>
+
+
                       <Stack.Screen
                         name = "FollowTab" component= {this.followerFollowingTab}
                         options={{

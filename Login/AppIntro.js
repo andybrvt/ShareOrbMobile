@@ -45,6 +45,7 @@ import ProfilePicSlide from './ProfilePicSlide';
 import * as actions from '../store/actions/auth';
 import axios from "axios";
 import * as dateFns from 'date-fns';
+import * as authActions from '../store/actions/auth';
 
 
 const width = Dimensions.get("window").width
