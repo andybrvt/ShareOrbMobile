@@ -119,7 +119,7 @@ const height = Dimensions.get("window").height
 const styles = StyleSheet.create({
   topContainer: {
     width: width,
-    height: '40%',
+    height: '25%',
     alignItems: 'center',
     justifyContent: 'center',
   },

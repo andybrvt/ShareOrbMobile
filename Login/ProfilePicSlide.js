@@ -9,7 +9,8 @@ import {
   Modal,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Platform
  } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -106,23 +107,52 @@ class ProfilePicSlide extends React.Component{
 
   renderInner =()=> {
     return(
-      <View style={styles.panel}>
-        <TouchableOpacity1
-          onPress = {()=>this.handleTakeProfile()}
-          style={styles.panelButton} >
-          <Text style={styles.panelButtonTitle}>Take Photo</Text>
-        </TouchableOpacity1>
-        <TouchableOpacity1
-          onPress = {()=>this.handleChooseProfile()}
-          style={styles.panelButton}>
-          <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-        </TouchableOpacity1>
-        <TouchableOpacity1
-          style={styles.panelButton1}
-          onPress={() => this.bs.current.snapTo(1)}>
-          <Text style={styles.panelButtonTitle1}>Cancel</Text>
-        </TouchableOpacity1>
+      <View>
+        {
+          Platform.OS ===  'ios' ?
+
+          <View style={styles.panel}>
+            <TouchableOpacity
+              onPress = {()=>this.handleTakeProfile()}
+              style={styles.panelButton} >
+              <Text style={styles.panelButtonTitle}>Take Photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress = {()=>this.handleChooseProfile()}
+              style={styles.panelButton}>
+              <Text style={styles.panelButtonTitle}>Choose From Library</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.panelButton1}
+              onPress={() => this.bs.current.snapTo(1)}>
+              <Text style={styles.panelButtonTitle1}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+
+          :
+
+          <View style={styles.panel}>
+            <TouchableOpacity1
+              onPress = {()=>this.handleTakeProfile()}
+              style={styles.panelButton} >
+              <Text style={styles.panelButtonTitle}>Take Photo</Text>
+            </TouchableOpacity1>
+            <TouchableOpacity1
+              onPress = {()=>this.handleChooseProfile()}
+              style={styles.panelButton}>
+              <Text style={styles.panelButtonTitle}>Choose From Library</Text>
+            </TouchableOpacity1>
+            <TouchableOpacity1
+              style={styles.panelButton1}
+              onPress={() => this.bs.current.snapTo(1)}>
+              <Text style={styles.panelButtonTitle1}>Cancel</Text>
+            </TouchableOpacity1>
+          </View>
+
+        }
+
       </View>
+
     )
   }
 
