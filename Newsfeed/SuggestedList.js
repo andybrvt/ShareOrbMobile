@@ -101,7 +101,7 @@ class SuggestedList extends React.Component{
         start: start+addMore
       })
     })
-    
+
   }
 
   ViewProfile = (username) => {
@@ -280,7 +280,9 @@ class SuggestedList extends React.Component{
 
     return(
       <View style = {styles.headerContainer}>
-      <InvitePage />
+      <InvitePage
+        inviteCode = {this.props.inviteCode}
+         />
       </View>
     )
   }

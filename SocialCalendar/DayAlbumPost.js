@@ -128,7 +128,7 @@ import {
 
               {/* fast image*/}
 
-               <Image
+               <FastImage
                  resizeMode="cover"
                  style={{width:'100%', height:250, borderRadius:5, backgroundColor:'gray' }}
                  source = {{
@@ -137,7 +137,7 @@ import {
 
                {/* fast image*/}
 
-             </Image>
+             </FastImage>
              </TouchableOpacity>
 
          }

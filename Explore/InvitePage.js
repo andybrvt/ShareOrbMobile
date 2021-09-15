@@ -79,7 +79,9 @@ class InvitePage extends React.Component{
     //Here is the Share API
     Share.share({
       // message: inputValue.toString(),
-      message:"Join ShareOrb with my code: "+ codeInvite
+      message:"Join ShareOrb with my code: "+ codeInvite+"\nIOS:"+" https://testflight.apple.com/join/v58j1FSw"
+      + "\nAndroid: "+"https://play.google.com/store/apps/details?id=com.pinghsu520.ShareOrbMobile"
+
     })
       //after successful share return result
       .then((result) => console.log(result))
@@ -190,7 +192,15 @@ class InvitePage extends React.Component{
                   }}>
                    Skip the waitlist
                  </Text>
+                 <View>
+                   <Text style = {styles.welcomeText}>
+                     Your Code:&nbsp;
+                     <Text>{this.props.inviteCode}</Text>
+                   </Text>
+                 </View>
                 </View>
+
+
                 <TouchableOpacity onPress={()=>this.shareMessage(codeInvite)} style={styles.loginBtn1}>
                   <Text style={{color:'white'}}>Invite</Text>
 
@@ -266,7 +276,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10
   },
-
+  welcomeText: {
+  padding:5,
+    color: "#1890ff",
+    fontSize: 27.5,
+    top: '7%',
+    textAlign: 'center',
+    fontFamily:'Nunito-SemiBold',
+  },
   loginBtn1: {
     width: "75%",
     borderRadius: 25,
