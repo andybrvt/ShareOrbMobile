@@ -239,6 +239,7 @@ class Explore extends React.Component{
               username = {this.props.username}
               onRefresh = {this.onRefresh}
               refreshing = {this.state.refreshing}
+              inviteCode = {this.props.inviteCode}
                />
 
 
@@ -260,7 +261,7 @@ const mapStateToProps = state => {
     username: state.auth.username,
     following: state.auth.following,
     id: state.auth.id,
-
+    inviteCode: state.auth.inviteCode
   }
 }
 
