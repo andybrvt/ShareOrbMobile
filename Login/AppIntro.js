@@ -411,7 +411,7 @@ class AppIntro extends React.Component{
                 em = {false}
                 signup = {this.onSignupSubmit}
                 visible = {this.state.six}
-                prompt = {"Now your password"}
+                prompt = {"Create a password"}
                 value = {this.state.password}
                 onChange = {this.onPasswordChange}
                 closeModal = {this.closeModal}

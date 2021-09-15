@@ -16,11 +16,26 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as dateFns from 'date-fns';
 import { ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
-
+import authAxios from '../util';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
 class InvitePeople extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      inviteLeft:0
+    }
+  }
+  componentDidMount() {
+    authAxios.get(`${global.IP_CHANGE}`+'/userprofile/getInvitedNum')
+    .then( res => {
+      this.setState({
+        inviteLeft: res.data
+      })
+    })
+
+  }
    shareMessage = (codeInvite) => {
      //Here is the Share API
      Share.share({
@@ -68,14 +83,14 @@ class InvitePeople extends React.Component{
                   </TouchableOpacity>
                 </View>
               <View style = {{
-                  top: '7.5%'
+                  top: '2.5%'
                 }}>
                 <View style={{padding:30}}>
                   <Text style = {styles.welcomeText}>
                     Invite Friends
                   </Text>
                   <Text style = {styles.welcomeText}>
-                    Skip the Waitlist
+                    They Skip the Waitlist
                   </Text>
                 </View>
                 <View style={{alignItems: 'center'}}>
@@ -99,7 +114,7 @@ class InvitePeople extends React.Component{
                       {this.props.firstName} {this.props.lastName}
                     </Text>
                   </View>
-                  <View style={{top:'17.5%'}}>
+                  <View style={{top:'10%'}}>
                     <Text style = {styles.welcomeText}>
                       Your Code:&nbsp;
                       <Text  style={{fontSize:32.5, color:'white', fontFamily:'Nunito-Bold'}}>
@@ -108,7 +123,7 @@ class InvitePeople extends React.Component{
                     </Text>
 
                     <Text style = {styles.welcomeText}>
-                      You have only 5 invites
+                      {this.state.inviteLeft} invites Left
                     </Text>
                   </View>
                 </View>
@@ -152,7 +167,7 @@ class InvitePeople extends React.Component{
      borderRadius: 25,
      height: 50,
      marginLeft:'15%',
-     marginTop:'40%',
+     marginTop:'30%',
      alignItems: "center",
      justifyContent: "center",
      zIndex: 9999,

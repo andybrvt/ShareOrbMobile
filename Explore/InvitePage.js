@@ -37,7 +37,7 @@ class InvitePage extends React.Component{
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     authAxios.get(`${global.IP_CHANGE}`+'/userprofile/getInvitedNum')
     .then( res => {
       this.setState({
