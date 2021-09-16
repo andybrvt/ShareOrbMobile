@@ -123,6 +123,16 @@ import * as authActions from '../store/actions/auth';
      }
    }
 
+   resetInviteCode = () => {
+     authAxios.get(`${global.IP_CHANGE}`+'/userprofile/resetInviteNum')
+     .then( res => {
+       alert("invite codes reset")
+     })
+     .catch(err => {
+       alert("error invite code reset")
+     })
+   }
+
    render(){
      console.log(this.props.dailyNotification)
      return (
@@ -188,6 +198,23 @@ import * as authActions from '../store/actions/auth';
 
 
               */}
+
+            {
+              this.props.id === 1 ?
+
+              <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.resetInviteCode()}>
+                   <View style={{flexDirection:'row', padding:20}}>
+                      <Bell stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
+                      <Text style={styles.settingWord}>Reset invite code</Text>
+                  </View>
+                </TouchableHighlight>
+
+              :
+
+              null
+
+
+            }
 
 
 
