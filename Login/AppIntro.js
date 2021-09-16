@@ -16,8 +16,8 @@ import {
   TouchableOpacity,
   Share,
   Alert,
-  AsyncStorage
-
+  AsyncStorage,
+  ActivityIndicator
  } from 'react-native';
 import newfeedpic from '../newfeedpic.jpg';
 import profilepic from '../profilepic.jpg';
@@ -83,6 +83,7 @@ class AppIntro extends React.Component{
     videoPlaying:true,
     resumeOnce:false,
     showDatePicker: true,
+    loading:false,
   }
 
   resumeVid = () =>  {
@@ -250,6 +251,9 @@ class AppIntro extends React.Component{
 
   onSignupSubmit = () => {
     console.log('sign up here')
+    this.setState({
+      loading: true
+    })
     const { profilePic, username, firstName, lastName, email, dob, password} = this.state;
     return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
       username: username,
@@ -274,10 +278,19 @@ class AppIntro extends React.Component{
       authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePic`,
         formData
       ).then( res => {
+        this.setState({
+          loading:false
+        })
         this.props.authSuccess(token);
 
       })
       // change userprofile picture using username
+    })
+    .catch( err => {
+      alert(err)
+      this.setState({
+        loading:false
+      })
     })
   }
 
@@ -340,6 +353,7 @@ class AppIntro extends React.Component{
                 un = {false}
                 pw = {false}
                 em = {false}
+                loading = {this.state.loading}
                 visible = {this.state.one}
                 prompt = {"What's your name?"}
                 value = {this.state.firstName}
@@ -368,6 +382,7 @@ class AppIntro extends React.Component{
                 un = {true}
                 pw = {false}
                 em = {false}
+                loading = {this.state.loading}
                 visible = {this.state.three}
                 prompt = {"What is your username?"}
                 value = {this.state.username}
@@ -383,6 +398,7 @@ class AppIntro extends React.Component{
                 un = {false}
                 pw = {false}
                 em = {true}
+                loading = {this.state.loading}
                 visible = {this.state.four}
                 prompt = {"What is your email?"}
                 value = {this.state.email}
@@ -409,6 +425,7 @@ class AppIntro extends React.Component{
                 pw = {true}
                 un = {false}
                 em = {false}
+                loading = {this.state.loading}
                 signup = {this.onSignupSubmit}
                 visible = {this.state.six}
                 prompt = {"Create a password"}
