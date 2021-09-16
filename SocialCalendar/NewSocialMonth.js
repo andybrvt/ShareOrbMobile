@@ -212,7 +212,7 @@ class NewSocialMonth extends React.PureComponent{
                             }
                             rate = {1}
                             isMuted = {true}
-                            shouldPlay
+                            // shouldPlay
                             resizeMode = "cover"
                             source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverVid}` }}
                             />
@@ -393,7 +393,7 @@ class NewSocialMonth extends React.PureComponent{
 
                             rate = {1}
                             isMuted = {true}
-                            shouldPlay
+                            // shouldPlay
                             resizeMode = "cover"
                             source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverVid}` }}
                             />
