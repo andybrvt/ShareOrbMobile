@@ -44,9 +44,9 @@ class SearchResults extends React.Component{
             flexDirection:'column',
             }}>
           <View style = {{flexDirection: 'row'}}>
-            <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.first_name, item.last_name, 20)} </Text>
+            <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.first_name, item.last_name, 20)} </Text>
           </View>
-          <Text>{item.username}</Text>
+          <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.username}</Text>
 
 
 
@@ -88,7 +88,7 @@ class SearchResults extends React.Component{
               width = {60}
                />
              <Text
-               style ={{color: 'gainsboro', fontSize:18}}
+               style ={{color: 'gainsboro', fontFamily:'Nunito-Bold', fontSize:18}}
                >Looking for someone?</Text>
           </View>
 

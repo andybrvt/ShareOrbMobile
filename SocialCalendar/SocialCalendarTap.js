@@ -236,7 +236,7 @@ class SocialCalendarTap extends React.Component{
                           <Text style = {styles.formatDateImage}> {formattedDate}</Text>
 
                           {/* fast image*/}
-                          <FastImage
+                          <Image
 
                             style = {dateFns.isSameDay(day, new Date()) ?
                               styles.smallImageGlow : styles.smallImage
@@ -345,7 +345,7 @@ class SocialCalendarTap extends React.Component{
 
                         {/* fast image*/}
 
-                        <FastImage
+                        <Image
                           style = {styles.smallImage}
                           resizeMode = "cover"
                           source={{ uri: `${global.IMAGE_ENDPOINT}${toDoStuff[0].coverPic}` }}

@@ -150,8 +150,8 @@ class InvitePage extends React.Component{
              }}>
              <Text style = {{
                  fontSize: 20,
-                 fontWeight: 'bold'
-               }}>Looks like you are out of invites</Text>
+                 fontFamily: 'Nunito-Bold'
+               }}>Out of invites</Text>
              <Text>{this.state.infoText}</Text>
 
          </View>

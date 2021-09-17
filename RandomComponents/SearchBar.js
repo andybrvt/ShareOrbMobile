@@ -53,7 +53,7 @@ class SearchBar extends React.Component{
               }}>
               <TouchableWithoutFeedback onPress = {() => this.props.onClose()}>
                 <View style={styles.editButton}>
-                   <Text style={{color:'white',}}>Cancel</Text>
+                   <Text style={{color:'white', fontFamily:'Nunito-SemiBold', fontSize:13,}}>Cancel</Text>
                  </View>
              </TouchableWithoutFeedback>
             </View>
