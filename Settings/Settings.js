@@ -9,7 +9,8 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Switch,
-  ActivityIndicator
+  ActivityIndicator,
+  TextInput
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -27,8 +28,35 @@ import * as authActions from '../store/actions/auth';
      super(props)
      this.state = {
        showNotifications: this.props.dailyNotification,
-       loading: false
+       loading: false,
+       username: ''
      }
+   }
+
+   userNameChange = e => {
+     this.setState({
+       username: e
+     })
+   }
+   userDelete = () => {
+     // function will be used to delete a user
+     console.log('delete user here')
+
+     const username = this.state.username;
+     authAxios.post(`${global.IP_CHANGE}`+'/userprofile/user/delete/'+username)
+     .then( res => {
+       console.log(res.data)
+       this.setState({
+         username: ""
+       })
+
+       alert("user deleted")
+
+
+     })
+     .catch( err => {
+       alert(err)
+     })
    }
    navigateUserInfo = () => {
      this.props.navigation.navigate("UserInfo")
@@ -123,6 +151,16 @@ import * as authActions from '../store/actions/auth';
      }
    }
 
+   resetInviteCode = () => {
+     authAxios.get(`${global.IP_CHANGE}`+'/userprofile/resetInviteNum')
+     .then( res => {
+       alert("invite codes reset")
+     })
+     .catch(err => {
+       alert("error invite code reset")
+     })
+   }
+
    render(){
      console.log(this.props.dailyNotification)
      return (
@@ -188,6 +226,52 @@ import * as authActions from '../store/actions/auth';
 
 
               */}
+
+            {
+              this.props.id === 1 ?
+
+              <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.resetInviteCode()}>
+                   <View style={{flexDirection:'row', padding:20}}>
+                      <Bell stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
+                      <Text style={styles.settingWord}>Reset invite code</Text>
+                  </View>
+                </TouchableHighlight>
+
+              :
+
+              null
+
+
+            }
+
+            {
+              this.props.id === 1 || this.props.id === 3 ?
+
+              <View underlayColor="#f0f0f0" onPress={() => this.resetInviteCode()}>
+                   <View style={{flexDirection:'row', padding:20}}>
+                     <TextInput
+                       value = {this.state.username}
+                       onChangeText = {this.userNameChange}
+                       placeholder = "Delete user, enter username"
+                       style = {{
+                         flex: 5
+                         }}
+                        />
+                      <Button
+                        onPress = {() => this.userDelete()}
+                        title = "Delete"
+                         />
+                  </View>
+
+
+                </View>
+
+              :
+
+              null
+
+
+            }
 
 
 

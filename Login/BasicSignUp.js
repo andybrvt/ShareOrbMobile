@@ -17,6 +17,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Keyboard,
+  ActivityIndicator,
 
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -39,7 +40,8 @@ class BasicSignUp extends React.Component{
       super(props)
       this.state = {
         pageHeight: 0,
-        showPassword: this.props.pw
+        showPassword: this.props.pw,
+        loading: false
 
       }
       this._keyboardDidShow = this._keyboardDidShow.bind(this)
@@ -190,7 +192,7 @@ class BasicSignUp extends React.Component{
     if(this.props.pw){
       const value = this.props.value
 
-      if(value.length < 9){
+      if(value.length < 10){
         // validate if the password is longer than 8 characters
         return false
       } else if(value.search(/[A-Z]/)< 0){
@@ -243,18 +245,30 @@ class BasicSignUp extends React.Component{
               <View
                 style = {styles.textContainer}
                 >
-                <TextInput
-                  style = {{
-                    width: 'width'
-                  }}
-                  autoCapitalize="none"
-                  selectionColor={'white'}
-                  secureTextEntry={this.state.showPassword}
-                  style = {styles.textInput}
-                  ref={(input) => { this.textInput = input; }}
-                  onChangeText = {this.props.onChange}
-                  value = {this.props.value}
-                  />
+                {
+                  this.props.loading ?
+
+                  <ActivityIndicator
+                    size = "large"
+                    color = 'white'
+                      />
+
+                  :
+
+                  <TextInput
+                    style = {{
+                      width: 'width'
+                    }}
+                    autoCapitalize="none"
+                    selectionColor={'white'}
+                    secureTextEntry={this.state.showPassword}
+                    style = {styles.textInput}
+                    ref={(input) => { this.textInput = input; }}
+                    onChangeText = {this.props.onChange}
+                    value = {this.props.value}
+                    />
+                }
+
                 {
                   this.props.pw ?
 
@@ -306,20 +320,37 @@ class BasicSignUp extends React.Component{
               >
 
               <View style = {styles.bottomLContainer}>
-                <TouchableOpacity
-                  onPress = {() => this.props.closeModal(this.props.closeNum)}
+                {
+                  this.props.loading ?
 
-                  >
-                  <ArrowLeftCircle
-                    width = {40}
-                    height = {40}
-                    stroke = "white"
-                    />
-                </TouchableOpacity>
+                  null
+
+                  :
+
+                  <TouchableOpacity
+                    onPress = {() => this.props.closeModal(this.props.closeNum)}
+
+                    >
+                    <ArrowLeftCircle
+                      width = {40}
+                      height = {40}
+                      stroke = "white"
+                      />
+                  </TouchableOpacity>
+
+
+                }
 
               </View>
 
               {
+                this.props.loading ?
+
+                null
+
+                :
+
+
                 this.validate() ?
 
                 <View style = {styles.bottomRContainer}>
