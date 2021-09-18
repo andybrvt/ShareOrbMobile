@@ -40,7 +40,8 @@ import InvitePeople from './InvitePeople';
 import BasicSignUp from './BasicSignUp';
 import BirthdaySlide from './BirthdaySlide';
 import { Video, AVPlaybackStatus } from 'expo-av';
-import test from './test.mp4';
+
+import test1 from './test1.mp4';
 import ProfilePicSlide from './ProfilePicSlide';
 import * as actions from '../store/actions/auth';
 import axios from "axios";
@@ -327,7 +328,7 @@ class AppIntro extends React.Component{
                   style={{width:height,
                      height: Platform.OS === 'ios' ? width : width+35,
                      transform: [{ rotate: '270deg' }], }}
-                  source = {test}
+                  source = {test1}
                   resizeMode="contain"
                   // isLooping
                   shouldPlay={true}
