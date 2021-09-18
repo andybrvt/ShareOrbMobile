@@ -13,6 +13,8 @@ import { Avatar } from 'react-native-paper';
 import { Search, Bell, MessageCircle, BookOpen, Sunrise} from "react-native-feather";
 import Animated from 'react-native-reanimated';
 import * as Progress from 'react-native-progress';
+import SmallGroupHolder from './SmallGroupHolder';
+
 
 const {interpolate, interpolateColors, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
 const width = Dimensions.get("window").width
@@ -73,19 +75,14 @@ class Header extends React.Component{
     // })
 
     return(
-      <View style = {{
-          zIndex: 99,
-          height:0
-        }}>
-      <Animated.View
-        style = {[styles.container,{
-        zIndex: 99,
-        }]}>
+
+
+
         <Animated.View style = {{
-          flexDirection: "row",
+          flexDirection: "column",
           flex: 1,
           backgroundColor: Platform.OS === "ios" ? "white" : "white",
-          height: 70,
+          height: 130,
           position: 'absolute',
           width: "100%",
           }}>
@@ -100,65 +97,42 @@ class Header extends React.Component{
             }}
             progress = {this.props.curLoad} width = {width}
              />
-          <View style = {styles.logoContainer}>
-             <MainLogo1 width = {120}/>
-          </View>
 
-          <View style = {styles.testWhere2}>
-                 <Text style = {styles.videoFooterUserName}>
-                   {this.props.currentMonth}
-                 </Text>
-                 <Text style = {styles.dayNumTag}>
-                   {this.props.currentDay}
-                 </Text>
-          </View>
-          <View style = {styles.searchProfileContainer}>
-            {/*
-              <MessageCircle
-                onPress = {() => this.props.navigation.navigate("Messages")}
-                style={{right:25}}
-                stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
-              */}
+           <View style = {{
+             flexDirection: "row",
+             height: 70,
+             }}>
+             <View style = {styles.logoContainer}>
+                <MainLogo1 width = {120}/>
+             </View>
+
+             <View style = {styles.testWhere2}>
+                    <Text style = {styles.videoFooterUserName}>
+                      {this.props.currentMonth}
+                    </Text>
+                    <Text style = {styles.dayNumTag}>
+                      {this.props.currentDay}
+                    </Text>
+             </View>
 
 
+           </View>
+
+           <View>
+             <SmallGroupHolder />
+           </View>
 
 
 
 
-                {/*this.props.condition?
-                  <View>
-                  <TouchableOpacity
-                    style={{marginRight:10}}
-                     style={styles.loginBtn} onPress={() => this.props.changeFeed()}>
-
-                    <Text style={{color:'white', fontSize:15, padding:10}}>Public</Text>
-                  </TouchableOpacity>
-                </View>
-                :
-
-                <TouchableOpacity
-                  style={{marginRight:10}}
-                   style={styles.loginBtn} onPress={() => this.props.changeFeed()}>
-
-                  <Text style={{color:'white', fontSize:15, padding:5}}>Personal</Text>
-                </TouchableOpacity>
-              */}
-
-
-              {/*
-
-            <TouchableOpacity
-              onPress = {() => this.props.navigation.navigate("Notifications")}>
-              <Bell
-              stroke="#1890ff"
-              style={{marginLeft:10}}
-              strokeWidth={2.5} width={22.5} height={22.5} />
-            </TouchableOpacity>
-          */}
-          </View>
         </Animated.View>
-      </Animated.View>
-      </View>
+
+
+
+
+
+
+
     )
   }
 }
@@ -192,11 +166,13 @@ const styles = StyleSheet.create({
     backgroundColor:'red',
   },
   container: {
-    // backgroundColor:"red",
+    flex: 1,
     position: "relative",
     // shadowOffset:{  width: 0,  height: 2,  },
     // shadowColor: 'black',
     // shadowOpacity: 0.2,
+    backgroundColor: 'red',
+    height: 20,
     elevation:3,
     borderBottomWidth: 5,
     borderBottomColor: "gray",

@@ -222,7 +222,7 @@ class InfiniteScrollFlat extends React.Component{
             onEndReached = {() => this.loadSocialPost()}
             onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
-            style={{top:70,}}
+            style={{top:130,}}
              />
         }
 
