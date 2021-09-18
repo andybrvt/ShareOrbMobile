@@ -50,11 +50,11 @@ console.disableYellowBox = true;
 
 
 // Main site
-// global.IP_CHANGE = "https://api.shareorb.com"
-// global.IMAGE_ENDPOINT = ""
-// global.WS_ENDPOINT = "api.shareorb.com"
-// global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
-// global.WS_HEADER = "wss"
+global.IP_CHANGE = "https://api.shareorb.com"
+global.IMAGE_ENDPOINT = ""
+global.WS_ENDPOINT = "api.shareorb.com"
+global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
+global.WS_HEADER = "wss"
 
 // 931
 // global.IP_CHANGE = "http://10.20.100.62:19000"
