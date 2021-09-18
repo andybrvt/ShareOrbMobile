@@ -23,7 +23,7 @@ import Permissions from './Permissions';
 import InvitePeople from './InvitePeople';
 import SlideWrap from './SlideWrap';
 import { Video, AVPlaybackStatus } from 'expo-av';
-import test from './test.mp4';
+import test1 from './test1.mp4';
 import { connect } from "react-redux";
 import authAxios from '../util';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -211,7 +211,7 @@ class MiniAppIntro extends React.Component{
                   style={{width:height,
                      height: Platform.OS === 'ios' ? width : width+35,
                      transform: [{ rotate: '270deg' }], }}
-                  source = {test}
+                  source = {test1}
                   resizeMode="contain"
                   // isLooping
                   shouldPlay={true}
