@@ -82,7 +82,7 @@ class Header extends React.Component{
           flexDirection: "column",
           flex: 1,
           backgroundColor: Platform.OS === "ios" ? "white" : "white",
-          height: 130,
+          height: 70,
           position: 'absolute',
           width: "100%",
           }}>
@@ -117,11 +117,11 @@ class Header extends React.Component{
 
 
            </View>
-
+           {/*
            <View>
              <SmallGroupHolder />
            </View>
-
+           */}
 
 
 
