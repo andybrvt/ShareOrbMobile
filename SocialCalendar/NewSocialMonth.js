@@ -229,7 +229,7 @@ class NewSocialMonth extends React.PureComponent{
                           <View style={styles.miniBox}>
                             <Text style = {styles.formatDateImage}> {formattedDate}</Text>
                             {/* fast image*/}
-                            <FastImage
+                            <Image
                               style = {dateFns.isSameDay(day, new Date()) ?
                                 styles.smallImageGlow : styles.smallImage
                               }
@@ -408,7 +408,7 @@ class NewSocialMonth extends React.PureComponent{
                       <View>
                         <TouchableOpacity  onPress={() => this.ViewDay(toDoStuff.id)}>
                           {/* fast image*/}
-                          <FastImage
+                          <Image
 
                             style = {styles.smallImage}
                             resizeMode = "cover"

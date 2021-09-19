@@ -92,6 +92,7 @@ import * as dateFns from 'date-fns';
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
+const NewsfeedTopTab = createMaterialTopTabNavigator();
 
 ExpoNotifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -546,6 +547,36 @@ class App extends Component{
 
     )
   }
+
+  createNewsfeedStack = () => {
+
+      return(
+        <NewsfeedTopTab.Navigator>
+          <NewsfeedTopTab.Screen
+            name="defautl"
+            component={NewsfeedView}
+             />
+          <NewsfeedTopTab.Screen
+            name="defautl1"
+            component={NewsfeedView}
+             />
+          <NewsfeedTopTab.Screen
+            name="defautl2"
+            component={NewsfeedView}
+             />
+          <NewsfeedTopTab.Screen
+            name="defautl3"
+            component={NewsfeedView}
+             />
+          <NewsfeedTopTab.Screen
+            name="defautl4"
+            component={NewsfeedView}
+             />
+        </NewsfeedTopTab.Navigator>
+      )
+  }
+
+
   followerFollowingTab=(props)=>{
 
     return(
@@ -619,7 +650,7 @@ class App extends Component{
         <Tab.Screen
           name="Home"
           // component={NewsfeedView}
-          children = {this.createHomeStack}
+          children = {this.createNewsfeedStack}
           options={{
              tabBarLabel: false,
              tabBarIcon: ({ color }) => (
