@@ -12,6 +12,7 @@ const {
   Dimensions,
 } = ReactNative;
 const Button = require('./Button');
+import { Avatar } from 'react-native-elements';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
@@ -138,9 +139,12 @@ const ScrollableTabBarNew = createReactClass({
       onLayout={onLayoutHandler}
     >
       <View style={[styles.tab, this.props.tabStyle, ]}>
-        <Text style={[{color: textColor, fontWeight, }, textStyle, ]}>
-          {name}
-        </Text>
+        <Avatar
+          rounded
+          source = {{
+            uri: "https://pixabay.com/photos/tree-sunset-clouds-sky-silhouette-736885/"
+          }}
+           />
       </View>
     </Button>;
   },
