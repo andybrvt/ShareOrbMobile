@@ -437,7 +437,7 @@ class SocialNewsfeedPost extends React.Component{
                  }}>
                  <TouchableOpacity
                    activeOpacity={0.8}
-                   onPress = {() => this.onPostDirect(calCell, postId)}>
+                  >
 
                    {/* fast image*/}
                    {
@@ -530,7 +530,7 @@ class SocialNewsfeedPost extends React.Component{
                 />
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress = {() => this.onPostDirect(calCell, postId)}></TouchableOpacity>
+                ></TouchableOpacity>
               <View style = {styles.testWhere}>
                 <Text style = {styles.videoFooterUserName}>
                   {global.NAMEMAKE(firstName, lastName)}
