@@ -50,12 +50,14 @@ class SwipeInfiniteScrollHolder extends React.Component{
     return(
 
       <ScrollView>
+        {/*
+          <Header />
+          */}
 
-        <Header />
-        <View style = {{flex: 1, height:height - 70 }}>
+        <View style = {{flex: 1, height:height -10 }}>
 
           <ScrollableTabView
-            style={{ marginTop: 70 }}
+            style={{ marginTop: 10 }}
              initialPage={0}
              renderTabBar={() => <ScrollableTabBarNew />}
             >
