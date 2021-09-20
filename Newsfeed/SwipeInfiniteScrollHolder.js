@@ -46,6 +46,11 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
 
   render(){
+   let smallGroups = []
+
+   if(this.props.smallGroups){
+     smallGroups = this.props.smallGroups
+   }
 
     return(
 
@@ -59,14 +64,23 @@ class SwipeInfiniteScrollHolder extends React.Component{
           <ScrollableTabView
             style={{ marginTop: 10 }}
              initialPage={0}
-             renderTabBar={() => <ScrollableTabBarNew />}
+             renderTabBar={() => <ScrollableTabBarNew
+               navigation = {this.props.navigation}
+               />}
             >
-            <InfiniteScrollFlatNew name='tab1' tabLabel='tab1' />
-             <InfiniteScrollFlatNew name='tab2' tabLabel='tab2' />
-             <InfiniteScrollFlatNew name='tab3' tabLabel='tab3' />
-             <InfiniteScrollFlatNew name='tab4' tabLabel='tab4' />
-             <InfiniteScrollFlatNew name='tab5' tabLabel='tab5' />
-             <InfiniteScrollFlatNew name='tab6' tabLabel='tab6' />
+            {smallGroups.map((group, indx) => {
+              const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
+              return(
+                <InfiniteScrollFlatNew name='tab1' tabLabel={pic} />
+
+              )
+
+
+            })}
+
+              <Text name = "tab3" tabLabel = "add"/>
+
+
           </ScrollableTabView>
 
         </View>

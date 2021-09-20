@@ -82,7 +82,6 @@ export const authInvited = (token) => {
 
   return dispatch => {
     AsyncStorage.setItem('inviToken', token)
-    console.log('it goes here')
     dispatch(authInviteSuccess(token))
 
   }
@@ -188,7 +187,6 @@ export const grabUserCredentials = () => {
   return dispatch => {
     authAxios.get(`${global.IP_CHANGE}/userprofile/grabCurrentUser/`)
       .then(res => {
-        console.log(res.data)
       // AsyncStorage.setItem("username", username);
       // AsyncStorage.setItem("id", id);
       // AsyncStorage.setItem('firstName', firstName);
@@ -222,7 +220,8 @@ export const grabUserCredentials = () => {
          res.data.date_joined,
          res.data.bio,
          res.data.dailyNotification,
-         res.data.inviteCode
+         res.data.inviteCode,
+         res.data.get_small_groups
       ))
     })
     .catch(err => {
@@ -249,7 +248,8 @@ export const addCredentials = (
    date_joined,
    bio,
    dailyNotification,
-   inviteCode
+   inviteCode,
+   smallGroups
  ) => {
 
   return {
@@ -271,7 +271,8 @@ export const addCredentials = (
     date_joined: date_joined,
     bio: bio,
     dailyNotification: dailyNotification,
-    inviteCode: inviteCode
+    inviteCode: inviteCode,
+    smallGroups: smallGroups
   };
 };
 

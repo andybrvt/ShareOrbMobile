@@ -12,6 +12,7 @@ const {
   Dimensions,
 } = ReactNative;
 const Button = require('./Button');
+import { PlusCircle } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -130,23 +131,45 @@ const ScrollableTabBarNew = createReactClass({
     const textColor = isTabActive ? activeTextColor : inactiveTextColor;
     const fontWeight = isTabActive ? 'bold' : 'normal';
 
-    return <Button
-      key={`${name}_${page}`}
-      accessible={true}
-      accessibilityLabel={name}
-      accessibilityTraits='button'
-      onPress={() => onPressHandler(page)}
-      onLayout={onLayoutHandler}
-    >
-      <View style={[styles.tab, this.props.tabStyle, ]}>
-        <Avatar
-          rounded
-          source = {{
-            uri: "https://pixabay.com/photos/tree-sunset-clouds-sky-silhouette-736885/"
-          }}
-           />
-      </View>
-    </Button>;
+
+    if(name === "add"){
+      return <Button
+        key={`${name}_${page}`}
+        accessible={true}
+        accessibilityLabel={name}
+        accessibilityTraits='button'
+        onPress={() => this.onGroupCreateDirect()}
+        onLayout={onLayoutHandler}
+      >
+        <View style={[styles.tab, this.props.tabStyle, ]}>
+            <PlusCircle
+              height = {30}
+              width = {30}
+               />
+        </View>
+      </Button>;
+
+    } else {
+      return <Button
+        key={`${name}_${page}`}
+        accessible={true}
+        accessibilityLabel={name}
+        accessibilityTraits='button'
+        onPress={() => onPressHandler(page)}
+        onLayout={onLayoutHandler}
+      >
+        <View style={[styles.tab, this.props.tabStyle, ]}>
+            <Avatar
+              rounded
+              source = {{
+                uri: name
+              }}
+               />
+
+        </View>
+      </Button>
+    }
+
   },
 
   measureTab(page, event) {
@@ -224,6 +247,13 @@ const ScrollableTabBarNew = createReactClass({
     this._containerMeasurements = e.nativeEvent.layout;
     this.updateView({value: this.props.scrollValue.__getValue(), });
   },
+
+  onGroupCreateDirect(){
+      // this function will direct you to the creating group page
+      console.log('direct here')
+      this.props.navigation.navigate('createSmallGroup')
+  }
+
 });
 
 module.exports = ScrollableTabBarNew;
