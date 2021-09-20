@@ -95,7 +95,7 @@ class NewProfile extends React.Component{
                        uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
                      }}
                      rounded
-                     size = {150}
+                     size = {120}
                       />
                     <Text>{item.test}</Text>
                     {/*<View style={styles.roundButton1}></View> */}
@@ -170,11 +170,13 @@ const styles = StyleSheet.create({
   },
   viewStyle: {
 
-
+    backgroundColor: 'white',
     height:50,
     paddingTop:0,
     flexDirection:'row',
-
+    shadowColor:'black',
+    shadowOffset:{width:0,height:2},
+    shadowOpacity:0.2,
   },
   textStyle:{
     fontSize:20,
