@@ -354,7 +354,7 @@ class SocialNewsfeedPost extends React.Component{
           postCreatedAt=this.props.data.created_at
           if(!isNaN(new Date(this.props.data.created_at).getTimezoneOffset()/60)){
             const dtDateOnly1 = dateFns.addHours(new Date(this.props.data.created_at), new Date(this.props.data.created_at).getTimezoneOffset()/60)
-            utc3=dateFns.format(new Date(dtDateOnly1), 'h:mma');
+            utc3=dateFns.format(new Date(dtDateOnly1), 'M/dd');
           }
         }
       }
@@ -407,11 +407,11 @@ class SocialNewsfeedPost extends React.Component{
     // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
 
-    // timestamp=postCreatedAt
+    timestamp=postCreatedAt
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
     //
-    // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
-    // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
+    socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
+    socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
       return (
         <View>
         {/*
@@ -536,16 +536,16 @@ class SocialNewsfeedPost extends React.Component{
                   {global.NAMEMAKE(firstName, lastName)}
                 </Text>
               </View>
-              {/*
+
               <View style = {styles.testWhere2}>
                   <Text style = {styles.videoFooterUserName}>
-                    {socialMonth}
+                    {socialMonth.substring(0,3)}
                   </Text>
                   <Text style = {styles.dayNumTag}>
                     {socialDay}
                   </Text>
               </View>
-              */}
+
               {
 
                 (like_people.length>3)?
@@ -570,7 +570,7 @@ class SocialNewsfeedPost extends React.Component{
 
 
 
-              {
+              {/*
                 goal.goal ?
 
                 <View style = {styles.goalContainer}>
@@ -585,9 +585,9 @@ class SocialNewsfeedPost extends React.Component{
                 :
 
                 null
-
+                */
               }
-                    {
+                    {/*
                       peopleLikeId.includes(this.props.userId ) ?
                       <TouchableOpacity
                         onPress = {() => this.onUnlike(
@@ -629,7 +629,8 @@ class SocialNewsfeedPost extends React.Component{
                         </Text>
                         </View>
                       </TouchableOpacity>
-                    }
+                    */}
+                {/*
                 <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
                   <View style = {styles.tagCSS2}>
                       <View style = {styles.justifyCenter}>
@@ -645,13 +646,14 @@ class SocialNewsfeedPost extends React.Component{
                       </View>
                   </View>
                 </TouchableWithoutFeedback>
-
+                */}
+                {/*
                 <View style = {styles.tagCSS3}>
                     <View style = {styles.justifyCenter}>
                       <Text style={styles.videoFooterUserName}>{utc3}</Text>
                     </View>
                 </View>
-
+                */}
             </View>
             {/*
           </TouchableWithoutFeedback>

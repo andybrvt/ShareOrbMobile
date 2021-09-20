@@ -162,7 +162,7 @@ class ProfileHeader extends React.Component{
 
               </View>
 
-              <View style={{flex:1.5,justifyContent:'center', marginLeft:30, }}>
+              <View style={{flex:1.5,justifyContent:'center', marginLeft:30,  }}>
 
                 <Text style = {styles.name}>{name}</Text>
                 <Text style = {styles.username}>@{username}</Text>
@@ -211,9 +211,12 @@ class ProfileHeader extends React.Component{
 
 
 
+
+       {/*
        <View style = {styles.profileMidContainer}>
+
          <View style={styles.profileInfoContainer}>
-           {/*
+
            <View style={styles.followerCount}>
               <TouchableOpacity onPress={() => this.navigateFollowing()}>
                 <View style={{flexDirection:'column', alignItems:'center'}}>
@@ -222,7 +225,7 @@ class ProfileHeader extends React.Component{
                </View>
               </TouchableOpacity>
            </View>
-           */}
+
            <View style={styles.followerCount}>
               <TouchableOpacity onPress={() => this.navigateFollowing()}>
                 <View style={{flexDirection:'column', alignItems:'center'}}>
@@ -243,7 +246,8 @@ class ProfileHeader extends React.Component{
            </View>
 
          </View>
-     </View>
+       </View>
+       */}
 
 
        <View style = {styles.bioContainer}>
@@ -455,7 +459,8 @@ const styles = StyleSheet.create({
   profileInfoHeader: {
     justifyContent: 'center',
     flexDirection:'row',
-    width: "100%",
+    width: '115%',
+    // backgroundColor:'red',
   },
   profileMidContainer:{
     width:'100%',
