@@ -209,7 +209,7 @@ class Profile extends React.Component{
             numColumns={2}
             renderItem={({item}) => {
               return (
-                 <View style={{width: '50%', justifyContent:'center', alignItems:'center', padding:25}} >
+                 <View style={{width: '50%', justifyContent:'center', alignItems:'center', padding:10}} >
                      <Avatar
                        source = {{
                          uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
@@ -276,8 +276,6 @@ const styles = StyleSheet.create({
     flex: Platform.OS === 'ios' ? 1.65: 1.45,
   },
   profileHeader: {
-    // backgroundColor:'red',
-    alignItems:'flex-start',
     // left:'12.5%',
     width:'100%',
 
