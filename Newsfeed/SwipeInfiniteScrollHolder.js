@@ -14,12 +14,35 @@ import {
 import { Avatar } from 'react-native-elements';
 import ScrollableTabBarNew from './ScrollableTabBarNew';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
+import Header from './Header';
+
+const height = Dimensions.get('window').height
+
 
 class Page extends React.Component {
+  state = {
+    list: [1,2,3]
+  }
+
+  renderItem = ({item}) => {
+
+    return(
+      <View>
+        <Text>Hi</Text>
+      </View>
+    )
+
+  }
     render() {
         return (
-            <View style={{flex: 1, backgroundColor: 'blue'}}>
-                <Text>{this.props.name}</Text>
+            <View style={{flex: 1,}}>
+                <FlatList
+                  style = {{flex:1}}
+                  data = {this.state.list}
+                  renderItem = {this.renderItem}
+                  keyExtractor={(item, index) => String(index)}
+
+                  />
             </View>
         )
     }
@@ -33,9 +56,12 @@ class SwipeInfiniteScrollHolder extends React.Component{
     return(
 
       <ScrollView>
-        <View style = {{flex: 1, height: 200}}>
+
+        <Header />
+        <View style = {{flex: 1, height:height - 70 }}>
+
           <ScrollableTabView
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 70 }}
              initialPage={0}
              renderTabBar={() => <ScrollableTabBarNew />}
             >
