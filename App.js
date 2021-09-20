@@ -87,7 +87,7 @@ import { useScrollToTop } from '@react-navigation/native';
 import authAxios from './util';
 import GoalPage from './GoalAlbum/GoalPage';
 import * as dateFns from 'date-fns';
-
+import CreateGroupPage from './SmallGroups/CreateGroupPage';
 
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -1082,6 +1082,12 @@ class App extends Component{
                       name = "goalPage"
                       component = {GoalPage}
                        />
+
+                   <Stack.Screen
+                     options={{...TransitionPresets.SlideFromRightIOS,headerShown: false, }}
+                     name = "createSmallGroup"
+                     component= {CreateGroupPage}/>
+
 
 
 

@@ -64,7 +64,9 @@ class SwipeInfiniteScrollHolder extends React.Component{
           <ScrollableTabView
             style={{ marginTop: 10 }}
              initialPage={0}
-             renderTabBar={() => <ScrollableTabBarNew />}
+             renderTabBar={() => <ScrollableTabBarNew
+               navigation = {this.props.navigation}
+               />}
             >
             {smallGroups.map((group, indx) => {
               const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
@@ -76,7 +78,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
             })}
 
-              <Text name = "tab3" tabLabel = "tab3"/>
+              <Text name = "tab3" tabLabel = "add"/>
 
 
           </ScrollableTabView>

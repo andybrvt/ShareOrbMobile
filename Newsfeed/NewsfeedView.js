@@ -225,6 +225,7 @@ class NewsfeedView extends React.Component{
             {this.state.newsFeedCondition?
 
                 <SwipeInfiniteScrollHolder
+                  navigation = {this.props.navigation}
                   smallGroups = {this.props.smallGroups}
                    />
 
