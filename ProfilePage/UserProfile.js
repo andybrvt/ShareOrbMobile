@@ -197,7 +197,7 @@ class UserProfile extends React.Component{
               />
 
             */}
-            
+
               <TabView
               navigationState = {this.state}
               renderScene = {this._renderScene}

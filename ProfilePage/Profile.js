@@ -188,24 +188,25 @@ class Profile extends React.Component{
             {...this.props}
             />
         </View>
-        {/*
-        <View style = {styles.socialCalContainer}>
 
+        <View style = {styles.socialCalContainer}>
+          {/*
             <TabView
               navigationState = {this.state}
               renderScene = {this._renderScene}
               renderTabBar={this._renderTabBar}
               onIndexChange={this._handleIndexChange}
                />
+               */}
 
 
-        </View>
-        */}
+
 
         <View>
           <FlatList
             columnWrapperStyle={{justifyContent: 'space-between'}}
             data={data}
+             showsVerticalScrollIndicator={true}
             numColumns={2}
             renderItem={({item}) => {
               return (
@@ -223,6 +224,7 @@ class Profile extends React.Component{
               );
             }}
           />
+        </View>
         </View>
       </BackgroundContainer>
     )
@@ -269,11 +271,12 @@ const styles = StyleSheet.create({
     backgroundColor:"#1890ff"
   },
   container: {
+    flex: 1,
     marginTop: Constant.statusBarHeight,
     backgroundColor: "white"
   },
   socialCalContainer: {
-    flex: Platform.OS === 'ios' ? 1.65: 1.45,
+    flex: Platform.OS === 'ios' ? 1.65: 3,
   },
   profileHeader: {
     // left:'12.5%',

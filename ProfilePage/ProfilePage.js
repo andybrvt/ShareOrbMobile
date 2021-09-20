@@ -13,8 +13,8 @@ import { ArrowLeft, Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlu
 import * as authActions from '../store/actions/auth';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import GoalContainer from '../GoalAlbum/GoalContainer';
-
-
+import { FlatList } from "react-native-bidirectional-infinite-scroll";
+import { Avatar } from 'react-native-elements';
 // this will be used mostly for the other person profile
 // I want to make it seperate is because for your profile you can just
 // use auth and changing stuff would be so much easier because you don't
@@ -163,6 +163,10 @@ class ProfilePage extends React.Component{
 
     }
 
+    let data=[{'test':'Food'},{'test':'Family'},{'test':'Fitness'},{'test':'NBA'},
+      {'test':'Soccer'},{'test':'Entreprenur'},  {'test':'Soccer'},{'test':'Entreprenur'},
+    ]
+
     // you would use userId in this one
 
     return (
@@ -196,7 +200,7 @@ class ProfilePage extends React.Component{
               currentId = {this.props.currentId}
               />
 
-            */}
+
               <TabView
               navigationState = {this.state}
               renderScene = {
@@ -207,7 +211,33 @@ class ProfilePage extends React.Component{
               }
               renderTabBar={this._renderTabBar}
               onIndexChange={this._handleIndexChange}
-               />
+               />\
+               */}
+
+
+         <View>
+           <FlatList
+             columnWrapperStyle={{justifyContent: 'space-between'}}
+             data={data}
+             showsVerticalScrollIndicator={true}
+             numColumns={2}
+             renderItem={({item}) => {
+               return (
+                  <View style={{width: '50%', justifyContent:'center', alignItems:'center', padding:10}} >
+                      <Avatar
+                        source = {{
+                          uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                        }}
+                        rounded
+                        size = {150}
+                         />
+                       <Text>{item.test}</Text>
+                       {/*<View style={styles.roundButton1}></View> */}
+                  </View>
+               );
+             }}
+           />
+         </View>
         </View>
       </BackgroundContainer>
     )
@@ -243,7 +273,8 @@ const styles = StyleSheet.create({
   },
   socialCalContainer: {
 
-    flex: Platform.OS === 'ios' ? 2: 1.45,
+    flex: Platform.OS === 'ios' ? 2: 3,
+
   },
   profileHeader: {
     flex: 1,
