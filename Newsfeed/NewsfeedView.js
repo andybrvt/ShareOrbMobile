@@ -32,7 +32,7 @@ import PersonalNewsFeed from './PersonalNewsFeed';
 import authAxios from '../util';
 import * as Progress from 'react-native-progress';
 import FirstPost from './FirstPost';
-
+import SwipeInfiniteScrollHolder from './SwipeInfiniteScrollHolder';
 
 const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 const height = Dimensions.get('window').height
@@ -183,6 +183,18 @@ class NewsfeedView extends React.Component{
       backgroundColor: backgroundGradient
     }
 
+    {/*
+      <InfiniteScrollFlat
+        style={{marginBottom:400}}
+        y = {this.y}
+        navigation = {this.props.navigation}
+        onPagePost = {this.onPagePost}
+        ViewProfile = {this.ViewProfile}
+        onCommentOpen = {this.onCommentOpen}/>
+
+      */}
+
+
     return(
       <BackgroundContainer>
         {/*
@@ -222,17 +234,14 @@ class NewsfeedView extends React.Component{
 
               */}
             {this.state.newsFeedCondition?
-                <InfiniteScrollFlat
-                  style={{marginBottom:400}}
-                  y = {this.y}
-                  navigation = {this.props.navigation}
-                  onPagePost = {this.onPagePost}
-                  ViewProfile = {this.ViewProfile}
-                  onCommentOpen = {this.onCommentOpen}/>
+
+                <SwipeInfiniteScrollHolder />
+
+
               :
-              <PersonalNewsFeed
-                navigation = {this.props.navigation}
-                />
+                <PersonalNewsFeed
+                  navigation = {this.props.navigation}
+                  />
             }
 
 

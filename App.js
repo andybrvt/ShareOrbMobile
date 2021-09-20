@@ -650,7 +650,7 @@ class App extends Component{
         <Tab.Screen
           name="Home"
           // component={NewsfeedView}
-          children = {this.createNewsfeedStack}
+          children = {this.createHomeStack}
           options={{
              tabBarLabel: false,
              tabBarIcon: ({ color }) => (
