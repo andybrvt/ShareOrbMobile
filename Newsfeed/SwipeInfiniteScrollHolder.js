@@ -15,6 +15,8 @@ import { Avatar } from 'react-native-elements';
 import ScrollableTabBarNew from './ScrollableTabBarNew';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import Header from './Header';
+import InfiniteScrollFlatNew from './InfiniteScrollFlatNew';
+
 
 const height = Dimensions.get('window').height
 
@@ -35,15 +37,7 @@ class Page extends React.Component {
   }
     render() {
         return (
-            <View style={{flex: 1,}}>
-                <FlatList
-                  style = {{flex:1}}
-                  data = {this.state.list}
-                  renderItem = {this.renderItem}
-                  keyExtractor={(item, index) => String(index)}
-
-                  />
-            </View>
+                <InfiniteScrollFlatNew />
         )
     }
 }
@@ -65,12 +59,12 @@ class SwipeInfiniteScrollHolder extends React.Component{
              initialPage={0}
              renderTabBar={() => <ScrollableTabBarNew />}
             >
-            <Page name='tab1' tabLabel='tab1' />
-             <Page name='tab2' tabLabel='tab2' />
-             <Page name='tab3' tabLabel='tab3' />
-             <Page name='tab4' tabLabel='tab4' />
-             <Page name='tab5' tabLabel='tab5' />
-             <Page name='tab6' tabLabel='tab6' />
+            <InfiniteScrollFlatNew name='tab1' tabLabel='tab1' />
+             <InfiniteScrollFlatNew name='tab2' tabLabel='tab2' />
+             <InfiniteScrollFlatNew name='tab3' tabLabel='tab3' />
+             <InfiniteScrollFlatNew name='tab4' tabLabel='tab4' />
+             <InfiniteScrollFlatNew name='tab5' tabLabel='tab5' />
+             <InfiniteScrollFlatNew name='tab6' tabLabel='tab6' />
           </ScrollableTabView>
 
         </View>

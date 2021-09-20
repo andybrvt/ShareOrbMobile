@@ -213,7 +213,7 @@ class InfiniteScrollFlat extends React.Component{
 
 
           <AnimatedFlatList
-            onViewableItemsChanged={this.onViewableItemsChanged }
+            // onViewableItemsChanged={this.onViewableItemsChanged }
             contentContainerStyle={{ paddingBottom: 100 }}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle = {16} // important for animation
