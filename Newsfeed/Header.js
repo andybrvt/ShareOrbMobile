@@ -106,7 +106,7 @@ class Header extends React.Component{
              <View style = {styles.logoContainer}>
                 <MainLogo1 width = {120}/>
              </View>
-
+             {/*
              <View style = {styles.testWhere2}>
                     <Text style = {styles.videoFooterUserName}>
                       {this.props.currentMonth}
@@ -115,7 +115,7 @@ class Header extends React.Component{
                       {this.props.currentDay}
                     </Text>
              </View>
-
+             */}
 
            </View>
 

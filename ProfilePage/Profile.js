@@ -25,7 +25,8 @@ import { Tag, Bookmark, Search, ChevronRight, Settings
 import { TabView, SceneMap } from 'react-native-tab-view';
 import GoalContainer from '../GoalAlbum/GoalContainer';
 import * as authActions from '../store/actions/auth';
-
+import { FlatList } from "react-native-bidirectional-infinite-scroll";
+import { Avatar } from 'react-native-elements';
 // This will be the bulk of the profile page
 // this will be used for current user
 class Profile extends React.Component{
@@ -148,7 +149,9 @@ class Profile extends React.Component{
       get_followers: this.props.followers
     }
 
-
+    let data=[{'test':'Food'},{'test':'Family'},{'test':'Fitness'},{'test':'NBA'},
+      {'test':'Soccer'},{'test':'Entreprenur'},  {'test':'Soccer'},{'test':'Entreprenur'},
+    ]
 
     return (
       <BackgroundContainer>
@@ -177,6 +180,7 @@ class Profile extends React.Component{
           <Settings
            stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
         </TouchableOpacity>
+
         <View style = {styles.profileHeader}>
           <ProfileHeader
             navigation={this.props.navigation}
@@ -184,14 +188,9 @@ class Profile extends React.Component{
             {...this.props}
             />
         </View>
+        {/*
         <View style = {styles.socialCalContainer}>
-          {/*
-          <SocialCalendarVonly
-            openShowCamera = {this.props.openShowCamera}
-            userId = {this.props.currentId}
-            navigation = {this.props.navigation}
-            currentId = {this.props.currentId}/>
-          */}
+
             <TabView
               navigationState = {this.state}
               renderScene = {this._renderScene}
@@ -200,6 +199,30 @@ class Profile extends React.Component{
                />
 
 
+        </View>
+        */}
+
+        <View>
+          <FlatList
+            columnWrapperStyle={{justifyContent: 'space-between'}}
+            data={data}
+            numColumns={2}
+            renderItem={({item}) => {
+              return (
+                 <View style={{width: '50%', justifyContent:'center', alignItems:'center', padding:25}} >
+                     <Avatar
+                       source = {{
+                         uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                       }}
+                       rounded
+                       size = {150}
+                        />
+                      <Text>{item.test}</Text>
+                      {/*<View style={styles.roundButton1}></View> */}
+                 </View>
+              );
+            }}
+          />
         </View>
       </BackgroundContainer>
     )
@@ -230,6 +253,14 @@ const mapDispatchToProps = dispatch => {
 }
 
 const styles = StyleSheet.create({
+  roundButton1: {
+    width: 150,
+    height: 150,
+
+    // padding: 10,
+    // borderRadius: 100,
+    // backgroundColor: 'white',
+  },
   title:{
     color:'red',
   },
@@ -245,9 +276,6 @@ const styles = StyleSheet.create({
     flex: Platform.OS === 'ios' ? 1.65: 1.45,
   },
   profileHeader: {
-
-    flex: 1,
-    top:'0%',
     // backgroundColor:'red',
     alignItems:'flex-start',
     // left:'12.5%',
