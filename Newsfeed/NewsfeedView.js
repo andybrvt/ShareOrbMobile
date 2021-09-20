@@ -222,17 +222,6 @@ class NewsfeedView extends React.Component{
             }}
             >
 
-
-
-            {/*
-
-              <Header
-                changeFeed={this.changeFeed.bind(this)}
-                condition={this.state.newsFeedCondition}
-                y = {this.y}
-                {...this.props}/>
-
-              */}
             {this.state.newsFeedCondition?
 
                 <SwipeInfiniteScrollHolder />
