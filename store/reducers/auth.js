@@ -30,7 +30,8 @@ const initialState ={
   dailyNotification: true,
   showFirstPostModal: false,
   inviToken: null,
-  inviteCode: ""
+  inviteCode: "",
+  smallGroups: []
 
 }
 
@@ -130,11 +131,13 @@ const authLogout = (state, action) => {
     dailyNotification: true,
     showFirstPostModal: false,
     inviToken: null,
-    inviteCode: ""
+    inviteCode: "",
+    smallGroups: []
   });
 };
 
 const addCredentials = (state, action) => {
+  console.log(action, 'right ere')
   return updateObject(state, {
     username: action.username,
     id: action.id,
@@ -154,7 +157,8 @@ const addCredentials = (state, action) => {
     date_joined: action.date_joined,
     bio: action.bio,
     dailyNotification: action.dailyNotification,
-    inviteCode: action.inviteCode
+    inviteCode: action.inviteCode,
+    smallGroups: action.smallGroups
   });
 };
 

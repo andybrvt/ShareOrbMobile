@@ -224,7 +224,9 @@ class NewsfeedView extends React.Component{
 
             {this.state.newsFeedCondition?
 
-                <SwipeInfiniteScrollHolder />
+                <SwipeInfiniteScrollHolder
+                  smallGroups = {this.props.smallGroups}
+                   />
 
 
               :
@@ -293,7 +295,8 @@ const mapStateToProps = state => {
     showNewsfeedComments: state.socialNewsfeed.showNewsfeedComments,
     showIntialInstructions: state.auth.showIntialInstructions,
     notificationSeen: state.auth.notificationSeen,
-    showFirstPostModal: state.auth.showFirstPostModal
+    showFirstPostModal: state.auth.showFirstPostModal,
+    smallGroups: state.auth.smallGroups
   }
 }
 

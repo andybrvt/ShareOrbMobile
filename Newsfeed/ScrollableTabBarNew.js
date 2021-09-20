@@ -142,7 +142,7 @@ const ScrollableTabBarNew = createReactClass({
         <Avatar
           rounded
           source = {{
-            uri: "https://pixabay.com/photos/tree-sunset-clouds-sky-silhouette-736885/"
+            uri: name
           }}
            />
       </View>
