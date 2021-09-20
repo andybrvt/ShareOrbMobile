@@ -46,11 +46,40 @@ class NewProfile extends React.Component{
     )
   }
 
+  renderItem = ({item}) => {
+
+    const pic = `${global.IMAGE_ENDPOINT}` + item.groupPic
+
+    console.log(item)
+    return(
+      <View style={{width: '50%', justifyContent:'center', alignItems:'center', padding:10}} >
+          <Avatar
+            source = {{
+              uri: pic
+            }}
+            rounded
+            size = {120}
+             />
+           <Text>{item.group_name}</Text>
+           <View>
+             <Text>Members {item.members.length}</Text>
+
+           </View>
+
+           {/*<View style={styles.roundButton1}></View> */}
+      </View>
+
+    )
+  }
+
   render(){
 
-    let data=[{'test':'Food'},{'test':'Family'},{'test':'Fitness'},{'test':'NBA'},
-      {'test':'Soccer'},{'test':'Entreprenur'},  {'test':'Soccer'},{'test':'Entreprenur'},
-    ]
+    let data = []
+
+    if(this.props.smallGroups){
+
+      data = this.props.smallGroups
+    }
 
     return(
       <BackgroundContainer>
@@ -87,21 +116,7 @@ class NewProfile extends React.Component{
           data={data}
           numColumns={2}
           keyExtractor={(item, index) => String(index)}
-          renderItem={({item}) => {
-            return (
-               <View style={{width: '50%', justifyContent:'center', alignItems:'center', padding:10}} >
-                   <Avatar
-                     source = {{
-                       uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
-                     }}
-                     rounded
-                     size = {120}
-                      />
-                    <Text>{item.test}</Text>
-                    {/*<View style={styles.roundButton1}></View> */}
-               </View>
-            );
-          }}
+          renderItem={this.renderItem}
 
            />
 
@@ -126,6 +141,7 @@ const mapStateToProps = state => {
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,
     bio: state.auth.bio,
+    smallGroups: state.auth.smallGroups
   }
 }
 
