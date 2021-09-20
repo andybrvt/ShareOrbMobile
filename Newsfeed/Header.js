@@ -14,6 +14,7 @@ import { Search, Bell, MessageCircle, BookOpen, Sunrise} from "react-native-feat
 import Animated from 'react-native-reanimated';
 import * as Progress from 'react-native-progress';
 import SmallGroupHolder from './SmallGroupHolder';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 
 const {interpolate, interpolateColors, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
@@ -82,8 +83,8 @@ class Header extends React.Component{
           flexDirection: "column",
           flex: 1,
           backgroundColor: Platform.OS === "ios" ? "white" : "white",
-          // height: 70,
-          height: 130,
+          height: 70,
+          // height: 130,
           position: 'absolute',
           width: "100%",
           }}>
@@ -106,22 +107,30 @@ class Header extends React.Component{
              <View style = {styles.logoContainer}>
                 <MainLogo1 width = {120}/>
              </View>
-             {/*
-             <View style = {styles.testWhere2}>
-                    <Text style = {styles.videoFooterUserName}>
-                      {this.props.currentMonth}
-                    </Text>
-                    <Text style = {styles.dayNumTag}>
-                      {this.props.currentDay}
-                    </Text>
+
+               <View style = {styles.testWhere2}>
+                      <Text style = {styles.videoFooterUserName}>
+                        {this.props.currentMonth}
+                      </Text>
+                      <Text style = {styles.dayNumTag}>
+                        {this.props.currentDay}
+                      </Text>
+               </View>
+
+
+
+
+        
+
+           </View>
+
+           {/*
+             <View>
+               <SmallGroupHolder />
              </View>
+
+
              */}
-
-           </View>
-
-           <View>
-             <SmallGroupHolder />
-           </View>
 
 
 

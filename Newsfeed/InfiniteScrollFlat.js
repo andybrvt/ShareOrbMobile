@@ -196,8 +196,8 @@ class InfiniteScrollFlat extends React.Component{
                 onRefresh={this.onRefresh}
                 />
               }
-            // style = {{top: 70}}
-            style = {{top: 130}}
+            style = {{top: 70}}
+            // style = {{top: 130}}
             >
             <View style = {{
                 alignItems: 'center'
@@ -210,6 +210,7 @@ class InfiniteScrollFlat extends React.Component{
           </ScrollView>
 
           :
+
 
           <AnimatedFlatList
             onViewableItemsChanged={this.onViewableItemsChanged }
@@ -224,8 +225,8 @@ class InfiniteScrollFlat extends React.Component{
             onEndReached = {() => this.loadSocialPost()}
             onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
-            style={{top:130,}}
-            // style={{top:70,}}
+            // style={{top:130,}}
+            style={{top:70,}}
              />
         }
 

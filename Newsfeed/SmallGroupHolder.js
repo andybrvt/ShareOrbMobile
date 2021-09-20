@@ -10,6 +10,7 @@ import { Text,
    TouchableWithoutFeedback } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import { Avatar } from 'react-native-elements';
+import { TabView, SceneMap } from 'react-native-tab-view';
 
 const width = Dimensions.get("window").width
 
@@ -18,12 +19,18 @@ const width = Dimensions.get("window").width
 
 class SmallGroupHolder extends React.Component{
 
+
+
   constructor(props){
 
     super(props)
 
     this.state = {
-      list: [1, 2 ,3 ]
+      index: 0,
+      routes: [
+        { key: 'first', title: 'Shared Albums' },
+        { key: 'second', title: 'Pending' },
+      ],
     }
   }
 
@@ -42,24 +49,57 @@ class SmallGroupHolder extends React.Component{
     )
   }
 
+  _renderScene = SceneMap({
+    first: () => <View><Text>stuff here</Text></View>,
+  second: () => <View><Text>stuff here</Text></View>,
+  });
+
+  _handleIndexChange = (index) => this.setState({ index });
+
+  _renderTabBar = (props) => {
+    const inputRange = props.navigationState.routes.map((x, i) => i);
+    return (
+      <View style={styles.tabBar}>
+        {
+        props.navigationState.routes.map((route, i) => {
+        return (
+          <View style = {styles.listItem}>
+            <Avatar
+              rounded
+              source = {{
+                uri: "https://pixabay.com/photos/tree-sunset-clouds-sky-silhouette-736885/"
+              }}
+               />
+          </View>
+          );
+        })}
+      </View>
+    );
+  };
+
+
   render(){
 
     return(
       <View style = {styles.container} >
-        <FlatList
-          horizontal={true}
+          <FlatList
+            horizontal={true}
 
-          // onRefresh = {()=> this.props.onRefresh()}
-          // refreshing = {this.props.refreshing}
-          // ListHeaderComponent = {this.listHeader}
-          // numColumns = {2}
-          data = {this.state.list}
-          renderItem = {this.renderItem}
-          keyExtractor={(item, index) => String(index)}
-          // onEndReachedThreshold = {0.2}
-          // onEndReached = {()=> this.onLoadMorePeople()}
-          // showsVerticalScrollIndicator={false}
-           />
+            // onRefresh = {()=> this.props.onRefresh()}
+            // refreshing = {this.props.refreshing}
+            // ListHeaderComponent = {this.listHeader}
+            // numColumns = {2}
+            data = {this.state.list}
+            renderItem = {this.renderItem}
+            keyExtractor={(item, index) => String(index)}
+            // onEndReachedThreshold = {0.2}
+            // onEndReached = {()=> this.onLoadMorePeople()}
+            // showsVerticalScrollIndicator={false}
+             />
+
+
+
+
       </View>
 
 
