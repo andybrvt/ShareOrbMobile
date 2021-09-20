@@ -17,7 +17,7 @@ import axios from "axios";
 import authAxios from '../util';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import InvitePage from '../Explore/InvitePage';
-
+import { Avatar } from 'react-native-elements';
  // used in conjuction with the newsfeed view so that you
  // can folow people
 const width = Dimensions.get("window").width
@@ -87,6 +87,86 @@ class SuggestedList extends React.Component{
 
 
     })
+  }
+
+  frequentChatPeople = () => {
+    // this function will be used to render the headers of the
+    // chats
+
+    return (
+
+      <View style = {styles.frequentPeopleContainer}>
+        <View style={[styles.column]}>
+          <Avatar
+            source = {{
+              uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+            }}
+            size = {80}
+          />
+        </View>
+
+        <View style={[styles.column]}>
+           <Avatar
+             source = {{
+               uri: 'https://images.unsplash.com/photo-1610555248279-adea4c523fb3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+             }}
+             size = {80}
+           />
+        </View>
+
+        <View style={[styles.column]}>
+          <Avatar
+            source = {{
+              uri: 'https://images.unsplash.com/photo-1558339136-19ee57afe7a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
+            }}
+            size = {80}
+           />
+        </View>
+
+        <View style={[styles.column]}>
+           <Avatar
+             source = {{
+               uri: 'https://images.unsplash.com/photo-1610490689129-26c48e3cb975?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=80',
+             }}
+             size = {80}
+           />
+        </View>
+        <View style={[styles.column]}>
+           <Avatar
+             source = {{
+               uri: 'https://images.unsplash.com/photo-1618125857227-df2ded76ec2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+             }}
+             size = {80}
+           />
+        </View>
+        <View style={[styles.column]}>
+           <Avatar
+             source = {{
+               uri: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80'
+             }}
+             size = {80}
+           />
+        </View>
+        <View style={[styles.column]}>
+           <Avatar
+             source = {{
+               uri: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+             }}
+             size = {80}
+           />
+        </View>
+        <View style={[styles.column]}>
+           <Avatar
+             source = {{
+               uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+             }}
+             size = {80}
+           />
+        </View>
+
+
+      </View>
+    )
   }
 
   onLoadMorePeople = () => {
@@ -292,8 +372,78 @@ class SuggestedList extends React.Component{
 
     return(
       <View style = {{
-          flex: 1
         }}>
+        <InvitePage></InvitePage>
+        <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
+          <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Food</Text>
+        </View>
+        <View style={{flex:1, }}>
+          <View style={{flexDirection:'row', marginLeft:'2.5%' }}>
+            <View style={{zIndex:99}}>
+              <Avatar
+                source = {{
+                  uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                }}
+                rounded
+                size = {105}
+                 />
+             </View>
+             <ScrollView
+               style={{right:20}}
+               showsHorizontalScrollIndicator={false}
+               horizontal = {true}>
+               {this.frequentChatPeople()}
+             </ScrollView>
+           </View>
+           <View style={{top:'5%'}}>
+             <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
+               <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Fitness</Text>
+             </View>
+             <View style={{flexDirection:'row', marginLeft:'2.5%', }}>
+               <View style={{zIndex:99}}>
+                 <Avatar
+                   source = {{
+                     uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                   }}
+                   rounded
+                   size = {105}
+                    />
+                </View>
+                <ScrollView
+                  style={{right:20}}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal = {true}>
+                  {this.frequentChatPeople()}
+                </ScrollView>
+              </View>
+            </View>
+            <View style={{top:'10%'}}>
+              <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
+                <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>NBA</Text>
+              </View>
+              <View style={{flexDirection:'row', marginLeft:'2.5%', }}>
+                <View style={{zIndex:99}}>
+                  <Avatar
+                    source = {{
+                      uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                    }}
+                    rounded
+                    size = {105}
+                     />
+                 </View>
+                 <ScrollView
+                   style={{right:20}}
+                   showsHorizontalScrollIndicator={false}
+                   horizontal = {true}>
+                   {this.frequentChatPeople()}
+                 </ScrollView>
+               </View>
+             </View>
+          </View>
+
+
+
+        {/*
         <FlatList
           // onRefresh = {()=> this.props.onRefresh()}
           // refreshing = {this.props.refreshing}
@@ -307,13 +457,26 @@ class SuggestedList extends React.Component{
           showsVerticalScrollIndicator={false}
 
           />
-
+          */}
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  frequentPeopleContainer: {
+    marginTop:20,
+    height: 65,
+    flexDirection: 'row',
+  },
+  column:{
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',       //THIS LINE HAS CHANGED
+    marginRight:2.5,
+    justifyContent:'center',
+
+  },
   userContainer: {
     width: width/2,
     height: width/2,

@@ -200,11 +200,11 @@ class InvitePage extends React.Component{
                  </View>
                 </View>
 
-
                 <TouchableOpacity onPress={()=>this.shareMessage(codeInvite)} style={styles.loginBtn1}>
                   <Text style={{color:'white'}}>Invite</Text>
 
                 </TouchableOpacity>
+
                 {/*
                <View style ={{
                    width: '80%',
@@ -273,8 +273,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    alignItems: 'center',
-    padding: 10
   },
   welcomeText: {
   padding:5,

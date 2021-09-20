@@ -26,6 +26,9 @@ import SuggestedList from '../Newsfeed/SuggestedList';
 import Animated from 'react-native-reanimated';
 import SearchResults from './SearchResults';
 import InvitePage from './InvitePage';
+import { Avatar } from 'react-native-elements';
+
+
 const { Value } = Animated;
 
 const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
@@ -230,20 +233,24 @@ class Explore extends React.Component{
                />
 
             :
+            <ScrollView
+               style={{}}>
+              <SuggestedList
+                navigation = {this.props.navigation}
+                updateFollowing = {this.props.authAddUnaddFollowing}
+                following= {this.props.following}
+                curId = {this.props.id}
+                username = {this.props.username}
+                onRefresh = {this.onRefresh}
+                refreshing = {this.state.refreshing}
+                inviteCode = {this.props.inviteCode}
+                 />
+            </ScrollView>
 
-            <SuggestedList
-              navigation = {this.props.navigation}
-              updateFollowing = {this.props.authAddUnaddFollowing}
-              following= {this.props.following}
-              curId = {this.props.id}
-              username = {this.props.username}
-              onRefresh = {this.onRefresh}
-              refreshing = {this.state.refreshing}
-              inviteCode = {this.props.inviteCode}
-               />
 
 
           }
+
 
 
 
