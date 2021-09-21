@@ -43,14 +43,14 @@ class SuggestedListGroup extends React.Component{
 
   componentDidMount(){
 
-    // authAxios.get(`${global.IP_CHANGE}`+'/userprofile/configSuggestSuggested')
-    // .then(res => {
-    //   const newList = this.onRemoveDuplicates(res.data.focusList, res.data.userList)
-    //   this.setState({
-    //       list:newList,
-    //    });
-    //
-    // })
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/suggestedGroups')
+    .then(res => {
+
+      this.setState({
+        list: res.data
+      })
+
+    })
 
   }
 
@@ -90,80 +90,29 @@ class SuggestedListGroup extends React.Component{
     })
   }
 
-  frequentChatPeople = () => {
+  frequentChatPeople = (posts) => {
     // this function will be used to render the headers of the
     // chats
 
     return (
 
       <View style = {styles.frequentPeopleContainer}>
-        <View style={[styles.column]}>
-          <Avatar
-            source = {{
-              uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-            }}
-            size = {80}
-          />
-        </View>
 
-        <View style={[styles.column]}>
-           <Avatar
-             source = {{
-               uri: 'https://images.unsplash.com/photo-1610555248279-adea4c523fb3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
-             }}
-             size = {80}
-           />
-        </View>
+        {posts.map((item, index) => {
+          console.log(item)
+          const image = `${global.IMAGE_ENDPOINT}`+ item.itemImage
+          return(
+            <View style={[styles.column]}>
+              <Avatar
+                source = {{
+                  uri: image
+                }}
+                size = {80}
+              />
+            </View>
 
-        <View style={[styles.column]}>
-          <Avatar
-            source = {{
-              uri: 'https://images.unsplash.com/photo-1558339136-19ee57afe7a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
-            }}
-            size = {80}
-           />
-        </View>
-
-        <View style={[styles.column]}>
-           <Avatar
-             source = {{
-               uri: 'https://images.unsplash.com/photo-1610490689129-26c48e3cb975?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=80',
-             }}
-             size = {80}
-           />
-        </View>
-        <View style={[styles.column]}>
-           <Avatar
-             source = {{
-               uri: 'https://images.unsplash.com/photo-1618125857227-df2ded76ec2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-             }}
-             size = {80}
-           />
-        </View>
-        <View style={[styles.column]}>
-           <Avatar
-             source = {{
-               uri: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80'
-             }}
-             size = {80}
-           />
-        </View>
-        <View style={[styles.column]}>
-           <Avatar
-             source = {{
-               uri: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-             }}
-             size = {80}
-           />
-        </View>
-        <View style={[styles.column]}>
-           <Avatar
-             source = {{
-               uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-             }}
-             size = {80}
-           />
-        </View>
+          )
+        })}
 
 
       </View>
@@ -221,17 +170,27 @@ class SuggestedListGroup extends React.Component{
 
   renderItem = ({item}) => {
 
+
+    const groupPic = `${global.IMAGE_ENDPOINT}`+item.groupPic
+    let title = ""
+    let post = []
+    if(item.group_name){
+      title = item.group_name
+    }
+    if(item.get_socialCalItems){
+      post = item.get_socialCalItems
+    }
     return(
       <View>
         <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
-          <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Food</Text>
+          <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>{global.CAPITALIZE(title)}</Text>
         </View>
 
         <View style={{flexDirection:'row', marginLeft:'2.5%' }}>
           <View style={{zIndex:99}}>
             <Avatar
               source = {{
-                uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                uri: groupPic
               }}
               rounded
               size = {105}
@@ -241,7 +200,8 @@ class SuggestedListGroup extends React.Component{
              style={{right:20}}
              showsHorizontalScrollIndicator={false}
              horizontal = {true}>
-             {this.frequentChatPeople()}
+
+             {this.frequentChatPeople(post)}
            </ScrollView>
          </View>
       </View>
