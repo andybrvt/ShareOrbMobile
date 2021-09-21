@@ -19,7 +19,7 @@ import {
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
 // import * as Permissions from 'expo-permissions';
-import { Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
+import { Triangle, Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
@@ -38,6 +38,8 @@ import Test from '../PostingFolder/Test'
 const width = Dimensions.get("window").width
 const height = Dimensions.get('window').height
 import * as Progress from 'react-native-progress';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { Avatar } from 'react-native-elements';
 
 
 const { Clock,
@@ -708,8 +710,60 @@ class CameraScreen extends React.Component{
 
 
 
+  renderSmallGroupCarousel = () => {
+
+    const smallGroups = this.props.smallGroups
+    return(
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          borderRadius: 35,
+          padding: 5,
+          top: '4%',
+          alignSelf: 'center',
+          backgroundColor:'#000000aa',
+          // backgroundColor:'transparent',
+          position:'absolute'}}
+
+        >
+        <Carousel
+          style = {{backgroundColor: 'pink'}}
+          data = {smallGroups}
+          renderItem = {this.renderSmallGroupItem}
+          keyExtractor={(item, index) => String(index)}
+          sliderWidth = {width * 0.6}
+          itemWidth = {width * 0.15}
+           />
+      </View>
+
+    )
+  }
+
+  renderSmallGroupItem = ({item}) => {
+
+    const pic = `${global.IMAGE_ENDPOINT}` + item.groupPic
+
+    return(
+      <View style = {{
+          alignItems:'center',
+          justifyContent: 'center',
+          }}>
+        <Avatar
+          source = {{
+            uri: pic
+          }}
+          rounded
+          size = {50}
+          />
+      </View>
+    )
+  }
+
   render(){
     console.log(this.state.videoPreview)
+    const smallGroups = this.props.smallGroups;
     const showCaption = this.state.showCaptionModal;
     return(
       <View
@@ -1156,6 +1210,15 @@ class CameraScreen extends React.Component{
 
                   */}
 
+                {
+                  this.state.isRecording === true ?
+
+                  null
+
+                  :
+
+                  this.renderSmallGroupCarousel()
+                }
 
 
                 {
@@ -1358,7 +1421,8 @@ class CameraScreen extends React.Component{
 const mapStateToProps = state => {
   return {
     curUserId: state.auth.id,
-    showCamera: state.auth.showCamera
+    showCamera: state.auth.showCamera,
+    smallGroups: state.auth.smallGroups
   }
 }
 
