@@ -16,20 +16,21 @@ import {
 import axios from "axios";
 import authAxios from '../util';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
-import InvitePage from '../Explore/InvitePage';
+import InvitePage from './InvitePage';
 import { Avatar } from 'react-native-elements';
  // used in conjuction with the newsfeed view so that you
  // can folow people
 const width = Dimensions.get("window").width
+const height = Dimensions.get("window").height
 
 
-class SuggestedList extends React.Component{
+class SuggestedListGroup extends React.Component{
 
   constructor(props){
     super(props)
 
     this.state = {
-      list: [],
+      list: [1, 2, 3,],
       loading: false,
       itemLoading: 0,
       start: 10,
@@ -42,14 +43,14 @@ class SuggestedList extends React.Component{
 
   componentDidMount(){
 
-    authAxios.get(`${global.IP_CHANGE}`+'/userprofile/configSuggestSuggested')
-    .then(res => {
-      const newList = this.onRemoveDuplicates(res.data.focusList, res.data.userList)
-      this.setState({
-          list:newList,
-       });
-
-    })
+    // authAxios.get(`${global.IP_CHANGE}`+'/userprofile/configSuggestSuggested')
+    // .then(res => {
+    //   const newList = this.onRemoveDuplicates(res.data.focusList, res.data.userList)
+    //   this.setState({
+    //       list:newList,
+    //    });
+    //
+    // })
 
   }
 
@@ -218,246 +219,213 @@ class SuggestedList extends React.Component{
     })
   }
 
-  renderItem = ({item, index}) => {
-
-    // if(index === 0){
-    //   return(
-    //     <View>
-    //       <Text>There are no post. Lets go follow some people</Text>
-    //     </View>
-    //   )
-    // }
-
-
-    const following = [];
-    const firstName = item.first_name
-    const lastName = item.last_name
-
-    if(this.props.following){
-      for(let i = 0; i< this.props.following.length; i++){
-        following.push(
-          this.props.following[i].id
-        )
-      }
-    }
-
+  renderItem = ({item}) => {
 
     return(
-      <View style = {styles.userContainer}>
-        <TouchableWithoutFeedback onPress = {() => this.ViewProfile(item.username)}>
-
-        <View style = {styles.userCards}>
-            <Image
-              style = {styles.userImage}
-              resizeMode = "cover"
-              source = {{uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture}}
-              />
-            <View style = {styles.userName}>
-              <Text style = {styles.textName}>{firstName} {lastName}</Text>
-            </View>
-
-
-
-          {
-            this.state.loading=== true && this.state.itemLoading === item.id ?
-
-            <View
-              style = {styles.editButton}>
-              <ActivityIndicator />
-            </View>
-
-            :
-
-            following.includes(item.id) ?
-
-            <TouchableOpacity
-              onPress = {() => this.onUnfollow(this.props.curId, item.id)}
-              style = {styles.editButton}>
-              <Text style = {{color: 'white', fontFamily:'Nunito-Bold'}}>Unfollow</Text>
-            </TouchableOpacity>
-
-            :
-
-            <TouchableOpacity
-              onPress = {() => this.onFollow(this.props.curId, item.id, item.notificationToken)}
-              style = {styles.editButton}>
-              <Text style = {{color: 'white',  fontFamily:'Nunito-Bold'}}>Follow</Text>
-            </TouchableOpacity>
-
-
-
-          }
-
-
+      <View>
+        <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
+          <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Food</Text>
         </View>
-      </TouchableWithoutFeedback>
 
+        <View style={{flexDirection:'row', marginLeft:'2.5%' }}>
+          <View style={{zIndex:99}}>
+            <Avatar
+              source = {{
+                uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+              }}
+              rounded
+              size = {105}
+               />
+           </View>
+           <ScrollView
+             style={{right:20}}
+             showsHorizontalScrollIndicator={false}
+             horizontal = {true}>
+             {this.frequentChatPeople()}
+           </ScrollView>
+         </View>
       </View>
+
     )
   }
 
   onRemoveDuplicates = (list1, list2 ) => {
-  // This will remove all the dumplicates from the
-  // list
 
+    let newList = []
+    let duplicate = false
+    for(let i = 0; i< list1.length; i++){
+      // check if the value of list1 is duplicate
+      const length = newList.length
+      for(let j = 0; j< length; j++){
+        if(newList[j].id === list1[i].id){
+          //f the idea for any of the values exist within
+          // the newlist you will stop this current loop
+          duplicate = true
+          break
 
-  let newList = []
-  let duplicate = false
-  for(let i = 0; i< list1.length; i++){
-    // check if the value of list1 is duplicate
-    const length = newList.length
-    for(let j = 0; j< length; j++){
-      if(newList[j].id === list1[i].id){
-        //f the idea for any of the values exist within
-        // the newlist you will stop this current loop
-        duplicate = true
-        break
+        }
+
+        //if it makes it to the end without breaking then
+        // add it in
+
 
       }
-
-      //if it makes it to the end without breaking then
-      // add it in
-
+      if(duplicate === false){
+          newList.push(list1[i])
+      } else {
+        duplicate = false
+      }
 
     }
-    if(duplicate === false){
-        newList.push(list1[i])
-    } else {
-      duplicate = false
-    }
 
-  }
+    let duplicate2 = false
+    for(let i = 0; i< list2.length; i++){
+      // check if the value of list1 is duplicate
+      const length = newList.length
+      for(let j = 0; j< length; j++){
+        if(newList[j].id === list2[i].id){
+          //f the idea for any of the values exist within
+          // the newlist you will stop this current loop
 
-  let duplicate2 = false
-  for(let i = 0; i< list2.length; i++){
-    // check if the value of list1 is duplicate
-    const length = newList.length
-    for(let j = 0; j< length; j++){
-      if(newList[j].id === list2[i].id){
-        //f the idea for any of the values exist within
-        // the newlist you will stop this current loop
+          duplicate2 = true
+          break
+        }
 
-        duplicate2 = true
-        break
+
+      }
+      if(duplicate2 === false){
+          newList.push(list2[i])
+      } else {
+        duplicate2 = false
       }
 
 
-    }
-    if(duplicate2 === false){
-        newList.push(list2[i])
-    } else {
-      duplicate2 = false
+
     }
 
-
-
+    return newList
   }
-
-  return newList
-}
 
   listHeader = () => {
 
     return(
-      <View style = {styles.headerContainer}>
-      <InvitePage
-        inviteCode = {this.props.inviteCode}
-         />
-      </View>
+        <InvitePage />
+
     )
   }
 
 
   render(){
 
+    {/*
+    <FlatList
+      // onRefresh = {()=> this.props.onRefresh()}
+      // refreshing = {this.props.refreshing}
+      ListHeaderComponent = {this.listHeader}
+      numColumns = {2}
+      data = {this.state.list}
+      renderItem = {this.renderItem}
+      keyExtractor={(item, index) => String(index)}
+      onEndReachedThreshold = {0.2}
+      onEndReached = {()=> this.onLoadMorePeople()}
+      showsVerticalScrollIndicator={false}
+
+      />
+      */}
+
+
     return(
-      <View style = {{
-        }}>
-        <InvitePage></InvitePage>
-        <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
-          <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Food</Text>
-        </View>
-        <View style={{flex:1, }}>
-          <View style={{flexDirection:'row', marginLeft:'2.5%' }}>
-            <View style={{zIndex:99}}>
-              <Avatar
-                source = {{
-                  uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
-                }}
-                rounded
-                size = {105}
-                 />
-             </View>
-             <ScrollView
-               style={{right:20}}
-               showsHorizontalScrollIndicator={false}
-               horizontal = {true}>
-               {this.frequentChatPeople()}
-             </ScrollView>
-           </View>
-           <View style={{top:'5%'}}>
-             <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
-               <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Fitness</Text>
-             </View>
-             <View style={{flexDirection:'row', marginLeft:'2.5%', }}>
-               <View style={{zIndex:99}}>
-                 <Avatar
-                   source = {{
-                     uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
-                   }}
-                   rounded
-                   size = {105}
-                    />
-                </View>
-                <ScrollView
-                  style={{right:20}}
-                  showsHorizontalScrollIndicator={false}
-                  horizontal = {true}>
-                  {this.frequentChatPeople()}
-                </ScrollView>
-              </View>
-            </View>
-            <View style={{top:'10%'}}>
-              <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
-                <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>NBA</Text>
-              </View>
-              <View style={{flexDirection:'row', marginLeft:'2.5%', }}>
-                <View style={{zIndex:99}}>
-                  <Avatar
-                    source = {{
-                      uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
-                    }}
-                    rounded
-                    size = {105}
-                     />
-                 </View>
-                 <ScrollView
-                   style={{right:20}}
-                   showsHorizontalScrollIndicator={false}
-                   horizontal = {true}>
-                   {this.frequentChatPeople()}
-                 </ScrollView>
-               </View>
-             </View>
-          </View>
+      <View style = {{flex:1}}>
 
-
-
-        {/*
         <FlatList
-          // onRefresh = {()=> this.props.onRefresh()}
-          // refreshing = {this.props.refreshing}
+          style = {{
+            flex: 1,
+          }}
           ListHeaderComponent = {this.listHeader}
-          numColumns = {2}
           data = {this.state.list}
           renderItem = {this.renderItem}
           keyExtractor={(item, index) => String(index)}
           onEndReachedThreshold = {0.2}
-          onEndReached = {()=> this.onLoadMorePeople()}
+          // onEndReached = {()=> this.onLoadMorePeople()}
           showsVerticalScrollIndicator={false}
 
-          />
+           />
+        {/*
+          <InvitePage />
+          <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
+            <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Food</Text>
+          </View>
+          <View style={{flex:1, }}>
+            <View style={{flexDirection:'row', marginLeft:'2.5%' }}>
+              <View style={{zIndex:99}}>
+                <Avatar
+                  source = {{
+                    uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                  }}
+                  rounded
+                  size = {105}
+                   />
+               </View>
+               <ScrollView
+                 style={{right:20}}
+                 showsHorizontalScrollIndicator={false}
+                 horizontal = {true}>
+                 {this.frequentChatPeople()}
+               </ScrollView>
+             </View>
+             <View style={{top:'5%'}}>
+               <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
+                 <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Fitness</Text>
+               </View>
+               <View style={{flexDirection:'row', marginLeft:'2.5%', }}>
+                 <View style={{zIndex:99}}>
+                   <Avatar
+                     source = {{
+                       uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                     }}
+                     rounded
+                     size = {105}
+                      />
+                  </View>
+                  <ScrollView
+                    style={{right:20}}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal = {true}>
+                    {this.frequentChatPeople()}
+                  </ScrollView>
+                </View>
+              </View>
+              <View style={{top:'10%'}}>
+                <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
+                  <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>NBA</Text>
+                </View>
+                <View style={{flexDirection:'row', marginLeft:'2.5%', }}>
+                  <View style={{zIndex:99}}>
+                    <Avatar
+                      source = {{
+                        uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                      }}
+                      rounded
+                      size = {105}
+                       />
+                   </View>
+                   <ScrollView
+                     style={{right:20}}
+                     showsHorizontalScrollIndicator={false}
+                     horizontal = {true}>
+                     {this.frequentChatPeople()}
+                   </ScrollView>
+                 </View>
+               </View>
+            </View>
+
+
+
+
+
           */}
+
+
       </View>
     )
   }
@@ -534,4 +502,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default SuggestedList;
+export default SuggestedListGroup;

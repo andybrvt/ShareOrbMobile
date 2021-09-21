@@ -19,6 +19,7 @@ import { Tag, Bookmark, Search, ChevronRight, Settings
   ,MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 
+const {width, height} = Dimensions.get('screen')
 
 class NewProfile extends React.Component{
 
@@ -52,7 +53,7 @@ class NewProfile extends React.Component{
 
     console.log(item)
     return(
-      <View style={{width: '50%', justifyContent:'center', alignItems:'center', padding:10}} >
+      <View style={{width: width/3, justifyContent:'center', alignItems:'center', padding:10}} >
           <Avatar
             source = {{
               uri: pic
@@ -114,7 +115,7 @@ class NewProfile extends React.Component{
           ListHeaderComponent = {this.listHeader}
           columnWrapperStyle={{justifyContent: 'space-between'}}
           data={data}
-          numColumns={2}
+          numColumns={3}
           keyExtractor={(item, index) => String(index)}
           renderItem={this.renderItem}
 
