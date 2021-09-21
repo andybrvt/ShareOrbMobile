@@ -1085,10 +1085,16 @@ class App extends Component{
                        />
 
                    <Stack.Screen
-                     options={{...TransitionPresets.SlideFromRightIOS,headerShown: false, }}
+                     options={{
+                       headerStyle:{
+                         shadowColor:'#fff', //ios
+                         elevation:0,        // android
+                       },
+                       title: '',
+                        ...TransitionPresets.SlideFromRightIOS,
+                      }}
                      name = "createSmallGroup"
                      component= {CreateGroupPage}/>
-
 
 
 

@@ -165,7 +165,7 @@ import * as authActions from '../store/actions/auth';
      console.log(this.props.dailyNotification)
      return (
        <BackgroundContainer>
-         <View >
+         <View>
           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
              <View style={{flexDirection:'row', padding:20}}>
                 <User stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
