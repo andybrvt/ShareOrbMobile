@@ -22,7 +22,7 @@ import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather
 import ExploreSearchBar from './ExploreSearchBar';
 import TrendingList from './TrendingList';
 // import SuggestedList from './SuggestedList';
-import SuggestedList from '../Newsfeed/SuggestedList';
+import SuggestedListGroup from './SuggestedListGroup';
 import Animated from 'react-native-reanimated';
 import SearchResults from './SearchResults';
 import InvitePage from './InvitePage';
@@ -233,9 +233,8 @@ class Explore extends React.Component{
                />
 
             :
-            <ScrollView
-               style={{}}>
-              <SuggestedList
+      
+              <SuggestedListGroup
                 navigation = {this.props.navigation}
                 updateFollowing = {this.props.authAddUnaddFollowing}
                 following= {this.props.following}
@@ -245,7 +244,6 @@ class Explore extends React.Component{
                 refreshing = {this.state.refreshing}
                 inviteCode = {this.props.inviteCode}
                  />
-            </ScrollView>
 
 
 

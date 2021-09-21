@@ -25,7 +25,6 @@ import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import NoPosts from './noPosts.svg';
-import SuggestedList from './SuggestedList';
 import FirstPost from './FirstPost';
 
 class InfiniteScrollFlatNew extends React.Component{

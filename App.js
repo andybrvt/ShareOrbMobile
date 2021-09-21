@@ -52,6 +52,7 @@ import CameraScreen from './PostingFolder/CameraScreen';
 import NewPostingPage from './PostingFolder/NewPostingPage';
 import TestDrag from './PostingFolder/TestDrag';
 import Profile from './ProfilePage/Profile';
+import NewProfile from './ProfilePage/NewProfile';
 import ProfilePage from './ProfilePage/ProfilePage';
 import ViewProfile from './ProfilePage/ViewProfile';
 import EditProfile from './ProfilePage/EditProfile';
@@ -764,7 +765,7 @@ class App extends Component{
 
             <Tab.Screen
                name="Profile"
-               component={Profile}
+               component={NewProfile}
                options={{
                  tabBarLabel: false,
                   tabBarIcon: ({ color }) => (
