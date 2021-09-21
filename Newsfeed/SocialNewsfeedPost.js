@@ -587,7 +587,7 @@ class SocialNewsfeedPost extends React.Component{
                 null
                 */
               }
-                    {/*
+                    {
                       peopleLikeId.includes(this.props.userId ) ?
                       <TouchableOpacity
                         onPress = {() => this.onUnlike(
@@ -629,8 +629,8 @@ class SocialNewsfeedPost extends React.Component{
                         </Text>
                         </View>
                       </TouchableOpacity>
-                    */}
-                {/*
+                  }
+
                 <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
                   <View style = {styles.tagCSS2}>
                       <View style = {styles.justifyCenter}>
@@ -646,7 +646,7 @@ class SocialNewsfeedPost extends React.Component{
                       </View>
                   </View>
                 </TouchableWithoutFeedback>
-                */}
+
                 {/*
                 <View style = {styles.tagCSS3}>
                     <View style = {styles.justifyCenter}>

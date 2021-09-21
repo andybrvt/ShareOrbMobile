@@ -12,7 +12,7 @@ const {
   Dimensions,
 } = ReactNative;
 const Button = require('./Button');
-import { PlusCircle } from "react-native-feather";
+import { PlusCircle, UserPlus  } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -142,7 +142,8 @@ const ScrollableTabBarNew = createReactClass({
         onLayout={onLayoutHandler}
       >
         <View style={[styles.tab, this.props.tabStyle, ]}>
-            <PlusCircle
+            <UserPlus
+              stroke="black"
               height = {30}
               width = {30}
                />
