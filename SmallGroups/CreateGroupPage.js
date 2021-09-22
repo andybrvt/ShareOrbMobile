@@ -17,10 +17,13 @@ import {
  } from 'react-native';
 import { LogOut, Lock, User, Bell, Globe, Menu} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import Camera from './camera.jpg';
+import CameraPic from './camera.jpg';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
 import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
+import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -33,7 +36,10 @@ class CreateGroupPage extends React.Component{
       username: '',
       loginCondition:true,
       groupPic: "",
-      groupName: ""
+      groupName: "",
+      description: "",
+      public: false,
+      invitedPeople: []
     }
     this.bs = React.createRef()
   }
@@ -42,6 +48,71 @@ class CreateGroupPage extends React.Component{
     this.setState({
       condition: !this.state.condition
     })
+  }
+
+  handleTakeProfile = async() => {
+    let permissionResult = await Camera.requestPermissionsAsync();
+    if(permissionResult.granted === false){
+      alert("Permission to access camera is required!");
+      // permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+      allowsMultipleSelection: true,
+      base64: true,
+
+    })
+
+
+    if(!pickerResult.cancelled){
+
+      this.setState({
+        groupPic: pickerResult.uri
+      })
+
+      this.bs.current.snapTo(1)
+
+    }
+
+  }
+
+  // handle to choose photo
+  handleChooseProfile = async() => {
+    // this will give permission in order to open up your camera roll
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if(permissionResult.granted === false){
+      // in the case that permission is not granted
+      alert("Permission to access library is required!");
+      return;
+    }
+
+    // this is to pick the image
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      allowsMultipleSelection: true,
+      base64: true,
+    })
+
+    if(!pickerResult.cancelled){
+      // this is if you pick out a picture
+      // in this case you will just change the picture right away
+
+      // this.uploadProfileImage(pickerResult.uri);
+      this.setState({
+        groupPic: pickerResult.uri
+      })
+
+      this.bs.current.snapTo(1)
+    }
   }
 
   renderInner =()=> {
@@ -176,13 +247,32 @@ class CreateGroupPage extends React.Component{
                   width:'100%',
                   // backgroundColor:'red',
                   marginTop:'5%', }}>
-                  <TouchableOpacity   onPress={() => this.bs.current.snapTo(0)}>
-                    <Avatar
-                      rounded
-                      source = {Camera}
-                      size={100}
-                       />
-                  </TouchableOpacity>
+                  {
+                    this.state.groupPic !== "" ?
+
+                    <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
+                      <Avatar
+                        rounded
+                        source = {{
+                          uri: this.state.groupPic
+                        }}
+                        size={100}
+                         />
+                    </TouchableOpacity>
+
+                    :
+
+                    <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
+                      <Avatar
+                        rounded
+                        source = {CameraPic}
+                        size={100}
+                         />
+                    </TouchableOpacity>
+
+
+                  }
+
                   <View style={{
                     marginTop:10,
                     width:'70%',
