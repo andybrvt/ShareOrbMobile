@@ -30,8 +30,8 @@ class ExploreSearchBar extends React.Component{
 
   render(){
 
-    const y = this.props.y;
-    const diff = diffClamp(y, 500, 600);
+    // const y = this.props.y;
+    // const diff = diffClamp(y, 500, 600);
 
     // const translateY = interpolate(cond(lessOrEq(y, 500), y,diff), {
     //   inputRange: [0, 500, 600],

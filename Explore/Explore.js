@@ -227,13 +227,13 @@ class Explore extends React.Component{
               */}
           {
             this.state.showSearch ?
-            <SearchResults
+            <SearchResultsMultiple
               viewProfile = {this.viewProfile}
               data = {this.state.searched}
                />
 
             :
-      
+
               <SuggestedListGroup
                 navigation = {this.props.navigation}
                 updateFollowing = {this.props.authAddUnaddFollowing}
