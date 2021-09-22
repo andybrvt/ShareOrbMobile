@@ -12,7 +12,7 @@ const {
   Dimensions,
 } = ReactNative;
 const Button = require('./Button');
-import { PlusCircle, UserPlus  } from "react-native-feather";
+import { PlusCircle, UserPlus, Info } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -141,16 +141,23 @@ const ScrollableTabBarNew = createReactClass({
         onPress={() => this.onGroupCreateDirect()}
         onLayout={onLayoutHandler}
       >
+
         <View style={[styles.tab, this.props.tabStyle, ]}>
-            <UserPlus
-              stroke="black"
+
+            <PlusCircle
+              strokeWidth={1.5}
+              stroke="#108ee9"
               height = {30}
               width = {30}
                />
         </View>
       </Button>;
 
-    } else {
+    }
+
+
+
+     else {
       return <Button
         key={`${name}_${page}`}
         accessible={true}
@@ -167,6 +174,7 @@ const ScrollableTabBarNew = createReactClass({
               }}
                />
 
+             <Text>test</Text>
         </View>
       </Button>
     }
@@ -182,8 +190,8 @@ const ScrollableTabBarNew = createReactClass({
   render() {
     const tabUnderlineStyle = {
       position: 'absolute',
-      height: 4,
-      backgroundColor: 'navy',
+      height: 2,
+      backgroundColor: '#108ee9',
       bottom: 0,
     };
 
@@ -260,6 +268,12 @@ const ScrollableTabBarNew = createReactClass({
 module.exports = ScrollableTabBarNew;
 
 const styles = StyleSheet.create({
+  activeTextColor:{
+    color:'red',
+  },
+  inactiveTextColor:{
+    color:'green',
+  },
   tab: {
     height: 49,
     alignItems: 'center',
