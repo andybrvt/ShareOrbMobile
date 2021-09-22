@@ -11,7 +11,9 @@ import {
   Switch,
   TextInput,
   Dimensions,
-  RefreshControle
+  RefreshControle,
+  TouchableWithoutFeedback,
+  Keyboard
  } from 'react-native';
 import { LogOut, Lock, User, Bell, Globe, Menu} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -21,6 +23,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
+
 class CreateGroupPage extends React.Component{
   constructor(props){
     super(props)
@@ -29,6 +32,8 @@ class CreateGroupPage extends React.Component{
       loading: false,
       username: '',
       loginCondition:true,
+      groupPic: "",
+      groupName: ""
     }
     this.bs = React.createRef()
   }
@@ -142,138 +147,156 @@ class CreateGroupPage extends React.Component{
     </View>
     </View>
   );
+
+  onOutSideClick = () => {
+    Keyboard.dismiss()
+    this.bs.current.snapTo(1)
+  }
+
+
   render(){
     return(
       <BackgroundContainer>
+        <TouchableWithoutFeedback
+          onPress = {() => this.onOutSideClick()}
+          >
 
-        <View underlayColor="#f0f0f0">
-          <View style={{
-              alignItems:'center',
-              justifyContent:'center',
-              flexDirection:'row',
-
-            }}>
-
-            <View style={{flexDirection:'column',
-              alignItems:'center',
-              justifyContent:'center',
-              width:'100%',
-              // backgroundColor:'red',
-              marginTop:'5%', }}>
-              <TouchableOpacity   onPress={() => this.bs.current.snapTo(0)}>
-                <Avatar
-                  rounded
-                  source = {Camera}
-                  size={100}
-                   />
-              </TouchableOpacity>
+          <View>
+            <View underlayColor="#f0f0f0">
               <View style={{
-                marginTop:10,
-                width:'70%',
+                  alignItems:'center',
+                  justifyContent:'center',
+                  flexDirection:'row',
+
                 }}>
 
-                  <TextInput
-                   placeholder="Orb Name"
-                   placeholderTextColor="#919191"
-                   autoCorrect={false}
-                   style={{fontSize:18,
+                <View style={{flexDirection:'column',
+                  alignItems:'center',
+                  justifyContent:'center',
+                  width:'100%',
+                  // backgroundColor:'red',
+                  marginTop:'5%', }}>
+                  <TouchableOpacity   onPress={() => this.bs.current.snapTo(0)}>
+                    <Avatar
+                      rounded
+                      source = {Camera}
+                      size={100}
+                       />
+                  </TouchableOpacity>
+                  <View style={{
+                    marginTop:10,
+                    width:'70%',
+                    }}>
 
-                     fontFamily:'Nunito-SemiBold', textAlign:'center', }}
-                     // onChangeText = {this.handleFirstNameChange}
-                     // value = {firstName}
-                   />
+                      <TextInput
+                       placeholder="Orb Name"
+                       placeholderTextColor="#919191"
+                       autoCorrect={false}
+                       style={{fontSize:18,
 
+                         fontFamily:'Nunito-SemiBold', textAlign:'center', }}
+                         // onChangeText = {this.handleFirstNameChange}
+                         // value = {firstName}
+                       />
+
+                   </View>
+                </View>
                </View>
-            </View>
-           </View>
-           <View style={{
-               flexDirection:'row',
-               padding:25}}>
-               <Menu
+               <View style={{
+                   flexDirection:'row',
+                   padding:25}}>
+                   <Menu
 
-                 stroke="black" strokeWidth={2.0} width={25} height={25} style={{top:3}}/>
-               <TextInput
-                placeholder="Description"
-                placeholderTextColor="#919191"
-                autoCorrect={false}
-                style={{marginLeft:20,fontSize:18, fontFamily:'Nunito-SemiBold', width:'85%',}}
-                  // onChangeText = {this.handleFirstNameChange}
-                  // value = {firstName}
-                />
+                     stroke="black" strokeWidth={2.0} width={25} height={25} style={{top:3}}/>
+                   <TextInput
+                    placeholder="Description"
+                    placeholderTextColor="#919191"
+                    autoCorrect={false}
+                    style={{marginLeft:20,fontSize:18, fontFamily:'Nunito-SemiBold', width:'85%',}}
+                      // onChangeText = {this.handleFirstNameChange}
+                      // value = {firstName}
+                    />
 
-            </View>
-            <View style={{
-                flexDirection:'row',
-
-                borderTopWidth:1,
-                borderColor:'#d9d9d9',
-                borderBottomWidth:1,
-                padding:20}}>
-              <View>
-                <Globe stroke="black" strokeWidth={1} width={45} height={45} style={{top:3}}/>
-              </View>
-              {
-                (this.state.condition)?
-                <View style={{marginLeft:20, flexDirection:'column'}}>
-                  <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Public</Text>
-                  <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Anyone can join the group</Text>
                 </View>
-                :
-                <View style={{marginLeft:20, flexDirection:'column'}}>
-                  <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Private</Text>
-                  <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Choose who joins the group</Text>
+                <View style={{
+                    flexDirection:'row',
+
+                    borderTopWidth:1,
+                    borderColor:'#d9d9d9',
+                    borderBottomWidth:1,
+                    padding:20}}>
+                  <View>
+                    <Globe stroke="black" strokeWidth={1} width={45} height={45} style={{top:3}}/>
+                  </View>
+                  {
+                    (this.state.condition)?
+                    <View style={{marginLeft:20, flexDirection:'column'}}>
+                      <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Public</Text>
+                      <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Anyone can join the group</Text>
+                    </View>
+                    :
+                    <View style={{marginLeft:20, flexDirection:'column'}}>
+                      <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Private</Text>
+                      <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Choose who joins the group</Text>
+                    </View>
+                  }
+
+                  <View style = {{
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    {
+                      this.state.loading === true ?
+                      <ActivityIndicator />
+                    :
+
+                    <Switch
+                      trackColor={{ false: "gray", true: "#1890ff" }}
+                      thumbColor={this.state.condition ? "white" : "white"}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={this.toggleChange}
+                      value={this.state.condition }
+                       />
+
+                    }
+
+                  </View>
+
+
+                 </View>
+                <View style={{top:20}}>
+                  <Text style={styles.settingWord}>People in Group</Text>
                 </View>
-              }
+                <ScrollView
+                  showsHorizontalScrollIndicator={false}
+                  horizontal = {true}>
+                  {this.frequentChatPeople()}
+                </ScrollView>
 
-              <View style = {{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                {
-                  this.state.loading === true ?
-                  <ActivityIndicator />
-                :
+            </View>
 
-                <Switch
-                  trackColor={{ false: "gray", true: "#1890ff" }}
-                  thumbColor={this.state.condition ? "white" : "white"}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={this.toggleChange}
-                  value={this.state.condition }
-                   />
-
-                }
-
-              </View>
-
-
+             <View style={{alignItems:'center', top:'7.5%'}}>
+             <View style={styles.loginBtn1}>
+               <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
              </View>
-            <View style={{top:20}}>
-              <Text style={styles.settingWord}>People in Group</Text>
-            </View>
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              horizontal = {true}>
-              {this.frequentChatPeople()}
-            </ScrollView>
+             </View>
 
-        </View>
 
-         <View style={{alignItems:'center', top:'7.5%'}}>
-         <View style={styles.loginBtn1}>
-           <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
-         </View>
-         </View>
-         <BottomSheet
-          ref={this.bs}
-          snapPoints={[250, 0]}
-          renderContent={this.renderInner}
-          renderHeader={this.renderHeader}
-          initialSnap={1}
-          callbackNode={this.fall}
-          enabledGestureInteraction={true}
-        />
+
+          </View>
+
+        </TouchableWithoutFeedback>
+
+        <BottomSheet
+         ref={this.bs}
+         snapPoints={[250, 0]}
+         renderContent={this.renderInner}
+         renderHeader={this.renderHeader}
+         initialSnap={1}
+         callbackNode={this.fall}
+         enabledGestureInteraction={true}
+       />
       </BackgroundContainer>
     )
   }
