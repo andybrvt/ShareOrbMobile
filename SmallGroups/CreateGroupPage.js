@@ -11,16 +11,29 @@ import {
   Switch,
   TextInput,
   Dimensions,
-  RefreshControle
+  RefreshControle,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+  ActivityIndicator
  } from 'react-native';
-import { LogOut, Lock, User, Bell, Globe, Menu} from "react-native-feather";
+import { LogOut, Lock, User, Bell, Globe, Menu, PlusCircle} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import Camera from './camera.jpg';
+import CameraPic from './camera.jpg';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
 import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
+import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
+import ExploreSearchBar from '../Explore/ExploreSearchBar';
+import authAxios from '../util';
+import FakeRoundedInput from '../RandomComponents/FakeRoundedInput';
+import SearchResults from '../Explore/SearchResults';
+import SearchResultsMultiple from './SearchResultsMultiple';
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
+
 class CreateGroupPage extends React.Component{
   constructor(props){
     super(props)
@@ -29,15 +42,144 @@ class CreateGroupPage extends React.Component{
       loading: false,
       username: '',
       loginCondition:true,
+      groupPic: "",
+      groupName: "",
+      description: "",
+      public: false,
+      invitedPeople: [],
+      searchValue: '',
+      showSearch: false
     }
     this.bs = React.createRef()
   }
 
-  toggleChange = () => {
+  onShowSearch = () => {
     this.setState({
-      condition: !this.state.condition
+      showSearch: true
     })
   }
+
+  onCloseSearch = () => {
+    this.setState({
+      searchValue: "",
+      showSearch: false
+    })
+  }
+
+  onPublicChange = () => {
+    this.setState({
+      public: !this.state.public
+    })
+  }
+
+  handleTakeProfile = async() => {
+    let permissionResult = await Camera.requestPermissionsAsync();
+    if(permissionResult.granted === false){
+      alert("Permission to access camera is required!");
+      // permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+      allowsMultipleSelection: true,
+      base64: true,
+
+    })
+
+
+    if(!pickerResult.cancelled){
+
+      this.setState({
+        groupPic: pickerResult.uri
+      })
+
+      this.bs.current.snapTo(1)
+
+    }
+
+  }
+
+  // handle to choose photo
+  handleChooseProfile = async() => {
+    // this will give permission in order to open up your camera roll
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if(permissionResult.granted === false){
+      // in the case that permission is not granted
+      alert("Permission to access library is required!");
+      return;
+    }
+
+    // this is to pick the image
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      allowsMultipleSelection: true,
+      base64: true,
+    })
+
+    if(!pickerResult.cancelled){
+      // this is if you pick out a picture
+      // in this case you will just change the picture right away
+
+      // this.uploadProfileImage(pickerResult.uri);
+      this.setState({
+        groupPic: pickerResult.uri
+      })
+
+      this.bs.current.snapTo(1)
+    }
+  }
+
+  onGroupNameChange = e => {
+    this.setState({
+      groupName:e
+    })
+  }
+
+  onDescriptionChange = e => {
+    this.setState({
+      description: e
+    })
+  }
+
+  onChangeNewSearch = e => {
+
+   this.setState({
+     searchValue: e
+   })
+
+   const search = e === undefined ? null : e;
+
+   if(search !== ""){
+     this.setState({
+       loading: true
+     });
+   authAxios.get(`${global.IP_CHANGE}/userprofile/userSearch/`, {
+     params: {
+       search
+     }
+   }).then(res => {
+     this.setState({
+       loading: false,
+       searched: res.data,
+     })
+   })
+
+ } else {
+   this.setState({
+     searched:[],
+
+   })
+ }
+
+ }
 
   renderInner =()=> {
     return(
@@ -118,15 +260,16 @@ class CreateGroupPage extends React.Component{
           />
         </View>
 
-        <View style={[styles.column]}>
-           <Avatar
-             rounded
-             source = {{
-               uri: 'https://images.unsplash.com/photo-1610555248279-adea4c523fb3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
-             }}
-             size = {70}
-           />
-        </View>
+        <TouchableOpacity
+
+          style={[styles.column]}>
+           <PlusCircle
+             stroke = "white"
+             fill = {'gray'}
+             width = {70}
+             height = {70}
+              />
+          </TouchableOpacity>
 
 
       </View>
@@ -142,138 +285,212 @@ class CreateGroupPage extends React.Component{
     </View>
     </View>
   );
+
+  onOutSideClick = () => {
+    Keyboard.dismiss()
+    this.bs.current.snapTo(1)
+  }
+
+
   render(){
     return(
       <BackgroundContainer>
 
-        <View underlayColor="#f0f0f0">
-          <View style={{
-              alignItems:'center',
-              justifyContent:'center',
-              flexDirection:'row',
+        {
+          this.state.showSearch ?
 
-            }}>
+          <SearchResultsMultiple />
 
-            <View style={{flexDirection:'column',
-              alignItems:'center',
-              justifyContent:'center',
-              width:'100%',
-              // backgroundColor:'red',
-              marginTop:'5%', }}>
-              <TouchableOpacity   onPress={() => this.bs.current.snapTo(0)}>
-                <Avatar
-                  rounded
-                  source = {Camera}
-                  size={100}
-                   />
-              </TouchableOpacity>
-              <View style={{
-                marginTop:10,
-                width:'70%',
-                }}>
+          :
 
-                  <TextInput
-                   placeholder="Orb Name"
-                   placeholderTextColor="#919191"
-                   autoCorrect={false}
-                   style={{fontSize:18,
+          <View style ={{
+                flex: 1}}>
 
-                     fontFamily:'Nunito-SemiBold', textAlign:'center', }}
-                     // onChangeText = {this.handleFirstNameChange}
-                     // value = {firstName}
-                   />
+            <TouchableWithoutFeedback
+              onPress = {() => this.onOutSideClick()}
+              >
+              <KeyboardAvoidingView
+                style = {{
+                  flex:1,
+                }}
+                // keyboardVerticalOffset = {Platform.OS === "ios" ? 0 : 60}
+                // behavior = {Platform.OS =='ios'?"padding":"height"}
+                behavior = {'padding'}
+                 >
 
-               </View>
-            </View>
-           </View>
-           <View style={{
-               flexDirection:'row',
-               padding:25}}>
-               <Menu
+                <ScrollView style = {{
+                    flex:1
+                  }}>
+                  <View underlayColor="#f0f0f0">
+                    <View style={{
+                        alignItems:'center',
+                        justifyContent:'center',
+                        flexDirection:'row',
 
-                 stroke="black" strokeWidth={2.0} width={25} height={25} style={{top:3}}/>
-               <TextInput
-                placeholder="Description"
-                placeholderTextColor="#919191"
-                autoCorrect={false}
-                style={{marginLeft:20,fontSize:18, fontFamily:'Nunito-SemiBold', width:'85%',}}
-                  // onChangeText = {this.handleFirstNameChange}
-                  // value = {firstName}
-                />
+                      }}>
 
-            </View>
-            <View style={{
-                flexDirection:'row',
+                      <View style={{flexDirection:'column',
+                        alignItems:'center',
+                        justifyContent:'center',
+                        width:'100%',
+                        // backgroundColor:'red',
+                        marginTop:'5%', }}>
+                        {
+                          this.state.groupPic !== "" ?
 
-                borderTopWidth:1,
-                borderColor:'#d9d9d9',
-                borderBottomWidth:1,
-                padding:20}}>
-              <View>
-                <Globe stroke="black" strokeWidth={1} width={45} height={45} style={{top:3}}/>
-              </View>
-              {
-                (this.state.condition)?
-                <View style={{marginLeft:20, flexDirection:'column'}}>
-                  <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Public</Text>
-                  <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Anyone can join the group</Text>
-                </View>
-                :
-                <View style={{marginLeft:20, flexDirection:'column'}}>
-                  <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Private</Text>
-                  <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Choose who joins the group</Text>
-                </View>
-              }
+                          <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
+                            <Avatar
+                              rounded
+                              source = {{
+                                uri: this.state.groupPic
+                              }}
+                              size={100}
+                               />
+                          </TouchableOpacity>
 
-              <View style = {{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                {
-                  this.state.loading === true ?
-                  <ActivityIndicator />
-                :
+                          :
 
-                <Switch
-                  trackColor={{ false: "gray", true: "#1890ff" }}
-                  thumbColor={this.state.condition ? "white" : "white"}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={this.toggleChange}
-                  value={this.state.condition }
-                   />
-
-                }
-
-              </View>
+                          <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
+                            <Avatar
+                              rounded
+                              source = {CameraPic}
+                              size={100}
+                               />
+                          </TouchableOpacity>
 
 
-             </View>
-            <View style={{top:20}}>
-              <Text style={styles.settingWord}>People in Group</Text>
-            </View>
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              horizontal = {true}>
-              {this.frequentChatPeople()}
-            </ScrollView>
+                        }
 
-        </View>
+                        <View style={{
+                          marginTop:10,
+                          width:'70%',
+                          }}>
 
-         <View style={{alignItems:'center', top:'7.5%'}}>
-         <View style={styles.loginBtn1}>
-           <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
-         </View>
-         </View>
-         <BottomSheet
-          ref={this.bs}
-          snapPoints={[250, 0]}
-          renderContent={this.renderInner}
-          renderHeader={this.renderHeader}
-          initialSnap={1}
-          callbackNode={this.fall}
-          enabledGestureInteraction={true}
-        />
+                            <TextInput
+                             placeholder="Orb Name"
+                             placeholderTextColor="#919191"
+                             autoCorrect={false}
+                             style={{fontSize:18,
+
+                               fontFamily:'Nunito-SemiBold', textAlign:'center', }}
+                             onChangeText = {this.onGroupNameChange}
+                             value = {this.state.groupName}
+                             />
+
+                         </View>
+                      </View>
+                     </View>
+                     <View style={{
+                         flexDirection:'row',
+                         padding:25}}>
+                         <Menu
+
+                           stroke="black" strokeWidth={2.0} width={25} height={25} style={{top:3}}/>
+                         <TextInput
+                          placeholder="Description"
+                          placeholderTextColor="#919191"
+                          autoCorrect={false}
+                          style={{marginLeft:20,fontSize:18, fontFamily:'Nunito-SemiBold', width:'85%',}}
+                          onChangeText = {this.onDescriptionChange}
+                          value = {this.state.description}
+                          />
+
+                      </View>
+                      <View style={{
+                          flexDirection:'row',
+
+                          borderTopWidth:1,
+                          borderColor:'#d9d9d9',
+                          borderBottomWidth:1,
+                          padding:20}}>
+                        <View>
+                          <Globe stroke="black" strokeWidth={1} width={45} height={45} style={{top:3}}/>
+                        </View>
+                        {
+                          (this.state.condition)?
+                          <View style={{marginLeft:20, flexDirection:'column'}}>
+                            <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Public</Text>
+                            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Anyone can join the group</Text>
+                          </View>
+                          :
+                          <View style={{marginLeft:20, flexDirection:'column'}}>
+                            <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Private</Text>
+                            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Choose who joins the group</Text>
+                          </View>
+                        }
+
+                        <View style = {{
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          {
+                            this.state.loading === true ?
+                            <ActivityIndicator />
+                          :
+
+                          <Switch
+                            trackColor={{ false: "gray", true: "#1890ff" }}
+                            thumbColor={this.state.condition ? "white" : "white"}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={this.onPublicChange}
+                            value={this.state.public }
+                             />
+
+                          }
+
+                        </View>
+
+
+                       </View>
+
+                      <View style = {{top: 20}}>
+                        <View >
+                          <Text style={styles.settingWord}>People in Group</Text>
+                        </View>
+
+
+
+                         <View
+                          // showsHorizontalScrollIndicator={false}
+                          // horizontal = {true}
+                          >
+                          {this.frequentChatPeople()}
+                        </View>
+
+                      </View>
+
+                  </View>
+
+
+
+                   <View style={{alignItems:'center', top:'7.5%'}}>
+                   <View style={styles.loginBtn1}>
+                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
+                   </View>
+                   </View>
+
+
+
+                </ScrollView>
+
+              </KeyboardAvoidingView>
+
+
+            </TouchableWithoutFeedback>
+          </View>
+
+        }
+
+        <BottomSheet
+         ref={this.bs}
+         snapPoints={[250, 0]}
+         renderContent={this.renderInner}
+         renderHeader={this.renderHeader}
+         initialSnap={1}
+         callbackNode={this.fall}
+         enabledGestureInteraction={true}
+       />
       </BackgroundContainer>
     )
   }
