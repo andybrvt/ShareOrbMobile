@@ -85,10 +85,11 @@ class SwipeInfiniteScrollHolder extends React.Component{
                />}
             >
             {smallGroups.map((group, indx) => {
-              console.log(group)
               const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
               return(
-                <InfiniteScrollFlatNew name='tab1' tabLabel={{pic: pic, name:group.group_name}} />
+                <InfiniteScrollFlatNew
+                  groupId= {group.id}
+                  name='tab1' tabLabel={{pic: pic, name:group.group_name}} />
 
               )
 
