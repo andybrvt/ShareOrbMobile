@@ -718,22 +718,21 @@ class CameraScreen extends React.Component{
           alignItems: 'center',
           justifyContent: 'center',
           overflow: 'hidden',
-          borderRadius: 35,
+          borderRadius: 25,
           padding: 5,
           top: '4%',
           alignSelf: 'center',
-          backgroundColor:'#000000aa',
+          backgroundColor: 'rgba(0,0,0,.7)',
           // backgroundColor:'transparent',
           position:'absolute'}}
 
         >
         <Carousel
-          style = {{backgroundColor: 'pink'}}
           data = {smallGroups}
           renderItem = {this.renderSmallGroupItem}
           keyExtractor={(item, index) => String(index)}
-          sliderWidth = {width * 0.6}
-          itemWidth = {width * 0.15}
+          sliderWidth = {width * 0.65}
+          itemWidth = {width * 0.2}
            />
       </View>
 
@@ -754,7 +753,7 @@ class CameraScreen extends React.Component{
             uri: pic
           }}
           rounded
-          size = {50}
+          size = {40}
           />
       </View>
     )

@@ -251,10 +251,10 @@ class ProfileHeader extends React.Component{
 
 
        <View style = {styles.bioContainer}>
-         <Text style = {styles.bio}>Orbs</Text>
-         {/*
+
+
          <Text style = {styles.bio}> {bio}</Text>
-         */}
+
        </View>
 
               {/*

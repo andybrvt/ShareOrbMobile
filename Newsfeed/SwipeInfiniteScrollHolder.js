@@ -16,7 +16,7 @@ import ScrollableTabBarNew from './ScrollableTabBarNew';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import Header from './Header';
 import InfiniteScrollFlatNew from './InfiniteScrollFlatNew';
-import { PlusCircle, UserPlus, Info } from "react-native-feather";
+import { PlusCircle, UserPlus, Info, Users} from "react-native-feather";
 
 const height = Dimensions.get('window').height
 
@@ -64,7 +64,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
           onPress={() => this.navGroupInfo()}
           style={styles.roundButton1}>
 
-          <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+          <Users stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
         </TouchableOpacity>
         </View>
       <ScrollView
