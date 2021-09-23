@@ -25,6 +25,7 @@ import * as colabAlbumActions from './store/actions/colabAlbum';
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import GroupInfo from './Newsfeed/GroupInfo';
+import InvitePeople from './Newsfeed/InvitePeople';
 import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
 import Explore from './Explore/Explore';
 import Friends from './Friends';
@@ -1109,6 +1110,17 @@ class App extends Component{
                         }}
                        name = "GroupInfo"
                        component= {GroupInfo}/>
+                       <Stack.Screen
+                         options={{
+                           headerStyle:{
+                             shadowColor:'#fff', //ios
+                             elevation:0,        // android
+                           },
+                           title: '',
+                            ...TransitionPresets. BottomSheetSlideInSpec,
+                          }}
+                         name = "InvitePeople"
+                         component= {InvitePeople}/>
 
                   </Stack.Navigator>
                   :

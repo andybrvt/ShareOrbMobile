@@ -466,7 +466,7 @@ class CreateGroupPage extends React.Component{
 
                    <View style={{alignItems:'center', top:'7.5%'}}>
                    <View style={styles.loginBtn1}>
-                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
+                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
                    </View>
                    </View>
 
