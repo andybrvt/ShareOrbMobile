@@ -45,7 +45,7 @@ class CreateGroupPage extends React.Component{
       groupPic: "",
       groupName: "",
       description: "",
-      public: false,
+      publicG: false,
       searchResults: [],
       invitedPeople: [],
       searchValue: '',
@@ -310,6 +310,31 @@ class CreateGroupPage extends React.Component{
 
   }
 
+  checkCreating = () => {
+    // this function will check whether or not you meet the criteria
+    // to sumbit to create a group
+    const {groupPic, groupName, description, publicG, invitedPeople} = this.state
+    if(groupPic === ""){
+      return false
+    }
+    if(groupName === ""){
+      return false
+    }
+    if(description === ""){
+      return false
+    }
+    if(invitedPeople.length < 1){
+      return false
+    }
+    return true
+
+  }
+
+  onCreateGroup = () => {
+    // this function is used to create
+    console.log('create group')
+  }
+
 
   render(){
     console.log(this.state.invitedPeople)
@@ -427,7 +452,7 @@ class CreateGroupPage extends React.Component{
                           <Globe stroke="black" strokeWidth={1} width={45} height={45} style={{top:3}}/>
                         </View>
                         {
-                          (this.state.condition)?
+                          (this.state.publicG)?
                           <View style={{marginLeft:20, flexDirection:'column'}}>
                             <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Public</Text>
                             <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Anyone can join the group</Text>
@@ -454,7 +479,7 @@ class CreateGroupPage extends React.Component{
                             thumbColor={this.state.condition ? "white" : "white"}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={this.onPublicChange}
-                            value={this.state.public }
+                            value={this.state.publicG }
                              />
 
                           }
@@ -486,15 +511,34 @@ class CreateGroupPage extends React.Component{
                   </View>
 
 
+                  {
+                    this.checkCreating() ?
 
-                   <View style={{alignItems:'center',
-                     height: 100,
-                     justifyContent: 'center',
-                   }}>
-                   <View style={styles.loginBtn1}>
-                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
-                   </View>
-                   </View>
+
+                    <View style={{alignItems:'center',
+                      height: 100,
+                      justifyContent: 'center',
+                    }}>
+                    <TouchableOpacity style={styles.loginBtn1}>
+                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
+                    </TouchableOpacity>
+                    </View>
+
+                    :
+
+                    <View style={{alignItems:'center',
+                      height: 100,
+                      justifyContent: 'center',
+                    }}>
+                    <View style={styles.loginBtn2}>
+                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
+                    </View>
+                    </View>
+
+
+
+                  }
+
 
 
 
@@ -606,6 +650,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
 
     backgroundColor: "#40a9ff",
+  },
+  loginBtn2: {
+    width: "85%",
+    borderRadius: 35,
+    height: 60,
+    // elevation:20,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+
+    backgroundColor: "gray",
   },
 
   settingWord: {
