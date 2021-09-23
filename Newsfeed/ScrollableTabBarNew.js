@@ -170,11 +170,11 @@ const ScrollableTabBarNew = createReactClass({
             <Avatar
               rounded
               source = {{
-                uri: name
+                uri: name.pic
               }}
                />
 
-             <Text>test</Text>
+             <Text>{name.name}</Text>
         </View>
       </Button>
     }
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     color:'green',
   },
   tab: {
-    height: 49,
+    height: 52,
     alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 20,

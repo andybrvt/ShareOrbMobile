@@ -233,6 +233,12 @@ const authUnshowFirstPostModal = (state, action) => {
   })
 }
 
+const authAddSmallGroup = (state, action) => {
+  return updateObject(state,{
+    smallGroups: [...state.smallGroups, action.group]
+  })
+}
+
 
 const reducer = (state = initialState, action) => {
   switch(action.type){
@@ -284,6 +290,8 @@ const reducer = (state = initialState, action) => {
       return authShowFirstPostModal(state, action)
     case actionTypes.AUTH_UNSHOW_FIRST_POST_MODAL:
       return authUnshowFirstPostModal(state, action)
+    case actionTypes.AUTH_ADD_SMALL_GROUP:
+      return authAddSmallGroup(state, action)
     default:
       return state;
   }

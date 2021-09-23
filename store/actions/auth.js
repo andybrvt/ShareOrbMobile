@@ -359,3 +359,10 @@ export const authUnshowFirstPostModal =() => {
     type: actionTypes.AUTH_UNSHOW_FIRST_POST_MODAL
   }
 }
+
+export const authAddSmallGroup = (group) => {
+  return{
+    type: actionTypes.AUTH_ADD_SMALL_GROUP,
+    group: group
+  }
+}
