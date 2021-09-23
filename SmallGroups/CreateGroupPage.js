@@ -371,6 +371,20 @@ class CreateGroupPage extends React.Component{
     return(
       <BackgroundContainer>
 
+        <View style = {{
+            height: 200,
+            width: 200,
+            backgroundColor: "#000000aa",
+            borderRadius: 20,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+          <ActivityIndicator
+            size ="large"
+            color = "white"
+             />
+        </View>
+
         {
           this.state.showSearch ?
 

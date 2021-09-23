@@ -166,7 +166,9 @@ const ScrollableTabBarNew = createReactClass({
         onPress={() => onPressHandler(page)}
         onLayout={onLayoutHandler}
       >
-        <View style={[styles.tab, this.props.tabStyle, ]}>
+        <View
+          key = {page}
+           style={[styles.tab, this.props.tabStyle, ]}>
             <Avatar
               rounded
               source = {{
