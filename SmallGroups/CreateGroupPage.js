@@ -17,7 +17,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator
  } from 'react-native';
-import { LogOut, Lock, User, Bell, Globe, Menu, PlusCircle} from "react-native-feather";
+import { LogOut, Lock, User, Bell, Globe, Menu, PlusCircle, ArrowLeft} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import CameraPic from './camera.jpg';
 import { Avatar } from 'react-native-elements';
@@ -31,6 +31,7 @@ import FakeRoundedInput from '../RandomComponents/FakeRoundedInput';
 import SearchResults from '../Explore/SearchResults';
 import SearchResultsMultiple from './SearchResultsMultiple';
 import { connect } from 'react-redux';
+import * as authActions from '../store/actions/auth';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -70,7 +71,7 @@ class CreateGroupPage extends React.Component{
 
   onPublicChange = () => {
     this.setState({
-      public: !this.state.public
+      publicG: !this.state.publicG
     })
   }
 
@@ -238,7 +239,9 @@ class CreateGroupPage extends React.Component{
           this.state.invitedPeople.map((item, index) => {
 
             return(
-              <View style={[styles.column]}>
+              <View
+                key = {index}
+                style={[styles.column]}>
                 <Avatar
                   rounded
                   source = {{
@@ -351,15 +354,36 @@ class CreateGroupPage extends React.Component{
       formData
     ).then(res => {
       console.log(res.data)
+
+      this.props.authAddSmallGroup(res.data)
+      this.props.navigation.goBack(0)
+
     })
 
   }
 
+  onBack = () => {
+    this.props.navigation.goBack(0)
+  }
 
   render(){
     console.log(this.state.invitedPeople)
     return(
       <BackgroundContainer>
+
+        <View style = {{
+            height: 200,
+            width: 200,
+            backgroundColor: "#000000aa",
+            borderRadius: 20,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+          <ActivityIndicator
+            size ="large"
+            color = "white"
+             />
+        </View>
 
         {
           this.state.showSearch ?
@@ -383,9 +407,27 @@ class CreateGroupPage extends React.Component{
               >
 
 
+
+
                 <ScrollView style = {{
                     height: height
                   }}>
+                  <TouchableOpacity
+                    style = {{
+                      position: 'absolute',
+                      left: '2%',
+                      top: '2%',
+                      zIndex: 999
+                    }}
+                    onPress = {() => this.onBack()}
+                    >
+                    <ArrowLeft
+
+                      height = {40}
+                      width = {40}
+                      />
+                  </TouchableOpacity>
+
                   <View underlayColor="#f0f0f0">
                     <View style={{
                         alignItems:'center',
@@ -542,7 +584,7 @@ class CreateGroupPage extends React.Component{
                     <TouchableOpacity
                       onPress = {() => this.onCreateGroup()}
                        style={styles.loginBtn1}>
-                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
+                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
                     </TouchableOpacity>
                     </View>
 
@@ -553,7 +595,7 @@ class CreateGroupPage extends React.Component{
                       justifyContent: 'center',
                     }}>
                     <View style={styles.loginBtn2}>
-                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
+                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
                     </View>
                     </View>
 
@@ -561,11 +603,7 @@ class CreateGroupPage extends React.Component{
 
                   }
 
-                   <View style={{alignItems:'center', top:'7.5%'}}>
-                   <View style={styles.loginBtn1}>
-                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
-                   </View>
-                   </View>
+
 
 
 
@@ -707,4 +745,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, null)(CreateGroupPage);
+const mapDispatchToProps = dispatch => {
+  return{
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupPage);
