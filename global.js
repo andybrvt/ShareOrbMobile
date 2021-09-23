@@ -10,12 +10,12 @@ import * as Notifications from 'expo-notifications';
 // global.WS_HEADER = "ws"
 
 // Ping UACI
-// global.IP_CHANGE = "http://206.207.51.186:19002"
-// global.IMAGE_ENDPOINT = "http://206.207.51.186:19002"
-// global.WS_ENDPOINT = "206.207.51.186:19002"
-// global.POSTLIST_SPEC = 'http://206.207.51.186:19002/media/'
-// global.WS_HEADER = "ws"
-// console.disableYellowBox = true;
+global.IP_CHANGE = "http://206.207.51.188:19002"
+global.IMAGE_ENDPOINT = "http://206.207.51.188:19002"
+global.WS_ENDPOINT = "206.207.51.188:19002"
+global.POSTLIST_SPEC = 'http://206.207.51.188:19002/media/'
+global.WS_HEADER = "ws"
+console.disableYellowBox = true;
 
 
 // Ping ethernet house
@@ -91,11 +91,19 @@ import * as Notifications from 'expo-notifications';
 
 
 // Andy UACI
+<<<<<<< HEAD
+// global.IP_CHANGE = "http://206.207.51.170:19000"
+// global.IMAGE_ENDPOINT = "http://206.207.51.170:19000"
+// global.WS_ENDPOINT = "206.207.51.170:19000"
+// global.POSTLIST_SPEC = 'http://206.207.51.170:19000/media/'
+// global.WS_HEADER = "ws"
+=======
 global.IP_CHANGE = "http://206.207.51.190:19000"
 global.IMAGE_ENDPOINT = "http://206.207.51.190:19000"
 global.WS_ENDPOINT = "206.207.51.190:19000"
 global.POSTLIST_SPEC = 'http://206.207.51.190:19000/media/'
 global.WS_HEADER = "ws"
+>>>>>>> 73a18357d8f52f8f1169da7077dcfa4762244854
 
 
 // global.IP_CHANGE = "http://206.207.51.82:19002"

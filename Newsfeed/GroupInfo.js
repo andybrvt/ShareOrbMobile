@@ -9,12 +9,13 @@ import {
   TouchableOpacity,
   Image,
   Switch,
+  Share,
   Alert,
   TextInput,
   Dimensions,
   RefreshControle
  } from 'react-native';
-import { LogOut, Lock, User, Bell, Globe, Menu} from "react-native-feather";
+import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -33,6 +34,24 @@ class GroupInfo extends React.Component{
     this.bs = React.createRef()
   }
 
+  navInvitePeople = () => {
+    this.props.navigation.navigate("InvitePeople")
+  }
+
+  shareMessage = (codeInvite) => {
+    //Here is the Share API
+    Share.share({
+      // message: inputValue.toString(),
+      message:"Join my Fitness orb with my code: N324FJ3A "+ codeInvite
+
+    })
+      //after successful share return result
+      .then((result) => console.log(result))
+      //If any thing goes wrong it comes here
+      .catch((errorMsg) => console.log(errorMsg));
+  };
+
+
   toggleChange = () => {
     Alert.alert(
       "Are you sure?",
@@ -44,13 +63,17 @@ class GroupInfo extends React.Component{
           style: "cancel"
         },
         { text: "Change to public",
-          style:'destructive', onPress: () => this.props.openModal(this.props.openNum) }
+          style:'destructive', onPress: () => this.makeGroupPublic }
       ]
     );
+
+
+  }
+
+  makeGroupPublic  = ()=> {
     this.setState({
       condition: !this.state.condition
     })
-
   }
 
   renderInner =()=> {
@@ -125,7 +148,19 @@ class GroupInfo extends React.Component{
               justifyContent:'center',
               width:'100%',
               // backgroundColor:'red',
-              marginTop:'5%', }}>
+              }}>
+              <View style={{flexDirection:'row', alignItems:'center', marginBottom:'5%',}}>
+                <Text style={styles.settingWord}>
+
+                Invite code
+                </Text>
+                <TouchableOpacity onPress={()=>this.shareMessage()}>
+
+                <View style={styles.loginBtn0}>
+                  <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}> N324FJ3A</Text>
+                </View>
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity   onPress={() => this.bs.current.snapTo(0)}>
                 <Avatar
                   rounded
@@ -151,51 +186,61 @@ class GroupInfo extends React.Component{
         This is the University of Arizona fitness group. Bear Down!
            </Text>
            </View>
-           <Text style={styles.settingWord}>
-
-           Add people to orb
-           </Text>
-            <View style={{
-                flexDirection:'row',
-                padding:20}}>
-
-                <View style={{marginLeft:20, flexDirection:'column'}}>
-                  <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Public</Text>
-
-                </View>
-
-
-              <View style = {{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                {
-                  this.state.loading === true ?
-                  <ActivityIndicator />
-                :
-
-                <Switch
-                  trackColor={{ false: "gray", true: "#1890ff" }}
-                  thumbColor={this.state.condition ? "white" : "white"}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={this.toggleChange}
-                  value={this.state.condition }
-                   />
-
-                }
-
+           <TouchableOpacity onPress = {()=>this.navInvitePeople()}>
+             <View style={{
+               marginTop:25,
+                 flexDirection:'row',
+                 borderTopWidth:1,
+                 borderColor:'#d9d9d9',
+                 borderBottomWidth:1,
+                 padding:15,
+                 alignItems:'center'
+               }}>
+                 <View style={{marginLeft:20, flexDirection:'column'}}>
+                   <Text style={{fontFamily:'Nunito-Bold', fontSize:16}}>Invite with username</Text>
+                 </View>
+                 <View style={{marginLeft:'40%'}}>
+                   <ArrowRight stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
+                 </View>
+                 <View style = {{
+                   flex: 1,
+                   alignItems: 'center',
+                   justifyContent: 'center',
+                 }}>
+               </View>
               </View>
+            </TouchableOpacity>
+            <View style={{flexDirection:'row',padding:20}}>
+                <View style={{marginLeft:20, flex:3, }}>
+                 <Text style={{fontFamily:'Nunito-Bold', fontSize:16}}>Make Orb Public</Text>
+               </View>
 
+                <View style = {{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  {
+                    this.state.loading === true ?
+                    <ActivityIndicator />
+                  :
 
+                  <Switch
+                    trackColor={ this.state.condition ? "gray": "red" }
+                    thumbColor={this.state.condition ? "white" : "white"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={this.toggleChange}
+                    value={this.state.condition }
+                     />
+                  }
+                </View>
              </View>
-            <View style={{top:20}}>
-              <Text style={styles.settingWord}>People in Group</Text>
+            <View style={{alignItems:'center', top:'7.5%'}}>
+            <View style={styles.loginBtn1}>
+              <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
             </View>
-
-
+            </View>
         </View>
-
 
          <BottomSheet
           ref={this.bs}
@@ -223,6 +268,32 @@ const styles = StyleSheet.create({
     // shadowOffset: {width: 0, height: 0},
     // shadowRadius: 5,
     // shadowOpacity: 0.4,
+  },
+  loginBtn0: {
+
+    borderRadius: 10,
+    marginLeft:10,
+    // elevation:20,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+
+    backgroundColor: "#1890ff",
+  },
+  loginBtn1: {
+    width: "60%",
+    borderRadius: 10,
+    height: 40,
+    // elevation:20,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+
+    backgroundColor: "#ff4d4f",
   },
   panelButtonTitle: {
     color:'white'
