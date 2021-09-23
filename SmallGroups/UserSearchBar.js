@@ -5,9 +5,10 @@ import { Text,
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
+  TouchableOpacity
  } from 'react-native';
 import axios from "axios";
-import { ArrowUpCircle, Search, Plus, Menu } from "react-native-feather";
+import { ArrowUpCircle, Search, Plus, Menu, ArrowLeft } from "react-native-feather";
 import { faSearch, faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Avatar, BottomNavigation } from 'react-native-paper';
@@ -25,8 +26,22 @@ class UserSearchBar extends React.Component{
           justifyContent: 'center',
           height: 60,
         }}>
+
         <View style = {{
-            width:'92.5%',
+            width:'8%',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity onPress = {() => this.props.onClose()}>
+            <ArrowLeft
+              height = {35}
+              width = {35}
+              />
+         </TouchableOpacity>
+        </View>
+
+        <View style = {{
+            width:'80%',
+            marginLeft: 10
           }}>
           <View style = {styles.searchText}>
             <FontAwesomeIcon
@@ -47,20 +62,8 @@ class UserSearchBar extends React.Component{
               placeholder = "Search"></TextInput>
           </View>
         </View>
-        {
-          this.props.visible ?
-          <View style = {{
-              width:'17.5%',
-              left:10,
-            }}>
-            <TouchableWithoutFeedback onPress = {() => this.props.onClose()}>
-              <View style={styles.editButton}>
-                 <Text style={{color:'white', fontFamily:'Nunito-SemiBold', fontSize:13,}}>Cancel</Text>
-               </View>
-           </TouchableWithoutFeedback>
-          </View>
-          : null
-        }
+
+
       </View>
     )
   }

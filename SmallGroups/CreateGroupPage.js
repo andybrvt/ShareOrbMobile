@@ -45,7 +45,8 @@ class CreateGroupPage extends React.Component{
       groupPic: "",
       groupName: "",
       description: "",
-      public: false,
+      publicG: false,
+      searchResults: [],
       invitedPeople: [],
       searchValue: '',
       showSearch: false
@@ -166,17 +167,18 @@ class CreateGroupPage extends React.Component{
        search
      }
    }).then(res => {
+
      this.setState({
        loading: false,
-       searched: res.data,
+       searchResults: res.data,
      })
    })
 
  } else {
-   this.setState({
-     searched:[],
-
-   })
+   // this.setState({
+   //   searched:[],
+   //
+   // })
  }
 
  }
@@ -231,37 +233,29 @@ class CreateGroupPage extends React.Component{
     return(
 
       <View style = {styles.frequentPeopleContainer}>
-        <View style={[styles.column]}>
-          <Avatar
-            rounded
-            source = {{
-              uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-            }}
-            size = {70}
-          />
-        </View>
+        {
+          this.state.invitedPeople.map((item, index) => {
 
-        <View style={[styles.column]}>
-           <Avatar
-             rounded
-             source = {{
-               uri: 'https://images.unsplash.com/photo-1610555248279-adea4c523fb3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
-             }}
-             size = {70}
-           />
-        </View>
-        <View style={[styles.column]}>
-          <Avatar
-            rounded
-            source = {{
-              uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-            }}
-            size = {70}
-          />
-        </View>
+            return(
+              <View style={[styles.column]}>
+                <Avatar
+                  rounded
+                  source = {{
+                    uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture
+                  }}
+                  size = {70}
+                />
+              <Text>{item.first_name} {item.last_name}</Text>
+              </View>
+
+            )
+          })
+        }
+
+
 
         <TouchableOpacity
-
+          onPress = {() => this.onShowSearch()}
           style={[styles.column]}>
            <PlusCircle
              stroke = "white"
@@ -292,14 +286,72 @@ class CreateGroupPage extends React.Component{
   }
 
 
+  onShowSearch = () => {
+    this.setState({
+      showSearch: true
+    })
+  }
+  onUnShowSearch = () => {
+     this.setState({
+       showSearch: false
+     })
+  }
+
+  onSearchChange = e => {
+    this.setState({
+      searchValue: e
+    })
+  }
+
+  onSelectUser = (user) => {
+    this.setState({
+      invitedPeople: [...this.state.invitedPeople, user]
+    })
+
+  }
+
+  checkCreating = () => {
+    // this function will check whether or not you meet the criteria
+    // to sumbit to create a group
+    const {groupPic, groupName, description, publicG, invitedPeople} = this.state
+    if(groupPic === ""){
+      return false
+    }
+    if(groupName === ""){
+      return false
+    }
+    if(description === ""){
+      return false
+    }
+    if(invitedPeople.length < 1){
+      return false
+    }
+    return true
+
+  }
+
+  onCreateGroup = () => {
+    // this function is used to create
+    console.log('create group')
+  }
+
+
   render(){
+    console.log(this.state.invitedPeople)
     return(
       <BackgroundContainer>
 
         {
           this.state.showSearch ?
 
-          <SearchResultsMultiple />
+          <SearchResultsMultiple
+            searchValue = {this.state.searchValue}
+            onSearchChange = {this.onChangeNewSearch}
+            onClose = {this.onUnShowSearch}
+            data = {this.state.searchResults}
+            onSelect = {this.onSelectUser}
+            invited = {this.state.invitedPeople}
+             />
 
           :
 
@@ -309,17 +361,10 @@ class CreateGroupPage extends React.Component{
             <TouchableWithoutFeedback
               onPress = {() => this.onOutSideClick()}
               >
-              <KeyboardAvoidingView
-                style = {{
-                  flex:1,
-                }}
-                // keyboardVerticalOffset = {Platform.OS === "ios" ? 0 : 60}
-                // behavior = {Platform.OS =='ios'?"padding":"height"}
-                behavior = {'padding'}
-                 >
+
 
                 <ScrollView style = {{
-                    flex:1
+                    height: height
                   }}>
                   <View underlayColor="#f0f0f0">
                     <View style={{
@@ -407,7 +452,7 @@ class CreateGroupPage extends React.Component{
                           <Globe stroke="black" strokeWidth={1} width={45} height={45} style={{top:3}}/>
                         </View>
                         {
-                          (this.state.condition)?
+                          (this.state.publicG)?
                           <View style={{marginLeft:20, flexDirection:'column'}}>
                             <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Public</Text>
                             <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Anyone can join the group</Text>
@@ -434,7 +479,7 @@ class CreateGroupPage extends React.Component{
                             thumbColor={this.state.condition ? "white" : "white"}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={this.onPublicChange}
-                            value={this.state.public }
+                            value={this.state.publicG }
                              />
 
                           }
@@ -452,6 +497,9 @@ class CreateGroupPage extends React.Component{
 
 
                          <View
+                           style = {{
+                             flex:1,
+                             width: width}}
                           // showsHorizontalScrollIndicator={false}
                           // horizontal = {true}
                           >
@@ -463,6 +511,33 @@ class CreateGroupPage extends React.Component{
                   </View>
 
 
+                  {
+                    this.checkCreating() ?
+
+
+                    <View style={{alignItems:'center',
+                      height: 100,
+                      justifyContent: 'center',
+                    }}>
+                    <TouchableOpacity style={styles.loginBtn1}>
+                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
+                    </TouchableOpacity>
+                    </View>
+
+                    :
+
+                    <View style={{alignItems:'center',
+                      height: 100,
+                      justifyContent: 'center',
+                    }}>
+                    <View style={styles.loginBtn2}>
+                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
+                    </View>
+                    </View>
+
+
+
+                  }
 
                    <View style={{alignItems:'center', top:'7.5%'}}>
                    <View style={styles.loginBtn1}>
@@ -474,7 +549,6 @@ class CreateGroupPage extends React.Component{
 
                 </ScrollView>
 
-              </KeyboardAvoidingView>
 
 
             </TouchableWithoutFeedback>
@@ -557,16 +631,14 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   frequentPeopleContainer: {
-    marginLeft:10,
-    marginTop:20,
-    height: 100,
+    flexWrap: 'wrap',
     flexDirection: 'row',
   },
   column:{
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',       //THIS LINE HAS CHANGED
-    marginRight:30,
+    padding: 10,
+    alignItems: 'center',
+    width: width/4,
+    //THIS LINE HAS CHANGED
     justifyContent:'center',
 
   },
@@ -583,6 +655,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
 
     backgroundColor: "#40a9ff",
+  },
+  loginBtn2: {
+    width: "85%",
+    borderRadius: 35,
+    height: 60,
+    // elevation:20,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+
+    backgroundColor: "gray",
   },
 
   settingWord: {

@@ -91,11 +91,19 @@ console.disableYellowBox = true;
 
 
 // Andy UACI
+<<<<<<< HEAD
 // global.IP_CHANGE = "http://206.207.51.170:19000"
 // global.IMAGE_ENDPOINT = "http://206.207.51.170:19000"
 // global.WS_ENDPOINT = "206.207.51.170:19000"
 // global.POSTLIST_SPEC = 'http://206.207.51.170:19000/media/'
 // global.WS_HEADER = "ws"
+=======
+global.IP_CHANGE = "http://206.207.51.190:19000"
+global.IMAGE_ENDPOINT = "http://206.207.51.190:19000"
+global.WS_ENDPOINT = "206.207.51.190:19000"
+global.POSTLIST_SPEC = 'http://206.207.51.190:19000/media/'
+global.WS_HEADER = "ws"
+>>>>>>> 73a18357d8f52f8f1169da7077dcfa4762244854
 
 
 // global.IP_CHANGE = "http://206.207.51.82:19002"
@@ -193,7 +201,6 @@ global.FILE_NAME_GETTER = (fileURI) => {
   const fileName = fileURI.split("/").pop()
 
   let match = /\.(\w+)$/.exec(fileName);
-  console.log(match[1],  "is there a match here")
   let type = match ? match[1] === "mov" ? "mov" : `image/${match[1]}` : `image`;
 
 

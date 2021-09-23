@@ -170,7 +170,6 @@ class Explore extends React.Component{
  }
 
  onRefresh = () => {
-   console.log('empty refresh')
  }
 
 

@@ -251,7 +251,6 @@ class AppIntro extends React.Component{
   }
 
   onSignupSubmit = () => {
-    console.log('sign up here')
     this.setState({
       loading: true
     })
@@ -266,7 +265,6 @@ class AppIntro extends React.Component{
       password2: password
     }).then(res => {
       const token = res.data.key;
-      console.log(token)
       const formData = new FormData();
       const newPic = global.FILE_NAME_GETTER(profilePic)
 

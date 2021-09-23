@@ -259,7 +259,6 @@ const ScrollableTabBarNew = createReactClass({
 
   onGroupCreateDirect(){
       // this function will direct you to the creating group page
-      console.log('direct here')
       this.props.navigation.navigate('createSmallGroup')
   }
 

@@ -72,7 +72,6 @@ import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 
    onFollow = (follower, following, notiToken) => {
 
-     console.log(follower, following, notiToken)
      this.setState({
        loading: true,
        itemLoading: following

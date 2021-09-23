@@ -99,7 +99,6 @@ class SuggestedListGroup extends React.Component{
       <View style = {styles.frequentPeopleContainer}>
 
         {posts.map((item, index) => {
-          console.log(item)
           const image = `${global.IMAGE_ENDPOINT}`+ item.itemImage
           return(
             <View style={[styles.column]}>

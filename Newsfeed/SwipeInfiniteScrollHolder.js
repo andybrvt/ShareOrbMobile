@@ -59,7 +59,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
     return(
       <View>
-        <View style={{position:'absolute', right:'10%', bottom:'5%',}}>
+        <View style={{zIndex: 999, position:'absolute', right:'10%', bottom:'5%',}}>
         <TouchableOpacity
           onPress={() => this.navGroupInfo()}
           style={styles.roundButton1}>
@@ -67,7 +67,10 @@ class SwipeInfiniteScrollHolder extends React.Component{
           <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
         </TouchableOpacity>
         </View>
-      <ScrollView>
+      <ScrollView
+        scrollEnabled = {false}
+        showsVerticalScrollIndicator={false}
+        >
         {/*
           <Header />
           */}
