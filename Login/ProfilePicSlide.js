@@ -86,8 +86,7 @@ class ProfilePicSlide extends React.Component{
       // in this case you will just change the picture right away
 
       // this.uploadProfileImage(pickerResult.uri);
-      console.log("B")
-      console.log(pickerResult.uri)
+  
       this.props.onChange(pickerResult.uri);
       this.bs.current.snapTo(1)
     }

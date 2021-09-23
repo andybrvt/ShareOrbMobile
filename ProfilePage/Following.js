@@ -70,7 +70,6 @@ import * as authActions from '../store/actions/auth';
 
    onFollow = (follower, following, notiToken) => {
 
-     console.log(follower, following, notiToken)
      this.setState({
        loading: true,
        itemLoading: following
@@ -196,7 +195,6 @@ import * as authActions from '../store/actions/auth';
          data = this.props.profile.get_following
        }
      }
-     console.log(data, 'this is some data')
 
      return (
        <BackgroundContainer>

@@ -51,7 +51,6 @@ class NewProfile extends React.Component{
 
     const pic = `${global.IMAGE_ENDPOINT}` + item.groupPic
 
-    console.log(item)
     return(
       <View style={{width: width/3, justifyContent:'center', alignItems:'center', padding:10}} >
           <Avatar

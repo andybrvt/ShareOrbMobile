@@ -448,7 +448,6 @@ class CameraScreen extends React.Component{
           // return
        } else {
 
-         console.log(pickerResult.uri)
          setTimeout(() => {
            this.setState({
              isVideoOpen: true,

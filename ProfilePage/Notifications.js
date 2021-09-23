@@ -287,7 +287,6 @@ class Notifications extends React.Component{
      notifications = this.props.notifications
    }
 
-   console.log(this.props.notifications.length)
 
    return (
      <BackgroundContainer>

@@ -20,8 +20,7 @@ import * as authActions from '../store/actions/auth';
    }
 
    onUnfollow = (follower, following) => {
-     console.log("hit")
-     console.log(follower, following)
+
      this.setState({
        loading: true,
        itemLoading: following
@@ -40,7 +39,6 @@ import * as authActions from '../store/actions/auth';
    }
 
    onFollow = (follower, following, notiToken) => {
-     console.log(follower, following, notiToken)
      this.setState({
        loading: true,
        itemLoading: following

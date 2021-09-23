@@ -66,7 +66,6 @@ class Permissions extends React.Component{
      try{
        const camera = await Camera.requestMicrophonePermissionsAsync();
        if(camera.status  == "granted"){
-         console.log("hre")
          this.setState({
            allowMicrophone: true,
          })

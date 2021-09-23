@@ -27,7 +27,7 @@ class SearchResultsMultiple extends React.Component{
 
     return(
       <TouchableOpacity
-        onPress = {() => this.props.viewProfile(item.username)}
+        onPress = {() => this.props.onSelect(item)}
         >
         <View style={{
            flexDirection:'row',
@@ -60,7 +60,41 @@ class SearchResultsMultiple extends React.Component{
     )
   }
 
+  renderInvited = ({item}) => {
+    const pic = `${global.IMAGE_ENDPOINT}`+item.profile_picture
+    return(
+      <View style={[styles.column]}>
+         <Avatar
+           rounded
+           source = {{
+             uri:pic
+           }}
+           size = {70}
+         />
+       <Text>{item.first_name} {item.last_name}</Text>
+       </View>
+    )
+  }
+
   frequentChatPeople=()=>{
+
+    let invited = []
+    if(this.props.invited){
+      invited = this.props.invited
+    }
+    return(
+      <FlatList
+        style = {{
+
+        }}
+        data = {invited}
+        renderItem = {this.renderInvited}
+        keyExtractor={(item, index) => String(index)}
+        horizontal = {true}
+        showsHorizontalScrollIndicator={false}
+
+         />
+    )
     // <ScrollView
     //   showsHorizontalScrollIndicator={false}
     //   horizontal = {true}
@@ -145,16 +179,7 @@ class SearchResultsMultiple extends React.Component{
     //
     //
     // </ScrollView>
-    return(
-      <View style = {{
-        backgroundColor: 'red',
-        width: width,
-        height: 80}}>
 
-      </View>
-
-
-    )
   }
 
 
@@ -181,7 +206,14 @@ class SearchResultsMultiple extends React.Component{
             alignItems: 'center'
           }}>
 
-          <UserSearchBar />
+
+        <UserSearchBar
+          value = {this.props.searchValue}
+          onChange = {this.props.onSearchChange}
+          onClose = {this.props.onClose}
+          />
+
+
           {
             data.length === 0 ?
 
@@ -206,7 +238,7 @@ class SearchResultsMultiple extends React.Component{
             :
 
             <View style = {{
-                width: "100%",
+                width: width,
                 flex: 1,
 
               }}>
@@ -219,7 +251,16 @@ class SearchResultsMultiple extends React.Component{
             </View>
           }
 
+        <View style = {{
+            height: 90,
+            width: width,
+            bottom: 20
+          }}>
+
           {this.frequentChatPeople()}
+
+        </View>
+
 
 
         </View>
@@ -233,15 +274,11 @@ class SearchResultsMultiple extends React.Component{
 
 const styles = StyleSheet.create({
   frequentPeopleContainer: {
-    backgroundColor: 'red',
     width: width,
   },
   column:{
-    backgroundColor: 'pink',
-
-    flexDirection: 'column',
     alignItems: 'center',       //THIS LINE HAS CHANGED
-    marginRight:30,
+    marginLeft:15,
     justifyContent:'center',
 
   },

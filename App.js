@@ -791,8 +791,7 @@ class App extends Component{
   }
 
   render(){
-    console.log(this.props.username, 'here in teh app')
-    console.log(this.props.loading, 'loadhin gher ')
+
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth

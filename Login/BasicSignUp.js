@@ -93,10 +93,8 @@ class BasicSignUp extends React.Component{
 
   checkUsername = () => {
     const username = this.props.value
-    console.log('checkuser')
     axios.get(`${global.IP_CHANGE}`+'/userprofile/validateUsername/'+username)
     .then(res => {
-      console.log(res.data)
       if(res.data === true){
         Keyboard.dismiss()
         this.props.openModal(this.props.openNum)
@@ -118,7 +116,6 @@ class BasicSignUp extends React.Component{
   }
 
   checkEmail = () => {
-    console.log('email here')
     const email = this.props.value;
     axios.get(`${global.IP_CHANGE}`+'/userprofile/validateEmail', {
       params: {
@@ -126,7 +123,6 @@ class BasicSignUp extends React.Component{
       }
     })
     .then(res => {
-      console.log(res.data)
       if(res.data === true){
         Keyboard.dismiss()
         this.props.openModal(this.props.openNum)
