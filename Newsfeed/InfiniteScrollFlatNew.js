@@ -57,7 +57,7 @@ class InfiniteScrollFlatNew extends React.Component{
     const groupId = this.props.groupId
     this.waitForSmallGroupsSocketConnection(() => {
       //fetch the stuff here
-
+      WebSocketSmallGroupInstance.fetchGroupPost(groupId)
     })
 
     // connect there now
@@ -155,7 +155,7 @@ class InfiniteScrollFlatNew extends React.Component{
     }
 
     return(
-      <View>
+      <View >
 
         <FlatList
           // onViewableItemsChanged={this.onViewableItemsChanged }

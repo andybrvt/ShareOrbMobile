@@ -60,7 +60,12 @@ class WebSocketSmallGroups{
 
   fetchGroupPost(groupId){
     // this function is to pull the intial information of the groupo
+    this.sendGroupsInfo({
+      groupId: groupId,
+      command: "fetch_group_post"
+    })
   }
+
 
   sendGroupsInfo(data){
   // This is to send it to the backend
