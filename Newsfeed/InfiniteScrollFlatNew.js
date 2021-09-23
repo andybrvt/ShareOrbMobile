@@ -26,7 +26,7 @@ import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import NoPosts from './noPosts.svg';
 import FirstPost from './FirstPost';
-
+import { PlusCircle, UserPlus, Info } from "react-native-feather";
 class InfiniteScrollFlatNew extends React.Component{
 
   state = {
@@ -105,6 +105,8 @@ class InfiniteScrollFlatNew extends React.Component{
     }
 
     return(
+      <View>
+
         <FlatList
           // onViewableItemsChanged={this.onViewableItemsChanged }
           contentContainerStyle={{ paddingBottom: 100 }}
@@ -121,10 +123,15 @@ class InfiniteScrollFlatNew extends React.Component{
           // style={{top:130,}}
           style={{top:20,}}
           />
-
+      </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  
+
+})
 
 const mapStateToProps = state => {
 

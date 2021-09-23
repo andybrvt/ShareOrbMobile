@@ -16,7 +16,7 @@ import ScrollableTabBarNew from './ScrollableTabBarNew';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import Header from './Header';
 import InfiniteScrollFlatNew from './InfiniteScrollFlatNew';
-
+import { PlusCircle, UserPlus, Info } from "react-native-feather";
 
 const height = Dimensions.get('window').height
 
@@ -44,7 +44,12 @@ class Page extends React.Component {
 
 class SwipeInfiniteScrollHolder extends React.Component{
 
+  navGroupInfo=()=> {
 
+    this.props.navigation.navigate("GroupInfo",
+
+    );
+  }
   render(){
    let smallGroups = []
 
@@ -53,7 +58,15 @@ class SwipeInfiniteScrollHolder extends React.Component{
    }
 
     return(
+      <View>
+        <View style={{position:'absolute', right:'10%', bottom:'5%',}}>
+        <TouchableOpacity
+          onPress={() => this.navGroupInfo()}
+          style={styles.roundButton1}>
 
+          <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+        </TouchableOpacity>
+        </View>
       <ScrollView>
         {/*
           <Header />
@@ -86,14 +99,29 @@ class SwipeInfiniteScrollHolder extends React.Component{
         </View>
 
 
-      </ScrollView>
 
+
+      </ScrollView>
+    </View>
 
     )
   }
 }
 
 const styles = StyleSheet.create({
+  roundButton1: {
+
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:99,
+    borderRadius: 100,
+    left:10,
+    bottom:10,
+    backgroundColor: '#1890ff',
+    elevation:15,
+  },
   tabView: {
     flex: 1,
     padding: 10,

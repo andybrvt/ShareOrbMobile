@@ -24,6 +24,7 @@ import * as colabAlbumActions from './store/actions/colabAlbum';
 
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
+import GroupInfo from './Newsfeed/GroupInfo';
 import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
 import Explore from './Explore/Explore';
 import Friends from './Friends';
@@ -1096,7 +1097,17 @@ class App extends Component{
                      name = "createSmallGroup"
                      component= {CreateGroupPage}/>
 
-
+                     <Stack.Screen
+                       options={{
+                         headerStyle:{
+                           shadowColor:'#fff', //ios
+                           elevation:0,        // android
+                         },
+                         title: '',
+                          ...TransitionPresets. BottomSheetSlideInSpec,
+                        }}
+                       name = "GroupInfo"
+                       component= {GroupInfo}/>
 
                   </Stack.Navigator>
                   :

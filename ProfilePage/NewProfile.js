@@ -60,9 +60,9 @@ class NewProfile extends React.Component{
             rounded
             size = {120}
              />
-           <Text>{item.group_name}</Text>
+           <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
            <View>
-             <Text>Members {item.members.length}</Text>
+             <Text>{item.members.length} people</Text>
 
            </View>
 
