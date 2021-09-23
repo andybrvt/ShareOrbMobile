@@ -371,29 +371,40 @@ class CreateGroupPage extends React.Component{
     return(
       <BackgroundContainer>
 
-        <View style = {{
-            width: width,
-            height: height,
-            backgroundColor: 'transparent',
-            position: 'absolute',
-            zIndex: 999,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
+        {
+          this.state.loading ?
+
           <View style = {{
-              height: 200,
-              width: 200,
-              backgroundColor: "#000000aa",
-              borderRadius: 20,
+              width: width,
+              height: height,
+              backgroundColor: 'transparent',
+              position: 'absolute',
+              zIndex: 999,
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-            <ActivityIndicator
-              size ="large"
-              color = "white"
-               />
+            <View style = {{
+                height: 200,
+                width: 200,
+                backgroundColor: "#000000aa",
+                borderRadius: 20,
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+              <ActivityIndicator
+                size ="large"
+                color = "white"
+                 />
+            </View>
           </View>
-        </View>
+
+          :
+
+          null
+
+        }
+
+
 
 
         {
