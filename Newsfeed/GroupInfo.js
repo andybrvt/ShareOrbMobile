@@ -34,6 +34,10 @@ class GroupInfo extends React.Component{
     this.bs = React.createRef()
   }
 
+  navPeopleInGroup= () => {
+    this.props.navigation.navigate("PeopleInGroup")
+  }
+
   navInvitePeople = () => {
     this.props.navigation.navigate("InvitePeople")
   }
@@ -176,14 +180,15 @@ class GroupInfo extends React.Component{
                 }}>
 
                   <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>Fitness</Text>
-                  <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>349 Members</Text>
-               </View>
+                  <TouchableOpacity onPress = {()=>this.navPeopleInGroup()}>
+                    <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> 349 Members </Text>
+                  </TouchableOpacity>
+              </View>
             </View>
            </View>
            <View style={{ alignItems:'center', marginTop:25}}>
            <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
-
-        This is the University of Arizona fitness group. Bear Down!
+             This is the University of Arizona fitness group. Bear Down!
            </Text>
            </View>
            <TouchableOpacity onPress = {()=>this.navInvitePeople()}>
