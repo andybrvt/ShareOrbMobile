@@ -30,6 +30,7 @@ import authAxios from '../util';
 import FakeRoundedInput from '../RandomComponents/FakeRoundedInput';
 import SearchResults from '../Explore/SearchResults';
 import SearchResultsMultiple from './SearchResultsMultiple';
+import { connect } from 'react-redux';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -333,6 +334,25 @@ class CreateGroupPage extends React.Component{
   onCreateGroup = () => {
     // this function is used to create
     console.log('create group')
+    const {groupPic, groupName, description, publicG, invitedPeople} = this.state
+
+
+    let newInvited = [];
+
+    const pic = global.FILE_NAME_GETTER(groupPic)
+
+    const formData = new FormData();
+    formData.append('groupPic', pic)
+    formData.append('groupName', groupName)
+    formData.append('description', description)
+    formData.append('public', publicG)
+    formData.append('curId', this.props.id)
+    authAxios.post(`${global.IP_CHANGE}/mySocialCal/createSmallGroup`,
+      formData
+    ).then(res => {
+      console.log(res.data)
+    })
+
   }
 
 
@@ -519,7 +539,9 @@ class CreateGroupPage extends React.Component{
                       height: 100,
                       justifyContent: 'center',
                     }}>
-                    <TouchableOpacity style={styles.loginBtn1}>
+                    <TouchableOpacity
+                      onPress = {() => this.onCreateGroup()}
+                       style={styles.loginBtn1}>
                       <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE GROUP</Text>
                     </TouchableOpacity>
                     </View>
@@ -678,4 +700,11 @@ const styles = StyleSheet.create({
     marginLeft:10,
   },
 });
-export default CreateGroupPage;
+
+const mapStateToProps = state => {
+  return{
+    id: state.auth.id
+  }
+}
+
+export default connect(mapStateToProps, null)(CreateGroupPage);
