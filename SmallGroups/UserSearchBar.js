@@ -33,14 +33,15 @@ class UserSearchBar extends React.Component{
           }}>
           <TouchableOpacity onPress = {() => this.props.onClose()}>
             <ArrowLeft
-              height = {35}
-              width = {35}
+              stroke="black"
+              height = {27.5}
+              width = {27.5}
               />
          </TouchableOpacity>
         </View>
 
         <View style = {{
-            width:'80%',
+            width:'85%',
             marginLeft: 10
           }}>
           <View style = {styles.searchText}>

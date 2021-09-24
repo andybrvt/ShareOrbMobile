@@ -13,7 +13,7 @@ import { Text,
   Dimensions
  } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { Search, PlusCircle} from "react-native-feather";
+import { Search, PlusCircle, ArrowLeft} from "react-native-feather";
 import UserSearchBar from './UserSearchBar'
 
 
@@ -194,21 +194,18 @@ class SearchResultsMultiple extends React.Component{
 
     return(
       <KeyboardAvoidingView
-
-        behavior = {Platform.OS =='ios'?"padding":''}
+        behavior = {Platform.OS =='ios'?"padding":""}
         style = {{
           flex: 1,
           alignItems: 'center',
-
         }}>
 
         <View style = {{
-            flex: 1,
-            alignItems: 'center'
+        
+            alignItems: 'center',
           }}>
+
           <View style={{flexDirection:'row'}}>
-
-
             <UserSearchBar
               value = {this.props.searchValue}
               onChange = {this.props.onSearchChange}
@@ -218,13 +215,11 @@ class SearchResultsMultiple extends React.Component{
 
           {
             data.length === 0 ?
-
             <View style = {{
                 flex:1,
                 width: width,
                 alignItems: 'center',
                 justifyContent: 'center',
-
               }}>
               <Search
                 stroke = "gainsboro"
@@ -242,13 +237,11 @@ class SearchResultsMultiple extends React.Component{
             <View style = {{
                 width: width,
                 flex: 1,
-
               }}>
               <FlatList
                 data = {data}
                 renderItem = {this.renderItem}
                 keyExtractor={(item, index) => String(index)}
-
                  />
             </View>
           }
