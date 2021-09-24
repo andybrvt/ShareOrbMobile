@@ -235,9 +235,12 @@ class CreateGroupPage extends React.Component{
     return(
 
       <View style = {styles.frequentPeopleContainer}>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{width:'75%',  flexDirection:'row'}}>
         {
           this.state.invitedPeople.map((item, index) => {
-
             return(
               <View
                 key = {index}
@@ -249,23 +252,20 @@ class CreateGroupPage extends React.Component{
                   }}
                   size = {50}
                 />
-              <Text>{item.first_name} {item.last_name}</Text>
+              <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.first_name} {item.last_name}</Text>
               </View>
-
             )
           })
         }
-
-
-
+        </ScrollView>
         <TouchableOpacity
           onPress = {() => this.onShowSearch()}
           style={[styles.column]}>
            <PlusCircle
              stroke = "white"
              fill = {'gray'}
-             width = {50}
-             height = {50}
+             width = {40}
+             height = {40}
               />
           </TouchableOpacity>
 
@@ -580,7 +580,7 @@ class CreateGroupPage extends React.Component{
                         </View>
 
 
-                        
+
                          <View
                            style = {{
                              marginTop:20,
