@@ -17,6 +17,9 @@ import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab
 import Header from './Header';
 import InfiniteScrollFlatNew from './InfiniteScrollFlatNew';
 import { PlusCircle, UserPlus, Info, Users} from "react-native-feather";
+import { connect } from 'react-redux';
+import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
+
 
 const height = Dimensions.get('window').height
 
@@ -50,6 +53,11 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
     );
   }
+
+  componentDidUpdate(prevProps){
+    console.log('component did updated')
+  }
+
   render(){
    let smallGroups = []
 
@@ -88,6 +96,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
               const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
               return(
                 <InfiniteScrollFlatNew
+                  key = {indx}
                   groupId= {group.id}
                   name='tab1' tabLabel={{pic: pic, name:group.group_name}} />
 
@@ -145,5 +154,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
 });
+
+
+
 
 export default SwipeInfiniteScrollHolder;

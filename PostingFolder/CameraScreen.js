@@ -524,6 +524,12 @@ class CameraScreen extends React.Component{
 
       setTimeout(() => this.props.authZeroCurLoad(), 1000);
 
+
+      // probally gonna put a websocket here for the specific group
+      // this is also assuming that he has connected to the group
+      // that he is trying to send to
+
+
         // this.props.addFirstSocialCellPost(res.data.item)
         // const coverPicForm = new FormData();
         // coverPicForm.append('cellId', res.data.cellId)

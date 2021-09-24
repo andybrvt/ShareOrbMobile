@@ -120,6 +120,7 @@ class NewsfeedView extends React.Component{
 
   componentDidUpdate(prevProps){
 
+    console.log('does it update here')
     if(prevProps !== this.props){
       const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
 
@@ -298,7 +299,8 @@ const mapStateToProps = state => {
     showIntialInstructions: state.auth.showIntialInstructions,
     notificationSeen: state.auth.notificationSeen,
     showFirstPostModal: state.auth.showFirstPostModal,
-    smallGroups: state.auth.smallGroups
+    smallGroups: state.auth.smallGroups,
+    groupPosts: state.smallGroups.groupPosts
   }
 }
 

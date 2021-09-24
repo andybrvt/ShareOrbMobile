@@ -59,6 +59,7 @@ class WebSocketSmallGroups{
           groupId
         }
 
+        console.log('websockets here')
         this.callbacks['load_small_groups_post'](groupObj)
     }
 
