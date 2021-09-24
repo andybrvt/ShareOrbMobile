@@ -193,7 +193,10 @@ class CameraScreen extends React.Component{
       this.setState({
         showCaptionModal: true
       })
-      this.textInput.focus()
+      if(this.textInput){
+          this.textInput.focus()
+      }
+
     } else {
 
       if(this.state.caption.length === 0){
@@ -307,7 +310,10 @@ class CameraScreen extends React.Component{
         this.setState({
           showCaptionModal: true
         })
-        this.textInput.focus()
+        if(this.textInput){
+            this.textInput.focus()
+        }
+
 
       }, 1000)
 
@@ -354,7 +360,9 @@ class CameraScreen extends React.Component{
           this.setState({
             showCaptionModal: true
           })
-          this.textInput.focus()
+          if(this.textInput){
+              this.textInput.focus()
+          }
 
         }, 1000)
 
