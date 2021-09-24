@@ -154,6 +154,11 @@ class InfiniteScrollFlatNew extends React.Component{
       post = this.props.socialPosts
     }
 
+    let groupPost = [];
+    if(this.props.groupPost){
+      console.log(this.props.groupPost[this.props.groupId], 'here here')
+    }
+
     return(
       <View >
 
@@ -191,7 +196,8 @@ const mapStateToProps = state => {
     userName: state.auth.username,
     socialPosts: state.socialNewsfeed.socialPosts,
     following: state.auth.following,
-    curLoad: state.auth.curLoad
+    curLoad: state.auth.curLoad,
+    groupPost: state.smallGroups.groupPosts
   }
 }
 

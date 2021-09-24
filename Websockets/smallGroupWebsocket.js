@@ -25,7 +25,7 @@ class WebSocketSmallGroups{
     }
     this.socketRef.onmessage = (e) => {
 
-      // this.socketNewSocialPost(e.data)
+      this.socketNewGroupPost(e.data)
     }
 
     this.socketRef.onerror = (e) => {
@@ -51,11 +51,24 @@ class WebSocketSmallGroups{
     // something gets sent through you have to check which weboscket
     // its coming from and put it in the correct group
 
+    if(command === "fetch_group_post"){
+        const groupPosts = parsedData.group_posts
+        const groupId = parsedData.groupId
+        const groupObj = {
+          groupPosts,
+          groupId
+        }
+
+        this.callbacks['load_small_groups_post'](groupObj)
+    }
+
   }
 
   // First function is to pull the intial information
-  addCallbacks(){
-
+  addCallbacks(
+    loadSmallGroupsPost
+  ){
+    this.callbacks['load_small_groups_post'] = loadSmallGroupsPost
   }
 
   fetchGroupPost(groupId){
