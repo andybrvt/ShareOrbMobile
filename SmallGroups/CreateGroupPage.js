@@ -370,10 +370,8 @@ class CreateGroupPage extends React.Component{
     console.log(this.state.invitedPeople)
     return(
       <BackgroundContainer>
-
         {
           this.state.loading ?
-
           <View style = {{
               width: width,
               height: height,
@@ -397,19 +395,14 @@ class CreateGroupPage extends React.Component{
                  />
             </View>
           </View>
-
           :
-
           null
-
         }
-
-
-
 
         {
           this.state.showSearch ?
 
+        
           <SearchResultsMultiple
             searchValue = {this.state.searchValue}
             onSearchChange = {this.onChangeNewSearch}
@@ -431,19 +424,20 @@ class CreateGroupPage extends React.Component{
                 <ScrollView style = {{
                     height: height
                   }}>
+
                   <TouchableOpacity
                     style = {{
                       position: 'absolute',
-                      left: '2%',
-                      top: '2%',
+                      left: '5%',
+                      top: '5%',
                       zIndex: 999
                     }}
                     onPress = {() => this.onBack()}
                     >
                     <ArrowLeft
-
-                      height = {40}
-                      width = {40}
+                      stroke="black"
+                      height = {30}
+                      width = {30}
                       />
                   </TouchableOpacity>
 
@@ -460,7 +454,7 @@ class CreateGroupPage extends React.Component{
                         justifyContent:'center',
                         width:'100%',
                         // backgroundColor:'red',
-                        marginTop:'7.5%', }}>
+                        marginTop:'25%', }}>
                         {
                           this.state.groupPic !== "" ?
 
