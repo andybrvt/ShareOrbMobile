@@ -141,9 +141,7 @@ const ScrollableTabBarNew = createReactClass({
         onPress={() => this.onGroupCreateDirect()}
         onLayout={onLayoutHandler}
       >
-
         <View style={[styles.tab, this.props.tabStyle, ]}>
-
             <PlusCircle
               strokeWidth={1.5}
               stroke="#108ee9"
@@ -161,7 +159,7 @@ const ScrollableTabBarNew = createReactClass({
       return <Button
         key={`${name}_${page}`}
         accessible={true}
-        accessibilityLabel={name}
+        // accessibilityLabel={name}
         accessibilityTraits='button'
         onPress={() => onPressHandler(page)}
         onLayout={onLayoutHandler}
@@ -176,7 +174,7 @@ const ScrollableTabBarNew = createReactClass({
               }}
                />
 
-             <Text>{name.name}</Text>
+             <Text style={{paddingBottom:10}}>{name.name}</Text>
         </View>
       </Button>
     }
@@ -276,14 +274,16 @@ const styles = StyleSheet.create({
     color:'green',
   },
   tab: {
-    height: 52,
+
+    // backgroundColor:'red',
     alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 20,
     paddingRight: 20,
   },
   container: {
-    height: 50,
+    height: 70,
+    backgroundColor:'blue',
     borderWidth: 1,
     borderTopWidth: 0,
     borderLeftWidth: 0,

@@ -1092,11 +1092,11 @@ class App extends Component{
 
                    <Stack.Screen
                      options={{
-                       // headerStyle:{
-                       //   shadowColor:'#fff', //ios
-                       //   elevation:0,        // android
-                       // },
-                       headerShown: false,
+                       headerStyle:{
+                         shadowColor:'#fff', //ios
+                         elevation:0,        // android
+                       },
+
                        title: '',
                         ...TransitionPresets.SlideFromRightIOS,
                       }}

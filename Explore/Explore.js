@@ -232,7 +232,6 @@ class Explore extends React.Component{
                />
 
             :
-
               <SuggestedListGroup
                 navigation = {this.props.navigation}
                 updateFollowing = {this.props.authAddUnaddFollowing}
@@ -243,19 +242,9 @@ class Explore extends React.Component{
                 refreshing = {this.state.refreshing}
                 inviteCode = {this.props.inviteCode}
                  />
-
-
-
           }
-
-
-
-
         </View>
     </BackgroundContainer>
-
-
-
     )
   }
 }

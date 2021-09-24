@@ -195,24 +195,26 @@ class SearchResultsMultiple extends React.Component{
     return(
       <KeyboardAvoidingView
 
-        behavior = "padding"
+        behavior = {Platform.OS =='ios'?"padding":''}
         style = {{
           flex: 1,
           alignItems: 'center',
+
         }}>
 
         <View style = {{
             flex: 1,
             alignItems: 'center'
           }}>
+          <View style={{flexDirection:'row'}}>
 
 
-        <UserSearchBar
-          value = {this.props.searchValue}
-          onChange = {this.props.onSearchChange}
-          onClose = {this.props.onClose}
-          />
-
+            <UserSearchBar
+              value = {this.props.searchValue}
+              onChange = {this.props.onSearchChange}
+              onClose = {this.props.onClose}
+              />
+          </View>
 
           {
             data.length === 0 ?
@@ -222,13 +224,13 @@ class SearchResultsMultiple extends React.Component{
                 width: width,
                 alignItems: 'center',
                 justifyContent: 'center',
-                top:50,
+
               }}>
               <Search
                 stroke = "gainsboro"
                 strokeWidth = {2}
-                height = {60}
-                width = {60}
+                height = {50}
+                width = {50}
                  />
                <Text
                  style ={{color: 'gainsboro', fontFamily:'Nunito-Bold', fontSize:18}}
