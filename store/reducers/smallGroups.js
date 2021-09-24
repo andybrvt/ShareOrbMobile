@@ -12,10 +12,15 @@ const initialState = {
 const loadSmallGroupsPost = (state, action) => {
 
 
-  state.groupPosts[action.posts.groupId]  = action.posts.groupPosts
-  const dict = state.groupPosts
+  // state.groupPosts[action.posts.groupId]  = action.posts.groupPosts
+  // const dict = state.groupPosts
+  // THE REASON YOU HAVE TO DO THIS IS BECAUSE YOU CANNOT CHANGE THE
+  // STATE DIRECTY (THIS ALSO APPLIES TO REDUX TOO)
   return updateObject(state, {
-    groupPosts: dict
+    groupPosts: {
+      ...state.groupPosts,
+      [action.posts.groupId.toString()]: action.posts.groupPosts
+    }
   })
 }
 

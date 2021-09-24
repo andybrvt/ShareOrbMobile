@@ -46,6 +46,11 @@ class InfiniteScrollFlatNew extends React.Component{
       }
   }
 
+
+  componentDidUpdate(prevProps){
+
+
+  }
   componentWillUnmount(){
 
   }
@@ -54,9 +59,12 @@ class InfiniteScrollFlatNew extends React.Component{
   initialiseSmallGroup(){
     // used to connect to the websocket and then pull the intial
     // group info
+
+    console.log('initialize it here')
     const groupId = this.props.groupId
     this.waitForSmallGroupsSocketConnection(() => {
       //fetch the stuff here
+      console.log('goes here right')
       WebSocketSmallGroupInstance.fetchGroupPost(groupId)
     })
 
@@ -89,37 +97,37 @@ class InfiniteScrollFlatNew extends React.Component{
     currentDay: dateFns.format(new Date(), "d")
   }
 
-  loadSocialPost = () => {
-    const {start, addMore} = this.state;
-    const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
-    authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSocial/`+curDate+"/"+start+'/'+addMore)
-    .then( res => {
-      this.props.loadMoreSocialPost(res.data.socialPost)
-      const hasMore = res.data.has_more;
-      this.setState({
-        hasMore:hasMore,
-        loading: false,
-        start: start+addMore
-      })
+  // loadSocialPost = () => {
+  //   const {start, addMore} = this.state;
+  //   const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+  //   authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSocial/`+curDate+"/"+start+'/'+addMore)
+  //   .then( res => {
+  //     this.props.loadMoreSocialPost(res.data.socialPost)
+  //     const hasMore = res.data.has_more;
+  //     this.setState({
+  //       hasMore:hasMore,
+  //       loading: false,
+  //       start: start+addMore
+  //     })
+  //
+  //   })
+  //   .catch( err => {
+  //     this.setState({
+  //       error: err.message
+  //     })
+  //   })
+  // }
 
-    })
-    .catch( err => {
-      this.setState({
-        error: err.message
-      })
-    })
-  }
-
-  onRefresh = () => {
-    this.setState({refreshing: true})
-    const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
-    WebSocketSocialNewsfeedInstance.fetchSocialPost(
-      this.props.id,
-      curDate,
-      6
-    )
-    this.setState({refreshing: false});
-  }
+  // onRefresh = () => {
+  //   this.setState({refreshing: true})
+  //   const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
+  //   WebSocketSocialNewsfeedInstance.fetchSocialPost(
+  //     this.props.id,
+  //     curDate,
+  //     6
+  //   )
+  //   this.setState({refreshing: false});
+  // }
 
   renderPost = ({item}) => {
     return(
@@ -167,7 +175,10 @@ class InfiniteScrollFlatNew extends React.Component{
       const groupId = this.props.groupId.toString()
 
       groupPost = this.props.groupPost[groupId]
+      // groupPost = this.props.groupPost
+      // console.log(this.props.groupPost, 'stuff here')
     }
+
 
     return(
       <View >
