@@ -58,13 +58,13 @@ class SearchResultsMultiple extends React.Component{
               </View>
               <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.username}</Text>
             </View>
-            <View style={{width:'52.5%', alignItems:'center', justifyContent:'center' }}>
+            <View style={{width:'50%', alignItems:'center', justifyContent:'center' }}>
               {this.props.invited.includes(item)?
                 <CheckCircle
                   stroke = "#52c41a"
                   strokeWidth = {2}
-                  height = {30}
-                  width = {30}
+                  height = {25}
+                  width = {25}
                    />
                 :
                 <Text></Text>
