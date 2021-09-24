@@ -483,6 +483,8 @@ class CameraScreen extends React.Component{
 
   onSavePhoto = (image) => {
 
+    const {activeSlide} = this.state;
+    const groupId = this.props.smallGroups[activeSlide].id;
     const ownerId = this.props.curUserId;
     const caption = this.state.caption;
     const goalId = this.state.selectedGoal.id;
@@ -496,7 +498,7 @@ class CameraScreen extends React.Component{
     formData.append('curDateTime', curDateTime);
     formData.append("caption", caption);
     formData.append('goalId', goalId);
-
+    formData.append("groupId", groupId)
     this.props.authAddCurLoad()
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSinglePic/`+ownerId,
       formData,
@@ -504,79 +506,52 @@ class CameraScreen extends React.Component{
 
     ).then(res => {
 
+      console.log(res.data)
 
-        this.props.addFirstSocialCellPost(res.data.item)
-        const coverPicForm = new FormData();
-        coverPicForm.append('cellId', res.data.cellId)
-        coverPicForm.append('coverImage', imageFile)
+      // now that you don't have to link it to a day album
+      // you can now just direct it directly into the websockets
+      this.props.authAddCurLoad()
+      this.props.authAddCurLoad()
+      this.props.authAddCurLoad()
 
-        this.props.authAddCurLoad()
-        this.props.authAddCurLoad()
-        this.props.authAddCurLoad()
-
-
-        authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
-          coverPicForm,
-          {headers: {"content-type": "multipart/form-data"}}
-
-        ).then(res => {
-
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-
-          setTimeout(() => this.props.authZeroCurLoad(), 1000);
-
-          if(res.data === 1){
-            // run the
-            setTimeout(() => this.props.authShowFirstPostModal(), 1200);
-
-          }
+      this.props.authAddCurLoad()
+      this.props.authAddCurLoad()
+      this.props.authAddCurLoad()
+      this.props.authAddCurLoad()
+      this.props.authAddCurLoad()
+      this.props.authAddCurLoad()
 
 
-        })
+      setTimeout(() => this.props.authZeroCurLoad(), 1000);
+
+        // this.props.addFirstSocialCellPost(res.data.item)
+        // const coverPicForm = new FormData();
+        // coverPicForm.append('cellId', res.data.cellId)
+        // coverPicForm.append('coverImage', imageFile)
+        //
+
+        //
+        //
+        // authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
+        //   coverPicForm,
+        //   {headers: {"content-type": "multipart/form-data"}}
+        //
+        // ).then(res => {
+        //
+        //
+        //
+        //
+        //   if(res.data === 1){
+        //     // run the
+        //     setTimeout(() => this.props.authShowFirstPostModal(), 1200);
+        //
+        //   }
+        //
+        //
+        // })
 
 
-      // if(res.data.coverPicChange){
-      //
-      //
-      //
-      //   coverPicForm.append('createdCell', res.data.created)
-      //   // you
-      //   coverPicForm.append('coverImage', imageFile)
-      //
-      //   this.props.authAddTotalLoad()
-      //   authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
-      //     coverPicForm,
-      //     {headers: {"content-type": "multipart/form-data"}}
-      //
-      //   ).then(res => {
-      //     // put loading here
-      //
-      //     this.props.authAddCurLoad()
-      //
-      //   })
-      //
-      // }
 
-      // this.props.authAddTotalLoad()
-
-      // WebSocketSocialNewsfeedInstance.addUpdateSocialPost(
-      //   ownerId,
-      //   res.data.cell.id,
-      //   res.data.created
-      // )
-
-      // this.props.authAddCurLoad()
-
-      // if(this.props.curLoad >= this.props.totalLoad){
-      //   // if they are equal or larger you will just set it back to zero
-      //   this.props.authZeroTotalLoad()
-      //
-      // }
 
 
 
@@ -584,7 +559,7 @@ class CameraScreen extends React.Component{
     })
 
     this.onCancelPhoto();
-    this.props.navigation.navigate("newsfeed");
+    this.props.navigation.navigate("Home");
 
     setTimeout(() => {this.props.closeShowCamera()}, 1000);
 
@@ -594,6 +569,10 @@ class CameraScreen extends React.Component{
 
   onSaveVideo = (video) => {
 
+      const {activeSlide} = this.state;
+      const groupId = this.props.smallGroups[activeSlide].id;
+
+      // CONTINUE HERE WHEN YOU ARE DONE
       const ownerId = this.props.curUserId;
       const caption = this.state.caption;
       const goalId = this.state.selectedGoal.id;
@@ -719,7 +698,7 @@ class CameraScreen extends React.Component{
     }), 1000)
   }
 
-  renderSmallGroupCarousel = () => {
+  renderSmallGroupCarousel = (firstItem) => {
 
     const smallGroups = this.props.smallGroups
     return(
@@ -751,7 +730,7 @@ class CameraScreen extends React.Component{
             sliderWidth = {width * 0.65}
             itemWidth = {width * 0.2}
             onSnapToItem={(index) => this.onCarouselChange(index) }
-
+            firstItem = {firstItem}
              />
            <Triangle
              height = {8}
@@ -913,7 +892,7 @@ class CameraScreen extends React.Component{
                   save = {this.onSaveNewGoal}
                   />
 
-                {this.renderSmallGroupCarousel()}
+                {this.renderSmallGroupCarousel(this.state.activeSlide)}
 
                <TouchableOpacity
                  onPress = {() => this.onCancelPhoto()}
@@ -1105,7 +1084,7 @@ class CameraScreen extends React.Component{
 
                   </TouchableWithoutFeedback>
 
-                  {this.renderSmallGroupCarousel()}
+                  {this.renderSmallGroupCarousel(this.state.activeSlide)}
 
 
                      <TouchableOpacity
@@ -1263,7 +1242,7 @@ class CameraScreen extends React.Component{
 
                   :
 
-                  this.renderSmallGroupCarousel()
+                  this.renderSmallGroupCarousel(this.state.activeSlide)
                 }
 
 
