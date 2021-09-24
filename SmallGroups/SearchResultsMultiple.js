@@ -13,7 +13,7 @@ import { Text,
   Dimensions
  } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { Search, PlusCircle, ArrowLeft} from "react-native-feather";
+import { Search, PlusCircle, ArrowLeft, CheckCircle} from "react-native-feather";
 import UserSearchBar from './UserSearchBar'
 
 
@@ -21,7 +21,12 @@ const width = Dimensions.get("window").width
 
 
 class SearchResultsMultiple extends React.Component{
-
+  constructor(props){
+    super(props)
+    this.state = {
+     refresh:false,
+     };
+  }
   renderItem = ({item}) => {
 
 
@@ -33,7 +38,7 @@ class SearchResultsMultiple extends React.Component{
            flexDirection:'row',
            padding:15
          }}>
-          <View style={{flex:1}}>
+          <View>
             <Avatar
               size={40}
               rounded
@@ -42,19 +47,30 @@ class SearchResultsMultiple extends React.Component{
               }}
             />
           </View>
-        <View style={{
-
-            flex:6,
-            flexDirection:'column',
-            }}>
-          <View style = {{flexDirection: 'row'}}>
-            <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.first_name, item.last_name, 20)} </Text>
+          <View style={{flexDirection:'row'}}>
+            <View style={{
+                width:'50%',
+                marginLeft:10,
+                flexDirection:'column',
+                }}>
+              <View style = {{flexDirection: 'row'}}>
+                <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.first_name, item.last_name, 20)} </Text>
+              </View>
+              <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.username}</Text>
+            </View>
+            <View style={{width:'52.5%', alignItems:'center', justifyContent:'center' }}>
+              {this.props.invited.includes(item)?
+                <CheckCircle
+                  stroke = "#52c41a"
+                  strokeWidth = {2}
+                  height = {30}
+                  width = {30}
+                   />
+                :
+                <Text></Text>
+              }
+            </View>
           </View>
-          <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.username}</Text>
-
-
-
-        </View>
       </View>
       </TouchableOpacity>
     )
@@ -76,112 +92,6 @@ class SearchResultsMultiple extends React.Component{
     )
   }
 
-  frequentChatPeople=()=>{
-
-    let invited = []
-    if(this.props.invited){
-      invited = this.props.invited
-    }
-    return(
-      <FlatList
-        style = {{
-
-        }}
-        data = {invited}
-        renderItem = {this.renderInvited}
-        keyExtractor={(item, index) => String(index)}
-        horizontal = {true}
-        showsHorizontalScrollIndicator={false}
-
-         />
-    )
-    // <ScrollView
-    //   showsHorizontalScrollIndicator={false}
-    //   horizontal = {true}
-    //   style = {styles.frequentPeopleContainer}>
-    //   <View style={[styles.column]}>
-    //     <Avatar
-    //       rounded
-    //       source = {{
-    //         uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    //       }}
-    //       size = {70}
-    //     />
-    //   </View>
-    //
-    //   <View style={[styles.column]}>
-    //      <Avatar
-    //        rounded
-    //        source = {{
-    //          uri: 'https://images.unsplash.com/photo-1610555248279-adea4c523fb3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
-    //        }}
-    //        size = {70}
-    //      />
-    //   </View>
-    //   <View style={[styles.column]}>
-    //     <Avatar
-    //       rounded
-    //       source = {{
-    //         uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    //       }}
-    //       size = {70}
-    //     />
-    //   </View>
-    //
-    //   <View style={[styles.column]}>
-    //     <Avatar
-    //       rounded
-    //       source = {{
-    //         uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    //       }}
-    //       size = {70}
-    //     />
-    //   </View>
-    //   <View style={[styles.column]}>
-    //     <Avatar
-    //       rounded
-    //       source = {{
-    //         uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    //       }}
-    //       size = {70}
-    //     />
-    //   </View>
-    //   <View style={[styles.column]}>
-    //     <Avatar
-    //       rounded
-    //       source = {{
-    //         uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    //       }}
-    //       size = {70}
-    //     />
-    //   </View>
-    //   <View style={[styles.column]}>
-    //     <Avatar
-    //       rounded
-    //       source = {{
-    //         uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    //       }}
-    //       size = {70}
-    //     />
-    //   </View>
-    //
-    //
-    //   <TouchableOpacity
-    //
-    //     style={[styles.column]}>
-    //      <PlusCircle
-    //        stroke = "white"
-    //        fill = {'gray'}
-    //        width = {70}
-    //        height = {70}
-    //         />
-    //     </TouchableOpacity>
-    //
-    //
-    // </ScrollView>
-
-  }
-
 
 
   render(){
@@ -194,14 +104,14 @@ class SearchResultsMultiple extends React.Component{
 
     return(
       <KeyboardAvoidingView
-        behavior = {Platform.OS =='ios'?"padding":""}
+        keyboardVerticalOffset={Platform.OS =='ios'?0:-300}
+        behavior = {Platform.OS =='ios'?"padding":"height"}
         style = {{
           flex: 1,
           alignItems: 'center',
         }}>
 
         <View style = {{
-        
             alignItems: 'center',
           }}>
 
@@ -239,23 +149,22 @@ class SearchResultsMultiple extends React.Component{
                 flex: 1,
               }}>
               <FlatList
+                extraData={this.props.invited}
                 data = {data}
+
                 renderItem = {this.renderItem}
                 keyExtractor={(item, index) => String(index)}
                  />
             </View>
           }
-
+        {/*
         <View style = {{
-            height: 90,
             width: width,
             bottom: 20
           }}>
-
           {this.frequentChatPeople()}
-
         </View>
-
+        */}
 
 
         </View>

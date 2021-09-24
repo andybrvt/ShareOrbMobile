@@ -51,7 +51,7 @@ class CreateGroupPage extends React.Component{
       searchResults: [],
       invitedPeople: [],
       searchValue: '',
-      showSearch: false
+      showSearch: false,
     }
     this.bs = React.createRef()
   }
@@ -308,9 +308,19 @@ class CreateGroupPage extends React.Component{
   }
 
   onSelectUser = (user) => {
-    this.setState({
-      invitedPeople: [...this.state.invitedPeople, user]
-    })
+
+    if(this.state.invitedPeople.some(item => user.username == item.username)){
+      const newList = this.state.invitedPeople.filter(function(el) { return el.username != user.username });
+      this.setState({
+        invitedPeople: newList
+      })
+    }
+    else{
+      this.setState({
+        invitedPeople: [...this.state.invitedPeople, user],
+      })
+    }
+
 
   }
 
@@ -402,7 +412,7 @@ class CreateGroupPage extends React.Component{
         {
           this.state.showSearch ?
 
-        
+
           <SearchResultsMultiple
             searchValue = {this.state.searchValue}
             onSearchChange = {this.onChangeNewSearch}
@@ -570,7 +580,7 @@ class CreateGroupPage extends React.Component{
                         </View>
 
 
-
+                        
                          <View
                            style = {{
                              marginTop:20,
