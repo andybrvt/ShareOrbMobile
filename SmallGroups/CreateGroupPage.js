@@ -247,7 +247,7 @@ class CreateGroupPage extends React.Component{
                   source = {{
                     uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture
                   }}
-                  size = {70}
+                  size = {50}
                 />
               <Text>{item.first_name} {item.last_name}</Text>
               </View>
@@ -264,8 +264,8 @@ class CreateGroupPage extends React.Component{
            <PlusCircle
              stroke = "white"
              fill = {'gray'}
-             width = {70}
-             height = {70}
+             width = {50}
+             height = {50}
               />
           </TouchableOpacity>
 
@@ -428,9 +428,6 @@ class CreateGroupPage extends React.Component{
               onPress = {() => this.onOutSideClick()}
               >
 
-
-
-
                 <ScrollView style = {{
                     height: height
                   }}>
@@ -463,7 +460,7 @@ class CreateGroupPage extends React.Component{
                         justifyContent:'center',
                         width:'100%',
                         // backgroundColor:'red',
-                        marginTop:'5%', }}>
+                        marginTop:'7.5%', }}>
                         {
                           this.state.groupPic !== "" ?
 
@@ -501,7 +498,7 @@ class CreateGroupPage extends React.Component{
                              autoCorrect={false}
                              style={{fontSize:18,
 
-                               fontFamily:'Nunito-SemiBold', textAlign:'center', }}
+                               fontFamily:'Nunito', textAlign:'center', }}
                              onChangeText = {this.onGroupNameChange}
                              value = {this.state.groupName}
                              />
@@ -514,12 +511,12 @@ class CreateGroupPage extends React.Component{
                          padding:25}}>
                          <Menu
 
-                           stroke="black" strokeWidth={2.0} width={25} height={25} style={{top:3}}/>
+                           stroke="black" strokeWidth={2.0} width={22.5} height={22.5} style={{top:3}}/>
                          <TextInput
                           placeholder="Description"
                           placeholderTextColor="#919191"
                           autoCorrect={false}
-                          style={{marginLeft:20,fontSize:18, fontFamily:'Nunito-SemiBold', width:'85%',}}
+                          style={{marginLeft:20,fontSize:16, fontFamily:'Nunito', width:'85%',}}
                           onChangeText = {this.onDescriptionChange}
                           value = {this.state.description}
                           />
@@ -533,18 +530,18 @@ class CreateGroupPage extends React.Component{
                           borderBottomWidth:1,
                           padding:20}}>
                         <View>
-                          <Globe stroke="black" strokeWidth={1} width={45} height={45} style={{top:3}}/>
+                          <Globe stroke="black" strokeWidth={1.5} width={40} height={40} style={{top:3}}/>
                         </View>
                         {
                           (this.state.publicG)?
                           <View style={{marginLeft:20, flexDirection:'column'}}>
-                            <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Public</Text>
-                            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Anyone can join the group</Text>
+                            <Text style={styles.settingWord}>Make Orb Public</Text>
+                            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16, color:'#108EE9'}}>Anyone can join the group</Text>
                           </View>
                           :
                           <View style={{marginLeft:20, flexDirection:'column'}}>
-                            <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Make Orb Private</Text>
-                            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:18, color:'#108EE9'}}>Choose who joins the group</Text>
+                            <Text style={styles.settingWord}>Make Orb Private</Text>
+                            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16, color:'#108EE9'}}>Choose who joins the group</Text>
                           </View>
                         }
 
@@ -582,6 +579,7 @@ class CreateGroupPage extends React.Component{
 
                          <View
                            style = {{
+                             marginTop:20,
                              flex:1,
                              width: width}}
                           // showsHorizontalScrollIndicator={false}
@@ -594,18 +592,16 @@ class CreateGroupPage extends React.Component{
 
                   </View>
 
-
+                  <View style={{marginTop:50}}>
                   {
                     this.checkCreating() ?
-
-
                     <View style={{alignItems:'center',
                       height: 100,
                       justifyContent: 'center',
                     }}>
                     <TouchableOpacity
                       onPress = {() => this.onCreateGroup()}
-                       style={styles.loginBtn1}>
+                       style={styles.loginBtn1}>gf
                       <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
                     </TouchableOpacity>
                     </View>
@@ -620,11 +616,8 @@ class CreateGroupPage extends React.Component{
                       <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
                     </View>
                     </View>
-
-
-
                   }
-
+                  </View>
 
 
 
@@ -726,9 +719,9 @@ const styles = StyleSheet.create({
   },
 
   loginBtn1: {
-    width: "85%",
-    borderRadius: 35,
-    height: 60,
+    width: "80%",
+    borderRadius: 25,
+    height: 50,
     // elevation:20,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
@@ -739,9 +732,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#40a9ff",
   },
   loginBtn2: {
-    width: "85%",
-    borderRadius: 35,
-    height: 60,
+    width: "80%",
+    borderRadius: 25,
+    height: 50,
     // elevation:20,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
@@ -755,7 +748,7 @@ const styles = StyleSheet.create({
   settingWord: {
     left:5,
     color:'#919191',
-    fontSize:18,
+    fontSize:16,
     fontFamily:'Nunito-Bold',
     marginLeft:10,
   },
