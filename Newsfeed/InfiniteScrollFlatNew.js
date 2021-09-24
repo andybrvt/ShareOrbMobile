@@ -147,6 +147,14 @@ class InfiniteScrollFlatNew extends React.Component{
 
   }
 
+  renderEmptyContainer(){
+    return(
+      <View>
+        <Text>No post here</Text>
+      </View>
+    )
+  }
+
   render(){
 
     let post = [];
@@ -164,22 +172,31 @@ class InfiniteScrollFlatNew extends React.Component{
     return(
       <View >
 
-        <FlatList
-          // onViewableItemsChanged={this.onViewableItemsChanged }
-          contentContainerStyle={{ paddingBottom: 100 }}
-          showsVerticalScrollIndicator={false}
-          scrollEventThrottle = {16} // important for animation
-          // onScroll = {onScrollEvent({y})}
-          data = {groupPost}
-          renderItem = {this.renderPost}
-          keyExtractor={(item, index) => String(index)}
-          onEndReachedThreshold={0.5}
-          // onEndReached = {() => this.loadSocialPost()}
-          // onRefresh = {() => this.onRefresh()}
-          refreshing = {this.state.refreshing}
-          // style={{top:130,}}
-          style={{top:20,}}
-          />
+
+
+
+
+          <FlatList
+            // onViewableItemsChanged={this.onViewableItemsChanged }
+            contentContainerStyle={{ paddingBottom: 100 }}
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle = {16} // important for animation
+            // onScroll = {onScrollEvent({y})}
+            data = {groupPost}
+            renderItem = {this.renderPost}
+            keyExtractor={(item, index) => String(index)}
+            onEndReachedThreshold={0.5}
+            // onEndReached = {() => this.loadSocialPost()}
+            // onRefresh = {() => this.onRefresh()}
+            refreshing = {this.state.refreshing}
+            // style={{top:130,}}
+            style={{top:20,}}
+            ListEmptyComponent={this.renderEmptyContainer()}
+
+            />
+
+
+
       </View>
     )
   }
