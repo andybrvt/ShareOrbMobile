@@ -156,7 +156,9 @@ class InfiniteScrollFlatNew extends React.Component{
 
     let groupPost = [];
     if(this.props.groupPost){
-      console.log(this.props.groupPost[this.props.groupId], 'here here')
+      const groupId = this.props.groupId.toString()
+
+      groupPost = this.props.groupPost[groupId]
     }
 
     return(
@@ -168,12 +170,12 @@ class InfiniteScrollFlatNew extends React.Component{
           showsVerticalScrollIndicator={false}
           scrollEventThrottle = {16} // important for animation
           // onScroll = {onScrollEvent({y})}
-          data = {post}
+          data = {groupPost}
           renderItem = {this.renderPost}
           keyExtractor={(item, index) => String(index)}
           onEndReachedThreshold={0.5}
-          onEndReached = {() => this.loadSocialPost()}
-          onRefresh = {() => this.onRefresh()}
+          // onEndReached = {() => this.loadSocialPost()}
+          // onRefresh = {() => this.onRefresh()}
           refreshing = {this.state.refreshing}
           // style={{top:130,}}
           style={{top:20,}}

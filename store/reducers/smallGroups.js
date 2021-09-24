@@ -14,7 +14,6 @@ const loadSmallGroupsPost = (state, action) => {
 
   state.groupPosts[action.posts.groupId]  = action.posts.groupPosts
   const dict = state.groupPosts
-  console.log(dict)
   return updateObject(state, {
     groupPosts: dict
   })
