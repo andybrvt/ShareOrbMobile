@@ -600,6 +600,7 @@ class CameraScreen extends React.Component{
       formData.append('curDateTime', curDateTime);
       formData.append("caption", caption);
       formData.append('goalId', goalId);
+      formData.append("groupId", groupId);
 
       this.props.authAddCurLoad()
 
@@ -608,45 +609,55 @@ class CameraScreen extends React.Component{
         {headers: {"content-type": "multipart/form-data"}}
 
       ).then(res =>{
-        this.props.addFirstSocialCellPost(res.data.item)
-        const coverPicForm = new FormData();
-        coverPicForm.append('cellId', res.data.cellId)
 
-        coverPicForm.append('coverVideo', videoFile)
+        console.log(res.data)
 
         this.props.authAddCurLoad()
         this.props.authAddCurLoad()
         this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+        this.props.authAddCurLoad()
+
+        setTimeout(() => this.props.authZeroCurLoad(), 1000);
 
 
-        authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverVid/`+ownerId,
-          coverPicForm,
-          {headers: {"content-type": "multipart/form-data"}}
+        // Add a websocket funciton here so that you can start sending
+        // stuff in real time
 
-        ).then( res => {
 
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-          this.props.authAddCurLoad()
-
-          setTimeout(() => this.props.authZeroCurLoad(), 1000);
-
-          if(res.data === 1){
-            // run the
-            setTimeout(() => this.props.authShowFirstPostModal(), 1200);
-
-          }
-
-        })
+        // this.props.addFirstSocialCellPost(res.data.item)
+        // const coverPicForm = new FormData();
+        // coverPicForm.append('cellId', res.data.cellId)
+        //
+        // coverPicForm.append('coverVideo', videoFile)
+        //
+      //
+        //
+        // authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverVid/`+ownerId,
+        //   coverPicForm,
+        //   {headers: {"content-type": "multipart/form-data"}}
+        //
+        // ).then( res => {
+        //
+        //
+        //
+        //   if(res.data === 1){
+        //     // run the
+        //     setTimeout(() => this.props.authShowFirstPostModal(), 1200);
+        //
+        //   }
+        //
+        // })
 
 
       })
 
       this.onCancelPhoto();
-      this.props.navigation.navigate("newsfeed");
+      this.props.navigation.navigate("Home");
 
       setTimeout(() => {this.props.closeShowCamera()}, 1000);
 
