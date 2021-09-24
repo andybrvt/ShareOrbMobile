@@ -21,7 +21,7 @@ import * as messageActions from './store/actions/messages';
 import * as socialActions from './store/actions/socialCalendar';
 import * as notificationsActions from './store/actions/notifications';
 import * as colabAlbumActions from './store/actions/colabAlbum';
-
+import * as smallGroupsActions from './store/actions/smallGroups';
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import GroupInfo from './Newsfeed/GroupInfo';
@@ -42,7 +42,7 @@ import SocialCommentsWebsocketInstance from './Websockets/commentsCellWebsocket'
 import SocialCalCellPageWebSocketInstance from './Websockets/socialCalCellWebsocket';
 import NotificationWebSocketInstance from './Websockets/notificationWebsocket';
 import ColabAlbumWebsocketInstance from './Websockets/colabAlbumWebsocket';
-
+import WebSocketSmallGroupInstance from './Websockets/smallGroupWebsocket';
 // import BottomNavigation from './BottomNavigation';
 import { TabActions } from '@react-navigation/native';
 import Constant from 'expo-constants';
@@ -239,6 +239,10 @@ class App extends Component{
 
     ColabAlbumWebsocketInstance.addCallbacks(
       this.props.fetchColabAlbum.bind(this)
+    )
+
+    WebSocketSmallGroupInstance.addCallbacks(
+      this.props.loadSmallGroupsPost.bind(this)
     )
 
 
@@ -1202,8 +1206,9 @@ const mapDispatchToProps = dispatch => {
     fetchTimeLineColab: (albums) => dispatch(colabAlbumActions.fetchTimeLineColab(albums)),
     fetchExpiringColab: (albums) => dispatch(colabAlbumActions.fetchExpiringColab(albums)),
     authAddNotificationToken: (token) => dispatch(authActions.authAddNotificationToken(token)),
-    resetNotificationSeen: () => dispatch(authActions.resetNotificationSeen())
+    resetNotificationSeen: () => dispatch(authActions.resetNotificationSeen()),
 
+    loadSmallGroupsPost: (posts) => dispatch(smallGroupsActions.loadSmallGroupsPost(posts))
   }
 }
 

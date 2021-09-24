@@ -27,7 +27,57 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import NoPosts from './noPosts.svg';
 import FirstPost from './FirstPost';
 import { PlusCircle, UserPlus, Info } from "react-native-feather";
+import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
+
+// this is used mostly for the new scroll newsfeed
 class InfiniteScrollFlatNew extends React.Component{
+
+  // for this one here you will try to connect to the websocket
+  // given the group id and then try to grab all the post of that
+  // group
+  constructor(props){
+      super(props)
+
+      if(this.props.isAuthenticated){
+
+
+        // initialize the websocket here
+        this.initialiseSmallGroup()
+      }
+  }
+
+  componentWillUnmount(){
+
+  }
+
+
+  initialiseSmallGroup(){
+    // used to connect to the websocket and then pull the intial
+    // group info
+    const groupId = this.props.groupId
+    this.waitForSmallGroupsSocketConnection(() => {
+      //fetch the stuff here
+      WebSocketSmallGroupInstance.fetchGroupPost(groupId)
+    })
+
+    // connect there now
+    WebSocketSmallGroupInstance.connect(groupId)
+
+  }
+
+  waitForSmallGroupsSocketConnection(callback){
+    const component = this
+    setTimeout(
+      function(){
+        if(WebSocketSmallGroupInstance.state() === 1){
+          callback()
+          return;
+        } else {
+          component.waitForSmallGroupsSocketConnection(callback);
+        }
+      }, 100)
+  }
+
 
   state = {
     list: [1,2,3],
@@ -104,8 +154,13 @@ class InfiniteScrollFlatNew extends React.Component{
       post = this.props.socialPosts
     }
 
+    let groupPost = [];
+    if(this.props.groupPost){
+      console.log(this.props.groupPost[this.props.groupId], 'here here')
+    }
+
     return(
-      <View>
+      <View >
 
         <FlatList
           // onViewableItemsChanged={this.onViewableItemsChanged }
@@ -129,18 +184,20 @@ class InfiniteScrollFlatNew extends React.Component{
 }
 
 const styles = StyleSheet.create({
-  
+
 
 })
 
 const mapStateToProps = state => {
 
   return{
+    isAuthenticated: state.auth.token !== null,
     id: state.auth.id,
     userName: state.auth.username,
     socialPosts: state.socialNewsfeed.socialPosts,
     following: state.auth.following,
-    curLoad: state.auth.curLoad
+    curLoad: state.auth.curLoad,
+    groupPost: state.smallGroups.groupPosts
   }
 }
 

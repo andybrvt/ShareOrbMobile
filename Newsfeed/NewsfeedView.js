@@ -84,6 +84,7 @@ class NewsfeedView extends React.Component{
     if(this.props.isAuthenticated){
 
       // this only hits once
+      console.log('here at newsfeed')
       this.initialiseSocialNewsfeed()
     }
   }
@@ -222,7 +223,7 @@ class NewsfeedView extends React.Component{
             }}
             >
 
-            {this.state.newsFeedCondition?
+            {true ?
 
                 <SwipeInfiniteScrollHolder
                   navigation = {this.props.navigation}

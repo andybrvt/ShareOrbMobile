@@ -226,7 +226,7 @@ class Explore extends React.Component{
               */}
           {
             this.state.showSearch ?
-            <SearchResultsMultiple
+            <SearchResults
               viewProfile = {this.viewProfile}
               data = {this.state.searched}
                />

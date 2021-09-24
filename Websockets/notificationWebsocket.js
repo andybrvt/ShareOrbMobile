@@ -136,7 +136,6 @@ class WebSocketNotifications {
 
   sendNotification(data) {
 
-    console.log('stuff here right now')
     // this is good, it only sends 1 time
     // This will recieve information from onClickSend from PersonalProfile.js
     // and will send it to the userprofile.consumers
