@@ -135,6 +135,8 @@ class CameraScreen extends React.Component{
     isRecording: false,
     counter: 0,
     timer: null,
+    showGroupText: false,
+    activeSlide: 0
   }
 
   componentDidMount(){
@@ -591,8 +593,6 @@ class CameraScreen extends React.Component{
 
 
   onSaveVideo = (video) => {
-      console.log('save video')
-      console.log(video)
 
       const ownerId = this.props.curUserId;
       const caption = this.state.caption;
@@ -708,32 +708,74 @@ class CameraScreen extends React.Component{
   opacity = this.runLoadingTimer(this.clock)
 
 
+  onCarouselChange = (index) => {
+    this.setState({
+      showGroupText: true,
+      activeSlide: index
+    })
+
+    setTimeout(() => this.setState({
+      showGroupText: false
+    }), 1000)
+  }
 
   renderSmallGroupCarousel = () => {
 
     const smallGroups = this.props.smallGroups
     return(
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          overflow: 'hidden',
-          borderRadius: 25,
-          padding: 5,
-          top: '4%',
-          alignSelf: 'center',
-          backgroundColor: 'rgba(0,0,0,.7)',
-          // backgroundColor:'transparent',
-          position:'absolute'}}
+      <View style = {{
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: '4%',
+        position:'absolute',
+        alignSelf: 'center',
 
-        >
-        <Carousel
-          data = {smallGroups}
-          renderItem = {this.renderSmallGroupItem}
-          keyExtractor={(item, index) => String(index)}
-          sliderWidth = {width * 0.65}
-          itemWidth = {width * 0.2}
-           />
+        }}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            borderRadius: 25,
+            padding: 5,
+
+            backgroundColor: 'rgba(0,0,0,.7)',
+            // backgroundColor:'transparent',
+            }}
+
+          >
+          <Carousel
+            data = {smallGroups}
+            renderItem = {this.renderSmallGroupItem}
+            keyExtractor={(item, index) => String(index)}
+            sliderWidth = {width * 0.65}
+            itemWidth = {width * 0.2}
+            onSnapToItem={(index) => this.onCarouselChange(index) }
+
+             />
+           <Triangle
+             height = {8}
+             width = {8}
+              />
+        </View>
+        {
+          this.state.showGroupText ?
+
+          <View style = {{
+              position: 'absolute',
+              bottom: -20
+            }}>
+            <Text style = {{
+                color: 'white'
+              }}>{smallGroups[this.state.activeSlide].group_name}</Text>
+
+          </View>
+
+          :
+
+            null
+        }
+
       </View>
 
     )
@@ -760,7 +802,6 @@ class CameraScreen extends React.Component{
   }
 
   render(){
-    console.log(this.state.videoPreview)
     const smallGroups = this.props.smallGroups;
     const showCaption = this.state.showCaptionModal;
     return(
@@ -871,6 +912,8 @@ class CameraScreen extends React.Component{
                   select = {this.onSelectGoal}
                   save = {this.onSaveNewGoal}
                   />
+
+                {this.renderSmallGroupCarousel()}
 
                <TouchableOpacity
                  onPress = {() => this.onCancelPhoto()}
@@ -1058,7 +1101,12 @@ class CameraScreen extends React.Component{
 
                        />
 
+
+
                   </TouchableWithoutFeedback>
+
+                  {this.renderSmallGroupCarousel()}
+
 
                      <TouchableOpacity
                        onPress = {() => this.onCancelPhoto()}
