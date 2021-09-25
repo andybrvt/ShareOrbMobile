@@ -129,7 +129,7 @@ class GroupInfo extends React.Component{
           marginTop:10,
         }}>
         <View style = {{
-            width: this.props.visible ? '75%' : '92.5%',
+          width: this.props.visible ? '75%' : '92.5%',
           }}>
           <View style = {styles.searchText}>
             <FontAwesomeIcon
