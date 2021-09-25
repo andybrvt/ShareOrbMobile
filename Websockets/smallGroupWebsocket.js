@@ -47,6 +47,7 @@ class WebSocketSmallGroups{
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
 
+    console.log(parsedData)
     // You will have a websocket for each group and everytime
     // something gets sent through you have to check which weboscket
     // its coming from and put it in the correct group
@@ -79,6 +80,20 @@ class WebSocketSmallGroups{
       command: "fetch_group_post"
     })
   }
+
+  sendPostToGroup(groupId, postId){
+    // this function will sned a specific group
+    // a post someone just made+
+    // You just need the post id to grab the post and the
+    //  groupId to know which group you are trying to post to
+    this.sendGroupsInfo({
+      postId: postId,
+      groupId: groupId,
+      command: 'send_group_post'
+    })
+
+  }
+
 
 
   sendGroupsInfo(data){

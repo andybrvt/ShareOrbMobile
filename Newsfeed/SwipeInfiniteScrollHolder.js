@@ -55,7 +55,6 @@ class SwipeInfiniteScrollHolder extends React.Component{
   }
 
   componentDidUpdate(prevProps){
-    console.log('component did updated')
   }
 
   render(){
