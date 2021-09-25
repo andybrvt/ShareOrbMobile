@@ -23,6 +23,7 @@ import { Triangle, Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import * as authActions from '../store/actions/auth';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import * as ImagePicker from 'expo-image-picker';
@@ -537,6 +538,7 @@ class CameraScreen extends React.Component{
       // this is also assuming that he has connected to the group
       // that he is trying to send to
 
+      WebSocketSmallGroupInstance.sendPostToGroup(groupId, res.data.item.id)
 
         // this.props.addFirstSocialCellPost(res.data.item)
         // const coverPicForm = new FormData();
@@ -627,6 +629,8 @@ class CameraScreen extends React.Component{
 
         // Add a websocket funciton here so that you can start sending
         // stuff in real time
+
+        WebSocketSmallGroupInstance.sendPostToGroup(groupId, res.data.item.id)
 
 
         // this.props.addFirstSocialCellPost(res.data.item)

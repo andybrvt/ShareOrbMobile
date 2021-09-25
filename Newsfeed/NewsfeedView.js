@@ -84,7 +84,6 @@ class NewsfeedView extends React.Component{
     if(this.props.isAuthenticated){
 
       // this only hits once
-      console.log('here at newsfeed')
       this.initialiseSocialNewsfeed()
     }
   }
@@ -120,7 +119,6 @@ class NewsfeedView extends React.Component{
 
   componentDidUpdate(prevProps){
 
-    console.log('does it update here')
     if(prevProps !== this.props){
       const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
 

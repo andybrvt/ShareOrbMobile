@@ -243,7 +243,8 @@ class App extends Component{
     )
 
     WebSocketSmallGroupInstance.addCallbacks(
-      this.props.loadSmallGroupsPost.bind(this)
+      this.props.loadSmallGroupsPost.bind(this),
+      this.props.sendGroupPost.bind(this)
     )
 
 
@@ -1214,7 +1215,8 @@ const mapDispatchToProps = dispatch => {
     authAddNotificationToken: (token) => dispatch(authActions.authAddNotificationToken(token)),
     resetNotificationSeen: () => dispatch(authActions.resetNotificationSeen()),
 
-    loadSmallGroupsPost: (posts) => dispatch(smallGroupsActions.loadSmallGroupsPost(posts))
+    loadSmallGroupsPost: (posts) => dispatch(smallGroupsActions.loadSmallGroupsPost(posts)),
+    sendGroupPost: (post) => dispatch(smallGroupsActions.sendGroupPost(post))
   }
 }
 
