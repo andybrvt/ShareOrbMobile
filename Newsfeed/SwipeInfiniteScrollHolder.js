@@ -19,6 +19,7 @@ import InfiniteScrollFlatNew from './InfiniteScrollFlatNew';
 import { PlusCircle, UserPlus, Info, Users} from "react-native-feather";
 import { connect } from 'react-redux';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
+import * as Progress from 'react-native-progress';
 
 
 const height = Dimensions.get('window').height
@@ -90,6 +91,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
              initialPage={0}
              renderTabBar={() => <ScrollableTabBarNew
                navigation = {this.props.navigation}
+               curLoad = {this.props.curLoad}
                />}
             >
             {smallGroups.map((group, indx) => {
