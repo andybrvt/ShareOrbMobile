@@ -33,6 +33,7 @@ import Friends from './Friends';
 import Login from './Login/Login';
 import AppIntro from './Login/AppIntro';
 import MiniAppIntro from './Login/MiniAppIntro';
+import SuggestedGroups from './Login/SuggestedGroups';
 import Signup from './Signup/Signup';
 import Chats from './Chats/Chats';
 import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
@@ -1120,7 +1121,17 @@ class App extends Component{
                           }}
                          name = "InvitePeople"
                          component= {InvitePeople}/>
-
+                         <Stack.Screen
+                           options={{
+                             headerStyle:{
+                               shadowColor:'#fff', //ios
+                               elevation:0,        // android
+                             },
+                             title: '',
+                              ...TransitionPresets. BottomSheetSlideInSpec,
+                            }}
+                           name = "SuggestedGroups"
+                           component= {SuggestedGroups}/>
                          <Stack.Screen
                            options={{
                              headerStyle:{

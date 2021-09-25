@@ -21,6 +21,7 @@ import {
  } from 'react-native';
 import Permissions from './Permissions';
 import InvitePeople from './InvitePeople';
+import SuggestedGroups from './SuggestedGroups';
 import SlideWrap from './SlideWrap';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import test1 from './test1.mp4';
@@ -262,8 +263,14 @@ class MiniAppIntro extends React.Component{
             </SlideWrap>
           }
 
-
           <SlideWrap visible = {this.state.two}>
+            <ScrollView>
+            <SuggestedGroups
+              onClose = {this.close}
+               />
+             </ScrollView>
+          </SlideWrap>
+          <SlideWrap visible = {this.state.three}>
             <Permissions
               onClose = {this.close}
                />
