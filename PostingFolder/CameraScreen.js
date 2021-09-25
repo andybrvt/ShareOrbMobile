@@ -630,6 +630,8 @@ class CameraScreen extends React.Component{
         // Add a websocket funciton here so that you can start sending
         // stuff in real time
 
+        WebSocketSmallGroupInstance.sendPostToGroup(groupId, res.data.item.id)
+
 
         // this.props.addFirstSocialCellPost(res.data.item)
         // const coverPicForm = new FormData();

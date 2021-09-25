@@ -24,11 +24,27 @@ const loadSmallGroupsPost = (state, action) => {
   })
 }
 
+const sendGroupPost = (state, action) => {
+
+  console.log(state.groupPosts[action.post.groupId.toString()], 'stufff her ')
+  return updateObject(state, {
+    groupPosts: {
+      ...state.groupPosts,
+      [action.post.groupId.toString()]:[
+        action.post.groupPost,
+        ...state.groupPosts[action.post.groupId.toString()],
+      ]
+    }
+  })
+}
+
 const reducer = (state = initialState, action) => {
 
   switch(action.type){
     case actionTypes.LOAD_SMALL_GROUPS_POST:
       return loadSmallGroupsPost(state, action)
+    case actionTypes.SEND_GROUP_POST:
+      return sendGroupPost(state, action)
     default:
       return state;
   }

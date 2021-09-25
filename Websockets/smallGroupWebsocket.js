@@ -63,14 +63,30 @@ class WebSocketSmallGroups{
         console.log('websockets here')
         this.callbacks['load_small_groups_post'](groupObj)
     }
+    if(command === "send_group_post"){
+      // You will set in the group post here into a specific
+      // value in the dict
+      const groupId = parsedData.groupId
+      const groupPost = parsedData.post
+      const groupObj = {
+        groupId,
+        groupPost
+      }
+
+      // add call back here
+      this.callbacks['send_group_post'](groupObj)
+
+    }
 
   }
 
   // First function is to pull the intial information
   addCallbacks(
-    loadSmallGroupsPost
+    loadSmallGroupsPost,
+    sendGroupPost
   ){
     this.callbacks['load_small_groups_post'] = loadSmallGroupsPost
+    this.callbacks['send_group_post'] = sendGroupPost
   }
 
   fetchGroupPost(groupId){
