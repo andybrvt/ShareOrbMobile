@@ -13,7 +13,8 @@ import {
   Alert,
   TextInput,
   Dimensions,
-  RefreshControle
+  RefreshControle,
+  ActivityIndicator
  } from 'react-native';
 import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -21,6 +22,8 @@ import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
 import { connect } from 'react-redux';
 import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
+import authAxios from '../util';
+import * as authActions from '../store/actions/auth';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -72,7 +75,7 @@ class GroupInfo extends React.Component{
           style: "cancel"
         },
         { text: "Change to public",
-          style:'destructive', onPress: () => this.makeGroupPublic }
+          style:'destructive', onPress: () => this.makeGroupPublic() }
       ]
     );
 
@@ -80,9 +83,21 @@ class GroupInfo extends React.Component{
   }
 
   makeGroupPublic  = ()=> {
+    const groupId = this.props.route.params.groupId;
+
     this.setState({
-      condition: !this.state.condition
+      loading: true
     })
+    authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/changeSGPublic/'+groupId)
+    .then(res =>{
+      // do a redux here that updates the global group info
+
+      this.props.authUpdateSmallGroup(res.data)
+      this.setState({
+        loading: false
+      })
+    })
+
   }
 
   renderInner =()=> {
@@ -148,6 +163,7 @@ class GroupInfo extends React.Component{
     let members = []
     let description = ""
     let publicG = false
+    let code = ""
     if(this.props.smallGroups){
       if(this.props.route.params.groupId){
 
@@ -161,7 +177,7 @@ class GroupInfo extends React.Component{
             members = group.members
             description = group.description
             publicG = group.public
-
+            code = group.groupCode
           }
 
 
@@ -196,7 +212,7 @@ class GroupInfo extends React.Component{
                 <TouchableOpacity onPress={()=>this.shareMessage()}>
 
                 <View style={styles.loginBtn0}>
-                  <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}> N324FJ3A</Text>
+                  <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>{code}</Text>
                 </View>
                 </TouchableOpacity>
               </View>
@@ -271,6 +287,7 @@ class GroupInfo extends React.Component{
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={this.toggleChange}
                     value={publicG}
+                    disabled = {publicG}
                      />
                   }
                 </View>
@@ -411,4 +428,11 @@ const mapStateToProps = state => {
     smallGroups: state.auth.smallGroups
   }
 }
-export default connect(mapStateToProps, null)(GroupInfo);
+
+const mapDispatchToProps= dispatch =>{
+    return{
+      authUpdateSmallGroup: (group) => dispatch(authActions.authUpdateSmallGroup(group))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupInfo);

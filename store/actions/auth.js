@@ -366,3 +366,11 @@ export const authAddSmallGroup = (group) => {
     group: group
   }
 }
+
+export const authUpdateSmallGroup = (group) => {
+  console.log(group, 'in the action')
+  return{
+    type: actionTypes.AUTH_UPDATE_SMALL_GROUP,
+    group: group
+  }
+}
