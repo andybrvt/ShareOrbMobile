@@ -17,7 +17,41 @@ import { Search,} from "react-native-feather";
 class SearchResults extends React.Component{
 
 
+  renderGroupItem = ({item}) => {
 
+    return(
+      <TouchableOpacity
+        // onPress = {() => this.props.viewProfile(item.username)}
+        >
+        <View style={{
+           flexDirection:'row',
+           padding:15}}>
+          <View style={{flex:1}}>
+            <Avatar
+              size={40}
+              rounded
+              source = {{
+                uri: `${global.IMAGE_ENDPOINT}`+item.groupPic
+              }}
+            />
+          </View>
+        <View style={{
+
+            flex:6,
+            flexDirection:'column',
+            }}>
+          <View style = {{flexDirection: 'row'}}>
+            <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.group_name, "", 20)} </Text>
+          </View>
+          <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.members.length} members</Text>
+
+
+
+        </View>
+      </View>
+      </TouchableOpacity>
+    )
+  }
 
   renderItem = ({item}) => {
 
@@ -56,11 +90,24 @@ class SearchResults extends React.Component{
     )
   }
 
+  renderGroupHeader = () => {
+
+    return(
+      <View>
+        <Text>Groups</Text>
+      </View>
+    )
+  }
+
   render(){
 
     let data = [];
+    let groupData = [];
     if(this.props.data){
       data = this.props.data
+    }
+    if(this.props.groupData){
+      groupData = this.props.groupData
     }
 
     return(
@@ -100,12 +147,22 @@ class SearchResults extends React.Component{
               flex: 1,
 
             }}>
+            <Text>Users</Text>
             <FlatList
+              style = {{flex: 1}}
               data = {data}
               renderItem = {this.renderItem}
               keyExtractor={(item, index) => String(index)}
 
                />
+             <Text>Groups</Text>
+             <FlatList
+               style = {{flex: 1}}
+               data = {groupData}
+               renderItem = {this.renderGroupItem}
+               keyExtractor={(item, index) => String(index)}
+
+                />
           </View>
         }
 

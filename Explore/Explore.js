@@ -57,6 +57,7 @@ class Explore extends React.Component{
      exploreCells: [],
      showSearch: false,
      searched: [],
+     searhcedGroups: [],
      searchValue: "",
      loading: false,
      start: 0,
@@ -156,7 +157,8 @@ class Explore extends React.Component{
    }).then(res => {
      this.setState({
        loading: false,
-       searched: res.data,
+       searched: res.data.users,
+       searchedGroups: res.data.groups
      })
    })
 
@@ -229,6 +231,7 @@ class Explore extends React.Component{
             <SearchResults
               viewProfile = {this.viewProfile}
               data = {this.state.searched}
+              groupData = {this.state.searchedGroups}
                />
 
             :
