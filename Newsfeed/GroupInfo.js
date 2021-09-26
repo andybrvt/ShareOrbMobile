@@ -19,9 +19,13 @@ import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-f
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
+import { connect } from 'react-redux';
 import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
+
+
 class GroupInfo extends React.Component{
   constructor(props){
     super(props)
@@ -30,6 +34,7 @@ class GroupInfo extends React.Component{
       loading: false,
       username: '',
       loginCondition:true,
+      publicG: false
     }
     this.bs = React.createRef()
   }
@@ -136,6 +141,36 @@ class GroupInfo extends React.Component{
     </View>
   );
   render(){
+
+    let smallGroups = []
+    let picture = ""
+    let groupName = ""
+    let members = []
+    let description = ""
+    let publicG = false
+    if(this.props.smallGroups){
+      if(this.props.route.params.groupId){
+
+        const groupId = this.props.route.params.groupId
+
+        for(let i = 0; i < this.props.smallGroups.length; i++){
+          if(this.props.smallGroups[i].id === groupId){
+            const group = this.props.smallGroups[i]
+            picture = `${global.IMAGE_ENDPOINT}`+group.groupPic
+            groupName = group.group_name;
+            members = group.members
+            description = group.description
+            publicG = group.public
+
+          }
+
+
+        }
+
+
+      }
+    }
+
     return(
       <BackgroundContainer>
 
@@ -169,7 +204,7 @@ class GroupInfo extends React.Component{
                 <Avatar
                   rounded
                   source = {{
-                    uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+                    uri: picture
                   }}
                   size={125}
                    />
@@ -179,16 +214,16 @@ class GroupInfo extends React.Component{
 
                 }}>
 
-                  <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>Fitness</Text>
+                  <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
                   <TouchableOpacity onPress = {()=>this.navPeopleInGroup()}>
-                    <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> 349 Members </Text>
+                    <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> {members.length} Members </Text>
                   </TouchableOpacity>
               </View>
             </View>
            </View>
            <View style={{ alignItems:'center', marginTop:25}}>
            <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
-             This is the University of Arizona fitness group. Bear Down!
+             {description}
            </Text>
            </View>
            <TouchableOpacity onPress = {()=>this.navInvitePeople()}>
@@ -235,7 +270,7 @@ class GroupInfo extends React.Component{
                     thumbColor={this.state.condition ? "white" : "white"}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={this.toggleChange}
-                    value={this.state.condition }
+                    value={publicG}
                      />
                   }
                 </View>
@@ -370,4 +405,10 @@ const styles = StyleSheet.create({
     marginLeft:10,
   },
 });
-export default GroupInfo;
+
+const mapStateToProps = state => {
+  return {
+    smallGroups: state.auth.smallGroups
+  }
+}
+export default connect(mapStateToProps, null)(GroupInfo);
