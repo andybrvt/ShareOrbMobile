@@ -20,14 +20,11 @@ import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-f
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
-import { connect } from 'react-redux';
 import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
-<<<<<<< HEAD
 import { connect } from "react-redux";
-=======
 import authAxios from '../util';
 import * as authActions from '../store/actions/auth';
->>>>>>> 828091e050727f3334ae290e8e501905b0d4107b
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -440,10 +437,7 @@ const mapStateToProps = state => {
   smallGroups: state.auth.smallGroups
   }
 }
-export default connect(mapStateToProps)(GroupInfo);
-    smallGroups: state.auth.smallGroups
-  }
-}
+
 
 const mapDispatchToProps= dispatch =>{
     return{
