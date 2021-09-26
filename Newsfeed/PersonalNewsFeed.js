@@ -203,7 +203,7 @@ const FACES = [
              }}
            >
              <TouchableOpacity
-               onPress={() => this.props.navigation.navigate("CreateAlbum")}
+               // onPress={() => this.props.navigation.navigate("CreateAlbum")}
                style={styles.roundButton1}>
                <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
              </TouchableOpacity>

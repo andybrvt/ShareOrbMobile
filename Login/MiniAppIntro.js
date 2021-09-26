@@ -264,11 +264,11 @@ class MiniAppIntro extends React.Component{
           }
 
           <SlideWrap visible = {this.state.two}>
-            <ScrollView>
+            <View style={{height:'100%'}}>
             <SuggestedGroups
               onClose = {this.close}
                />
-             </ScrollView>
+             </View>
           </SlideWrap>
           <SlideWrap visible = {this.state.three}>
             <Permissions

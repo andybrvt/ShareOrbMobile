@@ -93,6 +93,7 @@ import authAxios from './util';
 import GoalPage from './GoalAlbum/GoalPage';
 import * as dateFns from 'date-fns';
 import CreateGroupPage from './SmallGroups/CreateGroupPage';
+import JoinScreen from './SmallGroups/JoinScreen';
 
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -1101,6 +1102,20 @@ class App extends Component{
                      component= {CreateGroupPage}/>
 
                      <Stack.Screen
+                       options = {{
+                         headerStyle:{
+                           shadowColor:'#fff', //ios
+                           elevation:0,        // android
+                         },
+                         title: 'Join Orb',
+                         headerShown: false,
+                           ...TransitionPresets. SlideFromRightIOS,
+                       }}
+
+                       name = "JoinScreen"
+                       component= {JoinScreen}/>
+
+                     <Stack.Screen
                        options={{
                          headerStyle:{
                            shadowColor:'#fff', //ios
@@ -1117,7 +1132,7 @@ class App extends Component{
                              shadowColor:'#fff', //ios
                              elevation:0,        // android
                            },
-                           title: '',
+                           title: 'Invite People',
                             ...TransitionPresets. BottomSheetSlideInSpec,
                           }}
                          name = "InvitePeople"
@@ -1128,7 +1143,7 @@ class App extends Component{
                                shadowColor:'#fff', //ios
                                elevation:0,        // android
                              },
-                             title: '',
+                             title: 'Invite People',
                               ...TransitionPresets. BottomSheetSlideInSpec,
                             }}
                            name = "SuggestedGroups"

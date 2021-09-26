@@ -20,10 +20,11 @@ import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-f
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
-import { connect } from 'react-redux';
 import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
+import { connect } from "react-redux";
 import authAxios from '../util';
 import * as authActions from '../store/actions/auth';
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -157,6 +158,13 @@ class GroupInfo extends React.Component{
   );
   render(){
 
+    let data = []
+    if(this.props.smallGroups){
+      data = this.props.smallGroups
+    }
+    console.log(data)
+
+
     let smallGroups = []
     let picture = ""
     let groupName = ""
@@ -201,6 +209,7 @@ class GroupInfo extends React.Component{
             <View style={{flexDirection:'column',
               alignItems:'center',
               justifyContent:'center',
+
               width:'100%',
               // backgroundColor:'red',
               }}>
@@ -425,9 +434,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    smallGroups: state.auth.smallGroups
+  smallGroups: state.auth.smallGroups
   }
 }
+
 
 const mapDispatchToProps= dispatch =>{
     return{

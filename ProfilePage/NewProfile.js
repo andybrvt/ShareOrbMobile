@@ -22,7 +22,11 @@ import { Avatar } from 'react-native-elements';
 const {width, height} = Dimensions.get('screen')
 
 class NewProfile extends React.Component{
-
+  navSetting = () => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+    this.props.navigation.navigate("Settings")
+  }
   listHeader = () => {
 
     const profile = {
@@ -75,9 +79,7 @@ class NewProfile extends React.Component{
   render(){
 
     let data = []
-
     if(this.props.smallGroups){
-
       data = this.props.smallGroups
     }
 
@@ -98,7 +100,7 @@ class NewProfile extends React.Component{
             <View>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress = {() => this.ViewProfile()}
+                onPress = {() => this.navSetting()}
                 // style={{ width:50, height:50, }}
                 >
                 <Settings
@@ -219,10 +221,13 @@ const styles = StyleSheet.create({
     // backgroundColor:'red',
   },
   topLeft: {
-    flex:4,
+    flex:5,
   },
   topRight: {
+    marginTop:10,
     flex:1,
+
+    // backgroundColor:'red',
     justifyContent: 'center',
     alignItems: 'center'
   }
