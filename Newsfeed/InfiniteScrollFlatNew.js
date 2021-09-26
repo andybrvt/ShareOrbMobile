@@ -20,7 +20,7 @@ import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent} from 'react-native-redash/lib/module/v1';
-import { User } from "react-native-feather";
+import { User, Users } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
@@ -31,6 +31,13 @@ import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 
 // this is used mostly for the new scroll newsfeed
 class InfiniteScrollFlatNew extends React.Component{
+
+  navGroupInfo=()=> {
+    const groupId = this.props.groupId
+    this.props.navigation.navigate("GroupInfo",{
+      groupId: groupId
+    });
+  }
 
   // for this one here you will try to connect to the websocket
   // given the group id and then try to grab all the post of that
@@ -181,15 +188,23 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
     return(
-      <View >
+      <View style = {{flex: 1}} >
 
 
 
+        <View style={{zIndex: 999, position:'absolute', right:'10%', bottom:'10%',}}>
+        <TouchableOpacity
+          onPress={() => this.navGroupInfo()}
+          style={styles.roundButton1}>
 
+          <Users stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+        </TouchableOpacity>
+        </View>
 
           <FlatList
             // onViewableItemsChanged={this.onViewableItemsChanged }
-            contentContainerStyle={{ paddingBottom: 100 }}
+            contentContainerStyle={{
+              paddingBottom: 100 }}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle = {16} // important for animation
             // onScroll = {onScrollEvent({y})}
@@ -214,7 +229,19 @@ class InfiniteScrollFlatNew extends React.Component{
 }
 
 const styles = StyleSheet.create({
+  roundButton1: {
 
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:99,
+    borderRadius: 100,
+    left:10,
+    bottom:10,
+    backgroundColor: '#1890ff',
+    elevation:15,
+  },
 
 })
 

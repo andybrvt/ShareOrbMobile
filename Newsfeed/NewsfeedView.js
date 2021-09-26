@@ -227,6 +227,7 @@ class NewsfeedView extends React.Component{
                 <SwipeInfiniteScrollHolder
                   navigation = {this.props.navigation}
                   smallGroups = {this.props.smallGroups}
+                  curLoad = {this.props.curLoad}
                    />
 
 
@@ -298,7 +299,8 @@ const mapStateToProps = state => {
     notificationSeen: state.auth.notificationSeen,
     showFirstPostModal: state.auth.showFirstPostModal,
     smallGroups: state.auth.smallGroups,
-    groupPosts: state.smallGroups.groupPosts
+    groupPosts: state.smallGroups.groupPosts,
+    curLoad: state.auth.curLoad
   }
 }
 

@@ -19,6 +19,7 @@ import InfiniteScrollFlatNew from './InfiniteScrollFlatNew';
 import { PlusCircle, UserPlus, Info, Users} from "react-native-feather";
 import { connect } from 'react-redux';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
+import * as Progress from 'react-native-progress';
 
 
 const height = Dimensions.get('window').height
@@ -67,14 +68,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
     return(
       <View>
-        <View style={{zIndex: 999, position:'absolute', right:'10%', bottom:'5%',}}>
-        <TouchableOpacity
-          onPress={() => this.navGroupInfo()}
-          style={styles.roundButton1}>
 
-          <Users stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
-        </TouchableOpacity>
-        </View>
       <ScrollView
         scrollEnabled = {false}
         showsVerticalScrollIndicator={false}
@@ -90,12 +84,14 @@ class SwipeInfiniteScrollHolder extends React.Component{
              initialPage={0}
              renderTabBar={() => <ScrollableTabBarNew
                navigation = {this.props.navigation}
+               curLoad = {this.props.curLoad}
                />}
             >
             {smallGroups.map((group, indx) => {
               const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
               return(
                 <InfiniteScrollFlatNew
+                  navigation = {this.props.navigation}
                   key = {indx}
                   groupId= {group.id}
                   name='tab1' tabLabel={{pic: pic, name:group.group_name}} />

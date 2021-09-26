@@ -14,6 +14,8 @@ const {
 const Button = require('./Button');
 import { PlusCircle, UserPlus, Info } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
+import * as Progress from 'react-native-progress';
+
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
@@ -235,6 +237,17 @@ const ScrollableTabBarNew = createReactClass({
           })}
           <Animated.View style={[tabUnderlineStyle, dynamicTabUnderline, this.props.underlineStyle, ]} />
         </View>
+        <Progress.Bar
+          animationType = "timing"
+          borderWidth = {0}
+          style = {{
+            position: 'absolute',
+            bottom: '0%',
+            left: 0,
+          }}
+          progress = {this.props.curLoad} width = {WINDOW_WIDTH}
+
+           />
       </ScrollView>
     </View>;
   },

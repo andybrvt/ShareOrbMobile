@@ -238,9 +238,22 @@ const authAddSmallGroup = (state, action) => {
   })
 }
 
+const authUpdateSmallGroup = (state, action) => {
+  console.log('here on reducers')
+  return updateObject(state, {
+    smallGroups: state.smallGroups.map(
+      groups => groups.id === action.group.id ? {
+        ...action.group
+      } : groups
+
+    )
+  })
+}
+
 
 const reducer = (state = initialState, action) => {
   switch(action.type){
+
     case actionTypes.AUTH_START:
       return authStart(state, action);
     case actionTypes.AUTH_SUCCESS:
@@ -291,6 +304,9 @@ const reducer = (state = initialState, action) => {
       return authUnshowFirstPostModal(state, action)
     case actionTypes.AUTH_ADD_SMALL_GROUP:
       return authAddSmallGroup(state, action)
+    case actionTypes.AUTH_UPDATE_SMALL_GROUP:
+      console.log('it matches this')
+      return authUpdateSmallGroup(state, action)
     default:
       return state;
   }
