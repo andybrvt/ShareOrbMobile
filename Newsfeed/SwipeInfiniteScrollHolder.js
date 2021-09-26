@@ -48,7 +48,7 @@ class Page extends React.Component {
 class SwipeInfiniteScrollHolder extends React.Component{
 
   navGroupInfo=()=> {
-
+    // this.props.navigation.navigate("JoinScreen"
     this.props.navigation.navigate("GroupInfo",
 
     );

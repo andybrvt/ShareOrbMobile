@@ -20,6 +20,8 @@ import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
 import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
+import { connect } from "react-redux";
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 class GroupInfo extends React.Component{
@@ -136,6 +138,11 @@ class GroupInfo extends React.Component{
     </View>
   );
   render(){
+    let data = []
+    if(this.props.smallGroups){
+      data = this.props.smallGroups
+    }
+    console.log(data)
     return(
       <BackgroundContainer>
 
@@ -370,4 +377,10 @@ const styles = StyleSheet.create({
     marginLeft:10,
   },
 });
-export default GroupInfo;
+
+const mapStateToProps = state => {
+  return {
+  smallGroups: state.auth.smallGroups
+  }
+}
+export default connect(mapStateToProps)(GroupInfo);

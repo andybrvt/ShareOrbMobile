@@ -164,8 +164,40 @@ import * as authActions from '../store/actions/auth';
    render(){
      console.log(this.props.dailyNotification)
      return (
+
        <BackgroundContainer>
          <View>
+           <View style = {{
+
+             alignItems: 'center',
+             width: '100%'
+               // backgroundColor:'red',
+             }}>
+             <Text style = {{
+               color: '#1890ff',
+               fontSize:30,
+               // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+               // textShadowColor: 'black',
+               // textShadowOffset: {width: -1, height: 1},
+               // textShadowRadius: 5,
+               fontFamily:'Nunito-Bold',
+               paddingLeft:20,
+               paddingRight:20,
+             }}>Invite a friend</Text>
+             <Text style = {{
+               color: '#1890ff',
+               fontSize:30,
+               fontFamily:'Nunito-Bold',
+             }}>
+              Skip the waitlist
+            </Text>
+            <View>
+              <Text style = {styles.welcomeText}>
+                Your Code:&nbsp;
+                <Text>{this.props.inviteCode}</Text>
+              </Text>
+            </View>
+           </View>
           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
              <View style={{flexDirection:'row', padding:20}}>
                 <User stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
@@ -304,6 +336,14 @@ import * as authActions from '../store/actions/auth';
  }
 
  const styles = StyleSheet.create({
+   welcomeText: {
+   padding:5,
+     color: "#1890ff",
+     fontSize: 27.5,
+     top: '7%',
+     textAlign: 'center',
+     fontFamily:'Nunito-SemiBold',
+   },
    settingWord: {
      left:5,
      color:'black',

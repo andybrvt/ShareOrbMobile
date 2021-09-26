@@ -173,8 +173,12 @@ const ScrollableTabBarNew = createReactClass({
                 uri: name.pic
               }}
                />
+             {name.name.length>10?
+                <Text style={{paddingBottom:5, fontFamily:'Nunito-SemiBold'}}>{name.name.substring(0,10)}...</Text>
+               :
+                <Text style={{paddingBottom:5, fontFamily:'Nunito-SemiBold'}}>{name.name}</Text>
+             }
 
-             <Text style={{paddingBottom:10}}>{name.name}</Text>
         </View>
       </Button>
     }
@@ -282,7 +286,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   container: {
-    height: 70,
+    height: 60,
     backgroundColor:'blue',
     borderWidth: 1,
     borderTopWidth: 0,

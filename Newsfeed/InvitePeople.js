@@ -108,7 +108,7 @@ class GroupInfo extends React.Component{
   }
 
   render(){
-    let data=[{'name':'Ping Hsu'},{'name':'Andy Le'},]
+    let data=[{'name':'Ping Hsu'},{'name':'Andy Le'},{'name':'Hamzah Firman'},]
     let data1=[{'name':'John Smith'},{'name':'George Dong'},
   {'name':'Abe Ging'},{'name':'Josh Lee'},
 {'name':'April Forest'},{'name':'Emily Ju'},
@@ -116,11 +116,7 @@ class GroupInfo extends React.Component{
     console.log(data)
     return(
       <BackgroundContainer>
-      <View style={{ alignItems:'center', borderBottomWidth:1, borderColor:'#d9d9d9', paddingBottom:10,}}>
-        <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
-          Join my Fitness orb with this code: N49045ABS
-        </Text>
-      </View>
+
       <View style = {{
           flexDirection: 'row',
           alignItems: 'center',
@@ -165,14 +161,20 @@ class GroupInfo extends React.Component{
           : null
         }
       </View>
-      <ScrollView>
-      <View underlayColor="#f0f0f0">
-        <Text style={styles.settingWord}>
-        Recents
-        </Text>
+
+      <View underlayColor="#f0f0f0" style={{marginTop:10}}>
+        <View style={{flexDirection:'row'}}>
+          <View style={{flex:3}}>
+            <Text style={styles.settingWord}>
+            Recents
+            </Text>
+          </View>
+
+        </View>
         {/* put like max 3 people for recent */}
         <FlatList
           data={data}
+          style={{height:'15%'}}
           showsVerticalScrollIndicator={true}
           renderItem={(item) => {
             return(
@@ -180,12 +182,13 @@ class GroupInfo extends React.Component{
           )
             }}
           />
-       <View style={{marginTop:10}}>
+        <View style={{marginTop:10}}>
          <Text style={styles.settingWord}>
          Suggested
          </Text>
          <FlatList
-           // style={{ height:'55%', backgroundColor:'red'}}
+           contentContainerStyle={{ paddingBottom: 10 }}
+           style={{ height:'48%'}}
              data={data1}
              showsVerticalScrollIndicator={true}
              renderItem={(item) => {
@@ -195,29 +198,32 @@ class GroupInfo extends React.Component{
              }}
            />
        </View>
+       <View style={{alignItems:'center', justifyContent:'center'}}>
+         <View style={styles.loginBtn}>
+           <Text style={{left:5,
+           fontSize:16,
+           fontFamily:'Nunito-Bold',
+           marginLeft:10, color:'white'}}>Invite Contacts</Text>
+         </View>
+       </View>
       </View>
-      </ScrollView>
       </BackgroundContainer>
     )
   }
 }
 const styles = StyleSheet.create({
-  panel: {
-    padding: 20,
-    backgroundColor: '#FFFFFF',
-    paddingTop: 20,
-    zIndex:9999,
-    elevation:40,
+
+  loginBtn: {
+    marginTop:'5%',
+    width: "75%",
+    borderRadius: 25,
+    height: 50,
     alignItems: "center",
     justifyContent: "center",
-    // borderTopLeftRadius: 20,
-    // borderTopRightRadius: 20,
-    // shadowColor: '#000000',
-    // shadowOffset: {width: 0, height: 0},
-    // shadowRadius: 5,
-    // shadowOpacity: 0.4,
-  },
 
+    zIndex: 9999,
+    backgroundColor: "#1890ff",
+  },
   inviteButton: {
     borderRadius: 20,
     height:30,
@@ -230,11 +236,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#1890ff",
   },
 
-  bottomContainer: {
-    height: '25%',
-    width: width,
-    flexDirection:'row'
-  },
 
   column:{
     flex: 1,
