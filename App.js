@@ -27,6 +27,7 @@ import NewsfeedView from './Newsfeed/NewsfeedView';
 import GroupInfo from './Newsfeed/GroupInfo';
 import PeopleInGroup from './Newsfeed/PeopleInGroup';
 import InvitePeople from './Newsfeed/InvitePeople';
+import InviteContacts from './Newsfeed/InviteContacts';
 import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
 import Explore from './Explore/Explore';
 import Friends from './Friends';
@@ -1137,6 +1138,17 @@ class App extends Component{
                           }}
                          name = "InvitePeople"
                          component= {InvitePeople}/>
+                         <Stack.Screen
+                           options={{
+                             headerStyle:{
+                               shadowColor:'#fff', //ios
+                               elevation:0,        // android
+                             },
+                             title: 'Invite to ShareOrb',
+                              ...TransitionPresets. BottomSheetSlideInSpec,
+                            }}
+                           name = "InviteContacts"
+                           component= {InviteContacts}/>
                          <Stack.Screen
                            options={{
                              headerStyle:{
