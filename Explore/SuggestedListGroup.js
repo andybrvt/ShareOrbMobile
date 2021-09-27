@@ -314,6 +314,7 @@ class SuggestedListGroup extends React.Component{
 
         <FlatList
           style = {{
+            paddingTop:10,
             flex: 1,
           }}
           ItemSeparatorComponent = { this.FlatListItemSeparator }

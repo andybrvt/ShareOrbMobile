@@ -56,7 +56,7 @@ class NewProfile extends React.Component{
     const pic = `${global.IMAGE_ENDPOINT}` + item.groupPic
 
     return(
-      <View style={{width: width/3, justifyContent:'center', alignItems:'center', padding:10}} >
+      <View style={{width: width/2, justifyContent:'center', alignItems:'center', padding:10}} >
           <Avatar
             source = {{
               uri: pic
@@ -79,7 +79,7 @@ class NewProfile extends React.Component{
   renderEmptyContainer(){
     return(
       <View>
-        <Text>No post here</Text>
+        <Text>No orbs here</Text>
       </View>
     )
   }
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
   viewStyle: {
 
-    backgroundColor: 'white',
+    // backgroundColor: 'red',
     height:50,
     paddingTop:0,
     flexDirection:'row',
