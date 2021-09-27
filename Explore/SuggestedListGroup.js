@@ -101,7 +101,9 @@ class SuggestedListGroup extends React.Component{
         {posts.map((item, index) => {
           const image = `${global.IMAGE_ENDPOINT}`+ item.itemImage
           return(
-            <View style={[styles.column]}>
+            <View
+              key = {index}
+              style={[styles.column]}>
               <Avatar
                 source = {{
                   uri: image
