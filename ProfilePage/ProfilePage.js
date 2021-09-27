@@ -122,6 +122,10 @@ class ProfilePage extends React.Component{
   }
 
   onGroupDirect = (item) => {
+
+    // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
+    // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
+    // JOINSCREEN
     this.props.navigation.navigate("JoinScreen", {
       item:item
     })

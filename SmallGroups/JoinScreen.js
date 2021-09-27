@@ -22,6 +22,7 @@ import { Avatar } from 'react-native-elements';
 import authAxios from '../util';
 import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-feather";
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from "react-redux";
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -61,6 +62,17 @@ class JoinScreen extends React.Component{
 
     this.setState({
       inviteCode:e
+    })
+  }
+
+  joinGroup = (groupId) => {
+
+    const userId = this.props.id
+
+    // for this you just need group id and userid
+    authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
+    .then(res => {
+      console.log(res.data)
     })
   }
 
@@ -167,10 +179,14 @@ class JoinScreen extends React.Component{
                {
                  group.public ?
 
+                 <TouchableOpacity
+                   onPress = {() => this.joinGroup(group.id)}
+                   style = {styles.joinButton}>
+                   <View >
+                     <Text style = {styles.joinText}>Join</Text>
+                   </View>
 
-                 <View style = {styles.joinButton}>
-                   <Text style = {styles.joinText}>Join</Text>
-                 </View>
+                 </TouchableOpacity>
 
 
                  :
@@ -277,4 +293,10 @@ class JoinScreen extends React.Component{
    },
  })
 
- export default JoinScreen;
+const mapStateToProps = state => {
+  return{
+    id: state.auth.id
+  }
+}
+
+ export default connect(mapStateToProps, null)(JoinScreen);
