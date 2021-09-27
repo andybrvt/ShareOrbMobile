@@ -50,7 +50,6 @@ type RowItem = {
 
 
    render(){
-     let test=this.state.data
 
      return (
        <BackgroundContainer>

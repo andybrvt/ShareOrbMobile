@@ -36,6 +36,10 @@ class GroupInfo extends React.Component{
     this.bs = React.createRef()
   }
 
+  navContacts= () => {
+    this.props.navigation.navigate("InviteContacts")
+  }
+
   renderItem = ({item}) => {
     console.log(item)
     return(
@@ -199,12 +203,14 @@ class GroupInfo extends React.Component{
            />
        </View>
        <View style={{alignItems:'center', justifyContent:'center'}}>
-         <View style={styles.loginBtn}>
+         <TouchableOpacity
+           onPress={this.navContacts}
+           style={styles.loginBtn}>
            <Text style={{left:5,
            fontSize:16,
            fontFamily:'Nunito-Bold',
            marginLeft:10, color:'white'}}>Invite Contacts</Text>
-         </View>
+         </TouchableOpacity>
        </View>
       </View>
       </BackgroundContainer>
