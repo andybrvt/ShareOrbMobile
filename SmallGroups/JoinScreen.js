@@ -21,6 +21,7 @@ import { ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus, CheckCircle, A
 import { Avatar } from 'react-native-elements';
 import authAxios from '../util';
 import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-feather";
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -29,7 +30,8 @@ class JoinScreen extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      invitedPeople:[]
+      invitedPeople:[],
+      inviteCode: ''
     }
   }
 
@@ -55,97 +57,166 @@ class JoinScreen extends React.Component{
   }
 
 
+  handleCode = (e) => {
+
+    this.setState({
+      inviteCode:e
+    })
+  }
+
+
+
 
    render(){
+
+     console.log(this.props, 'stuff here')
      let data=[{'test':'Food'},{'test':'Family'},{'test':'Fitness'},{'test':'NBA'},
      {'test':'Tennis'},{'test':'volleball'},
    ]
      let codeInvite=this.props.codeInvite
+     let group = {}
+     if(this.props.route.params.item){
+       group = this.props.route.params.item
+     }
+
      return(
-       <View>
-       <TouchableOpacity
-         style={{width:50, padding:25}}
-         onPress = {() => this.props.navigation.goBack(0)}
-         >
+       <SafeAreaView style = {{flex: 1}}>
 
-         <ArrowLeft
+         <TouchableOpacity
+           style={{
+             position: 'absolute',
+             top: '5%',
+             left: '5%',
+             zIndex: 999
+           }}
+           onPress = {() => this.props.navigation.goBack(0)}
+           >
 
-           stroke="black"
-           height = {25}
-           width = {25}
-           />
-       </TouchableOpacity>
-         <View>
+           <ArrowLeft
 
-           <View style={{
-               alignItems:'center',
-               justifyContent:'center',
-               flexDirection:'row',
+             stroke="black"
+             height = {35}
+             width = {35}
+             />
+         </TouchableOpacity>
+         <ScrollView >
 
-             }}>
+           <View style = {{top: '10%'}}>
 
-             <View style={{flexDirection:'column',
-               alignItems:'center',
-               justifyContent:'center',
-               width:'100%',
-               // backgroundColor:'red',
+             <View style={{
+                 alignItems:'center',
+                 justifyContent:'center',
+                 flexDirection:'row',
+
                }}>
 
-                 <Avatar
-                   rounded
-                   source = {{
-                     uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-                   }}
-                   size={125}
-                    />
-               <View style={{
-                 marginTop:10,
-
+               <View style={{flexDirection:'column',
+                 alignItems:'center',
+                 justifyContent:'center',
+                 width:'100%',
+                 // backgroundColor:'red',
                  }}>
 
-                   <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>Fitness</Text>
-                   <View style={styles.loginBtn0}>
-                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}> Private Orb</Text>
-                   </View>
-                   <TouchableOpacity onPress = {()=>this.navPeopleInGroup()}>
-                     <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> 349 Members </Text>
-                   </TouchableOpacity>
+                   <Avatar
+                     rounded
+                     source = {{
+                       uri:`${global.IMAGE_ENDPOINT}`+group.groupPic
+                     }}
+                     size={125}
+                      />
+                 <View style={{
+                   marginTop:10,
+
+                   }}>
+
+                     <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{group.group_name}</Text>
+                     {
+                       group.public ?
+
+                       <View style={styles.loginBtn0}>
+                         <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>Public Orb</Text>
+                       </View>
+
+                       :
+
+                       <View style={styles.loginBtn0}>
+                         <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>Private Orb</Text>
+                       </View>
+
+
+                     }
+
+                     <TouchableOpacity onPress = {()=>this.navPeopleInGroup()}>
+                       <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{group.members.length} Members </Text>
+                     </TouchableOpacity>
+                 </View>
                </View>
+              </View>
+              <View style={{
+                alignItems:'center',
+                marginTop:25}}>
+              <Text style={{fontSize:18, fontFamily:'Nunito'}}>
+                {group.description}
+              </Text>
+              </View>
+
+
+             <View style={{
+                 alignItems:'center',
+                 top:'15%'}}>
+               {
+                 group.public ?
+
+
+                 <View style = {styles.joinButton}>
+                   <Text style = {styles.joinText}>Join</Text>
+                 </View>
+
+
+                 :
+
+                 <View style = {styles.inputHolder}>
+                   <TextInput
+                     autoCapitalize="none"
+                     onChangeText = {this.handleCode}
+                     style = {styles.inviteInput}
+                     placeholder = "Enter invite code"
+                     value = {this.state.inviteCode}
+                     />
+
+                     <View style = {styles.joinButton}>
+                       <Text style = {styles.joinText}>Join</Text>
+                     </View>
+
+
+                 </View>
+
+               }
+
              </View>
-            </View>
-            <View style={{ alignItems:'center', marginTop:25}}>
-            <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
-              This is the University of Arizona fitness group. Bear Down!
-            </Text>
-            </View>
+           </View>
+         </ScrollView>
 
-
-             <View style={{alignItems:'center', top:'15%'}}>
-             <TextInput
-               autoCapitalize="none"
-               onChangeText = {this.handleCode}
-               style = {styles.inviteInput}
-               placeholder = "Enter invite code"
-               value = {this.state.inviteCode}
-               />
-
-             </View>
-         </View>
-       </View>
+       </SafeAreaView>
      )
    }
  }
 
  const styles = StyleSheet.create({
-   inviteInput: {
+
+   inputHolder:{
      width: "75%",
+     alignItems: 'center'
+   },
+   inviteInput: {
+     width: '100%',
      height: 50,
-     marginLeft:20,
      backgroundColor:'#d9d9d9',
      fontFamily:'Nunito',
      borderRadius:10,
      padding:10,
      fontSize:18,
+     marginBottom: 20
    },
 
    loginBtn0: {
@@ -161,8 +232,22 @@ class JoinScreen extends React.Component{
 
      backgroundColor: "#1890ff",
    },
+   joinButton: {
+     width: '70%',
+     backgroundColor: "#1890ff",
+     justifyContent: 'center',
+     alignItems: 'center',
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 10,
+     borderRadius: 20,
+     height: 50,
 
-
+   },
+   joinText:{
+     color: 'white',
+     fontSize: 15
+   },
    bottomContainer: {
      height: '25%',
      width: width,

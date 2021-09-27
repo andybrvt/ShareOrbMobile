@@ -171,13 +171,12 @@ class UserProfile extends React.Component{
           <TouchableOpacity
             onPress = {() => this.onRedirect()}>
           <ArrowLeft
-                style={{top:15}}
                 stroke='black'
                 width ={35}
                 height = {25}
            />
          </TouchableOpacity>
-          <View style={{top: 10, flex:1, justifyContent:'center'}}>
+          <View >
             <Text style={styles.textStyle}>{username}</Text>
           </View>
 
@@ -254,7 +253,6 @@ const styles = StyleSheet.create({
     height:30,
     paddingTop:0,
     flexDirection:'row',
-
     // shadowColor:'black',
     // shadowOffset:{width:0,height:2},
     // shadowOpacity:0.2,

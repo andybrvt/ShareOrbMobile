@@ -101,7 +101,9 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
             })}
 
-              <Text name = "tab3" tabLabel = "add"/>
+              <View name = "tab3" tabLabel = "add">
+                <Text>Find some groups</Text>
+              </View>
 
 
           </ScrollableTabView>
