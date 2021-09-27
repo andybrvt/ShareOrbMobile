@@ -121,6 +121,10 @@ class ProfilePage extends React.Component{
     )
   }
 
+  onBack = () => {
+    this.props.navigation.goBack(0)
+  }
+
   listHeader = () => {
     // const profile = {
     //   username: this.props.username,
@@ -201,7 +205,7 @@ class ProfilePage extends React.Component{
 
 
   render(){
-
+    console.log(this.props, 'here in the props')
 
     const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -217,7 +221,12 @@ class ProfilePage extends React.Component{
         <View style={styles.viewStyle}>
 
           <View style = {styles.topLeft}>
-            <ArrowLeft />
+            <TouchableOpacity
+              onPress = {() => this.onBack()}
+              >
+              <ArrowLeft />
+            </TouchableOpacity>
+
             <View style={{justifyContent:'center', paddingLeft: 10}}>
               <Text style={styles.textStyle}>{this.state.profile.username}</Text>
             </View>
