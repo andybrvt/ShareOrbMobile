@@ -99,6 +99,7 @@ class ProfileHeader extends React.Component{
     let notiToken = ""
 
     if(this.props.profile){
+      console.log(this.props.profile, 'here')
       if(this.props.profile.notificationToken){
         notiToken = this.props.profile.notificationToken
       }

@@ -1,5 +1,8 @@
 import React from 'react';
-import { Text, SafeAreaView, View, TouchableOpacity, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
+import {
+  Text,
+  FlatList,
+   SafeAreaView, View, TouchableOpacity, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
 import ProfileHeader from './ProfileHeader';
 import { connect } from "react-redux";
 import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
@@ -13,40 +16,33 @@ import { ArrowLeft, Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlu
 import * as authActions from '../store/actions/auth';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import GoalContainer from '../GoalAlbum/GoalContainer';
-import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { Avatar } from 'react-native-elements';
+import authAxios from '../util';
+
 // this will be used mostly for the other person profile
 // I want to make it seperate is because for your profile you can just
 // use auth and changing stuff would be so much easier because you don't
 // need two reducers to manage
+const {width, height} = Dimensions.get('screen')
+
+
 class ProfilePage extends React.Component{
 
   constructor(props){
     super(props);
 
     this.state = {
-      index: 0,
-      routes: [
-        { key: 'first', title: 'Calendar' },
-        { key: 'second', title: 'Goals' },
-      ]
+
+      profile: {}
     }
   }
 
-  ViewNoti = () => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
-    this.props.navigation.navigate("Notifications")
-  }
-
-  ViewProfile = () => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
-    this.props.navigation.navigate("Settings")
-  }
 
   initialiseProfile() {
 
+    // honeslty you don't even need websockets bc there are not that
+    // much real time stuff,
+    // you just gotta pull the profiele
       this.waitForSocketConnection(() => {
           ExploreWebSocketInstance.fetchProfile(
             this.props.route.params.username
@@ -77,7 +73,17 @@ class ProfilePage extends React.Component{
 
   componentDidMount(){
     if(this.props.route.params.username !== null){
-        this.initialiseProfile()
+    //     this.initialiseProfile()
+      const name = this.props.route.params.username
+      authAxios.get(`${global.IP_CHANGE}`+"/userprofile/"+name)
+      .then(res => {
+
+        this.setState({
+          profile: res.data
+        })
+
+      })
+
     }
 
   }
@@ -91,13 +97,13 @@ class ProfilePage extends React.Component{
     // months a bit differently, we will pull the information a bit more differnet
     // than that of the website. We will just get the profile stuff and then
     // for the social cal we will get it seperatly
-    ExploreWebSocketInstance.disconnect();
-    this.waitForSocketConnection(() => {
-      ExploreWebSocketInstance.fetchProfile(
-        this.props.route.params.username
-      )
-    })
-    ExploreWebSocketInstance.connect(String(this.props.route.params.username))
+    // ExploreWebSocketInstance.disconnect();
+    // this.waitForSocketConnection(() => {
+    //   ExploreWebSocketInstance.fetchProfile(
+    //     this.props.route.params.username
+    //   )
+    // })
+    // ExploreWebSocketInstance.connect(String(this.props.route.params.username))
   }
 
   }
@@ -107,138 +113,139 @@ class ProfilePage extends React.Component{
     this.props.navigation.goBack();
   }
 
-  _renderScene = SceneMap({
-    first: () =>  <SocialCalendarVonly userId = {this.props.profile.id} navigation = {this.props.navigation} currentId = {this.props.currentId}/>,
-  second: () => <GoalContainer  userId = {this.props.currentId} navigation = {this.props.navigation}/>,
-  });
-
-  _handleIndexChange = (index) => this.setState({ index });
-
-
-  _renderTabBar = (props) => {
-    const inputRange = props.navigationState.routes.map((x, i) => i);
-    return (
-      <View style={styles.tabBar}>
-        {
-        props.navigationState.routes.map((route, i) => {
-        return (
-          <TouchableOpacity
-            style={styles.tabItem}
-            onPress={() => this.setState({ index: i })}>
-            <View style={{flexDirection:'row'}}>
-              {
-                (i==1)?
-               <Clipboard
-                 style={{right:10}}
-                 stroke="#bfbfbf" strokeWidth={2} width={20} height={20} />
-              :
-               <Calendar
-                 style={{right:10}}
-                 stroke="#bfbfbf" strokeWidth={2} width={20} height={20} />
-              }
-              <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>{route.title}</Text>
-            </View>
-          </TouchableOpacity>
-          );
-        })}
+  renderEmptyContainer(){
+    return(
+      <View>
+        <Text>No post here</Text>
       </View>
-    );
-  };
+    )
+  }
+
+  onBack = () => {
+    this.props.navigation.goBack(0)
+  }
+
+  listHeader = () => {
+    // const profile = {
+    //   username: this.props.username,
+    //   profile_picture: this.props.profilePic,
+    //   first_name: this.props.firstName,
+    //   last_name: this.props.lastName,
+    //   get_following: this.props.following,
+    //   id: this.props.currentId,
+    //   bio: this.props.bio,
+    //   get_followers: this.props.followers
+    // }
+
+    console.log(this.state.profile, 'profile here')
+    const profile = this.state.profile
+    const username = profile.username
+    const profilePic = profile.profile_picture
+    const bio = profile.bio
+    const name = profile.first_name
+    return(
+      <View style = {styles.container1}>
+
+        <View style = {styles.profileInfoHeader}>
+          <View>
+            <Avatar
+              size={95}
+              rounded
+              source={{
+                uri: profilePic,
+              }}
+            />
+          </View>
+          <View>
+            <Text style = {styles.name}>{name}</Text>
+            <Text style = {styles.username}>@{username}</Text>
+
+          </View>
+
+        </View>
+
+
+        <View>
+          <Text style = {styles.bio}>{bio}</Text>
+        </View>
+
+      </View>
+
+    )
+  }
+
+
+  renderItem = ({item}) => {
+
+    const pic = `${global.IMAGE_ENDPOINT}` + item.groupPic
+
+    return(
+      <View style={{width: width/3, justifyContent:'center', alignItems:'center', padding:10}} >
+          <Avatar
+            source = {{
+              uri: pic
+            }}
+            rounded
+            size = {120}
+             />
+           <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
+           <View>
+             <Text>{item.members.length} people</Text>
+
+           </View>
+
+           {/*<View style={styles.roundButton1}></View> */}
+      </View>
+
+    )
+  }
+
+
+
+
 
   render(){
-
+    console.log(this.props, 'here in the props')
 
     const screenWidth = Math.round(Dimensions.get('window').width);
 
     let username = "";
     let userId = "";
 
-    if(this.props.profile){
-      if(this.props.profile.username){
-        username = this.props.profile.username
-      }
-      if(this.props.profile.id){
-        userId = this.props.profile.id
-      }
-
-    }
-
-    let data=[{'test':'Food'},{'test':'Family'},{'test':'Fitness'},{'test':'NBA'},
-      {'test':'Soccer'},{'test':'Entreprenur'},  {'test':'Soccer'},{'test':'Entreprenur'},
-    ]
+    const data = this.state.profile.get_small_groups
 
     // you would use userId in this one
 
     return (
       <BackgroundContainer>
         <View style={styles.viewStyle}>
-          <TouchableOpacity
-            onPress = {() => this.onRedirect()}>
-          <ArrowLeft
-                style={{top:15}}
-                stroke='black'
-                width ={35}
-                height = {25}
-           />
-         </TouchableOpacity>
-          <View style={{top: 10, flex:1, justifyContent:'center'}}>
-            <Text style={styles.textStyle}>{username}</Text>
+
+          <View style = {styles.topLeft}>
+            <TouchableOpacity
+              onPress = {() => this.onBack()}
+              >
+              <ArrowLeft />
+            </TouchableOpacity>
+
+            <View style={{justifyContent:'center', paddingLeft: 10}}>
+              <Text style={styles.textStyle}>{this.state.profile.username}</Text>
+            </View>
           </View>
 
+
         </View>
-        <View style = {styles.profileHeader}>
-          <ProfileHeader
-            navigation={this.props.navigation}
-            {...this.props}
-            />
-        </View>
-        <View style = {styles.socialCalContainer}>
-          {/*
-            <SocialCalendarVonly
-              navigation = {this.props.navigation}
-              userId = {userId}
-              currentId = {this.props.currentId}
-              />
 
 
-              <TabView
-              navigationState = {this.state}
-              renderScene = {
-                SceneMap({
-                  first: () =>  <SocialCalendarVonly userId = {userId} navigation = {this.props.navigation} currentId = {this.props.currentId}/>,
-                second: () => <GoalContainer  userId = {userId} navigation = {this.props.navigation}/>,
-                })
-              }
-              renderTabBar={this._renderTabBar}
-              onIndexChange={this._handleIndexChange}
-               />\
-               */}
+        <FlatList
+          ListHeaderComponent = {this.listHeader}
+          columnWrapperStyle={{justifyContent: 'space-between'}}
+          data={data}
+          numColumns={3}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={this.renderItem}
+          ListEmptyComponent={this.renderEmptyContainer()}
 
-
-         <View>
-           <FlatList
-             columnWrapperStyle={{justifyContent: 'space-between'}}
-             data={data}
-             showsVerticalScrollIndicator={true}
-             numColumns={2}
-             renderItem={({item}) => {
-               return (
-                  <View style={{width: '50%', justifyContent:'center', alignItems:'center', padding:10}} >
-                      <Avatar
-                        source = {{
-                          uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
-                        }}
-                        rounded
-                        size = {150}
-                         />
-                       <Text>{item.test}</Text>
-                       {/*<View style={styles.roundButton1}></View> */}
-                  </View>
-               );
-             }}
            />
-         </View>
-        </View>
       </BackgroundContainer>
     )
   }
@@ -266,6 +273,19 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor:"#1890ff"
   },
+  profileInfoHeader: {
+    justifyContent: 'center',
+    width: '80%',
+    flexDirection: 'row'
+  },
+  container1: {
+    alignItems: 'center',
+    width: '100%',
+    padding: 25,
+    paddingLeft: 30,
+    paddingRight: 30,
+
+  },
   container: {
     flex: 1,
     marginTop: Constant.statusBarHeight,
@@ -277,9 +297,7 @@ const styles = StyleSheet.create({
 
   },
   profileHeader: {
-    flex: 1,
-    alignItems:'flex-start',
-    // left:'12.5%',
+
     width:'100%',
 
 
@@ -321,6 +339,20 @@ const styles = StyleSheet.create({
     // backgroundColor:'red',
   },
 
+  name:{
+    fontSize: 20,
+    color: "black",
+    fontFamily:'Nunito-SemiBold',
+  },
+  username:{
+    fontSize: 14,
+    color: "gray",
+    fontFamily:'Nunito-SemiBold',
+  },
+  bio: {
+    fontSize: 15,
+    fontFamily:'Nunito-SemiBold',
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
