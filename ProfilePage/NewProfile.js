@@ -76,6 +76,14 @@ class NewProfile extends React.Component{
     )
   }
 
+  renderEmptyContainer(){
+    return(
+      <View>
+        <Text>No post here</Text>
+      </View>
+    )
+  }
+
   render(){
 
     let data = []
@@ -119,6 +127,7 @@ class NewProfile extends React.Component{
           numColumns={2}
           keyExtractor={(item, index) => String(index)}
           renderItem={this.renderItem}
+          ListEmptyComponent={this.renderEmptyContainer()}
 
            />
 
@@ -192,9 +201,9 @@ const styles = StyleSheet.create({
     height:50,
     paddingTop:0,
     flexDirection:'row',
-    shadowColor:'black',
-    shadowOffset:{width:0,height:2},
-    shadowOpacity:0.2,
+    // shadowColor:'black',
+    // shadowOffset:{width:0,height:2},
+    // shadowOpacity:0.2,
   },
   textStyle:{
     fontSize:20,

@@ -64,7 +64,6 @@ class SwipeInfiniteScrollHolder extends React.Component{
    if(this.props.smallGroups){
      smallGroups = this.props.smallGroups
    }
-   console.log(this.props.smallGroups["2"])
 
     return(
       <View>
@@ -101,7 +100,9 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
             })}
 
-              <Text name = "tab3" tabLabel = "add"/>
+              <View name = "tab3" tabLabel = "add">
+                <Text>Find some groups</Text>
+              </View>
 
 
           </ScrollableTabView>

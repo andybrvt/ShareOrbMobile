@@ -109,10 +109,6 @@ class ProfilePage extends React.Component{
   }
 
 
-  onRedirect = () => {
-    this.props.navigation.goBack();
-  }
-
   renderEmptyContainer(){
     return(
       <View>
@@ -124,6 +120,29 @@ class ProfilePage extends React.Component{
   onBack = () => {
     this.props.navigation.goBack(0)
   }
+
+  onGroupDirect = (item) => {
+
+    // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
+    // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
+    // JOINSCREEN
+
+
+    const curId = this.props.currentId
+    const memberList = item.members
+
+    if(memberList.includes(curId)){
+      this.props.navigation.navigate("Home")
+    } else {
+      this.props.navigation.navigate("JoinScreen", {
+        item:item
+      })
+
+    }
+
+
+  }
+
 
   listHeader = () => {
     // const profile = {
@@ -181,6 +200,9 @@ class ProfilePage extends React.Component{
 
     return(
       <View style={{width: width/3, justifyContent:'center', alignItems:'center', padding:10}} >
+        <TouchableOpacity
+          onPress = {() => this.onGroupDirect(item)}
+          >
           <Avatar
             source = {{
               uri: pic
@@ -188,6 +210,8 @@ class ProfilePage extends React.Component{
             rounded
             size = {120}
              />
+        </TouchableOpacity>
+
            <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
            <View>
              <Text>{item.members.length} people</Text>
@@ -219,18 +243,23 @@ class ProfilePage extends React.Component{
     return (
       <BackgroundContainer>
         <View style={styles.viewStyle}>
-
-          <View style = {styles.topLeft}>
+          <View style = {{
+              justifyContent: 'center',
+              alignItems:'center'}}>
             <TouchableOpacity
               onPress = {() => this.onBack()}
               >
-              <ArrowLeft />
+              <ArrowLeft
+                width = {35}
+                height = {35}
+                 />
             </TouchableOpacity>
+
+          </View>
 
             <View style={{justifyContent:'center', paddingLeft: 10}}>
               <Text style={styles.textStyle}>{this.state.profile.username}</Text>
             </View>
-          </View>
 
 
         </View>
@@ -305,10 +334,9 @@ const styles = StyleSheet.create({
   viewStyle: {
 
 
-    height:30,
+    height:50,
     paddingTop:0,
     flexDirection:'row',
-
     // shadowColor:'black',
     // shadowOffset:{width:0,height:2},
     // shadowOpacity:0.2,

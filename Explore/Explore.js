@@ -138,6 +138,24 @@ class Explore extends React.Component{
 
   }
 
+  viewGroup = (item) => {
+
+    const curId = this.props.id
+    const memberList = item.members
+
+    if(memberList.includes(curId)){
+      this.props.navigation.navigate("Home")
+    } else {
+      this.props.navigation.navigate("JoinScreen", {
+        item:item
+      })
+
+    }
+
+
+
+  }
+
   onChangeNewSearch = e => {
 
    this.setState({
@@ -227,6 +245,7 @@ class Explore extends React.Component{
             this.state.showSearch ?
             <SearchResults
               viewProfile = {this.viewProfile}
+              growProfile = {this.viewGroup}
               data = {this.state.searched}
               groupData = {this.state.searchedGroups}
                />
