@@ -201,8 +201,6 @@ class Explore extends React.Component{
         <View style = {{
             flex: 1,
           }}>
-
-
           <ExploreSearchBar
             value = {this.state.searchValue}
             onOpen = {this.onShowSearch}
@@ -211,7 +209,6 @@ class Explore extends React.Component{
             onChange = {this.onChangeNewSearch}
             y = {this.y}
             />
-
 
             {/*
 

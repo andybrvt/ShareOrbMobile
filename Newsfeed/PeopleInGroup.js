@@ -56,6 +56,8 @@ import * as authActions from '../store/actions/auth';
    }
 
    renderItem = ({item}) => {
+     console.log("WWWWWWWWWWWW")
+     console.log(item)
      const following = [];
      if(this.props.following){
        for(let i = 0; i< this.props.following.length; i++){
@@ -92,8 +94,9 @@ import * as authActions from '../store/actions/auth';
 
 
    render(){
-     let data = [{'first_name':'Ping', 'last_name':'Hsu', 'username':'admin'},
-   {'first_name':'June', 'last_name':'Chen', 'username':'june23'}];
+   let members = this.props.route.params.members
+
+
      // if(this.props.profile){
      //   if(this.props.profile.get_following){
      //     data = this.props.profile.get_following
@@ -102,10 +105,11 @@ import * as authActions from '../store/actions/auth';
      return (
        <BackgroundContainer>
          <View >
+
          <FlatList
            keyExtractor={(item, index) => String(index)}
            style = {{marginTop:5}}
-           data = {data}
+           data = {members}
            renderItem = {this.renderItem}
            ItemSeparatorComponent = { this.FlatListItemSeparator }
            />

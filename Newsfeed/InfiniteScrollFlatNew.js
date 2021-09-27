@@ -192,7 +192,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
 
-        <View style={{zIndex: 999, position:'absolute', right:'10%', bottom:'10%',}}>
+        <View style={{zIndex: 999, position:'absolute', right:'10%', bottom:'15%',}}>
         <TouchableOpacity
           onPress={() => this.navGroupInfo()}
           style={styles.roundButton1}>

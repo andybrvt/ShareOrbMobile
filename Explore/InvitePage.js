@@ -136,13 +136,9 @@ class InvitePage extends React.Component{
      let codeInvite=this.props.inviteCode
      // You will need to get the current number of poeple on the wait list
      return(
-
        <View style = {styles.container}>
-
          {
-
            this.state.inviteLeft === 0 ?
-
            <View style = {{
                flex: 1,
                alignItems: 'center',
@@ -168,7 +164,7 @@ class InvitePage extends React.Component{
                 alignItems: 'center',
                 width: '100%'}}>
 
-
+                {/*
                 <View style = {{
 
                     padding:25,
@@ -204,6 +200,7 @@ class InvitePage extends React.Component{
                   <Text style={{color:'white'}}>Invite</Text>
 
                 </TouchableOpacity>
+                */}
 
                 {/*
                <View style ={{
@@ -239,6 +236,8 @@ class InvitePage extends React.Component{
                  </View>
                </View>
                */}
+
+               {/*
                <View style = {{
                    width: '80%',
                    alignItems: 'center',
@@ -255,6 +254,7 @@ class InvitePage extends React.Component{
                      textAlign: 'center'
                    }}>{this.state.infoText}</Text>
                </View>
+               */}
              </View>
            </TouchableWithoutFeedback>
          }
