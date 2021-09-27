@@ -126,9 +126,21 @@ class ProfilePage extends React.Component{
     // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
     // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
     // JOINSCREEN
-    this.props.navigation.navigate("JoinScreen", {
-      item:item
-    })
+
+
+    const curId = this.props.currentId
+    const memberList = item.members
+
+    if(memberList.includes(curId)){
+      this.props.navigation.navigate("Home")
+    } else {
+      this.props.navigation.navigate("JoinScreen", {
+        item:item
+      })
+
+    }
+
+
   }
 
 

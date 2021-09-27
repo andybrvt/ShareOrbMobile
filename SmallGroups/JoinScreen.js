@@ -13,7 +13,8 @@ import {
   Alert,
   TextInput,
   Dimensions,
-  RefreshControle
+  RefreshControle,
+  ActivityIndicator
  } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as dateFns from 'date-fns';
@@ -23,6 +24,8 @@ import authAxios from '../util';
 import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-feather";
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from "react-redux";
+import * as authActions from '../store/actions/auth';
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -32,7 +35,8 @@ class JoinScreen extends React.Component{
     super(props)
     this.state = {
       invitedPeople:[],
-      inviteCode: ''
+      inviteCode: '',
+      loading: false
     }
   }
 
@@ -69,10 +73,21 @@ class JoinScreen extends React.Component{
 
     const userId = this.props.id
 
+    this.setState({
+      loading: true
+    })
     // for this you just need group id and userid
     authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
     .then(res => {
       console.log(res.data)
+      // direct this group to newsfeed and then add it to auth
+
+      this.setState({
+        loading: false
+      })
+      this.props.authAddSmallGroup(res.data)
+
+
     })
   }
 
@@ -81,10 +96,6 @@ class JoinScreen extends React.Component{
 
    render(){
 
-     console.log(this.props, 'stuff here')
-     let data=[{'test':'Food'},{'test':'Family'},{'test':'Fitness'},{'test':'NBA'},
-     {'test':'Tennis'},{'test':'volleball'},
-   ]
      let codeInvite=this.props.codeInvite
      let group = {}
      if(this.props.route.params.item){
@@ -177,6 +188,13 @@ class JoinScreen extends React.Component{
                  alignItems:'center',
                  top:'15%'}}>
                {
+                 this.state.loading ?
+
+
+                 <ActivityIndicator />
+
+                :
+
                  group.public ?
 
                  <TouchableOpacity
@@ -299,4 +317,10 @@ const mapStateToProps = state => {
   }
 }
 
- export default connect(mapStateToProps, null)(JoinScreen);
+const mapDispatchToProps = dispatch => {
+  return{
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
+  }
+}
+
+ export default connect(mapStateToProps, mapDispatchToProps)(JoinScreen);
