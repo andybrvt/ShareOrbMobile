@@ -71,7 +71,7 @@ class InviteContacts extends React.Component{
     //Here is the Share API
     Share.share({
       // message: inputValue.toString(),
-      message:"Join ShareOrb with my code: "+ codeInvite+"\nIOS:"+" https://testflight.apple.com/join/v58j1FSw"
+      message:"Join my orb on ShareOrb with my code: "+ codeInvite+"\nIOS:"+" https://testflight.apple.com/join/v58j1FSw"
       + "\nAndroid: "+"https://play.google.com/store/apps/details?id=com.pinghsu520.ShareOrbMobile"
     })
       //after successful share return result
@@ -125,11 +125,11 @@ class InviteContacts extends React.Component{
               <View style={styles.inviteButton}>
                 <View style={{flexDirection:'row', padding:15, }}>
                 <UserPlus
-                  width = {17.5}
-                  height = {17.5}
+                  width = {15}
+                  height = {15}
                   stroke = "white"
                   />
-                <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-SemiBold'}}> Invite</Text>
+                <Text style={{color:'white', fontSize:12, fontFamily:'Nunito-SemiBold'}}> Invite</Text>
                 </View>
             </View>
             </TouchableOpacity>

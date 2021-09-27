@@ -144,12 +144,14 @@ const ScrollableTabBarNew = createReactClass({
         onLayout={onLayoutHandler}
       >
         <View style={[styles.tab, this.props.tabStyle, ]}>
+          <View style={{backgroundColor:'#108ee9', borderRadius:75}}>
             <PlusCircle
               strokeWidth={1.5}
-              stroke="#108ee9"
-              height = {30}
-              width = {30}
+              stroke="white"
+              height = {35}
+              width = {35}
                />
+             </View>
         </View>
       </Button>;
 

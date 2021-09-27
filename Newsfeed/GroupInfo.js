@@ -25,10 +25,8 @@ import { connect } from "react-redux";
 import authAxios from '../util';
 import * as authActions from '../store/actions/auth';
 
-
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
-
 
 class GroupInfo extends React.Component{
   constructor(props){
@@ -43,8 +41,9 @@ class GroupInfo extends React.Component{
     this.bs = React.createRef()
   }
 
-  navPeopleInGroup= () => {
-    this.props.navigation.navigate("PeopleInGroup")
+  navPeopleInGroup = (members) => {
+
+    this.props.navigation.navigate("PeopleInGroup", {members: members })
   }
 
   navInvitePeople = () => {
@@ -56,7 +55,6 @@ class GroupInfo extends React.Component{
     Share.share({
       // message: inputValue.toString(),
       message:"Join my Fitness orb with my code: N324FJ3A "+ codeInvite
-
     })
       //after successful share return result
       .then((result) => console.log(result))
@@ -79,20 +77,16 @@ class GroupInfo extends React.Component{
           style:'destructive', onPress: () => this.makeGroupPublic() }
       ]
     );
-
-
   }
 
   makeGroupPublic  = ()=> {
     const groupId = this.props.route.params.groupId;
-
     this.setState({
       loading: true
     })
     authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/changeSGPublic/'+groupId)
     .then(res =>{
       // do a redux here that updates the global group info
-
       this.props.authUpdateSmallGroup(res.data)
       this.setState({
         loading: false
@@ -174,9 +168,7 @@ class GroupInfo extends React.Component{
     let code = ""
     if(this.props.smallGroups){
       if(this.props.route.params.groupId){
-
         const groupId = this.props.route.params.groupId
-
         for(let i = 0; i < this.props.smallGroups.length; i++){
           if(this.props.smallGroups[i].id === groupId){
             const group = this.props.smallGroups[i]
@@ -187,13 +179,10 @@ class GroupInfo extends React.Component{
             publicG = group.public
             code = group.groupCode
           }
-
-
         }
-
-
       }
     }
+    console.log(members)
 
     return(
       <BackgroundContainer>
@@ -240,14 +229,14 @@ class GroupInfo extends React.Component{
                 }}>
 
                   <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
-                  <TouchableOpacity onPress = {()=>this.navPeopleInGroup()}>
+                  <TouchableOpacity onPress = {()=>this.navPeopleInGroup(members)}>
                     <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> {members.length} Members </Text>
                   </TouchableOpacity>
               </View>
             </View>
            </View>
            <View style={{ alignItems:'center', marginTop:25}}>
-           <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
+           <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito-SemiBold', width:'85%',}}>
              {description}
            </Text>
            </View>
@@ -261,10 +250,10 @@ class GroupInfo extends React.Component{
                  padding:15,
                  alignItems:'center'
                }}>
-                 <View style={{marginLeft:20, flexDirection:'column'}}>
-                   <Text style={{fontFamily:'Nunito-Bold', fontSize:16}}>Invite with username</Text>
+                 <View style={{marginLeft:15, flexDirection:'column'}}>
+                   <Text style={{fontFamily:'Nunito-Bold', color:'#919191', fontSize:16}}>Invite People</Text>
                  </View>
-                 <View style={{marginLeft:'40%'}}>
+                 <View style={{marginLeft:'55%'}}>
                    <ArrowRight stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
                  </View>
                  <View style = {{
@@ -276,8 +265,8 @@ class GroupInfo extends React.Component{
               </View>
             </TouchableOpacity>
             <View style={{flexDirection:'row',padding:20}}>
-                <View style={{marginLeft:20, flex:3, }}>
-                 <Text style={{fontFamily:'Nunito-Bold', fontSize:16}}>Make Orb Public</Text>
+                <View style={{marginLeft:10, flex:6, }}>
+                 <Text style={{fontFamily:'Nunito-Bold', fontSize:16, color:'#919191',}}>Make Orb Public</Text>
                </View>
 
                 <View style = {{
@@ -301,7 +290,7 @@ class GroupInfo extends React.Component{
                   }
                 </View>
              </View>
-            <View style={{alignItems:'center', top:'7.5%'}}>
+            <View style={{alignItems:'center', top:'15%'}}>
             <View style={styles.loginBtn1}>
               <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
             </View>

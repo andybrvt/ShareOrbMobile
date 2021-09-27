@@ -12,9 +12,10 @@ import {
   Alert,
   TextInput,
   Dimensions,
-  RefreshControle
+  RefreshControle,
+  KeyboardAvoidingView
  } from 'react-native';
-import { LogOut, Lock, User, Bell, Globe, Menu} from "react-native-feather";
+import { LogOut, Lock, User, Bell, Globe, Menu, UserPlus} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -57,12 +58,19 @@ class GroupInfo extends React.Component{
                 uri:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
               }}
               size={40}/>
-             <View style={{width:'62.5%', justifyContent:'center'}}>
+            <View style={{width:'60%', justifyContent:'center'}}>
                <Text style={{marginLeft:10, fontSize:16, fontFamily:'Nunito',  }}>{item.name}</Text>
              </View>
              <View style={{justifyContent:'center', alignItems:'center'}}>
                <View style={styles.inviteButton}>
-                 <Text style={{color:'white', padding:10, fontSize:16, fontFamily:'Nunito-SemiBold'}}> Invite</Text>
+                 <View style={{flexDirection:'row', padding:15, }}>
+                 <UserPlus
+                   width = {15}
+                   height = {15}
+                   stroke = "white"
+                   />
+                 <Text style={{color:'white', fontSize:12, fontFamily:'Nunito-SemiBold'}}> Invite</Text>
+                 </View>
                </View>
              </View>
           </View>
@@ -121,52 +129,52 @@ class GroupInfo extends React.Component{
     return(
       <BackgroundContainer>
 
-      <View style = {{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: 60,
-          marginTop:10,
-        }}>
-        <View style = {{
-          width: this.props.visible ? '75%' : '92.5%',
-          }}>
-          <View style = {styles.searchText}>
-            <FontAwesomeIcon
-              style={{marginRight:10, color: 'gray',left:20}}
-              size = {12.5}
-              icon={faSearch} />
-            <TextInput
-              autoCapitalize="none"
-              // value = {this.props.value}
-              // onChangeText = {this.props.onChange}
-              // onFocus = {() => this.props.onOpen()}
-              style={{
-                width: "82.5%",
-                fontFamily:'Nunito-SemiBold',
-                left:20
-              }}
-              underlineColorAndroid = "transparent"
-              placeholder = "Search"></TextInput>
-          </View>
-        </View>
-        {
-          this.props.visible ?
           <View style = {{
-              width:'17.5%',
-              left:10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 60,
+              marginTop:10,
             }}>
-            <TouchableWithoutFeedback onPress = {() => this.props.onClose()}>
-              <View style={styles.editButton}>
-                 <Text style={{color:'white', fontFamily:'Nunito-SemiBold', fontSize:13,}}>Cancel</Text>
-               </View>
-           </TouchableWithoutFeedback>
+            <View style = {{
+              width: this.props.visible ? '75%' : '92.5%',
+              }}>
+              <View style = {styles.searchText}>
+                <FontAwesomeIcon
+                  style={{marginRight:10, color: 'gray',left:20}}
+                  size = {12.5}
+                  icon={faSearch} />
+                <TextInput
+                  autoCapitalize="none"
+                  // value = {this.props.value}
+                  // onChangeText = {this.props.onChange}
+                  // onFocus = {() => this.props.onOpen()}
+                  style={{
+                    width: "82.5%",
+                    fontFamily:'Nunito-SemiBold',
+                    left:20
+                  }}
+                  underlineColorAndroid = "transparent"
+                  placeholder = "Search"></TextInput>
+              </View>
+            </View>
+            {
+              this.props.visible ?
+              <View style = {{
+                  width:'17.5%',
+                  left:10,
+                }}>
+                <TouchableWithoutFeedback onPress = {() => this.props.onClose()}>
+                  <View style={styles.editButton}>
+                     <Text style={{color:'white', fontFamily:'Nunito-SemiBold', fontSize:13,}}>Cancel</Text>
+                   </View>
+               </TouchableWithoutFeedback>
+              </View>
+              : null
+            }
           </View>
-          : null
-        }
-      </View>
 
-      <View underlayColor="#f0f0f0" style={{marginTop:10}}>
+          <View underlayColor="#f0f0f0" style={{marginTop:10}}>
         <View style={{flexDirection:'row'}}>
           <View style={{flex:3}}>
             <Text style={styles.settingWord}>
@@ -178,7 +186,7 @@ class GroupInfo extends React.Component{
         {/* put like max 3 people for recent */}
         <FlatList
           data={data}
-          style={{height:'15%'}}
+          style={{height:'17.5%'}}
           showsVerticalScrollIndicator={true}
           renderItem={(item) => {
             return(
@@ -192,7 +200,7 @@ class GroupInfo extends React.Component{
          </Text>
          <FlatList
            contentContainerStyle={{ paddingBottom: 10 }}
-           style={{ height:'48%'}}
+           style={{ height:'50%'}}
              data={data1}
              showsVerticalScrollIndicator={true}
              renderItem={(item) => {
@@ -207,7 +215,7 @@ class GroupInfo extends React.Component{
            onPress={this.navContacts}
            style={styles.loginBtn}>
            <Text style={{left:5,
-           fontSize:16,
+           fontSize:15,
            fontFamily:'Nunito-Bold',
            marginLeft:10, color:'white'}}>Invite Contacts</Text>
          </TouchableOpacity>
@@ -221,9 +229,9 @@ const styles = StyleSheet.create({
 
   loginBtn: {
     marginTop:'5%',
-    width: "75%",
+    width: "70%",
     borderRadius: 25,
-    height: 50,
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
 
@@ -254,7 +262,7 @@ const styles = StyleSheet.create({
   settingWord: {
     left:5,
     color:'#919191',
-    fontSize:16,
+    fontSize:14,
     fontFamily:'Nunito-Bold',
     marginLeft:10,
   },

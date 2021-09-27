@@ -124,7 +124,7 @@ class NewProfile extends React.Component{
           ListHeaderComponent = {this.listHeader}
           columnWrapperStyle={{justifyContent: 'space-between'}}
           data={data}
-          numColumns={3}
+          numColumns={2}
           keyExtractor={(item, index) => String(index)}
           renderItem={this.renderItem}
           ListEmptyComponent={this.renderEmptyContainer()}

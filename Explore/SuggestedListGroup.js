@@ -108,7 +108,7 @@ class SuggestedListGroup extends React.Component{
                 source = {{
                   uri: image
                 }}
-                size = {80}
+                size = {70}
               />
             </View>
 
@@ -169,9 +169,21 @@ class SuggestedListGroup extends React.Component{
     })
   }
 
+  FlatListItemSeparator = () => {
+    return (
+      <View
+        style={{
+          marginTop:10,
+          marginBottom:10,
+          height: 1,
+          width: "100%",
+          backgroundColor: "#f0f0f0",
+        }}
+      />
+    );
+  }
+
   renderItem = ({item}) => {
-
-
     const groupPic = `${global.IMAGE_ENDPOINT}`+item.groupPic
     let title = ""
     let post = []
@@ -183,35 +195,37 @@ class SuggestedListGroup extends React.Component{
     }
     return(
       <View>
-        <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
-          <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>{global.CAPITALIZE(title)}</Text>
+        <View style={{marginLeft:'3.5%', marginBottom:'1%' }}>
+          <View style={{flexDirection:'row'}}>
+            <Text style={{fontFamily:'Nunito-Bold', fontSize:16 }}>{global.CAPITALIZE(title)}</Text>
+              <View style={styles.inviteButton}>
+                <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12, color:'white' }}>+Join</Text>
+              </View>
         </View>
 
+        </View>
         <View style={{flexDirection:'row', marginLeft:'2.5%' }}>
-          <View style={{zIndex:99}}>
+          <View style={{zIndex:99, borderWidth: 2, borderColor: '#2f54eb', borderRadius:75,}}>
             <Avatar
               source = {{
                 uri: groupPic
               }}
               rounded
-              size = {105}
+              size = {85}
                />
            </View>
            <ScrollView
-             style={{right:20}}
+             style={{right:20, bottom:'10%'}}
              showsHorizontalScrollIndicator={false}
              horizontal = {true}>
-
              {this.frequentChatPeople(post)}
            </ScrollView>
          </View>
       </View>
-
     )
   }
 
   onRemoveDuplicates = (list1, list2 ) => {
-
     let newList = []
     let duplicate = false
     for(let i = 0; i< list1.length; i++){
@@ -302,8 +316,11 @@ class SuggestedListGroup extends React.Component{
           style = {{
             flex: 1,
           }}
+          ItemSeparatorComponent = { this.FlatListItemSeparator }
+          initialNumToRender={2}
           ListHeaderComponent = {this.listHeader}
-          data = {this.state.list}
+          data={this.state.list.slice(0, 8)}
+          contentContainerStyle={{paddingBottom:25}}
           renderItem = {this.renderItem}
           keyExtractor={(item, index) => String(index)}
           onEndReachedThreshold = {0.2}
@@ -393,6 +410,21 @@ class SuggestedListGroup extends React.Component{
 }
 
 const styles = StyleSheet.create({
+  inviteButton: {
+    position:'absolute',
+    top:'1%',
+    right:'5%',
+    padding:10,
+    borderRadius: 20,
+    height:25,
+    elevation:5,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1890ff",
+  },
   frequentPeopleContainer: {
     marginTop:20,
     height: 65,
