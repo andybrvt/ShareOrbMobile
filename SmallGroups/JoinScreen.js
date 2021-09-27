@@ -69,6 +69,16 @@ class JoinScreen extends React.Component{
     })
   }
 
+  joinPrivateGroup = (groupId, groupCode) => {
+
+    // Probally gonna put a authaxios call on this instead of
+    // just checking the code in an of itself instead of just
+    // checking if its right or worg
+    console.log(this.state.inviteCode)
+
+    console.log(groupId, groupCode)
+  }
+
   joinGroup = (groupId) => {
 
     const userId = this.props.id
@@ -122,10 +132,16 @@ class JoinScreen extends React.Component{
              width = {35}
              />
          </TouchableOpacity>
-         <ScrollView >
 
-           <View style = {{top: '10%'}}>
 
+         <View style = {{flex: 1}} >
+
+           <View style = {{
+               flex:1.5,
+               backgroundColor: 'pink',
+               alignItems: 'center',
+               justifyContent: 'center'
+             }}>
              <View style={{
                  alignItems:'center',
                  justifyContent:'center',
@@ -137,7 +153,7 @@ class JoinScreen extends React.Component{
                  alignItems:'center',
                  justifyContent:'center',
                  width:'100%',
-                 // backgroundColor:'red',
+                 backgroundColor:'red',
                  }}>
 
                    <Avatar
@@ -148,7 +164,6 @@ class JoinScreen extends React.Component{
                      size={125}
                       />
                  <View style={{
-                   marginTop:10,
 
                    }}>
 
@@ -175,61 +190,129 @@ class JoinScreen extends React.Component{
                  </View>
                </View>
               </View>
+
+
               <View style={{
                 alignItems:'center',
-                marginTop:25}}>
-              <Text style={{fontSize:18, fontFamily:'Nunito'}}>
-                {group.description}
-              </Text>
+                }}>
+                <Text style={{fontSize:18, fontFamily:'Nunito'}}>
+                  {group.description} stuff here
+                </Text>
               </View>
 
 
-             <View style={{
-                 alignItems:'center',
-                 top:'15%'}}>
-               {
-                 this.state.loading ?
+           </View>
 
 
-                 <ActivityIndicator />
-
-                :
-
-                 group.public ?
-
-                 <TouchableOpacity
-                   onPress = {() => this.joinGroup(group.id)}
-                   style = {styles.joinButton}>
-                   <View >
-                     <Text style = {styles.joinText}>Join</Text>
-                   </View>
-
-                 </TouchableOpacity>
 
 
-                 :
 
-                 <View style = {styles.inputHolder}>
-                   <TextInput
-                     autoCapitalize="none"
-                     onChangeText = {this.handleCode}
-                     style = {styles.inviteInput}
-                     placeholder = "Enter invite code"
-                     value = {this.state.inviteCode}
-                     />
+           <View style = {{
+               flex: 1,
+               backgroundColor: 'yellow'
+             }}>
+             <Text>things here</Text>
+           </View>
 
-                     <View style = {styles.joinButton}>
+
+
+
+           {
+             group.public ?
+
+             <View style = {{
+                 flex:1,
+                 backgroundColor: 'orange'
+               }}>
+               <Text>Stuff here</Text>
+             </View>
+
+             : null
+
+           }
+
+           {/*
+             <View style = {{top: '10%'}}>
+
+
+
+
+               <View style={{
+                   alignItems:'center',
+                   top:'15%'}}>
+                 {
+                   this.state.loading ?
+
+
+                   <ActivityIndicator />
+
+                  :
+
+                   group.public ?
+
+
+                   <TouchableOpacity
+                     onPress = {() => this.joinGroup(group.id)}
+                     style = {styles.joinButton}>
+                     <View >
                        <Text style = {styles.joinText}>Join</Text>
                      </View>
 
+                   </TouchableOpacity>
 
-                 </View>
 
-               }
+                   :
+
+                   <View style = {styles.inputHolder}>
+
+                     <View style = {styles.buttonHolder}>
+
+                         <TouchableOpacity
+                           onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
+                           style = {styles.declineButton}>
+                             <Text style = {styles.joinText}>Join</Text>
+                           </TouchableOpacity>
+
+
+                     </View>
+
+                     <View style = {styles.buttonHolder}>
+
+                         <TouchableOpacity
+                           onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
+                           style = {styles.acceptButton}>
+                             <Text style = {styles.joinText}>Join</Text>
+                           </TouchableOpacity>
+
+
+
+                     </View>
+
+                   </View>
+
+                 }
+
+               </View>
+
+               <View>
+                 {
+                   group.public ?
+
+                   <View>
+                     <Text>put the pictures of the group</Text>
+                   </View>
+
+                   :null
+                 }
+
+               </View>
+
 
              </View>
-           </View>
-         </ScrollView>
+
+
+             */}
+          </View>
 
        </SafeAreaView>
      )
@@ -239,8 +322,11 @@ class JoinScreen extends React.Component{
  const styles = StyleSheet.create({
 
    inputHolder:{
-     width: "75%",
-     alignItems: 'center'
+     height: 50,
+     width: "90%",
+     alignItems: 'center',
+     flexDirection: 'row',
+     top: '50%'
    },
    inviteInput: {
      width: '100%',
@@ -267,6 +353,7 @@ class JoinScreen extends React.Component{
      backgroundColor: "#1890ff",
    },
    joinButton: {
+
      width: '70%',
      backgroundColor: "#1890ff",
      justifyContent: 'center',
@@ -281,6 +368,35 @@ class JoinScreen extends React.Component{
    joinText:{
      color: 'white',
      fontSize: 15
+   },
+   buttonHolder:{
+     height: 50,
+     width: '50%',
+     alignItems: 'center'
+   },
+   acceptButton: {
+     width: '70%',
+     backgroundColor: "#1890ff",
+     justifyContent: 'center',
+     alignItems: 'center',
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 10,
+     borderRadius: 20,
+     height: 50,
+
+   },
+   declineButton: {
+     width: '70%',
+     backgroundColor: "red",
+     justifyContent: 'center',
+     alignItems: 'center',
+     textShadowColor: 'black',
+     textShadowOffset: {width: -1, height: 1},
+     textShadowRadius: 10,
+     borderRadius: 20,
+     height: 50,
+
    },
    bottomContainer: {
      height: '25%',
