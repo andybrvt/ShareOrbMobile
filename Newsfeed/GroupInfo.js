@@ -16,7 +16,7 @@ import {
   RefreshControle,
   ActivityIndicator
  } from 'react-native';
-import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-feather";
+import { LogOut, Lock, User, Bell, Globe, ArrowRight, UserPlus, Menu} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -201,7 +201,8 @@ class GroupInfo extends React.Component{
 
               width:'100%',
               // backgroundColor:'red',
-              }}>
+            }}>
+            {/*
               <View style={{flexDirection:'row', alignItems:'center', marginBottom:'5%',}}>
                 <Text style={styles.settingWord}>
 
@@ -214,6 +215,8 @@ class GroupInfo extends React.Component{
                 </View>
                 </TouchableOpacity>
               </View>
+            */}
+            <View>
               <TouchableOpacity   onPress={() => this.bs.current.snapTo(0)}>
                 <Avatar
                   rounded
@@ -223,6 +226,12 @@ class GroupInfo extends React.Component{
                   size={125}
                    />
               </TouchableOpacity>
+              <TouchableOpacity onPress = {()=>this.navInvitePeople()}>
+                <View style={styles.roundButton1}>
+                  <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+                </View>
+              </TouchableOpacity>
+            </View>
               <View style={{
                 marginTop:10,
 
@@ -240,30 +249,7 @@ class GroupInfo extends React.Component{
              {description}
            </Text>
            </View>
-           <TouchableOpacity onPress = {()=>this.navInvitePeople()}>
-             <View style={{
-               marginTop:25,
-                 flexDirection:'row',
-                 borderTopWidth:1,
-                 borderColor:'#d9d9d9',
-          
-                 padding:15,
-                 alignItems:'center'
-               }}>
-                 <View style={{marginLeft:15, flexDirection:'column'}}>
-                   <Text style={{fontFamily:'Nunito-Bold', color:'#919191', fontSize:16}}>Invite People</Text>
-                 </View>
-                 <View style={{marginLeft:'55%'}}>
-                   <ArrowRight stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
-                 </View>
-                 <View style = {{
-                   flex: 1,
-                   alignItems: 'center',
-                   justifyContent: 'center',
-                 }}>
-               </View>
-              </View>
-            </TouchableOpacity>
+
             <View style={{flexDirection:'row',padding:20}}>
                 <View style={{marginLeft:10, flex:6, }}>
                  <Text style={{fontFamily:'Nunito-Bold', fontSize:16, color:'#919191',}}>Make Orb Public</Text>
@@ -324,18 +310,34 @@ const styles = StyleSheet.create({
     // shadowRadius: 5,
     // shadowOpacity: 0.4,
   },
+
+  roundButton1: {
+
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:99,
+    borderRadius: 100,
+    left:10,
+    bottom:10,
+    backgroundColor: '#1890ff',
+    elevation:15,
+  },
   loginBtn0: {
 
     borderRadius: 10,
     marginLeft:10,
+
     // elevation:20,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-
+    flexDirection:'row',
     backgroundColor: "#1890ff",
+
   },
   loginBtn1: {
     width: "60%",

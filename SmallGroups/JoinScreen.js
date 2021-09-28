@@ -25,10 +25,32 @@ import { LogOut, Lock, User, Bell, Globe, ArrowRight, Menu} from "react-native-f
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from "react-redux";
 import * as authActions from '../store/actions/auth';
-
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
+
+const data = [
+  { key: 'A' }, { key: 'B' }, { key: 'C' }, { key: 'D' }, { key: 'E' }, { key: 'F' }, { key: 'G' }, { key: 'H' }, { key: 'I' },,
+  // { key: 'K' },
+  // { key: 'L' },
+];
+
+const formatData = (data, numColumns) => {
+  const numberOfFullRows = Math.floor(data.length / numColumns);
+
+  let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
+  while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
+    data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+    numberOfElementsLastRow++;
+  }
+
+  return data;
+};
+
+const numColumns = 3;
+
+
 
 class JoinScreen extends React.Component{
   constructor(props){
@@ -102,15 +124,31 @@ class JoinScreen extends React.Component{
   }
 
 
+  renderItem = ({ item, index }) => {
+    console.log(item)
+    if (item.empty === true) {
+      return <View style={[styles.item, styles.itemInvisible]} />;
+    }
+    return (
+      <View
+        style={styles.item}
+      >
 
+      <Image style={{width:'100%', height:'100%'}}
+       source={{uri:'https://images.unsplash.com/photo-1564419320415-7f119406236e?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80'}}/>
+     <Text style={styles.itemText}>{item.key}dd</Text>
+      </View>
+    );
+  };
 
    render(){
-
+     console.log("??????")
      let codeInvite=this.props.codeInvite
      let group = {}
      if(this.props.route.params.item){
        group = this.props.route.params.item
      }
+
 
      return(
        <SafeAreaView style = {{flex: 1}}>
@@ -128,8 +166,8 @@ class JoinScreen extends React.Component{
            <ArrowLeft
 
              stroke="black"
-             height = {35}
-             width = {35}
+             height = {25}
+             width = {25}
              />
          </TouchableOpacity>
 
@@ -137,7 +175,7 @@ class JoinScreen extends React.Component{
          <View style = {{flex: 1}} >
 
            <View style = {{
-               flex:1.5,
+               flex:2.5,
                backgroundColor: 'pink',
                alignItems: 'center',
                justifyContent: 'center'
@@ -196,22 +234,30 @@ class JoinScreen extends React.Component{
                 alignItems:'center',
                 }}>
                 <Text style={{fontSize:18, fontFamily:'Nunito'}}>
-                  {group.description} stuff here
+                  {group.description}
                 </Text>
               </View>
 
 
            </View>
 
-
-
-
-
            <View style = {{
-               flex: 1,
-               backgroundColor: 'yellow'
+               flex: 2.5,
+               backgroundColor: 'yellow',
+               alignItems:'center'
              }}>
-             <Text>things here</Text>
+             <Text>Recent picturesss</Text>
+             <View style={styles.testShadow}>
+
+               <FlatList
+                  data={formatData(data, numColumns)}
+
+                  renderItem={this.renderItem}
+                  numColumns={numColumns}
+                />
+
+             </View>
+
            </View>
 
 
@@ -222,14 +268,22 @@ class JoinScreen extends React.Component{
 
              <View style = {{
                  flex:1,
+                 alignItems:'center',
                  backgroundColor: 'orange'
                }}>
-               <Text>Stuff here</Text>
+
+
+               <View style={styles.loginBtn0}>
+                  <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-Bold', padding:10}}>Join</Text>
+               </View>
+
              </View>
 
              : null
 
            }
+
+
 
            {/*
              <View style = {{top: '10%'}}>
@@ -320,7 +374,39 @@ class JoinScreen extends React.Component{
  }
 
  const styles = StyleSheet.create({
+   testShadow:{
+     width:'100%',
+     height:'100%',
+     shadowColor: "#000",
+ shadowOffset: {
+ 	width: 0,
+ 	height: 1,
+ },
+ shadowOpacity: 0.20,
+ shadowRadius: 1.41,
 
+ elevation: 2,
+   },
+   container: {
+    width:'100%',
+    height:'100%',
+    marginVertical: 20,
+  },
+  item: {
+    backgroundColor: '#4D243D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    margin: 1,
+    width:90,
+    height:90,
+  },
+  itemInvisible: {
+    backgroundColor: 'transparent',
+  },
+  itemText: {
+    color: '#fff',
+  },
    inputHolder:{
      height: 50,
      width: "90%",
@@ -349,7 +435,7 @@ class JoinScreen extends React.Component{
      textShadowRadius: 10,
      alignItems: "center",
      justifyContent: "center",
-
+     width:'50%',
      backgroundColor: "#1890ff",
    },
    joinButton: {

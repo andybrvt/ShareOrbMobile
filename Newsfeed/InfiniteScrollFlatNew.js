@@ -63,6 +63,19 @@ class InfiniteScrollFlatNew extends React.Component{
   }
 
 
+  FlatListItemSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "100%",
+          backgroundColor: "#f0f0f0",
+          marginBottom:15,
+        }}
+      />
+    );
+  }
+
   initialiseSmallGroup(){
     // used to connect to the websocket and then pull the intial
     // group info
@@ -202,6 +215,7 @@ class InfiniteScrollFlatNew extends React.Component{
         </View>
 
           <FlatList
+            ItemSeparatorComponent = { this.FlatListItemSeparator }
             // onViewableItemsChanged={this.onViewableItemsChanged }
             contentContainerStyle={{
               paddingBottom: 100 }}
