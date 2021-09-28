@@ -149,63 +149,25 @@ class ProfileHeader extends React.Component{
           <View style={styles.profileInfoHeader}>
 
               <View style={{
-                 flex:1,
+                 flexDirection:'column',
                   alignItems: 'center',
                  justifyContent:'center'}}>
-                <Avatar
-                  size={95}
-                  rounded
-                  source={{
-                    uri:
-                      profileImage,
-                  }}
-                />
-
-              </View>
-
-              <View style={{flex:1.5,justifyContent:'center', marginLeft:30,  }}>
-
+                 <View style={{zIndex:99, borderWidth: 2, borderColor: '#2f54eb', borderRadius:75,}}>
+                  <Avatar
+                    size={110}
+                    rounded
+                    source={{
+                      uri:
+                        profileImage,
+                    }}
+                  />
+                </View>
                 <Text style = {styles.name}>{name}</Text>
                 <Text style = {styles.username}>@{username}</Text>
-                {
-                  this.props.currentId === profileId ?
-
-                  <TouchableOpacity onPress={() => this.editPageClick()}>
-                    <View style={styles.editButton}>
-                       <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Edit Profile</Text>
-                     </View>
-                 </TouchableOpacity>
-
-                 :
-
-                 followers.includes(this.props.currentUser.toString()) ?
-
-                 <TouchableOpacity
-                   onPress={() => this.onUnfollow(
-                     this.props.currentId,
-                     profileId
-                   )}>
-                   <View style={styles.editButton}>
-                      <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Unfollow</Text>
-                    </View>
-                </TouchableOpacity>
-
-                :
-
-                <TouchableOpacity
-                  onPress={() => this.onFollow(
-                    this.props.currentId,
-                    profileId,
-                    notiToken
-                  )}>
-                  <View style={styles.editButton}>
-                     <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Follow</Text>
-                   </View>
-               </TouchableOpacity>
-
-                }
 
               </View>
+
+
           </View>
 
         </View>
@@ -249,7 +211,48 @@ class ProfileHeader extends React.Component{
          </View>
        </View>
        */}
+       <View style={{justifyContent:'center',   }}>
 
+
+         {
+           this.props.currentId === profileId ?
+
+           <TouchableOpacity onPress={() => this.editPageClick()}>
+             <View style={styles.editButton}>
+                <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Edit Profile</Text>
+              </View>
+          </TouchableOpacity>
+
+          :
+
+          followers.includes(this.props.currentUser.toString()) ?
+
+          <TouchableOpacity
+            onPress={() => this.onUnfollow(
+              this.props.currentId,
+              profileId
+            )}>
+            <View style={styles.editButton}>
+               <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Unfollow</Text>
+             </View>
+         </TouchableOpacity>
+
+         :
+
+         <TouchableOpacity
+           onPress={() => this.onFollow(
+             this.props.currentId,
+             profileId,
+             notiToken
+           )}>
+           <View style={styles.editButton}>
+              <Text style={{color:'white', fontFamily:'Nunito-SemiBold',}}>Follow</Text>
+            </View>
+        </TouchableOpacity>
+
+         }
+
+       </View>
 
        <View style = {styles.bioContainer}>
 
@@ -461,9 +464,7 @@ const styles = StyleSheet.create({
 
   profileInfoHeader: {
     justifyContent: 'center',
-    flexDirection:'row',
-    width: '115%',
-    // backgroundColor:'red',
+    width: '100%',
   },
   profileMidContainer:{
     width:'100%',

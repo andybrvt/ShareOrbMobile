@@ -236,7 +236,7 @@ class GroupInfo extends React.Component{
             </View>
            </View>
            <View style={{ alignItems:'center', marginTop:25}}>
-           <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito-SemiBold', width:'85%',}}>
+           <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
              {description}
            </Text>
            </View>
@@ -246,7 +246,7 @@ class GroupInfo extends React.Component{
                  flexDirection:'row',
                  borderTopWidth:1,
                  borderColor:'#d9d9d9',
-                 borderBottomWidth:1,
+          
                  padding:15,
                  alignItems:'center'
                }}>

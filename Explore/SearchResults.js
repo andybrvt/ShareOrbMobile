@@ -147,7 +147,7 @@ class SearchResults extends React.Component{
               flex: 1,
 
             }}>
-            <Text>Users</Text>
+            <Text style={styles.settingWord}>Users</Text>
             <FlatList
               style = {{flex: 1}}
               data = {data}
@@ -155,7 +155,7 @@ class SearchResults extends React.Component{
               keyExtractor={(item, index) => String(index)}
 
                />
-             <Text>Groups</Text>
+             <Text style={styles.settingWord}>Groups</Text>
              <FlatList
                style = {{flex: 1}}
                data = {groupData}
@@ -171,7 +171,15 @@ class SearchResults extends React.Component{
   }
 }
 
-
+const styles = StyleSheet.create({
+  settingWord: {
+    left:5,
+    color:'#919191',
+    fontSize:14,
+    fontFamily:'Nunito-Bold',
+    marginLeft:10,
+  },
+})
 
 
 export default SearchResults;
