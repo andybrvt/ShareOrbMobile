@@ -169,10 +169,9 @@ class CreateGroupPage extends React.Component{
        search
      }
    }).then(res => {
-
      this.setState({
        loading: false,
-       searchResults: res.data,
+       searchResults: res.data.users,
      })
    })
 
@@ -352,6 +351,12 @@ class CreateGroupPage extends React.Component{
 
     let newInvited = [];
 
+    for(let i = 0; i < invitedPeople.length; i++){
+        newInvited.push(
+          invitedPeople[i].id
+        )
+    }
+
     const pic = global.FILE_NAME_GETTER(groupPic)
 
     const formData = new FormData();
@@ -360,6 +365,7 @@ class CreateGroupPage extends React.Component{
     formData.append('description', description)
     formData.append('public', publicG)
     formData.append('curId', this.props.id)
+    formData.append('invited', JSON.stringify(newInvited))
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/createSmallGroup`,
       formData
     ).then(res => {
@@ -377,7 +383,6 @@ class CreateGroupPage extends React.Component{
   }
 
   render(){
-    console.log(this.state.invitedPeople)
     return(
       <BackgroundContainer>
         {
@@ -605,7 +610,7 @@ class CreateGroupPage extends React.Component{
                     }}>
                     <TouchableOpacity
                       onPress = {() => this.onCreateGroup()}
-                       style={styles.loginBtn1}>gf
+                       style={styles.loginBtn1}>
                       <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
                     </TouchableOpacity>
                     </View>
