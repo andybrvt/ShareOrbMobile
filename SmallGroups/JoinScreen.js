@@ -74,7 +74,6 @@ class JoinScreen extends React.Component{
         invitedPeople: [...this.state.invitedPeople, user],
       })
     }
-    console.log(this.state.invitedPeople)
 
 
   }
@@ -137,7 +136,6 @@ class JoinScreen extends React.Component{
     // for this you just need group id and userid
     authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
     .then(res => {
-      console.log(res.data)
       // direct this group to newsfeed and then add it to auth
 
       this.setState({
@@ -169,15 +167,11 @@ class JoinScreen extends React.Component{
   };
 
    render(){
-     console.log("??????")
      let codeInvite=this.props.codeInvite
      let group = {}
      if(this.props.route.params.item){
        group = this.props.route.params.item
      }
-     console.log(group, 'stuff here her')
-
-
      return(
        <SafeAreaView style = {{flex: 1}}>
 
@@ -203,12 +197,10 @@ class JoinScreen extends React.Component{
          <View style = {{flex: 1}} >
 
            <View style = {{
-<<<<<<< HEAD
+
                flex:2.5,
                backgroundColor: 'pink',
-=======
-               flex:1.5,
->>>>>>> ca569ef002fb8744bfb0f0f439c7edd39b5e70c2
+
                alignItems: 'center',
                justifyContent: 'center'
              }}>
@@ -256,7 +248,9 @@ class JoinScreen extends React.Component{
                 alignItems:'center',
                 }}>
                 <Text style={{fontSize:18, fontFamily:'Nunito'}}>
+
                   {group.description}
+
                 </Text>
               </View>
 
@@ -280,137 +274,88 @@ class JoinScreen extends React.Component{
 
              </View>
 
-<<<<<<< HEAD
+
            </View>
 
-
-=======
            <View style = {{
                flex: 1,
                justifyContent: 'center',
                alignItems: 'center',
              }}>
->>>>>>> ca569ef002fb8744bfb0f0f439c7edd39b5e70c2
-
-             {
-               this.state.loading ?
-
-<<<<<<< HEAD
-           {
-             group.public ?
-
-             <View style = {{
-                 flex:1,
-                 alignItems:'center',
-                 backgroundColor: 'orange'
-               }}>
 
 
-               <View style={styles.loginBtn0}>
-                  <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-Bold', padding:10}}>Join</Text>
-               </View>
 
-             </View>
 
-             : null
+               {
+                 group.public ?
 
-           }
+                 <View style = {{
+                     flex:1,
+                     alignItems:'center',
+                     backgroundColor: 'orange'
+                   }}>
+
+
+                   <View style={styles.loginBtn0}>
+                      <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-Bold', padding:10}}>Join</Text>
+                   </View>
+
+                 </View>
+
+                 : null
+
+               }
 
 
 
            {/*
-             <View style = {{top: '10%'}}>
-=======
-               <ActivityIndicator />
-
-               :
->>>>>>> ca569ef002fb8744bfb0f0f439c7edd39b5e70c2
-
-               group.public ?
-
-               <TouchableOpacity
-                 onPress = {() => this.joinGroup(group.id)}
-                 style = {styles.joinButton}>
-                 <View >
-                   <Text style = {styles.joinText}>Join</Text>
-                 </View>
-
-               </TouchableOpacity>
-
-               :
-
-
-
-               <View style = {styles.inputHolder}>
-
-                 <View style = {styles.buttonHolder}>
-
-                     <TouchableOpacity
-                       onPress = {() => this.declineGroup()}
-                       style = {styles.declineButton}>
-                         <Text style = {styles.joinText}>Decline</Text>
-                       </TouchableOpacity>
-
-
-                 </View>
-
-                 <View style = {styles.buttonHolder}>
-
-                     <TouchableOpacity
-                       onPress = {() => this.joinGroup(group.id)}
-                       style = {styles.acceptButton}>
-                         <Text style = {styles.joinText}>Join</Text>
-                       </TouchableOpacity>
-
-
-
-                 </View>
-
-               </View>
-
-
-
-
-             }
-
-            </View>
-
-
-
-
-           {
-             group.public ?
-
-             <View style = {{
-                 flex:1,
-               }}>
-               {group.get_socialCalItems.map((item, index) => {
-
-                 console.log(item)
-                 return(
-                   <View style = {{
-                        width: 100,
-                        height: 100
-                     }}>
-                     <Image
-                       style = {{
-                         width: "100%",
-                         height: "100%",
-
-                       }}
-                         resizeMode = "cover"
-                       source = {{
-                         uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
-                       }}
-                        />
+           <View style = {{top: '10%'}}>
+             <View style={{
+                 alignItems:'center',
+                 top:'15%'}}>
+               {
+                 this.state.loading ?
+                 <ActivityIndicator />
+                :
+                 group.public ?
+                 <TouchableOpacity
+                   onPress = {() => this.joinGroup(group.id)}
+                   style = {styles.joinButton}>
+                   <View >
+                     <Text style = {styles.joinText}>Join</Text>
                    </View>
-                 )
-               })}
+                 </TouchableOpacity>
+                 :
+                 <View style = {styles.inputHolder}>
+                   <View style = {styles.buttonHolder}>
+                       <TouchableOpacity
+                         onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
+                         style = {styles.declineButton}>
+                           <Text style = {styles.joinText}>Join</Text>
+                         </TouchableOpacity>
+                   </View>
+                   <View style = {styles.buttonHolder}>
+                       <TouchableOpacity
+                         onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
+                         style = {styles.acceptButton}>
+                           <Text style = {styles.joinText}>Join</Text>
+                         </TouchableOpacity>
+                   </View>
+                 </View>
+               }
              </View>
-
-             : null
-
-           }
+             <View>
+               {
+                 group.public ?
+                 <View>
+                   <Text>put the pictures of the group</Text>
+                 </View>
+                 :null
+               }
+             </View>
+           </View>
+           */}
+         </View>
 
 
           </View>
