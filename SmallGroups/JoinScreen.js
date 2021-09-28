@@ -69,14 +69,40 @@ class JoinScreen extends React.Component{
     })
   }
 
-  joinPrivateGroup = (groupId, groupCode) => {
+  // joinPrivateGroup = (groupId) => {
+  //
+  //   // Probally gonna put a authaxios call on this instead of
+  //   // just checking the code in an of itself instead of just
+  //   // checking if its right or worg
+  //   console.log(this.state.inviteCode)
+  //
+  //   console.log(groupId, groupCode)
+  //
+  //   const userId = this.props.id
+  //   this.setState({
+  //     loading: true
+  //   })
+  //
+  //   authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
+  //   .then(res => {
+  //     console.log(res.data)
+  //     // direct this group to newsfeed and then add it to auth
+  //
+  //     this.setState({
+  //       loading: false
+  //     })
+  //     this.props.authAddSmallGroup(res.data)
+  //
+  //     this.props.navigation.navigate('Home')
+  //
+  //   })
+  //
+  //
+  // }
 
-    // Probally gonna put a authaxios call on this instead of
-    // just checking the code in an of itself instead of just
-    // checking if its right or worg
-    console.log(this.state.inviteCode)
+  declineGroup = () => {
 
-    console.log(groupId, groupCode)
+    this.props.navigation.goBack()
   }
 
   joinGroup = (groupId) => {
@@ -97,6 +123,7 @@ class JoinScreen extends React.Component{
       })
       this.props.authAddSmallGroup(res.data)
 
+      this.props.navigation.navigate('Home')
 
     })
   }
@@ -111,6 +138,7 @@ class JoinScreen extends React.Component{
      if(this.props.route.params.item){
        group = this.props.route.params.item
      }
+     console.log(group, 'stuff here her')
 
      return(
        <SafeAreaView style = {{flex: 1}}>
@@ -138,65 +166,54 @@ class JoinScreen extends React.Component{
 
            <View style = {{
                flex:1.5,
-               backgroundColor: 'pink',
                alignItems: 'center',
                justifyContent: 'center'
              }}>
-             <View style={{
-                 alignItems:'center',
-                 justifyContent:'center',
-                 flexDirection:'row',
 
+             <View style = {{
                }}>
+               <Avatar
+                 rounded
+                 source = {{
+                   uri:`${global.IMAGE_ENDPOINT}`+group.groupPic
+                 }}
+                 size={125}
+                  />
+             </View>
 
-               <View style={{flexDirection:'column',
-                 alignItems:'center',
-                 justifyContent:'center',
-                 width:'100%',
-                 backgroundColor:'red',
-                 }}>
+             <View>
+               <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{global.CAPITALIZE(group.group_name)}</Text>
 
-                   <Avatar
-                     rounded
-                     source = {{
-                       uri:`${global.IMAGE_ENDPOINT}`+group.groupPic
-                     }}
-                     size={125}
-                      />
-                 <View style={{
+                 {
+                   group.public ?
 
-                   }}>
+                   <View style={styles.loginBtn0}>
+                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>Public Orb</Text>
+                   </View>
 
-                     <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{group.group_name}</Text>
-                     {
-                       group.public ?
+                   :
 
-                       <View style={styles.loginBtn0}>
-                         <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>Public Orb</Text>
-                       </View>
-
-                       :
-
-                       <View style={styles.loginBtn0}>
-                         <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>Private Orb</Text>
-                       </View>
+                   <View style={styles.loginBtn0}>
+                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>Private Orb</Text>
+                   </View>
 
 
-                     }
+                 }
 
-                     <TouchableOpacity onPress = {()=>this.navPeopleInGroup()}>
-                       <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{group.members.length} Members </Text>
-                     </TouchableOpacity>
-                 </View>
-               </View>
-              </View>
+                 <TouchableOpacity onPress = {()=>this.navPeopleInGroup()}>
+                   <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{group.members.length} Members </Text>
+                 </TouchableOpacity>
+
+
+             </View>
+
 
 
               <View style={{
                 alignItems:'center',
                 }}>
                 <Text style={{fontSize:18, fontFamily:'Nunito'}}>
-                  {group.description} stuff here
+                  {global.CAPITALIZE(group.description)} stuff here
                 </Text>
               </View>
 
@@ -209,10 +226,65 @@ class JoinScreen extends React.Component{
 
            <View style = {{
                flex: 1,
-               backgroundColor: 'yellow'
+               justifyContent: 'center',
+               alignItems: 'center',
              }}>
-             <Text>things here</Text>
-           </View>
+
+             {
+               this.state.loading ?
+
+               <ActivityIndicator />
+
+               :
+
+               group.public ?
+
+               <TouchableOpacity
+                 onPress = {() => this.joinGroup(group.id)}
+                 style = {styles.joinButton}>
+                 <View >
+                   <Text style = {styles.joinText}>Join</Text>
+                 </View>
+
+               </TouchableOpacity>
+
+               :
+
+
+
+               <View style = {styles.inputHolder}>
+
+                 <View style = {styles.buttonHolder}>
+
+                     <TouchableOpacity
+                       onPress = {() => this.declineGroup()}
+                       style = {styles.declineButton}>
+                         <Text style = {styles.joinText}>Decline</Text>
+                       </TouchableOpacity>
+
+
+                 </View>
+
+                 <View style = {styles.buttonHolder}>
+
+                     <TouchableOpacity
+                       onPress = {() => this.joinGroup(group.id)}
+                       style = {styles.acceptButton}>
+                         <Text style = {styles.joinText}>Join</Text>
+                       </TouchableOpacity>
+
+
+
+                 </View>
+
+               </View>
+
+
+
+
+             }
+
+            </View>
 
 
 
@@ -222,96 +294,36 @@ class JoinScreen extends React.Component{
 
              <View style = {{
                  flex:1,
-                 backgroundColor: 'orange'
                }}>
-               <Text>Stuff here</Text>
+               {group.get_socialCalItems.map((item, index) => {
+
+                 console.log(item)
+                 return(
+                   <View style = {{
+                        width: 100,
+                        height: 100
+                     }}>
+                     <Image
+                       style = {{
+                         width: "100%",
+                         height: "100%",
+
+                       }}
+                         resizeMode = "cover"
+                       source = {{
+                         uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
+                       }}
+                        />
+                   </View>
+                 )
+               })}
              </View>
 
              : null
 
            }
 
-           {/*
-             <View style = {{top: '10%'}}>
 
-
-
-
-               <View style={{
-                   alignItems:'center',
-                   top:'15%'}}>
-                 {
-                   this.state.loading ?
-
-
-                   <ActivityIndicator />
-
-                  :
-
-                   group.public ?
-
-
-                   <TouchableOpacity
-                     onPress = {() => this.joinGroup(group.id)}
-                     style = {styles.joinButton}>
-                     <View >
-                       <Text style = {styles.joinText}>Join</Text>
-                     </View>
-
-                   </TouchableOpacity>
-
-
-                   :
-
-                   <View style = {styles.inputHolder}>
-
-                     <View style = {styles.buttonHolder}>
-
-                         <TouchableOpacity
-                           onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
-                           style = {styles.declineButton}>
-                             <Text style = {styles.joinText}>Join</Text>
-                           </TouchableOpacity>
-
-
-                     </View>
-
-                     <View style = {styles.buttonHolder}>
-
-                         <TouchableOpacity
-                           onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
-                           style = {styles.acceptButton}>
-                             <Text style = {styles.joinText}>Join</Text>
-                           </TouchableOpacity>
-
-
-
-                     </View>
-
-                   </View>
-
-                 }
-
-               </View>
-
-               <View>
-                 {
-                   group.public ?
-
-                   <View>
-                     <Text>put the pictures of the group</Text>
-                   </View>
-
-                   :null
-                 }
-
-               </View>
-
-
-             </View>
-
-
-             */}
           </View>
 
        </SafeAreaView>
@@ -322,11 +334,10 @@ class JoinScreen extends React.Component{
  const styles = StyleSheet.create({
 
    inputHolder:{
-     height: 50,
-     width: "90%",
+     flex: 1,
+     // backgroundColor: 'red',
      alignItems: 'center',
      flexDirection: 'row',
-     top: '50%'
    },
    inviteInput: {
      width: '100%',
@@ -342,7 +353,6 @@ class JoinScreen extends React.Component{
    loginBtn0: {
 
      borderRadius: 10,
-     marginLeft:10,
      // elevation:20,
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
