@@ -68,11 +68,11 @@ class Notifications extends React.Component{
 
  renderItem = ({item}) => {
    const timestamp = Math.round((new Date().getTime() - new Date(item.timestamp).getTime())/60000)
-   let dataList=item.pendingEventDate.split("-")
-   let getYear=dataList[0]
-   let getMonth=dataList[1]-1
-   let getDay=dataList[2]
-   let albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM d")
+   // let dataList=item.pendingEventDate.split("-")
+   // let getYear=dataList[0]
+   // let getMonth=dataList[1]-1
+   // let getDay=dataList[2]
+   // let albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM d")
 
 
    if(item.type === "comment_notification"){
@@ -287,6 +287,7 @@ class Notifications extends React.Component{
      notifications = this.props.notifications
    }
 
+   console.log(notifications, 'stuff here here')
 
    return (
      <BackgroundContainer>

@@ -32,6 +32,8 @@ import SearchResults from '../Explore/SearchResults';
 import SearchResultsMultiple from './SearchResultsMultiple';
 import { connect } from 'react-redux';
 import * as authActions from '../store/actions/auth';
+import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -352,6 +354,8 @@ class CreateGroupPage extends React.Component{
     let newInvited = [];
 
     for(let i = 0; i < invitedPeople.length; i++){
+
+
         newInvited.push(
           invitedPeople[i].id
         )
@@ -366,13 +370,33 @@ class CreateGroupPage extends React.Component{
     formData.append('public', publicG)
     formData.append('curId', this.props.id)
     formData.append('invited', JSON.stringify(newInvited))
+
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/createSmallGroup`,
       formData
     ).then(res => {
-      console.log(res.data)
+      console.log(res.data, 'create a group here')
 
       this.props.authAddSmallGroup(res.data)
       this.props.navigation.goBack(0)
+
+      const groupId = res.data.id
+      for(let j = 0; j < newInvited.length; j++){
+        const userId = newInvited[j]
+        const curId = this.props.id
+        const notificationObject = {
+          command: "send_group_invite_notification",
+          actor: curId,
+          recipient: userId,
+          groupId: groupId
+        }
+
+        NotificationWebSocketInstance.sendNotification(notificationObject);
+
+
+
+
+      }
+
 
     })
 
