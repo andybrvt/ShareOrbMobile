@@ -51,15 +51,14 @@ class GroupInfo extends React.Component{
     // do a function here to load recent and suggested
     authAxios.get(`${global.IP_CHANGE}`+'/userprofile/randomRecentSuggest')
     .then(res => {
-      console.log(res.data)
       this.setState({
+        recent: res.data.recent,
         suggested: res.data.suggested
       })
     })
   }
 
   renderItem = ({item}) => {
-    console.log(item)
     return(
       <View style={{
         flexDirection:'row',
@@ -136,13 +135,20 @@ class GroupInfo extends React.Component{
     })
   }
 
+  renderEmptyRecent = () => {
+
+    return(
+      <View style = {{
+          alignItems: 'center'
+        }}>
+        <Text>You have no recents</Text>
+      </View>
+    )
+  }
+
   render(){
     let data=[{'name':'Ping Hsu'},{'name':'Andy Le'},{'name':'Hamzah Firman'},]
-    let data1=[{'name':'John Smith'},{'name':'George Dong'},
-  {'name':'Abe Ging'},{'name':'Josh Lee'},
-{'name':'April Forest'},{'name':'Emily Ju'},
-{'name':'May June'},{'name':'July August'},]
-    console.log(data)
+
     return(
       <BackgroundContainer>
 
@@ -202,7 +208,8 @@ class GroupInfo extends React.Component{
         </View>
         {/* put like max 3 people for recent */}
         <FlatList
-          data={data}
+          ListEmptyComponent={this.renderEmptyRecent()}
+          data={this.state.recent}
           style={{height:'17.5%'}}
           showsVerticalScrollIndicator={true}
           renderItem={(item) => {

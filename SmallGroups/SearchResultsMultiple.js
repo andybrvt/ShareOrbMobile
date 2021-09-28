@@ -29,7 +29,6 @@ class SearchResultsMultiple extends React.Component{
   }
   renderItem = ({item}) => {
 
-
     return(
       <TouchableOpacity
         onPress = {() => this.props.onSelect(item)}
@@ -149,9 +148,7 @@ class SearchResultsMultiple extends React.Component{
                 flex: 1,
               }}>
               <FlatList
-                extraData={this.props.invited}
                 data = {data}
-
                 renderItem = {this.renderItem}
                 keyExtractor={(item, index) => String(index)}
                  />
