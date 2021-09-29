@@ -27,6 +27,9 @@ import { connect } from "react-redux";
 import * as authActions from '../store/actions/auth';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { LinearGradient } from 'expo-linear-gradient';
+import FacePile from 'react-native-face-pile';
+
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -155,7 +158,7 @@ class JoinScreen extends React.Component{
 
 
   renderItem = ({ item, index }) => {
-
+    console.log(item)
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
@@ -165,7 +168,10 @@ class JoinScreen extends React.Component{
       >
 
       <Image style={{width:'100%', height:'100%'}}
-       source={{uri:'https://images.unsplash.com/photo-1564419320415-7f119406236e?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80'}}/>
+        source = {{
+          uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
+        }}
+       />
 
       </View>
     );
@@ -174,10 +180,17 @@ class JoinScreen extends React.Component{
    render(){
      let codeInvite=this.props.codeInvite
      let group = {}
+     let imageList = []
      if(this.props.route.params.item){
        group = this.props.route.params.item
      }
-
+     if(this.props.route.params.item){
+       imageList = this.props.route.params.item.get_socialCalItems
+     }
+     console.log("JOIN THIS")
+     console.log(group)
+     console.log("images")
+     console.log(imageList)
 
      return(
        <SafeAreaView style = {{flex: 1}}>
@@ -267,7 +280,7 @@ class JoinScreen extends React.Component{
            <View style={{flex:2}}>
            <FlatList
              style={{position:'relative', top:0}}
-             data={formatData(data, numColumns)}
+             data={formatData(imageList, numColumns)}
              renderItem={this.renderItem}
              numColumns={numColumns}
            />
