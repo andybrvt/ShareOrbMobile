@@ -199,7 +199,8 @@ class ProfilePage extends React.Component{
     const pic = `${global.IMAGE_ENDPOINT}` + item.groupPic
 
     return(
-      <View style={{width: width/3, justifyContent:'center', alignItems:'center', padding:10}} >
+      <View style={{
+          width: width/2, justifyContent:'center', alignItems:'center', padding:10}} >
         <TouchableOpacity
           onPress = {() => this.onGroupDirect(item)}
           >
@@ -269,7 +270,7 @@ class ProfilePage extends React.Component{
           ListHeaderComponent = {this.listHeader}
           columnWrapperStyle={{justifyContent: 'space-between'}}
           data={data}
-          numColumns={3}
+          numColumns={2}
           keyExtractor={(item, index) => String(index)}
           renderItem={this.renderItem}
           ListEmptyComponent={this.renderEmptyContainer()}

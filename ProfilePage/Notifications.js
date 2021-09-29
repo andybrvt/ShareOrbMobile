@@ -65,6 +65,23 @@ class Notifications extends React.Component{
     })
 }
 
+   onGroupOpen = (item) => {
+
+
+     const curId = this.props.userId
+     const memberList = item.members
+
+     if(memberList.includes(curId)){
+       this.props.navigation.navigate("Home")
+     } else {
+       this.props.navigation.navigate("JoinScreen", {
+         item:item
+       })
+
+     }
+
+   }
+
 
  renderItem = ({item}) => {
    const timestamp = Math.round((new Date().getTime() - new Date(item.timestamp).getTime())/60000)
@@ -73,7 +90,45 @@ class Notifications extends React.Component{
    // let getMonth=dataList[1]-1
    // let getDay=dataList[2]
    // let albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM d")
+   if(item.type === "group_invite"){
 
+     return(
+       <TouchableOpacity
+         onPress = {() => this.onGroupOpen(item.groupInvite)}
+         >
+          <View style={{
+             flexDirection:'row',
+             padding:15}}>
+            <View style={{flex:1}}>
+              <Avatar
+                // onPress = {() => this.ViewProfile(item.actor.username)}
+                size={40}
+                rounded
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
+                }}
+              />
+            </View>
+          <View style={{
+              flex:6,
+              flexDirection:'column',
+              }}>
+            <View style = {{flexDirection: 'row'}}>
+              <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
+              <Text> invited you to a group</Text>
+            </View>
+            <View style = {{marginTop: 10}}>
+              <Text>
+                {global.RENDER_TIMESTAMP(item.timestamp)}
+              </Text>
+            </View>
+        </View>
+
+          </View>
+       </TouchableOpacity>
+     )
+
+   }
 
    if(item.type === "comment_notification"){
 
