@@ -84,9 +84,12 @@ class NewsfeedView extends React.Component{
     if(this.props.isAuthenticated){
 
       // this only hits once
-      this.initialiseSocialNewsfeed()
+      // this.initialiseSocialNewsfeed()
     }
   }
+
+
+
 
   initialiseSocialNewsfeed(){
 
