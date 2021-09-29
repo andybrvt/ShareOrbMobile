@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  ImageBackground,
   Switch,
   Share,
   Alert,
@@ -28,7 +29,7 @@ import * as authActions from '../store/actions/auth';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { LinearGradient } from 'expo-linear-gradient';
 import FacePile from 'react-native-face-pile';
-
+import { BlurView } from 'expo-blur';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -52,7 +53,32 @@ const formatData = (data, numColumns) => {
 };
 
 const numColumns = 3;
-
+const FACES = [
+  {
+    id: 0,
+    imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+  },
+  {
+    id: 1,
+    imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+  },
+  {
+    id: 2,
+    imageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 3,
+    imageUrl: 'https://images.unsplash.com/photo-1611774812120-79d97450b31c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+  },
+  {
+    id: 4,
+    imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
+  },
+  {
+    id: 5,
+    imageUrl: 'https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80',
+  }
+];
 
 
 class JoinScreen extends React.Component{
@@ -77,8 +103,6 @@ class JoinScreen extends React.Component{
         invitedPeople: [...this.state.invitedPeople, user],
       })
     }
-
-
   }
 
   componentDidMount() {
@@ -86,13 +110,10 @@ class JoinScreen extends React.Component{
   }
 
   navPeopleInGroup = (groupId) => {
-
     this.props.navigation.navigate("PeopleInGroup", {groupId: groupId })
   }
 
-
   handleCode = (e) => {
-
     this.setState({
       inviteCode:e
     })
@@ -130,14 +151,11 @@ class JoinScreen extends React.Component{
   // }
 
   declineGroup = () => {
-
     this.props.navigation.goBack()
   }
 
   joinGroup = (groupId) => {
-
     const userId = this.props.id
-
     this.setState({
       loading: true
     })
@@ -145,20 +163,16 @@ class JoinScreen extends React.Component{
     authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
     .then(res => {
       // direct this group to newsfeed and then add it to auth
-
       this.setState({
         loading: false
       })
       this.props.authAddSmallGroup(res.data)
-
       this.props.navigation.navigate('Home')
-
     })
   }
 
 
   renderItem = ({ item, index }) => {
-    console.log(item)
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
@@ -181,14 +195,32 @@ class JoinScreen extends React.Component{
      let codeInvite=this.props.codeInvite
      let group = {}
      let imageList = []
+     let likeAvatarList=[]
      if(this.props.route.params.item){
        group = this.props.route.params.item
      }
      if(this.props.route.params.item){
        imageList = this.props.route.params.item.get_socialCalItems
      }
+     console.log("LOLLLLLLLLLLLLLLLLL")
+     if(group.mini_member){
+       likeAvatarList = group.mini_member.map(item => {
+        return {
+          imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+        };
+        });
+     }
 
-     console.log(group, 'groupgrup ')
+     // if(this.props.data.people_like.length>0)
+     // {
+     //   likeAvatarList = this.props.data.people_like.map(item => {
+     //    return {
+     //      imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+     //    };
+     //    });
+     // }
+
+
 
      return(
        <SafeAreaView style = {{flex: 1}}>
@@ -204,8 +236,7 @@ class JoinScreen extends React.Component{
            >
 
            <ArrowLeft
-
-             stroke="black"
+             stroke="white"
              height = {25}
              width = {25}
              />
@@ -214,75 +245,125 @@ class JoinScreen extends React.Component{
 
          <View style = {{flex: 1}} >
 
-           <View style = {{
-
-               flex:2.5,
-               backgroundColor: 'white',
-
+           <ImageBackground
+             source = {{
+               uri:`${global.IMAGE_ENDPOINT}`+group.groupPic
+             }}
+             style = {{
+               // flex:2.5,
+               height:'100%',
                alignItems: 'center',
                justifyContent: 'center'
              }}>
 
-             <View style = {{
+             <BlurView intensity={90} tint="dark" style = {{
+                 backgroundColor:'#f0f0f0',
+                 width:'100%',
+                 height:'100%',
+                 alignItems:'center',
+
                }}>
-               <Avatar
-                 rounded
-                 source = {{
-                   uri:`${global.IMAGE_ENDPOINT}`+group.groupPic
-                 }}
-                 size={125}
-                  />
+               <View style={{top:'10%',}}>
+                 <Avatar
+                   rounded
+                   source = {{
+                     uri:`${global.IMAGE_ENDPOINT}`+group.groupPic
+                   }}
+                   size={125}
+                    />
+                </View>
+                <View style={{top:'15%',alignItems:'center'}}>
+                <Text style={{color:'white',fontSize:30,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{global.CAPITALIZE(group.group_name)}</Text>
+                  {
+                    group.public ?
+                    <View style={styles.loginBtn0}>
+                      <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Public Orb</Text>
+                    </View>
+
+                    :
+                    <View style={styles.loginBtn0}>
+                      <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Private Orb</Text>
+                    </View>
+                  }
+                  <View style={{marginTop:'5%',}}>
+                    { (group.members.length)==0?
+                      <TouchableOpacity onPress = {()=>this.navPeopleInGroup(group.id)}>
+                        <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{group.members.length} Members </Text>
+                      </TouchableOpacity>
+
+                      :
+                      <TouchableOpacity activeOpacity={0.9} onPress = {()=>this.navPeopleInGroup(group.id)}>
+                        <FacePile numFaces={3} faces={likeAvatarList} overlap={1}
+                           circleSize={12.5} />
+                       </TouchableOpacity>
+                    }
+                  </View>
+                   <View style={{
+                     alignItems:'center',
+                     marginTop:'5%',
+                     width:'80%',
+
+                     }}>
+                     <Text style={{color:'white',fontSize:18, fontFamily:'Nunito-SemiBold'}}>
+
+                       {group.description}
+
+                     </Text>
+                   </View>
+                   </View>
+                   <View style={{top:'25%', width:'100%', alignItems:'center'}}>
+                   {
+                     this.state.loading ?
+                     <ActivityIndicator />
+                    :
+                     group.public ?
+                     <TouchableOpacity
+                       onPress = {() => this.joinGroup(group.id)}
+                       style = {styles.joinButton}>
+                       <View >
+                         <Text style = {styles.joinText}>Join</Text>
+                       </View>
+                     </TouchableOpacity>
+                     :
+                     <View style = {styles.inputHolder}>
+                       <View style = {styles.buttonHolder}>
+                           <TouchableOpacity
+                             onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
+                             style = {styles.declineButton}>
+                               <Text style = {styles.joinText}>Join</Text>
+                             </TouchableOpacity>
+                       </View>
+                       <View style = {styles.buttonHolder}>
+                           <TouchableOpacity
+                             onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
+                             style = {styles.acceptButton}>
+                               <Text style = {styles.joinText}>Join</Text>
+                             </TouchableOpacity>
+                       </View>
+                     </View>
+                   }
+                   </View>
+             </BlurView>
+           </ImageBackground>
+
+           <View>
+             {/*
+           {group.public?
+             <View style={{flex:2}}>
+             <FlatList
+               style={{position:'relative', top:0}}
+               data={formatData(imageList, numColumns)}
+               renderItem={this.renderItem}
+               numColumns={numColumns}
+             />
              </View>
 
-             <View>
-               <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{global.CAPITALIZE(group.group_name)}</Text>
+           :
+            <View></View>
 
-                 {
-                   group.public ?
-
-                   <View style={styles.loginBtn0}>
-                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>Public Orb</Text>
-                   </View>
-
-                   :
-
-                   <View style={styles.loginBtn0}>
-                     <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>Private Orb</Text>
-                   </View>
-
-
-                 }
-
-                 <TouchableOpacity onPress = {()=>this.navPeopleInGroup(group.id)}>
-                   <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{group.members.length} Members </Text>
-                 </TouchableOpacity>
-
-
-             </View>
-
-
-
-              <View style={{
-                alignItems:'center',
-                }}>
-                <Text style={{fontSize:18, fontFamily:'Nunito'}}>
-
-                  {group.description}
-
-                </Text>
-              </View>
-
-
-           </View>
-
-           <View style={{flex:2}}>
-           <FlatList
-             style={{position:'relative', top:0}}
-             data={formatData(imageList, numColumns)}
-             renderItem={this.renderItem}
-             numColumns={numColumns}
-           />
-           </View>
+            }
+            */}
+            </View>
            <View style = {{
                flex: 1,
                justifyContent: 'center',
@@ -302,9 +383,7 @@ class JoinScreen extends React.Component{
                    }}>
 
 
-                   <View style={styles.loginBtn0}>
-                      <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-Bold', padding:10}}>Join</Text>
-                   </View>
+
 
                  </View>
 
@@ -453,25 +532,28 @@ class JoinScreen extends React.Component{
      textShadowRadius: 10,
      alignItems: "center",
      justifyContent: "center",
-     width:'50%',
+     width:'25%',
+     marginTop:'5%',
      backgroundColor: "#1890ff",
    },
    joinButton: {
 
-     width: '70%',
+     width: '60%',
      backgroundColor: "#1890ff",
      justifyContent: 'center',
      alignItems: 'center',
      textShadowColor: 'black',
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 10,
-     borderRadius: 20,
-     height: 50,
+     borderRadius: 25,
+
 
    },
    joinText:{
      color: 'white',
-     fontSize: 15
+     fontSize: 15,
+     fontFamily:'Nunito-SemiBold',
+     padding:15,
    },
    buttonHolder:{
      height: 50,

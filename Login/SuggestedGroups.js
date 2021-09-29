@@ -24,7 +24,8 @@ class SuggestedGroups extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      invitedPeople:[]
+      invitedPeople:[],
+      list:[],
     }
   }
 
@@ -41,20 +42,22 @@ class SuggestedGroups extends React.Component{
       })
     }
     console.log(this.state.invitedPeople)
-
-
   }
 
-  componentDidMount() {
-
+  componentDidMount(){
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/suggestedGroups')
+    .then(res => {
+      this.setState({
+        list: res.data
+      })
+    })
   }
-
-
 
    render(){
      let data=[{'test':'Food'},{'test':'Family'},{'test':'Fitness'},{'test':'NBA'},
      {'test':'Tennis'},{'test':'volleball'},
    ]
+     console.log(this.state.list)
      let codeInvite=this.props.codeInvite
      return(
        <View style={{marginTop:'2.5%', alignItems:'center'}}>
@@ -63,18 +66,20 @@ class SuggestedGroups extends React.Component{
          </View>
          <View style={{marginTop:'5%', height:'75%'}}>
            <FlatList
-             extraData={this.state.invitedPeople}
+             extraData={this.state.list}
              columnWrapperStyle={{justifyContent: 'space-between'}}
-             data={data}
+             data={this.state.list}
              showsVerticalScrollIndicator={true}
              numColumns={2}
              renderItem={({item}) => {
+               console.log("WOW")
+               console.log(item)
                return (
                   <View style={{width: '50%', justifyContent:'center', alignItems:'center', padding:10}} >
                     <TouchableOpacity onPress = {() => this.onSelectUser(item)}>
                       <Avatar
                         source = {{
-                          uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+                          uri: `${global.IP_CHANGE}`+item.groupPic
                         }}
                         rounded
                         size = {125}
@@ -92,7 +97,7 @@ class SuggestedGroups extends React.Component{
 
 
                     </TouchableOpacity>
-                    <Text>{item.test}</Text>
+                    <Text style={{fontFamily:'Nunito-SemiBold', color:'white'}}>{item.group_name}</Text>
                   </View>
                  );
                }}
