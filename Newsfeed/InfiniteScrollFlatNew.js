@@ -210,7 +210,7 @@ class InfiniteScrollFlatNew extends React.Component{
           onPress={() => this.navGroupInfo()}
           style={styles.roundButton1}>
 
-          <Users stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+          <Users stroke="white" strokeWidth={2.5} width={20} height={20} />
         </TouchableOpacity>
         </View>
 
@@ -230,7 +230,7 @@ class InfiniteScrollFlatNew extends React.Component{
             // onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
             // style={{top:130,}}
-            style={{top:20,}}
+            style={{paddingTop:10,}}
             ListEmptyComponent={this.renderEmptyContainer()}
 
             />
