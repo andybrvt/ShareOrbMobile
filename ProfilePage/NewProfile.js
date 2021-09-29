@@ -115,9 +115,7 @@ class NewProfile extends React.Component{
                  stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
               </TouchableOpacity>
             </View>
-
           </View>
-
         </View>
 
         <FlatList
@@ -128,8 +126,7 @@ class NewProfile extends React.Component{
           keyExtractor={(item, index) => String(index)}
           renderItem={this.renderItem}
           ListEmptyComponent={this.renderEmptyContainer()}
-
-           />
+        />
 
 
 

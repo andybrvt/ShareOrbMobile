@@ -112,11 +112,12 @@ class SearchResults extends React.Component{
 
     return(
       <KeyboardAvoidingView
-        behavior = "padding"
+
+        behavior = {Platform.OS =='ios'?"padding":"height"}
         style = {{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'center'
+
         }}>
         {
           data.length === 0 ?

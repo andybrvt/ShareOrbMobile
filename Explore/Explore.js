@@ -241,6 +241,7 @@ class Explore extends React.Component{
                </Animated.View>
 
               */}
+              
           {
             this.state.showSearch ?
             <SearchResults

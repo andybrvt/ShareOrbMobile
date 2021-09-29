@@ -7,6 +7,8 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  TouchableHighlight,
   Image,
   Switch,
   Share,
@@ -16,7 +18,7 @@ import {
   RefreshControle,
   ActivityIndicator
  } from 'react-native';
-import { LogOut, Lock, User, Bell, Globe, ArrowRight, UserPlus, Menu} from "react-native-feather";
+import { LogOut, Lock, User, Bell, Globe, ArrowRight, UserPlus, Menu, Mic, Unlock} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -226,17 +228,11 @@ class GroupInfo extends React.Component{
                   size={125}
                    />
               </TouchableOpacity>
-              <TouchableOpacity onPress = {()=>this.navInvitePeople()}>
-                <View style={styles.roundButton1}>
-                  <UserPlus stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
-                </View>
-              </TouchableOpacity>
+
             </View>
               <View style={{
                 marginTop:10,
-
                 }}>
-
                   <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
                   <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.groupId)}>
                     <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> {members.length} Members </Text>
@@ -244,42 +240,65 @@ class GroupInfo extends React.Component{
               </View>
             </View>
            </View>
+
            <View style={{ alignItems:'center', marginTop:25}}>
-           <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
-             {description}
-           </Text>
+             <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
+               {description}
+             </Text>
            </View>
 
-            <View style={{flexDirection:'row',padding:20}}>
-                <View style={{marginLeft:10, flex:6, }}>
-                 <Text style={{fontFamily:'Nunito-Bold', fontSize:16, color:'#919191',}}>Make Orb Public</Text>
+           <TouchableHighlight underlayColor="#f0f0f0" onPress = {()=>this.navInvitePeople()}>
+             <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
+               <View style={styles.roundButton1}>
+                 <UserPlus stroke="white" strokeWidth={2.5} width={17.5} height={17.5} />
                </View>
-
-                <View style = {{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  {
-                    this.state.loading === true ?
-                    <ActivityIndicator />
-                  :
-
-                  <Switch
-                    trackColor={ this.state.condition ? "gray": "red" }
-                    thumbColor={this.state.condition ? "white" : "white"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={this.toggleChange}
-                    value={publicG}
-                    disabled = {publicG}
-                     />
-                  }
-                </View>
+               <Text style={styles.settingWord}> Add People </Text>
              </View>
-            <View style={{alignItems:'center', top:'15%'}}>
-            <View style={styles.loginBtn1}>
-              <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
+           </TouchableHighlight>
+
+           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
+            <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
+              <View style={styles.roundButton1}>
+                <Mic stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />
+              </View>
+             <Text style={styles.settingWord}> Create Announcements </Text>
+             </View>
+           </TouchableHighlight>
+
+           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
+            <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
+              <View style={styles.roundButton1}>
+                <Unlock stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />
+              </View>
+             <Text style={styles.settingWord}> Make Orb Public </Text>
+             <View style = {{
+                 flex: 1,
+                 alignItems: 'center',
+                 justifyContent: 'center',
+               }}>
+               {
+                 this.state.loading === true ?
+                 <ActivityIndicator />
+               :
+
+               <Switch
+                 trackColor={ this.state.condition ? "gray": "red" }
+                 thumbColor={this.state.condition ? "white" : "white"}
+                 ios_backgroundColor="#3e3e3e"
+                 onValueChange={this.toggleChange}
+                 value={publicG}
+                 disabled = {publicG}
+                  />
+               }
+             </View>
             </View>
+           </TouchableHighlight>
+
+
+            <View style={{alignItems:'center', top:'15%'}}>
+              <View style={styles.loginBtn1}>
+                <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
+              </View>
             </View>
         </View>
 
@@ -313,14 +332,13 @@ const styles = StyleSheet.create({
 
   roundButton1: {
 
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex:99,
     borderRadius: 100,
-    left:10,
-    bottom:10,
+
     backgroundColor: '#1890ff',
     elevation:15,
   },
@@ -415,10 +433,10 @@ const styles = StyleSheet.create({
   },
 
   settingWord: {
-    left:5,
+
     color:'#919191',
-    fontSize:18,
-    fontFamily:'Nunito-Bold',
+    fontSize:15,
+    fontFamily:'Nunito-SemiBold',
     marginLeft:10,
   },
 });
