@@ -21,7 +21,7 @@ class SearchResults extends React.Component{
 
     return(
       <TouchableOpacity
-        onPress = {() => this.props.growProfile(item)}
+        onPress = {() => this.props.groupProfile(item)}
         >
         <View style={{
            flexDirection:'row',

@@ -245,7 +245,7 @@ class Explore extends React.Component{
             this.state.showSearch ?
             <SearchResults
               viewProfile = {this.viewProfile}
-              growProfile = {this.viewGroup}
+              groupProfile = {this.viewGroup}
               data = {this.state.searched}
               groupData = {this.state.searchedGroups}
                />

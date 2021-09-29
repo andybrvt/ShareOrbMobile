@@ -41,9 +41,9 @@ class GroupInfo extends React.Component{
     this.bs = React.createRef()
   }
 
-  navPeopleInGroup = (members) => {
+  navPeopleInGroup = (groupId) => {
 
-    this.props.navigation.navigate("PeopleInGroup", {members: members })
+    this.props.navigation.navigate("PeopleInGroup", {groupId: groupId })
   }
 
   navInvitePeople = () => {
@@ -238,7 +238,7 @@ class GroupInfo extends React.Component{
                 }}>
 
                   <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
-                  <TouchableOpacity onPress = {()=>this.navPeopleInGroup(members)}>
+                  <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.groupId)}>
                     <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> {members.length} Members </Text>
                   </TouchableOpacity>
               </View>

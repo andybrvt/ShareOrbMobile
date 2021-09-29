@@ -172,8 +172,9 @@ class JoinScreen extends React.Component{
      if(this.props.route.params.item){
        group = this.props.route.params.item
      }
-     console.log("YOeeeeeOOOOO")
+
      console.log(group)
+
      return(
        <SafeAreaView style = {{flex: 1}}>
 

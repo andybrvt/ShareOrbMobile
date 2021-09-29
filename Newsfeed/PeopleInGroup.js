@@ -22,6 +22,7 @@ import * as authActions from '../store/actions/auth';
      this.state = {
        loading: false,
        itemLoading: 0,
+       members: []
      }
    }
 
@@ -33,6 +34,19 @@ import * as authActions from '../store/actions/auth';
    selectItem(item) {
      this.props.navigation.navigate("ProfilePage", {
        username: item.username
+     })
+   }
+
+   componentDidMount(){
+
+     const groupId = this.props.route.params.groupId
+     authAxios.get(`${global.IP_CHANGE}`+"/mySocialCal/grabMembers/"+groupId)
+     .then(res => {
+       console.log(res.data)
+       this.setState({
+
+         members: res.data
+       })
      })
    }
 
@@ -56,16 +70,8 @@ import * as authActions from '../store/actions/auth';
    }
 
    renderItem = ({item}) => {
-     console.log("WWWWWWWWWWWW")
-     console.log(item)
-     const following = [];
-     if(this.props.following){
-       for(let i = 0; i< this.props.following.length; i++){
-         following.push(
-           this.props.following[i].id
-         )
-       }
-     }
+
+
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
@@ -94,7 +100,7 @@ import * as authActions from '../store/actions/auth';
 
 
    render(){
-   let members = this.props.route.params.members
+
 
 
      // if(this.props.profile){
@@ -104,12 +110,14 @@ import * as authActions from '../store/actions/auth';
      // }
      return (
        <BackgroundContainer>
-         <View >
+         <View style = {{
+             flex: 1,
+           }} >
 
          <FlatList
            keyExtractor={(item, index) => String(index)}
            style = {{marginTop:5}}
-           data = {members}
+           data = {this.state.members}
            renderItem = {this.renderItem}
            ItemSeparatorComponent = { this.FlatListItemSeparator }
            />
