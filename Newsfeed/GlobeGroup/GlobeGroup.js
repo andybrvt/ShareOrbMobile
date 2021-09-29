@@ -26,7 +26,7 @@ class GlobeGroup extends React.Component{
 
       this.waitForGlobeSocketConnection(() => {
         // fetch post here
-
+        WebSocketGlobeInstance.fetchGlobePost()
       })
 
       WebSocketGlobeInstance.connect()

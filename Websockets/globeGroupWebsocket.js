@@ -43,14 +43,29 @@ class WebSocketGlobe {
     this.socketRef.close();
   }
 
+
   socketNewGlobePost(data){
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
+
+    console.log(parsedData)
+    if(command === 'fetch_globe_post'){
+        const globePost = JSON.parse(parsedData.globe_post)
+        console.log(globePost)
+    }
 
   }
 
   addCallbacks(){
 
+  }
+
+
+  fetchGlobePost(){
+    // this will be everybody post so it is not a problem
+    this.sendPostsInfo({
+      command: "fetch_globe_post"
+    })
   }
 
   sendPostsInfo(data){
