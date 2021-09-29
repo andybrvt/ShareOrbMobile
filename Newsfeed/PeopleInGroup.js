@@ -100,8 +100,10 @@ import * as authActions from '../store/actions/auth';
 
 
    render(){
-
-
+     let num=this.state.members.length
+     this.props.navigation.setOptions({
+        title: `${num} people`,
+     })
 
      // if(this.props.profile){
      //   if(this.props.profile.get_following){
