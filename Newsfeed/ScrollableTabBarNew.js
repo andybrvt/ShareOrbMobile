@@ -12,7 +12,7 @@ const {
   Dimensions,
 } = ReactNative;
 const Button = require('./Button');
-import { PlusCircle, UserPlus, Info } from "react-native-feather";
+import { PlusCircle, UserPlus, Info, Globe } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 
@@ -155,6 +155,26 @@ const ScrollableTabBarNew = createReactClass({
         </View>
       </Button>;
 
+    } else if(name === "globe"){
+      return <Button
+        key={`${name}_${page}`}
+        accessible={true}
+        accessibilityLabel={name}
+        accessibilityTraits='button'
+        onPress={() => this.onGroupCreateDirect()}
+        onLayout={onLayoutHandler}
+      >
+        <View style={[styles.tab, this.props.tabStyle, ]}>
+          <View style={{backgroundColor:'#108ee9', borderRadius:75}}>
+            <Globe
+              strokeWidth={1.5}
+              stroke="white"
+              height = {35}
+              width = {35}
+               />
+             </View>
+        </View>
+      </Button>;
     }
 
 
