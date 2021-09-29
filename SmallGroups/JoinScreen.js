@@ -82,6 +82,11 @@ class JoinScreen extends React.Component{
 
   }
 
+  navPeopleInGroup = (groupId) => {
+
+    this.props.navigation.navigate("PeopleInGroup", {groupId: groupId })
+  }
+
 
   handleCode = (e) => {
 
@@ -173,7 +178,6 @@ class JoinScreen extends React.Component{
        group = this.props.route.params.item
      }
 
-     console.log(group)
 
      return(
        <SafeAreaView style = {{flex: 1}}>
@@ -238,7 +242,7 @@ class JoinScreen extends React.Component{
 
                  }
 
-                 <TouchableOpacity onPress = {()=>this.navPeopleInGroup()}>
+                 <TouchableOpacity onPress = {()=>this.navPeopleInGroup(group.id)}>
                    <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{group.members.length} Members </Text>
                  </TouchableOpacity>
 
