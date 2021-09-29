@@ -51,13 +51,15 @@ class WebSocketGlobe {
     console.log(parsedData)
     if(command === 'fetch_globe_post'){
         const globePost = JSON.parse(parsedData.globe_post)
-        console.log(globePost)
+        this.callbacks['fetch_globe_post'](globePost)
     }
 
   }
 
-  addCallbacks(){
-
+  addCallbacks(
+    fetchGlobePost
+  ){
+    this.callbacks['fetch_globe_post'] = fetchGlobePost
   }
 
 

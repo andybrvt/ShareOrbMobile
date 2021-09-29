@@ -11,6 +11,7 @@ import messageReducer from './store/reducers/messages';
 import notificationsReducer from './store/reducers/notifications';
 import colabAlbumReducer from './store/reducers/colabAlbum';
 import smallGroupsReducer from './store/reducers/smallGroups';
+import globeGroupReducer from './store/reducers/globeGroup';
 import App from './App';
 import React, {Component} from 'react';
 import { AppRegistry } from 'react-native';
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   message: messageReducer,
   notifications: notificationsReducer,
   colabAlbum: colabAlbumReducer,
-  smallGroups: smallGroupsReducer 
+  smallGroups: smallGroupsReducer,
+  globeGroup: globeGroupReducer
 
 })
 

@@ -187,10 +187,8 @@ class JoinScreen extends React.Component{
      if(this.props.route.params.item){
        imageList = this.props.route.params.item.get_socialCalItems
      }
-     console.log("JOIN THIS")
-     console.log(group)
-     console.log("images")
-     console.log(imageList)
+
+     console.log(group, 'groupgrup ')
 
      return(
        <SafeAreaView style = {{flex: 1}}>

@@ -9,10 +9,15 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  RefreshControl
+  RefreshControl,
  } from 'react-native';
- import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
+import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
+import { connect } from 'react-redux';
+import NewGlobePost from './NewGlobePost';
+import CountDown from 'react-native-countdown-component';
 
+
+const height = Dimensions.get("window").height
 
 class GlobeGroup extends React.Component{
 
@@ -48,17 +53,67 @@ class GlobeGroup extends React.Component{
     }
 
 
+    renderItem = ({item}) => {
+
+      return(
+        <NewGlobePost data = {item}/>
+      )
+    }
+
+    listHeader = () => {
+
+      return(
+        <View style = {{padding: 30}}>
+          <CountDown
+            until={60 * 10 + 30}
+            size={30}
+            onFinish={() => alert('Finished')}
+            digitStyle={{backgroundColor: '#1890ff'}}
+            digitTxtStyle={{color: 'white'}}
+            timeToShow={["H",'M', 'S']}
+            timeLabels={{h:'hour',m: 'min', s: 'sec'}}
+             />
+
+
+        </View>
+      )
+    }
+
+
 
     render(){
 
+      console.log(this.props, 'globegroup')
+      let groupPosts = []
+      if(this.props.globePosts){
+        groupPosts = this.props.globePosts
+      }
+
       return(
-        <View>
-          <Text>This will be the globe hub</Text>
+        <View style = {{flex: 1}}>
+
+
+            <FlatList
+              ListHeaderComponent = {this.listHeader}
+
+              style = {{flex: 1}}
+              data = {groupPosts}
+              renderItem = {this.renderItem}
+              keyExtractor={(item, index) => String(index)}
+               />
+
+
         </View>
       )
     }
 
 }
 
+const mapStateToProps = state => {
+  return{
+    globePosts: state.globeGroup.globePosts
+  }
+}
 
-export default GlobeGroup;
+
+export default connect(mapStateToProps, null)(GlobeGroup);

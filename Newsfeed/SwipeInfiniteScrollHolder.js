@@ -86,9 +86,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
                curLoad = {this.props.curLoad}
                />}
             >
-            <View name = "globe" tabLabel = "globe">
-                <GlobeGroup />
-            </View>
+            <GlobeGroup name = "globe" tabLabel = "globe" />
             {smallGroups.map((group, indx) => {
               const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
               return(

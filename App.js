@@ -22,6 +22,7 @@ import * as socialActions from './store/actions/socialCalendar';
 import * as notificationsActions from './store/actions/notifications';
 import * as colabAlbumActions from './store/actions/colabAlbum';
 import * as smallGroupsActions from './store/actions/smallGroups';
+import * as globeGroupActions from './store/actions/globeGroup';
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import GroupInfo from './Newsfeed/GroupInfo';
@@ -45,6 +46,7 @@ import SocialCalCellPageWebSocketInstance from './Websockets/socialCalCellWebsoc
 import NotificationWebSocketInstance from './Websockets/notificationWebsocket';
 import ColabAlbumWebsocketInstance from './Websockets/colabAlbumWebsocket';
 import WebSocketSmallGroupInstance from './Websockets/smallGroupWebsocket';
+import WebSocketGlobeInstance from './Websockets/globeGroupWebsocket';
 // import BottomNavigation from './BottomNavigation';
 import { TabActions } from '@react-navigation/native';
 import Constant from 'expo-constants';
@@ -247,6 +249,10 @@ class App extends Component{
     WebSocketSmallGroupInstance.addCallbacks(
       this.props.loadSmallGroupsPost.bind(this),
       this.props.sendGroupPost.bind(this)
+    )
+
+    WebSocketGlobeInstance.addCallbacks(
+      this.props.fetchGlobePost.bind(this)
     )
 
 
@@ -1243,8 +1249,10 @@ const mapDispatchToProps = dispatch => {
     resetNotificationSeen: () => dispatch(authActions.resetNotificationSeen()),
 
     loadSmallGroupsPost: (posts) => dispatch(smallGroupsActions.loadSmallGroupsPost(posts)),
-    sendGroupPost: (post) => dispatch(smallGroupsActions.sendGroupPost(post))
-  }
+    sendGroupPost: (post) => dispatch(smallGroupsActions.sendGroupPost(post)),
+
+    fetchGlobePost: (posts) => dispatch(globeGroupActions.fetchGlobePost(posts))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
