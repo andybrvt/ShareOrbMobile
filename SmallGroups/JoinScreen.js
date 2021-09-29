@@ -26,14 +26,14 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from "react-redux";
 import * as authActions from '../store/actions/auth';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-
+import { LinearGradient } from 'expo-linear-gradient';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
 const data = [
-  { key: 'A' }, { key: 'B' }, { key: 'C' }, { key: 'D' }, { key: 'E' }, { key: 'F' }, { key: 'G' }, { key: 'H' }, { key: 'I' },,
-  // { key: 'K' },
-  // { key: 'L' },
+  { key: 'A' }, { key: 'B' }, { key: 'C' }, { key: 'D' }, { key: 'E' },
+  { key: 'K' },
+  { key: 'L' },
 ];
 
 const formatData = (data, numColumns) => {
@@ -150,7 +150,7 @@ class JoinScreen extends React.Component{
 
 
   renderItem = ({ item, index }) => {
-    console.log(item)
+
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
@@ -161,7 +161,7 @@ class JoinScreen extends React.Component{
 
       <Image style={{width:'100%', height:'100%'}}
        source={{uri:'https://images.unsplash.com/photo-1564419320415-7f119406236e?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80'}}/>
-     <Text style={styles.itemText}>{item.key}dd</Text>
+
       </View>
     );
   };
@@ -172,6 +172,8 @@ class JoinScreen extends React.Component{
      if(this.props.route.params.item){
        group = this.props.route.params.item
      }
+     console.log("YOeeeeeOOOOO")
+     console.log(group)
      return(
        <SafeAreaView style = {{flex: 1}}>
 
@@ -199,7 +201,7 @@ class JoinScreen extends React.Component{
            <View style = {{
 
                flex:2.5,
-               backgroundColor: 'pink',
+               backgroundColor: 'white',
 
                alignItems: 'center',
                justifyContent: 'center'
@@ -257,26 +259,14 @@ class JoinScreen extends React.Component{
 
            </View>
 
-           <View style = {{
-               flex: 2.5,
-               backgroundColor: 'yellow',
-               alignItems:'center'
-             }}>
-             <Text>Recent picturesss</Text>
-             <View style={styles.testShadow}>
-
-               <FlatList
-                  data={formatData(data, numColumns)}
-
-                  renderItem={this.renderItem}
-                  numColumns={numColumns}
-                />
-
-             </View>
-
-
+           <View style={{flex:2}}>
+           <FlatList
+             style={{position:'relative', top:0}}
+             data={formatData(data, numColumns)}
+             renderItem={this.renderItem}
+             numColumns={numColumns}
+           />
            </View>
-
            <View style = {{
                flex: 1,
                justifyContent: 'center',
@@ -366,6 +356,28 @@ class JoinScreen extends React.Component{
  }
 
  const styles = StyleSheet.create({
+   container: {
+     paddingTop:20,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+  background1: {
+    height:75,
+    position:'relative',
+    top:'20%',
+
+  },
+  button: {
+    padding: 15,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  text: {
+    backgroundColor: 'transparent',
+    fontSize: 15,
+    color: '#fff',
+  },
    testShadow:{
      width:'100%',
      height:'100%',
@@ -385,7 +397,7 @@ class JoinScreen extends React.Component{
     marginVertical: 20,
   },
   item: {
-    backgroundColor: '#4D243D',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
