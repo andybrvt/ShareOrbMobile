@@ -20,7 +20,7 @@ import { PlusCircle, UserPlus, Info, Users} from "react-native-feather";
 import { connect } from 'react-redux';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import * as Progress from 'react-native-progress';
-
+import GlobeGroup from './GlobeGroup/GlobeGroup';
 
 const height = Dimensions.get('window').height
 
@@ -86,6 +86,9 @@ class SwipeInfiniteScrollHolder extends React.Component{
                curLoad = {this.props.curLoad}
                />}
             >
+            <View name = "globe" tabLabel = "globe">
+                <GlobeGroup />
+            </View>
             {smallGroups.map((group, indx) => {
               const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
               return(
