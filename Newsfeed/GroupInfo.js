@@ -244,7 +244,7 @@ class GroupInfo extends React.Component{
             </View>
            </View>
 
-           <View style={{ alignItems:'center', marginTop:25}}>
+           <View style={{ alignItems:'center', marginTop:25, marginBottom:25,}}>
              <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
                {description}
              </Text>
@@ -298,7 +298,7 @@ class GroupInfo extends React.Component{
            </TouchableHighlight>
 
 
-            <View style={{alignItems:'center', top:'15%'}}>
+            <View style={{alignItems:'center', top:'10%'}}>
               <View style={styles.loginBtn1}>
                 <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
               </View>
