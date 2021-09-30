@@ -202,7 +202,6 @@ class JoinScreen extends React.Component{
      if(this.props.route.params.item){
        imageList = this.props.route.params.item.get_socialCalItems
      }
-     console.log("LOLLLLLLLLLLLLLLLLL")
      if(group.mini_member){
        likeAvatarList = group.mini_member.map(item => {
         return {
@@ -539,7 +538,6 @@ class JoinScreen extends React.Component{
      backgroundColor: "#1890ff",
    },
    joinButton: {
-
      width: '60%',
      backgroundColor: "#1890ff",
      justifyContent: 'center',

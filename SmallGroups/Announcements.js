@@ -55,20 +55,11 @@ import * as authActions from '../store/actions/auth';
 
    }
 
-   selectItem(item) {
-     this.props.navigation.navigate("ProfilePage", {
-       username: item.username
-     })
-   }
-
    componentDidMount(){
 
    }
 
-
    render(){
-
-
      // if(this.props.profile){
      //   if(this.props.profile.get_following){
      //     data = this.props.profile.get_following
@@ -79,26 +70,22 @@ import * as authActions from '../store/actions/auth';
          <View style = {{
              flex: 1,
            }} >
-
            <View style={styles.addBorder}>
            <TextInput
               style={{fontSize:15}}
               multiline = {true}
               numberOfLines = {2}
               maxLength = {80}
-              placeholder='Enter Announcments...'
+              placeholder='Enter Announcements...'
               value={this.state.contentBio}
               onChangeText={this.onBioChange}
               />
-
             <View style={styles.characterCount}>
                <Text style={{color:"#666666",}}>
-
                  {this.state.contentBio.length}/80
                </Text>
              </View>
            </View>
-
          </View>
        </BackgroundContainer>
      )

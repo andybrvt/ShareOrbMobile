@@ -51,12 +51,37 @@ class NewProfile extends React.Component{
     )
   }
 
+  onGroupDirect = (item) => {
+
+    // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
+    // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
+    // JOINSCREEN
+
+
+    const curId = this.props.currentId
+    const memberList = item.members
+
+    if(memberList.includes(curId)){
+      this.props.navigation.navigate("Home")
+    } else {
+      this.props.navigation.navigate("JoinScreen", {
+        item:item
+      })
+
+    }
+
+
+  }
+
   renderItem = ({item}) => {
 
     const pic = `${global.IMAGE_ENDPOINT}` + item.groupPic
 
     return(
       <View style={{width: width/2, justifyContent:'center', alignItems:'center', padding:10}} >
+        <TouchableOpacity
+          onPress = {() => this.onGroupDirect(item)}
+          >
           <Avatar
             source = {{
               uri: pic
@@ -64,6 +89,7 @@ class NewProfile extends React.Component{
             rounded
             size = {120}
              />
+          </TouchableOpacity>
            <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
            <View>
              <Text>{item.members.length} people</Text>
