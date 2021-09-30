@@ -22,7 +22,7 @@ import authAxios from '../util';
 import FastImage from 'react-native-fast-image'
 import { Video, AVPlaybackStatus } from 'expo-av';
 import InViewPort from "../RandomComponents/InViewPort";
-
+import { LinearGradient } from 'expo-linear-gradient';
 const { Clock, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 
 const {interpolate, Extrapolate, interpolateColors} = Animated;
@@ -213,12 +213,14 @@ class SocialNewsfeedPost extends React.Component{
 
           }}
           >
+
           <View style = {{
               width: "97%",
               height: "97%",
               backgroundColor: 'lightgray',
               borderRadius: 5
             }}>
+
             <Image
               style = {{
                 height:"100%",
@@ -438,7 +440,9 @@ class SocialNewsfeedPost extends React.Component{
                  <TouchableOpacity
                    activeOpacity={0.8}
                   >
+                  <View style={{backgroundColor:'red'}}>
 
+                 </View>
                    {/* fast image*/}
                    {
                      video === "" ?
@@ -787,8 +791,9 @@ class SocialNewsfeedPost extends React.Component{
         >
         <View
           style = {{
-            width: "95%"
+            width: '100%',
           }}>
+        
           {/*
           <Animated.Code>
             {() => cond(
@@ -806,7 +811,9 @@ class SocialNewsfeedPost extends React.Component{
           </Animated.Code>
           */}
           <View style = {styles.imageContainer}>
+
               {this.revealPhoto()}
+
           </View>
           {
             (caption.length==0)?
@@ -865,19 +872,6 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     // fontWeight:'bold',
   },
-  container: {
-
-    backgroundColor: 'lightgray',
-    height: 350,
-    borderRadius: 5,
-    position: 'relative',
-    zIndex: 99,
-    shadowOffset: { width: 1, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
-    elevation: 5,
-    width: '100%',
-  },
 
   miniContainer: {
     margin: margin,
@@ -890,11 +884,26 @@ const styles = StyleSheet.create({
 
   },
 
+  container: {
+
+    backgroundColor: 'lightgray',
+    height: 500,
+    borderRadius: 5,
+    position: 'relative',
+    zIndex: 99,
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 5,
+    width: '100%',
+  },
+
+
   cover: {
     // flex: 1,
-    borderRadius: 5,
+
     position: "relative",
-    height: 350,
+    height: 500,
     shadowColor: '#000',
     width:"100%",
     // transform: [{ scale: 0.9 }]
@@ -1125,7 +1134,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight:300,
     // backgroundColor: 'red',
-    position: "relative",
+
   },
 
   header: {
