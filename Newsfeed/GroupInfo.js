@@ -44,12 +44,15 @@ class GroupInfo extends React.Component{
   }
 
   navPeopleInGroup = (groupId) => {
-
     this.props.navigation.navigate("PeopleInGroup", {groupId: groupId })
   }
 
   navInvitePeople = () => {
     this.props.navigation.navigate("InvitePeople")
+  }
+
+  navAnnouncements = () => {
+    this.props.navigation.navigate("Announcements")
   }
 
   shareMessage = (codeInvite) => {
@@ -256,7 +259,7 @@ class GroupInfo extends React.Component{
              </View>
            </TouchableHighlight>
 
-           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
+           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navAnnouncements()}>
             <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
               <View style={styles.roundButton1}>
                 <Mic stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />

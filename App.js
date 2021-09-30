@@ -26,7 +26,6 @@ import * as globeGroupActions from './store/actions/globeGroup';
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import GroupInfo from './Newsfeed/GroupInfo';
-import PeopleInGroup from './Newsfeed/PeopleInGroup';
 import InvitePeople from './Newsfeed/InvitePeople';
 import InviteContacts from './Newsfeed/InviteContacts';
 import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
@@ -97,7 +96,8 @@ import GoalPage from './GoalAlbum/GoalPage';
 import * as dateFns from 'date-fns';
 import CreateGroupPage from './SmallGroups/CreateGroupPage';
 import JoinScreen from './SmallGroups/JoinScreen';
-
+import Announcements from './SmallGroups/Announcements';
+import PeopleInGroup from './SmallGroups/PeopleInGroup';
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -1177,7 +1177,17 @@ class App extends Component{
                             }}
                            name = "PeopleInGroup"
                            component= {PeopleInGroup}/>
-
+                           <Stack.Screen
+                             options={{
+                               headerStyle:{
+                                 shadowColor:'#fff', //ios
+                                 elevation:0,        // android
+                               },
+                               title: 'Announcements',
+                                ...TransitionPresets. SlideFromRightIOS,
+                              }}
+                             name = "Announcements"
+                             component= {Announcements}/>
                   </Stack.Navigator>
                   :
                   <Routes {...this.props} />

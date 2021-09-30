@@ -7,8 +7,7 @@ import {
   ScrollView,
   Dimensions,
   TextInput,
-  TouchableOpacity
-
+  TouchableOpacity,
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -70,12 +69,11 @@ class EditBio extends React.Component{
   }
 
   renderSave = () => (
-    <View>
+    <View style={{marginRight:10,}}>
       <Button
         onPress = {() =>this.onHandleSaveBio()}
         title = "Save"/>
     </View>
-
   )
 
    render(){

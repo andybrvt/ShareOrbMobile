@@ -243,7 +243,7 @@ class JoinScreen extends React.Component{
          </TouchableOpacity>
 
 
-         <View style = {{flex: 1}} >
+         <View>
 
            <ImageBackground
              source = {{
@@ -263,28 +263,30 @@ class JoinScreen extends React.Component{
                  alignItems:'center',
 
                }}>
-               <View style={{top:'10%',}}>
-                 <Avatar
-                   rounded
-                   source = {{
-                     uri:`${global.IMAGE_ENDPOINT}`+group.groupPic
-                   }}
-                   size={125}
-                    />
+               <View style={{flex:1.25,  justifyContent:'center'}}>
+                 <View style={{zIndex:99, borderWidth: 2, borderColor: 'white', borderRadius:75,}}>
+                   <Avatar
+                     rounded
+                     source = {{
+                       uri:`${global.IMAGE_ENDPOINT}`+group.groupPic
+                     }}
+                     size={125}
+                      />
+                  </View>
                 </View>
-                <View style={{top:'15%',alignItems:'center'}}>
-                <Text style={{color:'white',fontSize:30,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{global.CAPITALIZE(group.group_name)}</Text>
-                  {
-                    group.public ?
-                    <View style={styles.loginBtn0}>
-                      <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Public Orb</Text>
-                    </View>
+                <View style={{alignItems:'center',flex:1.5}}>
+                  <Text style={{color:'white',fontSize:28,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{global.CAPITALIZE(group.group_name)}</Text>
+                    {
+                      group.public ?
+                      <View style={styles.loginBtn0}>
+                        <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Public Orb</Text>
+                      </View>
 
-                    :
-                    <View style={styles.loginBtn0}>
-                      <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Private Orb</Text>
-                    </View>
-                  }
+                      :
+                      <View style={styles.loginBtn0}>
+                        <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold', padding:5}}>Private Orb</Text>
+                      </View>
+                    }
                   <View style={{marginTop:'5%',}}>
                     { (group.members.length)==0?
                       <TouchableOpacity onPress = {()=>this.navPeopleInGroup(group.id)}>
@@ -311,7 +313,7 @@ class JoinScreen extends React.Component{
                      </Text>
                    </View>
                    </View>
-                   <View style={{top:'25%', width:'100%', alignItems:'center'}}>
+                   <View style={{flex:1, width:'100%', alignItems:'center'}}>
                    {
                      this.state.loading ?
                      <ActivityIndicator />
