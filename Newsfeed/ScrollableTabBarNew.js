@@ -161,7 +161,7 @@ const ScrollableTabBarNew = createReactClass({
         accessible={true}
         accessibilityLabel={name}
         accessibilityTraits='button'
-        onPress={() => this.onGroupCreateDirect()}
+        onPress={() => onPressHandler(page)}
         onLayout={onLayoutHandler}
       >
         <View style={[styles.tab, this.props.tabStyle, ]}>
