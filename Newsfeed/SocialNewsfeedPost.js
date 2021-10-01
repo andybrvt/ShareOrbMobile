@@ -197,6 +197,212 @@ class SocialNewsfeedPost extends React.Component{
 
   }
 
+  renderPostInfo=(data)=>{
+
+    let postId = "";
+    let calCell = "";
+    let username = "";
+    let cellYear = "";
+    let cellMonth = "";
+    let cellDay = "";
+    let location = "";
+    let userUsername="";
+    let post = {};
+    let profilePic="";
+    let userPostImages = []
+    let like_people = [];
+    let commentList = [];
+    let peopleLikeId = []
+    let postCreatedAt= new Date();
+    let contentTypeId="";
+    let ownerId = "";
+    let cellDate = "";
+    let firstName="";
+    let lastName="";
+    let likeAvatarList=[]
+    let itemImage = "";
+    let video = "";
+    let calComment = 0;
+    let caption="";
+    let notificationToken = "";
+    let goal = "";
+
+    let utc3 = dateFns.format(new Date(), 'h:mma');
+
+    if(data){
+      if(data.caption){
+        caption = data.caption
+      }
+      if(data.creator){
+        if(data.creator.profile_picture){
+          profilePic = `${global.IMAGE_ENDPOINT}`+data.creator.profile_picture
+        }
+        if(data.creator.first_name){
+          firstName = data.creator.first_name;
+        }
+        if(data.creator.last_name){
+          lastName = data.creator.last_name;
+        }
+        if(data.creator.id){
+          ownerId = data.creator.id
+        }
+        if(data.creator.username){
+          userUsername = data.creator.username
+        }
+
+        if(data.created_at) {
+          postCreatedAt=data.created_at
+          if(!isNaN(new Date(data.created_at).getTimezoneOffset()/60)){
+            const dtDateOnly1 = dateFns.addHours(new Date(data.created_at), new Date(this.props.data.created_at).getTimezoneOffset()/60)
+            utc3=dateFns.format(new Date(dtDateOnly1), 'M/dd');
+          }
+        }
+      }
+      if(data.calCell){
+        calCell = data.calCell
+      }
+      if(data.id){
+        postId = data.id
+      }
+      if(data.goal){
+        goal = data.goal
+      }
+
+      if(data.itemImage){
+        itemImage = `${global.IMAGE_ENDPOINT}`+data.itemImage;
+      }
+      if(data.video){
+        if(data.video !== null){
+          video = `${global.IMAGE_ENDPOINT}`+data.video;
+          // video taken from the local site does not work but the videos
+          // taken from pretty much any where else works (sounds good to me)
+        }
+
+      }
+      if(data.people_like){
+        like_people = data.people_like
+      }
+      if(data.get_socialCalItemComment){
+        calComment =data.get_socialCalItemComment.length
+      }
+    }
+    if(like_people.length > 0){
+      for(let i = 0; i< like_people.length; i++){
+        peopleLikeId.push(like_people[i].id)
+      }
+    }
+
+    if(data.people_like.length>0)
+    {
+      likeAvatarList = data.people_like.map(item => {
+       return {
+         imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
+       };
+       });
+    }
+
+    let socialMonth=""
+    let socialDay=""
+    // timestamp=postCreatedAt
+    // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+    // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
+    // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
+
+    timestamp=postCreatedAt
+    // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
+    //
+    socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
+    socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
+    return(
+      <View>
+        <View style={{flexDirection:'row', zIndex:1, marginLeft:10}}>
+          <Avatar
+            onPress = {() => this.props.ViewProfile(userUsername)}
+            size={37.5}
+            rounded
+            source = {{
+              uri: profilePic
+            }}
+          />
+        <View style={{flexDirection:'column', marginLeft:10,  width:'57.5%'}}>
+            <Text style = {styles.videoFooterUserName}>
+              {global.NAMEMAKE(firstName, lastName)}
+            </Text>
+            <View style={{flexDirection:'row'}}>
+              <Text style = {styles.videoFooterUserName2}>
+                {socialMonth.substring(0,3)}&nbsp;
+              </Text>
+              <Text style = {styles.videoFooterUserName2}>
+                {socialDay}
+              </Text>
+            </View>
+          </View>
+          {
+                  peopleLikeId.includes(this.props.userId ) ?
+                  <TouchableOpacity
+                    onPress = {() => this.onUnlike(
+                      postId,
+                      this.props.userId,
+                    )}
+                >
+                    <View style = {styles.justifyCenter}>
+                      <Heart
+                        stroke = "red"
+                        fill="red"
+                        width = {27.5}
+                        height = {27.5}
+                         />
+                      <Text  style = {styles.statNum}>
+                        {like_people.length}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  :
+                  <TouchableOpacity
+                    onPress = {() => this.onLike(
+                      postId,
+                      this.props.userId,
+                      ownerId,
+                      notificationToken,
+                      calCell
+                    )}
+                    >
+                    <View style = {styles.justifyCenter}>
+                      <Heart
+                        stroke = "white"
+                        fill="white"
+                        width = {27.5}
+                        height = {27.5}
+                      />
+                     <Text style = {styles.statNum}>
+                      {like_people.length}
+                    </Text>
+                    </View>
+                  </TouchableOpacity>
+              }
+
+              <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
+                <View style={{marginLeft:20,}}>
+                    <View style = {styles.justifyCenter}>
+                      <MessageCircle
+                        stroke = "white"
+                        fill="white"
+                        width ={27.5}
+                        height = {27.5}
+                      />
+                      <Text style = {styles.statNum}>
+                        {calComment}
+                      </Text>
+                    </View>
+                </View>
+              </TouchableWithoutFeedback>
+         </View>
+      </View>
+
+    )
+  }
+
+
   renderExtraPics = (items) => {
     // this function will render the extra pics
 
@@ -329,7 +535,7 @@ class SocialNewsfeedPost extends React.Component{
     let caption="";
     let notificationToken = "";
     let goal = "";
-
+    let data=this.props.data
     let utc3 = dateFns.format(new Date(), 'h:mma');
 
     if(this.props.data){
@@ -527,185 +733,67 @@ class SocialNewsfeedPost extends React.Component{
                 </TouchableOpacity>
               </GestureRecognizer>
 
-                <Avatar
-                  style={styles.close}
-                  onPress = {() => this.props.ViewProfile(userUsername)}
-                  size={37.5}
-                  rounded
-                  source = {{
-                    uri: profilePic
-                  }}
-                />
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                ></TouchableOpacity>
-              <View style = {styles.testWhere}>
-                <Text style = {styles.videoFooterUserName}>
-                  {global.NAMEMAKE(firstName, lastName)}
-                </Text>
-              </View>
 
-              <View style = {styles.testWhere2}>
-                <Text style = {styles.videoFooterUserName2}>
-                  {socialMonth.substring(0,3)}&nbsp;
-                </Text>
-                <Text style = {styles.videoFooterUserName2}>
-                  {socialDay}
-                </Text>
 
-              </View>
               {
                 (caption.length==0)?
-                <View style={{minHeight:10, }}>
-                  <Text></Text>
-                </View>
-                :
-                <View style={styles.testWhere4}>
-                  {caption.length>140?
-                    <View style={{  minHeight:10, marginBottom:20, marginTop:10, paddingLeft:5}}>
-                      <TouchableOpacity onPress = {() => this.onPostDirect(calCell, postId)}>
-                        <View style={{flexDirection:'row', width:'92.5%', flexWrap:'wrap',}}>
-
-                            <Text style = {{fontFamily:'Nunito-Bold', color:'white', textShadowColor: 'white',
-                            textShadowOffset: {width: -1, height: 1},
-                            textShadowRadius: 5,}}>{userUsername}</Text>
-                          <Text style={styles.captionText}> {caption.substring(0,140)}</Text>
-                            <Text style={{color:'#bfbfbf'}}> ... see more </Text>
-
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                    :
-                    <View style={styles.testWhere4}>
-                      <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', }}>
-                        <Text>
-                          <Text style = {{fontSize:15, fontFamily:'Nunito-Bold', color:'white' }}>{userUsername+" "}</Text>
-                          <Text style={styles.captionText}>{caption.substring(0,140)}</Text>
-                        </Text>
-                      </View>
-                    </View>
-                  }
-                </View>
-              }
-
-              {/*
-              <View style = {styles.testWhere3}>
-                  <Text style = {styles.videoFooterUserName}>
-                    {socialMonth.substring(0,3)}
-                  </Text>
-                  <Text style = {styles.dayNumTag}>
-                    {socialDay}
-                  </Text>
+              <View style={{position:'absolute', marginTop:435, width:'100%', flexDirection:'row'}}>
+                {this.renderPostInfo(data)}
               </View>
-              */}
+              :
+              <View style={{position:'absolute', marginTop:400, width:'100%', flexDirection:'row'}}>
+                {this.renderPostInfo(data)}
+              </View>
+
+            }
               {
+                (caption.length==0)?
+                <View>
 
-                (like_people.length>3)?
-                <View style={{left:'4%', bottom:'0%', position:'absolute', width:50, height:50}}>
-                  <TouchableOpacity
-                    onPress={() => this.navLikePeople(like_people)}>
-                    <FacePile numFaces={3} faces={likeAvatarList} overlap={1}
-                       circleSize={15} />
-                  </TouchableOpacity>
                 </View>
                 :
+                <View>
 
-                <View style={{left:'0%', bottom:'0%', position:'absolute', width:50, height:50, }}>
-                  <TouchableOpacity
-                    onPress={() => this.navLikePeople(like_people)}>
-                      <FacePile numFaces={3} faces={likeAvatarList} overlap={1}
-                         circleSize={15} />
-                  </TouchableOpacity>
-                </View>
+                  <View style={styles.testWhere4}>
+                      <View style={styles.testWhere4}>
 
-              }
+                        { (caption.length>30)?
+                          <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row',}}>
+                            <Text>
+                              <Text style = {{fontSize:15, fontFamily:'Nunito-Bold', color:'white' }}>{userUsername+" "}</Text>
+                              <Text style={styles.captionText}>{caption.substring(0,75)}</Text>
+                            </Text>
+                          </View>
+                          :
+                          <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', marginBottom:10}}>
+                            <Text>
+                              <Text style = {{fontSize:15, fontFamily:'Nunito-Bold', color:'white' }}>{userUsername+" "}</Text>
+                              <Text style={styles.captionText}>{caption.substring(0,75)}</Text>
+                            </Text>
+                          </View>
 
+                        }
 
-
-              {/*
-                goal.goal ?
-                <View style = {styles.goalContainer}>
-                  {goal.goal.length<25?
-                      <Text style = {styles.goalText}>{(goal.goal)}</Text>
-                    :
-                    <Text style={styles.goalText}>{ (goal.goal).substring(0,25)}...</Text>
-                  }
-                </View>
-                :
-                null
-                */
-              }
-                    {
-                      peopleLikeId.includes(this.props.userId ) ?
-                      <TouchableOpacity
-                        onPress = {() => this.onUnlike(
-                          postId,
-                          this.props.userId,
-                        )}
-                        style = {styles.tagCSS1}>
-                        <View style = {styles.justifyCenter}>
-                          <Heart
-                            stroke = "red"
-                            fill="red"
-                            width = {27.5}
-                            height = {27.5}
-                             />
-                          <Text  style = {styles.statNum}>
-                            {like_people.length}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                      :
-                      <TouchableOpacity
-                        onPress = {() => this.onLike(
-                          postId,
-                          this.props.userId,
-                          ownerId,
-                          notificationToken,
-                          calCell
-                        )}
-                        style = {styles.tagCSS1}>
-                        <View style = {styles.justifyCenter}>
-                          <Heart
-                            stroke = "white"
-                            fill="white"
-                            width = {27.5}
-                            height = {27.5}
-                          />
-                         <Text style = {styles.statNum}>
-                          {like_people.length}
-                        </Text>
-                        </View>
-                      </TouchableOpacity>
-                  }
-
-                <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
-                  <View style = {styles.tagCSStest}>
-                      <View style = {styles.justifyCenter}>
-                        <MessageCircle
-                          stroke = "white"
-                          fill="white"
-                          width ={27.5}
-                          height = {27.5}
-                        />
-                        <Text style = {styles.statNum}>
-                          {calComment}
-                        </Text>
                       </View>
                   </View>
-                </TouchableWithoutFeedback>
+                </View>
+              }
 
-                <LinearGradient
-                  start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
+              <LinearGradient
+                start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
 
-                  style = {{
-                    position: 'absolute',
-                    width: '100%',
-                    bottom: '0%',
-                    height: "30%"
-                  }}
-                  colors = {['transparent', '#000000']}>
-                </LinearGradient>
+                style = {{
+                  position: 'absolute',
+                  width: '100%',
+                  bottom: '0%',
+                  height: "30%"
+                }}
+                colors = {['transparent', '#000000']}>
+              </LinearGradient>
+
+
+                </View>
+
 
                 {/*
                 <View style = {styles.tagCSS3}>
@@ -714,7 +802,7 @@ class SocialNewsfeedPost extends React.Component{
                     </View>
                 </View>
                 */}
-            </View>
+
             {/*
           </TouchableWithoutFeedback>
           */}
@@ -796,6 +884,7 @@ class SocialNewsfeedPost extends React.Component{
     let caption=""
     let calCell=""
     let postId=""
+
 
 
     if(this.props.data) {
@@ -967,11 +1056,11 @@ const styles = StyleSheet.create({
   },
   testWhere4:{
     position:'absolute',
-    bottom:10,
-    // backgroundColor:'red',
+    bottom:7.5,
+
     zIndex:1,
     flexDirection:'row',
-    padding:10,
+    padding:5,
     left:'1%',
     width:'100%',
   },
@@ -997,6 +1086,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     fontFamily:'Nunito-Bold',
     left:5,
+    zIndex:1,
     // fontWeight:'bold',
   },
 
@@ -1023,7 +1113,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
-  
+
     // fontWeight:'bold',
   },
 
@@ -1068,6 +1158,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     color:'white',
+    zIndex:1,
     // backgroundColor:'red',
   },
   justifyCenter1:{
