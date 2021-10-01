@@ -21,6 +21,7 @@ import { connect } from 'react-redux';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import * as Progress from 'react-native-progress';
 import GlobeGroup from './GlobeGroup/GlobeGroup';
+import NoPosts from './noPosts.svg';
 
 const height = Dimensions.get('window').height
 
@@ -53,6 +54,11 @@ class SwipeInfiniteScrollHolder extends React.Component{
     this.props.navigation.navigate("GroupInfo",
 
     );
+  }
+
+  onGroupCreateDirect(){
+      // this function will direct you to the creating group page
+      this.props.navigation.navigate('createSmallGroup')
   }
 
   componentDidUpdate(prevProps){
@@ -103,8 +109,51 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
             })}
 
-              <View name = "tab3" tabLabel = "add">
-                <Text>Find some groups</Text>
+              <View
+                style = {{
+                    alignItems: 'center',
+                    // justifyContent: 'center',
+                    backgroundColor: '#1890ff',
+                    flex: 1}}
+                name = "tab3" tabLabel = "add">
+
+                <View style ={{
+                    top: '15%',
+                    alignItems: 'center'
+                  }}>
+                  <NoPosts width = {150} height = {150} />
+                  <View style = {{
+
+                    }}>
+                    <Text style = {{
+                        top: '15%',
+                        color: 'white',
+                        fontSize: 30
+                      }}>Let's create a group</Text>
+                  </View>
+                  <View style = {{
+                      marginTop: 30
+                    }}>
+                    <TouchableOpacity
+                      style = {{
+                        borderRadius: 25,
+                        width: 250,
+                        height: 55,
+                        backgroundColor: 'white',
+                        justifyContent:'center',
+                        alignItems: 'center'
+
+                      }}
+                      onPress = {() => this.onGroupCreateDirect()}
+                      >
+                      <Text style = {{
+                        fontWeight: 'bold',
+                        color: '#1890ff'}}>Create a group</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                </View>
+
               </View>
 
 

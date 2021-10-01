@@ -15,7 +15,7 @@ import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import { connect } from 'react-redux';
 import NewGlobePost from './NewGlobePost';
 import CountDown from 'react-native-countdown-component';
-
+import NoPosts from '../noPosts.svg';
 
 const height = Dimensions.get("window").height
 
