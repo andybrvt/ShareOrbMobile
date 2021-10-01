@@ -323,7 +323,6 @@ const styles = StyleSheet.create({
   container: {
     height: 50,
     backgroundColor:'blue',
-    borderWidth: 1,
     borderTopWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,

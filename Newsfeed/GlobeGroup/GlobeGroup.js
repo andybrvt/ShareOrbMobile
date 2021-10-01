@@ -25,6 +25,10 @@ class GlobeGroup extends React.Component{
        super(props)
 
        this.initialiseGlobeGroup()
+
+       this.state = {
+         refreshing: false
+       }
     }
 
     initialiseGlobeGroup(){
@@ -79,6 +83,12 @@ class GlobeGroup extends React.Component{
       )
     }
 
+    onRefresh = () => {
+      this.setState({refreshing: true})
+      WebSocketGlobeInstance.fetchGlobePost()
+      this.setState({refreshing: false})
+    }
+
 
 
     render(){
@@ -95,11 +105,13 @@ class GlobeGroup extends React.Component{
 
             <FlatList
               ListHeaderComponent = {this.listHeader}
-
               style = {{flex: 1}}
               data = {groupPosts}
               renderItem = {this.renderItem}
               keyExtractor={(item, index) => String(index)}
+              refreshing = {this.state.refreshing}
+              onRefresh = {() => this.onRefresh()}
+              
                />
 
 

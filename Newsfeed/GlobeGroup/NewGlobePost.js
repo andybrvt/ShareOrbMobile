@@ -20,12 +20,23 @@ class NewGlobePost extends React.Component{
     let groupPic = ""
     let groupName = ""
 
+    let creatorPic = ""
+    let username = ""
+    let firstName = ""
+    let lastName = ""
+
     if(this.props.data){
       if(this.props.data.post){
 
         if(this.props.data.post.itemImage){
           itemImage = `${global.IMAGE_ENDPOINT}` + this.props.data.post.itemImage
         }
+
+        if(this.props.data.post.creator){
+          creatorPic  = `${global.IMAGE_ENDPOINT}`+ this.props.data.post.creator.profile_picture
+          username = this.props.data.post.creator.username
+        }
+
 
 
       }
@@ -41,50 +52,107 @@ class NewGlobePost extends React.Component{
     }
 
     return(
-      <View style = {styles.container}>
+      <View style = {styles.totalHolderContainer}>
 
-        <Image
-          style={styles.cover}
-          resizeMode = "cover"
-          source={{ uri: itemImage }}
-          blurRadius = {15}
-           />
 
-         <View style = {styles.avatarHolder}>
-           <View style={{zIndex:99, borderWidth: 5, borderColor: 'white', borderRadius:250,}}>
-             <Avatar
+        <View>
+          <Text>put the group stuff here</Text>
+        </View>
 
-               size={250}
-               rounded
-               source = {{
-                 uri: itemImage
-               }}
-                />
-           </View>
-         </View>
+        <View style = {styles.container}>
 
-         <View style = {styles.groupAvatar}>
-           <Avatar
-             size = {50}
-             rounded
-             source = {{
-               uri: groupPic
-             }}
-              />
-         </View>
 
-         <View style = {styles.groupName}>
-           <Text style = {{color: 'white'}}>{groupName}</Text>
-         </View>
+            <Image
+              style={styles.cover}
+              resizeMode = "cover"
+              source={{ uri: itemImage }}
+              // blurRadius = {15}
+               />
 
-         <View style = {styles.heartHolder}>
-           <Heart
-             stroke = "red"
-             fill = "red"
-             width = {35}
-             height = {35}
-              />
-         </View>
+             <View style = {styles.ownerHolder}>
+               <View >
+                 <Avatar
+                   size = {40}
+                   rounded
+                   source = {{
+                     uri: groupPic
+                   }}
+                    />
+               </View>
+
+               <View style = {{
+                   marginLeft: 7
+                 }}>
+                 <Text style = {{
+                     color: 'white',
+                     fontSize: 17}}> {global.CAPITALIZE(username)}</Text>
+               </View>
+
+
+             </View>
+
+
+
+           {/*
+             <View style = {styles.avatarHolder}>
+               <View style={{zIndex:99, borderWidth: 5, borderColor: '#1890ff', borderRadius:250,}}>
+                 <Avatar
+
+                   size={250}
+                   rounded
+                   source = {{
+                     uri: itemImage
+                   }}
+                    />
+               </View>
+             </View>
+
+             */}
+
+
+           {/*
+
+
+             <View style = {styles.heartHolder}>
+               <Heart
+                 stroke = "red"
+                 fill = "red"
+                 width = {35}
+                 height = {35}
+                  />
+             </View>
+
+
+             */}
+
+        </View>
+
+        {/*
+          <View style = {styles.sideContainer}>
+            <View style = {styles.sideAvatarContainer}>
+              <Avatar
+                size = {50}
+                rounded
+                source = {{
+                  uri: creatorPic
+                }}
+                 />
+            </View>
+
+            <View style = {styles.sideHeartContainer}>
+              <Heart
+                stroke = "red"
+                fill = "red"
+                width = {35}
+                height = {35}
+                 />
+            </View>
+
+          </View>
+
+
+
+          */}
 
       </View>
 
@@ -93,12 +161,16 @@ class NewGlobePost extends React.Component{
 }
 
 const styles = StyleSheet.create({
-
+  totalHolderContainer: {
+    position: 'relative',
+    // backgroundColor: 'red',
+    marginBottom: 80,
+    // flexDirection: 'row'
+  },
   container: {
 
     backgroundColor: 'lightgray',
-    height: 350,
-    borderRadius: 5,
+    height: 500,
     position: 'relative',
     zIndex: 99,
     // shadowOffset: { width: 1, height: 2 },
@@ -107,11 +179,34 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: '100%',
   },
+  ownerHolder: {
+
+    flexDirection: 'row',
+    position:'absolute',
+    bottom: '5%',
+    left: '3%',
+    alignItems: 'center',
+    justifyContent:'center'
+  },
+  sideContainer: {
+    // backgroundColor: 'yellow',
+    width: '20%',
+    height: 500,
+    alignItems: 'center'
+  },
+  sideAvatarContainer:{
+    position: 'absolute',
+    bottom: '25%'
+  },
+  sideHeartContainer:{
+    position: 'absolute',
+    bottom: '10%'
+  },
   cover: {
     // flex: 1,
-    borderRadius: 5,
+    // borderRadius: 5,
     position: "relative",
-    height: 350,
+    height: 500,
     shadowColor: '#000',
     width:"100%",
     // transform: [{ scale: 0.9 }]
