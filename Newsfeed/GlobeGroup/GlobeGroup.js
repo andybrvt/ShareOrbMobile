@@ -31,6 +31,16 @@ class GlobeGroup extends React.Component{
        }
     }
 
+    componentDidMount(){
+
+
+      const onRefresh = this.props.navigation.addListener("focus", () => {
+
+        WebSocketGlobeInstance.fetchGlobePost()
+
+      })
+    }
+
     initialiseGlobeGroup(){
 
       this.waitForGlobeSocketConnection(() => {
@@ -55,6 +65,9 @@ class GlobeGroup extends React.Component{
           }
         }, 100)
     }
+
+
+
 
 
     renderItem = ({item}) => {
