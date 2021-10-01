@@ -19,6 +19,7 @@ class NewGlobePost extends React.Component{
     let itemImage = ""
     let groupPic = ""
     let groupName = ""
+    let members = []
 
     let creatorPic = ""
     let username = ""
@@ -47,6 +48,9 @@ class NewGlobePost extends React.Component{
         if(this.props.data.group.group_name){
           groupName = this.props.data.group.group_name
         }
+        if(this.props.data.group.members){
+          members = this.props.data.group.members
+        }
 
       }
     }
@@ -55,104 +59,88 @@ class NewGlobePost extends React.Component{
       <View style = {styles.totalHolderContainer}>
 
 
-        <View>
-          <Text>put the group stuff here</Text>
-        </View>
+        <View style = {styles.topContainer}>
 
-        <View style = {styles.container}>
+          <View style = {{
+              backgroundColor: 'green',
+              width: '70%'
+            }}>
 
+            <View style = {{
+                flexDirection: 'row',
 
-            <Image
-              style={styles.cover}
-              resizeMode = "cover"
-              source={{ uri: itemImage }}
-              // blurRadius = {15}
-               />
-
-             <View style = {styles.ownerHolder}>
-               <View >
-                 <Avatar
-                   size = {40}
-                   rounded
-                   source = {{
-                     uri: groupPic
-                   }}
-                    />
-               </View>
-
-               <View style = {{
-                   marginLeft: 7
-                 }}>
-                 <Text style = {{
-                     color: 'white',
-                     fontSize: 17}}> {global.CAPITALIZE(username)}</Text>
-               </View>
-
-
-             </View>
-
-
-
-           {/*
-             <View style = {styles.avatarHolder}>
-               <View style={{zIndex:99, borderWidth: 5, borderColor: '#1890ff', borderRadius:250,}}>
-                 <Avatar
-
-                   size={250}
-                   rounded
-                   source = {{
-                     uri: itemImage
-                   }}
-                    />
-               </View>
-             </View>
-
-             */}
-
-
-           {/*
-
-
-             <View style = {styles.heartHolder}>
-               <Heart
-                 stroke = "red"
-                 fill = "red"
-                 width = {35}
-                 height = {35}
-                  />
-             </View>
-
-
-             */}
-
-        </View>
-
-        {/*
-          <View style = {styles.sideContainer}>
-            <View style = {styles.sideAvatarContainer}>
+              }}>
               <Avatar
-                size = {50}
+                size = {40}
                 rounded
                 source = {{
-                  uri: creatorPic
+                  uri: groupPic
                 }}
                  />
+              <Text>{groupName}</Text>
             </View>
 
-            <View style = {styles.sideHeartContainer}>
-              <Heart
-                stroke = "red"
-                fill = "red"
-                width = {35}
-                height = {35}
-                 />
+          </View>
+
+          <View style = {{
+              width: '30%',
+              backgroundColor: 'purple'
+            }}>
+            <Text>{members.length} members</Text>
+            <View>
+              <Text>Join</Text>
             </View>
 
           </View>
 
 
 
+        </View>
+
+
+        <View style = {styles.bottomContainer}>
+          <Text>Here is the pictures</Text>
+        </View>
+
+
+        {/*
+          <View style = {styles.container}>
+
+
+              <Image
+                style={styles.cover}
+                resizeMode = "cover"
+                source={{ uri: itemImage }}
+                // blurRadius = {15}
+                 />
+
+               <View style = {styles.ownerHolder}>
+                 <View >
+                   <Avatar
+                     size = {40}
+                     rounded
+                     source = {{
+                       uri: groupPic
+                     }}
+                      />
+                 </View>
+
+                 <View style = {{
+                     marginLeft: 7
+                   }}>
+                   <Text style = {{
+                       color: 'white',
+                       fontSize: 17}}> {global.CAPITALIZE(username)}</Text>
+                 </View>
+
+
+               </View>
+
+
+          </View>
+
           */}
+
 
       </View>
 
@@ -165,75 +153,19 @@ const styles = StyleSheet.create({
     position: 'relative',
     // backgroundColor: 'red',
     marginBottom: 80,
+    height: 500
     // flexDirection: 'row'
   },
-  container: {
+  topContainer:{
+    height: '20%',
+    backgroundColor: 'pink',
+    flexDirection:  'row'
+  },
+  bottomContainer: {
+    height: '80%',
+    backgroundColor: 'orange'
+  },
 
-    backgroundColor: 'lightgray',
-    height: 500,
-    position: 'relative',
-    zIndex: 99,
-    // shadowOffset: { width: 1, height: 2 },
-    // shadowOpacity: 0.8,
-    // shadowRadius: 1,
-    elevation: 5,
-    width: '100%',
-  },
-  ownerHolder: {
-
-    flexDirection: 'row',
-    position:'absolute',
-    bottom: '5%',
-    left: '3%',
-    alignItems: 'center',
-    justifyContent:'center'
-  },
-  sideContainer: {
-    // backgroundColor: 'yellow',
-    width: '20%',
-    height: 500,
-    alignItems: 'center'
-  },
-  sideAvatarContainer:{
-    position: 'absolute',
-    bottom: '25%'
-  },
-  sideHeartContainer:{
-    position: 'absolute',
-    bottom: '10%'
-  },
-  cover: {
-    // flex: 1,
-    // borderRadius: 5,
-    position: "relative",
-    height: 500,
-    shadowColor: '#000',
-    width:"100%",
-    // transform: [{ scale: 0.9 }]
-  },
-  avatarHolder: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    backgroundColor: 'transparent',
-    height: 350,
-    width: '100%'
-  },
-  groupAvatar: {
-    position: 'absolute',
-    left: '2%',
-    top: '3%'
-  },
-  groupName: {
-    left: '16%',
-    top: '5%',
-    position: 'absolute',
-  },
-  heartHolder: {
-    position: 'absolute',
-    right: '7%',
-    bottom: '10%'
-  }
 
 })
 

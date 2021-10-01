@@ -658,7 +658,7 @@ class SocialNewsfeedPost extends React.Component{
                     position: 'absolute',
                     width: '100%',
                     bottom: '0%',
-                    height: "20%"
+                    height: "30%"
                   }}
                   colors = {['transparent', '#000000']}>
                   <Text>Here is the gradient</Text>
