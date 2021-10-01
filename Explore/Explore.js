@@ -28,13 +28,10 @@ import SearchResults from './SearchResults';
 import InvitePage from './InvitePage';
 import { Avatar } from 'react-native-elements';
 
-
 const { Value } = Animated;
-
 const {interpolate, Extrapolate, diffClamp, cond, lessOrEq} = Animated;
-
-
 const {width, height} = Dimensions.get('screen')
+
 // This class will be in charge of managing the explore page,
 // the end goal is to show people and a way to find people
 // or just browse through cool stuff that happens through out
@@ -45,9 +42,7 @@ const {width, height} = Dimensions.get('screen')
 // be ok
 
 class Explore extends React.Component{
-
   y = new Value(0);
-
   constructor(props){
     super(props)
     this.state = {
@@ -100,8 +95,6 @@ class Explore extends React.Component{
     const end = start+ addMore;
     axios.get(`${global.IP_CHANGE}/mySocialCal/exploreDay/`+start+'/'+end)
     .then( res => {
-
-
       this.setState({
           exploreCells: exploreCells.concat(res.data),
           start: start+addMore
@@ -135,35 +128,25 @@ class Explore extends React.Component{
         username: username
       })
     }
-
   }
 
   viewGroup = (item) => {
-
     const curId = this.props.id
     const memberList = item.members
-
     if(memberList.includes(curId)){
       this.props.navigation.navigate("Home")
     } else {
       this.props.navigation.navigate("JoinScreen", {
         item:item
       })
-
     }
-
-
-
   }
 
   onChangeNewSearch = e => {
-
    this.setState({
      searchValue: e
    })
-
    const search = e === undefined ? null : e;
-
    if(search !== ""){
      this.setState({
        loading: true
@@ -183,10 +166,8 @@ class Explore extends React.Component{
  } else {
    this.setState({
      searched:[],
-
    })
  }
-
  }
 
  onRefresh = () => {
@@ -241,7 +222,7 @@ class Explore extends React.Component{
                </Animated.View>
 
               */}
-              
+
           {
             this.state.showSearch ?
             <SearchResults

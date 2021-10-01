@@ -18,6 +18,9 @@ import authAxios from '../util';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import InvitePage from './InvitePage';
 import { Avatar } from 'react-native-elements';
+import { connect } from 'react-redux';
+import * as authActions from '../store/actions/auth';
+import { UserCheck, UserPlus} from "react-native-feather";
  // used in conjuction with the newsfeed view so that you
  // can folow people
 const width = Dimensions.get("window").width
@@ -36,22 +39,30 @@ class SuggestedListGroup extends React.Component{
       start: 10,
       addMore: 6,
     }
-
   }
 
-
-
   componentDidMount(){
-
     authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/suggestedGroups')
     .then(res => {
-
       this.setState({
         list: res.data
       })
-
     })
+  }
 
+  onGroupDirect = (item) => {
+    // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
+    // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
+    // JOINSCREEN
+    const curId = this.props.curId
+    const memberList = item.members
+    if(memberList.includes(curId)){
+      this.props.navigation.navigate("Home")
+    } else {
+      this.props.navigation.navigate("JoinScreen", {
+        item:item
+      })
+    }
   }
 
   onFollow = (follower, following, notiToken) => {
@@ -59,7 +70,6 @@ class SuggestedListGroup extends React.Component{
       loading: true,
       itemLoading: following
     })
-
     authAxios.post(`${global.IP_CHANGE}/userprofile/onFollow`, {
       follower: follower,
       following: following
@@ -71,33 +81,41 @@ class SuggestedListGroup extends React.Component{
         recipient: following
       }
       NotificationWebSocketInstance.sendNotification(notificationObject);
-
-
       global.SEND_FOLLOW_NOTIFICAITON(
         notiToken,
         this.props.username,
         this.props.curId
       )
-
       this.props.updateFollowing(res.data)
       this.setState({
         loading: false,
         itemLoading: 0
       })
+    })
+  }
 
-
-
+  joinGroup = (groupId) => {
+    const userId = this.props.curId
+    this.setState({
+      loading: true
+    })
+    // for this you just need group id and userid
+    authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
+    .then(res => {
+      // direct this group to newsfeed and then add it to auth
+      this.setState({
+        loading: false
+      })
+      this.props.authAddSmallGroup(res.data)
+      this.props.navigation.navigate('Home')
     })
   }
 
   frequentChatPeople = (posts) => {
     // this function will be used to render the headers of the
     // chats
-
     return (
-
       <View style = {styles.frequentPeopleContainer}>
-
         {posts.map((item, index) => {
           const image = `${global.IMAGE_ENDPOINT}`+ item.itemImage
           return(
@@ -114,8 +132,6 @@ class SuggestedListGroup extends React.Component{
 
           )
         })}
-
-
       </View>
     )
   }
@@ -186,6 +202,7 @@ class SuggestedListGroup extends React.Component{
   renderItem = ({item}) => {
     const groupPic = `${global.IMAGE_ENDPOINT}`+item.groupPic
     let title = ""
+    let temp=""
     let post = []
     if(item.group_name){
       title = item.group_name
@@ -193,18 +210,45 @@ class SuggestedListGroup extends React.Component{
     if(item.get_socialCalItems){
       post = item.get_socialCalItems
     }
+    if(item.members){
+      temp=item.members
+    }
+    // console.log(item.members.includes(1))
     return(
       <View>
         <View style={{marginLeft:'3.5%', marginBottom:'1%' }}>
           <View style={{flexDirection:'row'}}>
             <Text style={{fontFamily:'Nunito-Bold', fontSize:16 }}>{global.CAPITALIZE(title)}</Text>
-              <View style={styles.inviteButton}>
-                <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12, color:'white' }}>+Join</Text>
-              </View>
-        </View>
 
+              {(temp.includes(this.props.curId))?
+                <View style={styles.inviteButton} onPress = {() => this.joinGroup(item.id)}>
+                  <UserCheck
+                    style={{marginRight:5}}
+                    stroke = "white"
+                    strokeWidth = {2}
+                    height = {12.5}
+                    width = {12.5}
+                     />
+                  <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12, color:'white' }}>Joined</Text>
+                </View>
+              :
+              <TouchableOpacity activeOpacity={0.8} style={styles.inviteButton} onPress = {() => this.joinGroup(item.id)}>
+                <UserPlus
+                  style={{marginRight:5}}
+                  stroke = "white"
+                  strokeWidth = {2}
+                  height = {12.5}
+                  width = {12.5}
+                   />
+                <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12, color:'white' }}>+Join</Text>
+              </TouchableOpacity>
+
+              }
+          </View>
         </View>
-        <View style={{flexDirection:'row', marginLeft:'2.5%' }}>
+        <TouchableOpacity
+          onPress = {() => this.onGroupDirect(item)}
+          style={{flexDirection:'row', marginLeft:'2.5%' }}>
           <View style={{zIndex:99, borderWidth: 2, borderColor: '#2f54eb', borderRadius:75,}}>
             <Avatar
               source = {{
@@ -220,7 +264,7 @@ class SuggestedListGroup extends React.Component{
              horizontal = {true}>
              {this.frequentChatPeople(post)}
            </ScrollView>
-         </View>
+         </TouchableOpacity>
       </View>
     )
   }
@@ -425,6 +469,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#1890ff",
+    flexDirection:'row'
   },
   frequentPeopleContainer: {
     marginTop:20,
@@ -496,4 +541,20 @@ const styles = StyleSheet.create({
 
 })
 
-export default SuggestedListGroup;
+const mapStateToProps = state => {
+  return {
+    followers:state.auth.followers,
+    following:state.auth.following,
+    profile: state.explore.profile,
+    curId: state.auth.id,
+    username: state.auth.username
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SuggestedListGroup);

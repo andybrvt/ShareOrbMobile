@@ -12,12 +12,13 @@ import { Text,
  } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Search,} from "react-native-feather";
-
+import { connect } from "react-redux";
 
 class SearchResults extends React.Component{
-
-
   renderGroupItem = ({item}) => {
+    console.log("GROUPP")
+    console.log(item)
+    console.log(item.mini_member)
 
     return(
       <TouchableOpacity
@@ -35,18 +36,18 @@ class SearchResults extends React.Component{
               }}
             />
           </View>
-        <View style={{
+        <View style={{flex:6,flexDirection:'column'}}>
+            <View style = {{flexDirection: 'row'}}>
+              <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.group_name, "", 20)} </Text>
+            </View>
+            <View>
+            {(item.mini_member.some(item => this.props.currentUser == item.username))?
+              <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12}}>You are part of this group</Text>
+              :
+              <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.members.length} members</Text>
 
-            flex:6,
-            flexDirection:'column',
-            }}>
-          <View style = {{flexDirection: 'row'}}>
-            <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.group_name, "", 20)} </Text>
-          </View>
-          <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.members.length} members</Text>
-
-
-
+            }
+            </View>
         </View>
       </View>
       </TouchableOpacity>
@@ -143,27 +144,28 @@ class SearchResults extends React.Component{
           :
 
           <View style = {{
-              height: 200,
               width: "100%",
               flex: 1,
-
             }}>
             <Text style={styles.settingWord}>Users</Text>
             <FlatList
-              style = {{flex: 1}}
+            
               data = {data}
               renderItem = {this.renderItem}
               keyExtractor={(item, index) => String(index)}
 
                />
-             <Text style={styles.settingWord}>Groups</Text>
-             <FlatList
-               style = {{flex: 1}}
-               data = {groupData}
-               renderItem = {this.renderGroupItem}
-               keyExtractor={(item, index) => String(index)}
+             <View style={{marginTop:15}}>
+               <Text style={styles.settingWord}>Groups</Text>
+               </View>
+               <FlatList
 
-                />
+                 data = {groupData}
+                 renderItem = {this.renderGroupItem}
+                 keyExtractor={(item, index) => String(index)}
+
+                  />
+
           </View>
         }
 
@@ -182,5 +184,15 @@ const styles = StyleSheet.create({
   },
 })
 
+const mapStateToProps = state => {
+  return {
+    userId: state.auth.id,
+    currentUser: state.auth.username,
+    profilepic: state.auth.profilePic,
+    socialComments: state.socialNewsfeed.socialComments,
+    commentHost: state.socialNewsfeed.commentHost,
+    cellDate: state.socialNewsfeed.cellDate
+  }
+}
 
-export default SearchResults;
+ export default connect(mapStateToProps)(SearchResults);

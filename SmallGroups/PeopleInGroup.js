@@ -70,8 +70,6 @@ import * as authActions from '../store/actions/auth';
    }
 
    renderItem = ({item}) => {
-
-
      return (
        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.selectItem(item)}>
          <View style = {styles.chatBox}>
@@ -98,13 +96,11 @@ import * as authActions from '../store/actions/auth';
      )
    }
 
-
    render(){
      let num=this.state.members.length
      this.props.navigation.setOptions({
         title: `${num} people`,
      })
-
      // if(this.props.profile){
      //   if(this.props.profile.get_following){
      //     data = this.props.profile.get_following
