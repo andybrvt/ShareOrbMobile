@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity,
 ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback} from 'react-native';
 import { Navigation2, Heart, MessageCircle, VolumeX, Volume2 } from "react-native-feather";
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { Avatar } from 'react-native-elements';
 
@@ -62,34 +63,66 @@ class NewGlobePost extends React.Component{
         <View style = {styles.topContainer}>
 
           <View style = {{
-              backgroundColor: 'green',
-              width: '70%'
+              width: '65%',
+              justifyContent: 'center'
             }}>
 
             <View style = {{
                 flexDirection: 'row',
-
+                alignItems: 'center',
+                marginLeft: 10
               }}>
               <Avatar
-                size = {40}
+                size = {50}
                 rounded
                 source = {{
                   uri: groupPic
                 }}
                  />
-              <Text>{groupName}</Text>
-            </View>
+               <View style = {{
+                   marginLeft: 10
+                 }}>
+                 <Text style = {{
+                    fontSize: 20,
+                    }}>{global.CAPITALIZE(groupName)}</Text>
+                  <View style = {{
+                      // alignItems: 'center',
+                      // justifyContent: 'center'
+                    }}>
+                    <Text>{members.length} members</Text>
+                  </View>
+               </View>
+
+          </View>
 
           </View>
 
           <View style = {{
-              width: '30%',
-              backgroundColor: 'purple'
+              width: '35%',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}>
-            <Text>{members.length} members</Text>
-            <View>
-              <Text>Join</Text>
-            </View>
+
+
+            {
+              members.includes(this.props.id) ?
+
+              <View style = {styles.joinedbtn} >
+                <Text style = {{color: 'white'}}>Joined</Text>
+              </View>
+
+              :
+
+
+              <TouchableOpacity style = {styles.joinbtn} >
+                <Text style = {{color: 'white'}}>Join</Text>
+              </TouchableOpacity>
+
+
+
+            }
+
+
 
           </View>
 
@@ -99,7 +132,28 @@ class NewGlobePost extends React.Component{
 
 
         <View style = {styles.bottomContainer}>
-          <Text>Here is the pictures</Text>
+          <Image
+            style={styles.cover}
+            resizeMode = "cover"
+            source={{ uri: itemImage }}
+            // blurRadius = {15}
+             />
+
+             <LinearGradient
+               start={{x: 0, y: 0}} end={{x: 0, y: 1}}
+
+               style = {{
+                 position: 'absolute',
+                 width: '100%',
+                 bottom: '0%',
+                 height: "30%"
+               }}
+               colors = {['transparent', '#000000']}>
+             </LinearGradient>
+
+
+
+
         </View>
 
 
@@ -107,12 +161,7 @@ class NewGlobePost extends React.Component{
           <View style = {styles.container}>
 
 
-              <Image
-                style={styles.cover}
-                resizeMode = "cover"
-                source={{ uri: itemImage }}
-                // blurRadius = {15}
-                 />
+
 
                <View style = {styles.ownerHolder}>
                  <View >
@@ -152,19 +201,38 @@ const styles = StyleSheet.create({
   totalHolderContainer: {
     position: 'relative',
     // backgroundColor: 'red',
-    marginBottom: 80,
+    marginBottom: 20,
     height: 500
     // flexDirection: 'row'
   },
   topContainer:{
-    height: '20%',
-    backgroundColor: 'pink',
+    height: '18%',
     flexDirection:  'row'
   },
   bottomContainer: {
-    height: '80%',
-    backgroundColor: 'orange'
+    height: '82%',
+    backgroundColor: 'gainsboro'
   },
+  joinbtn: {
+    height: 40,
+    width: '80%',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: 'limegreen',
+    borderRadius: 20
+  },
+  joinedbtn: {
+    height: 40,
+    width: '80%',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: 'gray',
+    borderRadius: 20
+  },
+  cover: {
+    width: '100%',
+    height: '100%'
+  }
 
 
 })

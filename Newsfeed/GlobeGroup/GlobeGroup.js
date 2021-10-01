@@ -60,7 +60,9 @@ class GlobeGroup extends React.Component{
     renderItem = ({item}) => {
 
       return(
-        <NewGlobePost data = {item}/>
+        <NewGlobePost
+          id = {this.props.id}
+          data = {item}/>
       )
     }
 
@@ -104,14 +106,14 @@ class GlobeGroup extends React.Component{
 
 
             <FlatList
-              ListHeaderComponent = {this.listHeader}
+              // ListHeaderComponent = {this.listHeader}
               style = {{flex: 1}}
               data = {groupPosts}
               renderItem = {this.renderItem}
               keyExtractor={(item, index) => String(index)}
               refreshing = {this.state.refreshing}
               onRefresh = {() => this.onRefresh()}
-              
+
                />
 
 
@@ -123,7 +125,8 @@ class GlobeGroup extends React.Component{
 
 const mapStateToProps = state => {
   return{
-    globePosts: state.globeGroup.globePosts
+    globePosts: state.globeGroup.globePosts,
+    id: state.auth.id
   }
 }
 
