@@ -326,13 +326,16 @@ class SocialNewsfeedPost extends React.Component{
     let itemImage = "";
     let video = "";
     let calComment = 0;
-
+    let caption="";
     let notificationToken = "";
     let goal = "";
 
     let utc3 = dateFns.format(new Date(), 'h:mma');
 
     if(this.props.data){
+      if(this.props.data.caption){
+        caption = this.props.data.caption
+      }
       if(this.props.data.creator){
         if(this.props.data.creator.profile_picture){
           profilePic = `${global.IMAGE_ENDPOINT}`+this.props.data.creator.profile_picture
@@ -523,6 +526,7 @@ class SocialNewsfeedPost extends React.Component{
 
                 </TouchableOpacity>
               </GestureRecognizer>
+
                 <Avatar
                   style={styles.close}
                   onPress = {() => this.props.ViewProfile(userUsername)}
@@ -542,6 +546,50 @@ class SocialNewsfeedPost extends React.Component{
               </View>
 
               <View style = {styles.testWhere2}>
+                <Text style = {styles.videoFooterUserName2}>
+                  {socialMonth.substring(0,3)}&nbsp;
+                </Text>
+                <Text style = {styles.videoFooterUserName2}>
+                  {socialDay}
+                </Text>
+
+              </View>
+              {
+                (caption.length==0)?
+                <View style={{minHeight:10, }}>
+                  <Text></Text>
+                </View>
+                :
+                <View style={styles.testWhere4}>
+                  {caption.length>140?
+                    <View style={{  minHeight:10, marginBottom:20, marginTop:10, paddingLeft:5}}>
+                      <TouchableOpacity onPress = {() => this.onPostDirect(calCell, postId)}>
+                        <View style={{flexDirection:'row', width:'92.5%', flexWrap:'wrap',}}>
+
+                            <Text style = {{fontFamily:'Nunito-Bold', color:'white', textShadowColor: 'white',
+                            textShadowOffset: {width: -1, height: 1},
+                            textShadowRadius: 5,}}>{userUsername}</Text>
+                          <Text style={styles.captionText}> {caption.substring(0,140)}</Text>
+                            <Text style={{color:'#bfbfbf'}}> ... see more </Text>
+
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                    :
+                    <View style={styles.testWhere4}>
+                      <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', }}>
+                        <Text>
+                          <Text style = {{fontSize:15, fontFamily:'Nunito-Bold', color:'white' }}>{userUsername+" "}</Text>
+                          <Text style={styles.captionText}>{caption.substring(0,140)}</Text>
+                        </Text>
+                      </View>
+                    </View>
+                  }
+                </View>
+              }
+
+              {/*
+              <View style = {styles.testWhere3}>
                   <Text style = {styles.videoFooterUserName}>
                     {socialMonth.substring(0,3)}
                   </Text>
@@ -549,7 +597,7 @@ class SocialNewsfeedPost extends React.Component{
                     {socialDay}
                   </Text>
               </View>
-
+              */}
               {
 
                 (like_people.length>3)?
@@ -576,18 +624,14 @@ class SocialNewsfeedPost extends React.Component{
 
               {/*
                 goal.goal ?
-
                 <View style = {styles.goalContainer}>
                   {goal.goal.length<25?
                       <Text style = {styles.goalText}>{(goal.goal)}</Text>
                     :
                     <Text style={styles.goalText}>{ (goal.goal).substring(0,25)}...</Text>
                   }
-
                 </View>
-
                 :
-
                 null
                 */
               }
@@ -636,13 +680,13 @@ class SocialNewsfeedPost extends React.Component{
                   }
 
                 <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
-                  <View style = {styles.tagCSS2}>
+                  <View style = {styles.tagCSStest}>
                       <View style = {styles.justifyCenter}>
                         <MessageCircle
                           stroke = "white"
                           fill="white"
-                          width ={30}
-                          height = {30}
+                          width ={27.5}
+                          height = {27.5}
                         />
                         <Text style = {styles.statNum}>
                           {calComment}
@@ -652,16 +696,15 @@ class SocialNewsfeedPost extends React.Component{
                 </TouchableWithoutFeedback>
 
                 <LinearGradient
-                  start={{x: 0, y: 0}} end={{x: 0, y: 1}}
+                  start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
 
                   style = {{
                     position: 'absolute',
                     width: '100%',
                     bottom: '0%',
-                    height: "20%"
+                    height: "30%"
                   }}
                   colors = {['transparent', '#000000']}>
-                  <Text>Here is the gradient</Text>
                 </LinearGradient>
 
                 {/*
@@ -828,37 +871,7 @@ class SocialNewsfeedPost extends React.Component{
               {this.revealPhoto()}
 
           </View>
-          {
-            (caption.length==0)?
-            <View style={{minHeight:10, }}>
-              <Text></Text>
-            </View>
-            :
-            <View>
-              {caption.length>140?
-                <View style={{  minHeight:10, marginBottom:20, marginTop:10, paddingLeft:5}}>
-                  <TouchableOpacity onPress = {() => this.onPostDirect(calCell, postId)}>
-                    <View style={{flexDirection:'row', width:'92.5%', flexWrap:'wrap',}}>
-                      <Text>
-                        <Text style = {{fontFamily:'Nunito-Bold'}}>{userUsername}</Text>
-                        <Text style={{fontFamily:'Nunito-SemiBold'}}> {caption.substring(0,140)}</Text>
-                        <Text style={{color:'#bfbfbf'}}> ... see more </Text>
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-                :
-                <View style={{minHeight:10, marginBottom:20, marginTop:10,paddingLeft:5,}}>
-                  <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', }}>
-                    <Text>
-                      <Text style = {{fontSize:15, fontFamily:'Nunito-Bold', }}>{userUsername+" "}</Text>
-                      <Text style={{fontFamily:'Nunito-SemiBold'}}>{caption.substring(0,140)}</Text>
-                    </Text>
-                  </View>
-                </View>
-              }
-            </View>
-          }
+
         </View>
       </View>
     )
@@ -927,13 +940,22 @@ const styles = StyleSheet.create({
 
   testWhere:{
     position:'absolute',
-    top:'1%',
+    bottom:'15%',
     padding:10,
     left:'12%',
     width:'50%',
      // backgroundColor:'red',
   },
   testWhere2:{
+    position:'absolute',
+    bottom:'11%',
+    flexDirection:'row',
+    padding:10,
+    left:'12%',
+    width:'100%',
+     // backgroundColor:'red',
+  },
+  testWhere3:{
     position:'absolute',
     top:'1%',
     padding:10,
@@ -942,6 +964,16 @@ const styles = StyleSheet.create({
     flexDirection:'column',
     alignItems:'center',
      // backgroundColor:'red',
+  },
+  testWhere4:{
+    position:'absolute',
+    bottom:10,
+    // backgroundColor:'red',
+    zIndex:1,
+    flexDirection:'row',
+    padding:10,
+    left:'1%',
+    width:'100%',
   },
   timeStampPost: {
 
@@ -973,10 +1005,25 @@ const styles = StyleSheet.create({
     fontSize:15,
     fontFamily:'Nunito-Bold',
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    zIndex:1,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
 
+    // fontWeight:'bold',
+  },
+
+  videoFooterUserName2: {
+    color:'white',
+    fontSize:13,
+    fontFamily:'Nunito-Bold',
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    zIndex:1,
+    color:'white',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+  
     // fontWeight:'bold',
   },
 
@@ -989,7 +1036,13 @@ const styles = StyleSheet.create({
   //   textShadowOffset: {width: -1, height: 1},
   //   textShadowRadius: 10
   // }
-
+  captionText:{
+    fontFamily:'Nunito-SemiBold',
+      textShadowColor: 'black',
+      textShadowOffset: {width: -1, height: 1},
+      textShadowRadius: 5,
+      color:'white'
+  },
   videoFooter: {
 
     fontSize:14,
@@ -1030,13 +1083,30 @@ const styles = StyleSheet.create({
     // backgroundColor: 'rgba(0,0,0,.6)',
     padding:15,
     borderRadius:25,
+
+    bottom:'12.5%',
+    justifyContent: 'center',
+    fontSize:13,
+    right:'17.5%',
+    zIndex:1,
     color:'white',
-    bottom:'30%',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
+  },
+  tagCSStest: {
+    position:'absolute',
+    // backgroundColor: 'rgba(0,0,0,.6)',
+    padding:15,
+    borderRadius:25,
+
+    bottom:'12.5%',
     justifyContent: 'center',
     fontSize:13,
     right:7.5,
     zIndex:1,
-    flex:1,
+    color:'white',
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
@@ -1050,9 +1120,10 @@ const styles = StyleSheet.create({
     padding:15,
     borderRadius:25,
     color:'white',
-    bottom:'17.5%',
+    bottom:'7.5%',
     fontSize:13,
     right:7.5,
+    color:'white',
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
@@ -1128,11 +1199,12 @@ const styles = StyleSheet.create({
   },
   close: {
     margin: 5,
+    zIndex:1,
     position: "absolute",
-    top: 5,
+    bottom:'12%',
     left: 5,
     width: 35,
-    height: 35,
+    height: 40,
     color: "tomato"
   },
 

@@ -191,21 +191,17 @@ class GroupInfo extends React.Component{
 
     return(
       <BackgroundContainer>
-
         <View underlayColor="#f0f0f0">
           <View style={{
-              alignItems:'center',
-              justifyContent:'center',
-              flexDirection:'row',
 
+              flexDirection:'column',
             }}>
-
             <View style={{flexDirection:'column',
               alignItems:'center',
               justifyContent:'center',
-
               width:'100%',
-              // backgroundColor:'red',
+        
+
             }}>
             {/*
               <View style={{flexDirection:'row', alignItems:'center', marginBottom:'5%',}}>
@@ -221,7 +217,7 @@ class GroupInfo extends React.Component{
                 </TouchableOpacity>
               </View>
             */}
-            <View>
+
               <TouchableOpacity   onPress={() => this.bs.current.snapTo(0)}>
                 <Avatar
                   rounded
@@ -232,7 +228,6 @@ class GroupInfo extends React.Component{
                    />
               </TouchableOpacity>
 
-            </View>
               <View style={{
                 marginTop:10,
                 }}>
@@ -242,12 +237,15 @@ class GroupInfo extends React.Component{
                   </TouchableOpacity>
               </View>
             </View>
-           </View>
 
-           <View style={{ alignItems:'center', marginTop:25, marginBottom:25,}}>
-             <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
-               {description}
-             </Text>
+
+            <View style={{ }}>
+            <View style={{ alignItems:'center', marginTop:25, marginBottom:25,}}>
+              <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
+                {description}
+              </Text>
+            </View>
+            </View>
            </View>
 
            <TouchableHighlight underlayColor="#f0f0f0" onPress = {()=>this.navInvitePeople()}>
