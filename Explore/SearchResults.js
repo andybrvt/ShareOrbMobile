@@ -149,7 +149,7 @@ class SearchResults extends React.Component{
             }}>
             <Text style={styles.settingWord}>Users</Text>
             <FlatList
-              style = {{flex: 1}}
+            
               data = {data}
               renderItem = {this.renderItem}
               keyExtractor={(item, index) => String(index)}
@@ -159,7 +159,7 @@ class SearchResults extends React.Component{
                <Text style={styles.settingWord}>Groups</Text>
                </View>
                <FlatList
-                 style = {{flex: 1}}
+
                  data = {groupData}
                  renderItem = {this.renderGroupItem}
                  keyExtractor={(item, index) => String(index)}

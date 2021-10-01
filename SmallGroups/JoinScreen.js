@@ -331,14 +331,14 @@ class JoinScreen extends React.Component{
                            <TouchableOpacity
                              onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
                              style = {styles.declineButton}>
-                               <Text style = {styles.joinText}>Join</Text>
+                               <Text style = {styles.joinText}>Decline</Text>
                              </TouchableOpacity>
                        </View>
                        <View style = {styles.buttonHolder}>
                            <TouchableOpacity
                              onPress = {() => this.joinPrivateGroup(group.id, group.groupCode)}
                              style = {styles.acceptButton}>
-                               <Text style = {styles.joinText}>Join</Text>
+                               <Text style = {styles.joinText}>Accept</Text>
                              </TouchableOpacity>
                        </View>
                      </View>
@@ -508,8 +508,6 @@ class JoinScreen extends React.Component{
     color: '#fff',
   },
    inputHolder:{
-     flex: 1,
-     // backgroundColor: 'red',
      alignItems: 'center',
      flexDirection: 'row',
    },
@@ -546,19 +544,6 @@ class JoinScreen extends React.Component{
      textShadowOffset: {width: -1, height: 1},
      textShadowRadius: 10,
      borderRadius: 25,
-
-
-   },
-   joinText:{
-     color: 'white',
-     fontSize: 15,
-     fontFamily:'Nunito-SemiBold',
-     padding:15,
-   },
-   buttonHolder:{
-     height: 50,
-     width: '50%',
-     alignItems: 'center'
    },
    acceptButton: {
      width: '70%',
@@ -584,6 +569,18 @@ class JoinScreen extends React.Component{
      height: 50,
 
    },
+   joinText:{
+     color: 'white',
+     fontSize: 18,
+     fontFamily:'Nunito-SemiBold',
+     padding:15,
+   },
+   buttonHolder:{
+     height: 50,
+     width: '50%',
+     alignItems: 'center'
+   },
+
    bottomContainer: {
      height: '25%',
      width: width,
