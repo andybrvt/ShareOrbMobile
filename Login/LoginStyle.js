@@ -58,7 +58,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     position: "relative",
     width: "70%",
-    borderRadius: 10,
+    borderRadius: 25,
     height: 50,
     alignItems: "center",
     justifyContent: "center",

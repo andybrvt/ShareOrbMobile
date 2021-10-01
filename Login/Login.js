@@ -80,6 +80,10 @@ class Login extends React.Component{
 
   }
 
+  handleSignupDirect = () => {
+    this.props.navigation.navigate('AppIntro')
+  }
+
   handleInviteSubmit = () => {
     const code = this.state.inviteCode;
     this.setState({
@@ -189,47 +193,51 @@ class Login extends React.Component{
               </TouchableOpacity>
 
               */}
-            <View
-               style = {styles.signUpBtn}>
-               <TextInput
-                 autoCapitalize="none"
-                 onChangeText = {this.handleCode}
-                 style = {styles.inviteInput}
-                 placeholder = "Enter invite code"
-                 value = {this.state.inviteCode}
-                 />
+            <TouchableOpacity
+              onPress = {() => this.handleSignupDirect()}
+              style = {styles.signUpBtn}>
+
+              <Text >Sign up</Text>
+               {/*
+                 <TextInput
+                   autoCapitalize="none"
+                   onChangeText = {this.handleCode}
+                   style = {styles.inviteInput}
+                   placeholder = "Enter invite code"
+                   value = {this.state.inviteCode}
+                   />
 
 
 
-                 {
-                   this.state.inviteLoading ?
+                   {
+                     this.state.inviteLoading ?
 
-                   <TouchableOpacity style = {{
+                     <TouchableOpacity style = {{
+                         width: "25%",
+                         alignItems: 'center'
+                       }}>
+                      <ActivityIndicator />
+
+                      </TouchableOpacity>
+
+                   :
+
+                   <TouchableOpacity
+                     onPress = {() => this.handleInviteSubmit()}
+                      style = {{
                        width: "25%",
                        alignItems: 'center'
                      }}>
-                    <ActivityIndicator />
+                    <ArrowRightCircle />
 
                     </TouchableOpacity>
 
-                 :
-
-                 <TouchableOpacity
-                   onPress = {() => this.handleInviteSubmit()}
-                    style = {{
-                     width: "25%",
-                     alignItems: 'center'
-                   }}>
-                  <ArrowRightCircle />
-
-                  </TouchableOpacity>
-
-                 }
+                   }
 
 
+                 */}
 
-
-            </View>
+            </TouchableOpacity>
 
 
 

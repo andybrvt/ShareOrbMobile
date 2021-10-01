@@ -52,6 +52,10 @@ class BasicSignUp extends React.Component{
   componentDidMount(){
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+
+    if(this.props.visible){
+      this.textInput.focus()
+    }
   }
 
   _keyboardDidShow(e){
