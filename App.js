@@ -423,6 +423,19 @@ class App extends Component{
 
   componentDidUpdate(prevProps){
     if(this.props.isAuthenticated){
+
+      if(this.props.id === null){
+
+        this.props.grabUserCredentials()
+
+      }
+
+      if(this.props.id !== null){
+
+  
+      }
+
+
       // This one is when you have an update of the props, especially whne you
       // login... check if you are authenticated and then
       // grab the userinfromation
@@ -445,9 +458,10 @@ class App extends Component{
       }
 
 
-      if(prevProps !== this.props){
+      if(prevProps.username !== this.props.username){
         // might just put the user in a dictionary but we will see
-          this.props.grabUserCredentials()
+          // this.props.grabUserCredentials()
+          console.log('grab users here')
       }
 
       if(parseInt(this.props.id) !== parseInt(prevProps.id) && this.props.id !== null && this.props.username !== null){
@@ -1221,6 +1235,8 @@ const mapStateToProps = state => {
     notificationSeen: state.auth.notificationSeen,
     dailyNotification: state.auth.dailyNotification,
     isInvited: state.auth.inviToken !== null,
+    smallGroups:state.auth.smallGroups,
+    smallGroupIds: state.auth.smallGroupIds
   }
 }
 
@@ -1261,7 +1277,9 @@ const mapDispatchToProps = dispatch => {
     loadSmallGroupsPost: (posts) => dispatch(smallGroupsActions.loadSmallGroupsPost(posts)),
     sendGroupPost: (post) => dispatch(smallGroupsActions.sendGroupPost(post)),
 
-    fetchGlobePost: (posts) => dispatch(globeGroupActions.fetchGlobePost(posts))
+    fetchGlobePost: (posts) => dispatch(globeGroupActions.fetchGlobePost(posts)),
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
+
     }
 }
 

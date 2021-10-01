@@ -234,7 +234,8 @@ import * as exploreActions from '../store/actions/explore';
       const profileInfo = {
         first_name: res.data.first_name,
         username: res.data.username,
-        profile_picture: pic
+        profile_picture: pic,
+        bio: res.data.bio
       }
 
       this.props.changeProfileInfoAuth(profileInfo);

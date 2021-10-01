@@ -86,7 +86,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
           <ScrollableTabView
             style={{ marginTop:10 }}
-             initialPage={0}
+             initialPage={1}
              renderTabBar={() => <ScrollableTabBarNew
                navigation = {this.props.navigation}
                curLoad = {this.props.curLoad}
