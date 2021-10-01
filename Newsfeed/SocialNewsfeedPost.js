@@ -651,6 +651,19 @@ class SocialNewsfeedPost extends React.Component{
                   </View>
                 </TouchableWithoutFeedback>
 
+                <LinearGradient
+                  start={{x: 0, y: 0}} end={{x: 0, y: 1}}
+
+                  style = {{
+                    position: 'absolute',
+                    width: '100%',
+                    bottom: '0%',
+                    height: "20%"
+                  }}
+                  colors = {['transparent', '#000000']}>
+                  <Text>Here is the gradient</Text>
+                </LinearGradient>
+
                 {/*
                 <View style = {styles.tagCSS3}>
                     <View style = {styles.justifyCenter}>
@@ -793,7 +806,7 @@ class SocialNewsfeedPost extends React.Component{
           style = {{
             width: '100%',
           }}>
-        
+
           {/*
           <Animated.Code>
             {() => cond(
