@@ -862,7 +862,7 @@ class CameraScreen extends React.Component{
                     behavior = "height"
                     keyboardVerticalOffset = {10}
                     >
-                    <Text style={{fontSize:16, paddingBottom:10, fontFamily:'Nunito-Bold'}}> Thoughts</Text>
+                    <Text style={{fontSize:16, paddingBottom:10, fontFamily:'Nunito-Bold'}}> Thoughts ({this.state.caption.length}/75)</Text>
                    <View
                      style = {{
                        // backgroundColor: "whitesmoke",
@@ -872,17 +872,20 @@ class CameraScreen extends React.Component{
                      }}
                      >
                      <TextInput
-                       onContentSizeChange={(event) => {
-                          // event.preventDefult()
-                          this.setState({
-                            height: event.nativeEvent.contentSize.height
-                          })
-                       }}
+                       // onContentSizeChange={(event) => {
+                       //    // event.preventDefult()
+                       //    this.setState({
+                       //      height: event.nativeEvent.contentSize.height
+                       //    })
+                       // }}
+                       maxLength={75}
                        style={{fontFamily:'Nunito', color:'#595959', fontSize:15}}
                        value = {this.state.caption}
                        onChangeText = {this.changeCaption}
                        placeholder = "Write something here..."
                        multiline = {true}
+
+                       blurOnSubmit={true}
                        ref={(input) => { this.textInput = input; }}
                         />
                    </View>
