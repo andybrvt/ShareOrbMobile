@@ -61,6 +61,7 @@ class GlobeGroup extends React.Component{
 
       return(
         <NewGlobePost
+          navigation = {this.props.navigation}
           id = {this.props.id}
           data = {item}/>
       )
@@ -95,7 +96,6 @@ class GlobeGroup extends React.Component{
 
     render(){
 
-      console.log(this.props, 'globegroup')
       let groupPosts = []
       if(this.props.globePosts){
         groupPosts = this.props.globePosts

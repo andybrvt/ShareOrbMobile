@@ -11,13 +11,22 @@ const width = Dimensions.get("window").width
 
 class NewGlobePost extends React.Component{
 
+  viewGroup = (item) => {
+
+
+    this.props.navigation.navigate("JoinScreen", {
+      item:item
+    })
+
+  }
+
 
   render(){
 
-    console.log(this.props.data, 'data here')
 
     let postId = ""
     let itemImage = ""
+    let group = {}
     let groupPic = ""
     let groupName = ""
     let members = []
@@ -43,6 +52,7 @@ class NewGlobePost extends React.Component{
 
       }
       if(this.props.data.group){
+        group = this.props.data.group
         if(this.props.data.group.groupPic){
           groupPic = `${global.IMAGE_ENDPOINT}` + this.props.data.group.groupPic
         }
@@ -114,7 +124,9 @@ class NewGlobePost extends React.Component{
               :
 
 
-              <TouchableOpacity style = {styles.joinbtn} >
+              <TouchableOpacity
+                onPress = {() => this.viewGroup(group)}
+                style = {styles.joinbtn} >
                 <Text style = {{color: 'white'}}>Join</Text>
               </TouchableOpacity>
 
