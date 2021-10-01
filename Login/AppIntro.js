@@ -66,7 +66,7 @@ class AppIntro extends React.Component{
     allowMicrophone: false,
     allowNotifications:false,
     allowGallery:false,
-    one: false,
+    one: true,
     two: false,
     three: false,
     four: false,
@@ -121,12 +121,13 @@ class AppIntro extends React.Component{
   openModal = (modalNum) => {
     // this function will open a specific modal
     if(modalNum === 'one'){
-      this.setState({
-        one:true,
-        videoPlaying:false,
-        resumeOnce:true,
-      })
-      this.video.current.pauseAsync()
+      // this.setState({
+      //   one:true,
+      //   videoPlaying:false,
+      //   resumeOnce:true,
+      // })
+      // this.video.current.pauseAsync()
+      console.log('stuff here')
     }
     if(modalNum === 'two'){
       this.setState({
@@ -162,9 +163,11 @@ class AppIntro extends React.Component{
 
   closeModal = (modalNum) => {
     if(modalNum === 'one'){
-      this.setState({
-        one:false
-      })
+      // this.setState({
+      //   one:false
+      // })
+      this.props.navigation.navigate('Login')
+      console.log('stuff here')
     }
     if(modalNum === 'two'){
       this.setState({
@@ -250,6 +253,13 @@ class AppIntro extends React.Component{
     })
   }
 
+  componentDidUpdate(prevProps){
+
+    if(this.props.isAuthenticated === true){
+      this.props.navigation.navigate("LoadingScreen")
+    }
+  }
+
   onSignupSubmit = () => {
     this.setState({
       loading: true
@@ -280,8 +290,9 @@ class AppIntro extends React.Component{
         this.setState({
           loading:false
         })
+        console.log(token)
         this.props.authSuccess(token);
-
+        this.props.navigation.navigate("")
       })
       // change userprofile picture using username
     })
@@ -298,7 +309,8 @@ class AppIntro extends React.Component{
     return(
       <View style = {{flex: 1}}>
           <View style = {{alignItems:'center'}}>
-            {(this.state.one==true||this.state.two==true||this.state.three==true||this.state.four==true
+
+            {/*(this.state.one==true||this.state.two==true||this.state.three==true||this.state.four==true
               ||this.state.five==true||this.state.six==true||this.state.seven==true)?
                 <View><Text></Text></View>
               :
@@ -318,51 +330,58 @@ class AppIntro extends React.Component{
                 }
 
               </View>
-            }
-            <View>
-              <View style={{flex:5, justifyContent:'center', alignItems:'center'}}>
-                <Video
-                  ref={this.video}
-                  style={{width:height,
-                     height: Platform.OS === 'ios' ? width : width+35,
-                     transform: [{ rotate: '270deg' }], }}
-                  source = {test1}
-                  resizeMode="contain"
-                  // isLooping
-                  shouldPlay={true}
-                />
-                <View>
+            */}
 
-                {this.state.videoPlaying==false?
-                  <TouchableOpacity onPress={()=>this.resumeVid()}>
-                    <Text style={{fontSize:18, color:'white'}}>Resume</Text>
-                  </TouchableOpacity>
-                :
-                <Text></Text>
-                }
+            {/*
+              <View>
+                <View style={{flex:5, justifyContent:'center', alignItems:'center'}}>
+                  <Video
+                    ref={this.video}
+                    style={{width:height,
+                       height: Platform.OS === 'ios' ? width : width+35,
+                       transform: [{ rotate: '270deg' }], }}
+                    source = {test1}
+                    resizeMode="contain"
+                    // isLooping
+                    shouldPlay={true}
+                  />
+                  <View>
+
+                  {this.state.videoPlaying==false?
+                    <TouchableOpacity onPress={()=>this.resumeVid()}>
+                      <Text style={{fontSize:18, color:'white'}}>Resume</Text>
+                    </TouchableOpacity>
+                  :
+                  <Text></Text>
+                  }
+                  </View>
                 </View>
               </View>
-            </View>
 
-            <View>
-              <Text></Text>
-            </View>
-            <SlideWrap visible = {this.state.one}>
-              <BasicSignUp
-                un = {false}
-                pw = {false}
-                em = {false}
-                loading = {this.state.loading}
-                visible = {this.state.one}
-                prompt = {"What's your name?"}
-                value = {this.state.firstName}
-                onChange = {this.onNameChange}
-                closeModal = {this.closeModal}
-                openModal = {this.openModal}
-                closeNum = {'one'}
-                openNum = {'two'}
-                 />
-            </SlideWrap>
+
+              */}
+
+              {/*
+                <SlideWrap visible = {this.state.one}>
+
+                </SlideWrap>
+
+                */}
+
+            <BasicSignUp
+              un = {false}
+              pw = {false}
+              em = {false}
+              loading = {this.state.loading}
+              visible = {this.state.one}
+              prompt = {"What's your name?"}
+              value = {this.state.firstName}
+              onChange = {this.onNameChange}
+              closeModal = {this.closeModal}
+              openModal = {this.openModal}
+              closeNum = {'one'}
+              openNum = {'two'}
+               />
             <SlideWrap visible = {this.state.two}>
               <BirthdaySlide
                 {...this.props}
@@ -554,7 +573,9 @@ const mapStateToProps = state => {
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,
     userId: state.auth.id,
-    username: state.auth.username
+    username: state.auth.username,
+    isAuthenticated: state.auth.token !== null,
+
   }
 }
 const mapDispatchToProps = dispatch => {

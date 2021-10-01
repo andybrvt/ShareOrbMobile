@@ -168,7 +168,7 @@ class MiniAppIntro extends React.Component{
 
               alignItems: 'center'}}>
 
-          {
+          {/*
             this.props.isInvited ?
 
             null
@@ -195,9 +195,9 @@ class MiniAppIntro extends React.Component{
               }
 
             </View>
-          }
+          */}
 
-          {
+          {/*
             this.props.isInvited ?
 
             null
@@ -224,57 +224,44 @@ class MiniAppIntro extends React.Component{
             </View>
 
 
-          }
+          */}
 
-          {
-            this.props.isInvited ?
+          {/*
+            <View style = {{height: height, width: width,  backgroundColor: "#1890ff"}}>
+              <SafeAreaView>
+                <InvitePeople
+                  codeInvite = {this.props.inviteCode}
+                  profilePic = {profilePic}
+                  firstName = {this.props.firstName}
+                  lastName = {this.props.lastName}
+                  closeModal = {this.closeModal}
+                  openModal = {this.openModal}
+                  closeNum = {'one'}
+                  openNum = {'two'}
+                   />
+              </SafeAreaView>
 
+            </View>
 
-              <View style = {{height: height, width: width,  backgroundColor: "#1890ff"}}>
-                <SafeAreaView>
-                  <InvitePeople
-                    codeInvite = {this.props.inviteCode}
-                    profilePic = {profilePic}
-                    firstName = {this.props.firstName}
-                    lastName = {this.props.lastName}
-                    closeModal = {this.closeModal}
-                    openModal = {this.openModal}
-                    closeNum = {'one'}
-                    openNum = {'two'}
-                     />
-                </SafeAreaView>
+            */}
+            <View style = {{height: height, width: width,  backgroundColor: "#1890ff"}}>
 
-              </View>
-
-
-            :
-
-            <SlideWrap visible = {this.state.one}>
-              <InvitePeople
-                codeInvite = {this.props.inviteCode}
-                profilePic = {profilePic}
-                firstName = {this.props.firstName}
-                lastName = {this.props.lastName}
-                closeModal = {this.closeModal}
-                openModal = {this.openModal}
-                closeNum = {'one'}
-                openNum = {'two'}
+              <Permissions
+                onClose = {this.close}
                  />
-            </SlideWrap>
-          }
+            </View>
 
-          <SlideWrap visible = {this.state.two}>
-            <View style={{height:'100%'}}>
-            <SuggestedGroups
-              onClose = {this.close}
-               />
-             </View>
-          </SlideWrap>
-          <SlideWrap visible = {this.state.three}>
-            <Permissions
-              onClose = {this.close}
-               />
-          </SlideWrap>
+            {/*
+              <SlideWrap visible = {this.state.three}>
+                <View style={{height:'100%'}}>
+                <SuggestedGroups
+                  onClose = {this.close}
+                   />
+                 </View>
+              </SlideWrap>
+
+
+              */}
 
 
 

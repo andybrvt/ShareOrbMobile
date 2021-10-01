@@ -19,6 +19,24 @@ const Stack = createNativeStackNavigator();
 class Routes extends React.Component{
 
   render(){
+
+    {/*
+      this.props.isAuthenticated === true ?
+
+      <Stack.Screen name = "LoadingScreen" component = {LoadingScreen} />
+
+      :
+
+      this.props.isInvited === true ?
+
+      <Stack.Screen name = "AppIntro" component = {AppIntro}/>
+
+      :
+
+      <Stack.Screen name = "Login" component = {Login} />
+
+    */}
+
     return(
       <Stack.Navigator screenOptions={{headerShown: false,}}>
         {
@@ -28,16 +46,11 @@ class Routes extends React.Component{
 
           :
 
-          this.props.isInvited === true ?
-
-          <Stack.Screen name = "AppIntro" component = {AppIntro}/>
-
-          :
-
           <Stack.Screen name = "Login" component = {Login} />
 
         }
 
+        <Stack.Screen name = "AppIntro" component = {AppIntro}/>
         <Stack.Screen
            name = "Signup" component = {Signup} />
         <Stack.Screen name = "Explore" component = {Explore} />
