@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity,
 ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback} from 'react-native';
 import { Navigation2, Heart, MessageCircle, VolumeX, Volume2 } from "react-native-feather";
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { Avatar } from 'react-native-elements';
 
@@ -10,15 +11,25 @@ const width = Dimensions.get("window").width
 
 class NewGlobePost extends React.Component{
 
+  viewGroup = (item) => {
+
+
+    this.props.navigation.navigate("JoinScreen", {
+      item:item
+    })
+
+  }
+
 
   render(){
 
-    console.log(this.props.data, 'data here')
 
     let postId = ""
     let itemImage = ""
+    let group = {}
     let groupPic = ""
     let groupName = ""
+    let members = []
 
     let creatorPic = ""
     let username = ""
@@ -41,11 +52,15 @@ class NewGlobePost extends React.Component{
 
       }
       if(this.props.data.group){
+        group = this.props.data.group
         if(this.props.data.group.groupPic){
           groupPic = `${global.IMAGE_ENDPOINT}` + this.props.data.group.groupPic
         }
         if(this.props.data.group.group_name){
           groupName = this.props.data.group.group_name
+        }
+        if(this.props.data.group.members){
+          members = this.props.data.group.members
         }
 
       }
@@ -55,104 +70,138 @@ class NewGlobePost extends React.Component{
       <View style = {styles.totalHolderContainer}>
 
 
-        <View>
-          <Text>put the group stuff here</Text>
-        </View>
+        <View style = {styles.topContainer}>
 
-        <View style = {styles.container}>
+          <View style = {{
+              width: '65%',
+              justifyContent: 'center'
+            }}>
 
-
-            <Image
-              style={styles.cover}
-              resizeMode = "cover"
-              source={{ uri: itemImage }}
-              // blurRadius = {15}
-               />
-
-             <View style = {styles.ownerHolder}>
-               <View >
-                 <Avatar
-                   size = {40}
-                   rounded
-                   source = {{
-                     uri: groupPic
-                   }}
-                    />
-               </View>
-
-               <View style = {{
-                   marginLeft: 7
-                 }}>
-                 <Text style = {{
-                     color: 'white',
-                     fontSize: 17}}> {global.CAPITALIZE(username)}</Text>
-               </View>
-
-
-             </View>
-
-
-
-           {/*
-             <View style = {styles.avatarHolder}>
-               <View style={{zIndex:99, borderWidth: 5, borderColor: '#1890ff', borderRadius:250,}}>
-                 <Avatar
-
-                   size={250}
-                   rounded
-                   source = {{
-                     uri: itemImage
-                   }}
-                    />
-               </View>
-             </View>
-
-             */}
-
-
-           {/*
-
-
-             <View style = {styles.heartHolder}>
-               <Heart
-                 stroke = "red"
-                 fill = "red"
-                 width = {35}
-                 height = {35}
-                  />
-             </View>
-
-
-             */}
-
-        </View>
-
-        {/*
-          <View style = {styles.sideContainer}>
-            <View style = {styles.sideAvatarContainer}>
+            <View style = {{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: 10
+              }}>
               <Avatar
                 size = {50}
                 rounded
                 source = {{
-                  uri: creatorPic
+                  uri: groupPic
                 }}
                  />
-            </View>
+               <View style = {{
+                   marginLeft: 10
+                 }}>
+                 <Text style = {{
+                    fontSize: 20,
+                    }}>{global.CAPITALIZE(groupName)}</Text>
+                  <View style = {{
+                      // alignItems: 'center',
+                      // justifyContent: 'center'
+                    }}>
+                    <Text>{members.length} members</Text>
+                  </View>
+               </View>
 
-            <View style = {styles.sideHeartContainer}>
-              <Heart
-                stroke = "red"
-                fill = "red"
-                width = {35}
-                height = {35}
-                 />
-            </View>
+          </View>
+
+          </View>
+
+          <View style = {{
+              width: '35%',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+
+
+            {
+              members.includes(this.props.id) ?
+
+              <View style = {styles.joinedbtn} >
+                <Text style = {{color: 'white'}}>Joined</Text>
+              </View>
+
+              :
+
+
+              <TouchableOpacity
+                onPress = {() => this.viewGroup(group)}
+                style = {styles.joinbtn} >
+                <Text style = {{color: 'white'}}>Join</Text>
+              </TouchableOpacity>
+
+
+
+            }
+
+
 
           </View>
 
 
 
+        </View>
+
+
+        <View style = {styles.bottomContainer}>
+          <Image
+            style={styles.cover}
+            resizeMode = "cover"
+            source={{ uri: itemImage }}
+            // blurRadius = {15}
+             />
+
+             <LinearGradient
+               start={{x: 0, y: 0}} end={{x: 0, y: 1}}
+
+               style = {{
+                 position: 'absolute',
+                 width: '100%',
+                 bottom: '0%',
+                 height: "30%"
+               }}
+               colors = {['transparent', '#000000']}>
+             </LinearGradient>
+
+
+
+
+        </View>
+
+
+        {/*
+          <View style = {styles.container}>
+
+
+
+
+               <View style = {styles.ownerHolder}>
+                 <View >
+                   <Avatar
+                     size = {40}
+                     rounded
+                     source = {{
+                       uri: groupPic
+                     }}
+                      />
+                 </View>
+
+                 <View style = {{
+                     marginLeft: 7
+                   }}>
+                   <Text style = {{
+                       color: 'white',
+                       fontSize: 17}}> {global.CAPITALIZE(username)}</Text>
+                 </View>
+
+
+               </View>
+
+
+          </View>
+
           */}
+
 
       </View>
 
@@ -164,76 +213,39 @@ const styles = StyleSheet.create({
   totalHolderContainer: {
     position: 'relative',
     // backgroundColor: 'red',
-    marginBottom: 80,
+    marginBottom: 20,
+    height: 500
     // flexDirection: 'row'
   },
-  container: {
-
-    backgroundColor: 'lightgray',
-    height: 500,
-    position: 'relative',
-    zIndex: 99,
-    // shadowOffset: { width: 1, height: 2 },
-    // shadowOpacity: 0.8,
-    // shadowRadius: 1,
-    elevation: 5,
-    width: '100%',
+  topContainer:{
+    height: '18%',
+    flexDirection:  'row'
   },
-  ownerHolder: {
-
-    flexDirection: 'row',
-    position:'absolute',
-    bottom: '5%',
-    left: '3%',
-    alignItems: 'center',
-    justifyContent:'center'
+  bottomContainer: {
+    height: '82%',
+    backgroundColor: 'gainsboro'
   },
-  sideContainer: {
-    // backgroundColor: 'yellow',
-    width: '20%',
-    height: 500,
-    alignItems: 'center'
+  joinbtn: {
+    height: 40,
+    width: '80%',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: 'limegreen',
+    borderRadius: 20
   },
-  sideAvatarContainer:{
-    position: 'absolute',
-    bottom: '25%'
-  },
-  sideHeartContainer:{
-    position: 'absolute',
-    bottom: '10%'
+  joinedbtn: {
+    height: 40,
+    width: '80%',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: 'gray',
+    borderRadius: 20
   },
   cover: {
-    // flex: 1,
-    // borderRadius: 5,
-    position: "relative",
-    height: 500,
-    shadowColor: '#000',
-    width:"100%",
-    // transform: [{ scale: 0.9 }]
-  },
-  avatarHolder: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    backgroundColor: 'transparent',
-    height: 350,
-    width: '100%'
-  },
-  groupAvatar: {
-    position: 'absolute',
-    left: '2%',
-    top: '3%'
-  },
-  groupName: {
-    left: '16%',
-    top: '5%',
-    position: 'absolute',
-  },
-  heartHolder: {
-    position: 'absolute',
-    right: '7%',
-    bottom: '10%'
+    width: '100%',
+    height: '100%'
   }
+
 
 })
 

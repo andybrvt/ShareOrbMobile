@@ -15,7 +15,7 @@ import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import { connect } from 'react-redux';
 import NewGlobePost from './NewGlobePost';
 import CountDown from 'react-native-countdown-component';
-
+import NoPosts from '../noPosts.svg';
 
 const height = Dimensions.get("window").height
 
@@ -29,6 +29,16 @@ class GlobeGroup extends React.Component{
        this.state = {
          refreshing: false
        }
+    }
+
+    componentDidMount(){
+
+
+      const onRefresh = this.props.navigation.addListener("focus", () => {
+
+        WebSocketGlobeInstance.fetchGlobePost()
+
+      })
     }
 
     initialiseGlobeGroup(){
@@ -57,10 +67,16 @@ class GlobeGroup extends React.Component{
     }
 
 
+
+
+
     renderItem = ({item}) => {
 
       return(
-        <NewGlobePost data = {item}/>
+        <NewGlobePost
+          navigation = {this.props.navigation}
+          id = {this.props.id}
+          data = {item}/>
       )
     }
 
@@ -93,7 +109,6 @@ class GlobeGroup extends React.Component{
 
     render(){
 
-      console.log(this.props, 'globegroup')
       let groupPosts = []
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
@@ -104,14 +119,14 @@ class GlobeGroup extends React.Component{
 
 
             <FlatList
-              ListHeaderComponent = {this.listHeader}
+              // ListHeaderComponent = {this.listHeader}
               style = {{flex: 1}}
               data = {groupPosts}
               renderItem = {this.renderItem}
               keyExtractor={(item, index) => String(index)}
               refreshing = {this.state.refreshing}
               onRefresh = {() => this.onRefresh()}
-              
+
                />
 
 
@@ -123,7 +138,8 @@ class GlobeGroup extends React.Component{
 
 const mapStateToProps = state => {
   return{
-    globePosts: state.globeGroup.globePosts
+    globePosts: state.globeGroup.globePosts,
+    id: state.auth.id
   }
 }
 
