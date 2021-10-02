@@ -38,6 +38,15 @@ class NewGlobePost extends React.Component{
       unlikerId
     )
   }
+
+  changeShowComments = () => {
+      this.props.navigation.navigate("Comments",{
+        postId: this.props.data.id,
+        type: 'globe'
+      })
+  }
+
+
   renderPostInfo=(data, like)=>{
 
     console.log(like, 'like like')
@@ -240,7 +249,7 @@ class NewGlobePost extends React.Component{
                       </TouchableOpacity>
                   }
 
-                  <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
+                  <TouchableWithoutFeedback  onPress={() => this.changeShowComments()}>
                     <View style={{marginLeft:20,}}>
                         <View style = {styles.justifyCenter}>
                           <MessageCircle
