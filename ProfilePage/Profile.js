@@ -93,7 +93,7 @@ class Profile extends React.Component{
     }
   }
 
-  ViewProfile = () => {
+  navSettings = () => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
     this.props.navigation.navigate("Settings")
@@ -175,7 +175,7 @@ class Profile extends React.Component{
 
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress = {() => this.ViewProfile()}
+          onPress = {() => this.navSettings()}
           style={{position:'absolute', padding:20, right:10, width:50, height:50, }}>
           <Settings
            stroke="#8c8c8c" strokeWidth={2} width={25} height={25}/>
@@ -206,7 +206,8 @@ class Profile extends React.Component{
           <FlatList
             columnWrapperStyle={{justifyContent: 'space-between'}}
             data={data}
-             showsVerticalScrollIndicator={true}
+            showsVerticalScrollIndicator={true}
+            contentContainerStyle={{ paddingBottom: 25 }}
             numColumns={2}
             renderItem={({item}) => {
               return (
@@ -296,6 +297,7 @@ const styles = StyleSheet.create({
     // shadowOpacity:0.2,
     // elevation:4
   },
+
   textStyle:{
     fontSize:20,
     justifyContent:'flex-start',

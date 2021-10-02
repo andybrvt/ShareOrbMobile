@@ -164,32 +164,32 @@ class ProfilePage extends React.Component{
     const name = profile.first_name
     return(
       <View style = {styles.container1}>
-
-        <View style = {styles.profileInfoHeader}>
-          <View>
-            <Avatar
-              size={95}
-              rounded
-              source={{
-                uri: profilePic,
-              }}
-            />
-          </View>
-          <View>
-            <Text style = {styles.name}>{name}</Text>
-            <Text style = {styles.username}>@{username}</Text>
-
-          </View>
-
-        </View>
-
-
         <View>
-          <Text style = {styles.bio}>{bio}</Text>
+          <View style={styles.profileInfoHeader}>
+              <View style={{
+                 flexDirection:'column',
+                  alignItems: 'center',
+                 justifyContent:'center',}}>
+                 <View style={{zIndex:99, borderWidth: 2, borderColor: '#2f54eb', borderRadius:75,}}>
+                  <Avatar
+                    size={110}
+                    rounded
+                    source={{
+                      uri:
+                        profilePic,
+                    }}
+                  />
+                </View>
+                <Text style = {styles.name}>{name}</Text>
+                <Text style = {styles.username}>@{username}</Text>
+              </View>
+          </View>
+        </View>
+        <View style = {styles.bioContainer}>
+          <Text style = {styles.bio}> {bio}</Text>
         </View>
 
       </View>
-
     )
   }
 
@@ -248,11 +248,13 @@ class ProfilePage extends React.Component{
               justifyContent: 'center',
               alignItems:'center'}}>
             <TouchableOpacity
+              style={{padding:10}}
               onPress = {() => this.onBack()}
               >
               <ArrowLeft
-                width = {35}
-                height = {35}
+                stroke="black"
+                width = {25}
+                height = {25}
                  />
             </TouchableOpacity>
 
@@ -271,6 +273,7 @@ class ProfilePage extends React.Component{
           columnWrapperStyle={{justifyContent: 'space-between'}}
           data={data}
           numColumns={2}
+          contentContainerStyle={{ paddingBottom: 25 }}
           keyExtractor={(item, index) => String(index)}
           renderItem={this.renderItem}
           ListEmptyComponent={this.renderEmptyContainer()}
@@ -304,9 +307,9 @@ const styles = StyleSheet.create({
     backgroundColor:"#1890ff"
   },
   profileInfoHeader: {
-    justifyContent: 'center',
-    width: '80%',
-    flexDirection: 'row'
+    flexDirection:'column',
+     alignItems: 'center',
+    justifyContent:'center',
   },
   container1: {
     alignItems: 'center',
@@ -315,6 +318,10 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
 
+  },
+  bioContainer:{
+    marginTop: 5,
+    alignItems: 'center',
   },
   container: {
     flex: 1,

@@ -55,12 +55,8 @@ class SearchResults extends React.Component{
   }
 
   renderItem = ({item}) => {
-
-
     return(
-      <TouchableOpacity
-        onPress = {() => this.props.viewProfile(item.username)}
-        >
+      <TouchableOpacity onPress = {() => this.props.ViewProfile(item.username)}>
         <View style={{
            flexDirection:'row',
            padding:15}}>
@@ -74,7 +70,6 @@ class SearchResults extends React.Component{
             />
           </View>
         <View style={{
-
             flex:6,
             flexDirection:'column',
             }}>
@@ -82,9 +77,6 @@ class SearchResults extends React.Component{
             <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.first_name, item.last_name, 20)} </Text>
           </View>
           <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.username}</Text>
-
-
-
         </View>
       </View>
       </TouchableOpacity>
@@ -149,7 +141,7 @@ class SearchResults extends React.Component{
             }}>
             <Text style={styles.settingWord}>Users</Text>
             <FlatList
-            
+
               data = {data}
               renderItem = {this.renderItem}
               keyExtractor={(item, index) => String(index)}
