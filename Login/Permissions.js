@@ -108,6 +108,16 @@ class Permissions extends React.Component{
   }
 
   close = () => {
+
+    authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+"2"+'/'+this.props.id)
+    .then(res => {
+
+      this.props.authAddSmallGroup(res.data)
+      console.log('here here')
+      // console.log(res.data,'my stuff running here')
+      alert("You were add to the Unversity of Arizona Orb!")
+    })
+
     this.props.onClose()
   }
 

@@ -201,7 +201,6 @@ export const grabUserCredentials = () => {
       // AsyncStorage.setItem('requestList', requestList)
       // AsyncStorage.setItem('showIntialInstructions', showIntialInstructions)
       // AsyncStorage.setItem('notificationSeen', notificationSeen)
-
       dispatch(addCredentials(
         res.data.username,
          res.data.id,
@@ -221,7 +220,8 @@ export const grabUserCredentials = () => {
          res.data.bio,
          res.data.dailyNotification,
          res.data.inviteCode,
-         res.data.get_small_groups
+         res.data.get_small_groups,
+         res.data.id_small_groups
       ))
     })
     .catch(err => {
@@ -249,7 +249,8 @@ export const addCredentials = (
    bio,
    dailyNotification,
    inviteCode,
-   smallGroups
+   smallGroups,
+   smallGroupIds
  ) => {
 
   return {
@@ -272,7 +273,8 @@ export const addCredentials = (
     bio: bio,
     dailyNotification: dailyNotification,
     inviteCode: inviteCode,
-    smallGroups: smallGroups
+    smallGroups: smallGroups,
+    smallGroupIds:smallGroupIds
   };
 };
 

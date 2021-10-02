@@ -31,7 +31,8 @@ const initialState ={
   showFirstPostModal: false,
   inviToken: null,
   inviteCode: "",
-  smallGroups: []
+  smallGroups: [],
+  smallGroupIds: []
 
 }
 
@@ -132,7 +133,8 @@ const authLogout = (state, action) => {
     showFirstPostModal: false,
     inviToken: null,
     inviteCode: "",
-    smallGroups: []
+    smallGroups: [],
+    smallGroupIds: []
   });
 };
 
@@ -157,7 +159,8 @@ const addCredentials = (state, action) => {
     bio: action.bio,
     dailyNotification: action.dailyNotification,
     inviteCode: action.inviteCode,
-    smallGroups: action.smallGroups
+    smallGroups: action.smallGroups,
+    smallGroupIds: action.smallGroupIds
   });
 };
 
@@ -233,8 +236,11 @@ const authUnshowFirstPostModal = (state, action) => {
 }
 
 const authAddSmallGroup = (state, action) => {
+  var groupId = action.group.id.toString()
+  console.log(groupId, 'idid id id')
   return updateObject(state,{
-    smallGroups: [...state.smallGroups, action.group]
+    smallGroups: [...state.smallGroups, action.group],
+    smallGroupIds: [...state.smallGroupIds, groupId]
   })
 }
 

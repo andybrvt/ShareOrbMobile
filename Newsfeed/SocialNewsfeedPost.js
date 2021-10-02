@@ -329,17 +329,24 @@ class SocialNewsfeedPost extends React.Component{
     socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
     return(
       <View>
-        <View style={{flexDirection:'row', zIndex:1, marginLeft:10}}>
-          <TouchableOpacity onPress = {() => this.ViewProfile(userUsername)}>
+        <View style={{flexDirection:'row', zIndex:999}}>
+
+          <View style = {{
+              width: '15%',
+              alignItems:'center'
+            }}>
             <Avatar
+              onPress = {() => this.props.ViewProfile(userUsername)}
               size={37.5}
               rounded
               source = {{
                 uri: profilePic
               }}
             />
-          </TouchableOpacity>
-        <View style={{flexDirection:'column', marginLeft:10,  width:'57.5%'}}>
+          </View>
+
+        <View style={{
+            flexDirection:'column',  width:'50%'}}>
             <Text style = {styles.videoFooterUserName}>
               {global.NAMEMAKE(firstName, lastName)}
             </Text>
@@ -352,65 +359,82 @@ class SocialNewsfeedPost extends React.Component{
               </Text>
             </View>
           </View>
-          {
-                  peopleLikeId.includes(this.props.userId ) ?
-                  <TouchableOpacity
-                    onPress = {() => this.onUnlike(
-                      postId,
-                      this.props.userId,
-                    )}
-                >
-                    <View style = {styles.justifyCenter}>
-                      <Heart
-                        stroke = "red"
-                        fill="red"
-                        width = {27.5}
-                        height = {27.5}
-                         />
-                      <Text  style = {styles.statNum}>
-                        {like_people.length}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                  :
-                  <TouchableOpacity
-                    onPress = {() => this.onLike(
-                      postId,
-                      this.props.userId,
-                      ownerId,
-                      notificationToken,
-                      calCell
-                    )}
-                    >
-                    <View style = {styles.justifyCenter}>
-                      <Heart
-                        stroke = "white"
-                        fill="white"
-                        width = {27.5}
-                        height = {27.5}
-                      />
-                     <Text style = {styles.statNum}>
-                      {like_people.length}
-                    </Text>
-                    </View>
-                  </TouchableOpacity>
-              }
 
-              <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
-                <View style={{marginLeft:20,}}>
-                    <View style = {styles.justifyCenter}>
-                      <MessageCircle
-                        stroke = "white"
-                        fill="white"
-                        width ={27.5}
-                        height = {27.5}
-                      />
-                      <Text style = {styles.statNum}>
-                        {calComment}
-                      </Text>
+
+          <View style = {{
+             alignItems: 'center',
+             justifyContent: 'center',
+             width: '35%'
+            }}>
+            <View style = {{
+                flexDirection: 'row'
+              }}>
+              {
+                      peopleLikeId.includes(this.props.userId ) ?
+                      <TouchableOpacity
+                        onPress = {() => this.onUnlike(
+                          postId,
+                          this.props.userId,
+                        )}
+                    >
+                        <View style = {styles.justifyCenter}>
+                          <Heart
+                            stroke = "red"
+                            fill="red"
+                            width = {27.5}
+                            height = {27.5}
+                             />
+                          <Text  style = {styles.statNum}>
+                            {like_people.length}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      :
+                      <TouchableOpacity
+                        onPress = {() => this.onLike(
+                          postId,
+                          this.props.userId,
+                          ownerId,
+                          notificationToken,
+                          calCell
+                        )}
+                        >
+                        <View style = {styles.justifyCenter}>
+                          <Heart
+                            stroke = "white"
+                            fill="white"
+                            width = {27.5}
+                            height = {27.5}
+                          />
+                         <Text style = {styles.statNum}>
+                          {like_people.length}
+                        </Text>
+                        </View>
+                      </TouchableOpacity>
+                  }
+
+                  <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
+                    <View style={{marginLeft:20,}}>
+                        <View style = {styles.justifyCenter}>
+                          <MessageCircle
+                            stroke = "white"
+                            fill="white"
+                            width ={27.5}
+                            height = {27.5}
+                          />
+                          <Text style = {styles.statNum}>
+                            {calComment}
+                          </Text>
+                        </View>
                     </View>
-                </View>
-              </TouchableWithoutFeedback>
+                  </TouchableWithoutFeedback>
+
+            </View>
+
+          </View>
+
+
+
          </View>
       </View>
 
@@ -748,6 +772,18 @@ class SocialNewsfeedPost extends React.Component{
                 </TouchableOpacity>
               </GestureRecognizer>
 
+              <LinearGradient
+                start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
+
+                style = {{
+                  position: 'absolute',
+                  width: '100%',
+                  bottom: '0%',
+                  height: "30%"
+                }}
+                colors = {['transparent', '#000000']}>
+              </LinearGradient>
+
 
 
               {
@@ -794,17 +830,6 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
               }
 
-              <LinearGradient
-                start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
-
-                style = {{
-                  position: 'absolute',
-                  width: '100%',
-                  bottom: '0%',
-                  height: "30%"
-                }}
-                colors = {['transparent', '#000000']}>
-              </LinearGradient>
 
 
                 </View>

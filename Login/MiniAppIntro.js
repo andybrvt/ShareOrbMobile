@@ -28,6 +28,7 @@ import test1 from './test1.mp4';
 import { connect } from "react-redux";
 import authAxios from '../util';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import * as authActions from '../store/actions/auth';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -247,7 +248,9 @@ class MiniAppIntro extends React.Component{
             <View style = {{height: height, width: width,  backgroundColor: "#1890ff"}}>
 
               <Permissions
+                id = {this.props.id}
                 onClose = {this.close}
+                authAddSmallGroup= {this.props.authAddSmallGroup}
                  />
             </View>
 
@@ -307,6 +310,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     unShowIntialInstructions: (bool) => dispatch(authActions.unShowIntialInstructions(bool)),
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
 
   }
 }
