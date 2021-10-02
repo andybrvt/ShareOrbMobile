@@ -252,6 +252,7 @@ const ScrollableTabBarNew = createReactClass({
           ref={'tabContainer'}
           onLayout={this.onTabContainerLayout}
         >
+  
           {this.props.tabs.map((name, page) => {
             const isTabActive = this.props.activeTab === page;
             const renderTab = this.props.renderTab || this.renderTab;

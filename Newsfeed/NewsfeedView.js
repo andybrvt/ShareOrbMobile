@@ -174,9 +174,26 @@ class NewsfeedView extends React.Component{
 
 
   render(){
+    console.log("STARTTTTT")
+    console.log(this.props.route)
+
+    // if(this.props.route.params){
+    //   console.log("Helllooo")
+    //   console.log(this.props.route)
+    //   console.log(this.props.route.params)
+    //   const navGroupIDCondition=this.props.route.params.groupID
+    // }
 
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
+    let navGroupID=1
+    console.log("EEEEEEEEEEE")
+    console.log(navGroupID)
+    if(this.props.route.params){
+      navGroupID=this.props.route.params.groupID
+      console.log(navGroupID)
+  }
+
     let showComments = this.props.showNewsfeedComments
     const backgroundGradient = interpolateColors(this.y, {
       inputRange: [0, 600],
@@ -229,6 +246,7 @@ class NewsfeedView extends React.Component{
             {true ?
 
                 <SwipeInfiniteScrollHolder
+                  // navGroupIDCondition={navGroupID}
                   navigation = {this.props.navigation}
                   smallGroups = {this.props.smallGroups}
                   curLoad = {this.props.curLoad}
