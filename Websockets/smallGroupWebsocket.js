@@ -76,7 +76,7 @@ class WebSocketSmallGroups{
       this.callbacks['send_group_post'](groupObj)
 
     }
-    if(command === "send_group_post_like"){
+    if(command === "send_group_post_like_unlike"){
       const groupId = parsedData.groupId
       const groupPost = parsedData.post
       const groupObj  = {
@@ -135,6 +135,19 @@ class WebSocketSmallGroups{
       command: 'send_group_post_like'
     })
 
+  }
+
+  onGroupPostUnlike(
+    postId,
+    unlikerId,
+    groupId
+  ){
+    this.sendGroupsInfo({
+      postId,
+      unlikerId: unlikerId,
+      groupId: groupId,
+      command: 'send_group_post_unlike'
+    })
   }
 
 

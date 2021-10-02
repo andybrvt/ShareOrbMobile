@@ -157,13 +157,14 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   // New unlike for the single day post
-  onUnlike = (socialItemId, personUnlike) => {
+  onUnlike = (postId, unlikerId) => {
     console.log('unlike')
 
-    // WebSocketSocialNewsfeedInstance.sendSinglePostUnlike(
-    //   socialItemId,
-    //   personUnlike
-    // )
+    WebSocketSmallGroupInstance.onGroupPostUnlike(
+      postId,
+      unlikerId,
+      this.props.groupId
+    )
 
   }
 
