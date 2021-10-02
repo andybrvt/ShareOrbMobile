@@ -78,7 +78,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
         scrollEnabled = {false}
         showsVerticalScrollIndicator={false}
         >
-  
+
 
         <View style = {{flex: 1, height:height -10 }}>
 

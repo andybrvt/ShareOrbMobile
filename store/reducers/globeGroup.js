@@ -13,11 +13,23 @@ const fetchGlobePost = (state, action) => {
   })
 }
 
+const sendGlobePostLike = (state, action) => {
+  return updateObject(state, {
+    globePosts: state.globePosts.map(
+      globePost => globePost.id === action.post.id ? {
+        ...action.post
+      } : globePost
+    )
+  })
+}
+
 const reducer = (state = initialState, action) => {
 
   switch(action.type){
     case actionTypes.FETCH_GLOBE_POST:
       return fetchGlobePost(state, action)
+    case actionTypes.SEND_GLOBE_POST_LIKE:
+      return sendGlobePostLike(state, action)
     default:
       return state;
   }
