@@ -239,32 +239,32 @@ class CreateGroupPage extends React.Component{
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          style={{width:'75%',  flexDirection:'row'}}>
-        {
-          this.state.invitedPeople.map((item, index) => {
-            return(
-              <View
-                key = {index}
-                style={[styles.column]}>
-                <Avatar
-                  rounded
-                  source = {{
-                    uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture
-                  }}
-                  size = {50}
-                />
-              <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.first_name} {item.last_name}</Text>
-              </View>
-            )
-          })
-        }
+          style={{ flexDirection:'row'}}>
+          {
+              this.state.invitedPeople.map((item, index) => {
+                return(
+                  <View
+                    key = {index}
+                    style={[styles.column]}>
+                    <Avatar
+                      rounded
+                      source = {{
+                        uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture
+                      }}
+                      size = {50}
+                    />
+                  <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.first_name} {item.last_name}</Text>
+                  </View>
+                )
+              })
+            }
         </ScrollView>
         <TouchableOpacity
           onPress = {() => this.onShowSearch()}
           style={[styles.column]}>
            <PlusCircle
              stroke = "white"
-             fill = {'gray'}
+             fill = {'#1890ff'}
              width = {40}
              height = {40}
               />
@@ -529,12 +529,12 @@ class CreateGroupPage extends React.Component{
                              placeholder="Orb Name"
                              placeholderTextColor="#919191"
                              autoCorrect={false}
-                             style={{fontSize:18,
-
-                               fontFamily:'Nunito', textAlign:'center', }}
+                             style={{fontSize:18, fontFamily:'Nunito-SemiBold', textAlign:'center', color:'#919191' }}
                              onChangeText = {this.onGroupNameChange}
                              value = {this.state.groupName}
-                             />
+                             >
+
+                           </TextInput>
 
                          </View>
                       </View>
@@ -542,22 +542,18 @@ class CreateGroupPage extends React.Component{
                      <View style={{
                          flexDirection:'row',
                          padding:25}}>
-                         <Menu
-
-                           stroke="black" strokeWidth={2.0} width={22.5} height={22.5} style={{top:3}}/>
+                         <Menu stroke="#919191" strokeWidth={2.0} width={22.5} height={22.5} style={{top:3}}/>
                          <TextInput
                           placeholder="Description"
                           placeholderTextColor="#919191"
                           autoCorrect={false}
-                          style={{marginLeft:20,fontSize:16, fontFamily:'Nunito', width:'85%',}}
+                          style={{marginLeft:20,fontSize:16, fontFamily:'Nunito-SemiBold', width:'85%', color:'#919191'}}
                           onChangeText = {this.onDescriptionChange}
                           value = {this.state.description}
                           />
-
                       </View>
                       <View style={{
                           flexDirection:'row',
-
                           borderTopWidth:1,
                           borderColor:'#d9d9d9',
                           borderBottomWidth:1,
@@ -568,13 +564,19 @@ class CreateGroupPage extends React.Component{
                         {
                           (this.state.publicG)?
                           <View style={{marginLeft:20, flexDirection:'column'}}>
-                            <Text style={styles.settingWord}>Make Orb Public</Text>
-                            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16, color:'#108EE9'}}>Anyone can join the group</Text>
+                            <Text style={{color:'#919191',
+                            fontSize:16,
+                            fontFamily:'Nunito-Bold',
+                            }}>Make Orb Public</Text>
+                          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:14, }}>Anyone can join the group</Text>
                           </View>
                           :
                           <View style={{marginLeft:20, flexDirection:'column'}}>
-                            <Text style={styles.settingWord}>Make Orb Private</Text>
-                            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16, color:'#108EE9'}}>Choose who joins the group</Text>
+                            <Text style={{color:'#919191',
+                            fontSize:16,
+                            fontFamily:'Nunito-Bold',
+                            }}>Make Orb Private</Text>
+                          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:14,}}>Choose who joins the group</Text>
                           </View>
                         }
 

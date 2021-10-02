@@ -212,6 +212,7 @@ class GroupInfo extends React.Component{
       }
     }
 
+
     return(
       <BackgroundContainer>
         <View underlayColor="#f0f0f0">
@@ -290,35 +291,45 @@ class GroupInfo extends React.Component{
            </TouchableHighlight>
            */}
 
+           {(!publicG)?
+             <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
+              <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
+                <View style={styles.roundButton1}>
+                  <Unlock stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />
+                </View>
+               <Text style={styles.settingWord}> Make Orb Public </Text>
+               <View style = {{
+                   flex: 1,
+                   alignItems: 'center',
+                   justifyContent: 'center',
+                 }}>
+                 {
+                   this.state.loading === true ?
+                   <ActivityIndicator />
+                 :
 
-           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
-            <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
-              <View style={styles.roundButton1}>
-                <Unlock stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />
+                 <Switch
+                   trackColor={ this.state.condition ? "gray": "red" }
+                   thumbColor={this.state.condition ? "white" : "white"}
+                   ios_backgroundColor="#3e3e3e"
+                   onValueChange={this.toggleChange}
+                   value={publicG}
+                   disabled = {publicG}
+                    />
+                 }
+               </View>
               </View>
-             <Text style={styles.settingWord}> Make Orb Public </Text>
-             <View style = {{
-                 flex: 1,
-                 alignItems: 'center',
-                 justifyContent: 'center',
-               }}>
-               {
-                 this.state.loading === true ?
-                 <ActivityIndicator />
-               :
+             </TouchableHighlight>
 
-               <Switch
-                 trackColor={ this.state.condition ? "gray": "red" }
-                 thumbColor={this.state.condition ? "white" : "white"}
-                 ios_backgroundColor="#3e3e3e"
-                 onValueChange={this.toggleChange}
-                 value={publicG}
-                 disabled = {publicG}
-                  />
-               }
-             </View>
-            </View>
-           </TouchableHighlight>
+           :
+           <View style={{marginTop:'10%'}}>
+             <Text></Text>
+           </View>
+
+
+
+            }
+
 
 
            <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>

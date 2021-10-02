@@ -167,7 +167,7 @@ const ScrollableTabBarNew = createReactClass({
         <View style={[styles.tab, this.props.tabStyle, ]}>
           <View style={{backgroundColor:'#108ee9', borderRadius:75}}>
             <Globe
-              strokeWidth={1.5}
+              strokeWidth={1}
               stroke="white"
               height = {35}
               width = {35}
