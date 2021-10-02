@@ -278,7 +278,7 @@ class GroupInfo extends React.Component{
                <View style={styles.roundButton1}>
                  <UserPlus stroke="white" strokeWidth={2.5} width={17.5} height={17.5} />
                </View>
-               <Text style={styles.settingWord}> Add People </Text>
+               <Text style={styles.settingWord}> Invite People </Text>
              </View>
            </TouchableHighlight>
            {/*

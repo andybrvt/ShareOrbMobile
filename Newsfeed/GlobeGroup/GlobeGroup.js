@@ -93,8 +93,6 @@ class GlobeGroup extends React.Component{
             timeToShow={["H",'M', 'S']}
             timeLabels={{h:'hour',m: 'min', s: 'sec'}}
              />
-
-
         </View>
       )
     }
@@ -105,20 +103,15 @@ class GlobeGroup extends React.Component{
       this.setState({refreshing: false})
     }
 
-
-
     render(){
-
       let groupPosts = []
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
       }
-
       return(
         <View style = {{flex: 1}}>
-
-
             <FlatList
+              contentContainerStyle={{paddingBottom:75}}
               // ListHeaderComponent = {this.listHeader}
               style = {{flex: 1}}
               data = {groupPosts}
@@ -126,10 +119,7 @@ class GlobeGroup extends React.Component{
               keyExtractor={(item, index) => String(index)}
               refreshing = {this.state.refreshing}
               onRefresh = {() => this.onRefresh()}
-
                />
-
-
         </View>
       )
     }

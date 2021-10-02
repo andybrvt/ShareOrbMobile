@@ -240,7 +240,7 @@ class SuggestedListGroup extends React.Component{
                   height = {12.5}
                   width = {12.5}
                    />
-                <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12, color:'white' }}>+Join</Text>
+                <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12, color:'white' }}>Join</Text>
               </TouchableOpacity>
 
               }
