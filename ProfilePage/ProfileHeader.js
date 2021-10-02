@@ -145,13 +145,11 @@ class ProfileHeader extends React.Component{
     return (
     <View>
         <View>
-
           <View style={styles.profileInfoHeader}>
-
               <View style={{
                  flexDirection:'column',
                   alignItems: 'center',
-                 justifyContent:'center'}}>
+                 justifyContent:'center',}}>
                  <View style={{zIndex:99, borderWidth: 2, borderColor: '#2f54eb', borderRadius:75,}}>
                   <Avatar
                     size={110}
@@ -164,54 +162,11 @@ class ProfileHeader extends React.Component{
                 </View>
                 <Text style = {styles.name}>{name}</Text>
                 <Text style = {styles.username}>@{username}</Text>
-
               </View>
-
-
           </View>
-
         </View>
 
-
-
-
-       {/*
-       <View style = {styles.profileMidContainer}>
-
-         <View style={styles.profileInfoContainer}>
-
-           <View style={styles.followerCount}>
-              <TouchableOpacity onPress={() => this.navigateFollowing()}>
-                <View style={{flexDirection:'column', alignItems:'center'}}>
-                 <Text style={styles.followerFollowingNum}> 5</Text>
-                 <Text style={styles.followerFollowingHeader}> Streak </Text>
-               </View>
-              </TouchableOpacity>
-           </View>
-
-           <View style={styles.followerCount}>
-              <TouchableOpacity onPress={() => this.navigateFollowing()}>
-                <View style={{flexDirection:'column', alignItems:'center'}}>
-                 <Text style={styles.followerFollowingNum}> {following.length}</Text>
-                 <Text style={styles.followerFollowingHeader}> Following </Text>
-               </View>
-              </TouchableOpacity>
-           </View>
-
-           <View style={styles.followerCount}>
-             <TouchableOpacity onPress={() => this.navigateFollowing()}>
-               <View style={{flexDirection:'column', alignItems:'center'}}>
-                 <Text style={styles.followerFollowingNum}> {followers.length}</Text>
-
-                <Text style={styles.followerFollowingHeader}> Followers</Text>
-               </View>
-            </TouchableOpacity>
-           </View>
-
-         </View>
-       </View>
-       */}
-       <View style={{justifyContent:'center',   }}>
+       <View style={{justifyContent:'center', alignItems:'center'  }}>
 
 
          {
@@ -255,10 +210,7 @@ class ProfileHeader extends React.Component{
        </View>
 
        <View style = {styles.bioContainer}>
-
-
          <Text style = {styles.bio}> {bio}</Text>
-
        </View>
 
               {/*
@@ -419,26 +371,22 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   editButton: {
-
-    alignItems: 'center',
     paddingVertical: 5,
-    width:'90%',
+    width:'100%',
     borderRadius: 5,
     top:7.5,
     backgroundColor: '#1890ff',
-
-    alignItems: "center",
     backgroundColor: "#1890ff",
     padding: 10
   },
 
   shadowAvatar:{
-
     shadowColor: '#470000',
         shadowOffset: {width: 0, height: 1},
         shadowOpacity: 0.2,
         elevation: 1,
   },
+
   container: {
     alignItems: 'center',
     width: '100%',

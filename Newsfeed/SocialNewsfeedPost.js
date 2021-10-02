@@ -71,6 +71,20 @@ class SocialNewsfeedPost extends React.Component{
     this.showExtra = new Value(false);
   }
 
+  ViewProfile = (username) => {
+    this.setState({
+      searchValue: "",
+      showSearch: false
+    })
+    if(username === this.props.username){
+      this.props.navigation.navigate("Profile");
+    } else {
+      this.props.navigation.navigate("ProfilePage", {
+        username: username
+      })
+    }
+  }
+
   handleDoubleTap = (postId, userId, ownerId, notificationToken) => {
     const now = Date.now();
     const DOUBLE_PRESS_DELAY = 300;

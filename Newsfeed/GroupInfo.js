@@ -16,7 +16,8 @@ import {
   TextInput,
   Dimensions,
   RefreshControle,
-  ActivityIndicator
+  ActivityIndicator,
+  Clipboard
  } from 'react-native';
 import { LogOut, Lock, User, Bell, Globe, ArrowRight, UserPlus, Menu, Mic, Unlock} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -26,7 +27,10 @@ import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-hand
 import { connect } from "react-redux";
 import authAxios from '../util';
 import * as authActions from '../store/actions/auth';
-
+import FlashMessage from "react-native-flash-message";
+import { showMessage, hideMessage } from "react-native-flash-message";
+import { faFire, faAppleAlt, Android, faRobot, faAndroid, faGoogle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -64,8 +68,29 @@ class GroupInfo extends React.Component{
       //after successful share return result
       .then((result) => console.log(result))
       //If any thing goes wrong it comes here
-      .catch((errorMsg) => console.log(errorMsg));
+      .catch((errorMsg) => console.log(errorMsg));z
   };
+
+  copyToClipboardApple = () => {
+    showMessage({
+      message: "Copied IOS download link",
+      type: "info",
+      backgroundColor: "#1890ff", // background color
+      color: "white", // text color
+      duration:850
+    });
+    Clipboard.setString("Download ShareOrb on IOS:"+" https://testflight.apple.com/join/v58j1FSw")
+  }
+
+  copyToClipboardAndroid = () => {
+    showMessage({
+      message: "Copied Android download link",
+      backgroundColor: "#1890ff", // background color
+      color: "white", // text color
+      duration:1000
+    });
+    Clipboard.setString("Download ShareOrb on Android:"+" https://play.google.com/store/apps/details?id=com.pinghsu520.ShareOrbMobile")
+  }
 
 
   toggleChange = () => {
@@ -229,17 +254,17 @@ class GroupInfo extends React.Component{
               <View style={{
                 marginTop:10,
                 }}>
-                  <Text style={{fontSize:22,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
+                  <Text style={{fontSize:20,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
                   <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.groupId)}>
-                    <Text style={{fontSize:16,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> {members.length} Members </Text>
+                    <Text style={{fontSize:14,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> {members.length} Members </Text>
                   </TouchableOpacity>
               </View>
             </View>
 
 
             <View style={{ }}>
-            <View style={{ alignItems:'center', marginTop:25, marginBottom:25,}}>
-              <Text style={{marginLeft:20,fontSize:18, fontFamily:'Nunito', width:'85%',}}>
+            <View style={{ alignItems:'center', marginTop:15, marginBottom:15,}}>
+              <Text style={{marginLeft:20,fontSize:16, fontFamily:'Nunito', width:'85%',}}>
                 {description}
               </Text>
             </View>
@@ -254,7 +279,7 @@ class GroupInfo extends React.Component{
                <Text style={styles.settingWord}> Add People </Text>
              </View>
            </TouchableHighlight>
-
+           {/*
            <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navAnnouncements()}>
             <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
               <View style={styles.roundButton1}>
@@ -263,6 +288,8 @@ class GroupInfo extends React.Component{
              <Text style={styles.settingWord}> Create Announcements </Text>
              </View>
            </TouchableHighlight>
+           */}
+
 
            <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
             <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
@@ -294,6 +321,42 @@ class GroupInfo extends React.Component{
            </TouchableHighlight>
 
 
+           <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
+             <Text style={styles.settingWord}> Copy Clipboard </Text>
+            </View>
+
+
+          <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
+            <View style={{marginRight:'15%'}}>
+              <TouchableHighlight
+                onPress={() => this.copyToClipboardApple()}
+                style={styles.roundButton2}>
+                <FontAwesomeIcon
+                 style = {{
+                   color:'white',
+                   right:1,
+                 }}
+                 size = {25}
+                 icon={faAppleAlt} />
+              </TouchableHighlight>
+            </View>
+            <View>
+              <TouchableHighlight
+                onPress={() => this.copyToClipboardAndroid()}
+                style={styles.roundButton2}>
+                <FontAwesomeIcon
+                 style = {{
+                   color:'white',
+                   right:1,
+                 }}
+                 size = {25}
+                 icon={faRobot} />
+              </TouchableHighlight>
+            </View>
+          </View>
+
+
+
             <View style={{alignItems:'center', top:'10%'}}>
               <View style={styles.loginBtn1}>
                 <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
@@ -310,6 +373,8 @@ class GroupInfo extends React.Component{
           callbackNode={this.fall}
           enabledGestureInteraction={true}
         />
+      <FlashMessage
+        position="bottom" />
       </BackgroundContainer>
     )
   }
@@ -330,17 +395,28 @@ const styles = StyleSheet.create({
   },
 
   roundButton1: {
-
     width: 45,
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex:99,
     borderRadius: 100,
-
     backgroundColor: '#1890ff',
     elevation:15,
   },
+
+  roundButton2: {
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:99,
+    borderRadius: 100,
+    backgroundColor: '#2f54eb',
+    elevation:15,
+  },
+
+
   loginBtn0: {
 
     borderRadius: 10,
