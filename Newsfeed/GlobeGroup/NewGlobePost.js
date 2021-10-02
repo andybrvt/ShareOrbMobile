@@ -30,9 +30,25 @@ class NewGlobePost extends React.Component{
       likerId
     )
   }
+
+  onUnlike = (unlikerId, notificationToken) =>{
+
+    WebSocketGlobeInstance.sendGroupUnlike(
+      this.props.data.id,
+      unlikerId
+    )
+  }
+
+  changeShowComments = () => {
+      this.props.navigation.navigate("Comments",{
+        postId: this.props.data.id,
+        type: 'globe'
+      })
+  }
+
+
   renderPostInfo=(data, like)=>{
 
-    console.log(like, 'like like')
     let postId = "";
     let calCell = "";
     let username = "";
@@ -195,8 +211,8 @@ class NewGlobePost extends React.Component{
                       like.includes(this.props.id) ?
                       <TouchableOpacity
                         onPress = {() => this.onUnlike(
-                          postId,
-                          this.props.userId,
+                          this.props.id,
+                          notificationToken,
                         )}
                     >
                         <View style = {styles.justifyCenter}>
@@ -232,7 +248,7 @@ class NewGlobePost extends React.Component{
                       </TouchableOpacity>
                   }
 
-                  <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
+                  <TouchableWithoutFeedback  onPress={() => this.changeShowComments()}>
                     <View style={{marginLeft:20,}}>
                         <View style = {styles.justifyCenter}>
                           <MessageCircle

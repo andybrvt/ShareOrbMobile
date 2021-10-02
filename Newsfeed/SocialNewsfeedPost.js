@@ -113,7 +113,8 @@ class SocialNewsfeedPost extends React.Component{
   changeShowComments = (postId) => {
     // this.props.onCommentOpen(postId)
     this.props.navigation.navigate("Comments", {
-      postId: postId
+      postId: postId,
+      type: "group"
     })
   }
 

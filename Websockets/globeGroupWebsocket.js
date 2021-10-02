@@ -91,6 +91,17 @@ class WebSocketGlobe {
     })
   }
 
+  sendGroupUnlike(
+    globeId,
+    unlikerId
+  ){
+    this.sendPostsInfo({
+      globeId: globeId,
+      unlikerId: unlikerId,
+      command: "send_group_unlike"
+    })
+  }
+
 
 
   sendPostsInfo(data){

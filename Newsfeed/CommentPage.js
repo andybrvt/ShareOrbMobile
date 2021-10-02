@@ -22,6 +22,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
  // pictures
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket';
+import GlobeCommentWebsocketInstance from '../Websockets/globeCommentWebsocket';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import TextModal from '../RandomComponents/TextModal';
@@ -38,7 +39,13 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
    }
    constructor(props){
      super(props)
-     this.initialiseComments()
+
+     if(this.props.route.params.type === "group"){
+        this.initialiseComments()
+     } else {
+       this.initialiseGlobeComments()
+     }
+
      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
    }
 
@@ -118,6 +125,18 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
     SocialCommentsWebsocketInstance.connect(postId)
   }
 
+  initialiseGlobeComments(){
+    const postId = this.props.route.params.postId
+    this.waitForGlobeCommentsSocketConnection(() => {
+      GlobeCommentWebsocketInstance.fetchComments(
+        postId
+      )
+    })
+
+    GlobeCommentWebsocketInstance.connect(postId)
+
+  }
+
   waitForCommentsSocketConnection(callback) {
     const component = this;
     setTimeout(
@@ -127,6 +146,19 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
           return;
         } else{
             component.waitForCommentsSocketConnection(callback);
+        }
+      }, 100)
+  }
+
+  waitForGlobeCommentsSocketConnection(callback) {
+    const component = this;
+    setTimeout(
+      function(){
+        if (GlobeCommentWebsocketInstance.state() === 1){
+          callback();
+          return;
+        } else{
+            component.waitForGlobeCommentsSocketConnection(callback);
         }
       }, 100)
   }
@@ -160,8 +192,14 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
    componentWillUnmount = () => {
 
-     SocialCommentsWebsocketInstance.disconnect()
-     this.props.unloadSocialComments()
+
+     if(this.props.route.params.type === "group"){
+       SocialCommentsWebsocketInstance.disconnect()
+       this.props.unloadSocialComments()
+     } else {
+       GlobeCommentWebsocketInstance.disconnect()
+     }
+
    }
 
    showTextInput = () => {
@@ -222,6 +260,8 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
    }
 
    render(){
+
+     console.log(this.props.route.params.type)
      let comments = []
      if(this.props.socialComments){
        comments = this.props.socialComments
