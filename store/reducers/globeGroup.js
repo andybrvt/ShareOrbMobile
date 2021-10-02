@@ -3,7 +3,8 @@ import { updateObject } from "../utility";
 
 
 const initialState = {
-  globePosts: []
+  globePosts: [],
+  globeComments: []
 }
 
 
@@ -23,6 +24,13 @@ const sendGlobePostLike = (state, action) => {
   })
 }
 
+const fetchGlobeItemComment = (state, action) =>{
+
+  return updateObject(state, {
+    globeComments: action.comments
+  })
+}
+
 const reducer = (state = initialState, action) => {
 
   switch(action.type){
@@ -30,6 +38,8 @@ const reducer = (state = initialState, action) => {
       return fetchGlobePost(state, action)
     case actionTypes.SEND_GLOBE_POST_LIKE:
       return sendGlobePostLike(state, action)
+    case actionTypes.FETCH_GLOBE_ITEM_COMMENT:
+      return fetchGlobeItemComment(state, action)
     default:
       return state;
   }

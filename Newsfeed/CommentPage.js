@@ -261,10 +261,17 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
    render(){
 
-     console.log(this.props.route.params.type)
+    
      let comments = []
-     if(this.props.socialComments){
-       comments = this.props.socialComments
+     if(this.props.route.params.type === "group"){
+       if(this.props.socialComments){
+         comments = this.props.socialComments
+       }
+
+     } else {
+       if(this.props.globeComments){
+         comments = this.props.globeComments
+       }
      }
 
      return (
@@ -325,7 +332,8 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
      socialComments: state.socialNewsfeed.socialComments,
      commentHost: state.socialNewsfeed.commentHost,
      cellDate: state.socialNewsfeed.cellDate,
-     commentHostNotiToken: state.socialNewsfeed.commentHostNotiToken
+     commentHostNotiToken: state.socialNewsfeed.commentHostNotiToken,
+     globeComments: state.globeGroup.globeComments
    }
  }
 

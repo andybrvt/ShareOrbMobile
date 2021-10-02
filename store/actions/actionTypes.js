@@ -92,3 +92,5 @@ export const SEND_GROUP_POST_LIKE = "SEND_GROUP_POST_LIKE";
 // this will have to do with the globe group
 export const FETCH_GLOBE_POST = "FETCH_GLOBE_POST";
 export const SEND_GLOBE_POST_LIKE = "SEND_GLOBE_POST_LIKE";
+
+export const FETCH_GLOBE_ITEM_COMMENT = "FETCH_GLOBE_ITEM_COMMENT";
