@@ -49,7 +49,6 @@ class NewGlobePost extends React.Component{
 
   renderPostInfo=(data, like)=>{
 
-    console.log(like, 'like like')
     let postId = "";
     let calCell = "";
     let username = "";

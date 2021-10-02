@@ -30,7 +30,7 @@ class WebsocketGlobeComment{
     }
 
     this.socketRef.onmessage = (e) => {
-
+      this.socketNewGlobeComments(e.data)
     }
     this.socketRef.onerror = (e) => {
     }
@@ -49,10 +49,18 @@ class WebsocketGlobeComment{
   }
 
   socketNewGlobeComments(data){
-
+    const parsedData = JSON.parse(data);
+    const command = parsedData.command;
+    console.log(parsedData)
   }
+
+
   fetchComments(itemId){
 
+    this.sendCommentGlobeInfo({
+      itemId: itemId,
+      command: 'fetch_globe_item_comment'
+    })
     // this.sendCommentCellInfo({
     //   cellId: cellId,
     //   command: "fetch_comment_cell_info"

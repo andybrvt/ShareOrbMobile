@@ -192,8 +192,14 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
    componentWillUnmount = () => {
 
-     SocialCommentsWebsocketInstance.disconnect()
-     this.props.unloadSocialComments()
+
+     if(this.props.route.params.type === "group"){
+       SocialCommentsWebsocketInstance.disconnect()
+       this.props.unloadSocialComments()
+     } else {
+       GlobeCommentWebsocketInstance.disconnect()
+     }
+
    }
 
    showTextInput = () => {
