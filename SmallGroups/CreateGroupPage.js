@@ -49,7 +49,7 @@ class CreateGroupPage extends React.Component{
       groupPic: "",
       groupName: "",
       description: "",
-      publicG: false,
+      publicG: true,
       searchResults: [],
       invitedPeople: [],
       searchValue: '',
