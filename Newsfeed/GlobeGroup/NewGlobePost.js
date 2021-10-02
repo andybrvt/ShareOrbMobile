@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity,
-ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback} from 'react-native';
-import { Navigation2, Heart, MessageCircle, VolumeX, Volume2 } from "react-native-feather";
+ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback, } from 'react-native';
+import { Navigation2, Heart, MessageCircle, VolumeX, Volume2, UserCheck, UserPlus } from "react-native-feather";
 import { LinearGradient } from 'expo-linear-gradient';
 import * as dateFns from 'date-fns';
 
@@ -133,7 +133,6 @@ class NewGlobePost extends React.Component{
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
     // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
-
     timestamp=postCreatedAt
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
     //
@@ -142,7 +141,6 @@ class NewGlobePost extends React.Component{
     return(
       <View>
         <View style={{flexDirection:'row', zIndex:999}}>
-
           <View style = {{
               width: '15%',
               alignItems:'center'
@@ -156,7 +154,6 @@ class NewGlobePost extends React.Component{
               }}
             />
           </View>
-
         <View style={{
             flexDirection:'column',  width:'50%'}}>
             <Text style = {styles.videoFooterUserName}>
@@ -171,7 +168,6 @@ class NewGlobePost extends React.Component{
               </Text>
             </View>
           </View>
-
 
           <View style = {{
              alignItems: 'center',
@@ -240,16 +236,10 @@ class NewGlobePost extends React.Component{
                         </View>
                     </View>
                   </TouchableWithoutFeedback>
-
             </View>
-
           </View>
-
-
-
          </View>
       </View>
-
     )
   }
 
@@ -308,10 +298,7 @@ class NewGlobePost extends React.Component{
 
     return(
       <View style = {styles.totalHolderContainer}>
-
-
         <View style = {styles.topContainer}>
-
           <View style = {{
               width: '65%',
               justifyContent: 'center'
@@ -323,7 +310,7 @@ class NewGlobePost extends React.Component{
                 marginLeft: 10
               }}>
               <Avatar
-                size = {50}
+                size = {40}
                 rounded
                 source = {{
                   uri: groupPic
@@ -333,55 +320,55 @@ class NewGlobePost extends React.Component{
                    marginLeft: 10
                  }}>
                  <Text style = {{
-                    fontSize: 20,
+                    fontSize:16,
+                    fontFamily:'Nunito-Bold'
                     }}>{global.CAPITALIZE(groupName)}</Text>
                   <View style = {{
                       // alignItems: 'center',
                       // justifyContent: 'center'
                     }}>
-                    <Text>{members.length} members</Text>
+                    <Text style = {{
+                       fontSize:12,
+                       fontFamily:'Nunito-SemiBold'
+                       }}>{members.length} members</Text>
                   </View>
                </View>
-
-          </View>
-
+             </View>
           </View>
 
           <View style = {{
-              width: '35%',
+              width: '37.5%',
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-
-
             {
               members.includes(this.props.id) ?
-
-              <View style = {styles.joinedbtn} >
-                <Text style = {{color: 'white'}}>Joined</Text>
-              </View>
-
+              <TouchableOpacity activeOpacity={0.8} style={styles.inviteButton} onPress = {() => this.joinGroup(item.id)}>
+                <UserPlus
+                  style={{marginRight:5}}
+                  stroke = "white"
+                  strokeWidth = {2}
+                  height = {15}
+                  width = {15}
+                   />
+                 <Text style={{fontFamily:'Nunito-SemiBold', fontSize:13, color:'white' }}>Join</Text>
+              </TouchableOpacity>
               :
-
-
               <TouchableOpacity
                 onPress = {() => this.viewGroup(group)}
-                style = {styles.joinbtn} >
-                <Text style = {{color: 'white'}}>Join</Text>
+                style={styles.inviteButton} onPress = {() => this.joinGroup(item.id)}>
+                <UserCheck
+                  style={{marginRight:5}}
+                  stroke = "white"
+                  strokeWidth = {2}
+                  height = {15}
+                  width = {15}
+                   />
+                 <Text style={{fontFamily:'Nunito-SemiBold', fontSize:13, color:'white' }}>Joined</Text>
               </TouchableOpacity>
-
-
-
             }
-
-
-
           </View>
-
-
-
         </View>
-
 
         <View style = {styles.bottomContainer}>
           <Image
@@ -393,7 +380,6 @@ class NewGlobePost extends React.Component{
 
              <LinearGradient
                start={{x: 0, y: 0}} end={{x: 0, y: 1}}
-
                style = {{
                  position: 'absolute',
                  width: '100%',
@@ -405,23 +391,13 @@ class NewGlobePost extends React.Component{
 
            {
              caption.length === 0 ?
-
-             <View style={{position:'absolute', marginTop:'82%', width:'100%', flexDirection:'row'}}>
-
+             <View style={{position:'absolute', marginTop:'100%', width:'100%', flexDirection:'row'}}>
                {this.renderPostInfo(post)}
-
-
              </View>
-
              :
-
-             <View style={{position:'absolute', marginTop:'74%', width:'100%', flexDirection:'row'}}>
-
+             <View style={{position:'absolute', marginTop:'92%', width:'100%', flexDirection:'row'}}>
                {this.renderPostInfo(post)}
-
              </View>
-
-
            }
 
            {
@@ -431,10 +407,8 @@ class NewGlobePost extends React.Component{
              </View>
              :
              <View>
-
                <View style={styles.testWhere4}>
                    <View style={styles.testWhere4}>
-
                      { (caption.length>30)?
                        <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row',}}>
                          <Text>
@@ -449,56 +423,12 @@ class NewGlobePost extends React.Component{
                            <Text style={styles.captionText}>{caption.substring(0,75)}</Text>
                          </Text>
                        </View>
-
                      }
-
                    </View>
                </View>
              </View>
            }
-
-
-
-
-
-
         </View>
-
-
-        {/*
-          <View style = {styles.container}>
-
-
-
-
-               <View style = {styles.ownerHolder}>
-                 <View >
-                   <Avatar
-                     size = {40}
-                     rounded
-                     source = {{
-                       uri: groupPic
-                     }}
-                      />
-                 </View>
-
-                 <View style = {{
-                     marginLeft: 7
-                   }}>
-                   <Text style = {{
-                       color: 'white',
-                       fontSize: 17}}> {global.CAPITALIZE(username)}</Text>
-                 </View>
-
-
-               </View>
-
-
-          </View>
-
-          */}
-
-
       </View>
 
     )
@@ -506,28 +436,47 @@ class NewGlobePost extends React.Component{
 }
 
 const styles = StyleSheet.create({
+  inviteButton: {
+    padding:15,
+    width:80,
+    borderRadius: 20,
+    height:35,
+    elevation:5,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1890ff",
+    flexDirection:'row'
+  },
   totalHolderContainer: {
     position: 'relative',
-    // backgroundColor: 'red',
-    marginBottom: 20,
-    height: 500
+    height: 500,
+    // borderTopWidth:1, borderColor:'#F0F0F0'
     // flexDirection: 'row'
   },
   topContainer:{
-    height: '18%',
+    height: '12.5%',
+    // backgroundColor:'red',
     flexDirection:  'row'
   },
   bottomContainer: {
-    height: '82%',
+    height: '85%',
     backgroundColor: 'gainsboro'
   },
   joinbtn: {
-    height: 40,
-    width: '80%',
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor: 'limegreen',
-    borderRadius: 20
+    padding:10,
+    borderRadius: 20,
+    height:25,
+    elevation:5,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1890ff",
+    flexDirection:'row'
   },
   joinedbtn: {
     height: 40,

@@ -772,7 +772,7 @@ class SocialNewsfeedPost extends React.Component{
 
               {
                 (caption.length==0)?
-              <View style={{position:'absolute', marginTop:435, width:'100%', flexDirection:'row'}}>
+              <View style={{position:'absolute', marginTop:440, width:'100%', flexDirection:'row'}}>
                 {this.renderPostInfo(data)}
               </View>
               :
@@ -791,7 +791,6 @@ class SocialNewsfeedPost extends React.Component{
 
                   <View style={styles.testWhere4}>
                       <View style={styles.testWhere4}>
-
                         { (caption.length>30)?
                           <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row',}}>
                             <Text>

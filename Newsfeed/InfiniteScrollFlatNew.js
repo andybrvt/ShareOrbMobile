@@ -229,7 +229,7 @@ class InfiniteScrollFlatNew extends React.Component{
             // onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
             // style={{top:130,}}
-            style={{paddingTop:10,}}
+            style={{paddingBottom:10,}}
             ListEmptyComponent={this.renderEmptyContainer()}
 
             />
