@@ -143,8 +143,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
       this.props.navigation.navigate('createSmallGroup')
   }
 
-  componentDidUpdate(prevProps){
-  }
+
 
   render(){
    let smallGroups = []
@@ -155,6 +154,8 @@ class SwipeInfiniteScrollHolder extends React.Component{
    if(this.props.navGroupIDCondition){
      navGroupIDCondition=this.props.navGroupIDCondition
    }
+   console.log("made class")
+   console.log(navGroupIDCondition)
 
     return(
       <View>
@@ -171,6 +172,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
               style={{ marginTop:10 }}
                initialPage={1}
                renderTabBar={() => <ScrollableTabBarNew
+                navGroupIDCondition={navGroupIDCondition}
                  navigation = {this.props.navigation}
                  curLoad = {this.props.curLoad}
                  />}

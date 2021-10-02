@@ -37,6 +37,8 @@ const ScrollableTabBarNew = createReactClass({
     onScroll: PropTypes.func,
   },
 
+
+
   getDefaultProps() {
     return {
       scrollOffset: 52,
@@ -62,6 +64,7 @@ const ScrollableTabBarNew = createReactClass({
   componentDidMount() {
     this.props.scrollValue.addListener(this.updateView);
   },
+
 
   updateView(offset) {
     const position = Math.floor(offset.value);
@@ -216,6 +219,9 @@ const ScrollableTabBarNew = createReactClass({
   },
 
   render() {
+    const navGroupIDCondition=this.props.navGroupIDCondition;
+    console.log("Third, MADE IT")
+    console.log(navGroupIDCondition)
     const tabUnderlineStyle = {
       position: 'absolute',
       height: 2,
@@ -252,7 +258,7 @@ const ScrollableTabBarNew = createReactClass({
           ref={'tabContainer'}
           onLayout={this.onTabContainerLayout}
         >
-  
+
           {this.props.tabs.map((name, page) => {
             const isTabActive = this.props.activeTab === page;
             const renderTab = this.props.renderTab || this.renderTab;
@@ -280,6 +286,9 @@ const ScrollableTabBarNew = createReactClass({
     if (JSON.stringify(prevProps.tabs) !== JSON.stringify(this.props.tabs) && this.state._containerWidth) {
       this.setState({ _containerWidth: null, });
     }
+    console.log(prevProps)
+
+    // this.props.goToPage(navGroupIDCondition)
   },
 
   onTabContainerLayout(e) {
