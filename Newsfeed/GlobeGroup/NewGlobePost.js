@@ -30,6 +30,14 @@ class NewGlobePost extends React.Component{
       likerId
     )
   }
+
+  onUnlike = (unlikerId, notificationToken) =>{
+
+    WebSocketGlobeInstance.sendGroupUnlike(
+      this.props.data.id,
+      unlikerId
+    )
+  }
   renderPostInfo=(data, like)=>{
 
     console.log(like, 'like like')
@@ -195,8 +203,8 @@ class NewGlobePost extends React.Component{
                       like.includes(this.props.id) ?
                       <TouchableOpacity
                         onPress = {() => this.onUnlike(
-                          postId,
-                          this.props.userId,
+                          this.props.id,
+                          notificationToken,
                         )}
                     >
                         <View style = {styles.justifyCenter}>
