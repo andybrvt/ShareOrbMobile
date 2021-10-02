@@ -17,3 +17,11 @@ export const sendGlobePostLike = (post)=> {
     post: post
   }
 }
+
+export const fetchGlobeItemComment = (comments) => {
+
+  return{
+    type: actionTypes.FETCH_GLOBE_ITEM_COMMENT,
+    comments: comments
+  }
+}

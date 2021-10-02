@@ -43,15 +43,20 @@ class WebsocketGlobeComment{
   }
 
   addCallbacks(
-
+    fetchGlobeItemComment
   ){
-
+    this.callbacks['fetch_globe_item_comment'] = fetchGlobeItemComment
   }
 
   socketNewGlobeComments(data){
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
-    console.log(parsedData)
+
+    if(command === "fetch_globe_item_comment"){
+      const globeComments = parsedData.itemComments
+
+      this.callbacks['fetch_globe_item_comment'](globeComments)
+    }
   }
 
 

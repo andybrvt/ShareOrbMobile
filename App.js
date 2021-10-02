@@ -41,6 +41,7 @@ import ExploreWebSocketInstance from './Websockets/exploreWebsocket';
 import WebSocketSocialNewsfeedInstance from './Websockets/socialNewsfeedWebsocket';
 import ChatSidePanelWebSocketInstance from './Websockets/newChatSidePanelWebsocket';
 import SocialCommentsWebsocketInstance from './Websockets/commentsCellWebsocket';
+import GlobeCommentWebsocketInstance from './Websockets/globeCommentWebsocket';
 import SocialCalCellPageWebSocketInstance from './Websockets/socialCalCellWebsocket';
 import NotificationWebSocketInstance from './Websockets/notificationWebsocket';
 import ColabAlbumWebsocketInstance from './Websockets/colabAlbumWebsocket';
@@ -255,6 +256,10 @@ class App extends Component{
     WebSocketGlobeInstance.addCallbacks(
       this.props.fetchGlobePost.bind(this),
       this.props.sendGlobePostLike.bind(this)
+    )
+
+    GlobeCommentWebsocketInstance.addCallbacks(
+      this.props.fetchGlobeItemComment.bind(this)
     )
 
 
@@ -1283,6 +1288,9 @@ const mapDispatchToProps = dispatch => {
 
     fetchGlobePost: (posts) => dispatch(globeGroupActions.fetchGlobePost(posts)),
     sendGlobePostLike: (post) => dispatch(globeGroupActions.sendGlobePostLike(post)),
+    fetchGlobeItemComment: (comments) => dispatch(globeGroupActions.fetchGlobeItemComment(comments)),
+
+
     authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
 
     }
