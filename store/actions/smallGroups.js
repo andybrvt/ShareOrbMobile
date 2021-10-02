@@ -7,10 +7,18 @@ export const loadSmallGroupsPost = (posts) => {
      posts: posts
    }
 }
-``
+
 export const sendGroupPost = (post) => {
   return{
     type: actionTypes.SEND_GROUP_POST,
+    post: post
+  }
+}
+
+export const sendGroupPostLike = (post) => {
+  console.log('the stuff goes here')
+  return{
+    type: actionTypes.SEND_GROUP_POST_LIKE,
     post: post
   }
 }

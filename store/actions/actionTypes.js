@@ -84,10 +84,10 @@ export const FETCH_TIMELINE_COLAB = "FETCH_TIMELINE_COLAB";
 export const FETCH_EXPIRING_COLAB = "FETCH_EXPIRING_COLAB";
 export const UPDATE_EXPIRING_COLAB = "UPDATE_EXPIRING_COLAB";
 
-
+// this will be used for small groups
 export const LOAD_SMALL_GROUPS_POST = "LOAD_SMALL_GROUPS_POST";
 export const SEND_GROUP_POST = "SEND_GROUP_POST";
-
+export const SEND_GROUP_POST_LIKE = "SEND_GROUP_POST_LIKE";
 
 // this will have to do with the globe group
 export const FETCH_GLOBE_POST = "FETCH_GLOBE_POST";

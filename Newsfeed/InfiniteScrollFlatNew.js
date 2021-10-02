@@ -80,11 +80,9 @@ class InfiniteScrollFlatNew extends React.Component{
     // used to connect to the websocket and then pull the intial
     // group info
 
-    console.log('initialize it here')
     const groupId = this.props.groupId
     this.waitForSmallGroupsSocketConnection(() => {
       //fetch the stuff here
-      console.log('goes here right')
       WebSocketSmallGroupInstance.fetchGroupPost(groupId)
     })
 
@@ -157,7 +155,7 @@ class InfiniteScrollFlatNew extends React.Component{
           ViewProfile = {this.props.ViewProfile}
           data = {item}
           onCommentOpen = {this.props.onCommentOpen}
-
+          groupId = {this.props.groupId}
            />
 
     )
@@ -198,6 +196,7 @@ class InfiniteScrollFlatNew extends React.Component{
       // groupPost = this.props.groupPost
       // console.log(this.props.groupPost, 'stuff here')
     }
+
 
 
     return(

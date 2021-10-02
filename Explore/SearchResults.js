@@ -16,10 +16,7 @@ import { connect } from "react-redux";
 
 class SearchResults extends React.Component{
   renderGroupItem = ({item}) => {
-    console.log("GROUPP")
-    console.log(item)
-    console.log(item.mini_member)
-
+  
     return(
       <TouchableOpacity
         onPress = {() => this.props.groupProfile(item)}
@@ -149,7 +146,7 @@ class SearchResults extends React.Component{
             }}>
             <Text style={styles.settingWord}>Users</Text>
             <FlatList
-            
+
               data = {data}
               renderItem = {this.renderItem}
               keyExtractor={(item, index) => String(index)}

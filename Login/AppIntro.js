@@ -167,7 +167,6 @@ class AppIntro extends React.Component{
       //   one:false
       // })
       this.props.navigation.navigate('Login')
-      console.log('stuff here')
     }
     if(modalNum === 'two'){
       this.setState({
@@ -290,7 +289,6 @@ class AppIntro extends React.Component{
         this.setState({
           loading:false
         })
-        console.log(token)
         this.props.authSuccess(token);
         this.props.navigation.navigate("")
       })
