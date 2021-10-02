@@ -395,7 +395,7 @@ class NewGlobePost extends React.Component{
                {this.renderPostInfo(post)}
              </View>
              :
-             <View style={{position:'absolute', marginTop:'92%', width:'100%', flexDirection:'row'}}>
+             <View style={{position:'absolute', marginTop:'91%', width:'100%', flexDirection:'row'}}>
                {this.renderPostInfo(post)}
              </View>
            }

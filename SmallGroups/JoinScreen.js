@@ -119,36 +119,34 @@ class JoinScreen extends React.Component{
     })
   }
 
-  // joinPrivateGroup = (groupId) => {
-  //
-  //   // Probally gonna put a authaxios call on this instead of
-  //   // just checking the code in an of itself instead of just
-  //   // checking if its right or worg
-  //   console.log(this.state.inviteCode)
-  //
-  //   console.log(groupId, groupCode)
-  //
-  //   const userId = this.props.id
-  //   this.setState({
-  //     loading: true
-  //   })
-  //
-  //   authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
-  //   .then(res => {
-  //     console.log(res.data)
-  //     // direct this group to newsfeed and then add it to auth
-  //
-  //     this.setState({
-  //       loading: false
-  //     })
-  //     this.props.authAddSmallGroup(res.data)
-  //
-  //     this.props.navigation.navigate('Home')
-  //
-  //   })
-  //
-  //
-  // }
+  joinPrivateGroup = (groupId) => {
+
+    // Probally gonna put a authaxios call on this instead of
+    // just checking the code in an of itself instead of just
+    // checking if its right or worg
+
+
+    const userId = this.props.id
+    this.setState({
+      loading: true
+    })
+
+    authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
+    .then(res => {
+      console.log(res.data)
+      // direct this group to newsfeed and then add it to auth
+
+      this.setState({
+        loading: false
+      })
+      this.props.authAddSmallGroup(res.data)
+
+      this.props.navigation.navigate('Home')
+
+    })
+
+
+  }
 
   declineGroup = () => {
     this.props.navigation.goBack()
