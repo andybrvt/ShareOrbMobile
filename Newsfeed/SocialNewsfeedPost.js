@@ -15,6 +15,7 @@ import {loop, withTimingTransition, mix} from 'react-native-redash/lib/module/v1
 import BottomSheet from 'reanimated-bottom-sheet';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import NotificationWebSocketInstance from  '../Websockets/notificationWebsocket';
+import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import { Navigation2, Heart, MessageCircle, VolumeX, Volume2 } from "react-native-feather";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
@@ -110,85 +111,59 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   changeShowComments = (postId) => {
-    this.props.onCommentOpen(postId)
+    // this.props.onCommentOpen(postId)
   }
 
-  // New like that likes the single day post
+  // So you are gonna need the postId, and the person who likes it id
+  // groupId, and the notification token
   onLike = (
-     socialItemId,
-     personLike,
-     ownerId,
-     notificationToken,
-     calCell,
+     postId,
+     likerId,
+     notificationToken
    ) => {
 
-     const notificationObject = {
-       command: 'social_like_notification',
-       actor: personLike,
-       recipient: ownerId,
-       socialItemId: socialItemId,
-     }
-
-    NotificationWebSocketInstance.sendNotification(notificationObject)
 
 
-    WebSocketSocialNewsfeedInstance.sendSinglePostLike(
-      socialItemId,
-      personLike,
-    )
-    global.SEND_LIKE_NOTIFICATION(
-      notificationToken,
-      this.props.currentUser,
-      socialItemId,
-      calCell
-    )
+     WebSocketSmallGroupInstance.onGroupPostLike(
+       postId,
+       likerId,
+       this.props.groupId
+     )
+    //  const notificationObject = {
+    //    command: 'social_like_notification',
+    //    actor: personLike,
+    //    recipient: ownerId,
+    //    socialItemId: socialItemId,
+    //  }
+    //
+    // NotificationWebSocketInstance.sendNotification(notificationObject)
+    //
+    //
+    // WebSocketSocialNewsfeedInstance.sendSinglePostLike(
+    //   socialItemId,
+    //   personLike,
+    // )
+    // global.SEND_LIKE_NOTIFICATION(
+    //   notificationToken,
+    //   this.props.currentUser,
+    //   socialItemId,
+    //   calCell
+    // )
 
 
   }
 
   // New unlike for the single day post
   onUnlike = (socialItemId, personUnlike) => {
-    WebSocketSocialNewsfeedInstance.sendSinglePostUnlike(
-      socialItemId,
-      personUnlike
-    )
+    console.log('unlike')
+
+    // WebSocketSocialNewsfeedInstance.sendSinglePostUnlike(
+    //   socialItemId,
+    //   personUnlike
+    // )
 
   }
-  // Old like that likes the whole day album
-  // onLike = (socialCalCellId, personLike, contentTypeId, ownerId, cellDate) => {
-  //   // send it through the websocket
-  //   // and then backend
-  //   // then back to the redux
-  //   const notificationObject = {
-  //     command: 'social_like_notification',
-  //     actor: personLike,
-  //     recipient: ownerId,
-  //     cellDate:cellDate,
-  //
-  //   }
-  //
-  //   WebSocketSocialNewsfeedInstance.sendOneLike(
-  //     socialCalCellId,
-  //     personLike,
-  //     contentTypeId
-  //   )
-  //
-  //   if(personLike !== ownerId){
-  //     NotificationWebSocketInstance.sendNotification(notificationObject)
-  //
-  //   }
-  //
-  // }
 
-  // onUnlike = (socialCalCellId, personUnlike, contentTypeId) => {
-  //
-  //   WebSocketSocialNewsfeedInstance.unSendOneUnlike(
-  //     socialCalCellId,
-  //     personUnlike,
-  //     contentTypeId)
-  //
-  //
-  // }
 
   onSlidePress = (num, postId,
   userId,
@@ -212,6 +187,7 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   renderPostInfo=(data)=>{
+
 
     let postId = "";
     let calCell = "";
@@ -262,6 +238,9 @@ class SocialNewsfeedPost extends React.Component{
         }
         if(data.creator.username){
           userUsername = data.creator.username
+        }
+        if(data.creator.notificationToken){
+          notificationToken = data.creator.notificationToken
         }
 
         if(data.created_at) {
@@ -376,14 +355,15 @@ class SocialNewsfeedPost extends React.Component{
                           postId,
                           this.props.userId,
                         )}
-                    >
+                        >
                         <View style = {styles.justifyCenter}>
-                          <Heart
-                            stroke = "red"
-                            fill="red"
-                            width = {27.5}
-                            height = {27.5}
-                             />
+                            <Heart
+                              stroke = "red"
+                              fill="red"
+                              width = {27.5}
+                              height = {27.5}
+                               />
+
                           <Text  style = {styles.statNum}>
                             {like_people.length}
                           </Text>
@@ -394,18 +374,17 @@ class SocialNewsfeedPost extends React.Component{
                         onPress = {() => this.onLike(
                           postId,
                           this.props.userId,
-                          ownerId,
                           notificationToken,
-                          calCell
                         )}
                         >
                         <View style = {styles.justifyCenter}>
-                          <Heart
-                            stroke = "white"
-                            fill="white"
-                            width = {27.5}
-                            height = {27.5}
-                          />
+                            <Heart
+                              stroke = "white"
+                              fill="white"
+                              width = {27.5}
+                              height = {27.5}
+                            />
+
                          <Text style = {styles.statNum}>
                           {like_people.length}
                         </Text>
@@ -413,9 +392,10 @@ class SocialNewsfeedPost extends React.Component{
                       </TouchableOpacity>
                   }
 
-                  <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
+                  <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
                     <View style={{marginLeft:20,}}>
                         <View style = {styles.justifyCenter}>
+
                           <MessageCircle
                             stroke = "white"
                             fill="white"
@@ -427,7 +407,7 @@ class SocialNewsfeedPost extends React.Component{
                           </Text>
                         </View>
                     </View>
-                  </TouchableWithoutFeedback>
+                  </TouchableOpacity>
 
             </View>
 
@@ -747,6 +727,7 @@ class SocialNewsfeedPost extends React.Component{
 
                           :
 
+
                           <TouchableOpacity
                             onPress = {()=> this.mute()}
                             style = {styles.tagCSS4}>
@@ -923,7 +904,6 @@ class SocialNewsfeedPost extends React.Component{
     let caption=""
     let calCell=""
     let postId=""
-
 
 
     if(this.props.data) {

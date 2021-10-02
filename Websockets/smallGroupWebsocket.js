@@ -47,7 +47,6 @@ class WebSocketSmallGroups{
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
 
-    console.log(parsedData)
     // You will have a websocket for each group and everytime
     // something gets sent through you have to check which weboscket
     // its coming from and put it in the correct group
@@ -77,16 +76,30 @@ class WebSocketSmallGroups{
       this.callbacks['send_group_post'](groupObj)
 
     }
+    if(command === "send_group_post_like"){
+      const groupId = parsedData.groupId
+      const groupPost = parsedData.post
+      const groupObj  = {
+        groupId,
+        groupPost
+      }
+
+      // add call back here
+      this.callbacks['send_group_post_like'](groupObj)
+
+    }
 
   }
 
   // First function is to pull the intial information
   addCallbacks(
     loadSmallGroupsPost,
-    sendGroupPost
+    sendGroupPost,
+    sendGroupPostLike
   ){
     this.callbacks['load_small_groups_post'] = loadSmallGroupsPost
     this.callbacks['send_group_post'] = sendGroupPost
+    this.callbacks['send_group_post_like'] = sendGroupPostLike
   }
 
   fetchGroupPost(groupId){
@@ -106,6 +119,20 @@ class WebSocketSmallGroups{
       postId: postId,
       groupId: groupId,
       command: 'send_group_post'
+    })
+
+  }
+
+  onGroupPostLike(
+    postId,
+    likerId,
+    groupId
+  ){
+    this.sendGroupsInfo({
+      postId: postId,
+      likerId: likerId,
+      groupId: groupId,
+      command: 'send_group_post_like'
     })
 
   }

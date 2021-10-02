@@ -38,6 +38,41 @@ const sendGroupPost = (state, action) => {
   })
 }
 
+const sendGroupPostLike = (state, action) => {
+
+  // state.groupPosts[action.post.groupId.toString()].map(
+  //    socialPost => socialPost.id === action.post.groupPost.id ?
+  //    socialPost
+  //     : socialPost
+  // )
+
+  // const test = state.groupPosts[action.post.groupId.toString()].map(
+  //            socialPost => socialPost.id === action.post.groupPost.id ? {
+  //              ...action.post.groupPost
+  //            }
+  //             : socialPost
+  //         )
+  //
+  // console.log(test, 'test testestes')
+  return updateObject(state, {
+
+    groupPosts: {
+
+      ...state.groupPosts,
+      [action.post.groupId.toString()]: state.groupPosts[action.post.groupId.toString()].map(
+         socialPost => socialPost.id === action.post.groupPost.id ? {
+           ...action.post.groupPost
+         }
+          : socialPost
+      )
+
+    }
+
+
+
+  })
+}
+
 const reducer = (state = initialState, action) => {
 
   switch(action.type){
@@ -45,6 +80,8 @@ const reducer = (state = initialState, action) => {
       return loadSmallGroupsPost(state, action)
     case actionTypes.SEND_GROUP_POST:
       return sendGroupPost(state, action)
+    case actionTypes.SEND_GROUP_POST_LIKE:
+      return sendGroupPostLike(state, action)
     default:
       return state;
   }

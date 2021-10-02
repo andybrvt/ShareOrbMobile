@@ -186,7 +186,6 @@ class GroupInfo extends React.Component{
     if(this.props.smallGroups){
       data = this.props.smallGroups
     }
-    console.log(data)
 
 
     let smallGroups = []
@@ -212,7 +211,6 @@ class GroupInfo extends React.Component{
         }
       }
     }
-    console.log(members)
 
     return(
       <BackgroundContainer>

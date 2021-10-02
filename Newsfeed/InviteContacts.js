@@ -83,7 +83,6 @@ class InviteContacts extends React.Component{
 
    render(){
      let data=this.state.data
-     console.log(data)
      // You will need to get the current number of poeple on the wait list
      return(
        <BackgroundContainer>
