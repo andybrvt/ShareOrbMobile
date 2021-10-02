@@ -47,6 +47,10 @@ class Page extends React.Component {
     }
 }
 
+// do a component did mount with this.props.goTo(page number from newsfeedview)
+// check index out of all the gorups from the mapstatetoprops and make it mapDispatchToProps
+// up to the index passed in from newsfeedview
+
 class SwipeInfiniteScrollHolder extends React.Component{
 
   navGroupInfo=()=> {
@@ -54,6 +58,84 @@ class SwipeInfiniteScrollHolder extends React.Component{
     this.props.navigation.navigate("GroupInfo",
 
     );
+  }
+  navGroupDirect=(navGroupIDCondition)=>{
+    return(
+      <ScrollableTabView
+        style={{ marginTop:10 }}
+         initialPage={navGroupIDCondition}
+         renderTabBar={() => <ScrollableTabBarNew
+           navigation = {this.props.navigation}
+           curLoad = {this.props.curLoad}
+           />}
+        >
+        <GlobeGroup
+          navigation = {this.props.navigation}
+          name = "globe" tabLabel = "globe" />
+        {smallGroups.map((group, indx) => {
+          const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
+          return(
+            <InfiniteScrollFlatNew
+              navigation = {this.props.navigation}
+              key = {indx}
+              groupId= {group.id}
+              name='tab1' tabLabel={{pic: pic, name:group.group_name}} />
+
+          )
+
+
+        })}
+
+          <View
+            style = {{
+                alignItems: 'center',
+                // justifyContent: 'center',
+                backgroundColor: '#1890ff',
+                flex: 1}}
+            name = "tab3" tabLabel = "add">
+
+            <View style ={{
+                top: '15%',
+                alignItems: 'center'
+              }}>
+              <NoPosts width = {150} height = {150} />
+              <View style = {{
+
+                }}>
+                <Text style = {{
+                    top: '15%',
+                    color: 'white',
+                    fontSize: 30
+                  }}>Let's create a group</Text>
+              </View>
+              <View style = {{
+                  marginTop: 30
+                }}>
+                <TouchableOpacity
+                  style = {{
+                    borderRadius: 25,
+                    width: 250,
+                    height: 55,
+                    backgroundColor: 'white',
+                    justifyContent:'center',
+                    alignItems: 'center'
+
+                  }}
+                  onPress = {() => this.onGroupCreateDirect()}
+                  >
+                  <Text style = {{
+                    fontWeight: 'bold',
+                    color: '#1890ff'}}>Create a group</Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>
+
+          </View>
+
+
+      </ScrollableTabView>
+    )
   }
 
   onGroupCreateDirect(){
@@ -70,6 +152,9 @@ class SwipeInfiniteScrollHolder extends React.Component{
    if(this.props.smallGroups){
      smallGroups = this.props.smallGroups
    }
+   if(this.props.navGroupIDCondition){
+     navGroupIDCondition=this.props.navGroupIDCondition
+   }
 
     return(
       <View>
@@ -82,80 +167,85 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
         <View style = {{flex: 1, height:height -10 }}>
 
-          <ScrollableTabView
-            style={{ marginTop:10 }}
-             initialPage={1}
-             renderTabBar={() => <ScrollableTabBarNew
-               navigation = {this.props.navigation}
-               curLoad = {this.props.curLoad}
-               />}
-            >
-            <GlobeGroup
-              navigation = {this.props.navigation}
-              name = "globe" tabLabel = "globe" />
-            {smallGroups.map((group, indx) => {
-              const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
-              return(
-                <InfiniteScrollFlatNew
-                  navigation = {this.props.navigation}
-                  key = {indx}
-                  groupId= {group.id}
-                  name='tab1' tabLabel={{pic: pic, name:group.group_name}} />
+            <ScrollableTabView
+              style={{ marginTop:10 }}
+               initialPage={1}
+               renderTabBar={() => <ScrollableTabBarNew
+                 navigation = {this.props.navigation}
+                 curLoad = {this.props.curLoad}
+                 />}
+              >
+              <GlobeGroup
+                navigation = {this.props.navigation}
+                name = "globe" tabLabel = "globe" />
+              {smallGroups.map((group, indx) => {
+                const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
+                return(
+                  <InfiniteScrollFlatNew
+                    navigation = {this.props.navigation}
+                    key = {indx}
+                    groupId= {group.id}
+                    name='tab1' tabLabel={{pic: pic, name:group.group_name}} />
 
-              )
+                )
 
 
-            })}
+              })}
 
-              <View
-                style = {{
-                    alignItems: 'center',
-                    // justifyContent: 'center',
-                    backgroundColor: '#1890ff',
-                    flex: 1}}
-                name = "tab3" tabLabel = "add">
+                <View
+                  style = {{
+                      alignItems: 'center',
+                      // justifyContent: 'center',
+                      backgroundColor: '#1890ff',
+                      flex: 1}}
+                  name = "tab3" tabLabel = "add">
 
-                <View style ={{
-                    top: '15%',
-                    alignItems: 'center'
-                  }}>
-                  <NoPosts width = {150} height = {150} />
-                  <View style = {{
-
+                  <View style ={{
+                      top: '15%',
+                      alignItems: 'center'
                     }}>
-                    <Text style = {{
-                        top: '15%',
-                        color: 'white',
-                        fontSize: 30
-                      }}>Let's create a group</Text>
-                  </View>
-                  <View style = {{
-                      marginTop: 30
-                    }}>
-                    <TouchableOpacity
-                      style = {{
-                        borderRadius: 25,
-                        width: 250,
-                        height: 55,
-                        backgroundColor: 'white',
-                        justifyContent:'center',
-                        alignItems: 'center'
+                    <NoPosts width = {150} height = {150} />
+                    <View style = {{
 
-                      }}
-                      onPress = {() => this.onGroupCreateDirect()}
-                      >
+                      }}>
                       <Text style = {{
-                        fontWeight: 'bold',
-                        color: '#1890ff'}}>Create a group</Text>
-                    </TouchableOpacity>
+                          top: '15%',
+                          color: 'white',
+                          fontSize: 30
+                        }}>Let's create a group</Text>
+                    </View>
+                    <View style = {{
+                        marginTop: 30
+                      }}>
+                      <TouchableOpacity
+                        style = {{
+                          borderRadius: 25,
+                          width: 250,
+                          height: 55,
+                          backgroundColor: 'white',
+                          justifyContent:'center',
+                          alignItems: 'center'
+
+                        }}
+                        onPress = {() => this.onGroupCreateDirect()}
+                        >
+                        <Text style = {{
+                          fontWeight: 'bold',
+                          color: '#1890ff'}}>Create a group</Text>
+                      </TouchableOpacity>
+                    </View>
+
                   </View>
 
                 </View>
 
-              </View>
+
+            </ScrollableTabView>
 
 
-          </ScrollableTabView>
+
+
+
 
         </View>
 

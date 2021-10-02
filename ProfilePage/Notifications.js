@@ -91,7 +91,7 @@ class Notifications extends React.Component{
    // let getDay=dataList[2]
    // let albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM d")
    if(item.type === "group_invite"){
-     console.log(item)
+
      return(
        <TouchableOpacity
          onPress = {() => this.onGroupOpen(item.groupInvite)}
@@ -115,7 +115,7 @@ class Notifications extends React.Component{
               }}>
             <View style = {{flexDirection: 'row'}}>
               <Text style = {{fontFamily:'Nunito-Bold', fontSize:14}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
-              <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:13}}>invited you to the {item.group_name} orb</Text>
+              <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:13}}>invited you to a orb</Text>
             </View>
             <View style = {{marginTop: 10}}>
               <Text>
@@ -342,7 +342,6 @@ class Notifications extends React.Component{
      notifications = this.props.notifications
    }
 
-   console.log(notifications, 'stuff here here')
 
    return (
      <BackgroundContainer>
