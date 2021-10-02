@@ -112,6 +112,9 @@ class SocialNewsfeedPost extends React.Component{
 
   changeShowComments = (postId) => {
     // this.props.onCommentOpen(postId)
+    this.props.navigation.navigate("Comments", {
+      postId: postId
+    })
   }
 
   // So you are gonna need the postId, and the person who likes it id

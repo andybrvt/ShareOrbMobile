@@ -10,11 +10,11 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableOpacity
+  TouchableOpacity,
+  FlatList
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
-import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
  // this class will be a page on its own where
@@ -83,7 +83,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
 
        // if(userId !== commentHost){
-         NotificationWebSocketInstance.sendNotification(notificationObject)
+         // NotificationWebSocketInstance.sendNotification(notificationObject)
 
          global.SEND_COMMENT_NOTIFICATION(
            this.props.commentHostNotiToken,
@@ -222,7 +222,11 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
    }
 
    render(){
-     const comments = this.props.socialComments
+     let comments = []
+     if(this.props.socialComments){
+       comments = this.props.socialComments
+     }
+
      return (
        <SafeAreaView
          style ={{flex: 1, backgroundColor:'white'}}>
