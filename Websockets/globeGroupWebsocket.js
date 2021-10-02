@@ -48,17 +48,28 @@ class WebSocketGlobe {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
 
+    console.log(parsedData.command,'parsed the data here')
     if(command === 'fetch_globe_post'){
         const globePost = JSON.parse(parsedData.globe_post)
         this.callbacks['fetch_globe_post'](globePost)
     }
 
+    if(command === "send_globe_post_like_unlike"){
+      const globePost = parsedData.post
+
+
+      //add call back here
+      this.callbacks['send_globe_post_like'](globePost)
+    }
+
   }
 
   addCallbacks(
-    fetchGlobePost
+    fetchGlobePost,
+    sendGlobePostLike
   ){
     this.callbacks['fetch_globe_post'] = fetchGlobePost
+    this.callbacks['send_globe_post_like'] = sendGlobePostLike
   }
 
 
@@ -68,6 +79,19 @@ class WebSocketGlobe {
       command: "fetch_globe_post"
     })
   }
+
+  sendGroupLike(
+    globeId,
+    likerId
+  ){
+    this.sendPostsInfo({
+      globeId: globeId,
+      likerId: likerId,
+      command: "send_group_like"
+    })
+  }
+
+
 
   sendPostsInfo(data){
     try {

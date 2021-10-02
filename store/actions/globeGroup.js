@@ -9,3 +9,11 @@ export const fetchGlobePost = (posts) => {
     posts: posts
   }
 }
+
+export const sendGlobePostLike = (post)=> {
+
+  return{
+    type: actionTypes.SEND_GLOBE_POST_LIKE,
+    post: post
+  }
+}

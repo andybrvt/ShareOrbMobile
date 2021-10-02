@@ -253,7 +253,8 @@ class App extends Component{
     )
 
     WebSocketGlobeInstance.addCallbacks(
-      this.props.fetchGlobePost.bind(this)
+      this.props.fetchGlobePost.bind(this),
+      this.props.sendGlobePostLike.bind(this)
     )
 
 
@@ -1281,6 +1282,7 @@ const mapDispatchToProps = dispatch => {
 
 
     fetchGlobePost: (posts) => dispatch(globeGroupActions.fetchGlobePost(posts)),
+    sendGlobePostLike: (post) => dispatch(globeGroupActions.sendGlobePostLike(post)),
     authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
 
     }

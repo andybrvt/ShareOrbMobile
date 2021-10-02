@@ -4,6 +4,7 @@ ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback, } from 'reac
 import { Navigation2, Heart, MessageCircle, VolumeX, Volume2, UserCheck, UserPlus } from "react-native-feather";
 import { LinearGradient } from 'expo-linear-gradient';
 import * as dateFns from 'date-fns';
+import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 
 import { Avatar } from 'react-native-elements';
 
@@ -21,8 +22,17 @@ class NewGlobePost extends React.Component{
 
   }
 
-  renderPostInfo=(data)=>{
 
+  onLike = ( likerId, notificationToken) => {
+    console.log(this.props.data.id)
+    WebSocketGlobeInstance.sendGroupLike(
+      this.props.data.id,
+      likerId
+    )
+  }
+  renderPostInfo=(data, like)=>{
+
+    console.log(like, 'like like')
     let postId = "";
     let calCell = "";
     let username = "";
@@ -72,6 +82,10 @@ class NewGlobePost extends React.Component{
         }
         if(data.creator.username){
           userUsername = data.creator.username
+        }
+
+        if(data.creator.notificationToken){
+          notificationToken = data.creator.notificationToken
         }
 
         if(data.created_at) {
@@ -178,7 +192,7 @@ class NewGlobePost extends React.Component{
                 flexDirection: 'row'
               }}>
               {
-                      peopleLikeId.includes(this.props.userId ) ?
+                      like.includes(this.props.id) ?
                       <TouchableOpacity
                         onPress = {() => this.onUnlike(
                           postId,
@@ -193,18 +207,15 @@ class NewGlobePost extends React.Component{
                             height = {27.5}
                              />
                           <Text  style = {styles.statNum}>
-                            {like_people.length}
+                            {like.length}
                           </Text>
                         </View>
                       </TouchableOpacity>
                       :
                       <TouchableOpacity
                         onPress = {() => this.onLike(
-                          postId,
-                          this.props.userId,
-                          ownerId,
+                          this.props.id,
                           notificationToken,
-                          calCell
                         )}
                         >
                         <View style = {styles.justifyCenter}>
@@ -215,7 +226,7 @@ class NewGlobePost extends React.Component{
                             height = {27.5}
                           />
                          <Text style = {styles.statNum}>
-                          {like_people.length}
+                          {like.length}
                         </Text>
                         </View>
                       </TouchableOpacity>
@@ -245,7 +256,6 @@ class NewGlobePost extends React.Component{
 
   render(){
 
-
     let postId = ""
     let itemImage = ""
     let group = {}
@@ -253,6 +263,8 @@ class NewGlobePost extends React.Component{
     let groupName = ""
     let members = []
     let post = {}
+    let groupLike = []
+
 
     let creatorPic = ""
     let username = ""
@@ -263,6 +275,10 @@ class NewGlobePost extends React.Component{
     let userUsername = ""
 
     if(this.props.data){
+
+      if(this.props.data.people_like){
+        groupLike = this.props.data.people_like
+      }
       if(this.props.data.post){
 
         post = this.props.data.post
@@ -292,6 +308,8 @@ class NewGlobePost extends React.Component{
         if(this.props.data.group.members){
           members = this.props.data.group.members
         }
+
+
 
       }
     }
@@ -342,8 +360,10 @@ class NewGlobePost extends React.Component{
               justifyContent: 'center'
             }}>
             {
-              members.includes(this.props.id) ?
-              <TouchableOpacity activeOpacity={0.8} style={styles.inviteButton} onPress = {() => this.joinGroup(item.id)}>
+              !members.includes(this.props.id) ?
+              <TouchableOpacity
+                onPress = {() => this.viewGroup(group)}
+                activeOpacity={0.8} style={styles.inviteButton} >
                 <UserPlus
                   style={{marginRight:5}}
                   stroke = "white"
@@ -353,10 +373,11 @@ class NewGlobePost extends React.Component{
                    />
                  <Text style={{fontFamily:'Nunito-SemiBold', fontSize:13, color:'white' }}>Join</Text>
               </TouchableOpacity>
+
               :
+
               <TouchableOpacity
-                onPress = {() => this.viewGroup(group)}
-                style={styles.inviteButton} onPress = {() => this.joinGroup(item.id)}>
+                style={styles.inviteButtonJ} >
                 <UserCheck
                   style={{marginRight:5}}
                   stroke = "white"
@@ -391,12 +412,12 @@ class NewGlobePost extends React.Component{
 
            {
              caption.length === 0 ?
-             <View style={{position:'absolute', marginTop:'100%', width:'100%', flexDirection:'row'}}>
-               {this.renderPostInfo(post)}
+             <View style={{position:'absolute', bottom:'5%', width:'100%', flexDirection:'row'}}>
+               {this.renderPostInfo(post, groupLike)}
              </View>
              :
-             <View style={{position:'absolute', marginTop:'91%', width:'100%', flexDirection:'row'}}>
-               {this.renderPostInfo(post)}
+             <View style={{position:'absolute', bottom:'12.5%', width:'100%', flexDirection:'row'}}>
+               {this.renderPostInfo(post, groupLike)}
              </View>
            }
 
@@ -437,7 +458,7 @@ class NewGlobePost extends React.Component{
 
 const styles = StyleSheet.create({
   inviteButton: {
-    padding:15,
+    // padding:15,
     width:80,
     borderRadius: 20,
     height:35,
@@ -448,6 +469,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#1890ff",
+    flexDirection:'row'
+  },
+  inviteButtonJ: {
+    // padding:15,
+    width:80,
+    borderRadius: 20,
+    height:35,
+    elevation:5,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "gainsboro",
     flexDirection:'row'
   },
   totalHolderContainer: {
