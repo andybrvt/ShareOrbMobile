@@ -25,6 +25,7 @@ import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket
 import GlobeCommentWebsocketInstance from '../Websockets/globeCommentWebsocket';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+import WebSocketGlobeInstance from '../Websockets/globeGroupWebsocket';
 import TextModal from '../RandomComponents/TextModal';
 import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 import RealRoundedInput from '../RandomComponents/RealRoundedInput';
@@ -82,6 +83,21 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
          comment
        )
 
+       // update the globe stuff here
+
+      setTimeout(() =>  WebSocketGlobeInstance.updateSingleGlobeItem(
+         globeItem
+       ), 1000)
+
+
+
+       // send the notifications to the whole group
+
+       this.setState({
+         comment: ""
+       })
+       Keyboard.dismiss()
+
      }
 
    }
@@ -107,9 +123,14 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
          comment,
        )
 
-       setTimeout(() => WebSocketSocialNewsfeedInstance.updateSinglePost(
-        cellId
-      ), 1000)
+
+      //
+      //  setTimeout(() => WebSocketSocialNewsfeedInstance.updateSinglePost(
+      //   cellId
+      // ), 1000)
+
+      // update the group here
+      // similar to that on top
 
 
        // if(userId !== commentHost){

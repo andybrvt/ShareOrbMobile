@@ -18,6 +18,13 @@ export const sendGlobePostLike = (post)=> {
   }
 }
 
+export const updateSingleGlobeItem = (post) => {
+  return{
+    type: actionTypes.UPDATE_SINGLE_GLOBE_ITEM,
+    post: post
+  }
+}
+
 export const fetchGlobeItemComment = (comments) => {
 
   return{
