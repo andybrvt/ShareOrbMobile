@@ -37,11 +37,7 @@ const sendGlobeItemComment = (state, action) => {
   })
 }
 
-// const updateSingleGlobeItem = (state, action) => {
-//   return updateObject(state, {
-//
-//   })
-// }
+
 
 const reducer = (state = initialState, action) => {
 
@@ -54,8 +50,7 @@ const reducer = (state = initialState, action) => {
       return fetchGlobeItemComment(state, action)
     case actionTypes.SEND_GLOBE_ITEM_COMMENT:
       return sendGlobeItemComment(state, action)
-    case actionTypes.UPDATE_SINGLE_GLOBE_ITEM:
-      return updateSingleGlobeItem(state, action)
+  
     default:
       return state;
   }
