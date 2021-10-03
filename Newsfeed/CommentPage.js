@@ -26,6 +26,7 @@ import GlobeCommentWebsocketInstance from '../Websockets/globeCommentWebsocket';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import WebSocketGlobeInstance from '../Websockets/globeGroupWebsocket';
+import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import TextModal from '../RandomComponents/TextModal';
 import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 import RealRoundedInput from '../RandomComponents/RealRoundedInput';
@@ -93,6 +94,8 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
        // send the notifications to the whole group
 
+
+
        this.setState({
          comment: ""
        })
@@ -125,9 +128,9 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
 
       //
-      //  setTimeout(() => WebSocketSocialNewsfeedInstance.updateSinglePost(
-      //   cellId
-      // ), 1000)
+      setTimeout(() => WebSocketSmallGroupInstance.updateSingleGroupPost(
+        cellId
+      ), 1000)
 
       // update the group here
       // similar to that on top
@@ -136,11 +139,11 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
        // if(userId !== commentHost){
          // NotificationWebSocketInstance.sendNotification(notificationObject)
 
-         global.SEND_COMMENT_NOTIFICATION(
-           this.props.commentHostNotiToken,
-           this.props.currentUser,
-           cellId
-         )
+         // global.SEND_COMMENT_NOTIFICATION(
+         //   this.props.commentHostNotiToken,
+         //   this.props.currentUser,
+         //   cellId
+         // )
        // }
 
        this.setState({
