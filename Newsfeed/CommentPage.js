@@ -63,6 +63,29 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
      })
    }
 
+   onGlobeCommentSubmit = () => {
+     const comment = this.state.comment
+     console.log('globe')
+     if(this.state.comment.length > 0){
+
+       const globeItem = this.props.route.params.postId
+       const userId = this.props.userId
+       const commentHost = this.props.commentHost
+
+
+       // now this is where you put the websocket to send
+       // to the back end
+
+       GlobeCommentWebsocketInstance.sendGlobeComment(
+         globeItem,
+         userId,
+         comment
+       )
+
+     }
+
+   }
+
    onCommentSubmit = () => {
      // use to submit the comments into the websocket
      const comment = this.state.comment
@@ -261,9 +284,11 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
    render(){
 
-    
+
      let comments = []
+
      if(this.props.route.params.type === "group"){
+
        if(this.props.socialComments){
          comments = this.props.socialComments
        }
@@ -313,7 +338,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
                 />
               </View>
               <RealRoundedInput
-                onCommentSubmit = {this.onCommentSubmit}
+                onCommentSubmit = {this.props.route.params.type === "group" ? this.onCommentSubmit : this.onGlobeCommentSubmit}
                 onChange = {this.onCommentChange}
                 onEmojiChange = {this.onEmojiChange}
                 value = {this.state.comment}

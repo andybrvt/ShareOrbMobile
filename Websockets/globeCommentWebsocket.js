@@ -43,19 +43,29 @@ class WebsocketGlobeComment{
   }
 
   addCallbacks(
-    fetchGlobeItemComment
+    fetchGlobeItemComment,
+    sendGlobeItemComment
   ){
     this.callbacks['fetch_globe_item_comment'] = fetchGlobeItemComment
+    this.callbacks['send_globe_item_comment'] = sendGlobeItemComment
   }
 
   socketNewGlobeComments(data){
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
 
+    console.log(parsedData)
     if(command === "fetch_globe_item_comment"){
       const globeComments = parsedData.itemComments
 
       this.callbacks['fetch_globe_item_comment'](globeComments)
+    }
+    if(command === "send_globe_item_comment"){
+      const globeComment = parsedData.itemComment
+
+      // put call back here
+      this.callbacks['send_globe_item_comment'](globeComment)
+
     }
   }
 
@@ -70,6 +80,15 @@ class WebsocketGlobeComment{
     //   cellId: cellId,
     //   command: "fetch_comment_cell_info"
     // })
+  }
+
+  sendGlobeComment(globeItem, userId, comment){
+    this.sendCommentGlobeInfo({
+      globeItem: globeItem,
+      userId: userId,
+      comment: comment,
+      command: "send_globe_item_comment"
+    })
   }
 
   disconnect(){

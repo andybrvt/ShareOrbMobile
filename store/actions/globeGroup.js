@@ -25,3 +25,10 @@ export const fetchGlobeItemComment = (comments) => {
     comments: comments
   }
 }
+
+export const sendGlobeItemComment = (comment) => {
+  return {
+    type: actionTypes.SEND_GLOBE_ITEM_COMMENT,
+    comment: comment
+  }
+}

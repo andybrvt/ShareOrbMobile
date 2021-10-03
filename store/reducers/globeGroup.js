@@ -31,6 +31,12 @@ const fetchGlobeItemComment = (state, action) =>{
   })
 }
 
+const sendGlobeItemComment = (state, action) => {
+  return updateObject(state, {
+    globeComments: [...state.globeComments, action.comment]
+  })
+}
+
 const reducer = (state = initialState, action) => {
 
   switch(action.type){
@@ -40,6 +46,8 @@ const reducer = (state = initialState, action) => {
       return sendGlobePostLike(state, action)
     case actionTypes.FETCH_GLOBE_ITEM_COMMENT:
       return fetchGlobeItemComment(state, action)
+    case actionTypes.SEND_GLOBE_ITEM_COMMENT:
+      return sendGlobeItemComment(state, action)
     default:
       return state;
   }
