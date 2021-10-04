@@ -5,6 +5,10 @@ import { Navigation2, Heart, MessageCircle, VolumeX, Volume2, UserCheck, UserPlu
 import { LinearGradient } from 'expo-linear-gradient';
 import * as dateFns from 'date-fns';
 import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
+import InViewPort from "../../RandomComponents/InViewPort";
+import { Video, AVPlaybackStatus } from 'expo-av';
+
+
 
 import { Avatar } from 'react-native-elements';
 
@@ -12,6 +16,16 @@ import { Avatar } from 'react-native-elements';
 const width = Dimensions.get("window").width
 
 class NewGlobePost extends React.Component{
+
+  constructor(props){
+      super(props)
+      this.state = {
+        isMuted: true,
+        showMute: false
+      }
+  }
+
+
   playVideo = () => {
     this.setState({
       showMute: true
@@ -81,7 +95,7 @@ class NewGlobePost extends React.Component{
   }
 
 
-  ea=(data, like, comment, created_at)=>{
+  renderPostInfo=(data, like, comment, created_at)=>{
 
     let postId = "";
     let calCell = "";
@@ -458,7 +472,8 @@ class NewGlobePost extends React.Component{
           {/* FastImages */}
 
           {
-            video === "" ?
+            !video === "" ?
+
             <Image
               style={styles.cover}
               resizeMode = "cover"
@@ -475,8 +490,8 @@ class NewGlobePost extends React.Component{
                 ref={ref => {this.video = ref}}
                 style = {styles.cover}
                 source={{
-                  // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-                  uri: video
+                  uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                  // uri: video
                 }}
                 rate={1.0}
                 isMuted={this.state.isMuted}
@@ -726,6 +741,23 @@ const styles = StyleSheet.create({
       textShadowOffset: {width: -1, height: 1},
       textShadowRadius: 5,
       color:'white'
+  },
+  tagCSS4: {
+    position:'absolute',
+    // backgroundColor: 'rgba(0,0,0,.6)',
+    padding:15,
+    borderRadius:25,
+    color:'white',
+    bottom:'45%',
+    justifyContent: 'center',
+    fontSize:13,
+    right:7.5,
+    zIndex:1,
+    flex:1,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+    fontWeight:'bold',
   },
 
 
