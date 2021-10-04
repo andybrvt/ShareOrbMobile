@@ -695,8 +695,8 @@ class SocialNewsfeedPost extends React.Component{
                          ref={ref => {this.video = ref}}
                          style = {styles.cover}
                          source={{
-                           uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-                           // uri: video
+                           // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                           uri: video
                          }}
                          rate={1.0}
                          isMuted={this.state.isMuted}
