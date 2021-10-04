@@ -493,7 +493,7 @@ class CameraScreen extends React.Component{
   onSavePhoto = (image) => {
 
     const {activeSlide} = this.state;
-    const groupId = this.props.smallGroups[activeSlide].id;
+    const groupID = this.props.smallGroups[activeSlide].id;
     const ownerId = this.props.curUserId;
     const caption = this.state.caption;
     const goalId = this.state.selectedGoal.id;
@@ -507,7 +507,7 @@ class CameraScreen extends React.Component{
     formData.append('curDateTime', curDateTime);
     formData.append("caption", caption);
     formData.append('goalId', goalId);
-    formData.append("groupId", groupId)
+    formData.append("groupID", groupID)
     this.props.authAddCurLoad()
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSinglePic/`+ownerId,
       formData,
@@ -538,7 +538,7 @@ class CameraScreen extends React.Component{
       // this is also assuming that he has connected to the group
       // that he is trying to send to
 
-      WebSocketSmallGroupInstance.sendPostToGroup(groupId, res.data.item.id)
+      WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
 
         // this.props.addFirstSocialCellPost(res.data.item)
         // const coverPicForm = new FormData();
@@ -576,7 +576,8 @@ class CameraScreen extends React.Component{
 
     this.onCancelPhoto();
     this.props.navigation.navigate("Home", {
-            groupID: groupId
+            groupID: groupID,
+            test:"true",
           });
 
     setTimeout(() => {this.props.closeShowCamera()}, 1000);
@@ -588,7 +589,7 @@ class CameraScreen extends React.Component{
   onSaveVideo = (video) => {
 
       const {activeSlide} = this.state;
-      const groupId = this.props.smallGroups[activeSlide].id;
+      const groupID = this.props.smallGroups[activeSlide].id;
 
       // CONTINUE HERE WHEN YOU ARE DONE
       const ownerId = this.props.curUserId;
@@ -604,7 +605,7 @@ class CameraScreen extends React.Component{
       formData.append('curDateTime', curDateTime);
       formData.append("caption", caption);
       formData.append('goalId', goalId);
-      formData.append("groupId", groupId);
+      formData.append("groupID", groupID);
 
       this.props.authAddCurLoad()
 
@@ -632,7 +633,7 @@ class CameraScreen extends React.Component{
         // Add a websocket funciton here so that you can start sending
         // stuff in real time
 
-        WebSocketSmallGroupInstance.sendPostToGroup(groupId, res.data.item.id)
+        WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
 
 
         // this.props.addFirstSocialCellPost(res.data.item)
