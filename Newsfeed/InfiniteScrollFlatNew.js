@@ -24,6 +24,7 @@ import { User, Users } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
+import * as smallGroupsActions from '../store/actions/smallGroups';
 import NoPosts from './noPosts.svg';
 import FirstPost from './FirstPost';
 import { PlusCircle, UserPlus, Info } from "react-native-feather";
@@ -160,6 +161,39 @@ class InfiniteScrollFlatNew extends React.Component{
     })
   }
 
+  loadSocialPost = () => {
+    const {start, addMore} = this.state;
+    const groupId = this.props.groupId
+
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSmallGroup/`+groupId+"/"+start+"/"+addMore)
+    .then( res => {
+      console.log(res.data)
+      const serializedPost = res.data.serializedPost;
+      const groupId = res.data.groupId;
+      const hasMore = res.data.has_more;
+
+      const loadObj = {
+        serializedPost,
+        groupId
+      }
+
+      this.props.loadMoreSmallGroupPost(loadObj)
+
+      this.setState({
+        hasMore:hasMore,
+        loading: false,
+        start: start+addMore
+      })
+
+    })
+    .catch(err => {
+      this.setState({
+        error: err.message
+      })
+    })
+
+  }
+
   renderPost = ({item}) => {
     return(
         <SocialNewsfeedPost
@@ -238,7 +272,7 @@ class InfiniteScrollFlatNew extends React.Component{
             renderItem = {this.renderPost}
             keyExtractor={(item, index) => String(index)}
             onEndReachedThreshold={0.5}
-            // onEndReached = {() => this.loadSocialPost()}
+            onEndReached = {() => this.loadSocialPost()}
             onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
             // style={{top:130,}}
@@ -286,6 +320,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadMoreSmallGroupPost: (posts) => dispatch(smallGroupsActions.loadMoreSmallGroupPost(posts)),
     loadMoreSocialPost: (post) => dispatch(socialNewsfeedActions.loadMoreSocialPost(post)),
     openShowCamera: () => dispatch(authActions.openShowCamera()),
     authAddUnaddFollowing: (following) => dispatch(authActions.authAddUnaddFollowing(following))
