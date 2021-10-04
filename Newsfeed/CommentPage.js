@@ -25,6 +25,8 @@ import SocialCommentsWebsocketInstance from '../Websockets/commentsCellWebsocket
 import GlobeCommentWebsocketInstance from '../Websockets/globeCommentWebsocket';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
+import WebSocketGlobeInstance from '../Websockets/globeGroupWebsocket';
+import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import TextModal from '../RandomComponents/TextModal';
 import FakeSquaredInput from '../RandomComponents/FakeSquaredInput';
 import RealRoundedInput from '../RandomComponents/RealRoundedInput';
@@ -63,6 +65,46 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
      })
    }
 
+   onGlobeCommentSubmit = () => {
+     const comment = this.state.comment
+     console.log('globe')
+     if(this.state.comment.length > 0){
+
+       const globeItem = this.props.route.params.postId
+       const userId = this.props.userId
+       const commentHost = this.props.commentHost
+
+
+       // now this is where you put the websocket to send
+       // to the back end
+
+       GlobeCommentWebsocketInstance.sendGlobeComment(
+         globeItem,
+         userId,
+         comment
+       )
+
+       // update the globe stuff here
+
+      setTimeout(() =>  WebSocketGlobeInstance.updateSingleGlobeItem(
+         globeItem
+       ), 1000)
+
+
+
+       // send the notifications to the whole group
+
+
+
+       this.setState({
+         comment: ""
+       })
+       Keyboard.dismiss()
+
+     }
+
+   }
+
    onCommentSubmit = () => {
      // use to submit the comments into the websocket
      const comment = this.state.comment
@@ -84,19 +126,24 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
          comment,
        )
 
-       setTimeout(() => WebSocketSocialNewsfeedInstance.updateSinglePost(
+
+      //
+      setTimeout(() => WebSocketSmallGroupInstance.updateSingleGroupPost(
         cellId
       ), 1000)
+
+      // update the group here
+      // similar to that on top
 
 
        // if(userId !== commentHost){
          // NotificationWebSocketInstance.sendNotification(notificationObject)
 
-         global.SEND_COMMENT_NOTIFICATION(
-           this.props.commentHostNotiToken,
-           this.props.currentUser,
-           cellId
-         )
+         // global.SEND_COMMENT_NOTIFICATION(
+         //   this.props.commentHostNotiToken,
+         //   this.props.currentUser,
+         //   cellId
+         // )
        // }
 
        this.setState({
@@ -261,9 +308,11 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
    render(){
 
-    
+
      let comments = []
+
      if(this.props.route.params.type === "group"){
+
        if(this.props.socialComments){
          comments = this.props.socialComments
        }
@@ -313,7 +362,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
                 />
               </View>
               <RealRoundedInput
-                onCommentSubmit = {this.onCommentSubmit}
+                onCommentSubmit = {this.props.route.params.type === "group" ? this.onCommentSubmit : this.onGlobeCommentSubmit}
                 onChange = {this.onCommentChange}
                 onEmojiChange = {this.onEmojiChange}
                 value = {this.state.comment}

@@ -47,7 +47,7 @@ class NewGlobePost extends React.Component{
   }
 
 
-  renderPostInfo=(data, like)=>{
+  renderPostInfo=(data, like, comment, created_at)=>{
 
     let postId = "";
     let calCell = "";
@@ -191,10 +191,10 @@ class NewGlobePost extends React.Component{
             </Text>
             <View style={{flexDirection:'row'}}>
               <Text style = {styles.videoFooterUserName2}>
-                {socialMonth.substring(0,3)}&nbsp;
+                {dateFns.format(new Date(created_at), "MMM")}&nbsp;
               </Text>
               <Text style = {styles.videoFooterUserName2}>
-                {socialDay}
+                {dateFns.format(new Date(created_at), "dd")}
               </Text>
             </View>
           </View>
@@ -258,7 +258,7 @@ class NewGlobePost extends React.Component{
                             height = {27.5}
                           />
                           <Text style = {styles.statNum}>
-                            {calComment}
+                            {comment.length}
                           </Text>
                         </View>
                     </View>
@@ -290,10 +290,21 @@ class NewGlobePost extends React.Component{
     let caption = ""
     let userUsername = ""
 
+    let comment = []
+    let created_at = new Date();
+
     if(this.props.data){
+
+      console.log(this.props.data, 'newglobepost')
 
       if(this.props.data.people_like){
         groupLike = this.props.data.people_like
+      }
+      if(this.props.data.get_globeItemComment){
+        comment = this.props.data.get_globeItemComment
+      }
+      if(this.props.data.created_at){
+        created_at = new Date(this.props.data.created_at)
       }
       if(this.props.data.post){
 
@@ -429,11 +440,11 @@ class NewGlobePost extends React.Component{
            {
              caption.length === 0 ?
              <View style={{position:'absolute', bottom:'5%', width:'100%', flexDirection:'row'}}>
-               {this.renderPostInfo(post, groupLike)}
+               {this.renderPostInfo(post, groupLike, comment, created_at)}
              </View>
              :
              <View style={{position:'absolute', bottom:'12.5%', width:'100%', flexDirection:'row'}}>
-               {this.renderPostInfo(post, groupLike)}
+               {this.renderPostInfo(post, groupLike, comment, created_at)}
              </View>
            }
 

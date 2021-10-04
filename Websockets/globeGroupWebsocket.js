@@ -61,6 +61,12 @@ class WebSocketGlobe {
       //add call back here
       this.callbacks['send_globe_post_like'](globePost)
     }
+    if(command === "update_single_globe_item"){
+      const globePost = parsedData.globeItem
+
+      // put call back here
+      this.callbacks['send_globe_post_like'](globePost)
+    }
 
   }
 
@@ -102,6 +108,13 @@ class WebSocketGlobe {
     })
   }
 
+  updateSingleGlobeItem(globeItem){
+
+    this.sendPostsInfo({
+      globeItem: globeItem,
+      command: 'update_single_globe_item'
+    })
+  }
 
 
   sendPostsInfo(data){

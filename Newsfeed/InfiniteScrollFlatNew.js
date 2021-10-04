@@ -147,6 +147,19 @@ class InfiniteScrollFlatNew extends React.Component{
   //   this.setState({refreshing: false});
   // }
 
+  onRefresh = () => {
+    this.setState({
+      refreshing: true
+    })
+    const groupId = this.props.groupId
+
+    WebSocketSmallGroupInstance.fetchGroupPost(groupId)
+
+    this.setState({
+      refreshing: false
+    })
+  }
+
   renderPost = ({item}) => {
     return(
         <SocialNewsfeedPost
@@ -238,7 +251,7 @@ class InfiniteScrollFlatNew extends React.Component{
             keyExtractor={(item, index) => String(index)}
             onEndReachedThreshold={0.5}
             // onEndReached = {() => this.loadSocialPost()}
-            // onRefresh = {() => this.onRefresh()}
+            onRefresh = {() => this.onRefresh()}
             refreshing = {this.state.refreshing}
             // style={{top:130,}}
             style={{paddingBottom:10,}}

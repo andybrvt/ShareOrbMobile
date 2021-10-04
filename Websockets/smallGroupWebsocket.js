@@ -51,6 +51,7 @@ class WebSocketSmallGroups{
     // something gets sent through you have to check which weboscket
     // its coming from and put it in the correct group
 
+    console.log(parsedData)
     if(command === "fetch_group_post"){
         const groupPosts = parsedData.group_posts
         const groupId = parsedData.groupId
@@ -85,6 +86,18 @@ class WebSocketSmallGroups{
       }
 
       // add call back here
+      this.callbacks['send_group_post_like'](groupObj)
+
+    }
+    if(command === 'update_single_group_post'){
+      const groupPost = parsedData.post
+      const groupId = parsedData.groupId
+
+      const groupObj = {
+        groupId,
+        groupPost
+      }
+
       this.callbacks['send_group_post_like'](groupObj)
 
     }
@@ -147,6 +160,15 @@ class WebSocketSmallGroups{
       unlikerId: unlikerId,
       groupId: groupId,
       command: 'send_group_post_unlike'
+    })
+  }
+
+  updateSingleGroupPost(
+    postId,
+  ){
+    this.sendGroupsInfo({
+      postId,
+      command: "update_single_group_post"
     })
   }
 
