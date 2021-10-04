@@ -32,14 +32,14 @@ class Page extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("hiss")
-    console.log(navGroupIDCondition)
-    console.log("vs")
-    console.log(prevProps.activeTab)
-    if(prevProps.activeTab!=navGroupIDCondition){
-
-        this.goToPage(9)
-    }
+    // console.log("hiss")
+    // console.log(navGroupIDCondition)
+    // console.log("vs")
+    // console.log(prevProps.activeTab)
+    // if(prevProps.activeTab!=navGroupIDCondition){
+    //
+    //     this.goToPage(9)
+    // }
     // this.props.goToPage(5)
   }
 
@@ -92,15 +92,15 @@ class SwipeInfiniteScrollHolder extends React.Component{
    if(this.props.smallGroups){
      smallGroups = this.props.smallGroups
    }
-   if(this.props.navGroupIDCondition){
-     navGroupIDCondition=this.props.navGroupIDCondition
-   }
-   if(this.props.test){
-     test=this.props.test
-   }
+   // if(this.props.navGroupIDCondition){
+   //   navGroupIDCondition=this.props.navGroupIDCondition
+   // }
+   // if(this.props.test){
+   //   test=this.props.test
+   // }
 
-   console.log("made class")
-   console.log(navGroupIDCondition)
+   // console.log("made class")
+   // console.log(navGroupIDCondition)
 
     return(
       <View>
@@ -120,8 +120,8 @@ class SwipeInfiniteScrollHolder extends React.Component{
                renderTabBar={() =>
                  <ScrollableTabBarNew
                    tabView={this.tabView}
-                   test={test}
-                   navGroupIDCondition={navGroupIDCondition}
+                   // test={test}
+                   // navGroupIDCondition={navGroupIDCondition}
                    navigation = {this.props.navigation}
                    curLoad = {this.props.curLoad}
                  />}

@@ -575,11 +575,12 @@ class CameraScreen extends React.Component{
     })
 
     this.onCancelPhoto();
+    {/*
     this.props.navigation.navigate("Home", {
             groupID: groupID,
             test:"true",
           });
-
+    */}
     setTimeout(() => {this.props.closeShowCamera()}, 1000);
 
 

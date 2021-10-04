@@ -28,7 +28,7 @@ import NoPosts from './noPosts.svg';
 import FirstPost from './FirstPost';
 import { PlusCircle, UserPlus, Info } from "react-native-feather";
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
-import NoPostsGroup from './NoPostsGroup.svg';
+
 // this is used mostly for the new scroll newsfeed
 class InfiniteScrollFlatNew extends React.Component{
 
@@ -192,16 +192,19 @@ class InfiniteScrollFlatNew extends React.Component{
         style = {{
             alignItems: 'center',
             height:'100%',
-            backgroundColor:'red',
-            flex: 1}}>
-        <Text>No post in group</Text>
-          <View style ={{
-              top: '15%',
-              alignItems: 'center'
-            }}>
-            <NoPostsGroup width = {150} height = {150} />
 
+            flex: 1}}>
+          <View style={{top:'25%',}}>
+            <Text style={{fontSize:28, fontFamily:'Nunito-Bold'}}>No post in group</Text>
+              <View style ={{
+                  top: '15%',
+                  alignItems: 'center'
+                }}>
+                <NoPosts width = {150} height = {150} />
+
+              </View>
           </View>
+
       </View>
     )
   }
