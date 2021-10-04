@@ -226,7 +226,6 @@ class InfiniteScrollFlatNew extends React.Component{
         style = {{
             alignItems: 'center',
             height:'100%',
-            backgroundColor:'red',
             flex: 1}}>
         <Text>No post in group</Text>
           <View style ={{

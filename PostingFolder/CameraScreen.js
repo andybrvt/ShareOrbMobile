@@ -507,7 +507,7 @@ class CameraScreen extends React.Component{
     formData.append('curDateTime', curDateTime);
     formData.append("caption", caption);
     formData.append('goalId', goalId);
-    formData.append("groupID", groupID)
+    formData.append("groupId", groupID)
     this.props.authAddCurLoad()
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateSinglePic/`+ownerId,
       formData,
@@ -605,7 +605,7 @@ class CameraScreen extends React.Component{
       formData.append('curDateTime', curDateTime);
       formData.append("caption", caption);
       formData.append('goalId', goalId);
-      formData.append("groupID", groupID);
+      formData.append("groupId", groupID);
 
       this.props.authAddCurLoad()
 

@@ -333,7 +333,7 @@ class GroupInfo extends React.Component{
 
 
            <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
-             <Text style={styles.settingWord}> Copy Clipboard </Text>
+             <Text style={styles.settingWord}> Click to copy link to download app on Clipboard </Text>
             </View>
 
 
