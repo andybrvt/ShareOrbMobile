@@ -7,6 +7,7 @@ import * as dateFns from 'date-fns';
 import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import InViewPort from "../../RandomComponents/InViewPort";
 import { Video, AVPlaybackStatus } from 'expo-av';
+import FastImage from 'react-native-fast-image'
 
 
 
@@ -474,7 +475,7 @@ class NewGlobePost extends React.Component{
           {
             video === "" ?
 
-            <Image
+            <FastImage
               style={styles.cover}
               resizeMode = "cover"
               source={{ uri: itemImage }}
