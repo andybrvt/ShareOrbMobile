@@ -459,7 +459,7 @@ const styles = StyleSheet.create({
     position:'absolute',
     top:'1%',
     right:'5%',
-    padding:10,
+    padding:5,
     borderRadius: 20,
     height:25,
     elevation:5,
