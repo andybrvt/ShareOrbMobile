@@ -29,7 +29,7 @@ import NoPosts from './noPosts.svg';
 import FirstPost from './FirstPost';
 import { PlusCircle, UserPlus, Info } from "react-native-feather";
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
-import NoPostsGroup from './NoPostsGroup.svg';
+import NoPostsGroup from './noPostsGroup.svg';
 // this is used mostly for the new scroll newsfeed
 class InfiniteScrollFlatNew extends React.Component{
 
