@@ -99,6 +99,9 @@ import CreateGroupPage from './SmallGroups/CreateGroupPage';
 import JoinScreen from './SmallGroups/JoinScreen';
 import Announcements from './SmallGroups/Announcements';
 import PeopleInGroup from './SmallGroups/PeopleInGroup';
+import Frame from './Frame.svg';
+
+
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -727,7 +730,8 @@ class App extends Component{
              options={{
                tabBarLabel: false,
                 tabBarIcon: ({ color }) => (
-                  <Aperture style={{bottom:5}} stroke="black" fill="#1890ff" strokeWidth={2} width={40} height={40}  />
+                  <Frame height = {30} width = {30} />
+
                 ),
                 // ...TransitionPresets.ModalSlideFromBottomIOS,
               }}

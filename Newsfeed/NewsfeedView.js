@@ -243,8 +243,8 @@ class NewsfeedView extends React.Component{
             >
             {true ?
                 <SwipeInfiniteScrollHolder
-                  navGroupIDCondition={navGroupIDCondition}
-                  test={test}
+                  // navGroupIDCondition={navGroupIDCondition}
+                  // test={test}
                   navigation = {this.props.navigation}
                   smallGroups = {this.props.smallGroups}
                   curLoad = {this.props.curLoad}

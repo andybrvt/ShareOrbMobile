@@ -12,6 +12,40 @@ import { Avatar } from 'react-native-elements';
 const width = Dimensions.get("window").width
 
 class NewGlobePost extends React.Component{
+  playVideo = () => {
+    this.setState({
+      showMute: true
+    })
+    if(this.video){
+      this.video.playAsync();
+    }
+  }
+
+  pauseVideo = () => {
+    this.setState({
+      showMute: false
+    })
+    if(this.video){
+      this.video.pauseAsync();
+    }
+  }
+
+  handlePlaying = (isVisible) => {
+    isVisible ? this.playVideo() : this.pauseVideo();
+  }
+
+  unMute = () => {
+    this.setState({
+      isMuted: false
+    })
+  }
+
+
+  mute = () => {
+    this.setState({
+      isMuted: true
+    })
+  }
 
   viewGroup = (item) => {
 
@@ -170,6 +204,8 @@ class NewGlobePost extends React.Component{
     socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
     return(
       <View>
+
+
         <View style={{flexDirection:'row', zIndex:999}}>
           <View style = {{
               width: '15%',
@@ -419,12 +455,86 @@ class NewGlobePost extends React.Component{
         </View>
 
         <View style = {styles.bottomContainer}>
-          <Image
-            style={styles.cover}
-            resizeMode = "cover"
-            source={{ uri: itemImage }}
-            // blurRadius = {15}
-             />
+          {/* FastImages */}
+
+          {
+            video === "" ?
+            <Image
+              style={styles.cover}
+              resizeMode = "cover"
+              source={{ uri: itemImage }}
+              // blurRadius = {15}
+               />
+
+            :
+
+            <InViewPort
+              onChange = {this.handlePlaying}
+              >
+              <Video
+                ref={ref => {this.video = ref}}
+                style = {styles.cover}
+                source={{
+                  // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                  uri: video
+                }}
+                rate={1.0}
+                isMuted={this.state.isMuted}
+                resizeMode="cover"
+                isLooping
+                // shouldPlay
+                volume={0.5}
+
+
+                 />
+
+               {
+                 !this.state.showMute ?
+
+                 null
+
+                 :
+
+                 this.state.isMuted ?
+
+                 <TouchableOpacity
+                   onPress = {() => this.unMute()}
+                   style = {styles.tagCSS4}>
+                   <View style = {styles.justifyCenter}>
+                     <VolumeX
+                       stroke = "white"
+                       width = {27.5}
+                       height = {27.5}
+                        />
+
+                   </View>
+                 </TouchableOpacity>
+
+                 :
+
+
+                 <TouchableOpacity
+                   onPress = {()=> this.mute()}
+                   style = {styles.tagCSS4}>
+                   <View style = {styles.justifyCenter}>
+                     <Volume2
+                       stroke = "white"
+                       width = {27.5}
+                       height = {27.5}
+                        />
+
+                   </View>
+                 </TouchableOpacity>
+
+               }
+
+
+
+
+            </InViewPort>
+
+          }
+
 
              <LinearGradient
                start={{x: 0, y: 0}} end={{x: 0, y: 1}}

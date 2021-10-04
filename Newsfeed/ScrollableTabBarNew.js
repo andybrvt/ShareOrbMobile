@@ -221,8 +221,8 @@ const ScrollableTabBarNew = createReactClass({
   },
 
   render() {
-    const navGroupIDCondition=this.props.navGroupIDCondition;
-    const test=this.props.test;
+    // const navGroupIDCondition=this.props.navGroupIDCondition;
+    // const test=this.props.test;
     const tabUnderlineStyle = {
       position: 'absolute',
       height: 2,
@@ -286,14 +286,14 @@ const ScrollableTabBarNew = createReactClass({
     if (JSON.stringify(prevProps.tabs) !== JSON.stringify(this.props.tabs) && this.state._containerWidth) {
       this.setState({ _containerWidth: null, });
     }
-    console.log("hi")
-    console.log(navGroupIDCondition)
-    console.log("vs")
-    console.log(prevProps.activeTab)
-    console.log(test)
-    if(prevProps.activeTab!=navGroupIDCondition &&test=="true"){
-        await this.props.tabView.goToPage(7)
-    }
+    // console.log("hi")
+    // console.log(navGroupIDCondition)
+    // console.log("vs")
+    // console.log(prevProps.activeTab)
+    // console.log(test)
+    // if(prevProps.activeTab!=navGroupIDCondition &&test=="true"){
+    //     await this.props.tabView.goToPage(7)
+    // }
 
   },
 
