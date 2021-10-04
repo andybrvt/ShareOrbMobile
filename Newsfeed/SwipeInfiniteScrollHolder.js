@@ -31,6 +31,24 @@ class Page extends React.Component {
     list: [1,2,3]
   }
 
+  componentDidUpdate(prevProps) {
+    console.log("hiss")
+    console.log(navGroupIDCondition)
+    console.log("vs")
+    console.log(prevProps.activeTab)
+    if(prevProps.activeTab!=navGroupIDCondition){
+
+        this.goToPage(9)
+    }
+    // this.props.goToPage(5)
+  }
+
+
+  goToPage(pageId) {
+    console.log("PAGE SWITCH!")
+    this.props.tabView.goToPage(pageId)
+  }
+
   renderItem = ({item}) => {
 
     return(
@@ -59,84 +77,8 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
     );
   }
-  navGroupDirect=(navGroupIDCondition)=>{
-    return(
-      <ScrollableTabView
-        style={{ marginTop:10 }}
-         initialPage={navGroupIDCondition}
-         renderTabBar={() => <ScrollableTabBarNew
-           navigation = {this.props.navigation}
-           curLoad = {this.props.curLoad}
-           />}
-        >
-        <GlobeGroup
-          navigation = {this.props.navigation}
-          name = "globe" tabLabel = "globe" />
-        {smallGroups.map((group, indx) => {
-          const pic = `${global.IMAGE_ENDPOINT}` + group.groupPic
-          return(
-            <InfiniteScrollFlatNew
-              navigation = {this.props.navigation}
-              key = {indx}
-              groupId= {group.id}
-              name='tab1' tabLabel={{pic: pic, name:group.group_name}} />
-
-          )
 
 
-        })}
-
-          <View
-            style = {{
-                alignItems: 'center',
-                // justifyContent: 'center',
-                backgroundColor: '#1890ff',
-                flex: 1}}
-            name = "tab3" tabLabel = "add">
-
-            <View style ={{
-                top: '15%',
-                alignItems: 'center'
-              }}>
-              <NoPosts width = {150} height = {150} />
-              <View style = {{
-
-                }}>
-                <Text style = {{
-                    top: '15%',
-                    color: 'white',
-                    fontSize: 30
-                  }}>Let's create a group</Text>
-              </View>
-              <View style = {{
-                  marginTop: 30
-                }}>
-                <TouchableOpacity
-                  style = {{
-                    borderRadius: 25,
-                    width: 250,
-                    height: 55,
-                    backgroundColor: 'white',
-                    justifyContent:'center',
-                    alignItems: 'center'
-
-                  }}
-                  onPress = {() => this.onGroupCreateDirect()}
-                  >
-                  <Text style = {{
-                    fontWeight: 'bold',
-                    color: '#1890ff'}}>Create a group</Text>
-                </TouchableOpacity>
-              </View>
-
-            </View>
-
-          </View>
-
-
-      </ScrollableTabView>
-    )
-  }
 
   onGroupCreateDirect(){
       // this function will direct you to the creating group page
@@ -147,13 +89,16 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
   render(){
    let smallGroups = []
-
    if(this.props.smallGroups){
      smallGroups = this.props.smallGroups
    }
    if(this.props.navGroupIDCondition){
      navGroupIDCondition=this.props.navGroupIDCondition
    }
+   if(this.props.test){
+     test=this.props.test
+   }
+
    console.log("made class")
    console.log(navGroupIDCondition)
 
@@ -169,12 +114,16 @@ class SwipeInfiniteScrollHolder extends React.Component{
         <View style = {{flex: 1, height:height -10 }}>
 
             <ScrollableTabView
+              ref={(tabView) => { this.tabView = tabView}}
               style={{ marginTop:10 }}
                initialPage={1}
-               renderTabBar={() => <ScrollableTabBarNew
-                navGroupIDCondition={navGroupIDCondition}
-                 navigation = {this.props.navigation}
-                 curLoad = {this.props.curLoad}
+               renderTabBar={() =>
+                 <ScrollableTabBarNew
+                   tabView={this.tabView}
+                   test={test}
+                   navGroupIDCondition={navGroupIDCondition}
+                   navigation = {this.props.navigation}
+                   curLoad = {this.props.curLoad}
                  />}
               >
               <GlobeGroup
@@ -213,7 +162,8 @@ class SwipeInfiniteScrollHolder extends React.Component{
                       <Text style = {{
                           top: '15%',
                           color: 'white',
-                          fontSize: 30
+                          fontSize: 28,
+                          fontFamily:'Nunito-Bold'
                         }}>Let's create a group</Text>
                     </View>
                     <View style = {{

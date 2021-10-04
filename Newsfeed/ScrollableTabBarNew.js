@@ -52,6 +52,8 @@ const ScrollableTabBarNew = createReactClass({
     };
   },
 
+
+
   getInitialState() {
     this._tabsMeasurements = [];
     return {
@@ -220,8 +222,7 @@ const ScrollableTabBarNew = createReactClass({
 
   render() {
     const navGroupIDCondition=this.props.navGroupIDCondition;
-    console.log("Third, MADE IT")
-    console.log(navGroupIDCondition)
+    const test=this.props.test;
     const tabUnderlineStyle = {
       position: 'absolute',
       height: 2,
@@ -281,14 +282,19 @@ const ScrollableTabBarNew = createReactClass({
     </View>;
   },
 
-  componentDidUpdate(prevProps) {
-    // If the tabs change, force the width of the tabs container to be recalculated
+  async componentDidUpdate(prevProps) {    // If the tabs change, force the width of the tabs container to be recalculated
     if (JSON.stringify(prevProps.tabs) !== JSON.stringify(this.props.tabs) && this.state._containerWidth) {
       this.setState({ _containerWidth: null, });
     }
-    console.log(prevProps)
+    console.log("hi")
+    console.log(navGroupIDCondition)
+    console.log("vs")
+    console.log(prevProps.activeTab)
+    console.log(test)
+    if(prevProps.activeTab!=navGroupIDCondition &&test=="true"){
+        await this.props.tabView.goToPage(7)
+    }
 
-    // this.props.goToPage(navGroupIDCondition)
   },
 
   onTabContainerLayout(e) {
