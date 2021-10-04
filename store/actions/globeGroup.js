@@ -32,3 +32,10 @@ export const sendGlobeItemComment = (comment) => {
     comment: comment
   }
 }
+
+export const loadMoreGlobePost = (posts) => {
+  return{
+    type: actionTypes.LOAD_MORE_GLOBE_POST,
+    posts: posts
+  }
+}
