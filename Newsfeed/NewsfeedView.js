@@ -186,12 +186,12 @@ class NewsfeedView extends React.Component{
     console.log(this.props.route.params)
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
-    let navGroupIDCondition=1
-    let test="false"
-    if(this.props.route.params){
-      navGroupIDCondition=this.props.route.params.groupID
-      test=this.props.route.params.test
-    }
+    // let navGroupIDCondition=1
+    // let test="false"
+    // if(this.props.route.params){
+    //   navGroupIDCondition=this.props.route.params.groupID
+    //   test=this.props.route.params.test
+    // }
 
     let showComments = this.props.showNewsfeedComments
     const backgroundGradient = interpolateColors(this.y, {

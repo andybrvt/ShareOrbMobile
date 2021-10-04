@@ -81,7 +81,7 @@ class NewGlobePost extends React.Component{
   }
 
 
-  renderPostInfo=(data, like, comment, created_at)=>{
+  ea=(data, like, comment, created_at)=>{
 
     let postId = "";
     let calCell = "";
@@ -159,9 +159,9 @@ class NewGlobePost extends React.Component{
       if(data.itemImage){
         itemImage = `${global.IMAGE_ENDPOINT}`+data.itemImage;
       }
-      if(data.video){
-        if(data.video !== null){
-          video = `${global.IMAGE_ENDPOINT}`+data.video;
+      if(this.props.data.video){
+        if(this.props.data.video !== null){
+          video = `${global.IMAGE_ENDPOINT}`+this.props.data.video;
           // video taken from the local site does not work but the videos
           // taken from pretty much any where else works (sounds good to me)
         }
@@ -316,7 +316,7 @@ class NewGlobePost extends React.Component{
     let members = []
     let post = {}
     let groupLike = []
-
+    let video = "";
 
     let creatorPic = ""
     let username = ""
