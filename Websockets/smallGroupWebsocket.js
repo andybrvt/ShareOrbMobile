@@ -115,10 +115,11 @@ class WebSocketSmallGroups{
     this.callbacks['send_group_post_like'] = sendGroupPostLike
   }
 
-  fetchGroupPost(groupId){
+  fetchGroupPost(groupId, startIndex){
     // this function is to pull the intial information of the groupo
     this.sendGroupsInfo({
       groupId: groupId,
+      startIndex: startIndex,
       command: "fetch_group_post"
     })
   }

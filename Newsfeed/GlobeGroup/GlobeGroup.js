@@ -16,6 +16,8 @@ import { connect } from 'react-redux';
 import NewGlobePost from './NewGlobePost';
 import CountDown from 'react-native-countdown-component';
 import NoPosts from '../noPosts.svg';
+import authAxios from '../../util';
+import * as globeGroupActions from '../../store/actions/globeGroup';
 
 const height = Dimensions.get("window").height
 
@@ -27,7 +29,10 @@ class GlobeGroup extends React.Component{
        this.initialiseGlobeGroup()
 
        this.state = {
-         refreshing: false
+         refreshing: false,
+         start: 6,
+         addMore: 5,
+         hasMore: true,
        }
     }
 
@@ -103,6 +108,32 @@ class GlobeGroup extends React.Component{
       this.setState({refreshing: false})
     }
 
+    loadSocialPost = () => {
+      const {start, addMore} = this.state;
+      authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteGlobe/`+start+"/"+addMore)
+      .then(res => {
+
+        const globePost = res.data.globePost;
+        const hasMore = res.data.has_more
+
+        this.props.loadMoreGlobePost(globePost)
+        this.setState({
+          hasMore:hasMore,
+          loading: false,
+          start: start+addMore
+        })
+
+
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message
+        })
+      })
+
+
+    }
+
     render(){
       let groupPosts = []
       if(this.props.globePosts){
@@ -119,6 +150,8 @@ class GlobeGroup extends React.Component{
               keyExtractor={(item, index) => String(index)}
               refreshing = {this.state.refreshing}
               onRefresh = {() => this.onRefresh()}
+              onEndReachedThreshold={0.5}
+              onEndReached = {() => this.loadSocialPost()}
                />
         </View>
       )
@@ -133,5 +166,11 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return{
+    loadMoreGlobePost: (posts) => dispatch(globeGroupActions.loadMoreGlobePost(posts))
+  }
+}
 
-export default connect(mapStateToProps, null)(GlobeGroup);
+
+export default connect(mapStateToProps, mapDispatchToProps)(GlobeGroup);

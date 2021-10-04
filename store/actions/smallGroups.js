@@ -22,3 +22,11 @@ export const sendGroupPostLike = (post) => {
     post: post
   }
 }
+
+
+export const loadMoreSmallGroupPost = (posts) => {
+  return{
+    type: actionTypes.LOAD_MORE_SMALL_GROUP_POST,
+    posts: posts
+  }
+}

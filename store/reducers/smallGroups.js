@@ -24,6 +24,16 @@ const loadSmallGroupsPost = (state, action) => {
   })
 }
 
+const loadMoreSmallGroupPost = (state, action) => {
+
+  return updateObject(state, {
+    groupPosts: {
+      ...state.groupPosts,
+      [action.posts.groupId.toString()]:[...state.groupPosts[action.posts.groupId.toString()], ...action.posts.serializedPost]
+    }
+  })
+}
+
 const sendGroupPost = (state, action) => {
 
   console.log(state.groupPosts[action.post.groupId.toString()], 'stufff her ')
@@ -82,6 +92,8 @@ const reducer = (state = initialState, action) => {
       return sendGroupPost(state, action)
     case actionTypes.SEND_GROUP_POST_LIKE:
       return sendGroupPostLike(state, action)
+    case actionTypes.LOAD_MORE_SMALL_GROUP_POST:
+      return loadMoreSmallGroupPost(state, action)
     default:
       return state;
   }
