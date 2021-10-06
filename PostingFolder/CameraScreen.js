@@ -323,8 +323,8 @@ class CameraScreen extends React.Component{
 
       } else {
       Alert.alert(
-        "Join an Orb!",
-        "You must join an orb to post!",
+        "Join an Orb",
+        "You must join an orb to post",
         [
 
           { text: "OK",
