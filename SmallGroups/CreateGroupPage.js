@@ -349,20 +349,14 @@ class CreateGroupPage extends React.Component{
     // this function is used to create
     console.log('create group')
     const {groupPic, groupName, description, publicG, invitedPeople} = this.state
-
-
     let newInvited = [];
-
     for(let i = 0; i < invitedPeople.length; i++){
-
-
         newInvited.push(
           invitedPeople[i].id
         )
     }
 
     const pic = global.FILE_NAME_GETTER(groupPic)
-
     const formData = new FormData();
     formData.append('groupPic', pic)
     formData.append('groupName', groupName)
@@ -375,9 +369,8 @@ class CreateGroupPage extends React.Component{
       formData
     ).then(res => {
       console.log(res.data, 'create a group here')
-
+      const numIndex=this.props.smallGroups.length
       this.props.authAddSmallGroup(res.data)
-
       const groupId = res.data.id
       for(let j = 0; j < newInvited.length; j++){
         const userId = newInvited[j]
@@ -396,7 +389,8 @@ class CreateGroupPage extends React.Component{
 
       }
 
-      this.props.navigation.goBack(0)
+      this.props.navigation.navigate('Home')
+      this.props.authSetActiveNewsfeedSlide(numIndex+1)
 
 
 
@@ -793,13 +787,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return{
-    id: state.auth.id
+    id: state.auth.id,
+    smallGroups: state.auth.smallGroups,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return{
-    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group)),
+    authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
   }
 }
 

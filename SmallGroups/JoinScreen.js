@@ -124,8 +124,6 @@ class JoinScreen extends React.Component{
     // Probally gonna put a authaxios call on this instead of
     // just checking the code in an of itself instead of just
     // checking if its right or worg
-
-
     const userId = this.props.id
     this.setState({
       loading: true
@@ -135,28 +133,27 @@ class JoinScreen extends React.Component{
     .then(res => {
       console.log(res.data)
       // direct this group to newsfeed and then add it to auth
-
+      const numIndex=this.props.smallGroups.length
       this.setState({
         loading: false
       })
       this.props.authAddSmallGroup(res.data)
-
+      // console.log("YOLLOO", numIndex+2)
       this.props.navigation.navigate('Home')
-
+      this.props.authSetActiveNewsfeedSlide(numIndex+1)
     })
-
-
   }
 
   declineGroup = () => {
     this.props.navigation.goBack()
   }
 
-  joinGroup = (groupId) => {
+  joinPublicGroup = (groupId) => {
     const userId = this.props.id
     this.setState({
       loading: true
     })
+    const numIndex=this.props.smallGroups.length
     // for this you just need group id and userid
     authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
     .then(res => {
@@ -166,6 +163,7 @@ class JoinScreen extends React.Component{
       })
       this.props.authAddSmallGroup(res.data)
       this.props.navigation.navigate('Home')
+      this.props.authSetActiveNewsfeedSlide(numIndex+1)
     })
   }
 
@@ -317,7 +315,7 @@ class JoinScreen extends React.Component{
                     :
                      group.public ?
                      <TouchableOpacity
-                       onPress = {() => this.joinGroup(group.id)}
+                       onPress = {() => this.joinPublicGroup(group.id)}
                        style = {styles.joinButton}>
                        <View >
                          <Text style = {styles.joinText}>Join</Text>
@@ -610,13 +608,15 @@ class JoinScreen extends React.Component{
 
 const mapStateToProps = state => {
   return{
-    id: state.auth.id
+    id: state.auth.id,
+    smallGroups: state.auth.smallGroups,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return{
-    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group)),
+    authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
   }
 }
 

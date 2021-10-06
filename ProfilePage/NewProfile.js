@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 import { Tag, Bookmark, Search, ChevronRight, Settings
   ,MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
 import { Avatar } from 'react-native-elements';
-
+import * as authActions from '../store/actions/auth';
 const {width, height} = Dimensions.get('screen')
 
 class NewProfile extends React.Component{
@@ -52,25 +52,33 @@ class NewProfile extends React.Component{
   }
 
   onGroupDirect = (item) => {
-
     // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
     // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
     // JOINSCREEN
+    console.log("FFFFFFFFFFFFFFFFFFFFF")
 
-
-    const curId = this.props.currentId
+    const curId = this.props.curId
     const memberList = item.members
-
+    const groupList=this.props.smallGroups
+    console.log(this.props.curId)
+    // console.log(item.group_name)
+    console.log(memberList)
+    let itemIndex=0
     if(memberList.includes(curId)){
-      this.props.navigation.navigate("Home")
+      console.log("really")
+      // console.log(groupList.indexOf(item))
+      for(let i=0; i<groupList.length; i++){
+        if(groupList[i].id===item.id){
+          this.props.navigation.navigate("Home")
+          this.props.authSetActiveNewsfeedSlide(i+1)
+        }
+      }
+
     } else {
       this.props.navigation.navigate("JoinScreen", {
         item:item
       })
-
     }
-
-
   }
 
   renderItem = ({item}) => {
@@ -175,14 +183,14 @@ const mapStateToProps = state => {
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,
     bio: state.auth.bio,
-    smallGroups: state.auth.smallGroups
+    smallGroups: state.auth.smallGroups,
+    curId: state.auth.id,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    openShowCamera: () => dispatch(authActions.openShowCamera()),
-
+    authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
   }
 }
 

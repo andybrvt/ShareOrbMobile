@@ -56,8 +56,20 @@ class SuggestedListGroup extends React.Component{
     // JOINSCREEN
     const curId = this.props.curId
     const memberList = item.members
+    const groupList=this.props.smallGroups
+    // console.log(item.group_name)
+    // console.log(groupList)
+    let itemIndex=0
     if(memberList.includes(curId)){
-      this.props.navigation.navigate("Home")
+      // console.log("really")
+      // console.log(groupList.indexOf(item))
+      for(let i=0; i<groupList.length; i++){
+        if(groupList[i].id===item.id){
+          this.props.navigation.navigate("Home")
+          this.props.authSetActiveNewsfeedSlide(i+1)
+        }
+      }
+
     } else {
       this.props.navigation.navigate("JoinScreen", {
         item:item
@@ -546,13 +558,15 @@ const mapStateToProps = state => {
     following:state.auth.following,
     profile: state.explore.profile,
     curId: state.auth.id,
-    username: state.auth.username
+    username: state.auth.username,
+    smallGroups: state.auth.smallGroups,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return{
-    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group)),
+    authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
   }
 }
 

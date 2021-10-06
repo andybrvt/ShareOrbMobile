@@ -122,25 +122,29 @@ class ProfilePage extends React.Component{
   }
 
   onGroupDirect = (item) => {
-
     // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
     // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
     // JOINSCREEN
-
-
-    const curId = this.props.currentId
+    const curId = this.props.curId
     const memberList = item.members
-
+    const groupList=this.props.smallGroups
+    // console.log(item.group_name)
+    let itemIndex=0
     if(memberList.includes(curId)){
-      this.props.navigation.navigate("Home")
+      // console.log("really")
+      // console.log(groupList.indexOf(item))
+      for(let i=0; i<groupList.length; i++){
+        if(groupList[i].id===item.id){
+          this.props.navigation.navigate("Home")
+          this.props.authSetActiveNewsfeedSlide(i+1)
+        }
+      }
+
     } else {
       this.props.navigation.navigate("JoinScreen", {
         item:item
       })
-
     }
-
-
   }
 
 
@@ -285,19 +289,20 @@ class ProfilePage extends React.Component{
 }
 
 const mapStateToProps = state => {
-
   return {
     currentId: state.auth.id,
     currentUser: state.auth.username,
     following: state.auth.following,
     profile: state.explore.profile,
+    smallGroups: state.auth.smallGroups,
+    curId: state.auth.id,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return{
     grabUserCredentials: () => dispatch(authActions.grabUserCredentials()),
-
+    authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
   }
 }
 
@@ -390,5 +395,9 @@ const styles = StyleSheet.create({
     fontFamily:'Nunito-SemiBold',
   }
 })
+
+
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
