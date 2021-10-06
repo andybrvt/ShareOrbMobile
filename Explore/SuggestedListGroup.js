@@ -219,7 +219,6 @@ class SuggestedListGroup extends React.Component{
         <View style={{marginLeft:'3.5%', marginBottom:'1%' }}>
           <View style={{flexDirection:'row'}}>
             <Text style={{fontFamily:'Nunito-Bold', fontSize:16 }}>{global.CAPITALIZE(title)}</Text>
-
               {(temp.includes(this.props.curId))?
                 <View style={styles.inviteButton} onPress = {() => this.joinGroup(item.id)}>
                   <UserCheck
@@ -459,7 +458,7 @@ const styles = StyleSheet.create({
     position:'absolute',
     top:'1%',
     right:'5%',
-    padding:5,
+    padding:10,
     borderRadius: 20,
     height:25,
     elevation:5,

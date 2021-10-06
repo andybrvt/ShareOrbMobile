@@ -144,6 +144,7 @@ class App extends Component{
   }
 
   turnOnNotification = async() => {
+    {/*
      await ExpoNotifications.scheduleNotificationAsync({
       content: {
         title: "Good morning",
@@ -161,7 +162,7 @@ class App extends Component{
     await ExpoNotifications.scheduleNotificationAsync({
      content: {
        // title: "Reminder",
-       body: 'What did you do today to meet your goals?',
+       body: Let's post in a orb!',
        data: {
          type: "active"
        }
@@ -172,6 +173,7 @@ class App extends Component{
        repeats: true
      },
    });
+
    await ExpoNotifications.scheduleNotificationAsync({
     content: {
       title: "Good evening",
@@ -186,6 +188,8 @@ class App extends Component{
       repeats: true
     },
   });
+  */}
+
   }
 
   cancelNotifications = async() => {
