@@ -14,6 +14,7 @@ import {
  Dimensions,
  AsyncStorage,
  Modal,
+ Alert,
  Constants
 } from "react-native";
 import { connect } from 'react-redux'
@@ -294,33 +295,49 @@ class CameraScreen extends React.Component{
 
   }
 
-  takePicture = async() => {
+  takePicture = async(groupsLength) => {
     if(!this.cameraRef){
       return
     }
+    console.log("BLAHHHHHHHHHH")
+    console.log(groupsLength)
+    if(groupsLength>=1){
 
-    try {
-      const pic = await this.cameraRef.takePictureAsync();
+        const pic = await this.cameraRef.takePictureAsync();
 
-      this.setState({
-        isOpen: true,
-        imagePreview: pic.uri,
-      })
-
-      setTimeout(() => {
         this.setState({
-          showCaptionModal: true
+          isOpen: true,
+          imagePreview: pic.uri,
         })
-        if(this.textInput){
-            this.textInput.focus()
-        }
+
+        setTimeout(() => {
+          this.setState({
+            showCaptionModal: true
+          })
+          if(this.textInput){
+              this.textInput.focus()
+          }
 
 
-      }, 1000)
+        }, 1000)
 
-    } catch {
-      console.log('error taking pictures')
+      } else {
+      Alert.alert(
+        "Join an Orb!",
+        "You must join an orb to post!",
+        [
+
+          { text: "OK",
+            style:'destructive',
+            onPress: () => console.log('ok')
+          }
+        ]
+
+      )
     }
+
+
+
 
 
   }
@@ -817,6 +834,8 @@ class CameraScreen extends React.Component{
   render(){
     const smallGroups = this.props.smallGroups;
     const showCaption = this.state.showCaptionModal;
+    console.log(smallGroups.length)
+    let groupsLength=smallGroups.length
     return(
       <View
         style = {{flex: 1}}>
@@ -1442,7 +1461,7 @@ class CameraScreen extends React.Component{
                   <TouchableOpacity
                     onPressOut = {() => this.handlePressOut()}
                     onLongPress = {() => this.handleLongPress()}
-                    onPress = {() => this.takePicture()}
+                    onPress = {() => this.takePicture(groupsLength)}
                     style = {[(this.state.capturing)&&styles.captureBtnActive,styles.captureBtn]}></TouchableOpacity>
 
 
