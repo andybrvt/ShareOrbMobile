@@ -248,6 +248,8 @@ class NewsfeedView extends React.Component{
                   navigation = {this.props.navigation}
                   smallGroups = {this.props.smallGroups}
                   curLoad = {this.props.curLoad}
+                  activeSlide = {this.props.activeSlide}
+                  setNull = {this.props.authSetActiveNewsfeedSlideNull}
                    />
               :
                 <PersonalNewsFeed
@@ -315,7 +317,8 @@ const mapStateToProps = state => {
     showFirstPostModal: state.auth.showFirstPostModal,
     smallGroups: state.auth.smallGroups,
     groupPosts: state.smallGroups.groupPosts,
-    curLoad: state.auth.curLoad
+    curLoad: state.auth.curLoad,
+    activeSlide: state.auth.activeSlide
   }
 }
 
@@ -328,6 +331,7 @@ const mapDispatchToProps = dispatch => {
     unShowIntialInstructions: (bool) => dispatch(authActions.unShowIntialInstructions(bool)),
     authShowFirstPostModal: () => dispatch(authActions.authShowFirstPostModal()),
     authUnshowFirstPostModal: () => dispatch(authActions.authUnshowFirstPostModal()),
+    authSetActiveNewsfeedSlideNull: () => dispatch(authActions.authSetActiveNewsfeedSlideNull())
   }
 }
 

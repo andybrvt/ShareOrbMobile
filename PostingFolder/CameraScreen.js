@@ -555,6 +555,9 @@ class CameraScreen extends React.Component{
       // this is also assuming that he has connected to the group
       // that he is trying to send to
 
+      const tabIndex = activeSlide+1;
+      this.props.authSetActiveNewsfeedSlide(tabIndex)
+
       WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
 
         // this.props.addFirstSocialCellPost(res.data.item)
@@ -651,6 +654,10 @@ class CameraScreen extends React.Component{
 
         // Add a websocket funciton here so that you can start sending
         // stuff in real time
+
+        const tabIndex = activeSlide+1;
+        this.props.authSetActiveNewsfeedSlide(tabIndex)
+
 
         WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
 
@@ -834,7 +841,6 @@ class CameraScreen extends React.Component{
   render(){
     const smallGroups = this.props.smallGroups;
     const showCaption = this.state.showCaptionModal;
-    console.log(smallGroups.length)
     let groupsLength=smallGroups.length
     return(
       <View
@@ -1518,7 +1524,7 @@ const mapDispatchToProps = dispatch => {
     openShowCamera: () => dispatch(authActions.openShowCamera()),
     addFirstSocialCellPost: (post) => dispatch(socialNewsfeedActions.addFirstSocialCellPost(post)),
     authShowFirstPostModal: () => dispatch(authActions.authShowFirstPostModal()),
-
+    authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index))
   }
 }
 
