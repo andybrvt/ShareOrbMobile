@@ -26,6 +26,7 @@ import * as globeGroupActions from './store/actions/globeGroup';
 import { connect } from 'react-redux';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import GroupInfo from './Newsfeed/GroupInfo';
+import DownloadQR from './Newsfeed/DownloadQR';
 import InvitePeople from './Newsfeed/InvitePeople';
 import InviteContacts from './Newsfeed/InviteContacts';
 import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
@@ -1163,6 +1164,18 @@ class App extends Component{
                         }}
                        name = "GroupInfo"
                        component= {GroupInfo}/>
+                       <Stack.Screen
+                         options={{
+                           headerStyle:{
+                             shadowColor:'#fff', //ios
+                             elevation:0,        // android
+                           },
+                           title: '',
+                            ...TransitionPresets. SlideFromRightIOS,
+                          }}
+                         name = "DownloadQR"
+                         component= {DownloadQR}/>
+
                        <Stack.Screen
                          options={{
                            headerStyle:{
