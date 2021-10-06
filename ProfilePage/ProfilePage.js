@@ -131,12 +131,21 @@ class ProfilePage extends React.Component{
     const curId = this.props.currentId
     const memberList = item.members
 
+    console.log(item)
     if(memberList.includes(curId)){
       this.props.navigation.navigate("Home")
     } else {
-      this.props.navigation.navigate("JoinScreen", {
-        item:item
-      })
+
+      if(item.public === false){
+        alert("This group is private")
+      } else {
+        this.props.navigation.navigate("JoinScreen", {
+          item:item
+        })
+
+      }
+
+
 
     }
 
