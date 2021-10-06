@@ -295,7 +295,7 @@ class AppIntro extends React.Component{
       // change userprofile picture using username
     })
     .catch( err => {
-      alert(err)
+      alert('Check email or use a different one')
       this.setState({
         loading:false
       })

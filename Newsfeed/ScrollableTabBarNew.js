@@ -64,6 +64,7 @@ const ScrollableTabBarNew = createReactClass({
   },
 
   componentDidMount() {
+
     this.props.scrollValue.addListener(this.updateView);
   },
 
@@ -221,6 +222,7 @@ const ScrollableTabBarNew = createReactClass({
   },
 
   render() {
+
     // const navGroupIDCondition=this.props.navGroupIDCondition;
     // const test=this.props.test;
     const tabUnderlineStyle = {
@@ -283,17 +285,18 @@ const ScrollableTabBarNew = createReactClass({
   },
 
   async componentDidUpdate(prevProps) {    // If the tabs change, force the width of the tabs container to be recalculated
+
     if (JSON.stringify(prevProps.tabs) !== JSON.stringify(this.props.tabs) && this.state._containerWidth) {
       this.setState({ _containerWidth: null, });
     }
-    // console.log("hi")
-    // console.log(navGroupIDCondition)
-    // console.log("vs")
-    // console.log(prevProps.activeTab)
-    // console.log(test)
-    // if(prevProps.activeTab!=navGroupIDCondition &&test=="true"){
-    //     await this.props.tabView.goToPage(7)
-    // }
+
+    if(this.props.activeSlide !== null){
+      this.props.goToPage(this.props.activeSlide)
+      this.props.setNull()
+
+    }
+
+
 
   },
 

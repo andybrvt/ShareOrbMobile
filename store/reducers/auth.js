@@ -32,7 +32,8 @@ const initialState ={
   inviToken: null,
   inviteCode: "",
   smallGroups: [],
-  smallGroupIds: []
+  smallGroupIds: [],
+  activeSlide: null
 
 }
 
@@ -134,7 +135,8 @@ const authLogout = (state, action) => {
     inviToken: null,
     inviteCode: "",
     smallGroups: [],
-    smallGroupIds: []
+    smallGroupIds: [],
+
   });
 };
 
@@ -237,7 +239,6 @@ const authUnshowFirstPostModal = (state, action) => {
 
 const authAddSmallGroup = (state, action) => {
   var groupId = action.group.id.toString()
-  console.log(groupId, 'idid id id')
   return updateObject(state,{
     smallGroups: [...state.smallGroups, action.group],
     smallGroupIds: [...state.smallGroupIds, groupId]
@@ -245,7 +246,6 @@ const authAddSmallGroup = (state, action) => {
 }
 
 const authUpdateSmallGroup = (state, action) => {
-  console.log('here on reducers')
   return updateObject(state, {
     smallGroups: state.smallGroups.map(
       groups => groups.id === action.group.id ? {
@@ -253,6 +253,18 @@ const authUpdateSmallGroup = (state, action) => {
       } : groups
 
     )
+  })
+}
+
+const authSetActiveNewsfeedSlide = (state, action) => {
+  return updateObject(state, {
+    activeSlide: action.index
+  })
+}
+
+const authSetActiveNewsfeedSlideNull = (state, action) => {
+  return updateObject(state, {
+    activeSlide: null
   })
 }
 
@@ -311,8 +323,11 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_ADD_SMALL_GROUP:
       return authAddSmallGroup(state, action)
     case actionTypes.AUTH_UPDATE_SMALL_GROUP:
-      console.log('it matches this')
       return authUpdateSmallGroup(state, action)
+    case actionTypes.AUTH_SET_ACTIVE_NEWSFEED_SLIDE:
+      return authSetActiveNewsfeedSlide(state, action)
+    case actionTypes.AUTH_SET_ACTIVE_NEWSFEED_SLIDE_NULL:
+      return authSetActiveNewsfeedSlideNull(state, action)
     default:
       return state;
   }

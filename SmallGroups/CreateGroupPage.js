@@ -377,7 +377,6 @@ class CreateGroupPage extends React.Component{
       console.log(res.data, 'create a group here')
 
       this.props.authAddSmallGroup(res.data)
-      this.props.navigation.goBack(0)
 
       const groupId = res.data.id
       for(let j = 0; j < newInvited.length; j++){
@@ -396,6 +395,9 @@ class CreateGroupPage extends React.Component{
 
 
       }
+
+      this.props.navigation.goBack(0)
+
 
 
     })
