@@ -676,7 +676,7 @@ class SocialNewsfeedPost extends React.Component{
                   <View style={{backgroundColor:'red'}}>
 
                  </View>
-                   {/* fast image*/}
+                   {/* fastimage*/}
                    {
                      video === "" ?
 

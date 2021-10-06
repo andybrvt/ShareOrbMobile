@@ -161,6 +161,16 @@ import * as authActions from '../store/actions/auth';
      })
    }
 
+   deleteAllNotifications = () => {
+     authAxios.get(`${global.IP_CHANGE}`+'/userprofile/deleteAllNotifications')
+     .then( res => {
+       alert("all notifications delete")
+     })
+     .catch(err => {
+       alert(err)
+     })
+   }
+
    render(){
      console.log(this.props.dailyNotification)
      return (
@@ -251,6 +261,24 @@ import * as authActions from '../store/actions/auth';
 
 
             }
+
+            {
+              this.props.id === 1 ?
+
+              <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.deleteAllNotifications()}>
+                   <View style={{flexDirection:'row', padding:20}}>
+                      <Bell stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
+                      <Text style={styles.settingWord}>Delete Notifications</Text>
+                  </View>
+                </TouchableHighlight>
+
+              :
+
+              null
+
+
+            }
+
 
             {
               this.props.id === 1 || this.props.id === 3 ?
