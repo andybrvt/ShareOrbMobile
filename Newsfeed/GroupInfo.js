@@ -29,7 +29,7 @@ import authAxios from '../util';
 import * as authActions from '../store/actions/auth';
 import FlashMessage from "react-native-flash-message";
 import { showMessage, hideMessage } from "react-native-flash-message";
-import { faFire, faAppleAlt, Android, faRobot, faAndroid, faGoogle } from '@fortawesome/free-solid-svg-icons';
+import { faQrcode, faFire, faAppleAlt, Android, faRobot, faAndroid, faGoogle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -180,6 +180,11 @@ class GroupInfo extends React.Component{
     </View>
     </View>
   );
+
+  openQR = () => {
+    this.props.navigation.navigate("DownloadQR")
+  }
+
   render(){
 
     let data = []
@@ -351,7 +356,7 @@ class GroupInfo extends React.Component{
                  icon={faAppleAlt} />
               </TouchableHighlight>
             </View>
-            <View>
+            <View style={{marginRight:'15%'}}>
               <TouchableHighlight
                 onPress={() => this.copyToClipboardAndroid()}
                 style={styles.roundButton2}>
@@ -362,6 +367,20 @@ class GroupInfo extends React.Component{
                  }}
                  size = {25}
                  icon={faRobot} />
+              </TouchableHighlight>
+            </View>
+
+            <View>
+              <TouchableHighlight
+                onPress={() => this.openQR()}
+                style={styles.roundButton2}>
+                <FontAwesomeIcon
+                 style = {{
+                   color:'white',
+                   right:1,
+                 }}
+                 size = {25}
+                 icon={faQrcode} />
               </TouchableHighlight>
             </View>
           </View>
@@ -423,7 +442,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex:99,
     borderRadius: 100,
-    backgroundColor: '#2f54eb',
+    backgroundColor: '#1890ff',
     elevation:15,
   },
 

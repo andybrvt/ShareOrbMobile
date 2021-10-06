@@ -141,9 +141,18 @@ class ProfilePage extends React.Component{
       }
 
     } else {
-      this.props.navigation.navigate("JoinScreen", {
-        item:item
-      })
+
+      if(item.public === false){
+        alert("This group is private")
+      } else {
+        this.props.navigation.navigate("JoinScreen", {
+          item:item
+        })
+
+      }
+
+
+
     }
   }
 
