@@ -72,10 +72,7 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   ViewProfile = (username) => {
-    this.setState({
-      searchValue: "",
-      showSearch: false
-    })
+
     if(username === this.props.username){
       this.props.navigation.navigate("Profile");
     } else {
@@ -320,7 +317,7 @@ class SocialNewsfeedPost extends React.Component{
               alignItems:'center'
             }}>
             <Avatar
-              onPress = {() => this.props.ViewProfile(userUsername)}
+              onPress = {() => this.ViewProfile(userUsername)}
               size={37.5}
               rounded
               source = {{
@@ -680,7 +677,7 @@ class SocialNewsfeedPost extends React.Component{
                    {
                      video === "" ?
 
-                     <FastImage
+                     <Image
                        style={styles.cover}
                        resizeMode = "cover"
                        source={{ uri: itemImage }}

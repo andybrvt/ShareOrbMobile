@@ -46,6 +46,11 @@ class GlobeGroup extends React.Component{
       })
     }
 
+
+    componentWillUnmount(){
+      WebSocketGlobeInstance.disconnect()
+    }
+
     initialiseGlobeGroup(){
 
       this.waitForGlobeSocketConnection(() => {

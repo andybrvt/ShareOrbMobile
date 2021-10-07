@@ -62,19 +62,19 @@ import * as Notifications from 'expo-notifications';
 
 
 // Andy hot spoot
-// global.IP_CHANGE = "http://172.20.10.2:19000"
-// global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
-// global.WS_ENDPOINT = "172.20.10.2:19000"
-// global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
-// global.WS_HEADER = "ws"
+global.IP_CHANGE = "http://172.20.10.2:19000"
+global.IMAGE_ENDPOINT = "http://172.20.10.2:19000"
+global.WS_ENDPOINT = "172.20.10.2:19000"
+global.POSTLIST_SPEC = 'http://172.20.10.2:19000/media/'
+global.WS_HEADER = "ws"
 
 
 // Main site
-global.IP_CHANGE = "https://api.shareorb.com"
-global.IMAGE_ENDPOINT = ""
-global.WS_ENDPOINT = "api.shareorb.com"
-global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
-global.WS_HEADER = "wss"
+// global.IP_CHANGE = "https://api.shareorb.com"
+// global.IMAGE_ENDPOINT = ""
+// global.WS_ENDPOINT = "api.shareorb.com"
+// global.POSTLIST_SPEC = 'https://shareorb.s3.amazonaws.com/'
+// global.WS_HEADER = "wss"
 
 // 931
 // global.IP_CHANGE = "http://10.20.100.62:19000"
