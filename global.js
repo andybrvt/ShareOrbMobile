@@ -225,6 +225,38 @@ global.FILE_NAME_GETTER = (fileURI) => {
 
 }
 
+global.SEND_GROUP_COMMENT_NOTIFICATION = async(
+  expoPushToken,
+  sender,
+  groupId // its not the group id so fix it later
+) => {
+  if(expoPushToken !== ""){
+    const message = {
+      to: expoPushToken,
+      sound: "default",
+      title: global.CAPITALIZE(sender) + ' commented on your post!',
+      body: 'Click to check it out!',
+      data: {
+        type: "group_comment",
+        groupId: groupId,
+       },
+    }
+
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    })
+
+
+  }
+}
+
+
 global.SEND_GROUP_LIKE_NOTIFICATION = async(
   expoPushToken,
   sender,

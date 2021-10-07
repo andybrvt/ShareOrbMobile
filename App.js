@@ -385,6 +385,24 @@ class App extends Component{
                 this.refContainer.navigate("Home")
               }
 
+              if(notiType === "group_comment"){
+                // const groupId = response.notification.request.trigger.payload.body.groupId
+                //
+                // const smallGroups = this.props.smallGroups
+                // let index = 0
+                // for(let j = 0; j<smallGroups.length; j++){
+                //   if(smallGroups[j].id === groupId){
+                //     index = j
+                //   }
+                // }
+                // console.log(index, groupId)
+                // this.props.authSetActiveNewsfeedSlide(index)
+
+                // COME BACK TO THIS LATER
+                this.refContainer.navigate("Home")
+              }
+
+
               if(notiType === "comment"){
                 this.refContainer.navigate('Comments', {
                   postId: response.notification.request.trigger.payload.body.itemId

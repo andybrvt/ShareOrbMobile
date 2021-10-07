@@ -124,18 +124,24 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
        NotificationWebSocketInstance.sendNotification(notificationObject)
 
+
+       global.SEND_GROUP_COMMENT_NOTIFICATION(
+         this.props.commentHostNotiToken,
+         this.props.currentUser,
+         cellId
+       )
        // Now do the websocket here
-      //  SocialCommentsWebsocketInstance.sendComment(
-      //    cellId,
-      //    userId,
-      //    comment,
-      //  )
+       SocialCommentsWebsocketInstance.sendComment(
+         cellId,
+         userId,
+         comment,
+       )
+
+
       //
-      //
-      // //
-      // setTimeout(() => WebSocketSmallGroupInstance.updateSingleGroupPost(
-      //   cellId
-      // ), 1000)
+      setTimeout(() => WebSocketSmallGroupInstance.updateSingleGroupPost(
+        cellId
+      ), 1000)
 
       // update the group here
       // similar to that on top
@@ -144,11 +150,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
        // if(userId !== commentHost){
          // NotificationWebSocketInstance.sendNotification(notificationObject)
 
-         // global.SEND_COMMENT_NOTIFICATION(
-         //   this.props.commentHostNotiToken,
-         //   this.props.currentUser,
-         //   cellId
-         // )
+
        // }
 
        this.setState({
