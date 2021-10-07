@@ -225,6 +225,37 @@ global.FILE_NAME_GETTER = (fileURI) => {
 
 }
 
+global.SEND_GROUP_LIKE_NOTIFICATION = async(
+  expoPushToken,
+  sender,
+  groupId,
+) => {
+  if(expoPushToken !== ""){
+    const message = {
+      to: expoPushToken,
+      sound: "default",
+      title: global.CAPITALIZE(sender) + ' liked your post!',
+      body: 'Click to check it out!',
+      data: {
+        type: "group_like",
+        groupId: groupId,
+       },
+    }
+
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    })
+
+
+  }
+}
+
 global.SEND_LIKE_NOTIFICATION = async(
   expoPushToken,
   sender,

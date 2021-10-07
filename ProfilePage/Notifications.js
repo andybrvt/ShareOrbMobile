@@ -101,6 +101,45 @@ class Notifications extends React.Component{
    // let getMonth=dataList[1]-1
    // let getDay=dataList[2]
    // let albumDate = dateFns.format(new Date(getYear, getMonth, getDay), "MMMM d")
+   if(item.type === "group_post_comment"){
+
+
+     return(
+       <TouchableOpacity
+         onPress = {() => this.onGroupOpen(item.groupInvite)}
+         >
+          <View style={{
+             flexDirection:'row',
+             padding:15}}>
+            <View style={{flex:1}}>
+              <Avatar
+                // onPress = {() => this.ViewProfile(item.actor.username)}
+                size={40}
+                rounded
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+item.actor.profile_picture
+                }}
+              />
+            </View>
+          <View style={{
+              flex:6,
+              flexDirection:'column',
+              }}>
+            <View style = {{flexDirection: 'row'}}>
+              <Text style = {{fontFamily:'Nunito-Bold', fontSize:14}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
+              <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:13}}> commented on your post in {item.groupInvite.group_name} orb</Text>
+            </View>
+            <View style = {{marginTop: 10}}>
+              <Text>
+                {global.RENDER_TIMESTAMP(item.timestamp)}
+              </Text>
+            </View>
+        </View>
+
+          </View>
+       </TouchableOpacity>
+     )
+   }
    if(item.type === "group_post_like"){
 
 

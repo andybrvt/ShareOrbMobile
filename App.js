@@ -368,6 +368,23 @@ class App extends Component{
 
               }
 
+              if(notiType === "group_like"){
+                // const groupId = response.notification.request.trigger.payload.body.groupId
+                //
+                // const smallGroups = this.props.smallGroups
+                // let index = 0
+                // for(let j = 0; j<smallGroups.length; j++){
+                //   if(smallGroups[j].id === groupId){
+                //     index = j
+                //   }
+                // }
+                // console.log(index, groupId)
+                // this.props.authSetActiveNewsfeedSlide(index)
+
+                // COME BACK TO THIS LATER
+                this.refContainer.navigate("Home")
+              }
+
               if(notiType === "comment"){
                 this.refContainer.navigate('Comments', {
                   postId: response.notification.request.trigger.payload.body.itemId
@@ -1313,7 +1330,8 @@ const mapDispatchToProps = dispatch => {
     fetchGlobeItemComment: (comments) => dispatch(globeGroupActions.fetchGlobeItemComment(comments)),
     sendGlobeItemComment:(comment) => dispatch(globeGroupActions.sendGlobeItemComment(comment)),
 
-    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group))
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group)),
+    authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index))
 
     }
 }

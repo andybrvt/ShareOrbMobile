@@ -126,11 +126,11 @@ class SocialNewsfeedPost extends React.Component{
 
 
 
-     // WebSocketSmallGroupInstance.onGroupPostLike(
-     //   postId,
-     //   likerId,
-     //   this.props.groupId
-     // )
+     WebSocketSmallGroupInstance.onGroupPostLike(
+       postId,
+       likerId,
+       this.props.groupId
+     )
 
     console.log(postId, likerId, ownerId, this.props.groupId)
 
@@ -155,12 +155,11 @@ class SocialNewsfeedPost extends React.Component{
     //   socialItemId,
     //   personLike,
     // )
-    // global.SEND_LIKE_NOTIFICATION(
-    //   notificationToken,
-    //   this.props.currentUser,
-    //   socialItemId,
-    //   calCell
-    // )
+    global.SEND_GROUP_LIKE_NOTIFICATION(
+      notificationToken,
+      this.props.currentUser,
+      this.props.groupId,
+    )
 
 
   }
