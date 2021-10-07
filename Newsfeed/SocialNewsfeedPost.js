@@ -120,16 +120,27 @@ class SocialNewsfeedPost extends React.Component{
   onLike = (
      postId,
      likerId,
+     ownerId,
      notificationToken
    ) => {
 
 
 
-     WebSocketSmallGroupInstance.onGroupPostLike(
-       postId,
-       likerId,
-       this.props.groupId
-     )
+     // WebSocketSmallGroupInstance.onGroupPostLike(
+     //   postId,
+     //   likerId,
+     //   this.props.groupId
+     // )
+
+    console.log(postId, likerId, ownerId, this.props.groupId)
+
+
+    const notificationObject = {
+      command: 'group_like_notifcation',
+      actor: likerId,
+      recipient: ownerId,
+      groupId: this.props.groupId
+    }
     //  const notificationObject = {
     //    command: 'social_like_notification',
     //    actor: personLike,
@@ -137,7 +148,7 @@ class SocialNewsfeedPost extends React.Component{
     //    socialItemId: socialItemId,
     //  }
     //
-    // NotificationWebSocketInstance.sendNotification(notificationObject)
+    NotificationWebSocketInstance.sendNotification(notificationObject)
     //
     //
     // WebSocketSocialNewsfeedInstance.sendSinglePostLike(
@@ -376,6 +387,7 @@ class SocialNewsfeedPost extends React.Component{
                         onPress = {() => this.onLike(
                           postId,
                           this.props.userId,
+                          ownerId,
                           notificationToken,
                         )}
                         >
