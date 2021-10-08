@@ -452,13 +452,13 @@ class SocialNewsfeedPost extends React.Component{
           }}
           >
 
-          <View style = {{
+          <View
+             style = {{
               width: "97%",
               height: "97%",
               backgroundColor: 'lightgray',
               borderRadius: 5
             }}>
-
             <Image
               style = {{
                 height:"100%",
@@ -687,13 +687,15 @@ class SocialNewsfeedPost extends React.Component{
                    {/* fastimage*/}
                    {
                      video === "" ?
-
+                     <TouchableOpacity
+                       onPress = {() => this.props.navigation.navigate("NavPic")}
+                       >
                      <Image
                        style={styles.cover}
                        resizeMode = "cover"
                        source={{ uri: itemImage }}
                        />
-
+                     </TouchableOpacity>
                      :
 
                      <InViewPort

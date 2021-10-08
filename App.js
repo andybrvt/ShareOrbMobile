@@ -24,6 +24,7 @@ import * as colabAlbumActions from './store/actions/colabAlbum';
 import * as smallGroupsActions from './store/actions/smallGroups';
 import * as globeGroupActions from './store/actions/globeGroup';
 import { connect } from 'react-redux';
+import NavPic from './Newsfeed/NavPic';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import GroupInfo from './Newsfeed/GroupInfo';
 import DownloadQR from './Newsfeed/DownloadQR';
@@ -1187,7 +1188,17 @@ class App extends Component{
 
                        name = "JoinScreen"
                        component= {JoinScreen}/>
-
+                       <Stack.Screen
+                         options={{
+                           headerStyle:{
+                             shadowColor:'#fff', //ios
+                             elevation:0,        // android
+                           },
+                           title: '',
+                            ...TransitionPresets. SlideFromRightIOS,
+                          }}
+                         name = "NavPic"
+                         component= {NavPic}/>
                      <Stack.Screen
                        options={{
                          headerStyle:{
