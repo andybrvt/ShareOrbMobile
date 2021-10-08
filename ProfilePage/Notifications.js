@@ -65,6 +65,13 @@ class Notifications extends React.Component{
     })
 }
 
+  onNavPicDirect = (postId) => {
+
+    this.props.navigation.navigate("NavPic", {
+      postId: postId
+    })
+  }
+
    onGroupOpen = (item) => {
 
 
@@ -94,7 +101,6 @@ class Notifications extends React.Component{
 
  renderItem = ({item}) => {
 
-   console.log(item.type)
    const timestamp = Math.round((new Date().getTime() - new Date(item.timestamp).getTime())/60000)
    // let dataList=item.pendingEventDate.split("-")
    // let getYear=dataList[0]
@@ -106,7 +112,7 @@ class Notifications extends React.Component{
 
      return(
        <TouchableOpacity
-         onPress = {() => this.onGroupOpen(item.groupInvite)}
+         onPress = {() => this.onNavPicDirect(item.post)}
          >
           <View style={{
              flexDirection:'row',
@@ -145,7 +151,7 @@ class Notifications extends React.Component{
 
      return(
        <TouchableOpacity
-         onPress = {() => this.onGroupOpen(item.groupInvite)}
+         onPress = {() => this.onNavPicDirect(item.post)}
          >
           <View style={{
              flexDirection:'row',
