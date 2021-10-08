@@ -36,9 +36,6 @@ class NavPic extends React.Component{
   }
 
 
-
-
-
   componentDidMount(){
 
       const postId = this.props.route.params.postId
@@ -52,7 +49,6 @@ class NavPic extends React.Component{
       })
   }
 
-
   render(){
     const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -60,7 +56,7 @@ class NavPic extends React.Component{
     return (
       <BackgroundContainer>
         <View>
-        <Text>hi</Text>
+        <Image source={require('https://images.unsplash.com/photo-1581921028607-02e45c6e232c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1054&q=80')} style = {{height: 200, width: 250, resizeMode : 'stretch',}} />
         </View>
       </BackgroundContainer>
     )
