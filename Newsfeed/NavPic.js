@@ -12,7 +12,7 @@ import {
  } from 'react-native';
 
 import { connect } from "react-redux";
-import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
+import SinglePostWebsocketInstance from '../Websockets/singlePostWebsocket';
 import Constant from 'expo-constants';
 import { Appbar } from 'react-native-paper';
 import BackgroundContainer from "../RandomComponents/BackgroundContainer";
@@ -33,6 +33,8 @@ class NavPic extends React.Component{
     this.state = {
       post:{}
     }
+
+    this.initialiseSinglePost()
   }
 
 
@@ -47,6 +49,32 @@ class NavPic extends React.Component{
           post: res.data
         })
       })
+  }
+
+  initialiseSinglePost(){
+    const postId = this.props.route.params.postId
+
+    this.waitForSinglePostSocketConnection(() => {
+      // fetch info here
+
+    })
+
+    SinglePostWebsocketInstance.connect(postId)
+
+
+  }
+
+  waitForSinglePostSocketConnection(callback){
+    const component = this;
+    setTimeout(
+      function(){
+        if (SinglePostWebsocketInstance.state() === 1){
+          callback();
+          return;
+        } else{
+            component.waitForSinglePostSocketConnection(callback);
+        }
+      }, 100)
   }
 
   render(){
