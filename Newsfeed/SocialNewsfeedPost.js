@@ -688,7 +688,9 @@ class SocialNewsfeedPost extends React.Component{
                    {
                      video === "" ?
                      <TouchableOpacity
-                       onPress = {() => this.props.navigation.navigate("NavPic")}
+                       onPress = {() => this.props.navigation.navigate("NavPic", {
+                         postId: postId
+                       })}
                        >
                      <Image
                        style={styles.cover}

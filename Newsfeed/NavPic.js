@@ -16,6 +16,7 @@ import ExploreWebSocketInstance from '../Websockets/exploreWebsocket';
 import Constant from 'expo-constants';
 import { Appbar } from 'react-native-paper';
 import BackgroundContainer from "../RandomComponents/BackgroundContainer";
+import authAxios from '../util';
 
 import { Tag, Bookmark, Search, ChevronRight, Settings
   ,MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
@@ -30,11 +31,7 @@ class NavPic extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      index: 0,
-      routes: [
-        { key: 'first', title: 'Calendar' },
-        { key: 'second', title: 'Goals' },
-      ]
+      post:{}
     }
   }
 
@@ -43,12 +40,23 @@ class NavPic extends React.Component{
 
 
   componentDidMount(){
+
+      const postId = this.props.route.params.postId
+      // put a function where you pull the social post
+      authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getSinglePost/'+postId)
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+          post: res.data
+        })
+      })
   }
 
 
   render(){
     const screenWidth = Math.round(Dimensions.get('window').width);
 
+    console.log(this.props.route.params.postId,'commments')
 
     return (
       <BackgroundContainer>
