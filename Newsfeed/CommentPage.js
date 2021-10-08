@@ -95,6 +95,8 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
        // send the notifications to the whole group
 
 
+       // COME BACK TO THIS LATER
+
 
        this.setState({
          comment: ""
@@ -114,11 +116,20 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
        const commentHost = this.props.commentHost
        const cellDate = this.props.cellDate
        const notificationObject = {
-         command: "social_comment_notification",
+         command: "group_comment_notification",
          actor: userId,
          recipient:commentHost,
-         socialItemId:cellId
+         postId: cellId // this will be used mostly to get the groupId
        }
+
+       NotificationWebSocketInstance.sendNotification(notificationObject)
+
+
+       global.SEND_GROUP_COMMENT_NOTIFICATION(
+         this.props.commentHostNotiToken,
+         this.props.currentUser,
+         cellId
+       )
        // Now do the websocket here
        SocialCommentsWebsocketInstance.sendComment(
          cellId,
@@ -139,11 +150,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
        // if(userId !== commentHost){
          // NotificationWebSocketInstance.sendNotification(notificationObject)
 
-         // global.SEND_COMMENT_NOTIFICATION(
-         //   this.props.commentHostNotiToken,
-         //   this.props.currentUser,
-         //   cellId
-         // )
+
        // }
 
        this.setState({

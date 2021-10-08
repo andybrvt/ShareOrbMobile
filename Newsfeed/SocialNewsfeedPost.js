@@ -72,10 +72,7 @@ class SocialNewsfeedPost extends React.Component{
   }
 
   ViewProfile = (username) => {
-    this.setState({
-      searchValue: "",
-      showSearch: false
-    })
+
     if(username === this.props.username){
       this.props.navigation.navigate("Profile");
     } else {
@@ -123,6 +120,7 @@ class SocialNewsfeedPost extends React.Component{
   onLike = (
      postId,
      likerId,
+     ownerId,
      notificationToken
    ) => {
 
@@ -133,6 +131,16 @@ class SocialNewsfeedPost extends React.Component{
        likerId,
        this.props.groupId
      )
+
+    console.log(postId, likerId, ownerId, this.props.groupId)
+
+
+    const notificationObject = {
+      command: 'group_like_notifcation',
+      actor: likerId,
+      recipient: ownerId,
+      groupId: this.props.groupId
+    }
     //  const notificationObject = {
     //    command: 'social_like_notification',
     //    actor: personLike,
@@ -140,19 +148,18 @@ class SocialNewsfeedPost extends React.Component{
     //    socialItemId: socialItemId,
     //  }
     //
-    // NotificationWebSocketInstance.sendNotification(notificationObject)
+    NotificationWebSocketInstance.sendNotification(notificationObject)
     //
     //
     // WebSocketSocialNewsfeedInstance.sendSinglePostLike(
     //   socialItemId,
     //   personLike,
     // )
-    // global.SEND_LIKE_NOTIFICATION(
-    //   notificationToken,
-    //   this.props.currentUser,
-    //   socialItemId,
-    //   calCell
-    // )
+    global.SEND_GROUP_LIKE_NOTIFICATION(
+      notificationToken,
+      this.props.currentUser,
+      this.props.groupId,
+    )
 
 
   }
@@ -320,7 +327,7 @@ class SocialNewsfeedPost extends React.Component{
               alignItems:'center'
             }}>
             <Avatar
-              onPress = {() => this.props.ViewProfile(userUsername)}
+              onPress = {() => this.ViewProfile(userUsername)}
               size={37.5}
               rounded
               source = {{
@@ -379,6 +386,7 @@ class SocialNewsfeedPost extends React.Component{
                         onPress = {() => this.onLike(
                           postId,
                           this.props.userId,
+                          ownerId,
                           notificationToken,
                         )}
                         >

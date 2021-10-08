@@ -92,6 +92,10 @@ class InfiniteScrollFlatNew extends React.Component{
 
   }
 
+  componentWillUnmount(){
+    WebSocketSmallGroupInstance.disconnect()
+  }
+
   waitForSmallGroupsSocketConnection(callback){
     const component = this
     setTimeout(
