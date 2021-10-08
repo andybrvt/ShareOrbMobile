@@ -370,37 +370,23 @@ class App extends Component{
               }
 
               if(notiType === "group_like"){
-                // const groupId = response.notification.request.trigger.payload.body.groupId
-                //
-                // const smallGroups = this.props.smallGroups
-                // let index = 0
-                // for(let j = 0; j<smallGroups.length; j++){
-                //   if(smallGroups[j].id === groupId){
-                //     index = j
-                //   }
-                // }
-                // console.log(index, groupId)
-                // this.props.authSetActiveNewsfeedSlide(index)
+                const postId = response.notification.request.trigger.payload.body.postId
 
-                // COME BACK TO THIS LATER
-                this.refContainer.navigate("Home")
+
+                this.refContainer.navigate("NavPic", {
+                  postId, postId
+                })
               }
 
               if(notiType === "group_comment"){
-                // const groupId = response.notification.request.trigger.payload.body.groupId
-                //
-                // const smallGroups = this.props.smallGroups
-                // let index = 0
-                // for(let j = 0; j<smallGroups.length; j++){
-                //   if(smallGroups[j].id === groupId){
-                //     index = j
-                //   }
-                // }
-                // console.log(index, groupId)
-                // this.props.authSetActiveNewsfeedSlide(index)
+
+                const postId = response.notification.request.trigger.payload.body.postId
+
 
                 // COME BACK TO THIS LATER
-                this.refContainer.navigate("Home")
+                this.refContainer.navigate("NavPic", {
+                  postId, postId
+                })
               }
 
 

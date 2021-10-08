@@ -182,8 +182,6 @@ class NewsfeedView extends React.Component{
     //   console.log(this.props.route.params)
     //   const navGroupIDCondition=this.props.route.params.groupID
     // }
-    console.log("START HERE TEST")
-    console.log(this.props.route.params)
     let curLoading = this.props.curLoad
     let totalLoading = this.props.totalLoad
     // let navGroupIDCondition=1

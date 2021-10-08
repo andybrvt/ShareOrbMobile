@@ -158,7 +158,7 @@ class SocialNewsfeedPost extends React.Component{
     global.SEND_GROUP_LIKE_NOTIFICATION(
       notificationToken,
       this.props.currentUser,
-      this.props.groupId,
+      postId,
     )
 
 

@@ -16,7 +16,6 @@ export const sendGroupPost = (post) => {
 }
 
 export const sendGroupPostLike = (post) => {
-  console.log('the stuff goes here')
   return{
     type: actionTypes.SEND_GROUP_POST_LIKE,
     post: post
