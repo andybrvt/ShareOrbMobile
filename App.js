@@ -1185,6 +1185,8 @@ class App extends Component{
                           }}
                          name = "NavPic"
                          component= {NavPic}/>
+
+
                      <Stack.Screen
                        options={{
                          headerStyle:{

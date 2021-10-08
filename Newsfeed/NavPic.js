@@ -10,7 +10,9 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  FlatList,
+  Modal
  } from 'react-native';
 import * as dateFns from 'date-fns';
 import { connect } from "react-redux";
@@ -26,22 +28,29 @@ import { Tag, Bookmark,  Heart, Search, ChevronRight, Settings
 import { TabView, SceneMap } from 'react-native-tab-view';
 import GoalContainer from '../GoalAlbum/GoalContainer';
 import * as authActions from '../store/actions/auth';
-import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { Avatar } from 'react-native-elements';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import NotificationWebSocketInstance from  '../Websockets/notificationWebsocket';
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import SingleComment from './SingleComment';
+import DisplayLikeList from './DisplayLikeList';
 // This will be the bulk of the profile page
 // this will be used for current user
 class NavPic extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      post:{}
+      post:{},
+      showLike: false
     }
 
     // this.initialiseSinglePost()
+  }
+
+  onShowLike = () => {
+    this.props.navigation.navigate("DisplayLikeList", {
+      likePeople: this.state.post.people_like
+    })
   }
 
   renderComment = ({item}) => {
@@ -230,6 +239,18 @@ class NavPic extends React.Component{
             <View style = {{
                 flexDirection: 'row'
               }}>
+              <TouchableOpacity
+                onPress = {() => this.onShowLike()}
+                >
+                <View style = {styles.justifyCenter}>
+                    <Text style = {{color: 'white'}}>Likes</Text>
+
+                  <Text  style = {styles.statNum}>
+                    {like_people.length}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+
               {/*
               {
                       peopleLikeId.includes(this.props.userId ) ?
@@ -311,7 +332,7 @@ class NavPic extends React.Component{
       // put a function where you pull the social post
       authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getSinglePost/'+postId)
       .then(res => {
-
+        console.log(res.data, 'stuffhre')
         this.setState({
           post: res.data
         })
@@ -334,7 +355,6 @@ class NavPic extends React.Component{
        this.props.groupId
      )
 
-    console.log(postId, likerId, ownerId, this.props.groupId)
 
 
     const notificationObject = {
@@ -421,7 +441,6 @@ class NavPic extends React.Component{
       }
       if(post.get_socialCalItemComment){
         comments =post.get_socialCalItemComment
-        console.log(comments)
       }
       if(post.video){
         if(data.post !== null){
@@ -594,6 +613,8 @@ class NavPic extends React.Component{
 
 
         </View>
+
+
         <FlatList
           ref = {ref => this.flatListRef = ref}
           data = {comments}
