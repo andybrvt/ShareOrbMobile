@@ -228,7 +228,7 @@ global.FILE_NAME_GETTER = (fileURI) => {
 global.SEND_GROUP_COMMENT_NOTIFICATION = async(
   expoPushToken,
   sender,
-  groupId // its not the group id so fix it later
+  postId // its not the group id so fix it later
 ) => {
   if(expoPushToken !== ""){
     const message = {
@@ -238,7 +238,7 @@ global.SEND_GROUP_COMMENT_NOTIFICATION = async(
       body: 'Click to check it out!',
       data: {
         type: "group_comment",
-        groupId: groupId,
+        postId: postId,
        },
     }
 
@@ -260,8 +260,9 @@ global.SEND_GROUP_COMMENT_NOTIFICATION = async(
 global.SEND_GROUP_LIKE_NOTIFICATION = async(
   expoPushToken,
   sender,
-  groupId,
+  postId,
 ) => {
+  console.log(expoPushToken, sender, postId, 'stuf stuff')
   if(expoPushToken !== ""){
     const message = {
       to: expoPushToken,
@@ -270,7 +271,7 @@ global.SEND_GROUP_LIKE_NOTIFICATION = async(
       body: 'Click to check it out!',
       data: {
         type: "group_like",
-        groupId: groupId,
+        postId: postId,
        },
     }
 
