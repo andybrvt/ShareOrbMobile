@@ -56,7 +56,6 @@ class NavPic extends React.Component{
   render(){
     const screenWidth = Math.round(Dimensions.get('window').width);
 
-    console.log(this.props.route.params.postId,'commments')
 
     return (
       <BackgroundContainer>
