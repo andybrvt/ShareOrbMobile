@@ -34,6 +34,8 @@ import NotificationWebSocketInstance from  '../Websockets/notificationWebsocket'
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import SingleComment from './SingleComment';
 import DisplayLikeList from './DisplayLikeList';
+import FastImage from 'react-native-fast-image'
+
 // This will be the bulk of the profile page
 // this will be used for current user
 class NavPic extends React.Component{
@@ -475,7 +477,7 @@ class NavPic extends React.Component{
                video === "" ?
                <TouchableWithoutFeedback
                  >
-               <Image
+               <FastImage
                  style={styles.cover}
                  resizeMode = "cover"
                  source={{ uri:`${global.IMAGE_ENDPOINT}`+ post.itemImage }}
