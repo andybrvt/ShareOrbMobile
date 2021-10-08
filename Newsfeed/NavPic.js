@@ -34,7 +34,7 @@ class NavPic extends React.Component{
       post:{}
     }
 
-    this.initialiseSinglePost()
+    // this.initialiseSinglePost()
   }
 
 
@@ -56,7 +56,7 @@ class NavPic extends React.Component{
 
     this.waitForSinglePostSocketConnection(() => {
       // fetch info here
-
+      SinglePostWebsocketInstance.fetchSinglePost(postId)
     })
 
     SinglePostWebsocketInstance.connect(postId)

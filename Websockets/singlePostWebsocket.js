@@ -31,7 +31,7 @@ class WebSocketSinglePost{
     }
 
     this.socketRef.onmessage = (e) => {
-
+      this.socketNewSinglePost(e.data)
 
     }
     this.socketRef.onerror = (e) => {
@@ -50,11 +50,24 @@ class WebSocketSinglePost{
   }
 
   socketNewSinglePost(data){
+    const parsedData = JSON.parse(data);
+    const command = parsedData.command
 
+    if(command === "fetch_single_post_info"){
+      const post = parsedData.singlePost
+      console.log(post)
+    }
   }
 
   addCallbacks(){
 
+  }
+
+  fetchSinglePost(postId){
+    this.sendSinglePostInfo({
+      postId,
+      command: "fetch_single_post_info"
+    })
   }
 
   sendSinglePostInfo(data){
