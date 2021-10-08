@@ -697,7 +697,9 @@ class SocialNewsfeedPost extends React.Component{
                        />
                      </TouchableOpacity>
                      :
-
+                     <TouchableOpacity
+                       onPress = {() => this.props.navigation.navigate("NavPic")}
+                       >
                      <InViewPort
                        onChange = {this.handlePlaying}
                        >
@@ -762,7 +764,7 @@ class SocialNewsfeedPost extends React.Component{
 
 
                      </InViewPort>
-
+                     </TouchableOpacity>
                    }
 
                 </TouchableOpacity>
