@@ -700,7 +700,9 @@ class SocialNewsfeedPost extends React.Component{
                      </TouchableOpacity>
                      :
                      <TouchableOpacity
-                       onPress = {() => this.props.navigation.navigate("NavPic")}
+                       onPress = {() => this.props.navigation.navigate("NavPic", {
+                         postId: postId
+                       })}
                        >
                      <InViewPort
                        onChange = {this.handlePlaying}
