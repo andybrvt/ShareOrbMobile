@@ -234,7 +234,6 @@ class CreateGroupPage extends React.Component{
 
   frequentChatPeople=()=>{
     return(
-
       <View style = {styles.frequentPeopleContainer}>
         <ScrollView
           horizontal={true}
@@ -338,11 +337,7 @@ class CreateGroupPage extends React.Component{
     if(description === ""){
       return false
     }
-    if(invitedPeople.length < 1){
-      return false
-    }
     return true
-
   }
 
   onCreateGroup = () => {
@@ -383,9 +378,6 @@ class CreateGroupPage extends React.Component{
         }
 
         NotificationWebSocketInstance.sendNotification(notificationObject);
-
-
-
 
       }
 
@@ -451,11 +443,9 @@ class CreateGroupPage extends React.Component{
 
           <View style ={{
                 flex: 1}}>
-
             <TouchableWithoutFeedback
               onPress = {() => this.onOutSideClick()}
               >
-
                 <ScrollView style = {{
                     height: height
                   }}>
@@ -490,54 +480,61 @@ class CreateGroupPage extends React.Component{
                         width:'100%',
                         // backgroundColor:'red',
                         marginTop:'25%', }}>
+                        <View style={{flexDirection:'row', alignItems:'center',}}>
+
                         {
                           this.state.groupPic !== "" ?
-
                           <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
                             <Avatar
                               rounded
                               source = {{
                                 uri: this.state.groupPic
                               }}
-                              size={100}
+                              size={125}
                                />
                           </TouchableOpacity>
 
                           :
-
+                          <View style={{zIndex:99, borderWidth: 1, borderColor: 'red', borderRadius:75,}}>
                           <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
                             <Avatar
                               rounded
                               source = {CameraPic}
-                              size={100}
+                              size={125}
                                />
                           </TouchableOpacity>
-
-
+                          </View>
                         }
-
+                        </View>
                         <View style={{
                           marginTop:10,
-                          width:'70%',
-                          }}>
+                          width:'55%',
+                          flexDirection:'row',
+                          // justifyContent:'center',
+                          alignItems:'center',
 
+                          }}>
+                            <Text style={{color:'red',  marginRight:10, fontSize:18,}}>*</Text>
                             <TextInput
                              placeholder="Orb Name"
                              placeholderTextColor="#919191"
                              autoCorrect={false}
-                             style={{fontSize:18, fontFamily:'Nunito-SemiBold', textAlign:'center', color:'#919191' }}
+                             style={{fontSize:18, fontFamily:'Nunito-SemiBold',
+
+                               textAlign:'center', color:'#919191', width:'75%' }}
                              onChangeText = {this.onGroupNameChange}
                              value = {this.state.groupName}
                              >
-
                            </TextInput>
-
                          </View>
                       </View>
                      </View>
                      <View style={{
                          flexDirection:'row',
+                         justifyContent:'center',
+                         // backgroundColor:'blue',
                          padding:25}}>
+                         <Text style={{color:'red',  marginRight:10, fontSize:18,}}>*</Text>
                          <Menu stroke="#919191" strokeWidth={2.0} width={22.5} height={22.5} style={{top:3}}/>
                          <TextInput
                           placeholder="Description"
@@ -549,13 +546,14 @@ class CreateGroupPage extends React.Component{
                           />
                       </View>
                       <View style={{
+
                           flexDirection:'row',
                           borderTopWidth:1,
                           borderColor:'#d9d9d9',
                           borderBottomWidth:1,
                           padding:20}}>
                         <View>
-                          <Globe stroke="black" strokeWidth={1.5} width={40} height={40} style={{top:3}}/>
+                          <Globe stroke="#919191" strokeWidth={1.5} width={40} height={40} style={{top:3}}/>
                         </View>
                         {
                           (this.state.publicG)?
@@ -564,7 +562,7 @@ class CreateGroupPage extends React.Component{
                             fontSize:16,
                             fontFamily:'Nunito-Bold',
                             }}>Make Orb Public</Text>
-                          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:14, }}>Anyone can join the group</Text>
+                          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:14, color:"#919191" }}>Anyone can join the group</Text>
                           </View>
                           :
                           <View style={{marginLeft:20, flexDirection:'column'}}>
@@ -572,7 +570,7 @@ class CreateGroupPage extends React.Component{
                             fontSize:16,
                             fontFamily:'Nunito-Bold',
                             }}>Make Orb Private</Text>
-                          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:14,}}>Choose who joins the group</Text>
+                          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:14, color:"#919191"}}>Choose who joins the group</Text>
                           </View>
                         }
 
@@ -605,9 +603,6 @@ class CreateGroupPage extends React.Component{
                         <View >
                           <Text style={styles.settingWord}>People in Group</Text>
                         </View>
-
-
-
                          <View
                            style = {{
                              marginTop:20,
@@ -623,7 +618,7 @@ class CreateGroupPage extends React.Component{
 
                   </View>
 
-                  <View style={{marginTop:50}}>
+                  <View style={{marginTop:30}}>
                   {
                     this.checkCreating() ?
                     <View style={{alignItems:'center',

@@ -330,18 +330,12 @@ class GroupInfo extends React.Component{
            <View style={{marginTop:'10%'}}>
              <Text></Text>
            </View>
-
-
-
             }
-
-
-
-           <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
-             <Text style={styles.settingWord}> Click to copy link to download app on Clipboard </Text>
+           <View style={{flexDirection:'row', padding:10, alignItems:'center', justifyContent:'center', marginLeft:10,}}>
+             <Text style={{color:'#919191',
+             fontSize:15,
+             fontFamily:'Nunito-SemiBold',}}> Click to copy app link </Text>
             </View>
-
-
           <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
             <View style={{marginRight:'15%'}}>
               <TouchableHighlight

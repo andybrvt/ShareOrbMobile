@@ -309,8 +309,8 @@ class InfiniteScrollFlatNew extends React.Component{
 const styles = StyleSheet.create({
   roundButton1: {
 
-    width: 50,
-    height: 50,
+    width: 57.5,
+    height: 57.5,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex:99,
