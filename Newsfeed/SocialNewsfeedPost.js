@@ -658,20 +658,7 @@ class SocialNewsfeedPost extends React.Component{
     socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
       return (
         <View>
-        {/*
-        <Animated.View style = {{
-            height: this.heightAnimation
-          }}>
-          */}
-          {/*
-          <TouchableWithoutFeedback
-            onPress = {() => this.onSlidePress(userPostImages.length, postId,
-            this.props.userId,
-            contentTypeId,
-            ownerId,
-            cellDate)}
-            >
-            */}
+
             <View style = {styles.container}>
               <GestureRecognizer
                 onSwipe={(direction, state) => this.onSwipe(direction, state)}
@@ -693,7 +680,7 @@ class SocialNewsfeedPost extends React.Component{
                          postId: postId
                        })}
                        >
-                     <FastImage
+                     <Image
                        style={styles.cover}
                        resizeMode = "cover"
                        source={{ uri: itemImage }}
@@ -837,47 +824,6 @@ class SocialNewsfeedPost extends React.Component{
                 </View>
 
 
-                {/*
-                <View style = {styles.tagCSS3}>
-                    <View style = {styles.justifyCenter}>
-                      <Text style={styles.videoFooterUserName}>{utc3}</Text>
-                    </View>
-                </View>
-                */}
-
-            {/*
-          </TouchableWithoutFeedback>
-          */}
-          {/*
-            userPostImages.length > 1 ?
-            <Animated.View style = {{
-              height: width ,
-              flexWrap: 'wrap',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginLeft: 6,
-              marginRight: 3,
-              transform: [
-                {translateY: this.slideAnimation}
-              ]
-              }}>
-                {this.renderExtraPics(userPostImages)}
-            </Animated.View>
-            : <View></View>
-          */}
-          {/*
-            <Button
-              title = "slide"
-              onPress = {() => this.onSlidePress(userPostImages.length, postId,
-              this.props.userId,
-              contentTypeId,
-              ownerId,
-              cellDate)}
-               />
-            */}
-          {/*
-         </Animated.View>
-         */}
 
        </View>
       )
@@ -916,6 +862,7 @@ class SocialNewsfeedPost extends React.Component{
 
 
   render(){
+    console.log('update')
     let like_people = []
     let profilePic = ""
     let userUsername = ""
@@ -962,10 +909,7 @@ class SocialNewsfeedPost extends React.Component{
     }
 
     const y = this.props.y;
-    const backgroundGradient = interpolateColors(y, {
-      inputRange: [0, 100],
-      outputColorRange: ["white", "black"],
-    })
+
 
 
     return (

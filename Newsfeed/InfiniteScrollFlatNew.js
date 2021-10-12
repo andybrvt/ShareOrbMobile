@@ -56,7 +56,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
   componentDidUpdate(prevProps){
-
+    console.log('why it keep updatinging')
 
   }
   componentWillUnmount(){
@@ -248,18 +248,17 @@ class InfiniteScrollFlatNew extends React.Component{
 
   render(){
 
-    let post = [];
-    if(this.props.socialPosts){
-      post = this.props.socialPosts
-    }
+    // let post = [];
+    // if(this.props.socialPosts){
+    //   post = this.props.socialPosts
+    // }
 
     let groupPost = [];
     if(this.props.groupPost){
       const groupId = this.props.groupId.toString()
 
       groupPost = this.props.groupPost[groupId]
-      // groupPost = this.props.groupPost
-      // console.log(this.props.groupPost, 'stuff here')
+
     }
 
 
@@ -329,7 +328,7 @@ const mapStateToProps = state => {
     isAuthenticated: state.auth.token !== null,
     id: state.auth.id,
     userName: state.auth.username,
-    socialPosts: state.socialNewsfeed.socialPosts,
+    // socialPosts: state.socialNewsfeed.socialPosts,
     following: state.auth.following,
     curLoad: state.auth.curLoad,
     groupPost: state.smallGroups.groupPosts
