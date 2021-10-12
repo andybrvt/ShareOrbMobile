@@ -22,6 +22,8 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import * as Progress from 'react-native-progress';
 import GlobeGroup from './GlobeGroup/GlobeGroup';
 import NoPosts from './noPosts.svg';
+import * as smallGroupsActions from '../store/actions/smallGroups';
+
 
 const height = Dimensions.get('window').height
 
@@ -88,6 +90,8 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
 
   render(){
+
+    console.log('-------')
    let smallGroups = []
    if(this.props.smallGroups){
      smallGroups = this.props.smallGroups
@@ -247,6 +251,28 @@ const styles = StyleSheet.create({
 });
 
 
+const mapStateToProps = state => {
+
+  return{
+    isAuthenticated: state.auth.token !== null,
+    id: state.auth.id,
+    userName: state.auth.username,
+    socialPosts: state.socialNewsfeed.socialPosts,
+    following: state.auth.following,
+    curLoad: state.auth.curLoad,
+    groupPost: state.smallGroups.groupPosts
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadMoreSmallGroupPost: (posts) => dispatch(smallGroupsActions.loadMoreSmallGroupPost(posts)),
+    loadMoreSocialPost: (post) => dispatch(socialNewsfeedActions.loadMoreSocialPost(post)),
+    openShowCamera: () => dispatch(authActions.openShowCamera()),
+    authAddUnaddFollowing: (following) => dispatch(authActions.authAddUnaddFollowing(following))
+  }
+}
 
 
-export default SwipeInfiniteScrollHolder;
+
+export default connect(mapStateToProps, mapDispatchToProps)(SwipeInfiniteScrollHolder);

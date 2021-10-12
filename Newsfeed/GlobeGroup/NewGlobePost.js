@@ -323,6 +323,7 @@ class NewGlobePost extends React.Component{
 
   render(){
 
+    console.log('is there an infinite loop here')
     let postId = ""
     let itemImage = ""
     let group = {}
@@ -346,7 +347,6 @@ class NewGlobePost extends React.Component{
 
     if(this.props.data){
 
-      console.log(this.props.data, 'newglobepost')
 
       if(this.props.data.people_like){
         groupLike = this.props.data.people_like
@@ -362,6 +362,12 @@ class NewGlobePost extends React.Component{
         post = this.props.data.post
         if(this.props.data.post.itemImage){
           itemImage = `${global.IMAGE_ENDPOINT}` + this.props.data.post.itemImage
+        }
+        if(this.props.data.post.video){
+          if(this.props.data.post.video !== null){
+            video = `${global.IMAGE_ENDPOINT}`+this.props.data.post.video;
+
+          }
         }
 
         if(this.props.data.post.creator){

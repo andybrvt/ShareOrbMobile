@@ -25,14 +25,14 @@ class InViewPort extends React.Component{
 
    componentDidUpdate(prevProps){
 
-     if(this.props.disabled){
-       this.stopWatching()
-
-     }
-     else {
-       this.lastValue = null
-       this.startWatching()
-     }
+     // if(this.props.disabled){
+     //   this.stopWatching()
+     //
+     // }
+     // else {
+     //   this.lastValue = null
+     //   this.startWatching()
+     // }
    }
 
    startWatching(){
