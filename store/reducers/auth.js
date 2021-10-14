@@ -276,6 +276,13 @@ const authSetActiveNewsfeedSlideNull = (state, action) => {
   })
 }
 
+const authUpdateAllSmallGroup = (state, action) => {
+  return updateObject(state, {
+    smallGroups: action.smallGroups,
+    smallGroupIds: action.smallGroupsId
+  })
+}
+
 
 const reducer = (state = initialState, action) => {
   switch(action.type){
@@ -338,6 +345,8 @@ const reducer = (state = initialState, action) => {
       return authUpdateNewsfeedSlide(state, action)
     case actionTypes.AUTH_SET_ACTIVE_NEWSFEED_SLIDE_NULL:
       return authSetActiveNewsfeedSlideNull(state, action)
+    case actionTypes.AUTH_UPDATE_ALL_SMALL_GROUP:
+      return authUpdateAllSmallGroup(state, action)
     default:
       return state;
   }
