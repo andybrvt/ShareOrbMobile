@@ -273,7 +273,7 @@ class InfiniteScrollFlatNew extends React.Component{
           onPress={() => this.navGroupInfo()}
           style={styles.roundButton1}>
 
-          <Users stroke="white" strokeWidth={2.5} width={20} height={20} />
+          <Users stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
         </TouchableOpacity>
         </View>
 
@@ -308,8 +308,8 @@ class InfiniteScrollFlatNew extends React.Component{
 const styles = StyleSheet.create({
   roundButton1: {
 
-    width: 57.5,
-    height: 57.5,
+    width: 60,
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex:99,
