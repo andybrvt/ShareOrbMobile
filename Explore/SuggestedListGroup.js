@@ -233,6 +233,7 @@ class SuggestedListGroup extends React.Component{
     let title = ""
     let temp=""
     let post = []
+    let groupId = ""
     if(item.group_name){
       title = item.group_name
     }
@@ -242,13 +243,19 @@ class SuggestedListGroup extends React.Component{
     if(item.members){
       temp=item.members
     }
+    if(item.id){
+      groupId = item.id
+    }
+
+
+    const groupsId = this.props.smallGroupIds
     // console.log(item.members.includes(1))
     return(
       <View>
         <View style={{marginLeft:'3.5%', marginBottom:'1%' }}>
           <View style={{flexDirection:'row'}}>
             <Text style={{fontFamily:'Nunito-Bold', fontSize:16 }}>{global.CAPITALIZE(title)}</Text>
-              {(temp.includes(this.props.curId))?
+              {(groupsId.includes(groupId.toString()))?
                 <View style={styles.inviteButton}>
                   <UserCheck
                     style={{marginRight:5}}
@@ -490,9 +497,9 @@ const styles = StyleSheet.create({
     position:'absolute',
     top:'1%',
     right:'5%',
-    padding:10,
     borderRadius: 20,
     height:25,
+    width: 100,
     elevation:5,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
@@ -580,6 +587,7 @@ const mapStateToProps = state => {
     curId: state.auth.id,
     username: state.auth.username,
     smallGroups: state.auth.smallGroups,
+    smallGroupIds: state.auth.smallGroupIds
   }
 }
 

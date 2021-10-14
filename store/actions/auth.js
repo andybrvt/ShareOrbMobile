@@ -370,7 +370,6 @@ export const authAddSmallGroup = (group) => {
 }
 
 export const authUpdateSmallGroup = (group) => {
-  console.log(group, 'in the action')
   return{
     type: actionTypes.AUTH_UPDATE_SMALL_GROUP,
     group: group
@@ -394,5 +393,13 @@ export const authSetActiveNewsfeedSlide = (index) => {
 export const authSetActiveNewsfeedSlideNull = () =>{
   return{
     type: actionTypes.AUTH_SET_ACTIVE_NEWSFEED_SLIDE_NULL
+  }
+}
+
+export const authUpdateAllSmallGroup = (smallGroups, smallGroupsId) => {
+  return{
+    type: actionTypes.AUTH_UPDATE_ALL_SMALL_GROUP,
+    smallGroups: smallGroups,
+    smallGroupsId: smallGroupsId
   }
 }

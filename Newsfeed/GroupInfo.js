@@ -84,7 +84,7 @@ class GroupInfo extends React.Component{
 
   leaveGroup = (groupId) => {
     const userId = this.props.curId
-      const groupList=this.props.smallGroups
+    const groupList=this.props.smallGroups
     this.setState({
       loading: true,
       disabled:true,
@@ -93,25 +93,33 @@ class GroupInfo extends React.Component{
 
     authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/leaveSmallGroup/"+groupId+'/'+userId)
     .then(res => {
+
+      console.log(res.data, 'stuff here')
+
+      this.props.authUpdateAllSmallGroup(res.data.smallGroups, res.data.smallGroupId)
       this.setState({
         loading: false
       })
+
+      this.props.navigation.navigate("Home")
+
+
     })
 
 
-    setTimeout(()=>{
-       this.setState({
-        disabled: false,
-      });
-    }, 5000)
-
-    for(let i=0; i<groupList.length; i++) {
-      if(groupList[i].id===groupId){
-        this.props.navigation.navigate("Home")
-        // this.props.authUpdateNewsfeedSlide(i)
-        this.props.authSetActiveNewsfeedSlide(i+2)
-      }
-    }
+    // setTimeout(()=>{
+    //    this.setState({
+    //     disabled: false,
+    //   });
+    // }, 5000)
+    //
+    // for(let i=0; i<groupList.length; i++) {
+    //   if(groupList[i].id===groupId){
+    //     this.props.navigation.navigate("Home")
+    //     // this.props.authUpdateNewsfeedSlide(i)
+    //     // this.props.authSetActiveNewsfeedSlide(i+2)
+    //   }
+    // }
 
 
   }
@@ -606,7 +614,8 @@ const mapDispatchToProps= dispatch =>{
     return{
       authUpdateNewsfeedSlide: (index) => dispatch(authActions.authUpdateNewsfeedSlide(index)),
       authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
-      authUpdateSmallGroup: (group) => dispatch(authActions.authUpdateSmallGroup(group))
+      authUpdateSmallGroup: (group) => dispatch(authActions.authUpdateSmallGroup(group)),
+      authUpdateAllSmallGroup: (smallGroups, smallGroupsId) => dispatch(authActions.authUpdateAllSmallGroup(smallGroups, smallGroupsId))
     }
 }
 
