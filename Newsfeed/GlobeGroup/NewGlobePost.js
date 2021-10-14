@@ -444,6 +444,7 @@ class NewGlobePost extends React.Component{
                     }}>
                     <Text style = {{
                        fontSize:12,
+                       color:'#8c8c8c',
                        fontFamily:'Nunito-SemiBold'
                        }}>{members.length} members</Text>
                   </View>
@@ -633,7 +634,7 @@ const styles = StyleSheet.create({
     // padding:15,
     width:80,
     borderRadius: 20,
-    height:35,
+    height:32.5,
     elevation:5,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
@@ -647,14 +648,14 @@ const styles = StyleSheet.create({
     // padding:15,
     width:80,
     borderRadius: 20,
-    height:35,
+    height:32.5,
     elevation:5,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "gainsboro",
+    backgroundColor: '#bfbfbf',
     flexDirection:'row'
   },
   totalHolderContainer: {

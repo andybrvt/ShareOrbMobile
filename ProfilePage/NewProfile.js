@@ -98,9 +98,9 @@ class NewProfile extends React.Component{
             size = {120}
              />
           </TouchableOpacity>
-           <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
+           <Text style={{fontFamily:'Nunito-Bold', fontSize:16}}>{item.group_name}</Text>
            <View>
-             <Text>{item.members.length} people</Text>
+             <Text style={{fontFamily:'Nunito-SemiBold', color:'#8c8c8c', fontSize:12}}>{item.members.length} people</Text>
 
            </View>
 
@@ -153,6 +153,7 @@ class NewProfile extends React.Component{
         </View>
 
         <FlatList
+          contentContainerStyle={{ paddingBottom: 25 }}
           ListHeaderComponent = {this.listHeader}
           columnWrapperStyle={{justifyContent: 'space-between'}}
           data={data}

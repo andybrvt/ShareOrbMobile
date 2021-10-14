@@ -207,7 +207,7 @@ class Profile extends React.Component{
             columnWrapperStyle={{justifyContent: 'space-between'}}
             data={data}
             showsVerticalScrollIndicator={true}
-            contentContainerStyle={{ paddingBottom: 25 }}
+            contentContainerStyle={{ paddingBottom: 50 }}
             numColumns={2}
             renderItem={({item}) => {
               return (

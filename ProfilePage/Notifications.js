@@ -132,11 +132,11 @@ class Notifications extends React.Component{
               flexDirection:'column',
               }}>
             <View style = {{flexDirection: 'row'}}>
-              <Text style = {{fontFamily:'Nunito-Bold', fontSize:14}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
-              <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:13}}> commented on your post in {item.groupInvite.group_name} orb</Text>
+              <Text style = {{fontFamily:'Nunito-Bold', fontSize:13}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
+              <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:13}}>commented on your post in {item.groupInvite.group_name} orb</Text>
             </View>
-            <View style = {{marginTop: 10}}>
-              <Text>
+            <View style = {{marginTop: 5}}>
+              <Text style={styles.notiTimeStamp}>
                 {global.RENDER_TIMESTAMP(item.timestamp)}
               </Text>
             </View>
@@ -171,11 +171,11 @@ class Notifications extends React.Component{
               flexDirection:'column',
               }}>
             <View style = {{flexDirection: 'row'}}>
-              <Text style = {{fontFamily:'Nunito-Bold', fontSize:14}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
+              <Text style = {{fontFamily:'Nunito-Bold', fontSize:13}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
               <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:13}}> liked your post in {item.groupInvite.group_name} orb</Text>
             </View>
-            <View style = {{marginTop: 10}}>
-              <Text>
+            <View style = {{marginTop: 5}}>
+              <Text style = {styles.notiTimeStamp}>
                 {global.RENDER_TIMESTAMP(item.timestamp)}
               </Text>
             </View>
@@ -209,11 +209,11 @@ class Notifications extends React.Component{
               flexDirection:'column',
               }}>
             <View style = {{flexDirection: 'row'}}>
-              <Text style = {{fontFamily:'Nunito-Bold', fontSize:14}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
+              <Text style = {{fontFamily:'Nunito-Bold', fontSize:13}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
               <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:13}}>invited you to a orb</Text>
             </View>
-            <View style = {{marginTop: 10}}>
-              <Text>
+            <View style = {{marginTop: 5}}>
+              <Text style={styles.notiTimeStamp}>
                 {global.RENDER_TIMESTAMP(item.timestamp)}
               </Text>
             </View>
@@ -250,8 +250,8 @@ class Notifications extends React.Component{
               <Text style = {{fontWeight: 'bold'}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}</Text>
               <Text>commented on your post </Text>
             </View>
-            <View style = {{marginTop: 10}}>
-              <Text>
+            <View style = {{marginTop: 5}}>
+              <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:11}}>
                 {global.RENDER_TIMESTAMP(item.timestamp)}
               </Text>
             </View>
@@ -519,7 +519,7 @@ const styles = StyleSheet.create({
   },
   notiTimeStamp: {
     color:'#8c8c8c',
-    fontSize:12,
+    fontSize:11,
     fontFamily:'Nunito-SemiBold',
   },
  editButton: {
