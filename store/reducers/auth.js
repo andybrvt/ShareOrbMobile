@@ -33,7 +33,8 @@ const initialState ={
   inviteCode: "",
   smallGroups: [],
   smallGroupIds: [],
-  activeSlide: null
+  activeSlide: null,
+  updateSlide:null,
 
 }
 
@@ -256,6 +257,13 @@ const authUpdateSmallGroup = (state, action) => {
   })
 }
 
+const authUpdateNewsfeedSlide = (state, action) => {
+  console.log("test")
+  console.log(action)
+}
+
+
+
 const authSetActiveNewsfeedSlide = (state, action) => {
   return updateObject(state, {
     activeSlide: action.index
@@ -326,6 +334,8 @@ const reducer = (state = initialState, action) => {
       return authUpdateSmallGroup(state, action)
     case actionTypes.AUTH_SET_ACTIVE_NEWSFEED_SLIDE:
       return authSetActiveNewsfeedSlide(state, action)
+    case actionTypes.AUTH_UPDATE_NEWSFEED_SLIDE:
+      return authUpdateNewsfeedSlide(state, action)
     case actionTypes.AUTH_SET_ACTIVE_NEWSFEED_SLIDE_NULL:
       return authSetActiveNewsfeedSlideNull(state, action)
     default:

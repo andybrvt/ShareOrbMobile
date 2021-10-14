@@ -82,6 +82,40 @@ class GroupInfo extends React.Component{
     Clipboard.setString("Download ShareOrb on IOS:"+" https://testflight.apple.com/join/v58j1FSw")
   }
 
+  leaveGroup = (groupId) => {
+    const userId = this.props.curId
+      const groupList=this.props.smallGroups
+    this.setState({
+      loading: true,
+      disabled:true,
+    })
+
+
+    authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/leaveSmallGroup/"+groupId+'/'+userId)
+    .then(res => {
+      this.setState({
+        loading: false
+      })
+    })
+
+
+    setTimeout(()=>{
+       this.setState({
+        disabled: false,
+      });
+    }, 5000)
+
+    for(let i=0; i<groupList.length; i++) {
+      if(groupList[i].id===groupId){
+        this.props.navigation.navigate("Home")
+        // this.props.authUpdateNewsfeedSlide(i)
+        this.props.authSetActiveNewsfeedSlide(i+2)
+      }
+    }
+
+
+  }
+
   copyToClipboardAndroid = () => {
     showMessage({
       message: "Copied Android download link",
@@ -90,6 +124,24 @@ class GroupInfo extends React.Component{
       duration:1000
     });
     Clipboard.setString("Download ShareOrb on Android:"+" https://play.google.com/store/apps/details?id=com.pinghsu520.ShareOrbMobile")
+  }
+
+  toggleLeave = (groupID) => {
+    Alert.alert(
+      "Are you sure?",
+      "You must reopen the app to see this change",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Leave",
+          style:'destructive', onPress: () => this.leaveGroup(groupID) }
+      ]
+    );
+
+
   }
 
 
@@ -200,6 +252,7 @@ class GroupInfo extends React.Component{
     let description = ""
     let publicG = false
     let code = ""
+    let groupID=""
     if(this.props.smallGroups){
       if(this.props.route.params.groupId){
         const groupId = this.props.route.params.groupId
@@ -212,6 +265,7 @@ class GroupInfo extends React.Component{
             description = group.description
             publicG = group.public
             code = group.groupCode
+            groupID=group.id
           }
         }
       }
@@ -382,9 +436,9 @@ class GroupInfo extends React.Component{
 
 
             <View style={{alignItems:'center', top:'10%'}}>
-              <View style={styles.loginBtn1}>
+              <TouchableOpacity  onPress={() => this.toggleLeave(groupID)} style={styles.loginBtn1}>
                 <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
-              </View>
+              </TouchableOpacity>
             </View>
         </View>
 
@@ -542,13 +596,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-  smallGroups: state.auth.smallGroups
+    curId: state.auth.id,
+  smallGroups: state.auth.smallGroups,
   }
 }
 
 
 const mapDispatchToProps= dispatch =>{
     return{
+      authUpdateNewsfeedSlide: (index) => dispatch(authActions.authUpdateNewsfeedSlide(index)),
+      authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
       authUpdateSmallGroup: (group) => dispatch(authActions.authUpdateSmallGroup(group))
     }
 }

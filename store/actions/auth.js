@@ -377,6 +377,13 @@ export const authUpdateSmallGroup = (group) => {
   }
 }
 
+export const authUpdateNewsfeedSlide = (index) => {
+  return{
+    type: actionTypes.AUTH_UPDATE_NEWSFEED_SLIDE,
+    index: index
+  }
+}
+
 export const authSetActiveNewsfeedSlide = (index) => {
   return{
     type: actionTypes.AUTH_SET_ACTIVE_NEWSFEED_SLIDE,

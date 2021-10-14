@@ -38,6 +38,7 @@ class SuggestedListGroup extends React.Component{
       itemLoading: 0,
       start: 10,
       addMore: 6,
+      disabled:false,
     }
   }
 
@@ -109,7 +110,8 @@ class SuggestedListGroup extends React.Component{
   joinGroup = (groupId) => {
     const userId = this.props.curId
     this.setState({
-      loading: true
+      loading: true,
+      disabled:true,
     })
     // for this you just need group id and userid
     authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/joinSmallGroup/"+groupId+'/'+userId)
@@ -119,9 +121,24 @@ class SuggestedListGroup extends React.Component{
         loading: false
       })
       this.props.authAddSmallGroup(res.data)
-      this.props.navigation.navigate('Home')
+
+
+      this.props.navigation.navigate("Home")
+      this.props.authSetActiveNewsfeedSlide(this.props.smallGroups.length)
     })
+
+    // enable after 5 second
+    setTimeout(()=>{
+       this.setState({
+        disabled: false,
+      });
+    }, 2500)
   }
+
+
+
+
+
 
   frequentChatPeople = (posts) => {
     // this function will be used to render the headers of the
@@ -232,7 +249,7 @@ class SuggestedListGroup extends React.Component{
           <View style={{flexDirection:'row'}}>
             <Text style={{fontFamily:'Nunito-Bold', fontSize:16 }}>{global.CAPITALIZE(title)}</Text>
               {(temp.includes(this.props.curId))?
-                <View style={styles.inviteButton} onPress = {() => this.joinGroup(item.id)}>
+                <View style={styles.inviteButton}>
                   <UserCheck
                     style={{marginRight:5}}
                     stroke = "white"
@@ -243,7 +260,10 @@ class SuggestedListGroup extends React.Component{
                   <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12, color:'white' }}>Joined</Text>
                 </View>
               :
-              <TouchableOpacity activeOpacity={0.8} style={styles.inviteButton} onPress = {() => this.joinGroup(item.id)}>
+              <TouchableOpacity activeOpacity={0.8} style={styles.inviteButton} disabled={this.state.disabled}
+                onPress = {() =>
+                  this.joinGroup(item.id)
+                }>
                 <UserPlus
                   style={{marginRight:5}}
                   stroke = "white"

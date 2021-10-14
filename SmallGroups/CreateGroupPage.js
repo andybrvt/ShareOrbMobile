@@ -54,6 +54,7 @@ class CreateGroupPage extends React.Component{
       invitedPeople: [],
       searchValue: '',
       showSearch: false,
+      disabled:false,
     }
     this.bs = React.createRef()
   }
@@ -342,7 +343,9 @@ class CreateGroupPage extends React.Component{
 
   onCreateGroup = () => {
     // this function is used to create
-    console.log('create group')
+    this.setState({
+      disabled:true,
+    })
     const {groupPic, groupName, description, publicG, invitedPeople} = this.state
     let newInvited = [];
     for(let i = 0; i < invitedPeople.length; i++){
@@ -359,6 +362,7 @@ class CreateGroupPage extends React.Component{
     formData.append('public', publicG)
     formData.append('curId', this.props.id)
     formData.append('invited', JSON.stringify(newInvited))
+
 
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/createSmallGroup`,
       formData
@@ -384,8 +388,11 @@ class CreateGroupPage extends React.Component{
       this.props.navigation.navigate('Home')
       this.props.authSetActiveNewsfeedSlide(numIndex+1)
 
-
-
+      setTimeout(()=>{
+         this.setState({
+          disabled: false,
+        });
+      }, 2500)
     })
 
   }
@@ -627,6 +634,7 @@ class CreateGroupPage extends React.Component{
                     }}>
                     <TouchableOpacity
                       onPress = {() => this.onCreateGroup()}
+                      disabled={this.state.disabled}
                        style={styles.loginBtn1}>
                       <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
                     </TouchableOpacity>

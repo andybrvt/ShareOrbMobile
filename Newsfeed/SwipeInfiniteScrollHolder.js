@@ -124,6 +124,7 @@ class SwipeInfiniteScrollHolder extends React.Component{
                renderTabBar={() =>
                  <ScrollableTabBarNew
                    tabView={this.tabView}
+                   updateSlide={this.props.updateSlide}
                    activeSlide = {this.props.activeSlide}
                    setNull = {this.props.setNull}
                    navigation = {this.props.navigation}

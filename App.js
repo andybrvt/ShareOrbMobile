@@ -1348,8 +1348,8 @@ const mapDispatchToProps = dispatch => {
     sendGlobeItemComment:(comment) => dispatch(globeGroupActions.sendGlobeItemComment(comment)),
 
     authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group)),
-    authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index))
-
+    authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
+    authUpdateNewsfeedSlide: (index) => dispatch(authActions.authUpdateNewsfeedSlide(index)),
     }
 }
 
