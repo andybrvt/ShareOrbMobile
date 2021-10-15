@@ -495,7 +495,7 @@ class NewGlobePost extends React.Component{
           {
             video === "" ?
 
-            <FastImage
+            <Image
               style={styles.cover}
               resizeMode = "cover"
               source={{ uri: itemImage }}
