@@ -137,7 +137,7 @@ class GroupInfo extends React.Component{
   toggleLeave = (groupID) => {
     Alert.alert(
       "Are you sure?",
-      "You must reopen the app to see this change",
+      "You will leave the orb",
       [
         {
           text: "Cancel",
@@ -251,7 +251,7 @@ class GroupInfo extends React.Component{
     if(this.props.smallGroups){
       data = this.props.smallGroups
     }
-
+    console.log(data)
 
     let smallGroups = []
     let picture = ""
