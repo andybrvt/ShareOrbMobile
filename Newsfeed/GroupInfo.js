@@ -230,6 +230,19 @@ class GroupInfo extends React.Component{
     )
   }
 
+  ViewProfile = (username) => {
+    // This fucntion will be used to navigate to the post page
+    // that you can use to post pictures and write caption
+    if(username !== this.props.username){
+      this.props.navigation.navigate("ProfilePage", {
+        username: username
+      })
+    } else {
+      this.props.navigation.navigate("Profile")
+    }
+
+  }
+
 
   renderHeader = () => (
     <View style={styles.test}>
@@ -251,8 +264,11 @@ class GroupInfo extends React.Component{
     if(this.props.smallGroups){
       data = this.props.smallGroups
     }
-    console.log(data)
-
+    console.log(data[0].creator)
+    let creatorID=0
+    let creatorFirstName=""
+    let creatorLastName=""
+    let creatorUserName=""
     let smallGroups = []
     let picture = ""
     let groupName = ""
@@ -261,6 +277,7 @@ class GroupInfo extends React.Component{
     let publicG = false
     let code = ""
     let groupID=""
+
     if(this.props.smallGroups){
       if(this.props.route.params.groupId){
         const groupId = this.props.route.params.groupId
@@ -278,7 +295,12 @@ class GroupInfo extends React.Component{
         }
       }
     }
-
+    if(data[0]){
+      creatorFirstName=data[0].creator.first_name
+      creatorLastName=data[0].creator.last_name
+      creatorID=data[0].creator.id
+      creatorUserName=data[0].creator.username
+    }
 
     return(
       <BackgroundContainer>
@@ -322,11 +344,23 @@ class GroupInfo extends React.Component{
               <View style={{
                 marginTop:10,
                 }}>
-                  <Text style={{fontSize:20,fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
+                  <Text style={{fontSize:20, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
                   <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.groupId)}>
-                    <Text style={{fontSize:14,fontFamily:'Nunito-SemiBold', textAlign:'center', }}> {members.length} Members </Text>
+                    <Text style={{fontSize:12,fontFamily:'Nunito-SemiBold', textAlign:'center', color:'#8c8c8c',}}> {members.length} Members </Text>
                   </TouchableOpacity>
               </View>
+              <TouchableOpacity
+                onPress = {() => this.ViewProfile(creatorUserName)}
+                style={{flexDirection:'row', alignItems:'center'}}>
+                  <Avatar
+                    size={15}
+                    rounded
+                    source = {{
+                      uri: `https://images.unsplash.com/photo-1569173112611-52a7cd38bea9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80`
+                    }}
+                  />
+                <Text style={{marginLeft:5, fontFamily:'Nunito-SemiBold', fontSize:13}}>{creatorFirstName+" "+creatorLastName}</Text>
+              </TouchableOpacity>
             </View>
 
 
@@ -347,16 +381,19 @@ class GroupInfo extends React.Component{
                <Text style={styles.settingWord}> Invite People </Text>
              </View>
            </TouchableHighlight>
-           {/*
-           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navAnnouncements()}>
-            <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
-              <View style={styles.roundButton1}>
-                <Mic stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />
-              </View>
-             <Text style={styles.settingWord}> Create Announcements </Text>
-             </View>
-           </TouchableHighlight>
-           */}
+           {
+             (this.props.curId==creatorID)?
+               <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navAnnouncements()}>
+                <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
+                  <View style={styles.roundButton1}>
+                    <Mic stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />
+                  </View>
+                 <Text style={styles.settingWord}> Create Announcements </Text>
+                 </View>
+               </TouchableHighlight>
+               :
+              <Text></Text>
+           }
 
            {(!publicG)?
              <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
@@ -389,14 +426,15 @@ class GroupInfo extends React.Component{
              </TouchableHighlight>
 
            :
-           <View style={{marginTop:'10%'}}>
+           <View style={{marginTop:'0%'}}>
              <Text></Text>
            </View>
             }
-           <View style={{flexDirection:'row', padding:10, alignItems:'center', justifyContent:'center', marginLeft:10,}}>
+           <View style={{flexDirection:'row', padding:10, borderTopWidth:1, borderColor:'whitesmoke',
+             alignItems:'center', marginLeft:10,}}>
              <Text style={{color:'#919191',
              fontSize:15,
-             fontFamily:'Nunito-SemiBold',}}> Click to copy app link </Text>
+             fontFamily:'Nunito-SemiBold', marginLeft:10,}}> Share The Orb </Text>
             </View>
           <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
             <View style={{marginRight:'15%'}}>
@@ -442,12 +480,23 @@ class GroupInfo extends React.Component{
           </View>
 
 
+          {
+            (this.props.curId==creatorID)?
+            <View style={{alignItems:'center', top:'5%'}}>
+              <TouchableOpacity  onPress={() => this.toggleLeave(groupID)} style={styles.loginBtn1}>
+                <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
+              </TouchableOpacity>
+            </View>
 
+            :
             <View style={{alignItems:'center', top:'10%'}}>
               <TouchableOpacity  onPress={() => this.toggleLeave(groupID)} style={styles.loginBtn1}>
                 <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
               </TouchableOpacity>
             </View>
+
+          }
+
         </View>
 
          <BottomSheet
@@ -605,7 +654,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     curId: state.auth.id,
-  smallGroups: state.auth.smallGroups,
+    username: state.auth.username,
+    smallGroups: state.auth.smallGroups,
   }
 }
 

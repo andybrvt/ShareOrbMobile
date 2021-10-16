@@ -570,7 +570,7 @@ class SocialNewsfeedPost extends React.Component{
     let goal = "";
     let data=this.props.data
     let utc3 = dateFns.format(new Date(), 'h:mma');
-
+    console.log("VBBBBBBBBBBB")
     if(this.props.data){
       if(this.props.data.caption){
         caption = this.props.data.caption
