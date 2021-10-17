@@ -102,7 +102,7 @@ import JoinScreen from './SmallGroups/JoinScreen';
 import Announcements from './SmallGroups/Announcements';
 import PeopleInGroup from './SmallGroups/PeopleInGroup';
 import Frame from './Frame.svg';
-
+import Testing from './RandomComponents/Testing';
 
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -719,7 +719,7 @@ class App extends Component{
         >
         <Tab.Screen
           name="Home"
-          component={NewsfeedView}
+          component={Testing}
           // children = {this.createNewsfeedStack}
           options={{
              tabBarLabel: false,
