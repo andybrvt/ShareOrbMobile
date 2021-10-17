@@ -35,10 +35,10 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
 const coverScale = 1.7;
 const col = 3;
+const numColumns=2
 
 
-
-const formatData = (data, numColumns) => {
+const formatData = (data) => {
   const numberOfFullRows = Math.floor(data.length / numColumns);
 
   let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
@@ -54,7 +54,6 @@ const data = [
   { key: 'A' }, { key: 'B' }, { key: 'C' }, { key: 'D' }, { key: 'E' }, { key: 'F' }, { key: 'G' }, { key: 'H' }, { key: 'I' }, { key: 'J' },
 ];
 
-const numColumns=3;
 
 
 class InfiniteScrollFlatNew extends React.Component{
@@ -337,20 +336,13 @@ class InfiniteScrollFlatNew extends React.Component{
     // if(this.props.socialPosts){
     //   post = this.props.socialPosts
     // }
-    let test=0
+
     let groupPost = [];
     if(this.props.groupPost){
       const groupId = this.props.groupId.toString()
       groupPost = this.props.groupPost[groupId]
-
     }
-    console.log("BBBB")
-    // console.log(groupPost)
-    test=formatData(groupPost, 2)
-    groupPost.map(item => {
-      console.log(item.itemImage)
-    })
-    console.log(groupPost)
+
 
     return(
       <View style = {{flex: 1}} >
@@ -388,13 +380,13 @@ class InfiniteScrollFlatNew extends React.Component{
             />
             */}
 
-            
+
 
             <ScrollView>
               <FlatList
                 contentContainerStyle={{
                   paddingBottom: 75 }}
-               data={test}
+               data={groupPost}
                keyExtractor={(item, index) => String(index)}
                onEndReachedThreshold={0.5}
                onEndReached = {() => this.loadSocialPost()}
