@@ -498,7 +498,13 @@ class NewGlobePost extends React.Component{
             <Image
               style={styles.cover}
               resizeMode = "cover"
-              source={{ uri: itemImage }}
+              source={{
+                uri: itemImage,
+                // priority: FastImage.priority.normal,
+
+              }}
+              // resizeMode={FastImage.resizeMode.contain}
+
               // blurRadius = {15}
                />
 

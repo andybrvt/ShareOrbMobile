@@ -480,7 +480,13 @@ class NavPic extends React.Component{
                <Image
                  style={styles.cover}
                  resizeMode = "cover"
-                 source={{ uri:`${global.IMAGE_ENDPOINT}`+ post.itemImage }}
+                 source={{
+                   uri:`${global.IMAGE_ENDPOINT}`+ post.itemImage,
+                   // priority: FastImage.priority.normal,
+
+                 }}
+                 // resizeMode={FastImage.resizeMode.contain}
+
                  />
                </TouchableWithoutFeedback>
                :
