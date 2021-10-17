@@ -200,6 +200,8 @@ class Permissions extends React.Component{
             }
           </View>
           </TouchableOpacity>
+
+          {/*
           <TouchableOpacity onPress={() => this.allowNotificationPermissions()}>
             <View style={{flexDirection:'row'}}>
               <View style={{justifyContent:'center'}}>
@@ -224,6 +226,7 @@ class Permissions extends React.Component{
               }
             </View>
           </TouchableOpacity>
+          */}
 
           <TouchableOpacity onPress={()=>this.allowGalleryPermissions()}>
           <View style={{flexDirection:'row'}}>
@@ -252,7 +255,7 @@ class Permissions extends React.Component{
         </View>
 
         {
-          allowCamera && allowMicrophone && allowNotifications && allowGallery ?
+          allowCamera && allowMicrophone && allowGallery ?
 
           <TouchableOpacity
              onPress = {() => this.close()}
@@ -298,7 +301,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    top: '95%',
+    top: '85%',
     zIndex: 9999,
     backgroundColor: "white",
   },

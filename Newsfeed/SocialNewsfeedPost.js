@@ -873,7 +873,8 @@ class SocialNewsfeedPost extends React.Component{
     let calCell=""
     let postId=""
 
-
+    console.log("NOW CREATOR")
+    console.log(this.props.data)
     if(this.props.data) {
       if(this.props.data.post){
         const post = this.props.data.post
