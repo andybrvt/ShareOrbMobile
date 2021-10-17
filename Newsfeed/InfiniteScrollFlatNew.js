@@ -351,12 +351,11 @@ class InfiniteScrollFlatNew extends React.Component{
                />
            </View>
 
-         <View style={{
-           flexDirection:'column',  width:'50%'}}>
+
            <Text style = {styles.videoFooterUserName}>
              {this.setName(firstName, lastName)}
            </Text>
-         </View>
+
        </View>
 
       </TouchableOpacity>
@@ -438,8 +437,11 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
 
-            <ScrollView>
               <FlatList
+                maxToRenderPerBatch={10}
+                extraData={groupPost}
+                windowSize={10}
+                initialNumToRender={3}
                 contentContainerStyle={{
                   paddingBottom: 75 }}
                data={groupPost}
@@ -452,7 +454,7 @@ class InfiniteScrollFlatNew extends React.Component{
                renderItem={this.renderItem}
                numColumns={3}
              />
-           </ScrollView>
+
 
 
 
