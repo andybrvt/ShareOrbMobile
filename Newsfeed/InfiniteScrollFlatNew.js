@@ -31,6 +31,32 @@ import { PlusCircle, UserPlus, Info } from "react-native-feather";
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import NoPostsGroup from './noPostsGroup.svg';
 // this is used mostly for the new scroll newsfeed
+import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+const width=SCREEN_WIDTH;
+const coverScale = 1.7;
+const col = 3;
+
+
+
+const formatData = (data, numColumns) => {
+  const numberOfFullRows = Math.floor(data.length / numColumns);
+
+  let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
+  while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
+    data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+    numberOfElementsLastRow++;
+  }
+
+  return data;
+};
+
+const data = [
+  { key: 'A' }, { key: 'B' }, { key: 'C' }, { key: 'D' }, { key: 'E' }, { key: 'F' }, { key: 'G' }, { key: 'H' }, { key: 'I' }, { key: 'J' },
+];
+
+const numColumns=3;
+
+
 class InfiniteScrollFlatNew extends React.Component{
 
   navGroupInfo=()=> {
@@ -171,7 +197,6 @@ class InfiniteScrollFlatNew extends React.Component{
 
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSmallGroup/`+groupId+"/"+start+"/"+addMore)
     .then( res => {
-      console.log(res.data)
       const serializedPost = res.data.serializedPost;
       const groupId = res.data.groupId;
       const hasMore = res.data.has_more;
@@ -214,15 +239,76 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
 
-  renderItem = ({item}) => {
 
-    return(
-      <View>
-        <Text>Hi</Text>
+  renderItem = ({ item, index }) => {
+    {/*
+    renderItem = ({ item, index }) => {
+
+      // if (item.empty === true) {
+      //   return <View style={[styles.item, styles.itemInvisible]} />;
+      // }
+      if(item.itemImage){
+        return (
+          <View
+            style={styles.item}
+          >
+            <Image
+              style ={{
+                width: "100%",
+                height: '100%'
+              }}
+              resizeMode = "cover"
+              source = {{
+                uri: `${global.IMAGE_ENDPOINT}` + item.itemImage
+              }}
+               />
+
+          </View>
+        );
+      } else {
+        return (
+          <View
+            style={styles.item}
+          >
+            <Image
+              style ={{
+                width: "100%",
+                height: '100%'
+              }}
+              resizeMode = "cover"
+              source = {{
+                uri: item
+              }}
+               />
+
+          </View>
+        );
+      }
+
+    };
+    */}
+    if (item.empty === true) {
+      return <View style={[styles.item, styles.itemInvisible]} />;
+    }
+    return (
+      <View
+        style={styles.item}
+      >
+        <Image
+          style ={{
+            width: "100%",
+            height: '100%'
+          }}
+          resizeMode = "cover"
+          source = {{
+            uri: `${global.IMAGE_ENDPOINT}` + item.itemImage
+          }}
+           />
+
       </View>
-    )
+    );
+  };
 
-  }
 
   renderEmptyContainer(){
     return(
@@ -252,16 +338,20 @@ class InfiniteScrollFlatNew extends React.Component{
     // if(this.props.socialPosts){
     //   post = this.props.socialPosts
     // }
-
+    let test=0
     let groupPost = [];
     if(this.props.groupPost){
       const groupId = this.props.groupId.toString()
-
       groupPost = this.props.groupPost[groupId]
 
     }
-
-
+    console.log("BBBB")
+    // console.log(groupPost)
+    test=formatData(groupPost, 2)
+    groupPost.map(item => {
+      console.log(item.itemImage)
+    })
+    console.log(groupPost)
 
     return(
       <View style = {{flex: 1}} >
@@ -276,7 +366,7 @@ class InfiniteScrollFlatNew extends React.Component{
           <Users stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
         </TouchableOpacity>
         </View>
-
+        {/*
           <FlatList
             ItemSeparatorComponent = { this.FlatListItemSeparator }
             // onViewableItemsChanged={this.onViewableItemsChanged }
@@ -297,6 +387,25 @@ class InfiniteScrollFlatNew extends React.Component{
             ListEmptyComponent={this.renderEmptyContainer()}
 
             />
+            */}
+
+            
+
+            <ScrollView>
+              <FlatList
+                contentContainerStyle={{
+                  paddingBottom: 75 }}
+               data={test}
+               keyExtractor={(item, index) => String(index)}
+               onEndReachedThreshold={0.5}
+               onEndReached = {() => this.loadSocialPost()}
+               onRefresh = {() => this.onRefresh()}
+               refreshing = {this.state.refreshing}
+               scrollEventThrottle = {16} // important for animation
+               renderItem={this.renderItem}
+               numColumns={3}
+             />
+           </ScrollView>
 
 
 
@@ -306,6 +415,22 @@ class InfiniteScrollFlatNew extends React.Component{
 }
 
 const styles = StyleSheet.create({
+
+
+  item: {
+    backgroundColor: '#4D243D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    margin: 1,
+    height: Dimensions.get('window').width / 2, // approximate a square
+  },
+  itemInvisible: {
+    backgroundColor: 'transparent',
+  },
+  itemText: {
+    color: '#fff',
+  },
   roundButton1: {
 
     width: 60,
