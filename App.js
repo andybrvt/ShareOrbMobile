@@ -719,7 +719,7 @@ class App extends Component{
         >
         <Tab.Screen
           name="Home"
-          component={Testing}
+          component={NewsfeedView}
           // children = {this.createNewsfeedStack}
           options={{
              tabBarLabel: false,
