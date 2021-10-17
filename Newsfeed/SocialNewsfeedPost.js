@@ -862,7 +862,6 @@ class SocialNewsfeedPost extends React.Component{
 
 
   render(){
-    console.log('update')
     let like_people = []
     let profilePic = ""
     let userUsername = ""

@@ -56,7 +56,6 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
   componentDidUpdate(prevProps){
-    console.log('why it keep updatinging')
 
   }
   componentWillUnmount(){

@@ -91,7 +91,6 @@ class SwipeInfiniteScrollHolder extends React.Component{
 
   render(){
 
-    console.log('-------')
    let smallGroups = []
    if(this.props.smallGroups){
      smallGroups = this.props.smallGroups
