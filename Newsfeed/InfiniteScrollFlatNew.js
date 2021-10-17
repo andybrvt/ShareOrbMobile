@@ -30,6 +30,8 @@ import FirstPost from './FirstPost';
 import { PlusCircle, UserPlus, Info } from "react-native-feather";
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import NoPostsGroup from './noPostsGroup.svg';
+import { Avatar } from 'react-native-elements';
+import { LinearGradient } from 'expo-linear-gradient';
 // this is used mostly for the new scroll newsfeed
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
@@ -189,6 +191,41 @@ class InfiniteScrollFlatNew extends React.Component{
     })
   }
 
+  onNavPicDirect = (postId) => {
+
+    this.props.navigation.navigate("NavPic", {
+      postId: postId
+    })
+  }
+
+
+  setName=(firstName, lastName)=>{
+    let name=""
+    let lastCut=""
+    let total=0
+    first = global.CAPITALIZE(firstName)
+    last = global.CAPITALIZE(lastName)
+    name=first+" "+last
+    lastCut=lastName.substring(0,1)
+    total=firstName.length+lastName.length
+    if(total>10){
+      name=first+" "+lastCut+"."
+    }
+    return name
+  }
+
+
+  ViewProfile = (username) => {
+
+    if(username === this.props.username){
+      this.props.navigation.navigate("Profile");
+    } else {
+      this.props.navigation.navigate("ProfilePage", {
+        username: username
+      })
+    }
+  }
+
   loadSocialPost = () => {
     const {start, addMore} = this.state;
     const groupId = this.props.groupId
@@ -239,57 +276,34 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
   renderItem = ({ item, index }) => {
-    {/*
-    renderItem = ({ item, index }) => {
-
-      // if (item.empty === true) {
-      //   return <View style={[styles.item, styles.itemInvisible]} />;
-      // }
-      if(item.itemImage){
-        return (
-          <View
-            style={styles.item}
-          >
-            <Image
-              style ={{
-                width: "100%",
-                height: '100%'
-              }}
-              resizeMode = "cover"
-              source = {{
-                uri: `${global.IMAGE_ENDPOINT}` + item.itemImage
-              }}
-               />
-
-          </View>
-        );
-      } else {
-        return (
-          <View
-            style={styles.item}
-          >
-            <Image
-              style ={{
-                width: "100%",
-                height: '100%'
-              }}
-              resizeMode = "cover"
-              source = {{
-                uri: item
-              }}
-               />
-
-          </View>
-        );
+    let userUsername="";
+    let firstName="";
+    let lastName="";
+    let profilePic="";
+    let itemImage = "";
+    let video = "";
+    console.log(item)
+    if(item) {
+      if(item.creator.first_name){
+        firstName = item.creator.first_name;
       }
-
-    };
-    */}
+      if(item.creator.last_name){
+        lastName = item.creator.last_name;
+      }
+      if(item.creator.username){
+        userUsername = item.creator.username
+      }
+      if(item.creator.profile_picture){
+        profilePic = `${global.IMAGE_ENDPOINT}`+item.creator.profile_picture;
+      }
+    }
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
     return (
-      <View
+      <TouchableOpacity
+        onPress = {() => this.onNavPicDirect(item.id)}
+        activeOpacity={0.8}
         style={styles.item}
       >
         <Image
@@ -303,7 +317,49 @@ class InfiniteScrollFlatNew extends React.Component{
           }}
            />
 
-      </View>
+           <LinearGradient
+             start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
+             style = {{
+               position: 'absolute',
+               width: '100%',
+               bottom: '0%',
+               height: "30%"
+             }}
+             colors = {['transparent', '#000000']}>
+           </LinearGradient>
+
+         <View style = {{
+           position: 'absolute',
+           width: '100%',
+           bottom: '0%',
+           height: "20%",
+           flexDirection:'row',
+           alignItems:'center',
+           }}>
+             <View style={{
+               width: '15%',
+               marginLeft:2.5,
+               marginRight:7.5,
+               }}>
+               <Avatar
+                 onPress = {() => this.ViewProfile(userUsername)}
+                 size={20}
+                 rounded
+                 source = {{
+                   uri: profilePic
+                 }}
+               />
+           </View>
+
+         <View style={{
+           flexDirection:'column',  width:'50%'}}>
+           <Text style = {styles.videoFooterUserName}>
+             {this.setName(firstName, lastName)}
+           </Text>
+         </View>
+       </View>
+
+      </TouchableOpacity>
     );
   };
 
@@ -406,10 +462,21 @@ class InfiniteScrollFlatNew extends React.Component{
 }
 
 const styles = StyleSheet.create({
+  videoFooterUserName: {
+    color:'white',
+    fontSize:12,
+    fontFamily:'Nunito-Bold',
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    zIndex:1,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
 
+    // fontWeight:'bold',
+  },
 
   item: {
-    backgroundColor: '#4D243D',
+    // backgroundColor: '#4D243D',
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
