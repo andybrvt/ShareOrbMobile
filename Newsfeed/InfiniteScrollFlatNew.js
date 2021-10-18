@@ -52,6 +52,50 @@ const formatData = (data) => {
   return data;
 };
 
+const data2=[
+    {
+        "firstName": "Miyah Myles",
+        "lastName": "Myles",
+        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+    },
+    {
+        "firstName":  "June",
+        "lastName": "Cha",
+        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+    },
+    {
+        "firstName": "Miyah Myles",
+        "lastName": "Myles",
+        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+    },
+    {
+        "firstName":  "June",
+        "lastName": "Cha",
+        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+    },
+    {
+        "firstName":  "June",
+        "lastName": "Cha",
+        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+    },
+    {
+        "firstName": "Miyah Myles",
+        "lastName": "Myles",
+        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+    },
+    {
+        "firstName":  "June",
+        "lastName": "Cha",
+        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+    },
+
+    {
+        "firstName": "Miyah Myles",
+        "lastName": "Myles",
+        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+    },
+]
+
 const data = [
   { key: 'A' }, { key: 'B' }, { key: 'C' }, { key: 'D' }, { key: 'E' }, { key: 'F' }, { key: 'G' }, { key: 'H' }, { key: 'I' }, { key: 'J' },
 ];
@@ -302,10 +346,12 @@ class InfiniteScrollFlatNew extends React.Component{
     }
     return (
       <TouchableOpacity
+        delayPressIn={750}
         onPress = {() => this.onNavPicDirect(item.id)}
         activeOpacity={0.8}
         style={styles.item}
       >
+
         <Image
           style ={{
             width: "100%",
@@ -313,7 +359,7 @@ class InfiniteScrollFlatNew extends React.Component{
           }}
           resizeMode = "cover"
           source = {{
-            uri: `${global.IMAGE_ENDPOINT}` + item.itemImage
+            uri:  `${global.IMAGE_ENDPOINT}`+item.itemImage
           }}
            />
 
@@ -338,7 +384,7 @@ class InfiniteScrollFlatNew extends React.Component{
            }}>
              <View style={{
                width: '15%',
-               marginLeft:2.5,
+               marginLeft:5,
                marginRight:7.5,
                }}>
                <Avatar
@@ -438,18 +484,19 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
               <FlatList
-                maxToRenderPerBatch={10}
-                extraData={groupPost}
-                windowSize={10}
-                initialNumToRender={3}
-                contentContainerStyle={{
-                  paddingBottom: 75 }}
+
+              maxToRenderPerBatch={10}
+              extraData={groupPost}
+              windowSize={10}
+              initialNumToRender={3}
+              contentContainerStyle={{
+                paddingBottom: 75 }}
                data={groupPost}
                keyExtractor={(item, index) => String(index)}
                onEndReachedThreshold={0.5}
                onEndReached = {() => this.loadSocialPost()}
-               onRefresh = {() => this.onRefresh()}
-               refreshing = {this.state.refreshing}
+               // onRefresh = {() => this.onRefresh()}
+               // refreshing = {this.state.refreshing}
                scrollEventThrottle = {16} // important for animation
                renderItem={this.renderItem}
                numColumns={3}
@@ -466,7 +513,7 @@ class InfiniteScrollFlatNew extends React.Component{
 const styles = StyleSheet.create({
   videoFooterUserName: {
     color:'white',
-    fontSize:12,
+    fontSize:11,
     fontFamily:'Nunito-Bold',
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     zIndex:1,

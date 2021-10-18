@@ -21,11 +21,38 @@ import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import { UserCheck, UserPlus} from "react-native-feather";
+import Carousel, { Pagination } from 'react-native-snap-carousel';
  // used in conjuction with the newsfeed view so that you
  // can folow people
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
+const data2=[
+    {
+        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+    },
+    {
+        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+    },
+    {
+        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+    },
+    {
+        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+    },
+    {
+        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+    },
+    {
+        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+    },
+    {
+        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+    },
 
+    {
+        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+    },
+]
 
 class SuggestedListGroup extends React.Component{
 
@@ -39,6 +66,7 @@ class SuggestedListGroup extends React.Component{
       start: 10,
       addMore: 6,
       disabled:false,
+      curIndex:0,
     }
   }
 
@@ -49,6 +77,33 @@ class SuggestedListGroup extends React.Component{
         list: res.data
       })
     })
+  }
+
+  renderItem2 = ({item}) => {
+    return(
+      <View style = {styles.itemCard}>
+
+        <View style = {{
+            height: width/2,
+            width: '100%',
+            backgroundColor: 'gray',
+            borderRadius: 10,
+            overflow: "hidden"
+          }}>
+
+      <Image
+        style = {{
+          width: '100%',
+          height: '100%'
+        }}
+          resizeMode = "cover"
+          source = {{
+            uri: item.itemImage
+          }}
+         />
+       </View>
+       </View>
+    )
   }
 
   onGroupDirect = (item) => {
@@ -392,11 +447,25 @@ class SuggestedListGroup extends React.Component{
 
 
     return(
-      <View style = {{flex:1}}>
-
+      <ScrollView style = {{flex:1}}>
+        <Carousel
+          layout={'stack'}
+          data = {data2}
+          renderItem = {(item) => this.renderItem2(item)}
+          keyExtractor={(item, index) => String(index)}
+          sliderWidth = {width}
+          itemWidth = {width*0.85}
+          onSnapToItem={(index) => this.setState({curIndex:index}) }
+          />
+          <Pagination
+            style={{position:'absolute'}}
+            activeDotIndex = {this.state.curIndex}
+            dotsLength = {4}
+            dotColor ={'blue'}
+            inactiveDotColor = {'red'}
+             />
         <FlatList
           style = {{
-            paddingTop:10,
             flex: 1,
           }}
           ItemSeparatorComponent = { this.FlatListItemSeparator }
@@ -487,12 +556,17 @@ class SuggestedListGroup extends React.Component{
           */}
 
 
-      </View>
+      </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  itemCard: {
+    height: '60%',
+    width: '100%',
+
+  },
   inviteButton: {
     position:'absolute',
     top:'1%',
