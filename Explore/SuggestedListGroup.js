@@ -28,29 +28,16 @@ const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 const data2=[
     {
-        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+        "itemImage": "https://images.unsplash.com/photo-1634467164575-74a2a342b43e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
     },
     {
-        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+        "itemImage": "https://images.unsplash.com/photo-1634407605474-9143e0e16673?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=464&q=80"
     },
     {
-        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+        "itemImage": "https://images.unsplash.com/photo-1634488991132-2ba3aad8c1a0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80"
     },
     {
-        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
-    },
-    {
-        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
-    },
-    {
-        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
-    },
-    {
-        "itemImage": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
-    },
-
-    {
-        "itemImage": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+        "itemImage": "https://images.unsplash.com/photo-1634323026799-f2351f5f3a40?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80"
     },
 ]
 
@@ -81,12 +68,12 @@ class SuggestedListGroup extends React.Component{
 
   renderItem2 = ({item}) => {
     return(
-      <View style = {styles.itemCard}>
+      <View>
 
         <View style = {{
             height: width/2,
             width: '100%',
-            backgroundColor: 'gray',
+
             borderRadius: 10,
             overflow: "hidden"
           }}>
@@ -448,22 +435,30 @@ class SuggestedListGroup extends React.Component{
 
     return(
       <ScrollView style = {{flex:1}}>
+        <View style={{height:'35%',  justifyContent:'center',}}>
+          <View style={{ alignItems:'center'}}>
         <Carousel
-          layout={'stack'}
+          layout={'default'}
+          autoplayInterval={3500}
           data = {data2}
+          autoplay={true}
           renderItem = {(item) => this.renderItem2(item)}
           keyExtractor={(item, index) => String(index)}
           sliderWidth = {width}
           itemWidth = {width*0.85}
           onSnapToItem={(index) => this.setState({curIndex:index}) }
           />
-          <Pagination
-            style={{position:'absolute'}}
-            activeDotIndex = {this.state.curIndex}
-            dotsLength = {4}
-            dotColor ={'blue'}
-            inactiveDotColor = {'red'}
-             />
+        </View>
+        <View style={{position:'absolute', top:'70%', left:'35%', borderRadius:25}}>
+            <Pagination
+              activeDotIndex = {this.state.curIndex}
+              dotsLength = {4}
+              dotColor ={'white'}
+              inactiveDotColor = {'white'}
+              // dotStyle={{width:10, height:10}}
+               />
+          </View>
+        </View>
         <FlatList
           style = {{
             flex: 1,
@@ -471,7 +466,7 @@ class SuggestedListGroup extends React.Component{
           ItemSeparatorComponent = { this.FlatListItemSeparator }
           initialNumToRender={2}
           ListHeaderComponent = {this.listHeader}
-          data={this.state.list.slice(0, 8)}
+          data={this.state.list.slice(0, 5)}
           contentContainerStyle={{paddingBottom:25}}
           renderItem = {this.renderItem}
           keyExtractor={(item, index) => String(index)}
@@ -562,11 +557,6 @@ class SuggestedListGroup extends React.Component{
 }
 
 const styles = StyleSheet.create({
-  itemCard: {
-    height: '60%',
-    width: '100%',
-
-  },
   inviteButton: {
     position:'absolute',
     top:'1%',
