@@ -90,15 +90,12 @@ class SuggestedListGroup extends React.Component{
   renderItem2 = ({item}) => {
     return(
       <View>
-
         <View style = {{
             height: width/2,
             width: '100%',
-
             borderRadius: 10,
             overflow: "hidden"
           }}>
-
       <Image
         style = {{
           width: '100%',
@@ -117,7 +114,7 @@ class SuggestedListGroup extends React.Component{
   renderItem3 = ({item}) => {
     return(
       <View style={{flexDirection:'row',padding:5, marginTop:10, alignItems:'center'}}>
-
+        
         <Avatar
           size={50}
           rounded

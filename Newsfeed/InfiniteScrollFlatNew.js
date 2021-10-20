@@ -235,10 +235,13 @@ class InfiniteScrollFlatNew extends React.Component{
     })
   }
 
-  onNavPicDirect = (postId) => {
+  onNavPicDirect = (postId, groupId) => {
 
     this.props.navigation.navigate("NavPic", {
-      postId: postId
+      postId: postId,
+      groupId:groupId,
+      groupName:this.props.tabLabel.name,
+
     })
   }
 
@@ -320,13 +323,14 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
   renderItem = ({ item, index }) => {
+
     let userUsername="";
     let firstName="";
     let lastName="";
     let profilePic="";
     let itemImage = "";
     let video = "";
-    console.log(item)
+
     if(item) {
       if(item.creator.first_name){
         firstName = item.creator.first_name;
@@ -347,11 +351,11 @@ class InfiniteScrollFlatNew extends React.Component{
     return (
       <TouchableOpacity
         delayPressIn={750}
-        onPress = {() => this.onNavPicDirect(item.id)}
+        onPress = {() => this.onNavPicDirect(item.id, item.smallGroup)}
         activeOpacity={0.8}
         style={styles.item}
       >
-
+      {/*
         <Image
           style ={{
             width: "100%",
@@ -362,7 +366,7 @@ class InfiniteScrollFlatNew extends React.Component{
             uri:  `${global.IMAGE_ENDPOINT}`+item.itemImage
           }}
            />
-
+           */}
            <LinearGradient
              start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
              style = {{
@@ -437,7 +441,6 @@ class InfiniteScrollFlatNew extends React.Component{
     // if(this.props.socialPosts){
     //   post = this.props.socialPosts
     // }
-
     let groupPost = [];
     if(this.props.groupPost){
       const groupId = this.props.groupId.toString()
