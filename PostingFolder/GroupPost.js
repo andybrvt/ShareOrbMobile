@@ -13,7 +13,8 @@ import {
   FlatList,
   Share,
   TouchableOpacity,
-  Linking
+  Linking,
+
 } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import { connect } from 'react-redux';
@@ -23,27 +24,7 @@ import {  Circle, Instagram} from "react-native-feather";
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 // const viewRef = useRef();
-const shareDummyImage = async () => {
-    try {
-      // const uri = await captureRef(viewRef, {
-      //   format: 'png',
-      //   quality: 0.7,
-      // });
-      console.log("hi")
-
-        console.log("WILDDDDDDDdd")
-        await Share.shareSingle({
-          stickerImage: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=874&q=80",
-          method: Share.InstagramStories.SHARE_STICKER_IMAGE,
-          social: Share.Social.INSTAGRAM_STORIES,
-          backgroundBottomColor: '#FF0000',
-          backgroundTopColor: '#FF0000',
-        });
-
-    } catch (err) {
-      console.error(err);
-    }
-  };
+import CameraRoll from "@react-native-community/cameraroll";
 
 const data3=[
     {
@@ -77,11 +58,12 @@ class GroupPost extends React.PureComponent {
     }
   }
 
+
   _openCameraRoll = async () => {
     let image = await ImagePicker.launchImageLibraryAsync();
     let { origURL } = image;
     let encodedURL = encodeURIComponent(origURL);
-    let instagramURL = `instagram://library?AssetPath=${encodedURL}`;
+    let instagramURL = `instagram-stories://share?backgroundImage=${encodedURL}`
     Linking.openURL(instagramURL);
   }
 
@@ -158,11 +140,15 @@ class GroupPost extends React.PureComponent {
     )
   }
   render(){
+
+    const imageFile = this.props.route.params.imageFile.uri
+    console.log(this.props.route.params)
+    console.log(imageFile)
     return(
       <BackgroundContainer>
         <View>
           <Text style={{color:'black', fontSize:18, fontFamily:'Nunito-Bold', marginLeft:10}}> Your Orbs</Text>
-          <View style={{height:SCREEN_HEIGHT-200,}}>
+          <View style={{height:'77.5%',}}>
             <FlatList
             style={{height:500}}
              initialNumToRender={2}
@@ -185,12 +171,21 @@ class GroupPost extends React.PureComponent {
             width = {40}
             height = {40} />
           <View style={{alignItems:'center'}}>
-          <TouchableOpacity onPress={this._openCameraRoll} style={styles.loginBtn}>
+          {this.state.showInstagramStory?
+            <TouchableOpacity
+            onPress = {() => this._openCameraRoll(imageFile)}
+            style={styles.loginBtn}>
 
-            <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>
-             {this.state.showInstagramStory ? 'Share Instagram Story' : 'Share'}</Text>
+              <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>
+               Post</Text>
 
-          </TouchableOpacity>
+            </TouchableOpacity>
+
+          :
+          <Text></Text>
+
+        }
+
           </View>
         </View>
       </BackgroundContainer>

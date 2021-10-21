@@ -618,7 +618,10 @@ class CameraScreen extends React.Component{
           });
     */}
     this.props.closeShowCamera()
-    this.props.navigation.navigate("GroupPost")
+    this.props.navigation.navigate("GroupPost",
+       {imageFile: imageFile}
+    );
+
     // setTimeout(() => {this.props.closeShowCamera()}, 1000);
 
 
