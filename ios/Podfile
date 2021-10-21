@@ -27,4 +27,7 @@ target 'ShareOrbMobile' do
 
 
 
+
+  pod 'RNShare', :path => '../node_modules/react-native-share'
+
 end

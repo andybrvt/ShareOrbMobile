@@ -1,0 +1,227 @@
+import React, { useRef } from 'react';
+import {
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  TouchableWithoutFeedback,
+  TextInput,
+  KeyboardAvoidingView,
+  Keyboard,
+  FlatList,
+  Share,
+  TouchableOpacity,
+  Linking
+} from 'react-native';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+import { connect } from 'react-redux';
+import { Avatar } from 'react-native-elements';
+import BackgroundContainer from '../RandomComponents/BackgroundContainer';
+import {  Circle, Instagram} from "react-native-feather";
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+// const viewRef = useRef();
+const shareDummyImage = async () => {
+    try {
+      // const uri = await captureRef(viewRef, {
+      //   format: 'png',
+      //   quality: 0.7,
+      // });
+      console.log("hi")
+
+        console.log("WILDDDDDDDdd")
+        await Share.shareSingle({
+          stickerImage: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=874&q=80",
+          method: Share.InstagramStories.SHARE_STICKER_IMAGE,
+          social: Share.Social.INSTAGRAM_STORIES,
+          backgroundBottomColor: '#FF0000',
+          backgroundTopColor: '#FF0000',
+        });
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+const data3=[
+    {
+        "itemImage": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=874&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=871&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1634571348132-a4ca1aa4fabe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=580&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
+    },
+
+  ]
+
+class GroupPost extends React.PureComponent {
+  constructor(props){
+    super(props)
+    this.state = {
+      groupSelected:null,
+      showInstagramStory:true,
+
+    }
+  }
+
+  _openCameraRoll = async () => {
+    let image = await ImagePicker.launchImageLibraryAsync();
+    let { origURL } = image;
+    let encodedURL = encodeURIComponent(origURL);
+    let instagramURL = `instagram://library?AssetPath=${encodedURL}`;
+    Linking.openURL(instagramURL);
+  }
+
+  componentDidMount() {
+    if (Platform.OS === 'ios') {
+      Linking.canOpenURL('instagram://')
+        .then((val) => {
+          this.setState({
+            showInstagramStory:true,
+          })
+
+        })
+        .catch((err) => console.error(err));
+    }
+    {/*
+    else {
+      Share.isPackageInstalled('com.instagram.android')
+      .then((val) => {
+        this.setState({
+          showInstagramStory:true,
+        })
+      })
+      .catch((err) => console.error(err));
+    }
+    */}
+  }
+
+  onSelectGroup = (item) => {
+      this.setState({
+        groupSelected: item
+      })
+  }
+
+  renderItem3 = ({item}) => {
+    return(
+      <TouchableOpacity
+      onPress = {() =>
+        this.onSelectGroup(item)
+      }
+       activeOpacity={0.6} style={{flexDirection:'row',padding:5, marginTop:10, marginLeft:10, alignItems:'center'}}>
+        <Avatar
+          size={45}
+          rounded
+            resizeMode = "cover"
+            source = {{
+              uri: `${global.IMAGE_ENDPOINT}`+item.groupPic
+            }}
+           />
+         <View style={{marginLeft:10,  width:'65%',}}>
+         <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
+         <Text style={{fontSize:14, fontFamily:'Nunito'}}>{item.mini_member.length} members</Text>
+       </View>
+       <View>
+       {(this.state.groupSelected===item)?
+
+         <Circle
+           stroke = "#d9d9d9"
+           fill="#1890ff"
+           strokeWidth={2}
+           width = {30}
+           height = {30} />
+
+       :
+       <Circle
+         stroke = "#d9d9d9"
+         strokeWidth={2}
+         width = {30}
+         height = {30} />
+
+        }
+
+       </View>
+     </TouchableOpacity>
+    )
+  }
+  render(){
+    return(
+      <BackgroundContainer>
+        <View>
+          <Text style={{color:'black', fontSize:18, fontFamily:'Nunito-Bold', marginLeft:10}}> Your Orbs</Text>
+          <View style={{height:SCREEN_HEIGHT-200,}}>
+            <FlatList
+            style={{height:500}}
+             initialNumToRender={2}
+             // numColumns={2}
+             ListHeaderComponent = {this.listHeader}
+             data={this.props.smallGroups}
+             style={{}}
+             // contentContainerStyle={{paddingBottom:25}}
+             renderItem = {this.renderItem3}
+             keyExtractor={(item, index) => String(index)}
+             onEndReachedThreshold = {0.2}
+             showsHorizontalScrollIndicator={false}
+             horizontal={false}
+              />
+          </View>
+          <Instagram
+            stroke = "#d9d9d9"
+            fill="#1890ff"
+            strokeWidth={2}
+            width = {40}
+            height = {40} />
+          <View style={{alignItems:'center'}}>
+          <TouchableOpacity onPress={this._openCameraRoll} style={styles.loginBtn}>
+
+            <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>
+             {this.state.showInstagramStory ? 'Share Instagram Story' : 'Share'}</Text>
+
+          </TouchableOpacity>
+          </View>
+        </View>
+      </BackgroundContainer>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  loginBtn: {
+    width: "60%",
+    height: 40,
+    borderRadius:10,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 9999,
+    backgroundColor: "#1890ff",
+  },
+})
+
+
+const mapDispatchToProps = dispatch => {
+  return{
+  }
+}
+
+
+const mapStateToProps = state => {
+  return {
+    smallGroups: state.auth.smallGroups,
+    smallGroupIds: state.auth.smallGroupIds
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupPost);

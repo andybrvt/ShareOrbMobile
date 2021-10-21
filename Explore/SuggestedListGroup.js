@@ -75,6 +75,7 @@ class SuggestedListGroup extends React.Component{
       addMore: 6,
       disabled:false,
       curIndex:0,
+      todayList:[]
     }
   }
 
@@ -85,6 +86,13 @@ class SuggestedListGroup extends React.Component{
         list: res.data
       })
     })
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/exploreDay/1/8')
+    .then(res => {
+      this.setState({
+        todayList: res.data
+      })
+    })
+    console.log(this.state.todayList)
   }
 
   renderItem2 = ({item}) => {
@@ -114,9 +122,9 @@ class SuggestedListGroup extends React.Component{
   renderItem3 = ({item}) => {
     return(
       <View style={{flexDirection:'row',padding:5, marginTop:10, alignItems:'center'}}>
-        
+
         <Avatar
-          size={50}
+          size={42.5}
           rounded
             resizeMode = "cover"
             source = {{
@@ -489,7 +497,7 @@ class SuggestedListGroup extends React.Component{
     return(
       <ScrollView style = {{}}>
         <View style={{flex:1}}>
-          <Text style={{fontFamily:'Nunito-Bold', fontSize:30, paddingLeft:30, paddingBottom:20, paddingTop:10, }}>Discover</Text>
+          <Text style={{fontFamily:'Nunito-Bold', fontSize:27.5, paddingLeft:30, paddingBottom:20, paddingTop:5, }}>Discover</Text>
           <View style={{ alignItems:'center', }}>
             <Carousel
               layout={'default'}
@@ -515,18 +523,13 @@ class SuggestedListGroup extends React.Component{
           </View>
         </View>
 
-
-
-
+        {/*
         <View style={{marginTop:10, flex:1}}>
           <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16 }}>Something here?</Text>
           <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16 }}>Something here?</Text>
           <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16 }}>Something here?</Text>
-
         </View>
-
-
-
+        */}
 
 
         <View style={{flex:1}}>
