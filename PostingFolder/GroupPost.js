@@ -59,13 +59,27 @@ class GroupPost extends React.PureComponent {
   }
 
 
+  // _openCameraRoll = async () => {
+  //   let image = await ImagePicker.launchImageLibraryAsync();
+  //   let { origURL } = image;
+  //   let encodedURL = encodeURIComponent(origURL);
+  //   let instagramURL = `instagram-stories://share?backgroundImage=${encodedURL}`
+  //   Linking.openURL(instagramURL);
+  // }
+
   _openCameraRoll = async () => {
-    let image = await ImagePicker.launchImageLibraryAsync();
-    let { origURL } = image;
-    let encodedURL = encodeURIComponent(origURL);
-    let instagramURL = `instagram-stories://share?backgroundImage=${encodedURL}`
-    Linking.openURL(instagramURL);
-  }
+
+    const imageFile = this.props.route.params.imageFile
+
+    // let image = await ImagePicker.launchImageLibraryAsync();
+    // let { uri } = image;
+    let encodedURL = encodeURIComponent(imageFile);
+    console.log(encodedURL)
+     let instagramURL = `instagram-stories://`;
+    // let instagramURL = `instagram-stories://share?backgroundImage=${encodedURL}`
+
+     Linking.openURL(instagramURL);
+ }
 
   componentDidMount() {
     if (Platform.OS === 'ios') {
@@ -142,8 +156,7 @@ class GroupPost extends React.PureComponent {
   render(){
 
     const imageFile = this.props.route.params.imageFile.uri
-    console.log(this.props.route.params)
-    console.log(imageFile)
+
     return(
       <BackgroundContainer>
         <View>
@@ -173,7 +186,7 @@ class GroupPost extends React.PureComponent {
           <View style={{alignItems:'center'}}>
           {this.state.showInstagramStory?
             <TouchableOpacity
-            onPress = {() => this._openCameraRoll(imageFile)}
+            onPress = {() => this._openCameraRoll()}
             style={styles.loginBtn}>
 
               <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>
