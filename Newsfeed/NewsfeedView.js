@@ -175,54 +175,8 @@ class NewsfeedView extends React.Component{
 
   render(){
 
-
-    // if(this.props.route.params){
-    //   console.log("Helllooo")
-    //   console.log(this.props.route)
-    //   console.log(this.props.route.params)
-    //   const navGroupIDCondition=this.props.route.params.groupID
-    // }
-    let curLoading = this.props.curLoad
-    let totalLoading = this.props.totalLoad
-    // let navGroupIDCondition=1
-    // let test="false"
-    // if(this.props.route.params){
-    //   navGroupIDCondition=this.props.route.params.groupID
-    //   test=this.props.route.params.test
-    // }
-
-    let showComments = this.props.showNewsfeedComments
-    const backgroundGradient = interpolateColors(this.y, {
-      inputRange: [0, 600],
-      outputColorRange: ["black","#e6f7ff"],
-    })
-
-    const backgroundStyle = {
-      backgroundColor: backgroundGradient
-    }
-
-    {/*
-      <InfiniteScrollFlat
-        style={{marginBottom:400}}
-        y = {this.y}
-        navigation = {this.props.navigation}
-        onPagePost = {this.onPagePost}
-        ViewProfile = {this.ViewProfile}
-        onCommentOpen = {this.onCommentOpen}/>
-
-      */}
-
-
     return(
       <BackgroundContainer>
-        {/*
-          // You can put the mini invite and video here
-          <AppIntro
-            {...this.props}
-            visible = {this.props.showIntialInstructions}
-            unShow = {this.unShow}
-            />
-          */}
 
         {
           this.props.showFirstPostModal ?
@@ -234,26 +188,22 @@ class NewsfeedView extends React.Component{
            :
            null
         }
+
           <Animated.View
             style = {{
               // backgroundColor: backgroundGradient
             }}
             >
-            {true ?
-                <SwipeInfiniteScrollHolder
-                  // navGroupIDCondition={navGroupIDCondition}
-                  // test={test}
-                  navigation = {this.props.navigation}
-                  smallGroups = {this.props.smallGroups}
-                  curLoad = {this.props.curLoad}
-                  activeSlide = {this.props.activeSlide}
-                  setNull = {this.props.authSetActiveNewsfeedSlideNull}
-                   />
-              :
-                <PersonalNewsFeed
-                  navigation = {this.props.navigation}
-                  />
-            }
+            <SwipeInfiniteScrollHolder
+              // navGroupIDCondition={navGroupIDCondition}
+              // test={test}
+              navigation = {this.props.navigation}
+              smallGroups = {this.props.smallGroups}
+              curLoad = {this.props.curLoad}
+              activeSlide = {this.props.activeSlide}
+              setNull = {this.props.authSetActiveNewsfeedSlideNull}
+               />
+
           </Animated.View>
 
 

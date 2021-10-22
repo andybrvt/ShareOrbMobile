@@ -185,58 +185,10 @@ class Login extends React.Component{
             <Text>
               or
             </Text>
-            {/*
-              <TouchableOpacity
-                  onPress = {() =>this.props.navigation.navigate('Signup')}
-                 style = {styles.signUpBtn}>
-                <Text style = {{color:'black'}}> Sign Up</Text>
-              </TouchableOpacity>
-
-              */}
             <TouchableOpacity
               onPress = {() => this.handleSignupDirect()}
               style = {styles.signUpBtn}>
-
               <Text >Sign up</Text>
-               {/*
-                 <TextInput
-                   autoCapitalize="none"
-                   onChangeText = {this.handleCode}
-                   style = {styles.inviteInput}
-                   placeholder = "Enter invite code"
-                   value = {this.state.inviteCode}
-                   />
-
-
-
-                   {
-                     this.state.inviteLoading ?
-
-                     <TouchableOpacity style = {{
-                         width: "25%",
-                         alignItems: 'center'
-                       }}>
-                      <ActivityIndicator />
-
-                      </TouchableOpacity>
-
-                   :
-
-                   <TouchableOpacity
-                     onPress = {() => this.handleInviteSubmit()}
-                      style = {{
-                       width: "25%",
-                       alignItems: 'center'
-                     }}>
-                    <ArrowRightCircle />
-
-                    </TouchableOpacity>
-
-                   }
-
-
-                 */}
-
             </TouchableOpacity>
 
 

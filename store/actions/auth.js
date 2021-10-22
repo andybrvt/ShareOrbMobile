@@ -105,13 +105,8 @@ export const authLogin = (username, password) => {
 
     })
     .catch(err => {
-      console.log(err)
       dispatch(authFail(err));
     })
-
-
-
-
   }
 }
 
@@ -127,18 +122,13 @@ export const logout = () => {
 export const authCheckState = () => {
   return dispatch => {
 
-    const token = AsyncStorage.getItem("token")
+  const token = AsyncStorage.getItem("token")
     // since this is async storage and is a promise  you have to
     // do a . then  in order to get the value
   AsyncStorage.getItem('token')
   .then(res => {
       // res here will return the token
       if(res === null){
-        // Check if there is token already existing,
-        // if not you will log out
-
-        // if the token is not saved on the phone then you will then check
-        // if they have the invite key
         AsyncStorage.getItem('inviToken')
         .then(res => {
 
@@ -146,36 +136,15 @@ export const authCheckState = () => {
             // if you don't have a invite token saved you will get logged out
             dispatch(logout());
           } else {
-
             // direct you to the tutorial page by show that you have a invite token
             dispatch(authInviteSuccess(res))
           }
 
-
-
         })
 
       } else {
-
-        // if you have a token stored then you will put it into the redux
-        // AsyncStorage.getItem('inviToken')
-        // .then(res => {
-        //
-        //   if(res === null){
-        //     // if you don't have a invite token saved you will get logged out
-        //     // dispatch(logout());
-        //   } else {
-        //
-        //     // direct you to the tutorial page by show that you have a invite token
-        //     dispatch(authInviteSuccess(res))
-        //   }
-        //
-        //
-        //
-        // })
         dispatch(authSuccess(res))
         dispatch(grabUserCredentials())
-
       }
   })
   }
@@ -207,8 +176,6 @@ export const grabUserCredentials = () => {
          res.data.first_name,
          res.data.last_name,
          res.data.profile_picture,
-         res.data.get_following,
-         res.data.get_followers,
          res.data.email,
          res.data.dob,
          res.data.private,
@@ -236,8 +203,6 @@ export const addCredentials = (
    firstName,
    lastName,
    profilePic,
-   following,
-   followers,
    email,
    dob,
    privatePro,
@@ -260,8 +225,6 @@ export const addCredentials = (
     firstName: firstName,
     lastName: lastName,
     profilePic: profilePic,
-    following: following,
-    followers: followers,
     email:email,
     dob: dob,
     private: privatePro,

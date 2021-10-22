@@ -80,7 +80,6 @@ import DisplayLikeList from './Newsfeed/DisplayLikeList.js';
 import Settings from './Settings/Settings';
 import Privacy from './Settings/Privacy';
 import UserInfo from './Settings/UserInfo';
-
 import AlbumHome from './CollabAlbum/AlbumHome';
 import CreateAlbum from './CollabAlbum/CreateAlbum';
 import PicAlbum from './CollabAlbum/PicAlbum';
@@ -117,21 +116,7 @@ ExpoNotifications.setNotificationHandler({
   }),
 });
 
-// ExpoNotifications.scheduleNotificationAsync({
-//   content: {
-//     title: "Reminder",
-//     body: 'What did you do today to meet your goals?',
-//   },
-//   trigger: {
-//     hour: 10,
-//     minute: 0,
-//     repeats: true
-//   },
-// });
-
-
 class App extends Component{
-
 
   state = {
     fontsLoaded: true,
@@ -141,7 +126,6 @@ class App extends Component{
   getNotification = async() => {
 
     const notifications = await ExpoNotifications.getAllScheduledNotificationsAsync();
-
     return notifications;
   }
 
@@ -198,10 +182,6 @@ class App extends Component{
     await ExpoNotifications.cancelAllScheduledNotificationsAsync()
   }
 
-
-
-
-
   constructor(props){
     super(props)
     // Since you want to show chats at the beginning of your
@@ -221,14 +201,11 @@ class App extends Component{
     )
 
     ExploreWebSocketInstance.addCallbacks(
-      // add the call backs here
       this.props.loadProfile.bind(this),
       this.props.addFollowerUnfollower.bind(this),
-
     )
 
     ChatSidePanelWebSocketInstance.addCallbacks(
-      // These function is to set the chats in
       this.props.setChats.bind(this)
     )
 
@@ -297,13 +274,12 @@ class App extends Component{
   }
 
   registerForPushNotificationsAsync = async() => {
+
     if(Constants.isDevice){
-      // this function will be used to grab the notifications status
       const { status: existingStatus } = await ExpoNotifications.getPermissionsAsync();
 
       let finalStatus = existingStatus;
       if(existingStatus !== "granted"){
-        // if it is not already granted then you will go out and request it
         const {status} = await ExpoNotifications.requestPermissionsAsync();
         finalStatus = status;
 
@@ -324,14 +300,11 @@ class App extends Component{
       })
 
       this.props.authAddNotificationToken(token)
-
-      // probally gotta save the notification token for each person
-      // in their user data
-
     } else {
       alert('Must use physical device for Push Notifications');
-
     }
+
+
 
     if(Platform.OS === "android"){
         Notifications.setNotificationChannelAsync('default', {
@@ -355,14 +328,12 @@ class App extends Component{
 
    if(!this.props.loading && this.props.username){
      if(response.notification.request.trigger.payload){
-
        if(response.notification.request.trigger.payload.body){
-
          if(response.notification.request.trigger.payload.body.type){
 
              const notiType = response.notification.request.trigger.payload.body.type;
+
               if(notiType === "like"){
-                // you want to direct it to the post with the like
                 this.refContainer.navigate('DayAlbum', {
                   cellId: response.notification.request.trigger.payload.body.dayId
                 })
@@ -371,19 +342,13 @@ class App extends Component{
 
               if(notiType === "group_like"){
                 const postId = response.notification.request.trigger.payload.body.postId
-
-
                 this.refContainer.navigate("NavPic", {
                   postId, postId
                 })
               }
 
               if(notiType === "group_comment"){
-
                 const postId = response.notification.request.trigger.payload.body.postId
-
-
-                // COME BACK TO THIS LATER
                 this.refContainer.navigate("NavPic", {
                   postId, postId
                 })
@@ -406,8 +371,9 @@ class App extends Component{
                 } else {
                   this.refContainer.navigate("Profile")
                 }
-
               }
+
+
 
          }
 
@@ -419,7 +385,6 @@ class App extends Component{
        if(response.notification.request.content.data){
         if(response.notification.request.content.data.type){
           const type = response.notification.request.content.data.type
-
           if(type === "active"){
             this.refContainer.navigate("Upload")
           }
@@ -463,14 +428,7 @@ class App extends Component{
     if(this.props.isAuthenticated){
 
       if(this.props.id === null){
-
         this.props.grabUserCredentials()
-
-      }
-
-      if(this.props.id !== null){
-
-
       }
 
 
@@ -599,53 +557,6 @@ class App extends Component{
 
   }
 
-  // // This will be the navigation inside the home component ,
-  // // you are pretty much making a stack navigation in side a tab navigation
-  createHomeStack = () =>{
-    return (
-      <Stack.Navigator screenOptions={{headerShown: false,}} >
-        <Stack.Screen
-
-          name = "newsfeed" component= {NewsfeedView}/>
-        {/*
-          <Stack.Screen
-            options={{...TransitionPresets.SlideFromRightIOS,}}
-            name = 'ProfilePage' component = {ProfilePage}/>
-          */}
-
-      </Stack.Navigator>
-
-    )
-  }
-
-  createNewsfeedStack = () => {
-
-      return(
-        <NewsfeedTopTab.Navigator>
-          <NewsfeedTopTab.Screen
-            name="defautl"
-            component={NewsfeedView}
-             />
-          <NewsfeedTopTab.Screen
-            name="defautl1"
-            component={NewsfeedView}
-             />
-          <NewsfeedTopTab.Screen
-            name="defautl2"
-            component={NewsfeedView}
-             />
-          <NewsfeedTopTab.Screen
-            name="defautl3"
-            component={NewsfeedView}
-             />
-          <NewsfeedTopTab.Screen
-            name="defautl4"
-            component={NewsfeedView}
-             />
-        </NewsfeedTopTab.Navigator>
-      )
-  }
-
 
   followerFollowingTab=(props)=>{
 
@@ -720,7 +631,6 @@ class App extends Component{
         <Tab.Screen
           name="Home"
           component={NewsfeedView}
-          // children = {this.createNewsfeedStack}
           options={{
              tabBarLabel: false,
              tabBarIcon: ({ color }) => (

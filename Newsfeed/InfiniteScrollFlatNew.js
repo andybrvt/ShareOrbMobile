@@ -74,8 +74,6 @@ class InfiniteScrollFlatNew extends React.Component{
       super(props)
 
       if(this.props.isAuthenticated){
-
-
         // initialize the websocket here
         this.initialiseSmallGroup()
       }
@@ -145,38 +143,6 @@ class InfiniteScrollFlatNew extends React.Component{
     currentMonth: dateFns.format(new Date(), "MMMM"),
     currentDay: dateFns.format(new Date(), "d")
   }
-
-  // loadSocialPost = () => {
-  //   const {start, addMore} = this.state;
-  //   const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
-  //   authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSocial/`+curDate+"/"+start+'/'+addMore)
-  //   .then( res => {
-  //     this.props.loadMoreSocialPost(res.data.socialPost)
-  //     const hasMore = res.data.has_more;
-  //     this.setState({
-  //       hasMore:hasMore,
-  //       loading: false,
-  //       start: start+addMore
-  //     })
-  //
-  //   })
-  //   .catch( err => {
-  //     this.setState({
-  //       error: err.message
-  //     })
-  //   })
-  // }
-
-  // onRefresh = () => {
-  //   this.setState({refreshing: true})
-  //   const curDate = dateFns.format(new Date(), "yyyy-MM-dd")
-  //   WebSocketSocialNewsfeedInstance.fetchSocialPost(
-  //     this.props.id,
-  //     curDate,
-  //     6
-  //   )
-  //   this.setState({refreshing: false});
-  // }
 
   onRefresh = () => {
     this.setState({
@@ -282,7 +248,7 @@ class InfiniteScrollFlatNew extends React.Component{
     let profilePic="";
     let itemImage = "";
     let video = "";
-    console.log(item)
+
     if(item) {
       if(item.creator.first_name){
         firstName = item.creator.first_name;
@@ -306,6 +272,7 @@ class InfiniteScrollFlatNew extends React.Component{
         activeOpacity={0.8}
         style={styles.item}
       >
+      {/* fastimage */}
         <Image
           style ={{
             width: "100%",
@@ -412,31 +379,6 @@ class InfiniteScrollFlatNew extends React.Component{
           <Users stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
         </TouchableOpacity>
         </View>
-        {/*
-          <FlatList
-            ItemSeparatorComponent = { this.FlatListItemSeparator }
-            // onViewableItemsChanged={this.onViewableItemsChanged }
-            contentContainerStyle={{
-              paddingBottom: 100 }}
-            showsVerticalScrollIndicator={false}
-            scrollEventThrottle = {16} // important for animation
-            // onScroll = {onScrollEvent({y})}
-            data = {groupPost}
-            renderItem = {this.renderPost}
-            keyExtractor={(item, index) => String(index)}
-            onEndReachedThreshold={0.5}
-            onEndReached = {() => this.loadSocialPost()}
-            onRefresh = {() => this.onRefresh()}
-            refreshing = {this.state.refreshing}
-            // style={{top:130,}}
-            style={{paddingBottom:10,}}
-            ListEmptyComponent={this.renderEmptyContainer()}
-
-            />
-            */}
-
-
-
               <FlatList
                 maxToRenderPerBatch={10}
                 extraData={groupPost}
@@ -454,9 +396,6 @@ class InfiniteScrollFlatNew extends React.Component{
                renderItem={this.renderItem}
                numColumns={3}
              />
-
-
-
 
       </View>
     )

@@ -95,15 +95,6 @@ class SwipeInfiniteScrollHolder extends React.Component{
    if(this.props.smallGroups){
      smallGroups = this.props.smallGroups
    }
-   // if(this.props.navGroupIDCondition){
-   //   navGroupIDCondition=this.props.navGroupIDCondition
-   // }
-   // if(this.props.test){
-   //   test=this.props.test
-   // }
-
-   // console.log("made class")
-   // console.log(navGroupIDCondition)
 
     return(
       <View>
