@@ -175,7 +175,7 @@ class GroupPost extends React.PureComponent {
           <View style={{alignItems:'center'}}>
           {this.state.showInstagramStory?
             <TouchableOpacity
-            onPress = {() => this._openCameraRoll(imageFile)}
+            onPress = {() => this._openCameraRoll()}
             style={styles.loginBtn}>
 
               <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>

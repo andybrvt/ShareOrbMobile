@@ -104,6 +104,10 @@ import PeopleInGroup from './SmallGroups/PeopleInGroup';
 import Frame from './Frame.svg';
 import Testing from './RandomComponents/Testing';
 
+
+import * as Location from 'expo-location';
+
+
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -122,12 +126,24 @@ class App extends Component{
   state = {
     fontsLoaded: true,
     expoPushToken: "",
+    location: null
   };
 
   getNotification = async() => {
 
     const notifications = await ExpoNotifications.getAllScheduledNotificationsAsync();
     return notifications;
+  }
+
+  connectToLocation = async() => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    console.log(location)
   }
 
   turnOnNotification = async() => {
@@ -401,11 +417,15 @@ class App extends Component{
   };
 
   componentDidMount(){
+
     this.props.onTryAutoSignup();
     this.loadFonts();
 
     if(this.props.isAuthenticated){
       this.registerForPushNotificationsAsync()
+
+
+      this.connectToLocation()
 
     }
 
@@ -952,7 +972,11 @@ class App extends Component{
                                 ...TransitionPresets.SlideFromRightIOS,
                               }}
 
-                              name = 'GroupPost' component = {GroupPost}/>
+                              name = 'GroupPost'
+                              component = {GroupPost}
+                              // component = {Testing}
+
+                              />
                     <Stack.Screen
                       options={{
                         headerStyle:{

@@ -321,7 +321,7 @@ class InfiniteScrollFlatNew extends React.Component{
         activeOpacity={0.8}
         style={styles.item}
       >
-      {/*
+  
         <Image
           style ={{
             width: "100%",
@@ -332,7 +332,7 @@ class InfiniteScrollFlatNew extends React.Component{
             uri:  `${global.IMAGE_ENDPOINT}`+item.itemImage
           }}
            />
-           */}
+
            <LinearGradient
              start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
              style = {{

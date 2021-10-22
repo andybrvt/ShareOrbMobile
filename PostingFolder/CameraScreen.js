@@ -299,8 +299,7 @@ class CameraScreen extends React.Component{
     if(!this.cameraRef){
       return
     }
-    console.log("BLAHHHHHHHHHH")
-    console.log(groupsLength)
+
     if(groupsLength>=1){
 
         const pic = await this.cameraRef.takePictureAsync();
@@ -507,7 +506,22 @@ class CameraScreen extends React.Component{
 
   }
 
+  onGroupPostDirect = (imageFile) => {
+    // this function will be used to direct post
+
+    console.log('navigate here')
+    this.props.closeShowCamera()
+
+    this.props.navigation.navigate("GroupPost",
+       {imageFile: imageFile}
+    );
+
+
+  }
+
   onSavePhoto = (image) => {
+
+    console.log('save photo')
 
     const {activeSlide} = this.state;
     const groupID = this.props.smallGroups[activeSlide].id;
@@ -516,7 +530,6 @@ class CameraScreen extends React.Component{
     const goalId = this.state.selectedGoal.id;
     const curDate = dateFns.format(new Date(), "yyyy-MM-dd");
     const curDateTime = dateFns.format(new Date(), "yyyy-MM-dd HH:mm:ss")
-    // const curDateTime = new Date();
     const formData = new FormData();
     const imageFile = global.FILE_NAME_GETTER(image);
     formData.append("curDate", curDate);
@@ -532,10 +545,6 @@ class CameraScreen extends React.Component{
 
     ).then(res => {
 
-      console.log(res.data)
-
-      // now that you don't have to link it to a day album
-      // you can now just direct it directly into the websockets
       this.props.authAddCurLoad()
       this.props.authAddCurLoad()
       this.props.authAddCurLoad()
@@ -555,8 +564,8 @@ class CameraScreen extends React.Component{
       // this is also assuming that he has connected to the group
       // that he is trying to send to
 
-      // const tabIndex = activeSlide+1;
-      // this.props.authSetActiveNewsfeedSlide(tabIndex)
+      const tabIndex = activeSlide+1;
+      this.props.authSetActiveNewsfeedSlide(tabIndex)
 
 
 
@@ -567,40 +576,12 @@ class CameraScreen extends React.Component{
 
 
 
-      {/*
+
       WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
-      */}
 
 
 
 
-
-
-        // this.props.addFirstSocialCellPost(res.data.item)
-        // const coverPicForm = new FormData();
-        // coverPicForm.append('cellId', res.data.cellId)
-        // coverPicForm.append('coverImage', imageFile)
-        //
-
-        //
-        //
-        // authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverPic/`+ownerId,
-        //   coverPicForm,
-        //   {headers: {"content-type": "multipart/form-data"}}
-        //
-        // ).then(res => {
-        //
-        //
-        //
-        //
-        //   if(res.data === 1){
-        //     // run the
-        //     setTimeout(() => this.props.authShowFirstPostModal(), 1200);
-        //
-        //   }
-        //
-        //
-        // })
 
 
 
@@ -618,9 +599,6 @@ class CameraScreen extends React.Component{
           });
     */}
     this.props.closeShowCamera()
-    this.props.navigation.navigate("GroupPost",
-       {imageFile: imageFile}
-    );
 
     // setTimeout(() => {this.props.closeShowCamera()}, 1000);
 
@@ -1073,7 +1051,8 @@ class CameraScreen extends React.Component{
 
                <TouchableOpacity
                  style = {styles.submitBtn}
-                 onPress = {() => this.onSavePhoto(this.state.imagePreview)}
+                 // onPress = {() => this.onSavePhoto(this.state.imagePreview)}
+                 onPress = {() => this.onGroupPostDirect(this.state.imagePreview)}
                  >
                    <Text style = {{
                        color: 'white',

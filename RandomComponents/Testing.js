@@ -1,21 +1,25 @@
-import React, {useState} from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
-  Text,
   View,
-  Button,
   StyleSheet,
-  ScrollView,
-  Dimensions,
-  Image,
-  TextInput,
-  ActivityIndicator,
+  Text,
   TouchableOpacity,
-  TouchableHighlight,
-  Modal,
-  TouchableWithoutFeedback
- } from 'react-native';
+  Platform,
+  Linking,
+  Image
+} from 'react-native';
+import { captureRef } from 'react-native-view-shot';
+// import Share from 'react-native-share';
 
-class Testing extends React.Component{
+const Testing  = () => {
+  return (
+    <View>
+      <Text>stuff here</Text>
+    </View>
+  )
+}
+
+class Testing1 extends React.Component{
 
   render(){
 
