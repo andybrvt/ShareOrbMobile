@@ -13,7 +13,7 @@ import {
   FlatList,
   Share,
   TouchableOpacity,
-  Linking,
+
 
 } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
@@ -25,7 +25,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 // const viewRef = useRef();
 import CameraRoll from "@react-native-community/cameraroll";
-
+import * as Linking from 'expo-linking';
 const data3=[
     {
         "itemImage": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=874&q=80"
@@ -59,13 +59,14 @@ class GroupPost extends React.PureComponent {
   }
 
 
-  _openCameraRoll = async () => {
+  _openCameraRoll = async (imageFile) => {
     let image = await ImagePicker.launchImageLibraryAsync();
     let { origURL } = image;
     let encodedURL = encodeURIComponent(origURL);
-    let instagramURL = `instagram-stories://share?backgroundImage=${encodedURL}`
+    let instagramURL = `instagram://library?AssetPath=${encodedURL}`;
     Linking.openURL(instagramURL);
   }
+
 
   componentDidMount() {
     if (Platform.OS === 'ios') {
@@ -142,8 +143,6 @@ class GroupPost extends React.PureComponent {
   render(){
 
     const imageFile = this.props.route.params.imageFile.uri
-    console.log(this.props.route.params)
-    console.log(imageFile)
     return(
       <BackgroundContainer>
         <View>
@@ -164,12 +163,15 @@ class GroupPost extends React.PureComponent {
              horizontal={false}
               />
           </View>
-          <Instagram
-            stroke = "#d9d9d9"
-            fill="#1890ff"
-            strokeWidth={2}
-            width = {40}
-            height = {40} />
+          <TouchableOpacity
+          onPress = {() => this._openCameraRoll(imageFile)}>
+            <Instagram
+              stroke = "#d9d9d9"
+              fill="#1890ff"
+              strokeWidth={2}
+              width = {40}
+              height = {40} />
+          </TouchableOpacity>
           <View style={{alignItems:'center'}}>
           {this.state.showInstagramStory?
             <TouchableOpacity
