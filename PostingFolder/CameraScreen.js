@@ -319,7 +319,7 @@ class CameraScreen extends React.Component{
           }
 
 
-        }, 1000)
+        }, 500)
 
       } else {
       Alert.alert(
@@ -548,17 +548,33 @@ class CameraScreen extends React.Component{
       this.props.authAddCurLoad()
 
 
-      setTimeout(() => this.props.authZeroCurLoad(), 1000);
+      setTimeout(() => this.props.authZeroCurLoad(), 0);
 
 
       // probally gonna put a websocket here for the specific group
       // this is also assuming that he has connected to the group
       // that he is trying to send to
 
-      const tabIndex = activeSlide+1;
-      this.props.authSetActiveNewsfeedSlide(tabIndex)
+      // const tabIndex = activeSlide+1;
+      // this.props.authSetActiveNewsfeedSlide(tabIndex)
 
+
+
+
+
+
+
+
+
+
+      {/*
       WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
+      */}
+
+
+
+
+
 
         // this.props.addFirstSocialCellPost(res.data.item)
         // const coverPicForm = new FormData();
@@ -601,8 +617,12 @@ class CameraScreen extends React.Component{
             test:"true",
           });
     */}
-    this.props.navigation.navigate("Home")
-    setTimeout(() => {this.props.closeShowCamera()}, 1000);
+    this.props.closeShowCamera()
+    this.props.navigation.navigate("GroupPost",
+       {imageFile: imageFile}
+    );
+
+    // setTimeout(() => {this.props.closeShowCamera()}, 1000);
 
 
   }
@@ -649,7 +669,7 @@ class CameraScreen extends React.Component{
         this.props.authAddCurLoad()
         this.props.authAddCurLoad()
 
-        setTimeout(() => this.props.authZeroCurLoad(), 1000);
+        setTimeout(() => this.props.authZeroCurLoad(), 0);
 
 
         // Add a websocket funciton here so that you can start sending
@@ -690,9 +710,10 @@ class CameraScreen extends React.Component{
       })
 
       this.onCancelPhoto();
-      this.props.navigation.navigate("Home");
 
-      setTimeout(() => {this.props.closeShowCamera()}, 1000);
+      this.props.closeShowCamera()
+      this.props.navigation.navigate("GroupPost")
+      // setTimeout(() => {this.props.closeShowCamera()}, 1000);
 
   }
 
@@ -1056,9 +1077,9 @@ class CameraScreen extends React.Component{
                  >
                    <Text style = {{
                        color: 'white',
-                       fontSize: 20,
+                       fontSize: 18,
                        fontFamily:'Nunito-SemiBold',
-                     }}> Save  </Text>
+                     }}> Post  </Text>
                </TouchableOpacity>
               </Modal>
 
@@ -1167,7 +1188,7 @@ class CameraScreen extends React.Component{
                          height = {40}
                          width = {40}/>
                      </TouchableOpacity>
-                     {
+                     {/*
                        this.state.selectedGoal.goal  ?
 
                        <View
@@ -1211,7 +1232,7 @@ class CameraScreen extends React.Component{
 
 
 
-                     }
+                     */}
                      <TouchableOpacity
                        onPress = {() => this.openShowGoals()}
                        style ={{
@@ -1590,10 +1611,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     padding: 12.5,
     backgroundColor: '#1890ff',
-    borderRadius: 15,
+    borderRadius: 20,
     alignSelf: 'flex-end',
     bottom: 25,
-    right: 20
+    right: 25
   }
 })
 

@@ -39,7 +39,6 @@ class GoalPage extends React.Component{
         goal: res.data
       })
     })
-
   }
 
   componentWillUnmount(){
@@ -80,7 +79,6 @@ class GoalPage extends React.Component{
                 shouldPlay
 
                />
-
              :
 
              <Image
@@ -93,7 +91,6 @@ class GoalPage extends React.Component{
                    uri: `${global.IMAGE_ENDPOINT}`+item.itemImage
                  }}
                 />
-
           }
 
 

@@ -58,6 +58,7 @@ import * as Font from 'expo-font';
 import { faComments, faUser } from '@fortawesome/free-regular-svg-icons'
 import PostingPage from './PostingFolder/PostingPage';
 import CameraScreen from './PostingFolder/CameraScreen';
+import GroupPost from './PostingFolder/GroupPost';
 import NewPostingPage from './PostingFolder/NewPostingPage';
 import TestDrag from './PostingFolder/TestDrag';
 import Profile from './ProfilePage/Profile';
@@ -940,6 +941,18 @@ class App extends Component{
                            }}
 
                            name = 'DisplayLikeList' component = {DisplayLikeList}/>
+
+                           <Stack.Screen
+                             options={{
+                               headerStyle:{
+                                 shadowColor:'#fff', //ios
+                                 elevation:0,        // android
+                               },
+                               title: 'Post',
+                                ...TransitionPresets.SlideFromRightIOS,
+                              }}
+
+                              name = 'GroupPost' component = {GroupPost}/>
                     <Stack.Screen
                       options={{
                         headerStyle:{

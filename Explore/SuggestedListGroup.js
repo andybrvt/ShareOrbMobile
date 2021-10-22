@@ -21,12 +21,47 @@ import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import { UserCheck, UserPlus} from "react-native-feather";
+import Carousel, { Pagination } from 'react-native-snap-carousel';
  // used in conjuction with the newsfeed view so that you
  // can folow people
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
+const data2=[
+    {
+        "itemImage": "https://images.unsplash.com/photo-1634467164575-74a2a342b43e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1634407605474-9143e0e16673?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=464&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1634488991132-2ba3aad8c1a0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1634323026799-f2351f5f3a40?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80"
+    },
+]
 
+const data3=[
+    {
+        "itemImage": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=874&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=871&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1634571348132-a4ca1aa4fabe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=580&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
+    },
+    {
+        "itemImage": "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
+    },
 
+  ]
 class SuggestedListGroup extends React.Component{
 
   constructor(props){
@@ -39,6 +74,8 @@ class SuggestedListGroup extends React.Component{
       start: 10,
       addMore: 6,
       disabled:false,
+      curIndex:0,
+      todayList:[]
     }
   }
 
@@ -49,6 +86,72 @@ class SuggestedListGroup extends React.Component{
         list: res.data
       })
     })
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/exploreDay/1/8')
+    .then(res => {
+      this.setState({
+        todayList: res.data
+      })
+    })
+    console.log(this.state.todayList)
+  }
+
+  renderItem2 = ({item}) => {
+    return(
+      <View>
+        <View style = {{
+            height: width/2,
+            width: '100%',
+            borderRadius: 10,
+            overflow: "hidden"
+          }}>
+      <Image
+        style = {{
+          width: '100%',
+          height: '100%'
+        }}
+          resizeMode = "cover"
+          source = {{
+            uri: item.itemImage
+          }}
+         />
+       </View>
+       </View>
+    )
+  }
+
+  renderItem3 = ({item}) => {
+    return(
+      <View style={{flexDirection:'row',padding:5, marginTop:10, alignItems:'center'}}>
+
+        <Avatar
+          size={42.5}
+          rounded
+            resizeMode = "cover"
+            source = {{
+              uri: item.itemImage
+            }}
+           />
+         <View style={{marginLeft:10}}>
+         <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>Tucson Rotaract</Text>
+         <Text style={{fontSize:14, fontFamily:'Nunito'}}>3.3k members</Text>
+
+       </View>
+       <TouchableOpacity activeOpacity={0.8} style={styles.inviteButton} disabled={this.state.disabled}
+         // onPress = {() =>
+         //   this.joinGroup(item.id)
+         // }
+         >
+         <UserPlus
+           style={{marginRight:5}}
+           stroke = "white"
+           strokeWidth = {2}
+           height = {12.5}
+           width = {12.5}
+            />
+         <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12, color:'white' }}>Join</Text>
+       </TouchableOpacity>
+     </View>
+    )
   }
 
   onGroupDirect = (item) => {
@@ -392,17 +495,80 @@ class SuggestedListGroup extends React.Component{
 
 
     return(
-      <View style = {{flex:1}}>
+      <ScrollView style = {{}}>
+        <View style={{flex:1}}>
+          <Text style={{fontFamily:'Nunito-Bold', fontSize:27.5, paddingLeft:30, paddingBottom:20, paddingTop:5, }}>Discover</Text>
+          <View style={{ alignItems:'center', }}>
+            <Carousel
+              layout={'default'}
+              autoplayInterval={3500}
+              data = {data2}
+              autoplay={true}
+              loop={true}
+              renderItem = {(item) => this.renderItem2(item)}
+              keyExtractor={(item, index) => String(index)}
+              sliderWidth = {width}
+              itemWidth = {width*0.85}
+              onSnapToItem={(index) => this.setState({curIndex:index}) }
+              />
+            <View style={{position:'absolute', top:'72.5%', borderRadius:25}}>
+                <Pagination
+                  activeDotIndex = {this.state.curIndex}
+                  dotsLength = {4}
+                  dotColor ={'white'}
+                  inactiveDotColor = {'white'}
+                  // dotStyle={{width:10, height:10}}
+                   />
+            </View>
+          </View>
+        </View>
 
+        {/*
+        <View style={{marginTop:10, flex:1}}>
+          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16 }}>Something here?</Text>
+          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16 }}>Something here?</Text>
+          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:16 }}>Something here?</Text>
+        </View>
+        */}
+
+
+        <View style={{flex:1}}>
+          <View style = {{
+            padding:15,
+          }}>
+          <Text style={{fontFamily:'Nunito-Bold', fontSize:16 }}>Trending Orbs</Text>
+
+
+           <FlatList
+
+              initialNumToRender={2}
+              // numColumns={2}
+              ListHeaderComponent = {this.listHeader}
+              data={data3}
+              // contentContainerStyle={{paddingBottom:25}}
+              renderItem = {this.renderItem3}
+              keyExtractor={(item, index) => String(index)}
+              onEndReachedThreshold = {0.2}
+              showsHorizontalScrollIndicator={false}
+              horizontal={false}
+               />
+
+         </View>
+        </View>
+        {/*
+        <View style={{flex:1, justifyContent:'center',}}>
+
+        </View>
+        */}
+        {/*
         <FlatList
           style = {{
-            paddingTop:10,
             flex: 1,
           }}
           ItemSeparatorComponent = { this.FlatListItemSeparator }
           initialNumToRender={2}
           ListHeaderComponent = {this.listHeader}
-          data={this.state.list.slice(0, 8)}
+          data={this.state.list.slice(0, 5)}
           contentContainerStyle={{paddingBottom:25}}
           renderItem = {this.renderItem}
           keyExtractor={(item, index) => String(index)}
@@ -411,7 +577,13 @@ class SuggestedListGroup extends React.Component{
           showsVerticalScrollIndicator={false}
 
            />
-        {/*
+
+           */}
+           {/*
+
+          */}
+    {/*
+
           <InvitePage />
           <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
             <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Food</Text>
@@ -487,7 +659,7 @@ class SuggestedListGroup extends React.Component{
           */}
 
 
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -495,11 +667,10 @@ class SuggestedListGroup extends React.Component{
 const styles = StyleSheet.create({
   inviteButton: {
     position:'absolute',
-    top:'1%',
     right:'5%',
     borderRadius: 20,
     height:25,
-    width: 100,
+    width: 90,
     elevation:5,
     textShadowColor: 'black',
     textShadowOffset: {width: -1, height: 1},

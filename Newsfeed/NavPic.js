@@ -32,7 +32,7 @@ import { Avatar } from 'react-native-elements';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
 import NotificationWebSocketInstance from  '../Websockets/notificationWebsocket';
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
-import SingleComment from './SingleComment';
+import NavPicComment from './NavPicComment';
 import DisplayLikeList from './DisplayLikeList';
 import FastImage from 'react-native-fast-image'
 
@@ -59,8 +59,16 @@ class NavPic extends React.Component{
     const profilePic = `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
     const user = item.commentUser
     return(
-       <SingleComment item = {item} />
+       <NavPicComment item = {item} />
     )
+  }
+
+  changeShowComments = (postId) => {
+    // this.props.onCommentOpen(postId)
+    this.props.navigation.navigate("Comments", {
+      postId: postId,
+      type: "group"
+    })
   }
 
   ViewProfile = (username) => {
@@ -79,8 +87,6 @@ class NavPic extends React.Component{
 
 
   renderPostInfo=(data)=>{
-
-
     let postId = "";
     let calCell = "";
     let username = "";
@@ -200,7 +206,7 @@ class NavPic extends React.Component{
     socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
     return(
       <View>
-        <View style={{flexDirection:'row', zIndex:999}}>
+        <View style={{flexDirection:'row', zIndex:999, marginLeft:5}}>
 
           <View style = {{
 
@@ -209,7 +215,7 @@ class NavPic extends React.Component{
             }}>
             <Avatar
               onPress = {() => this.ViewProfile(userUsername)}
-              size={37.5}
+              size={35}
               rounded
               source = {{
                 uri: profilePic
@@ -236,24 +242,12 @@ class NavPic extends React.Component{
           <View style = {{
              alignItems: 'center',
              justifyContent: 'center',
-             width: '35%'
+             width: '32.5%',
+             // backgroundColor:'blue'
             }}>
             <View style = {{
                 flexDirection: 'row'
               }}>
-              <TouchableOpacity
-                onPress = {() => this.onShowLike()}
-                >
-                <View style = {styles.justifyCenter}>
-                    <Text style = {{color: 'white'}}>Likes</Text>
-
-                  <Text  style = {styles.statNum}>
-                    {like_people.length}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-
-              {/*
               {
                       peopleLikeId.includes(this.props.userId ) ?
                       <TouchableOpacity
@@ -269,10 +263,16 @@ class NavPic extends React.Component{
                               width = {27.5}
                               height = {27.5}
                                />
-
-                          <Text  style = {styles.statNum}>
-                            {like_people.length}
-                          </Text>
+                               <TouchableOpacity
+                                 style={{width:20, height:20}}
+                                onPress = {() => this.onShowLike()}
+                                >
+                                  <View style = {styles.justifyCenter}>
+                                    <Text  style = {styles.statNum}>
+                                      {like_people.length}
+                                    </Text>
+                                  </View>
+                                </TouchableOpacity>
                         </View>
                       </TouchableOpacity>
                       :
@@ -292,30 +292,37 @@ class NavPic extends React.Component{
                               height = {27.5}
                             />
 
-                         <Text style = {styles.statNum}>
-                          {like_people.length}
-                        </Text>
+                            <TouchableOpacity
+                              style={{width:20, height:20}}
+                             onPress = {() => this.onShowLike()}
+                             >
+                               <View style = {styles.justifyCenter}>
+                                 <Text  style = {styles.statNum}>
+                                   {like_people.length}
+                                 </Text>
+                               </View>
+                             </TouchableOpacity>
                         </View>
                       </TouchableOpacity>
                   }
 
-                  <TouchableWithoutFeedback>
+                  <TouchableOpacity  onPress={() => this.changeShowComments(postId)}>
                     <View style={{marginLeft:20,}}>
                         <View style = {styles.justifyCenter}>
-
                           <MessageCircle
+                            style={{marginRight:5}}
                             stroke = "white"
                             fill="white"
                             width ={27.5}
                             height = {27.5}
                           />
-                          <Text style = {styles.statNum}>
+                         <Text style = {styles.statNum}>
                             {calComment}
                           </Text>
                         </View>
                     </View>
-                  </TouchableWithoutFeedback>
-              */}
+                  </TouchableOpacity>
+
             </View>
 
           </View>
@@ -329,12 +336,10 @@ class NavPic extends React.Component{
   }
 
   componentDidMount(){
-
       const postId = this.props.route.params.postId
       // put a function where you pull the social post
       authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getSinglePost/'+postId)
       .then(res => {
-        console.log(res.data, 'stuffhre')
         this.setState({
           post: res.data
         })
@@ -418,7 +423,6 @@ class NavPic extends React.Component{
     const screenWidth = Math.round(Dimensions.get('window').width);
     let post=this.state.post
     let postId=this.props.route.params.postId
-
     let peopleLikeId = []
     let like_people = [];
     let calComment = 0;
@@ -428,6 +432,8 @@ class NavPic extends React.Component{
     let video = "";
     let comments=[];
     let userUsername="";
+    let picture="";
+    let groupName="";
     if(post){
       if(post.people_like){
         like_people = post.people_like
@@ -462,13 +468,48 @@ class NavPic extends React.Component{
         peopleLikeId.push(like_people[i].id)
       }
     }
+    if(this.props.smallGroups){
+      if(this.props.route.params.groupId){
+        const groupId = this.props.route.params.groupId
+        for(let i = 0; i < this.props.smallGroups.length; i++){
+          if(this.props.smallGroups[i].id === groupId){
+            const group = this.props.smallGroups[i]
+            picture = `${global.IMAGE_ENDPOINT}`+group.groupPic
+            groupName = group.group_name;
+          }
+        }
+      }
+    }
+
+    console.log(picture)
+    this.props.navigation.setOptions({
+      // headerLeft: (props) => (
+      //   <View style={{width:20}}>
+      //   <Text>hi</Text>
+      //   </View>
+      // ),
+      headerTitle: (props) => (
+        <View style={{flexDirection:"row", alignItems: 'center',}}>
+          <Avatar
+            source = {{
+              uri: picture
+            }}
+            size = {35}
+            rounded
+             />
+           <Text style={{marginLeft:10, color: 'black', fontWeight: 'bold', fontSize:18}}>
+                 {groupName}
+             </Text>
+         </View>
+         ),
+    })
+
+
     return (
       <BackgroundContainer>
         <View style = {styles.container}>
 
-           <TouchableOpacity
-             activeOpacity={0.8}
-            >
+
             <View >
 
            </View>
@@ -559,7 +600,7 @@ class NavPic extends React.Component{
                </TouchableWithoutFeedback>
              }
 
-          </TouchableOpacity>
+
 
 
          <LinearGradient
@@ -604,7 +645,7 @@ class NavPic extends React.Component{
                      </Text>
                    </View>
                    :
-                   <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', marginBottom:20}}>
+                   <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', marginBottom:10}}>
                      <Text style={{}}>
                        <Text style = {{fontSize:15, fontFamily:'Nunito-Bold', color:'white' }}>{userUsername+" "}</Text>
                        <Text style={styles.captionText}>{caption.substring(0,75)}</Text>
@@ -639,6 +680,7 @@ class NavPic extends React.Component{
 const mapStateToProps = state => {
   return {
     currentId: state.auth.id,
+    smallGroups: state.auth.smallGroups,
     currentUser: state.auth.username,
     curUserFriend: state.auth.friends,
     curRequested: state.auth.requestList,
@@ -775,7 +817,7 @@ const styles = StyleSheet.create({
 
   videoFooterUserName: {
     color:'white',
-    fontSize:15,
+    fontSize:14,
     fontFamily:'Nunito-Bold',
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     zIndex:1,
@@ -788,7 +830,7 @@ const styles = StyleSheet.create({
 
   videoFooterUserName2: {
     color:'white',
-    fontSize:13,
+    fontSize:12,
     fontFamily:'Nunito-Bold',
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     zIndex:1,
