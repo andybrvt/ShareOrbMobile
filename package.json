@@ -40,6 +40,7 @@
     "expo-image-picker": "~10.2.2",
     "expo-image-picker-multiple": "^1.4.1",
     "expo-linear-gradient": "~9.2.0",
+    "expo-location": "~12.1.2",
     "expo-mail-composer": "^10.2.2",
     "expo-media-library": "~12.1.2",
     "expo-notifications": "~0.12.3",
@@ -90,7 +91,7 @@
     "react-native-tags": "^2.2.0",
     "react-native-unimodules": "~0.14.5",
     "react-native-vector-icons": "^8.1.0",
-    "react-native-view-shot": "3.1.2",
+    "react-native-view-shot": "^3.1.2",
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.4",
     "react-navigation-animated-switch": "^0.6.4",
@@ -103,9 +104,7 @@
     "rn-emoji-keyboard": "^0.4.0",
     "styled-components": "^5.3.0",
     "symbol-observable": "^4.0.0",
-    "use-memo-one": "^1.1.2",
-    "expo-linking": "~2.3.1",
-    "expo-location": "~12.1.2",
+    "use-memo-one": "^1.1.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
