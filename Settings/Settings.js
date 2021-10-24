@@ -10,7 +10,8 @@ import {
   TouchableWithoutFeedback,
   Switch,
   ActivityIndicator,
-  TextInput
+  TextInput,
+  Clipboard
  } from 'react-native';
  import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -18,7 +19,10 @@ import { LogOut, Lock, User, Bell} from "react-native-feather";
 import { connect } from 'react-redux';
 import * as Notifications from 'expo-notifications';
 import authAxios from '../util';
-
+import FlashMessage from "react-native-flash-message";
+import { showMessage, hideMessage } from "react-native-flash-message";
+import { faQrcode, faFire, faAppleAlt, Android, faRobot, faAndroid, faGoogle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -38,6 +42,32 @@ import * as authActions from '../store/actions/auth';
        username: e
      })
    }
+
+   openQR = () => {
+     this.props.navigation.navigate("DownloadQR")
+   }
+
+   copyToClipboardApple = () => {
+     showMessage({
+       message: "Copied IOS download link",
+       type: "info",
+       backgroundColor: "#1890ff", // background color
+       color: "white", // text color
+       duration:850
+     });
+     Clipboard.setString("Download ShareOrb on IOS:"+" https://testflight.apple.com/join/v58j1FSw")
+   }
+
+   copyToClipboardAndroid = () => {
+     showMessage({
+       message: "Copied Android download link",
+       backgroundColor: "#1890ff", // background color
+       color: "white", // text color
+       duration:1000
+     });
+     Clipboard.setString("Download ShareOrb on Android:"+" https://play.google.com/store/apps/details?id=com.pinghsu520.ShareOrbMobile")
+   }
+
    userDelete = () => {
      // function will be used to delete a user
      console.log('delete user here')
@@ -330,9 +360,56 @@ import * as authActions from '../store/actions/auth';
              <Text style={styles.settingWord}> Log Out</Text>
          </View>
        </TouchableHighlight>
+       <View style={{flexDirection:'row', justifyContent:'center', marginTop:'75%'}}>
+         <View style={{marginRight:'15%', }}>
+
+
+           <TouchableHighlight
+             onPress={() => this.copyToClipboardApple()}
+             style={styles.roundButton2}>
+             <FontAwesomeIcon
+              style = {{
+                color:'white',
+                right:1,
+              }}
+              size = {25}
+              icon={faAppleAlt} />
+           </TouchableHighlight>
+         </View>
+         <View style={{marginRight:'15%'}}>
+           <TouchableHighlight
+             onPress={() => this.copyToClipboardAndroid()}
+             style={styles.roundButton2}>
+             <FontAwesomeIcon
+              style = {{
+                color:'white',
+                right:1,
+              }}
+              size = {25}
+              icon={faRobot} />
+           </TouchableHighlight>
+         </View>
+
+         <View>
+           <TouchableHighlight
+             onPress={() => this.openQR()}
+             style={styles.roundButton2}>
+             <FontAwesomeIcon
+              style = {{
+                color:'white',
+                right:1,
+              }}
+              size = {25}
+              icon={faQrcode} />
+           </TouchableHighlight>
+         </View>
+       </View>
 
 
          </View>
+
+         <FlashMessage
+           position="bottom" />
        </BackgroundContainer>
 
      )
@@ -353,6 +430,16 @@ import * as authActions from '../store/actions/auth';
      color:'black',
      fontSize:16,
      fontFamily:'Nunito-SemiBold',
+   },
+   roundButton2: {
+     width: 60,
+     height: 60,
+     justifyContent: 'center',
+     alignItems: 'center',
+     zIndex:99,
+     borderRadius: 100,
+     backgroundColor: '#1890ff',
+     elevation:15,
    },
  });
 

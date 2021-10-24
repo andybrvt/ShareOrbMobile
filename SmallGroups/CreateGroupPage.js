@@ -393,7 +393,8 @@ class CreateGroupPage extends React.Component{
 
 
     const location = await Location.geocodeAsync(selectedAddress)
-
+    const address=selectedAddress
+    console.log(address)
     const lat = location[0].latitude
     const long = location[0].longitude
     const pic = global.FILE_NAME_GETTER(groupPic)
@@ -406,7 +407,7 @@ class CreateGroupPage extends React.Component{
     // formData.append('invited', JSON.stringify(newInvited))
     formData.append("lat", lat)
     formData.append("long", long)
-
+    formData.append("address", selectedAddress)
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/createSmallGroup`,
       formData
     ).then(res => {

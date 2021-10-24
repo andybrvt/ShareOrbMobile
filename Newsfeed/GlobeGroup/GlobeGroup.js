@@ -144,8 +144,10 @@ class GlobeGroup extends React.Component{
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
       }
+      console.log(groupPosts)
       return(
         <View style = {{flex: 1}}>
+          <Text>testtt</Text>
             <FlatList
               contentContainerStyle={{paddingBottom:75}}
               // ListHeaderComponent = {this.listHeader}
