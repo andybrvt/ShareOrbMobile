@@ -378,19 +378,24 @@ class CreateGroupPage extends React.Component{
     return true
   }
 
-  onCreateGroup = () => {
+  onCreateGroup = async() => {
     // this function is used to create
     this.setState({
       disabled:true,
     })
-    const {groupPic, groupName, description, publicG, invitedPeople} = this.state
-    let newInvited = [];
-    for(let i = 0; i < invitedPeople.length; i++){
-        newInvited.push(
-          invitedPeople[i].id
-        )
-    }
+    const {groupPic, groupName, description, publicG, invitedPeople, selectedAddress} = this.state
+    // let newInvited = [];
+    // for(let i = 0; i < invitedPeople.length; i++){
+    //     newInvited.push(
+    //       invitedPeople[i].id
+    //     )
+    // }
 
+
+    const location = await Location.geocodeAsync(selectedAddress)
+
+    const lat = location[0].latitude
+    const long = location[0].longitude
     const pic = global.FILE_NAME_GETTER(groupPic)
     const formData = new FormData();
     formData.append('groupPic', pic)
@@ -398,8 +403,9 @@ class CreateGroupPage extends React.Component{
     formData.append('description', description)
     formData.append('public', publicG)
     formData.append('curId', this.props.id)
-    formData.append('invited', JSON.stringify(newInvited))
-
+    // formData.append('invited', JSON.stringify(newInvited))
+    formData.append("lat", lat)
+    formData.append("long", long)
 
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/createSmallGroup`,
       formData
@@ -407,21 +413,24 @@ class CreateGroupPage extends React.Component{
       console.log(res.data, 'create a group here')
       const numIndex=this.props.smallGroups.length
       this.props.authAddSmallGroup(res.data)
-      const groupId = res.data.id
-      for(let j = 0; j < newInvited.length; j++){
-        const userId = newInvited[j]
-        const curId = this.props.id
-        const notificationObject = {
-          command: "send_group_invite_notification",
-          actor: curId,
-          recipient: userId,
-          groupId: groupId
-        }
-
-        NotificationWebSocketInstance.sendNotification(notificationObject);
-
-      }
-
+      // const groupId = res.data.id
+      //
+      // // for(let j = 0; j < newInvited.length; j++){
+      // //   const userId = newInvited[j]
+      // //   const curId = this.props.id
+      //
+      //
+      //   // const notificationObject = {
+      //   //   command: "send_group_invite_notification",
+      //   //   actor: curId,
+      //   //   recipient: userId,
+      //   //   groupId: groupId
+      //   // }
+      //
+      //   // NotificationWebSocketInstance.sendNotification(notificationObject);
+      //
+      // // }
+      //
       this.props.navigation.navigate('Home')
       this.props.authSetActiveNewsfeedSlide(numIndex+1)
 
@@ -643,22 +652,26 @@ class CreateGroupPage extends React.Component{
 
                        </View>
 
-                      <View style = {{top: 20}}>
-                        <View >
-                          <Text style={styles.settingWord}>People in Group</Text>
-                        </View>
-                         <View
-                           style = {{
-                             marginTop:20,
-                             flex:1,
-                             width: width}}
-                          // showsHorizontalScrollIndicator={false}
-                          // horizontal = {true}
-                          >
-                          {this.frequentChatPeople()}
-                        </View>
+                       {/*
+                         <View style = {{top: 20}}>
+                           <View >
+                             <Text style={styles.settingWord}>People in Group</Text>
+                           </View>
+                            <View
+                              style = {{
+                                marginTop:20,
+                                flex:1,
+                                width: width}}
+                             // showsHorizontalScrollIndicator={false}
+                             // horizontal = {true}
+                             >
+                             {this.frequentChatPeople()}
+                           </View>
 
-                      </View>
+                         </View>
+
+
+                         */}
 
                       <View>
                         <Text>Add Address</Text>
@@ -686,7 +699,6 @@ class CreateGroupPage extends React.Component{
                     }}>
                     <TouchableOpacity
                       onPress = {() => this.onCreateGroup()}
-                      disabled={this.state.disabled}
                        style={styles.loginBtn1}>
                       <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
                     </TouchableOpacity>
