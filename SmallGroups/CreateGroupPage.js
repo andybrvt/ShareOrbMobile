@@ -64,7 +64,10 @@ class CreateGroupPage extends React.Component{
   }
 
   testGeoCode = async() =>{
-    const location = await Location.geocodeAsync(this.state.selectedAddress)
+    const location = await Location.reverseGeocodeAsync({
+      latitude: 32.25143,
+      longitude: -111.02191
+    })
 
     console.log(location)
   }
@@ -359,7 +362,7 @@ class CreateGroupPage extends React.Component{
   checkCreating = () => {
     // this function will check whether or not you meet the criteria
     // to sumbit to create a group
-    const {groupPic, groupName, description, publicG, invitedPeople} = this.state
+    const {groupPic, groupName, description, publicG, invitedPeople, selectedAddress} = this.state
     if(groupPic === ""){
       return false
     }
@@ -367,6 +370,9 @@ class CreateGroupPage extends React.Component{
       return false
     }
     if(description === ""){
+      return false
+    }
+    if(selectedAddress === ""){
       return false
     }
     return true
