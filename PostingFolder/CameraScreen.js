@@ -43,7 +43,6 @@ import * as Progress from 'react-native-progress';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Avatar } from 'react-native-elements';
 
-
 const { Clock,
    cond,
    sub,
@@ -75,7 +74,6 @@ class CameraScreen extends React.Component{
 
   clock = new Clock();
 
-
   runLoadingTimer = (clock) => {
     // timer will need 3 things, the clock, state, and config
 
@@ -91,7 +89,6 @@ class CameraScreen extends React.Component{
       toValue: new Value(width), // this will be the value it will go to
       easing: Easing.inOut(Easing.ease)
     }
-
     return block([
       cond(this.isRecording,
 
@@ -113,7 +110,6 @@ class CameraScreen extends React.Component{
 
 
   constructor(props){
-
     super(props)
     this.showFinal = new Value(false)
   }
@@ -142,11 +138,7 @@ class CameraScreen extends React.Component{
   }
 
   componentDidMount(){
-
-
-
     this.allowPermissions()
-
     this.open = this.props.navigation.addListener('focus', () => {
       this.props.openShowCamera()
 
