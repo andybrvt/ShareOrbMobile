@@ -13,18 +13,21 @@ import {
   FlatList,
   Share,
   TouchableOpacity,
-  Linking,
-
+  Clipboard,
 } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import {  Circle, Instagram} from "react-native-feather";
+import {  Circle, Instagram, Download} from "react-native-feather";
 import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
 // const viewRef = useRef();
 import CameraRoll from "@react-native-community/cameraroll";
+import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
+import * as Permissions from 'expo-permissions';
+import FlashMessage from "react-native-flash-message";
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const data3=[
     {
@@ -58,28 +61,49 @@ class GroupPost extends React.PureComponent {
     }
   }
 
+  downloadFile(imageFile) {
+    console.log(imageFile)
+    showMessage({
+      message: "Downloaded to phone",
+      type: "info",
+      backgroundColor: "#1890ff", // background color
+      color: "white", // text color
+      duration:850
+    });
+    const uri = "https://images.unsplash.com/photo-1634937916052-a893c9597b0d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
+    let fileUri = FileSystem.documentDirectory + "shareorb.jpg";
+    FileSystem.downloadAsync(uri, fileUri)
+    .then(({ uri }) => {
+        this.saveFile(uri);
+      })
+      .catch(error => {
+        console.error(error);
+      })
+  }
 
-  // _openCameraRoll = async () => {
-  //   let image = await ImagePicker.launchImageLibraryAsync();
-  //   let { origURL } = image;
-  //   let encodedURL = encodeURIComponent(origURL);
-  //   let instagramURL = `instagram-stories://share?backgroundImage=${encodedURL}`
-  //   Linking.openURL(instagramURL);
-  // }
+  saveFile = async (fileUri: string) => {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status === "granted") {
+          const asset = await MediaLibrary.createAssetAsync(fileUri)
+          await MediaLibrary.createAlbumAsync("Download", asset, false)
+      }
+  }
 
-  _openCameraRoll = async () => {
 
-    const imageFile = this.props.route.params.imageFile
 
-    // let image = await ImagePicker.launchImageLibraryAsync();
-    // let { uri } = image;
-    let encodedURL = encodeURIComponent(imageFile);
-    console.log(encodedURL)
-     let instagramURL = `instagram-stories://`;
-    // let instagramURL = `instagram-stories://share?backgroundImage=${encodedURL}`
+  testInstagram(imageFile) {
 
-     Linking.openURL(instagramURL);
- }
+
+  }
+
+  _openCameraRoll = async (imageFile) => {
+    let image = await ImagePicker.launchImageLibraryAsync();
+    let { origURL } = image;
+    let encodedURL = encodeURIComponent(origURL);
+    let instagramURL = `instagram://library?AssetPath=${encodedURL}`;
+    Linking.openURL(instagramURL);
+  }
+
 
   componentDidMount() {
     if (Platform.OS === 'ios') {
@@ -156,7 +180,7 @@ class GroupPost extends React.PureComponent {
   render(){
 
     const imageFile = this.props.route.params.imageFile.uri
-
+    console.log(imageFile)
     return(
       <BackgroundContainer>
         <View>
@@ -177,12 +201,29 @@ class GroupPost extends React.PureComponent {
              horizontal={false}
               />
           </View>
-          <Instagram
-            stroke = "#d9d9d9"
-            fill="#1890ff"
-            strokeWidth={2}
-            width = {40}
-            height = {40} />
+
+          <View style= {{flexDirection:'row'}}>
+            <TouchableOpacity
+            style={styles.roundButton2}
+            onPress = {() => this.testInstagram(imageFile)}>
+              <Instagram
+                stroke = "#bfbfbf"
+                strokeWidth={2}
+                width = {35}
+                height = {35} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style={styles.roundButton2}
+            onPress = {() => this.downloadFile()}>
+              <Download
+                stroke = "#bfbfbf"
+                strokeWidth={2}
+                width = {35}
+                height = {35} />
+            </TouchableOpacity>
+          </View>
+
           <View style={{alignItems:'center'}}>
           {this.state.showInstagramStory?
             <TouchableOpacity
@@ -201,6 +242,8 @@ class GroupPost extends React.PureComponent {
 
           </View>
         </View>
+        <FlashMessage
+          position="bottom" />
       </BackgroundContainer>
     )
   }
@@ -216,7 +259,22 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     backgroundColor: "#1890ff",
   },
+
+  roundButton2: {
+    borderColor:'#d9d9d9',
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:99,
+    borderRadius: 100,
+    backgroundColor: 'white',
+    elevation:15,
+    marginRight:'10%',
+  },
+
 })
+
 
 
 const mapDispatchToProps = dispatch => {
