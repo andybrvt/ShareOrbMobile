@@ -18,6 +18,7 @@ import CountDown from 'react-native-countdown-component';
 import NoPosts from '../noPosts.svg';
 import authAxios from '../../util';
 import * as globeGroupActions from '../../store/actions/globeGroup';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 const height = Dimensions.get("window").height
 
@@ -83,10 +84,21 @@ class GlobeGroup extends React.Component{
     renderItem = ({item}) => {
 
       return(
-        <NewGlobePost
-          navigation = {this.props.navigation}
-          id = {this.props.id}
-          data = {item}/>
+        <GestureRecognizer
+          config={{
+            detectSwipeUp: false,
+            detectSwipeDown: false,
+          }}
+          style = {{flex: 1}}
+          onSwipeLeft={(state) => this.onSwipeLeft(state)}
+          onSwipeRight={(state) => this.onSwipeRight(state)}
+          >
+          <NewGlobePost
+            navigation = {this.props.navigation}
+            id = {this.props.id}
+            data = {item}/>
+        </GestureRecognizer>
+
       )
     }
 
@@ -139,15 +151,21 @@ class GlobeGroup extends React.Component{
 
     }
 
+    onSwipeLeft(gestureState) {
+      this.props.navigation.navigate("Explore")
+     }
+
+     onSwipeRight(gestureState) {
+       this.props.navigation.navigate("Test1")
+     }
+
     render(){
       let groupPosts = []
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
       }
-      console.log(groupPosts)
       return(
         <View style = {{flex: 1}}>
-          <Text>testtt</Text>
             <FlatList
               contentContainerStyle={{paddingBottom:75}}
               // ListHeaderComponent = {this.listHeader}

@@ -8,7 +8,8 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   TouchableOpacity,
-  processColor
+  processColor,
+  FlatList
  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -34,7 +35,7 @@ import * as Progress from 'react-native-progress';
 import FirstPost from './FirstPost';
 import SwipeInfiniteScrollHolder from './SwipeInfiniteScrollHolder';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-
+import GlobeGroup from './GlobeGroup/GlobeGroup';
 
 const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 const height = Dimensions.get('window').height
@@ -173,46 +174,31 @@ class NewsfeedView extends React.Component{
 
   }
 
-  onSwipe = (gestureName, gestureState) => {
-    console.log(gestureName, gestureState)
-    const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
-    switch (gestureName) {
-      // case SWIPE_UP:
-      //   this.setState({backgroundColor: 'red'});
-      //   break;
-      // case SWIPE_DOWN:
-      //   this.setState({backgroundColor: 'green'});
-      //   break;
-      case SWIPE_LEFT:
-        // this.setState({backgroundColor: 'blue'});
 
-        this.props.navigation.navigate("Explore")
-        break;
-      case SWIPE_RIGHT:
-        // this.setState({backgroundColor: 'yellow'});
-        this.props.navigation.navigate("Test1")
-        break;
-    }
-  }
+  onSwipeLeft(gestureState) {
+    this.props.navigation.navigate("Explore")
+   }
+
+   onSwipeRight(gestureState) {
+     this.props.navigation.navigate("Test1")
+   }
+
+
+
 
 
 
   render(){
 
+    console.log('how are things')
     return(
 
-      <GestureRecognizer
-        onSwipe = {(direction, state) => this.onSwipe(direction, state)}
-        style = {{flex: 1}}
-        >
+
         <BackgroundContainer>
 
-          <View style = {{
-              flex: 1,
-              backgroundColor:'red'
-            }}>
 
-          </View>
+
+
           {
             this.props.showFirstPostModal ?
             <FirstPost
@@ -223,6 +209,17 @@ class NewsfeedView extends React.Component{
              :
              null
           }
+
+          <View style = {{
+              flex: 1,
+            }}>
+
+          <GlobeGroup
+            navigation = {this.props.navigation}
+             />
+
+
+          </View>
 
           {/*
             <Animated.View
@@ -249,7 +246,6 @@ class NewsfeedView extends React.Component{
 
         </BackgroundContainer>
 
-      </GestureRecognizer>
 
 
 

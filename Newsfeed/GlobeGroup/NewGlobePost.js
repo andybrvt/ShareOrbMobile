@@ -73,7 +73,6 @@ class NewGlobePost extends React.Component{
 
 
   onLike = ( likerId, notificationToken) => {
-    console.log(this.props.data.id)
     WebSocketGlobeInstance.sendGroupLike(
       this.props.data.id,
       likerId
@@ -336,7 +335,6 @@ class NewGlobePost extends React.Component{
 
   render(){
 
-    console.log('is there an infinite loop here')
     let postId = ""
     let itemImage = ""
     let group = {}
