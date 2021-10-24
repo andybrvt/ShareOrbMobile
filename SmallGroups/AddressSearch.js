@@ -14,6 +14,9 @@ import { Text,
  } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { ChevronsLeft } from "react-native-feather";
+
 
 // any questions you have about google places and billing go here (you have to
 // set up billing information inorder to deploy)
@@ -28,14 +31,31 @@ import * as Location from 'expo-location';
 
 class AddressSearch extends React.Component{
 
+  componentDidMount(){
+    this.ref.focus()
+  }
 
   render(){
     return(
-      <View style = {{
+      <SafeAreaView style = {{
           flex:1,
-          backgroundColor: 'gray'}}>
+          backgroundColor: 'gainsboro',
+          padding: 10
+        }}>
+
+        <TouchableOpacity
+          onPress = {() => this.props.onClose()}
+          style = {{
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}>
+          <ChevronsLeft />
+          <Text>Back</Text>
+        </TouchableOpacity>
         <GooglePlacesAutocomplete
-          placeholder='Search'
+          ref = {ref => this.ref = ref}
+          autoFocus = {true}
+          placeholder='Search your address'
           onPress={(data, details = null) => {
             // 'details' is provided when fetchDetails = true
             console.log(data, details);
@@ -45,13 +65,22 @@ class AddressSearch extends React.Component{
           onFail = {(err) => {
             console.log(err)
           }}
+          style = {{
+            textInput: {
+
+              color: 'black'
+            },
+            predefinedPlacesDescription: {
+             color: '#1faadb',
+           },
+          }}
           query={{
             key: 'AIzaSyCSJihRY1IF_wsdEWBgtK6UnmC9p_kxkh4',
             language: 'en',
           }}
         />
 
-      </View>
+      </SafeAreaView>
 
     )
   }

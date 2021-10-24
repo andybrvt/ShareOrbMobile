@@ -659,19 +659,12 @@ class CreateGroupPage extends React.Component{
 
                       <TouchableOpacity
                         onPress = {() => this.onShowAddressSearch()}
-                        // onPress = {() => this.testGeoCode()}
                         >
                         <Text>{this.state.selectedAddress}</Text>
                         <Search />
                       </TouchableOpacity>
 
-                      <TouchableOpacity
-                        // onPress = {() => this.onShowAddressSearch()}
-                        onPress = {() => this.testGeoCode()}
-                        >
-                        <Text>{this.state.selectedAddress}</Text>
-                        <Search />
-                      </TouchableOpacity>
+
 
 
                       </View>
@@ -733,6 +726,7 @@ class CreateGroupPage extends React.Component{
       visible = {this.state.showAddressSearch}>
 
        <AddressSearch
+         onClose = {this.onCloseAddressSearch}
          setAddress = {this.setAddress}
          />
      </Modal>
