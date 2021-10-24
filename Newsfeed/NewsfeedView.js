@@ -33,6 +33,8 @@ import authAxios from '../util';
 import * as Progress from 'react-native-progress';
 import FirstPost from './FirstPost';
 import SwipeInfiniteScrollHolder from './SwipeInfiniteScrollHolder';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 
 const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 const height = Dimensions.get('window').height
@@ -171,44 +173,83 @@ class NewsfeedView extends React.Component{
 
   }
 
+  onSwipe = (gestureName, gestureState) => {
+    console.log(gestureName, gestureState)
+    const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    switch (gestureName) {
+      // case SWIPE_UP:
+      //   this.setState({backgroundColor: 'red'});
+      //   break;
+      // case SWIPE_DOWN:
+      //   this.setState({backgroundColor: 'green'});
+      //   break;
+      case SWIPE_LEFT:
+        // this.setState({backgroundColor: 'blue'});
+
+        this.props.navigation.navigate("Explore")
+        break;
+      case SWIPE_RIGHT:
+        // this.setState({backgroundColor: 'yellow'});
+        this.props.navigation.navigate("Test1")
+        break;
+    }
+  }
+
 
 
   render(){
 
     return(
-      <BackgroundContainer>
 
-        {
-          this.props.showFirstPostModal ?
-          <FirstPost
-            visible = {this.props.showFirstPostModal}
-            unShow = {this.props.authUnshowFirstPostModal}
-            show = {this.props.authShowFirstPostModal}
-             />
-           :
-           null
-        }
+      <GestureRecognizer
+        onSwipe = {(direction, state) => this.onSwipe(direction, state)}
+        style = {{flex: 1}}
+        >
+        <BackgroundContainer>
 
-          <Animated.View
-            style = {{
-              // backgroundColor: backgroundGradient
-            }}
-            >
-            <SwipeInfiniteScrollHolder
-              // navGroupIDCondition={navGroupIDCondition}
-              // test={test}
-              navigation = {this.props.navigation}
-              smallGroups = {this.props.smallGroups}
-              curLoad = {this.props.curLoad}
-              activeSlide = {this.props.activeSlide}
-              setNull = {this.props.authSetActiveNewsfeedSlideNull}
+          <View style = {{
+              flex: 1,
+              backgroundColor:'red'
+            }}>
+
+          </View>
+          {
+            this.props.showFirstPostModal ?
+            <FirstPost
+              visible = {this.props.showFirstPostModal}
+              unShow = {this.props.authUnshowFirstPostModal}
+              show = {this.props.authShowFirstPostModal}
                />
+             :
+             null
+          }
 
-          </Animated.View>
+          {/*
+            <Animated.View
+              style = {{
+                // backgroundColor: backgroundGradient
+              }}
+              >
+              <SwipeInfiniteScrollHolder
+                // navGroupIDCondition={navGroupIDCondition}
+                // test={test}
+                navigation = {this.props.navigation}
+                smallGroups = {this.props.smallGroups}
+                curLoad = {this.props.curLoad}
+                activeSlide = {this.props.activeSlide}
+                setNull = {this.props.authSetActiveNewsfeedSlideNull}
+                 />
+
+            </Animated.View>
+
+
+            */}
 
 
 
-      </BackgroundContainer>
+        </BackgroundContainer>
+
+      </GestureRecognizer>
 
 
 

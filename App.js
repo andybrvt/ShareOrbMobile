@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import { createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import { CardStyleInterpolators,createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Constants from 'expo-constants';
 import * as ExpoNotifications from 'expo-notifications';
 
@@ -793,6 +793,8 @@ class App extends Component{
 
   render(){
 
+    // DELETE SOME STUFF IN THESE ROUTES HERE
+
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth
@@ -815,14 +817,18 @@ class App extends Component{
                     // headerMode ="none"
                     initialRouteName = {this.props.showIntialInstructions ? "intro" : "tab"}
                     screenOptions={{
-                      gestureEnabled: true
+                      gestureEnabled: true,
                       // headerShown: false,
+                      cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
                     }}>
 
 
                       <Stack.Screen
                         options={{headerShown: false, }}
-                        name = "tabs" component= {this.createTabStack}/>
+                        name = "tabs"
+                        // component= {this.createTabStack}
+                        component= {NewsfeedView}
+                        />
                       <Stack.Screen
                         options={{headerShown: false, }}
                         name = "intro" component= {MiniAppIntro}/>
@@ -962,21 +968,50 @@ class App extends Component{
 
                            name = 'DisplayLikeList' component = {DisplayLikeList}/>
 
-                           <Stack.Screen
-                             options={{
-                               headerStyle:{
-                                 shadowColor:'#fff', //ios
-                                 elevation:0,        // android
-                               },
-                               title: 'Post',
-                                ...TransitionPresets.SlideFromRightIOS,
-                              }}
+                 <Stack.Screen
+                   options={{
+                     headerStyle:{
+                       shadowColor:'#fff', //ios
+                       elevation:0,        // android
+                     },
+                     title: 'Post',
+                      ...TransitionPresets.SlideFromRightIOS,
+                    }}
 
-                              name = 'GroupPost'
-                              component = {GroupPost}
-                              // component = {Testing}
+                    name = 'GroupPost'
+                    component = {GroupPost}
+                    // component = {Testing}
 
-                              />
+                    />
+
+                    <Stack.Screen
+                      options={{
+                        headerShown: false,
+                         ...TransitionPresets.SlideFromRightIOS,
+                       }}
+
+                       name = 'Explore'
+                       // component = {GroupPost}
+                       component = {Explore}
+
+                       />
+
+                     <Stack.Screen
+                       options={{
+                         headerShown: false,
+                         gestureEnabled: true,
+                         gestureDirection: 'horizontal-inverted',
+                         // ...TransitionPresets.SlideFromRightIOS,
+
+                        }}
+
+
+
+                        name = 'Test1'
+                        // component = {GroupPost}
+                        component = {Testing}
+
+                        />
                     <Stack.Screen
                       options={{
                         headerStyle:{
