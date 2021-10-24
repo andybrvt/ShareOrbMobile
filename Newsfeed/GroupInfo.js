@@ -19,7 +19,7 @@ import {
   ActivityIndicator,
   Clipboard
  } from 'react-native';
-import { LogOut, Lock, User, Bell, Globe, ArrowRight, UserPlus, Menu, Mic, Unlock} from "react-native-feather";
+import { LogOut, Lock, User, Bell, Map, Globe, ArrowRight, UserPlus, Menu, Mic, Unlock, MapPin} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -29,8 +29,11 @@ import authAxios from '../util';
 import * as authActions from '../store/actions/auth';
 import FlashMessage from "react-native-flash-message";
 import { showMessage, hideMessage } from "react-native-flash-message";
-import { faQrcode, faFire, faAppleAlt, Android, faRobot, faAndroid, faGoogle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faQrcode, faFire, faAppleAlt, faMapMarked, Android, faRobot, faAndroid, faGoogle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import * as Linking from 'expo-linking';
+
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -71,16 +74,11 @@ class GroupInfo extends React.Component{
       .catch((errorMsg) => console.log(errorMsg));z
   };
 
-  copyToClipboardApple = () => {
-    showMessage({
-      message: "Copied IOS download link",
-      type: "info",
-      backgroundColor: "#1890ff", // background color
-      color: "white", // text color
-      duration:850
-    });
-    Clipboard.setString("Download ShareOrb on IOS:"+" https://testflight.apple.com/join/v58j1FSw")
+  testLocation = () => {
+    Linking.openURL(`http://maps.google.com/?daddr=${'2550 W Ironwood Hill Dr, Tucson, AZ 85745'}`);
   }
+
+
 
   leaveGroup = (groupId) => {
     const userId = this.props.curId
@@ -124,15 +122,7 @@ class GroupInfo extends React.Component{
 
   }
 
-  copyToClipboardAndroid = () => {
-    showMessage({
-      message: "Copied Android download link",
-      backgroundColor: "#1890ff", // background color
-      color: "white", // text color
-      duration:1000
-    });
-    Clipboard.setString("Download ShareOrb on Android:"+" https://play.google.com/store/apps/details?id=com.pinghsu520.ShareOrbMobile")
-  }
+
 
   toggleLeave = (groupID) => {
     Alert.alert(
@@ -254,10 +244,6 @@ class GroupInfo extends React.Component{
     </View>
   );
 
-  openQR = () => {
-    this.props.navigation.navigate("DownloadQR")
-  }
-
   render(){
 
     let data = []
@@ -284,6 +270,7 @@ class GroupInfo extends React.Component{
         for(let i = 0; i < this.props.smallGroups.length; i++){
           if(this.props.smallGroups[i].id === groupId){
             const group = this.props.smallGroups[i]
+            console.log(group)
             picture = `${global.IMAGE_ENDPOINT}`+group.groupPic
             groupName = group.group_name;
             members = group.members
@@ -345,10 +332,19 @@ class GroupInfo extends React.Component{
                 marginTop:10,
                 }}>
                   <Text style={{fontSize:20, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
-                  <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.groupId)}>
+                {/*
+                <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.groupId)}>
+
                     <Text style={{fontSize:12,fontFamily:'Nunito-SemiBold', textAlign:'center', color:'#8c8c8c',}}> {members.length} Members </Text>
+
                   </TouchableOpacity>
+                */}
+                <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                  <MapPin style={{marginRight:5,}} stroke="#8c8c8c" strokeWidth={2.5}  width={15} height={15} />
+                  <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>2219 West Palmdale Street</Text>
+                </View>
               </View>
+              {/*
               <TouchableOpacity
                 onPress = {() => this.ViewProfile(creatorUserName)}
                 style={{flexDirection:'row', alignItems:'center'}}>
@@ -361,6 +357,8 @@ class GroupInfo extends React.Component{
                   />
                 <Text style={{marginLeft:5, fontFamily:'Nunito-SemiBold', fontSize:13}}>{creatorFirstName+" "+creatorLastName}</Text>
               </TouchableOpacity>
+
+              */}
             </View>
 
 
@@ -436,51 +434,22 @@ class GroupInfo extends React.Component{
              fontSize:15,
              fontFamily:'Nunito-SemiBold', marginLeft:10,}}> Share The Orb </Text>
             </View>
-          <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
-            <View style={{marginRight:'15%'}}>
-              <TouchableHighlight
-                onPress={() => this.copyToClipboardApple()}
-                style={styles.roundButton2}>
-                <FontAwesomeIcon
-                 style = {{
-                   color:'white',
-                   right:1,
-                 }}
-                 size = {25}
-                 icon={faAppleAlt} />
-              </TouchableHighlight>
-            </View>
-            <View style={{marginRight:'15%'}}>
-              <TouchableHighlight
-                onPress={() => this.copyToClipboardAndroid()}
-                style={styles.roundButton2}>
-                <FontAwesomeIcon
-                 style = {{
-                   color:'white',
-                   right:1,
-                 }}
-                 size = {25}
-                 icon={faRobot} />
-              </TouchableHighlight>
-            </View>
-
-            <View>
-              <TouchableHighlight
-                onPress={() => this.openQR()}
-                style={styles.roundButton2}>
-                <FontAwesomeIcon
-                 style = {{
-                   color:'white',
-                   right:1,
-                 }}
-                 size = {25}
-                 icon={faQrcode} />
-              </TouchableHighlight>
-            </View>
+              <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
+            <TouchableHighlight
+              onPress={() => this.testLocation()}
+              style={styles.roundButton2}>
+              <FontAwesomeIcon
+               style = {{
+                 color:'white',
+                 right:1,
+               }}
+               size = {25}
+               icon={faMapMarked} />
+            </TouchableHighlight>
           </View>
 
 
-          {
+          {/*
             (this.props.curId==creatorID)?
             <View style={{alignItems:'center', top:'5%'}}>
               <TouchableOpacity  onPress={() => this.toggleLeave(groupID)} style={styles.loginBtn1}>
@@ -495,7 +464,7 @@ class GroupInfo extends React.Component{
               </TouchableOpacity>
             </View>
 
-          }
+          */}
 
         </View>
 
@@ -508,8 +477,7 @@ class GroupInfo extends React.Component{
           callbackNode={this.fall}
           enabledGestureInteraction={true}
         />
-      <FlashMessage
-        position="bottom" />
+
       </BackgroundContainer>
     )
   }
