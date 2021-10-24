@@ -15,9 +15,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
-  ActivityIndicator
+  ActivityIndicator,
+  Modal
  } from 'react-native';
-import { LogOut, Lock, User, Bell, Globe, Menu, PlusCircle, ArrowLeft} from "react-native-feather";
+import { Search, LogOut, Lock, User, Bell, Globe, Menu, PlusCircle, ArrowLeft} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import CameraPic from './camera.jpg';
 import { Avatar } from 'react-native-elements';
@@ -33,7 +34,7 @@ import SearchResultsMultiple from './SearchResultsMultiple';
 import { connect } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
-
+import AddressSearch from './AddressSearch';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -55,8 +56,21 @@ class CreateGroupPage extends React.Component{
       searchValue: '',
       showSearch: false,
       disabled:false,
+      showAddressSearch: false
     }
     this.bs = React.createRef()
+  }
+
+  onShowAddressSearch = () => {
+    this.setState({
+      showAddressSearch: true
+    })
+  }
+
+  onCloseAddressSearch = () => {
+    this.setState({
+      showAddressSearch: false
+    })
   }
 
   onShowSearch = () => {
@@ -623,6 +637,18 @@ class CreateGroupPage extends React.Component{
 
                       </View>
 
+                      <View>
+                        <Text>Add Address</Text>
+
+                      <TouchableOpacity
+                        onPress = {() => this.onShowAddressSearch()}
+                        >
+                        <Search />
+                      </TouchableOpacity>
+
+
+                      </View>
+
                   </View>
 
                   <View style={{marginTop:30}}>
@@ -674,6 +700,15 @@ class CreateGroupPage extends React.Component{
          callbackNode={this.fall}
          enabledGestureInteraction={true}
        />
+
+     <Modal
+      animationType = "slide"
+      visible = {this.state.showAddressSearch}>
+
+       <AddressSearch />
+     </Modal>
+
+
       </BackgroundContainer>
     )
   }
