@@ -35,6 +35,7 @@ import { connect } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import AddressSearch from './AddressSearch';
+import * as Location from 'expo-location';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -56,9 +57,25 @@ class CreateGroupPage extends React.Component{
       searchValue: '',
       showSearch: false,
       disabled:false,
-      showAddressSearch: false
+      showAddressSearch: false,
+      selectedAddress: ""
     }
     this.bs = React.createRef()
+  }
+
+  testGeoCode = async() =>{
+    const location = await Location.geocodeAsync(this.state.selectedAddress)
+
+    console.log(location)
+  }
+
+  setAddress = async(address) => {
+    // this function will set the address into the states
+    const location = await Location.geocodeAsync(address)
+    this.setState({
+      selectedAddress: address,
+      showAddressSearch: false
+    })
   }
 
   onShowAddressSearch = () => {
@@ -642,7 +659,17 @@ class CreateGroupPage extends React.Component{
 
                       <TouchableOpacity
                         onPress = {() => this.onShowAddressSearch()}
+                        // onPress = {() => this.testGeoCode()}
                         >
+                        <Text>{this.state.selectedAddress}</Text>
+                        <Search />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        // onPress = {() => this.onShowAddressSearch()}
+                        onPress = {() => this.testGeoCode()}
+                        >
+                        <Text>{this.state.selectedAddress}</Text>
                         <Search />
                       </TouchableOpacity>
 
@@ -705,7 +732,9 @@ class CreateGroupPage extends React.Component{
       animationType = "slide"
       visible = {this.state.showAddressSearch}>
 
-       <AddressSearch />
+       <AddressSearch
+         setAddress = {this.setAddress}
+         />
      </Modal>
 
 

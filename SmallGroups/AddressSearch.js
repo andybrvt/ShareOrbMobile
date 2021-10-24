@@ -12,7 +12,8 @@ import { Text,
   ScrollView,
   Dimensions
  } from 'react-native';
- import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import * as Location from 'expo-location';
 
 // any questions you have about google places and billing go here (you have to
 // set up billing information inorder to deploy)
@@ -38,6 +39,8 @@ class AddressSearch extends React.Component{
           onPress={(data, details = null) => {
             // 'details' is provided when fetchDetails = true
             console.log(data, details);
+            this.props.setAddress(data.description)
+
           }}
           onFail = {(err) => {
             console.log(err)
