@@ -16,7 +16,8 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   ActivityIndicator,
-  Modal
+  Modal,
+  Alert
  } from 'react-native';
 import { Search, LogOut, Lock, User, Bell, Globe, Menu, PlusCircle, ArrowLeft} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
@@ -36,6 +37,11 @@ import * as authActions from '../store/actions/auth';
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import AddressSearch from './AddressSearch';
 import * as Location from 'expo-location';
+import { faStore, faUsers, faUserFriends } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import Animated, {Easing} from 'react-native-reanimated';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -58,7 +64,11 @@ class CreateGroupPage extends React.Component{
       showSearch: false,
       disabled:false,
       showAddressSearch: false,
-      selectedAddress: ""
+      selectedAddress: "",
+      businessCondition:false,
+
+      inputValue:'',
+      isModalVisible:false,
     }
     this.bs = React.createRef()
   }
@@ -84,6 +94,12 @@ class CreateGroupPage extends React.Component{
   onShowAddressSearch = () => {
     this.setState({
       showAddressSearch: true
+    })
+  }
+
+  onShowBusinessCondition = () => {
+    this.setState({
+      businessCondition: !this.state.businessCondition,
     })
   }
 
@@ -267,58 +283,6 @@ class CreateGroupPage extends React.Component{
   }
 
 
-  frequentChatPeople=()=>{
-    return(
-      <View style = {styles.frequentPeopleContainer}>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={{ flexDirection:'row'}}>
-          {
-              this.state.invitedPeople.map((item, index) => {
-                return(
-                  <View
-                    key = {index}
-                    style={[styles.column]}>
-                    <Avatar
-                      rounded
-                      source = {{
-                        uri: `${global.IMAGE_ENDPOINT}`+item.profile_picture
-                      }}
-                      size = {50}
-                    />
-                  <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.first_name} {item.last_name}</Text>
-                  </View>
-                )
-              })
-            }
-        </ScrollView>
-        <TouchableOpacity
-          onPress = {() => this.onShowSearch()}
-          style={[styles.column]}>
-           <PlusCircle
-             stroke = "white"
-             fill = {'#1890ff'}
-             width = {40}
-             height = {40}
-              />
-          </TouchableOpacity>
-
-
-      </View>
-
-    )
-  }
-  renderHeader = () => (
-    <View style={styles.test}>
-    <View style={styles.header}>
-      <View style={styles.panelHeader}>
-        <View style={styles.panelHandle} />
-      </View>
-    </View>
-    </View>
-  );
-
   onOutSideClick = () => {
     Keyboard.dismiss()
     this.bs.current.snapTo(1)
@@ -444,6 +408,21 @@ class CreateGroupPage extends React.Component{
 
   }
 
+
+  businessAlert = () => {
+    console.log("hi")
+    return(
+        <Modal  animationType = "slide" visible = {true}>
+
+          <AddressSearch
+            onClose = {this.onCloseAddressSearch}
+            setAddress = {this.setAddress}
+            />
+        </Modal>
+    )
+  }
+
+
   onBack = () => {
     this.props.navigation.goBack(0)
   }
@@ -528,12 +507,54 @@ class CreateGroupPage extends React.Component{
 
                       }}>
 
-                      <View style={{flexDirection:'column',
-                        alignItems:'center',
-                        justifyContent:'center',
-                        width:'100%',
-                        // backgroundColor:'red',
-                        marginTop:'25%', }}>
+    <View style={{flexDirection:'column',
+      alignItems:'center',
+      justifyContent:'center',
+      width:'100%',
+      // backgroundColor:'red',
+      marginTop:'20%', }}>
+
+
+        <View style={{flexDirection:'row',
+          alignItems:'center',
+          justifyContent:'center',
+          width:'100%',
+          // backgroundColor:'red',
+        height:'70%'
+      }}>
+          <View style={{flexDirection:'column'}}>
+
+
+            <View style={{flex:1,alignItems:'center'}}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("PublicOrb")}
+                activeOpacity={0.7} style={styles.roundButton2}>
+              <FontAwesomeIcon
+               style = {{
+                 color:'white',
+                 right:1,
+               }}
+               size = {70}
+               icon={faUserFriends} />
+             <Text style={{fontFamily:'Nunito-Bold', fontSize:20, textAlign: 'center', width:'70%', color:'white'}}>Create a public orb</Text>
+             </TouchableOpacity>
+           </View>
+
+            <View style={{flex:1,alignItems:'center'}}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => this.onShowBusinessCondition()} style={styles.roundButton2}>
+              <FontAwesomeIcon
+               style = {{
+                 color:'white',
+                 right:1,
+               }}
+               size = {70}
+               icon={faStore} />
+             <Text style={{fontFamily:'Nunito-Bold', fontSize:20, textAlign: 'center', width:'70%', color:'white'}}>Create a business orb</Text>
+             </TouchableOpacity>
+           </View>
+          </View>
+        </View>
+
                         <View style={{flexDirection:'row', alignItems:'center',}}>
 
                         {
@@ -599,6 +620,7 @@ class CreateGroupPage extends React.Component{
                           value = {this.state.description}
                           />
                       </View>
+                      {/*
                       <View style={{
 
                           flexDirection:'row',
@@ -652,27 +674,8 @@ class CreateGroupPage extends React.Component{
 
 
                        </View>
+                       */}
 
-                       {/*
-                         <View style = {{top: 20}}>
-                           <View >
-                             <Text style={styles.settingWord}>People in Group</Text>
-                           </View>
-                            <View
-                              style = {{
-                                marginTop:20,
-                                flex:1,
-                                width: width}}
-                             // showsHorizontalScrollIndicator={false}
-                             // horizontal = {true}
-                             >
-                             {this.frequentChatPeople()}
-                           </View>
-
-                         </View>
-
-
-                         */}
 
                       <View>
                         <Text>Add Address</Text>
@@ -740,6 +743,25 @@ class CreateGroupPage extends React.Component{
          enabledGestureInteraction={true}
        />
 
+              {/** This is our modal component containing textinput and a button */}
+              <Modal animationType="fade"
+                     transparent
+                     visible={this.state.businessCondition}
+                     presentationStyle="overFullScreen"
+                     onDismiss={this.onShowBusinessCondition}>
+                  <View style={styles.viewWrapper}>
+                      <View style={styles.modalView}>
+                          <TextInput placeholder="Enter Code..."
+                                     value={this.state.inputValue} style={styles.textInput}
+                                     onChangeText={(value) =>this.setState({
+                                       inputValue:value
+                                     })} />
+
+                          {/** This button is responsible to close the modal */}
+                          <Button title="Close" onPress={this.onShowBusinessCondition} />
+                      </View>
+                  </View>
+              </Modal>
      <Modal
       animationType = "slide"
       visible = {this.state.showAddressSearch}>
@@ -756,6 +778,42 @@ class CreateGroupPage extends React.Component{
   }
 }
 const styles = StyleSheet.create({
+  screen: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#fff",
+    },
+    viewWrapper: {
+        flex: 1,
+
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+    },
+    modalView: {
+        alignItems: "center",
+        justifyContent: "center",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        elevation: 5,
+        transform: [{ translateX: -(width * 0.4) },
+                    { translateY: -90 }],
+        height: 180,
+        width: width * 0.8,
+        backgroundColor: "#fff",
+        borderRadius: 7,
+    },
+    textInput: {
+        width: "80%",
+        borderRadius: 5,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderColor: "rgba(0, 0, 0, 0.2)",
+        borderWidth: 1,
+        marginBottom: 8,
+    },
   panel: {
     padding: 20,
     backgroundColor: '#FFFFFF',
@@ -842,6 +900,20 @@ const styles = StyleSheet.create({
 
     backgroundColor: "#40a9ff",
   },
+
+  roundButton2: {
+    width:210,
+    height:210,
+    padding:15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:99,
+    borderRadius: 125,
+    backgroundColor: '#1890ff',
+    elevation:15,
+
+  },
+
   loginBtn2: {
     width: "80%",
     borderRadius: 25,
@@ -855,7 +927,12 @@ const styles = StyleSheet.create({
 
     backgroundColor: "gray",
   },
-
+  modal: {
+    backgroundColor: 'white',
+    margin: 15,
+    alignItems: undefined,
+    justifyContent: undefined,
+  },
   settingWord: {
     left:5,
     color:'#919191',
