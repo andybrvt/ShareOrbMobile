@@ -74,8 +74,8 @@ class GroupInfo extends React.Component{
       .catch((errorMsg) => console.log(errorMsg));z
   };
 
-  testLocation = () => {
-    Linking.openURL(`http://maps.google.com/?daddr=${'2550 W Ironwood Hill Dr, Tucson, AZ 85745'}`);
+  navMapsLocation = (address) => {
+    Linking.openURL(`http://maps.google.com/?daddr=${address}`);
   }
 
 
@@ -91,8 +91,6 @@ class GroupInfo extends React.Component{
 
     authAxios.post(`${global.IP_CHANGE}`+"/mySocialCal/leaveSmallGroup/"+groupId+'/'+userId)
     .then(res => {
-
-      console.log(res.data, 'stuff here')
 
       this.props.authUpdateAllSmallGroup(res.data.smallGroups, res.data.smallGroupId)
       this.setState({
@@ -250,7 +248,6 @@ class GroupInfo extends React.Component{
     if(this.props.smallGroups){
       data = this.props.smallGroups
     }
-    console.log(data[0].creator)
     let creatorID=0
     let creatorFirstName=""
     let creatorLastName=""
@@ -263,14 +260,16 @@ class GroupInfo extends React.Component{
     let publicG = false
     let code = ""
     let groupID=""
-
+    let address=""
     if(this.props.smallGroups){
       if(this.props.route.params.groupId){
         const groupId = this.props.route.params.groupId
         for(let i = 0; i < this.props.smallGroups.length; i++){
           if(this.props.smallGroups[i].id === groupId){
             const group = this.props.smallGroups[i]
+            console.log("LLLL")
             console.log(group)
+            address=group.address
             picture = `${global.IMAGE_ENDPOINT}`+group.groupPic
             groupName = group.group_name;
             members = group.members
@@ -339,9 +338,9 @@ class GroupInfo extends React.Component{
 
                   </TouchableOpacity>
                 */}
-                <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                <View style={{flexDirection:'row', width:'60%', justifyContent:'center', alignItems:'center'}}>
                   <MapPin style={{marginRight:5,}} stroke="#8c8c8c" strokeWidth={2.5}  width={15} height={15} />
-                  <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>2219 West Palmdale Street</Text>
+                  <Text style={{fontSize:13, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{address}</Text>
                 </View>
               </View>
               {/*
@@ -436,7 +435,7 @@ class GroupInfo extends React.Component{
             </View>
               <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
             <TouchableHighlight
-              onPress={() => this.testLocation()}
+              onPress={() => this.navMapsLocation(address)}
               style={styles.roundButton2}>
               <FontAwesomeIcon
                style = {{

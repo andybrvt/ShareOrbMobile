@@ -98,6 +98,8 @@ import authAxios from './util';
 import GoalPage from './GoalAlbum/GoalPage';
 import * as dateFns from 'date-fns';
 import CreateGroupPage from './SmallGroups/CreateGroupPage';
+import PublicOrb from './SmallGroups/PublicOrb';
+import BusinessOrb from './SmallGroups/BusinessOrb';
 import JoinScreen from './SmallGroups/JoinScreen';
 import Announcements from './SmallGroups/Announcements';
 import PeopleInGroup from './SmallGroups/PeopleInGroup';
@@ -942,6 +944,30 @@ class App extends Component{
                          ...TransitionPresets.SlideFromRightIOS,
                                         }}
                        name = 'MessageFriend' component = {MessageFriend}/>
+                     <Stack.Screen
+                       options={{
+                         headerStyle:{
+                           shadowColor:'#fff', //ios
+                           elevation:0,        // android
+
+                         },
+                         title: 'Create Public Orb',
+                          ...TransitionPresets.SlideFromRightIOS,
+                                         }}
+                        name = 'PublicOrb' component = {PublicOrb}/>
+                      <Stack.Screen
+                        options={{
+                          headerStyle:{
+                            shadowColor:'#fff', //ios
+                            elevation:0,        // android
+
+                          },
+                          title: 'Create Business',
+                           ...TransitionPresets.SlideFromRightIOS,
+
+                         }}
+
+                         name = 'BusinessOrb' component = {BusinessOrb}/>
                        <Stack.Screen
                          options={{
                            headerStyle:{

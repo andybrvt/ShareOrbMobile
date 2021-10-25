@@ -55,6 +55,8 @@ class AddressSearch extends React.Component{
         <GooglePlacesAutocomplete
           ref = {ref => this.ref = ref}
           autoFocus = {true}
+          enablePoweredByContainer={false}
+          currentLocation={true}
           placeholder='Search your address'
           onPress={(data, details = null) => {
             // 'details' is provided when fetchDetails = true
