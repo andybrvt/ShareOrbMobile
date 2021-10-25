@@ -112,13 +112,18 @@ class GlobeGroup extends React.Component{
       return(
         <View style = {styles.header}>
           <View style = {styles.sideHeaders}>
-            <Avatar
-              source = {{
-                uri: `${global.IMAGE_ENDPOINT}` + this.props.profilePic,
-              }}
-              rounded
-              size = {40}
-               />
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate("profile")}
+              >
+              <Avatar
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}` + this.props.profilePic,
+                }}
+                rounded
+                size = {40}
+                 />
+
+            </TouchableOpacity>
 
           </View>
 
@@ -130,10 +135,15 @@ class GlobeGroup extends React.Component{
           </View>
 
           <View style = {styles.sideHeaders}>
-            <Bell
-              stroke = "gray"
-              fill = "gray"
-               />
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate("notification")}
+              >
+              <Bell
+                stroke = "gray"
+                fill = "gray"
+                 />
+            </TouchableOpacity>
+
           </View>
 
 

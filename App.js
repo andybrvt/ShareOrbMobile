@@ -829,6 +829,25 @@ class App extends Component{
                         // component= {this.createTabStack}
                         component= {NewsfeedView}
                         />
+
+                    <Stack.Screen
+                      options={{
+                        headerShown: false,
+                        animationEnabled: false
+                      }}
+                      name = "profile"
+                      // component= {this.createTabStack}
+                      component= {NewProfile}
+                      />
+
+                    <Stack.Screen
+                      options={{headerShown: false, }}
+                      name = "notification"
+                      // component= {this.createTabStack}
+                      component= {Notifications}
+                      />
+
+
                       <Stack.Screen
                         options={{headerShown: false, }}
                         name = "intro" component= {MiniAppIntro}/>
