@@ -18,6 +18,12 @@ import CountDown from 'react-native-countdown-component';
 import NoPosts from '../noPosts.svg';
 import authAxios from '../../util';
 import * as globeGroupActions from '../../store/actions/globeGroup';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import { Avatar } from 'react-native-elements';
+import { Bell,ArrowUpCircle, Plus, Mail, UserPlus } from "react-native-feather";
+import MainLogo from '../../logo.svg';
+
+
 
 const height = Dimensions.get("window").height
 
@@ -83,26 +89,65 @@ class GlobeGroup extends React.Component{
     renderItem = ({item}) => {
 
       return(
-        <NewGlobePost
-          navigation = {this.props.navigation}
-          id = {this.props.id}
-          data = {item}/>
+        <GestureRecognizer
+          config={{
+            detectSwipeUp: false,
+            detectSwipeDown: false,
+          }}
+          style = {{flex: 1}}
+          onSwipeLeft={(state) => this.onSwipeLeft(state)}
+          onSwipeRight={(state) => this.onSwipeRight(state)}
+          >
+          <NewGlobePost
+            navigation = {this.props.navigation}
+            id = {this.props.id}
+            data = {item}/>
+        </GestureRecognizer>
+
       )
     }
 
     listHeader = () => {
-
+      console.log(this.props.profilePic)
       return(
-        <View style = {{padding: 30}}>
-          <CountDown
-            until={60 * 10 + 30}
-            size={30}
-            onFinish={() => alert('Finished')}
-            digitStyle={{backgroundColor: '#1890ff'}}
-            digitTxtStyle={{color: 'white'}}
-            timeToShow={["H",'M', 'S']}
-            timeLabels={{h:'hour',m: 'min', s: 'sec'}}
-             />
+        <View style = {styles.header}>
+          <View style = {styles.sideHeaders}>
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate("profile")}
+              >
+              <Avatar
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}` + this.props.profilePic,
+                }}
+                rounded
+                size = {40}
+                 />
+
+            </TouchableOpacity>
+
+          </View>
+
+          <View style = {styles.middleHeader}>
+            <MainLogo
+              height = {"80%"}
+              width = {"40%"}
+               />
+          </View>
+
+          <View style = {styles.sideHeaders}>
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate("notification")}
+              >
+              <Bell
+                stroke = "gray"
+                fill = "gray"
+                 />
+            </TouchableOpacity>
+
+          </View>
+
+
+
         </View>
       )
     }
@@ -139,18 +184,25 @@ class GlobeGroup extends React.Component{
 
     }
 
+    onSwipeLeft(gestureState) {
+      this.props.navigation.navigate("Explore")
+     }
+
+     onSwipeRight(gestureState) {
+       this.props.navigation.navigate("Test1")
+     }
+
     render(){
       let groupPosts = []
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
       }
-      console.log(groupPosts)
       return(
         <View style = {{flex: 1}}>
-          <Text>testtt</Text>
             <FlatList
-              contentContainerStyle={{paddingBottom:75}}
-              // ListHeaderComponent = {this.listHeader}
+              stickyHeaderIndices={[0]}
+              // contentContainerStyle={{paddingBottom:75}}
+              ListHeaderComponent = {this.listHeader}
               style = {{flex: 1}}
               data = {groupPosts}
               renderItem = {this.renderItem}
@@ -169,7 +221,8 @@ class GlobeGroup extends React.Component{
 const mapStateToProps = state => {
   return{
     globePosts: state.globeGroup.globePosts,
-    id: state.auth.id
+    id: state.auth.id,
+    profilePic: state.auth.profilePic
   }
 }
 
@@ -178,6 +231,25 @@ const mapDispatchToProps = dispatch => {
     loadMoreGlobePost: (posts) => dispatch(globeGroupActions.loadMoreGlobePost(posts))
   }
 }
+
+const styles = StyleSheet.create({
+  header: {
+    height: 50,
+    backgroundColor: 'white',
+    width: '100%',
+    flexDirection: 'row'
+  },
+  sideHeaders:{
+      width: '15%',
+      alignItems: 'center',
+      justifyContent: 'center'
+  },
+  middleHeader:{
+    width: '70%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(GlobeGroup);

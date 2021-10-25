@@ -15,7 +15,7 @@ import ProfileHeader from './ProfileHeader';
 import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import Constant from 'expo-constants';
 import { connect } from "react-redux";
-import { Tag, Bookmark, Search, ChevronRight, Settings
+import { Tag, Bookmark, Search, ChevronRight, Settings, ChevronsLeft
   ,MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 import * as authActions from '../store/actions/auth';
@@ -128,7 +128,15 @@ class NewProfile extends React.Component{
     return(
       <BackgroundContainer>
 
+
+        <TouchableOpacity
+          onPress = {() => this.props.navigation}
+          >
+          <ChevronsLeft />
+          <Text>Back</Text>
+        </TouchableOpacity>
         <View style={styles.viewStyle}>
+
 
           <View style = {styles.topLeft}>
 

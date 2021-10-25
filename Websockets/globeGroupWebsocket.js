@@ -48,7 +48,6 @@ class WebSocketGlobe {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
 
-    console.log(parsedData.command,'parsed the data here')
     if(command === 'fetch_globe_post'){
         const globePost = JSON.parse(parsedData.globe_post)
         this.callbacks['fetch_globe_post'](globePost)
