@@ -22,6 +22,7 @@ import { connect } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import { UserCheck, UserPlus} from "react-native-feather";
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Coffee from './coffee.jpg';
  // used in conjuction with the newsfeed view so that you
  // can folow people
 const width = Dimensions.get("window").width
@@ -532,7 +533,7 @@ class SuggestedListGroup extends React.Component{
         */}
 
 
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop:20,}}>
           <View style = {{
             padding:15,
           }}>
@@ -554,6 +555,34 @@ class SuggestedListGroup extends React.Component{
                />
 
          </View>
+
+         <View style={{flex:1, alignItems:'center',flexDirection:'column', marginTop:20,}}>
+           <View style = {{
+             backgroundColor:'#262626',
+             width:'80%',
+
+             borderRadius:10,
+             alignItems:'center',
+           }}>
+             <View style={{ alignItems:'center', padding:20, width:'80%',}}>
+               <Text style={{color:'white', fontFamily:'Nunito-Bold', fontSize:20}}>Have a business?</Text>
+
+               <Text style={{color:'white', fontFamily:'Nunito', fontSize:14,  marginTop:10, }}>
+                 Create a orb to unlock new opportunities for your fans to connect with you.
+               </Text>
+
+             </View>
+             <View style={styles.createButton}>
+               <Text style={{color:'black', fontFamily:'Nunito-SemiBold', fontSize:16 }}> Learn More </Text>
+             </View>
+             <View style={{marginTop:20}}>
+            <Image source={require('./coffee.jpg')} style = {{height: 150, width: 275, resizeMode : 'stretch',}} />
+              </View>
+           </View>
+
+
+
+          </View>
         </View>
         {/*
         <View style={{flex:1, justifyContent:'center',}}>
@@ -665,6 +694,20 @@ class SuggestedListGroup extends React.Component{
 }
 
 const styles = StyleSheet.create({
+
+  createButton: {
+    width:'75%',
+    borderRadius: 5,
+    padding:10,
+    elevation:5,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    flexDirection:'row'
+  },
   inviteButton: {
     position:'absolute',
     right:'5%',
