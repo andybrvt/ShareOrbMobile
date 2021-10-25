@@ -129,16 +129,20 @@ class NewProfile extends React.Component{
       <BackgroundContainer>
 
 
-        <TouchableOpacity
-          onPress = {() => this.props.navigation}
-          >
-          <ChevronsLeft />
-          <Text>Back</Text>
-        </TouchableOpacity>
+
         <View style={styles.viewStyle}>
 
 
           <View style = {styles.topLeft}>
+            <TouchableOpacity
+              style = {{
+                flexDirection: 'row',
+                alignItems:'center'
+              }}
+              onPress = {() => this.props.navigation.goBack()}
+              >
+              <ChevronsLeft />
+            </TouchableOpacity>
 
             <View style={{flex:1, justifyContent:'center', paddingLeft: 10}}>
               <Text style={styles.textStyle}>{this.props.username}</Text>
@@ -271,6 +275,7 @@ const styles = StyleSheet.create({
   },
   topLeft: {
     flex:5,
+    flexDirection:'row'
   },
   topRight: {
     marginTop:10,
