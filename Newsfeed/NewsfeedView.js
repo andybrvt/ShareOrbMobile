@@ -33,6 +33,7 @@ import PersonalNewsFeed from './PersonalNewsFeed';
 import authAxios from '../util';
 import * as Progress from 'react-native-progress';
 import FirstPost from './FirstPost';
+import NearOrbButton from './NearOrbButton';
 import SwipeInfiniteScrollHolder from './SwipeInfiniteScrollHolder';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import GlobeGroup from './GlobeGroup/GlobeGroup';
@@ -242,6 +243,8 @@ class NewsfeedView extends React.Component{
 
             */}
 
+            <NearOrbButton />
+
 
 
         </BackgroundContainer>
@@ -283,6 +286,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000040',
     marginBottom: 10,
   },
+  cameraButton:{
+    position: 'absolute',
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    alignSelf: 'center',
+    bottom: 15,
+    backgroundColor: 'pink'
+  }
 
 })
 
