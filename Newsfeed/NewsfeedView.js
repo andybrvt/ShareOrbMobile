@@ -191,7 +191,7 @@ class NewsfeedView extends React.Component{
 
   render(){
 
-    console.log('how are things')
+    console.log(this.props.closeOrb, 'how are things')
     return(
 
 
@@ -243,7 +243,18 @@ class NewsfeedView extends React.Component{
 
             */}
 
-            <NearOrbButton />
+            {
+              this.props.closeOrb ?
+
+              <NearOrbButton
+                orb = {this.props.closeOrb}
+                 />
+
+              :
+
+              null
+
+            }
 
 
 
@@ -315,7 +326,8 @@ const mapStateToProps = state => {
     smallGroups: state.auth.smallGroups,
     groupPosts: state.smallGroups.groupPosts,
     curLoad: state.auth.curLoad,
-    activeSlide: state.auth.activeSlide
+    activeSlide: state.auth.activeSlide,
+    closeOrb: state.globeGroup.closeOrb
   }
 }
 

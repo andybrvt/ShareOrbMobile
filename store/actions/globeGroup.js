@@ -39,3 +39,16 @@ export const loadMoreGlobePost = (posts) => {
     posts: posts
   }
 }
+
+export const addCloseOrb = (orb) => {
+  return{
+    type: actionTypes.ADD_CLOSE_ORB,
+    orb: orb
+  }
+}
+
+export const nullCloseOrb = () => {
+  return{
+    type: actionTypes.NULL_CLOSE_ORB
+  }
+}

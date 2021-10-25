@@ -474,11 +474,13 @@ class App extends Component{
       // Now you put in redux
 
       if(res.data !== false){
-
+        this.props.addCloseOrb(res.data)
 
 
       } else {
         // set the thing to false
+        this.props.nullCloseOrb()
+
       }
 
 
@@ -1416,6 +1418,8 @@ const mapDispatchToProps = dispatch => {
     sendGlobePostLike: (post) => dispatch(globeGroupActions.sendGlobePostLike(post)),
     fetchGlobeItemComment: (comments) => dispatch(globeGroupActions.fetchGlobeItemComment(comments)),
     sendGlobeItemComment:(comment) => dispatch(globeGroupActions.sendGlobeItemComment(comment)),
+    addCloseOrb: (orb) => dispatch(globeGroupActions.addCloseOrb(orb)),
+    nullCloseOrb: () => dispatch(globeGroupActions.nullCloseOrb()),
 
     authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group)),
     authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
