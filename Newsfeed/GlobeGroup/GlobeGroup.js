@@ -19,6 +19,11 @@ import NoPosts from '../noPosts.svg';
 import authAxios from '../../util';
 import * as globeGroupActions from '../../store/actions/globeGroup';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import { Avatar } from 'react-native-elements';
+import { Bell,ArrowUpCircle, Plus, Mail, UserPlus } from "react-native-feather";
+import MainLogo from '../../logo.svg';
+
+
 
 const height = Dimensions.get("window").height
 
@@ -103,18 +108,36 @@ class GlobeGroup extends React.Component{
     }
 
     listHeader = () => {
-
+      console.log(this.props.profilePic)
       return(
-        <View style = {{padding: 30}}>
-          <CountDown
-            until={60 * 10 + 30}
-            size={30}
-            onFinish={() => alert('Finished')}
-            digitStyle={{backgroundColor: '#1890ff'}}
-            digitTxtStyle={{color: 'white'}}
-            timeToShow={["H",'M', 'S']}
-            timeLabels={{h:'hour',m: 'min', s: 'sec'}}
-             />
+        <View style = {styles.header}>
+          <View style = {styles.sideHeaders}>
+            <Avatar
+              source = {{
+                uri: `${global.IMAGE_ENDPOINT}` + this.props.profilePic,
+              }}
+              rounded
+              size = {40}
+               />
+
+          </View>
+
+          <View style = {styles.middleHeader}>
+            <MainLogo
+              height = {"80%"}
+              width = {"40%"}
+               />
+          </View>
+
+          <View style = {styles.sideHeaders}>
+            <Bell
+              stroke = "gray"
+              fill = "gray"
+               />
+          </View>
+
+
+
         </View>
       )
     }
@@ -167,8 +190,9 @@ class GlobeGroup extends React.Component{
       return(
         <View style = {{flex: 1}}>
             <FlatList
-              contentContainerStyle={{paddingBottom:75}}
-              // ListHeaderComponent = {this.listHeader}
+              stickyHeaderIndices={[0]}
+              // contentContainerStyle={{paddingBottom:75}}
+              ListHeaderComponent = {this.listHeader}
               style = {{flex: 1}}
               data = {groupPosts}
               renderItem = {this.renderItem}
@@ -187,7 +211,8 @@ class GlobeGroup extends React.Component{
 const mapStateToProps = state => {
   return{
     globePosts: state.globeGroup.globePosts,
-    id: state.auth.id
+    id: state.auth.id,
+    profilePic: state.auth.profilePic
   }
 }
 
@@ -196,6 +221,25 @@ const mapDispatchToProps = dispatch => {
     loadMoreGlobePost: (posts) => dispatch(globeGroupActions.loadMoreGlobePost(posts))
   }
 }
+
+const styles = StyleSheet.create({
+  header: {
+    height: 50,
+    backgroundColor: 'white',
+    width: '100%',
+    flexDirection: 'row'
+  },
+  sideHeaders:{
+      width: '15%',
+      alignItems: 'center',
+      justifyContent: 'center'
+  },
+  middleHeader:{
+    width: '70%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(GlobeGroup);
