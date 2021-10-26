@@ -21,12 +21,7 @@ import {
  } from 'react-native';
 import { Search, LogOut, Lock, User, Bell, Globe, Menu, PlusCircle, ArrowLeft} from "react-native-feather";
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import CameraPic from './camera.jpg';
 import { Avatar } from 'react-native-elements';
-import BottomSheet from 'reanimated-bottom-sheet';
-import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
-import { Camera } from 'expo-camera';
-import * as ImagePicker from 'expo-image-picker';
 import ExploreSearchBar from '../Explore/ExploreSearchBar';
 import authAxios from '../util';
 import FakeRoundedInput from '../RandomComponents/FakeRoundedInput';
@@ -41,8 +36,8 @@ import { faStore, faUsers, faUserFriends } from '@fortawesome/free-solid-svg-ico
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import Animated, {Easing} from 'react-native-reanimated';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
-
-
+import BasicGroupPage from './BasicGroupPage';
+import SlideWrap from '../Login/SlideWrap';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -50,6 +45,14 @@ class CreateGroupPage extends React.Component{
   constructor(props){
     super(props)
     this.state = {
+      one: true,
+      two: false,
+      three: false,
+      four: false,
+      five: false,
+      six: false,
+      seven:false,
+      eight: false,
       condition:true,
       loading: false,
       username: '',
@@ -72,6 +75,90 @@ class CreateGroupPage extends React.Component{
     }
     this.bs = React.createRef()
   }
+
+
+  openModal = (modalNum) => {
+    // this function will open a specific modal
+    if(modalNum === 'one'){
+      // this.setState({
+      //   one:true,
+      //   videoPlaying:false,
+      //   resumeOnce:true,
+      // })
+      // this.video.current.pauseAsync()
+      console.log('stuff here')
+    }
+    if(modalNum === 'two'){
+      this.setState({
+        two:true
+      })
+    }
+    if(modalNum === 'three'){
+      this.setState({
+        three:true
+      })
+    }
+    if(modalNum === 'four'){
+      this.setState({
+        four:true
+      })
+    }
+    if(modalNum === 'five'){
+      this.setState({
+        five:true
+      })
+    }
+    if(modalNum === 'six'){
+      this.setState({
+        six:true
+      })
+    }
+    if(modalNum === 'seven'){
+      this.setState({
+        seven:true
+      })
+    }
+  }
+
+  closeModal = (modalNum) => {
+    if(modalNum === 'one'){
+      // this.setState({
+      //   one:false
+      // })
+      this.props.navigation.navigate('createSmallGroup')
+    }
+    if(modalNum === 'two'){
+      this.setState({
+        two:false
+      })
+    }
+    if(modalNum === 'three'){
+      this.setState({
+        three:false
+      })
+    }
+    if(modalNum === 'four'){
+      this.setState({
+        four:false
+      })
+    }
+    if(modalNum === 'five'){
+      this.setState({
+        five:false
+      })
+    }
+    if(modalNum === 'six'){
+      this.setState({
+        six:false
+      })
+    }
+    if(modalNum === 'seven'){
+      this.setState({
+        seven:true
+      })
+    }
+  }
+
 
   testGeoCode = async() =>{
     const location = await Location.reverseGeocodeAsync({
@@ -123,70 +210,7 @@ class CreateGroupPage extends React.Component{
     })
   }
 
-  handleTakeProfile = async() => {
-    let permissionResult = await Camera.requestPermissionsAsync();
-    if(permissionResult.granted === false){
-      alert("Permission to access camera is required!");
-      // permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-      return;
-    }
 
-    let pickerResult = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-      allowsMultipleSelection: true,
-      base64: true,
-
-    })
-
-
-    if(!pickerResult.cancelled){
-
-      this.setState({
-        groupPic: pickerResult.uri
-      })
-
-      this.bs.current.snapTo(1)
-
-    }
-
-  }
-
-  // handle to choose photo
-  handleChooseProfile = async() => {
-    // this will give permission in order to open up your camera roll
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if(permissionResult.granted === false){
-      // in the case that permission is not granted
-      alert("Permission to access library is required!");
-      return;
-    }
-
-    // this is to pick the image
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-      allowsMultipleSelection: true,
-      base64: true,
-    })
-
-    if(!pickerResult.cancelled){
-      // this is if you pick out a picture
-      // in this case you will just change the picture right away
-
-      // this.uploadProfileImage(pickerResult.uri);
-      this.setState({
-        groupPic: pickerResult.uri
-      })
-
-      this.bs.current.snapTo(1)
-    }
-  }
 
   onGroupNameChange = e => {
     this.setState({
@@ -232,50 +256,7 @@ class CreateGroupPage extends React.Component{
 
  }
 
-  renderInner =()=> {
-    return(
-      <View>
-        {
-          Platform.OS ===  'ios' ?
-          <View style={styles.panel}>
-            <TouchableOpacity
-              onPress = {()=>this.handleTakeProfile()}
-              style={styles.panelButton} >
-              <Text style={styles.panelButtonTitle}>Take Photo</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress = {()=>this.handleChooseProfile()}
-              style={styles.panelButton}>
-              <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.panelButton1}
-              onPress={() => this.bs.current.snapTo(1)}>
-              <Text style={styles.panelButtonTitle1}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-          :
-          <View style={styles.panel}>
-            <TouchableOpacity1
-              onPress = {()=>this.handleTakeProfile()}
-              style={styles.panelButton} >
-              <Text style={styles.panelButtonTitle}>Take Photo</Text>
-            </TouchableOpacity1>
-            <TouchableOpacity1
-              onPress = {()=>this.handleChooseProfile()}
-              style={styles.panelButton}>
-              <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-            </TouchableOpacity1>
-            <TouchableOpacity1
-              style={styles.panelButton1}
-              onPress={() => this.bs.current.snapTo(1)}>
-              <Text style={styles.panelButtonTitle1}>Cancel</Text>
-            </TouchableOpacity1>
-          </View>
-        }
-      </View>
-    )
-  }
+
 
 
   onOutSideClick = () => {
@@ -425,6 +406,57 @@ class CreateGroupPage extends React.Component{
   render(){
     return(
       <BackgroundContainer>
+
+        <BasicGroupPage
+          {...this.props}
+          loading = {this.state.loading}
+          visible = {this.state.one}
+          prompt = {"What is the name of your business?"}
+          value = {this.state.firstName}
+          onChange = {this.onNameChange}
+          closeModal = {this.closeModal}
+          openModal = {this.openModal}
+          closeNum = {'one'}
+          openNum = {'two'}
+           />
+        <SlideWrap visible = {this.state.two}>
+          <BasicGroupPage
+            {...this.props}
+            prompt = {"Write a description of your business"}
+            visible = {this.state.two}
+            closeModal = {this.closeModal}
+            openModal = {this.openModal}
+            closeNum = {'two'}
+            openNum = {'three'}
+            />
+        </SlideWrap>
+
+        <SlideWrap visible = {this.state.three}>
+          <BasicGroupPage
+            {...this.props}
+            prompt = {"Upload a profile picture"}
+            visible = {this.state.two}
+            closeModal = {this.closeModal}
+            openModal = {this.openModal}
+            closeNum = {'three'}
+            openNum = {'four'}
+            pp={true}
+          />
+
+        </SlideWrap>
+
+        <SlideWrap visible = {this.state.four}>
+          <BasicGroupPage
+            {...this.props}
+            prompt = {"Search your address"}
+            visible = {this.state.two}
+            closeModal = {this.closeModal}
+            openModal = {this.openModal}
+            closeNum = {'four'}
+            openNum = {'five'}
+          />
+
+        </SlideWrap>
         {
           this.state.loading ?
           <View style = {{
@@ -512,29 +544,7 @@ class CreateGroupPage extends React.Component{
 
                         <View style={{flexDirection:'row', alignItems:'center',}}>
 
-                        {
-                          this.state.groupPic !== "" ?
-                          <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
-                            <Avatar
-                              rounded
-                              source = {{
-                                uri: this.state.groupPic
-                              }}
-                              size={125}
-                               />
-                          </TouchableOpacity>
 
-                          :
-                          <View style={{zIndex:99, borderWidth: 1, borderColor: 'red', borderRadius:75,}}>
-                          <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
-                            <Avatar
-                              rounded
-                              source = {CameraPic}
-                              size={125}
-                               />
-                          </TouchableOpacity>
-                          </View>
-                        }
                         </View>
                         <View style={{
                           marginTop:10,
@@ -631,15 +641,7 @@ class CreateGroupPage extends React.Component{
 
         }
 
-        <BottomSheet
-         ref={this.bs}
-         snapPoints={[250, 0]}
-         renderContent={this.renderInner}
-         renderHeader={this.renderHeader}
-         initialSnap={1}
-         callbackNode={this.fall}
-         enabledGestureInteraction={true}
-       />
+
 
 
      <Modal
@@ -659,58 +661,7 @@ class CreateGroupPage extends React.Component{
 }
 const styles = StyleSheet.create({
 
-  panel: {
-    padding: 20,
-    backgroundColor: '#FFFFFF',
-    paddingTop: 20,
-    zIndex:9999,
-    elevation:40,
-    // borderTopLeftRadius: 20,
-    // borderTopRightRadius: 20,
-    // shadowColor: '#000000',
-    // shadowOffset: {width: 0, height: 0},
-    // shadowRadius: 5,
-    // shadowOpacity: 0.4,
-  },
-  panelButtonTitle: {
-    color:'white'
-  },
-  panelButton: {
-   padding: 13,
-   borderRadius: 10,
-   backgroundColor: '#1890ff',
-   alignItems: 'center',
-   marginVertical: 7,
-   },
-  panelButton1: {
-  padding: 13,
-  borderRadius: 10,
-  backgroundColor: '#F0F0F0',
-  alignItems: 'center',
-  marginVertical: 7,
-  },
-  header: {
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#333333',
-    shadowOffset: {width: -1, height: -3},
-    shadowRadius: 2,
-    shadowOpacity: 0.2,
 
-    paddingTop: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  panelHeader: {
-    // backgroundColor:'blue',
-    alignItems: 'center',
-  },
-  panelHandle: {
-    width: 40,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#00000040',
-    marginBottom: 10,
-  },
   test: {
     elevation:5,
   },
