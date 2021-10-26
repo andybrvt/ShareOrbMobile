@@ -2,11 +2,10 @@ import * as actionTypes from "../actions/actionTypes";
 import { updateObject } from "../utility";
 
 
-// The group post is probally gonna be a dictionary
-// where each group post is rep by its id and it will just
-// match that of the group itself
+// now that each group post is on its own page you don't need a
+// dictionary any more
 const initialState = {
-  groupPosts: {}
+  groupPosts: []
 }
 
 const loadSmallGroupsPost = (state, action) => {
@@ -17,20 +16,14 @@ const loadSmallGroupsPost = (state, action) => {
   // THE REASON YOU HAVE TO DO THIS IS BECAUSE YOU CANNOT CHANGE THE
   // STATE DIRECTY (THIS ALSO APPLIES TO REDUX TOO)
   return updateObject(state, {
-    groupPosts: {
-      ...state.groupPosts,
-      [action.posts.groupId.toString()]: action.posts.groupPosts
-    }
+    groupPosts: action.posts.groupPosts
   })
 }
 
 const loadMoreSmallGroupPost = (state, action) => {
 
   return updateObject(state, {
-    groupPosts: {
-      ...state.groupPosts,
-      [action.posts.groupId.toString()]:[...state.groupPosts[action.posts.groupId.toString()], ...action.posts.serializedPost]
-    }
+    groupPosts: [...state.groupPosts, action.posts.serializedPost]
   })
 }
 

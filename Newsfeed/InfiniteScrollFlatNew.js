@@ -11,6 +11,7 @@ import {
   Dimensions,
   RefreshControl
  } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import axios from "axios";
 import Header from './Header';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
@@ -20,7 +21,7 @@ import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent} from 'react-native-redash/lib/module/v1';
-import { User, Users } from "react-native-feather";
+import { User, Users,ChevronsLeft } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
@@ -35,6 +36,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 // this is used mostly for the new scroll newsfeed
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
+
+const height = Dimensions.get('window').height
+
 const coverScale = 1.7;
 const col = 3;
 const numColumns=2
@@ -149,7 +153,7 @@ class InfiniteScrollFlatNew extends React.Component{
     // used to connect to the websocket and then pull the intial
     // group info
 
-    const groupId = this.props.groupId
+    const groupId = this.props.route.params.orbId
     this.waitForSmallGroupsSocketConnection(() => {
       //fetch the stuff here
       WebSocketSmallGroupInstance.fetchGroupPost(groupId)
@@ -161,7 +165,9 @@ class InfiniteScrollFlatNew extends React.Component{
   }
 
   componentWillUnmount(){
+
     WebSocketSmallGroupInstance.disconnect()
+
   }
 
   waitForSmallGroupsSocketConnection(callback){
@@ -321,7 +327,7 @@ class InfiniteScrollFlatNew extends React.Component{
         activeOpacity={0.8}
         style={styles.item}
       >
-  
+
         <Image
           style ={{
             width: "100%",
@@ -401,25 +407,67 @@ class InfiniteScrollFlatNew extends React.Component{
     )
   }
 
+  listHeader = () => {
+
+    const groupPic = this.props.route.params.groupPic
+    const groupName = this.props.route.params.groupName
+
+    return(
+      <View style = {styles.header}>
+        <Avatar
+          size={120}
+          rounded
+          source = {{
+            uri: `${global.IMAGE_ENDPOINT}`+ groupPic
+          }}
+        />
+      <Text style = {styles.groupName}>{groupName}</Text>
+      </View>
+    )
+  }
+
   render(){
 
     // let post = [];
     // if(this.props.socialPosts){
     //   post = this.props.socialPosts
     // }
+    let groupId = '';
+    let groupPic = "";
+    let groupName  = "";
     let groupPost = [];
+
+    if(this.props.route.params.orbId){
+      groupId = this.props.route.params.orbId
+    }
+    if(this.props.route.params.groupPic){
+      groupPic = this.props.route.params.groupPic
+    }
+    if(this.props.route.params.groupName){
+      groupName = this.props.route.params.groupName
+    }
+
+
+
     if(this.props.groupPost){
-      const groupId = this.props.groupId.toString()
-      groupPost = this.props.groupPost[groupId]
+      groupPost = this.props.groupPost
     }
 
 
     return(
-      <View style = {{flex: 1}} >
+      <SafeAreaView style = {{flex: 1}}>
 
+        <TouchableOpacity
+          onPress = {() => this.props.navigation.goBack()}
+          style = {{
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}>
+          <ChevronsLeft />
+          <Text>Back</Text>
+        </TouchableOpacity>
 
-
-        <View style={{zIndex: 999, position:'absolute', right:'10%', bottom:'15%',}}>
+        <View style={{zIndex: 999, position:'absolute', right:'10%', bottom:'7%',}}>
         <TouchableOpacity
           onPress={() => this.navGroupInfo()}
           style={styles.roundButton1}>
@@ -428,25 +476,25 @@ class InfiniteScrollFlatNew extends React.Component{
         </TouchableOpacity>
         </View>
               <FlatList
-
-              maxToRenderPerBatch={10}
-              extraData={groupPost}
-              windowSize={10}
-              initialNumToRender={3}
-              contentContainerStyle={{
-                paddingBottom: 75 }}
-               data={groupPost}
-               keyExtractor={(item, index) => String(index)}
-               onEndReachedThreshold={0.5}
-               onEndReached = {() => this.loadSocialPost()}
-               // onRefresh = {() => this.onRefresh()}
-               // refreshing = {this.state.refreshing}
-               scrollEventThrottle = {16} // important for animation
-               renderItem={this.renderItem}
-               numColumns={3}
+                ListHeaderComponent = {this.listHeader}
+                maxToRenderPerBatch={10}
+                extraData={groupPost}
+                windowSize={10}
+                initialNumToRender={3}
+                contentContainerStyle={{
+                  paddingBottom: 75 }}
+                 data={groupPost}
+                 keyExtractor={(item, index) => String(index)}
+                 onEndReachedThreshold={0.5}
+                 onEndReached = {() => this.loadSocialPost()}
+                 // onRefresh = {() => this.onRefresh()}
+                 // refreshing = {this.state.refreshing}
+                 scrollEventThrottle = {16} // important for animation
+                 renderItem={this.renderItem}
+                 numColumns={3}
              />
 
-      </View>
+         </SafeAreaView>
     )
   }
 }
@@ -464,7 +512,6 @@ const styles = StyleSheet.create({
 
     // fontWeight:'bold',
   },
-
   item: {
     // backgroundColor: '#4D243D',
     alignItems: 'center',
@@ -492,7 +539,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#2f54eb',
     elevation:15,
   },
-
+  header: {
+    height: height*0.3,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  groupName: {
+    marginTop: 10,
+    fontSize: 25
+  }
 })
 
 const mapStateToProps = state => {

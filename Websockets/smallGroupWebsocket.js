@@ -33,7 +33,7 @@ class WebSocketSmallGroups{
     }
 
     this.socketRef.onclose = () => {
-      this.connect()
+      // this.connect()
     }
   }
 

@@ -105,10 +105,9 @@ import Announcements from './SmallGroups/Announcements';
 import PeopleInGroup from './SmallGroups/PeopleInGroup';
 import Frame from './Frame.svg';
 import Testing from './RandomComponents/Testing';
-
-
 import * as Location from 'expo-location';
-
+import GlobeGroup from './Newsfeed/GlobeGroup/GlobeGroup';
+import InfiniteScrollFlatNew from './Newsfeed/InfiniteScrollFlatNew';
 
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -138,6 +137,7 @@ class App extends Component{
   }
 
   connectToLocation = async() => {
+
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
       setErrorMsg('Permission to access location was denied');
@@ -421,10 +421,13 @@ class App extends Component{
 
   componentDidMount(){
 
+    this.locationChecker()
+
     this.props.onTryAutoSignup();
     this.loadFonts();
 
     if(this.props.isAuthenticated){
+
       this.registerForPushNotificationsAsync()
 
 
@@ -447,7 +450,7 @@ class App extends Component{
 
     ExpoNotifications.addNotificationResponseReceivedListener(this.handleNotificationResponse);
 
-    this.interval = setInterval(() => this.locationChecker(), 10000)
+    this.interval = setInterval(() => this.locationChecker(), 60000)
 
 
   }
@@ -455,11 +458,7 @@ class App extends Component{
   locationChecker = async() => {
     // this function will check for the closes orbs within a 5 mile radius
     // and then return it,
-
     const location = await this.connectToLocation()
-    console.log('wait after this')
-    console.log(location.coords.latitude)
-    console.log(location.coords.longitude)
 
     // now put a backend call function so that you can grab the nears orb
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/getClosestOrb`, {
@@ -488,6 +487,7 @@ class App extends Component{
   }
 
   componentDidUpdate(prevProps){
+
     if(this.props.isAuthenticated){
 
       if(this.props.id === null){
@@ -870,12 +870,12 @@ class App extends Component{
                     }}>
 
 
-                      <Stack.Screen
-                        options={{headerShown: false, }}
-                        name = "tabs"
-                        // component= {this.createTabStack}
-                        component= {NewsfeedView}
-                        />
+                    <Stack.Screen
+                      options={{headerShown: false, }}
+                      name = "tabs"
+                      // component= {this.createTabStack}
+                      component= {NewsfeedView}
+                      />
 
                     <Stack.Screen
                       options={{
@@ -895,9 +895,15 @@ class App extends Component{
                       />
 
 
-                      <Stack.Screen
-                        options={{headerShown: false, }}
-                        name = "intro" component= {MiniAppIntro}/>
+                    <Stack.Screen
+                      options={{headerShown: false, }}
+                      name = "intro" component= {MiniAppIntro}/>
+
+                    <Stack.Screen
+                      options={{headerShown: false, }}
+                      name = "groupOrb"
+                      component= {InfiniteScrollFlatNew}
+                       />
 
 
                       <Stack.Screen
@@ -920,12 +926,12 @@ class App extends Component{
                         }}
                         name = 'FullImage' component = {FullImage}/>
 
-                        <Stack.Screen
-                          options={{
-                            headerShown: false,
-                            ...TransitionPresets.SlideFromRightIOS,
-                          }}
-                          name = 'ProfilePage2' component = {ProfilePage}/>
+                      <Stack.Screen
+                        options={{
+                          headerShown: false,
+                          ...TransitionPresets.SlideFromRightIOS,
+                        }}
+                        name = 'ProfilePage2' component = {ProfilePage}/>
                       <Stack.Screen
                         initialRouteName = "Profile"
                         name = "PFollowTab" component= {this.pFollowerFollowingTab}
