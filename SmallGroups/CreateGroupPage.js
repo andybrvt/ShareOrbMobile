@@ -97,11 +97,6 @@ class CreateGroupPage extends React.Component{
     })
   }
 
-  onShowBusinessCondition = () => {
-    this.setState({
-      businessCondition: !this.state.businessCondition,
-    })
-  }
 
   onCloseAddressSearch = () => {
     this.setState({
@@ -515,46 +510,6 @@ class CreateGroupPage extends React.Component{
       marginTop:'20%', }}>
 
 
-        <View style={{flexDirection:'row',
-          alignItems:'center',
-          justifyContent:'center',
-          width:'100%',
-          // backgroundColor:'red',
-        height:'70%'
-      }}>
-          <View style={{flexDirection:'column'}}>
-
-
-            <View style={{flex:1,alignItems:'center'}}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("PublicOrb")}
-                activeOpacity={0.7} style={styles.roundButton2}>
-              <FontAwesomeIcon
-               style = {{
-                 color:'white',
-                 right:1,
-               }}
-               size = {70}
-               icon={faUserFriends} />
-             <Text style={{fontFamily:'Nunito-Bold', fontSize:20, textAlign: 'center', width:'70%', color:'white'}}>Create a public orb</Text>
-             </TouchableOpacity>
-           </View>
-
-            <View style={{flex:1,alignItems:'center'}}>
-              <TouchableOpacity activeOpacity={0.7} onPress={() => this.onShowBusinessCondition()} style={styles.roundButton2}>
-              <FontAwesomeIcon
-               style = {{
-                 color:'white',
-                 right:1,
-               }}
-               size = {70}
-               icon={faStore} />
-             <Text style={{fontFamily:'Nunito-Bold', fontSize:20, textAlign: 'center', width:'70%', color:'white'}}>Create a business orb</Text>
-             </TouchableOpacity>
-           </View>
-          </View>
-        </View>
-
                         <View style={{flexDirection:'row', alignItems:'center',}}>
 
                         {
@@ -620,61 +575,7 @@ class CreateGroupPage extends React.Component{
                           value = {this.state.description}
                           />
                       </View>
-                      {/*
-                      <View style={{
 
-                          flexDirection:'row',
-                          borderTopWidth:1,
-                          borderColor:'#d9d9d9',
-                          borderBottomWidth:1,
-                          padding:20}}>
-                        <View>
-                          <Globe stroke="#919191" strokeWidth={1.5} width={40} height={40} style={{top:3}}/>
-                        </View>
-                        {
-                          (this.state.publicG)?
-                          <View style={{marginLeft:20, flexDirection:'column'}}>
-                            <Text style={{color:'#919191',
-                            fontSize:16,
-                            fontFamily:'Nunito-Bold',
-                            }}>Make Orb Public</Text>
-                          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:14, color:"#919191" }}>Anyone can join the group</Text>
-                          </View>
-                          :
-                          <View style={{marginLeft:20, flexDirection:'column'}}>
-                            <Text style={{color:'#919191',
-                            fontSize:16,
-                            fontFamily:'Nunito-Bold',
-                            }}>Make Orb Private</Text>
-                          <Text style={{fontFamily:'Nunito-SemiBold', fontSize:14, color:"#919191"}}>Choose who joins the group</Text>
-                          </View>
-                        }
-
-                        <View style = {{
-                            flex: 1,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}>
-                          {
-                            this.state.loading === true ?
-                            <ActivityIndicator />
-                          :
-
-                          <Switch
-                            trackColor={{ false: "gray", true: "#1890ff" }}
-                            thumbColor={this.state.condition ? "white" : "white"}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={this.onPublicChange}
-                            value={this.state.publicG }
-                             />
-
-                          }
-
-                        </View>
-
-
-                       </View>
-                       */}
 
 
                       <View>
@@ -686,9 +587,6 @@ class CreateGroupPage extends React.Component{
                         <Text>{this.state.selectedAddress}</Text>
                         <Search />
                       </TouchableOpacity>
-
-
-
 
                       </View>
 
@@ -743,25 +641,7 @@ class CreateGroupPage extends React.Component{
          enabledGestureInteraction={true}
        />
 
-              {/** This is our modal component containing textinput and a button */}
-              <Modal animationType="fade"
-                     transparent
-                     visible={this.state.businessCondition}
-                     presentationStyle="overFullScreen"
-                     onDismiss={this.onShowBusinessCondition}>
-                  <View style={styles.viewWrapper}>
-                      <View style={styles.modalView}>
-                          <TextInput placeholder="Enter Code..."
-                                     value={this.state.inputValue} style={styles.textInput}
-                                     onChangeText={(value) =>this.setState({
-                                       inputValue:value
-                                     })} />
 
-                          {/** This button is responsible to close the modal */}
-                          <Button title="Close" onPress={this.onShowBusinessCondition} />
-                      </View>
-                  </View>
-              </Modal>
      <Modal
       animationType = "slide"
       visible = {this.state.showAddressSearch}>
@@ -778,42 +658,7 @@ class CreateGroupPage extends React.Component{
   }
 }
 const styles = StyleSheet.create({
-  screen: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#fff",
-    },
-    viewWrapper: {
-        flex: 1,
 
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "rgba(0, 0, 0, 0.6)",
-    },
-    modalView: {
-        alignItems: "center",
-        justifyContent: "center",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        elevation: 5,
-        transform: [{ translateX: -(width * 0.4) },
-                    { translateY: -90 }],
-        height: 180,
-        width: width * 0.8,
-        backgroundColor: "#fff",
-        borderRadius: 7,
-    },
-    textInput: {
-        width: "80%",
-        borderRadius: 5,
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        borderColor: "rgba(0, 0, 0, 0.2)",
-        borderWidth: 1,
-        marginBottom: 8,
-    },
   panel: {
     padding: 20,
     backgroundColor: '#FFFFFF',

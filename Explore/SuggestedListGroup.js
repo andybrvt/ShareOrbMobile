@@ -10,6 +10,8 @@ import {
   Dimensions,
   RefreshControl,
   Image,
+  Modal,
+  TextInput,
   ActivityIndicator,
   TouchableWithoutFeedback
  } from 'react-native';
@@ -76,9 +78,17 @@ class SuggestedListGroup extends React.Component{
       addMore: 6,
       disabled:false,
       curIndex:0,
-      todayList:[]
+      todayList:[],
+      businessCondition:false,
+      inputValue:'',
     }
   }
+  onShowBusinessCondition = () => {
+    this.setState({
+      businessCondition: !this.state.businessCondition,
+    })
+  }
+
 
   componentDidMount(){
     authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/suggestedGroups')
@@ -122,7 +132,7 @@ class SuggestedListGroup extends React.Component{
 
   renderItem3 = ({item}) => {
     return(
-      <View style={{flexDirection:'row',padding:5, marginTop:10, alignItems:'center'}}>
+      <View style={{flexDirection:'row',padding:5,  marginTop:10, alignItems:'center'}}>
 
         <Avatar
           size={42.5}
@@ -133,24 +143,11 @@ class SuggestedListGroup extends React.Component{
             }}
            />
          <View style={{marginLeft:10}}>
-         <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>Tucson Rotaract</Text>
-         <Text style={{fontSize:14, fontFamily:'Nunito'}}>3.3k members</Text>
+         <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>Presta Coffee</Text>
+         <Text style={{fontSize:14, fontFamily:'Nunito'}}>Tucson, Arizona</Text>
 
        </View>
-       <TouchableOpacity activeOpacity={0.8} style={styles.inviteButton} disabled={this.state.disabled}
-         // onPress = {() =>
-         //   this.joinGroup(item.id)
-         // }
-         >
-         <UserPlus
-           style={{marginRight:5}}
-           stroke = "white"
-           strokeWidth = {2}
-           height = {12.5}
-           width = {12.5}
-            />
-         <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12, color:'white' }}>Join</Text>
-       </TouchableOpacity>
+
      </View>
     )
   }
@@ -468,13 +465,19 @@ class SuggestedListGroup extends React.Component{
   }
 
   listHeader = () => {
-
     return(
         <InvitePage />
-
     )
   }
 
+  componentDidUpdate(previousProps, previousState){
+    if(this.state.inputValue=='Test'){
+      if (previousState.businessCondition==true){
+      this.setState({ businessCondition: false })
+      }
+      this.props.navigation.navigate("createSmallGroup")
+    }
+  }
 
   render(){
 
@@ -572,121 +575,44 @@ class SuggestedListGroup extends React.Component{
                </Text>
 
              </View>
-             <View style={styles.createButton}>
+             <TouchableOpacity activeOpacity={0.7} onPress={() => this.onShowBusinessCondition()} style={styles.createButton}>
                <Text style={{color:'black', fontFamily:'Nunito-SemiBold', fontSize:16 }}> Learn More </Text>
-             </View>
-             <View style={{marginTop:20}}>
-            <Image source={require('./coffee.jpg')} style = {{height: 150, width: 275, resizeMode : 'stretch',}} />
+             </TouchableOpacity>
+             <View style={{marginTop:20, }}>
+            <Image source={require('./coffee.jpg')} style = {{height: 175, width: width*0.80, borderBottomLeftRadius:10, borderBottomRightRadius:10}} />
               </View>
            </View>
-
-
-
-          </View>
-        </View>
-        {/*
-        <View style={{flex:1, justifyContent:'center',}}>
-
-        </View>
-        */}
-        {/*
-        <FlatList
-          style = {{
-            flex: 1,
-          }}
-          ItemSeparatorComponent = { this.FlatListItemSeparator }
-          initialNumToRender={2}
-          ListHeaderComponent = {this.listHeader}
-          data={this.state.list.slice(0, 5)}
-          contentContainerStyle={{paddingBottom:25}}
-          renderItem = {this.renderItem}
-          keyExtractor={(item, index) => String(index)}
-          onEndReachedThreshold = {0.2}
-          // onEndReached = {()=> this.onLoadMorePeople()}
-          showsVerticalScrollIndicator={false}
-
-           />
-
-           */}
-           {/*
-
-          */}
-    {/*
-
-          <InvitePage />
-          <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
-            <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Food</Text>
-          </View>
-          <View style={{flex:1, }}>
-            <View style={{flexDirection:'row', marginLeft:'2.5%' }}>
-              <View style={{zIndex:99}}>
-                <Avatar
-                  source = {{
-                    uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
-                  }}
-                  rounded
-                  size = {105}
-                   />
-               </View>
-               <ScrollView
-                 style={{right:20}}
-                 showsHorizontalScrollIndicator={false}
-                 horizontal = {true}>
-                 {this.frequentChatPeople()}
-               </ScrollView>
-             </View>
-             <View style={{top:'5%'}}>
-               <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
-                 <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>Fitness</Text>
-               </View>
-               <View style={{flexDirection:'row', marginLeft:'2.5%', }}>
-                 <View style={{zIndex:99}}>
-                   <Avatar
-                     source = {{
-                       uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
-                     }}
-                     rounded
-                     size = {105}
-                      />
-                  </View>
-                  <ScrollView
-                    style={{right:20}}
-                    showsHorizontalScrollIndicator={false}
-                    horizontal = {true}>
-                    {this.frequentChatPeople()}
-                  </ScrollView>
-                </View>
-              </View>
-              <View style={{top:'10%'}}>
-                <View style={{marginLeft:'7.5%', marginBottom:'2.5%'}}>
-                  <Text style={{fontFamily:'Nunito-Bold', fontSize:18}}>NBA</Text>
-                </View>
-                <View style={{flexDirection:'row', marginLeft:'2.5%', }}>
-                  <View style={{zIndex:99}}>
-                    <Avatar
-                      source = {{
-                        uri: 'https://images.unsplash.com/photo-1631798263380-d24c23a9e618?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
-                      }}
-                      rounded
-                      size = {105}
-                       />
-                   </View>
-                   <ScrollView
-                     style={{right:20}}
-                     showsHorizontalScrollIndicator={false}
-                     horizontal = {true}>
-                     {this.frequentChatPeople()}
-                   </ScrollView>
-                 </View>
-               </View>
+            <View style={{flex:1, marginTop:50}}>
             </View>
+          </View>
+        </View>
 
 
-
-
-
-          */}
-
+        <Modal
+           animationType="fade"
+           transparent
+           visible={this.state.businessCondition}
+           presentationStyle="overFullScreen"
+           onDismiss={this.onShowBusinessCondition}>
+            <View style={styles.viewWrapper}>
+                <View style={styles.modalView}>
+                    <TextInput
+                       placeholder="Enter Code..."
+                       value={this.state.inputValue}
+                       style={styles.textInput}
+                       onChangeText={(value) =>
+                           this.setState({
+                           inputValue:value
+                         })
+                       } />
+                     <View style={{flexDirection:'row', marginTop:25, alignItems:'flex-end'}}>
+                       <TouchableOpacity onPress={this.onShowBusinessCondition} style={styles.cancelButton}>
+                         <Text style={{color:'white'}}>Cancel</Text>
+                       </TouchableOpacity>
+                    </View>
+              </View>
+            </View>
+        </Modal>
 
       </ScrollView>
     )
@@ -694,9 +620,70 @@ class SuggestedListGroup extends React.Component{
 }
 
 const styles = StyleSheet.create({
+  submitButton: {
+    marginRight:10,
+    borderRadius: 5,
+    padding:10,
+    elevation:5,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "red",
+    flexDirection:'row'
+  },
+  cancelButton: {
 
+    borderRadius: 5,
+    padding:10,
+    elevation:5,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "blue",
+    flexDirection:'row'
+  },
+  screen: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#fff",
+    },
+    viewWrapper: {
+        flex: 1,
+
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+    },
+    modalView: {
+        alignItems: "center",
+        justifyContent: "center",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        elevation: 5,
+        transform: [{ translateX: -(width * 0.4) },
+                    { translateY: -90 }],
+        height: 180,
+        width: width * 0.8,
+        backgroundColor: "#fff",
+        borderRadius: 7,
+    },
+    textInput: {
+        width: "80%",
+        borderRadius: 5,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderColor: "rgba(0, 0, 0, 0.2)",
+        borderWidth: 1,
+        marginBottom: 8,
+    },
   createButton: {
-    width:'75%',
+    width:'50%',
     borderRadius: 5,
     padding:10,
     elevation:5,
