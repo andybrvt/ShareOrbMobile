@@ -108,7 +108,6 @@ class GlobeGroup extends React.Component{
     }
 
     listHeader = () => {
-      console.log(this.props.profilePic)
       return(
         <View style = {styles.header}>
           <View style = {styles.sideHeaders}>

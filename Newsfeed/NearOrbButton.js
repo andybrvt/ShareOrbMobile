@@ -24,13 +24,35 @@ import { Triangle } from "react-native-feather";
 class NearOrbButton extends React.Component{
 
   constructor(props) {
-   super(props);
-   this.state = {
-     progress: new Animated.Value(0),
-   };
- }
+     super(props);
+     this.state = {
+       progress: new Animated.Value(0),
+     };
+   }
+
+  onGroupDirect = (orb) => {
+
+
+    console.log(orb)
+    this.props.navigation.navigate("groupOrb", {
+      orbId: orb.id,
+      groupName: orb.group_name,
+      groupPic: orb.groupPic
+    })
+  }
+
 
   render(){
+
+    let groupImage = ""
+    let orb = {}
+    if(this.props.orb){
+      orb = this.props.orb
+      if(this.props.orb.groupPic){
+        groupImage = `${global.IMAGE_ENDPOINT}`+this.props.orb.groupPic
+      }
+    }
+
     return(
       <Animated.View
 
@@ -95,14 +117,14 @@ class NearOrbButton extends React.Component{
            overflow: 'hidden'
            }}>
            <TouchableOpacity
-             onPress = {() => console.log('prss here')}
+             onPress = {() => this.onGroupDirect(orb)}
              >
              <Image
                style = {{
                  height: '100%'
                }}
 
-               source = {{uri: 'https://cdn.5280.com/2020/12/Courtesy-Downtown-Fingers.jpg'}}
+               source = {{uri: groupImage}}
                 />
            </TouchableOpacity>
 

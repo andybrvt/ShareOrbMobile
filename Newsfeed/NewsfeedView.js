@@ -191,7 +191,6 @@ class NewsfeedView extends React.Component{
 
   render(){
 
-    console.log(this.props.closeOrb, 'how are things')
     return(
 
 
@@ -248,6 +247,7 @@ class NewsfeedView extends React.Component{
 
               <NearOrbButton
                 orb = {this.props.closeOrb}
+                navigation = {this.props.navigation}
                  />
 
               :
