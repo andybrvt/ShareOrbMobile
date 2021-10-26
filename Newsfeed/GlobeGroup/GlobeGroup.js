@@ -91,6 +91,8 @@ class GlobeGroup extends React.Component{
       return(
         <GestureRecognizer
           config={{
+            velocityThreshold: 0.2,
+            directionalOffsetThreshold: 90,
             detectSwipeUp: false,
             detectSwipeDown: false,
           }}
@@ -119,7 +121,7 @@ class GlobeGroup extends React.Component{
                   uri: `${global.IMAGE_ENDPOINT}` + this.props.profilePic,
                 }}
                 rounded
-                size = {40}
+                size = {32.5}
                  />
 
             </TouchableOpacity>
