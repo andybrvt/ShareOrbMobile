@@ -145,7 +145,8 @@ class App extends Component{
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    console.log(location)
+
+    return location
   }
 
   turnOnNotification = async() => {
@@ -445,6 +446,45 @@ class App extends Component{
     ExpoNotifications.addNotificationReceivedListener(this.handleNotification);
 
     ExpoNotifications.addNotificationResponseReceivedListener(this.handleNotificationResponse);
+
+    this.interval = setInterval(() => this.locationChecker(), 10000)
+
+
+  }
+
+  locationChecker = async() => {
+    // this function will check for the closes orbs within a 5 mile radius
+    // and then return it,
+
+    const location = await this.connectToLocation()
+    console.log('wait after this')
+    console.log(location.coords.latitude)
+    console.log(location.coords.longitude)
+
+    // now put a backend call function so that you can grab the nears orb
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/getClosestOrb`, {
+      params: {
+        lat: location.coords.latitude,
+        long: location.coords.longitude
+      }
+    })
+    .then(res => {
+      console.log(res.data, 'gorup here')
+
+      // Now you put in redux
+
+      if(res.data !== false){
+        this.props.addCloseOrb(res.data)
+
+
+      } else {
+        // set the thing to false
+        this.props.nullCloseOrb()
+
+      }
+
+
+    })
   }
 
   componentDidUpdate(prevProps){
@@ -525,6 +565,11 @@ class App extends Component{
 
       }
     }
+  }
+
+
+  componentWillUnmount(){
+    clearInterval(this.interval)
   }
 
   initialiseNotification(){
@@ -1373,6 +1418,8 @@ const mapDispatchToProps = dispatch => {
     sendGlobePostLike: (post) => dispatch(globeGroupActions.sendGlobePostLike(post)),
     fetchGlobeItemComment: (comments) => dispatch(globeGroupActions.fetchGlobeItemComment(comments)),
     sendGlobeItemComment:(comment) => dispatch(globeGroupActions.sendGlobeItemComment(comment)),
+    addCloseOrb: (orb) => dispatch(globeGroupActions.addCloseOrb(orb)),
+    nullCloseOrb: () => dispatch(globeGroupActions.nullCloseOrb()),
 
     authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group)),
     authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),

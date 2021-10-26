@@ -4,7 +4,8 @@ import { updateObject } from "../utility";
 
 const initialState = {
   globePosts: [],
-  globeComments: []
+  globeComments: [],
+  closeOrb: null
 }
 
 
@@ -43,6 +44,18 @@ const loadMoreGlobePost = (state, action) => {
   })
 }
 
+const addCloseOrb = (state, action) => {
+  return updateObject(state, {
+    closeOrb: action.orb
+  })
+}
+
+const nullCloseOrb = (state, action) => {
+  return updateObject(state, {
+    closeOrb: null
+  })
+}
+
 
 
 const reducer = (state = initialState, action) => {
@@ -58,6 +71,10 @@ const reducer = (state = initialState, action) => {
       return sendGlobeItemComment(state, action)
     case actionTypes.LOAD_MORE_GLOBE_POST:
       return loadMoreGlobePost(state, action)
+    case actionTypes.ADD_CLOSE_ORB:
+      return addCloseOrb(state, action)
+    case actionTypes.NULL_CLOSE_ORB:
+      return nullCloseOrb(state, action)
     default:
       return state;
   }

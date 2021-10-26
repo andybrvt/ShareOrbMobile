@@ -94,11 +94,14 @@ export const SEND_GROUP_POST = "SEND_GROUP_POST";
 export const SEND_GROUP_POST_LIKE = "SEND_GROUP_POST_LIKE";
 export const LOAD_MORE_SMALL_GROUP_POST = "LOAD_MORE_SMALL_GROUP_POST";
 
+
 // this will have to do with the globe group
 export const FETCH_GLOBE_POST = "FETCH_GLOBE_POST";
 export const SEND_GLOBE_POST_LIKE = "SEND_GLOBE_POST_LIKE";
 export const LOAD_MORE_GLOBE_POST = "LOAD_MORE_GLOBE_POST";
 
+export const ADD_CLOSE_ORB  = "ADD_CLOSE_ORB"; // This function is used to add in the near by orb
+export const NULL_CLOSE_ORB = "NULL_CLOSE_ORB";
 
 export const FETCH_GLOBE_ITEM_COMMENT = "FETCH_GLOBE_ITEM_COMMENT";
 export const SEND_GLOBE_ITEM_COMMENT = "SEND_GLOBE_ITEM_COMMENT";
