@@ -37,7 +37,8 @@ class NearOrbButton extends React.Component{
     this.props.navigation.navigate("groupOrb", {
       orbId: orb.id,
       groupName: orb.group_name,
-      groupPic: orb.groupPic
+      groupPic: orb.groupPic,
+      showButton: true,
     })
   }
 
