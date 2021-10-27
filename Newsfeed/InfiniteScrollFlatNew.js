@@ -108,10 +108,10 @@ const data = [
 
 class InfiniteScrollFlatNew extends React.Component{
 
-  navGroupInfo=()=> {
-    const groupId = this.props.groupId
+  navGroupInfo=(groupInfo)=> {
+    console.log(groupInfo)
     this.props.navigation.navigate("GroupInfo",{
-      groupId: groupId
+      groupId: groupInfo
     });
   }
 
@@ -411,12 +411,14 @@ class InfiniteScrollFlatNew extends React.Component{
 
     const groupPic = this.props.route.params.groupPic
     const groupName = this.props.route.params.groupName
+    const groupId = this.props.route.params.orbId
+
 
     return(
       <View style = {styles.header}>
 
         <TouchableOpacity
-          onPress={() => this.navGroupInfo()}
+          onPress={() => this.navGroupInfo(groupId)}
           style={styles.roundButton1}>
 
           <Users stroke="gray" strokeWidth={2.5} width={30} height={30} />
