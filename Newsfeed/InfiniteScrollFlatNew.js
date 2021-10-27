@@ -109,7 +109,6 @@ const data = [
 class InfiniteScrollFlatNew extends React.Component{
 
   navGroupInfo=(groupInfo)=> {
-    console.log(groupInfo)
     this.props.navigation.navigate("GroupInfo",{
       groupId: groupInfo
     });
@@ -435,6 +434,19 @@ class InfiniteScrollFlatNew extends React.Component{
     )
   }
 
+  onCameraNav = () => {
+    const groupPic = this.props.route.params.groupPic
+    const groupName = this.props.route.params.groupName
+    const groupId = this.props.route.params.orbId
+
+    console.log(groupPic, groupName, groupId)
+    this.props.navigation.navigate("Camera", {
+      groupPic: groupPic,
+      groupName: groupName,
+      groupId: groupId
+    })
+  }
+
   render(){
 
     // let post = [];
@@ -442,7 +454,6 @@ class InfiniteScrollFlatNew extends React.Component{
     //   post = this.props.socialPosts
     // }
 
-    console.log(this.props)
     let closeId = "";
     let groupId = '';
     let groupPic = "";
@@ -498,7 +509,7 @@ class InfiniteScrollFlatNew extends React.Component{
           groupId === closeId ?
 
           <TouchableOpacity
-            onPress = {() => this.props.navigation.navigate("Camera")}
+            onPress = {() => this.onCameraNav()}
             style = {styles.videoButton}>
             <Text style = {{
                 color: 'white',

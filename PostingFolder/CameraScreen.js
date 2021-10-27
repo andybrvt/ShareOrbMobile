@@ -501,7 +501,6 @@ class CameraScreen extends React.Component{
   onGroupPostDirect = (imageFile) => {
     // this function will be used to direct post
 
-    console.log('navigate here')
     this.props.closeShowCamera()
 
     this.props.navigation.navigate("GroupPost",
@@ -513,7 +512,6 @@ class CameraScreen extends React.Component{
 
   onSavePhoto = (image) => {
 
-    console.log('save photo')
 
     const {activeSlide} = this.state;
     const groupID = this.props.smallGroups[activeSlide].id;
@@ -627,7 +625,6 @@ class CameraScreen extends React.Component{
 
       ).then(res =>{
 
-        console.log(res.data)
 
         this.props.authAddCurLoad()
         this.props.authAddCurLoad()
@@ -832,6 +829,7 @@ class CameraScreen extends React.Component{
   render(){
     const smallGroups = this.props.smallGroups;
     const showCaption = this.state.showCaptionModal;
+    const groupPic = `${global.IMAGE_ENDPOINT}`+this.props.route.params.groupPic
     let groupsLength=smallGroups.length
     return(
       <View
@@ -945,7 +943,7 @@ class CameraScreen extends React.Component{
                   save = {this.onSaveNewGoal}
                   />
 
-                {this.renderSmallGroupCarousel(this.state.activeSlide)}
+                {/*this.renderSmallGroupCarousel(this.state.activeSlide)*/}
 
                <TouchableOpacity
                  onPress = {() => this.onCancelPhoto()}
@@ -1138,7 +1136,7 @@ class CameraScreen extends React.Component{
 
                   </TouchableWithoutFeedback>
 
-                  {this.renderSmallGroupCarousel(this.state.activeSlide)}
+                  {/*this.renderSmallGroupCarousel(this.state.activeSlide)*/}
 
 
                      <TouchableOpacity
@@ -1159,51 +1157,7 @@ class CameraScreen extends React.Component{
                          height = {40}
                          width = {40}/>
                      </TouchableOpacity>
-                     {/*
-                       this.state.selectedGoal.goal  ?
 
-                       <View
-                         style ={{
-                           // position: 'relative',
-                           position: 'absolute',
-                           top: '4%',
-                           right: '2%',
-                           alignSelf: 'flex-end',
-
-                           backgroundColor: '#000000aa',
-                           padding: 20,
-                           borderRadius: 30,
-                           flexDirection: 'row'
-                           // top: 100
-                         }}
-                         >
-
-
-
-                         <View>
-                           <Text style = {{
-                               color: 'white',
-                               textAlign: 'right'
-                             }}>{this.state.selectedGoal.goal}</Text>
-                         </View>
-
-                         <View style = {{
-                             height: 20,
-                             width: 40
-                           }}>
-
-                         </View>
-
-                       </View>
-
-                       :
-
-                       null
-
-
-
-
-                     */}
                      <TouchableOpacity
                        onPress = {() => this.openShowGoals()}
                        style ={{
@@ -1289,7 +1243,7 @@ class CameraScreen extends React.Component{
 
                   */}
 
-                {
+                {/*
                   this.state.isRecording === true ?
 
                   null
@@ -1297,7 +1251,7 @@ class CameraScreen extends React.Component{
                   :
 
                   this.renderSmallGroupCarousel(this.state.activeSlide)
-                }
+                */}
 
 
                 {
@@ -1326,6 +1280,35 @@ class CameraScreen extends React.Component{
                       width = {40} height = {40} />
 
                   </TouchableOpacity>
+                }
+
+                {
+                  this.state.isRecording === true ?
+
+                  null
+
+                  :
+
+
+                  <View style = {{
+                      position: 'absolute',
+                      bottom: '5%',
+                      right: '5%',
+                      alignItems: 'center'
+                    }}>
+                    <Text style = {{
+                        color: 'white',
+                        marginBottom: 5,
+                      }}>Posting to:</Text>
+                    <Avatar
+                      source = {{
+                        uri: groupPic
+                      }}
+                      rounded
+                      size = {40}
+                       />
+                  </View>
+
                 }
 
 
