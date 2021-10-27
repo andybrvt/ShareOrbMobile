@@ -20,7 +20,7 @@ import authAxios from '../../util';
 import * as globeGroupActions from '../../store/actions/globeGroup';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { Avatar } from 'react-native-elements';
-import { Bell,ArrowUpCircle, Plus, Mail, UserPlus } from "react-native-feather";
+import { Bell,ArrowUpCircle, Plus, Mail, UserPlus, Globe } from "react-native-feather";
 import MainLogo from '../../logo.svg';
 
 

@@ -439,11 +439,15 @@ class InfiniteScrollFlatNew extends React.Component{
     // if(this.props.socialPosts){
     //   post = this.props.socialPosts
     // }
+
+    console.log(this.props)
+    let closeId = "";
     let groupId = '';
     let groupPic = "";
     let groupName  = "";
     let groupPost = [];
     let showButton = false;
+
     if(this.props.route.params.orbId){
       groupId = this.props.route.params.orbId
     }
@@ -455,6 +459,9 @@ class InfiniteScrollFlatNew extends React.Component{
     }
     if(this.props.route.params.showButton){
       showButton = this.props.route.params.showButton
+    }
+    if(this.props.closeOrb){
+      closeId = this.props.closeOrb.id
     }
 
 
@@ -486,9 +493,11 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
         {
-          showButton ?
+          groupId === closeId ?
 
-          <TouchableOpacity style = {styles.videoButton}>
+          <TouchableOpacity
+            onPress = {() => this.props.navigation.navigate("Camera")}
+            style = {styles.videoButton}>
             <Text style = {{
                 color: 'white',
                 marginRight: 10,
@@ -601,7 +610,8 @@ const mapStateToProps = state => {
     // socialPosts: state.socialNewsfeed.socialPosts,
     following: state.auth.following,
     curLoad: state.auth.curLoad,
-    groupPost: state.smallGroups.groupPosts
+    groupPost: state.smallGroups.groupPosts,
+    closeOrb: state.globeGroup.closeOrb
   }
 }
 

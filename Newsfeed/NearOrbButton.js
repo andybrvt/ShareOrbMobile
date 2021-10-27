@@ -38,7 +38,6 @@ class NearOrbButton extends React.Component{
       orbId: orb.id,
       groupName: orb.group_name,
       groupPic: orb.groupPic,
-      showButton: true,
     })
   }
 
@@ -140,8 +139,8 @@ class NearOrbButton extends React.Component{
               position: 'absolute',
               bottom: 0,
             }}
-            fill = 'black'
-            stroke = "black"
+            fill = 'white'
+            stroke = "white"
              />
 
 

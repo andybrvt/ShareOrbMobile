@@ -887,6 +887,16 @@ class App extends Component{
                       component= {NewProfile}
                       />
 
+                      <Stack.Screen
+                        options={{
+                          headerShown: false,
+                          animationEnabled: false
+                        }}
+                        name = "Camera"
+                        // component= {this.createTabStack}
+                        component= {CameraScreen}
+                        />
+
                     <Stack.Screen
                       options={{headerShown: false, }}
                       name = "notification"

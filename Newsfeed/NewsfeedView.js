@@ -37,6 +37,7 @@ import NearOrbButton from './NearOrbButton';
 import SwipeInfiniteScrollHolder from './SwipeInfiniteScrollHolder';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import GlobeGroup from './GlobeGroup/GlobeGroup';
+import { Globe, Map } from "react-native-feather";
 
 const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 const height = Dimensions.get('window').height
@@ -199,6 +200,8 @@ class NewsfeedView extends React.Component{
 
 
 
+
+
           {
             this.props.showFirstPostModal ?
             <FirstPost
@@ -220,6 +223,17 @@ class NewsfeedView extends React.Component{
 
 
           </View>
+
+          <LinearGradient
+            start={{x: 0, y: 0}} end={{x: 0, y: 1}}
+            style = {{
+              position: 'absolute',
+              width: '100%',
+              bottom: '0%',
+              height: "12%",
+            }}
+            colors = {['transparent', '#000000']}>
+          </LinearGradient>
 
           {/*
             <Animated.View
@@ -252,9 +266,44 @@ class NewsfeedView extends React.Component{
 
               :
 
-              null
+              <View style = {{
+                  position: 'absolute',
+                  alignSelf: 'center',
+                  bottom: '5%',
+                }}>
+                <Text style = {{color:'white', fontSize: 30}}>|</Text>
+              </View>
 
             }
+
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate("Explore")}
+               style = {{
+                position: 'absolute',
+                bottom: '5%',
+                right: '23%'
+              }}>
+              <Globe
+                stroke = "white"
+                width = {40}
+                height = {40}
+                 />
+             </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate("Test1")}
+              style = {{
+                position: 'absolute',
+                bottom: '5%',
+                left: '23%'
+              }}>
+              <Map
+                stroke = "white"
+                width = {40}
+                height = {40}
+
+                 />
+             </TouchableOpacity>
 
 
 

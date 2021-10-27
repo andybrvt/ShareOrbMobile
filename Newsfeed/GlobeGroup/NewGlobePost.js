@@ -71,6 +71,16 @@ class NewGlobePost extends React.Component{
 
   }
 
+  viewOrb = (orb) => {
+
+    console.log(orb)
+    this.props.navigation.navigate("groupOrb", {
+      orbId: orb.id,
+      groupName: orb.group_name,
+      groupPic: orb.groupPic
+    })
+  }
+
 
   onLike = ( likerId, notificationToken) => {
     WebSocketGlobeInstance.sendGroupLike(
@@ -224,7 +234,7 @@ class NewGlobePost extends React.Component{
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
     // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
-    timestamp=postCreatedAt
+    let timestamp=postCreatedAt
     // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
     //
     socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
@@ -422,14 +432,18 @@ class NewGlobePost extends React.Component{
                 alignItems: 'center',
                 marginLeft: 10
               }}>
-              <Avatar
-                size = {40}
-                rounded
-                source = {{
-                  uri: groupPic
-                }}
-                 />
-               <View style = {{
+              <TouchableOpacity
+                onPress = {() => this.viewOrb(group)}
+                >
+                <Avatar
+                  size = {40}
+                  rounded
+                  source = {{
+                    uri: groupPic
+                  }}
+                   />
+              </TouchableOpacity>
+              <View style = {{
                    marginLeft: 10
                  }}>
                  <Text style = {{
@@ -455,35 +469,7 @@ class NewGlobePost extends React.Component{
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-            {
-              !members.includes(this.props.id) ?
-              <TouchableOpacity
-                onPress = {() => this.viewGroup(group)}
-                activeOpacity={0.8} style={styles.inviteButton} >
-                <UserPlus
-                  style={{marginRight:5}}
-                  stroke = "white"
-                  strokeWidth = {2}
-                  height = {15}
-                  width = {15}
-                   />
-                 <Text style={{fontFamily:'Nunito-SemiBold', fontSize:13, color:'white' }}>Join</Text>
-              </TouchableOpacity>
 
-              :
-
-              <TouchableOpacity
-                style={styles.inviteButtonJ} >
-                <UserCheck
-                  style={{marginRight:5}}
-                  stroke = "white"
-                  strokeWidth = {2}
-                  height = {15}
-                  width = {15}
-                   />
-                 <Text style={{fontFamily:'Nunito-SemiBold', fontSize:13, color:'white' }}>Joined</Text>
-              </TouchableOpacity>
-            }
           </View>
         </View>
 
@@ -515,8 +501,8 @@ class NewGlobePost extends React.Component{
                 ref={ref => {this.video = ref}}
                 style = {styles.cover}
                 source={{
-                  // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-                  uri: video
+                  uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                  // uri: video
                 }}
                 rate={1.0}
                 isMuted={this.state.isMuted}
@@ -587,46 +573,43 @@ class NewGlobePost extends React.Component{
                colors = {['transparent', '#000000']}>
              </LinearGradient>
 
-           {
-             caption.length === 0 ?
-             <View style={{position:'absolute', bottom:'5%', width:'100%', flexDirection:'row'}}>
-               {this.renderPostInfo(post, groupLike, comment, created_at)}
-             </View>
-             :
-             <View style={{position:'absolute', bottom:'12.5%', width:'100%', flexDirection:'row'}}>
-               {this.renderPostInfo(post, groupLike, comment, created_at)}
-             </View>
-           }
+           <View style={{position:'absolute', bottom:'5%', width:'100%', flexDirection:'row'}}>
+             {this.renderPostInfo(post, groupLike, comment, created_at)}
+           </View>
 
-           {
-             (caption.length==0)?
-             <View>
 
-             </View>
-             :
-             <View>
-               <View style={styles.testWhere4}>
-                   <View style={styles.testWhere4}>
-                     { (caption.length>30)?
-                       <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row',}}>
-                         <Text>
-                           <Text style = {{fontSize:15, fontFamily:'Nunito-Bold', color:'white' }}>{username+" "}</Text>
-                           <Text style={styles.captionText}>{caption.substring(0,75)}</Text>
-                         </Text>
-                       </View>
-                       :
-                       <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', marginBottom:10}}>
-                         <Text>
-                           <Text style = {{fontSize:15, fontFamily:'Nunito-Bold', color:'white' }}>{username+" "}</Text>
-                           <Text style={styles.captionText}>{caption.substring(0,75)}</Text>
-                         </Text>
-                       </View>
-                     }
-                   </View>
-               </View>
-             </View>
-           }
+
         </View>
+
+        {
+          caption.length === 0 ?
+
+          <View>
+          </View>
+
+          :
+
+          <View>
+            <View style={styles.testWhere4}>
+                <View style={styles.testWhere4}>
+
+                    <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', marginBottom:10}}>
+                      <Text>
+                        <Text style = {{
+                            fontWeight: 'bold',
+                              fontSize:15, fontFamily:'Nunito-Bold', color:'black' }}>{username+" "}</Text>
+                        <Text style={styles.captionText}>{caption} write wome more stuf idk what i am toasfkan asdkfas  sdafkaj;fljasd fsad </Text>
+                      </Text>
+                    </View>
+
+                </View>
+            </View>
+          </View>
+
+        }
+
+
+
       </View>
 
     )
@@ -664,18 +647,23 @@ const styles = StyleSheet.create({
   },
   totalHolderContainer: {
     position: 'relative',
-    height: 500,
+    // height: 600,
     // borderTopWidth:1, borderColor:'#F0F0F0'
     // flexDirection: 'row'
   },
   topContainer:{
-    height: '12.5%',
+    height: 70,
     // backgroundColor:'red',
     flexDirection:  'row'
   },
   bottomContainer: {
-    height: '85%',
-    backgroundColor: 'gainsboro'
+    alignSelf: 'center',
+    width: '90%',
+    height:500,
+    // height: '100%',
+    borderRadius: 25,
+    backgroundColor: 'gainsboro',
+    overflow: 'hidden'
   },
   joinbtn: {
     padding:10,
@@ -750,22 +738,19 @@ const styles = StyleSheet.create({
     // fontWeight:'bold',
   },
   testWhere4:{
-    position:'absolute',
-    bottom:7.5,
+    position:'relative',
 
     zIndex:1,
     flexDirection:'row',
     padding:5,
     left:'1%',
-    width:'100%',
+    width:'90%',
+    alignSelf:'center'
   },
 
   captionText:{
     fontFamily:'Nunito-SemiBold',
-      textShadowColor: 'black',
-      textShadowOffset: {width: -1, height: 1},
-      textShadowRadius: 5,
-      color:'white'
+    color:'black'
   },
   tagCSS4: {
     position:'absolute',
