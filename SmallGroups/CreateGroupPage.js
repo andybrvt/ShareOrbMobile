@@ -71,7 +71,7 @@ class CreateGroupPage extends React.Component{
       showAddressSearch: false,
       selectedAddress: "",
       businessCondition:false,
-
+      type:'',
       inputValue:'',
       isModalVisible:false,
     }
@@ -82,7 +82,7 @@ class CreateGroupPage extends React.Component{
   openModal = (modalNum) => {
     // this function will open a specific modal
     if(modalNum === 'one'){
-      // this.setState({
+      // this.setState({+
       //   one:true,
       //   videoPlaying:false,
       //   resumeOnce:true,
@@ -230,6 +230,13 @@ class CreateGroupPage extends React.Component{
   }
 
 
+  onTypeChange = e => {
+    this.setState({
+      type: e
+    })
+    console.log(e)
+  }
+
   onNameChange = e => {
     this.setState({
       firstName: e
@@ -310,7 +317,7 @@ class CreateGroupPage extends React.Component{
   checkCreating = () => {
     // this function will check whether or not you meet the criteria
     // to sumbit to create a group
-    const {groupPic, groupName, description, publicG, invitedPeople, selectedAddress} = this.state
+    const {groupPic, type, groupName, description, publicG, invitedPeople, selectedAddress} = this.state
     if(groupPic === ""){
       return false
     }
@@ -331,7 +338,7 @@ class CreateGroupPage extends React.Component{
     this.setState({
       disabled:true,
     })
-    const {groupPic, groupName, description, publicG, invitedPeople, selectedAddress} = this.state
+    const {groupPic, groupName, description, type, publicG, invitedPeople, selectedAddress} = this.state
     // let newInvited = [];
     // for(let i = 0; i < invitedPeople.length; i++){
     //     newInvited.push(
@@ -344,6 +351,7 @@ class CreateGroupPage extends React.Component{
     const address=selectedAddress
     console.log("Final info!")
     console.log(groupName)
+    console.log(type)
     console.log(description)
     console.log(groupPic)
     console.log(address)
@@ -356,6 +364,7 @@ class CreateGroupPage extends React.Component{
     formData.append('description', description)
     formData.append('public', publicG)
     formData.append('curId', this.props.id)
+    formData.append('type', type)
     // formData.append('invited', JSON.stringify(newInvited))
     formData.append("lat", lat)
     formData.append("long", long)
@@ -419,23 +428,40 @@ class CreateGroupPage extends React.Component{
           loading = {this.state.loading}
           />
 
-        <SlideWrap visible = {this.state.two}>
+          <SlideWrap visible = {this.state.two}>
+            <BasicGroupPage
+              {...this.props}
+              prompt = {"What type of business are you?"}
+              visible = {this.state.two}
+              closeModal = {this.closeModal}
+              openModal = {this.openModal}
+              autoCorrect={false}
+              closeNum = {'two'}
+              openNum = {'three'}
+              type={true}
+              onChange = {this.onTypeChange}
+              value = {this.state.type}
+              loading = {this.state.loading}
+              />
+          </SlideWrap>
+
+        <SlideWrap visible = {this.state.three}>
           <BasicGroupPage
             {...this.props}
             prompt = {"Write a description of your business"}
-            visible = {this.state.two}
+            visible = {this.state.three}
             closeModal = {this.closeModal}
             openModal = {this.openModal}
             autoCorrect={false}
-            closeNum = {'two'}
-            openNum = {'three'}
+            closeNum = {'three'}
+            openNum = {'four'}
             onChange = {this.onDescriptionChange}
             value = {this.state.description}
             loading = {this.state.loading}
             />
         </SlideWrap>
 
-        <SlideWrap visible = {this.state.three}>
+        <SlideWrap visible = {this.state.four}>
           <BasicGroupPage
             {...this.props}
             loading = {this.state.loading}
@@ -444,14 +470,14 @@ class CreateGroupPage extends React.Component{
             openModal = {this.openModal}
             onChange = {this.onGroupPicChange}
             value = {this.state.groupPic}
-            closeNum = {'three'}
-            openNum = {'four'}
+            closeNum = {'four'}
+            openNum = {'five'}
             pp={true}
           />
 
         </SlideWrap>
 
-        <SlideWrap visible = {this.state.four}>
+        <SlideWrap visible = {this.state.five}>
           <BasicGroupPage
             {...this.props}
             prompt = {"Search your address"}
@@ -462,8 +488,8 @@ class CreateGroupPage extends React.Component{
             openModal = {this.openModal}
             add={true}
             submitGroup={this.onCreateGroup}
-            closeNum = {'four'}
-            openNum = {'five'}
+            closeNum = {'five'}
+            openNum = {'six'}
             end={true}
           />
 

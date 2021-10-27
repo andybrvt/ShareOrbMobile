@@ -18,7 +18,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   ActivityIndicator,
-
+  TouchableHighlight,
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowRightCircle, ArrowLeftCircle, XCircle, Plus, Mail, UserPlus } from "react-native-feather";
@@ -31,6 +31,9 @@ import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-hand
 import * as ImagePicker from 'expo-image-picker';
 import AddressSearch from './AddressSearch';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { faStore, faUsers, faLaptopHouse, faUserFriends } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -69,6 +72,17 @@ class BasicGroupPage extends React.Component{
   }
 
 
+  checkType = (condition) => {
+    if(condition=='online'){
+      this.props.onChange("online")
+    }
+    else {
+      this.props.onChange("store")
+    }
+  }
+
+
+
   setAddress = async(address) => {
     // this function will set the address into the states
     const location = await Location.geocodeAsync(address)
@@ -89,28 +103,6 @@ class BasicGroupPage extends React.Component{
     this.setState({
       showAddressSearch: false
     })
-  }
-
-  next = () => {
-
-      Alert.alert(
-        "Are you sure?",
-        "You cannot go back after this, but you will still be able to edit later in the future",
-        [
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel"
-          },
-          { text: "Yes",
-            style:'destructive', onPress: () => this.props.submitGroup() }
-        ]
-
-      )
-
-
-
-
   }
 
   handleTakeProfile = async() => {
@@ -374,7 +366,7 @@ class BasicGroupPage extends React.Component{
             backgroundColor: '#1890ff',
             alignItems: 'center'
           }}>
-            {(this.props.pp)?
+            {(this.props.pp||this.props.type)?
               <View
               style = {styles.profilePicTopContainer}
               >
@@ -486,51 +478,59 @@ class BasicGroupPage extends React.Component{
             }
 
 
-
-            <TouchableWithoutFeedback
-
-              >
-              <View
-                style = {styles.textContainer}
-                >
-                {
-                  this.props.loading ?
-
-                  <ActivityIndicator
-                    size = "large"
-                    color = 'white'
-                      />
-
-                  :
-                  <View>
-                    {this.props.pp?
-                      <View></View>
-
-                    :
-                    <TextInput
-                      style = {{
-                        width: 'width'
-                      }}
-                      autoCapitalize="none"
-                      selectionColor={'white'}
-                      style = {styles.textInput}
-                      ref={(input) => { this.textInput = input; }}
-                      onChangeText = {this.props.onChange}
-                      value = {this.props.value}
-                      />
-
-
-                    }
-
+            <View>
+              {this.props.pp||this.props.type?
+                <View></View>
+              :
+              <TouchableWithoutFeedback>
+                <View
+                  style = {styles.textContainer}
+                  >
+                  <TextInput
+                    style = {{
+                      width: 'width'
+                    }}
+                    autoCapitalize="none"
+                    selectionColor={'white'}
+                    style = {styles.textInput}
+                    ref={(input) => { this.textInput = input; }}
+                    onChangeText = {this.props.onChange}
+                    value = {this.props.value}
+                    />
 
                   </View>
-                }
+              </TouchableWithoutFeedback>
+              }
+            </View>
 
-
+            <View>
+              { this.props.type?
+                <View style={{height:'55%'}}>
+                  <TouchableOpacity
+                     onPress = {() => this.checkType("store")}
+                     underlayColor={'gray'}  >
+                    <View style={styles.rectButton}>
+                      <FontAwesomeIcon
+                      size = {50}
+                      style={{color:'white'}}
+                      icon={faStore} />
+                      <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>In-Person</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress = {() => this.checkType("online")}
+                    underlayColor={'gray'}  style={styles.rectButton}>
+                    <FontAwesomeIcon
+                      size = {50}
+                      style={{color:'white'}}
+                      icon={faLaptopHouse} />
+                    <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>Online</Text>
+                  </TouchableOpacity>
                 </View>
-
-            </TouchableWithoutFeedback>
-
+                :
+                <Text></Text>
+              }
+            </View>
 
 
 
@@ -640,6 +640,20 @@ class BasicGroupPage extends React.Component{
 }
 
 const styles = StyleSheet.create({
+  rectButton: {
+    marginBottom:50,
+    width:175,
+    height:100,
+    padding:15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:99,
+    borderRadius: 10,
+    backgroundColor: '#1890ff',
+    elevation:15,
+
+  },
+
   promptText: {
     color: 'white',
     fontSize: 27.5,
