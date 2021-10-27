@@ -11,6 +11,7 @@ import {
  Keyboard,
  TouchableWithoutFeedback,
  KeyboardAvoidingView,
+ TouchableHighlight,
  Dimensions,
  AsyncStorage,
  Modal,
@@ -20,7 +21,7 @@ import {
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
 // import * as Permissions from 'expo-permissions';
-import { Triangle, Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
+import { ChevronRight,Triangle, Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
@@ -42,6 +43,8 @@ const height = Dimensions.get('window').height
 import * as Progress from 'react-native-progress';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Avatar } from 'react-native-elements';
+import RecordingAnimationBtn from './RecordingAnimationBtn';
+
 
 const { Clock,
    cond,
@@ -1012,32 +1015,6 @@ class CameraScreen extends React.Component{
                }
 
 
-                 <TouchableOpacity
-                   onPress = {() => this.openShowGoals()}
-                   style ={{
-                     // position: 'relative',
-                     position: 'absolute',
-                     top: '5%',
-                     right:'5%',
-                     // top: 100
-                   }}
-                   >
-                   <Circle
-                     style={{top:0, position:'absolute'}}
-                     stroke = "#d9d9d9"
-                     strokeWidth={3}
-                     width = {35}
-                     height = {35}
-                      />
-
-                    <Circle
-                      strokeWidth={2}
-                      stroke = "white"
-                      width = {35}
-                      height = {35}
-                       />
-
-                 </TouchableOpacity>
 
                <TouchableOpacity
                  style = {styles.submitBtn}
@@ -1158,42 +1135,26 @@ class CameraScreen extends React.Component{
                          width = {40}/>
                      </TouchableOpacity>
 
-                     <TouchableOpacity
-                       onPress = {() => this.openShowGoals()}
-                       style ={{
-                         // position: 'relative',
-                         position: 'absolute',
-                         top: '5%',
-                         right:'5%',
-                         // top: 100
-                       }}
-                       >
-                       <Circle
-                         style={{top:0, position:'absolute'}}
-                         stroke = "#d9d9d9"
-                         strokeWidth={3}
-                         width = {35}
-                         height = {35}
-                          />
 
-                        <Circle
-                          strokeWidth={2}
-                          stroke = "white"
-                          width = {35}
-                          height = {35}
-                           />
-
-                     </TouchableOpacity>
 
 
                      <TouchableOpacity
                        style = {styles.submitBtn}
                        onPress = {() => this.onSaveVideo(this.state.videoPreview)}
                        >
-                         <Text style = {{
-                             color: 'white',
-                             fontSize: 20
-                           }}> Save  </Text>
+                       <Avatar
+                         source = {{
+                           uri: groupPic
+                         }}
+                         rounded
+                         size = {40}
+                          />
+
+                         <ChevronRight
+                           height = {40}
+                           width = {40}
+                           stroke = "white"
+                            />
                      </TouchableOpacity>
                 </View>
                 <GoalDropDown
@@ -1437,13 +1398,30 @@ class CameraScreen extends React.Component{
                 }
 
 
-
+                {
+                  this.state.isRecording === true ?
 
                   <TouchableOpacity
                     onPressOut = {() => this.handlePressOut()}
                     onLongPress = {() => this.handleLongPress()}
-                    onPress = {() => this.takePicture(groupsLength)}
-                    style = {[(this.state.capturing)&&styles.captureBtnActive,styles.captureBtn]}></TouchableOpacity>
+                    // onPress = {() => this.takePicture(groupsLength)}
+                    style = {styles.captureBtnActive}>
+                    <RecordingAnimationBtn />
+
+                  </TouchableOpacity>
+
+                  :
+
+                  <TouchableOpacity
+                    onPressOut = {() => this.handlePressOut()}
+                    onLongPress = {() => this.handleLongPress()}
+                    // onPress = {() => this.takePicture(groupsLength)}
+                    style = {styles.captureBtn}></TouchableOpacity>
+
+
+
+                }
+
 
 
 
@@ -1559,7 +1537,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 5,
     alignSelf: 'center',
-    borderColor: 'red'
+    borderColor: '#1890ff'
   },
   submitBtn: {
     position: 'absolute',
@@ -1568,7 +1546,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignSelf: 'flex-end',
     bottom: 25,
-    right: 25
+    right: 25,
+    flexDirection: 'row',
+    alignItems: 'center'
+
   }
 })
 
