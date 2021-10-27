@@ -28,16 +28,9 @@ const loadMoreSmallGroupPost = (state, action) => {
 }
 
 const sendGroupPost = (state, action) => {
-
-  console.log(state.groupPosts[action.post.groupId.toString()], 'stufff her ')
+  console.log(action.post, 'in the action')
   return updateObject(state, {
-    groupPosts: {
-      ...state.groupPosts,
-      [action.post.groupId.toString()]:[
-        action.post.groupPost,
-        ...state.groupPosts[action.post.groupId.toString()],
-      ]
-    }
+    groupPosts: [action.post.groupPost, ...state.groupPosts]
   })
 }
 

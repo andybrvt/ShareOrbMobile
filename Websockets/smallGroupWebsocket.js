@@ -50,7 +50,7 @@ class WebSocketSmallGroups{
     // You will have a websocket for each group and everytime
     // something gets sent through you have to check which weboscket
     // its coming from and put it in the correct group
-
+    console.log(parsedData)
     if(command === "fetch_group_post"){
         const groupPosts = parsedData.group_posts
         const groupId = parsedData.groupId

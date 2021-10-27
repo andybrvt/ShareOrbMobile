@@ -28,14 +28,19 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import * as smallGroupsActions from '../store/actions/smallGroups';
 import NoPosts from './noPosts.svg';
 import FirstPost from './FirstPost';
-import { PlusCircle, UserPlus, Info, Video } from "react-native-feather";
+import { PlusCircle, UserPlus, Info } from "react-native-feather";
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import NoPostsGroup from './noPostsGroup.svg';
 import { Avatar } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Video, AVPlaybackStatus } from 'expo-av';
+
 // this is used mostly for the new scroll newsfeed
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
+
+import * as Progress from 'react-native-progress';
+
 
 const height = Dimensions.get('window').height
 
@@ -303,6 +308,9 @@ class InfiniteScrollFlatNew extends React.Component{
     let video = "";
 
     if(item) {
+      if(item.video){
+        video = `${global.IMAGE_ENDPOINT}`+item.video
+      }
       if(item.creator.first_name){
         firstName = item.creator.first_name;
       }
@@ -326,6 +334,29 @@ class InfiniteScrollFlatNew extends React.Component{
         activeOpacity={0.8}
         style={styles.item}
       >
+      {/*
+        <Video
+          ref={ref => {this.video = ref}}
+          style = {{
+            width: '100%',
+            height: '100%'
+          }}
+          source={{
+            uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+            // uri: video
+          }}
+          rate={1.0}
+          isMuted={this.state.isMuted}
+          resizeMode="cover"
+          isLooping
+          // shouldPlay
+          volume={0.5}
+
+
+           />
+
+        */}
+
 
         <Image
           style ={{
@@ -334,9 +365,12 @@ class InfiniteScrollFlatNew extends React.Component{
           }}
           resizeMode = "cover"
           source = {{
-            uri:  `${global.IMAGE_ENDPOINT}`+item.itemImage
+            // uri:  `${global.IMAGE_ENDPOINT}`+item.itemImage
+            uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
           }}
            />
+
+
 
            <LinearGradient
              start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
@@ -454,6 +488,7 @@ class InfiniteScrollFlatNew extends React.Component{
     //   post = this.props.socialPosts
     // }
 
+    console.log(this.props)
     let closeId = "";
     let groupId = '';
     let groupPic = "";
@@ -487,6 +522,19 @@ class InfiniteScrollFlatNew extends React.Component{
     return(
       <SafeAreaView style = {{flex: 1}}>
 
+
+        <Progress.Bar
+          animationType = "timing"
+          borderWidth = {0}
+          style = {{
+            position: 'relative',
+            left: 0,
+          }}
+          progress = {this.props.curLoad}
+          width = {width}
+
+           />
+
         <View >
           <TouchableOpacity
             onPress = {() => this.props.navigation.goBack()}
@@ -505,6 +553,8 @@ class InfiniteScrollFlatNew extends React.Component{
         </View>
 
 
+
+
         {
           groupId === closeId ?
 
@@ -516,9 +566,7 @@ class InfiniteScrollFlatNew extends React.Component{
                 marginRight: 10,
                 fontSize: 20
               }}>Share</Text>
-            <Video
-              stroke = "white"
-               />
+
           </TouchableOpacity>
 
 

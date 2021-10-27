@@ -123,6 +123,7 @@ class CameraScreen extends React.Component{
     showFlash: "off",
     imagePreview: null,
     videoPreview: null,
+    tinyVideo: null,
     isOpen: false,
     isVideoOpen: false,
     pageShow: true,
@@ -137,7 +138,8 @@ class CameraScreen extends React.Component{
     counter: 0,
     timer: null,
     showGroupText: false,
-    activeSlide: 0
+    activeSlide: 0,
+
   }
 
   componentDidMount(){
@@ -352,11 +354,16 @@ class CameraScreen extends React.Component{
         })
 
         // this.isRecording.setValue(true)
+        // const tinyVideo = await this.cameraRef.recordAsync({
+        //   maxDuration: 1
+        // })
         const video = await this.cameraRef.recordAsync({
           maxDuration: 10
         });
 
+
         // this.clearInterval(this.state.timer);
+
 
         clearInterval(this.state.timer);
 
@@ -602,7 +609,7 @@ class CameraScreen extends React.Component{
   onSaveVideo = (video) => {
 
       const {activeSlide} = this.state;
-      const groupID = this.props.smallGroups[activeSlide].id;
+      const groupID = this.props.route.params.groupId
 
       // CONTINUE HERE WHEN YOU ARE DONE
       const ownerId = this.props.curUserId;
@@ -628,7 +635,7 @@ class CameraScreen extends React.Component{
 
       ).then(res =>{
 
-
+        console.log(res.data)
         this.props.authAddCurLoad()
         this.props.authAddCurLoad()
         this.props.authAddCurLoad()
@@ -639,17 +646,15 @@ class CameraScreen extends React.Component{
         this.props.authAddCurLoad()
         this.props.authAddCurLoad()
 
-        setTimeout(() => this.props.authZeroCurLoad(), 0);
+        setTimeout(() => this.props.authZeroCurLoad(), 300);
 
 
         // Add a websocket funciton here so that you can start sending
         // stuff in real time
 
-        const tabIndex = activeSlide+1;
-        this.props.authSetActiveNewsfeedSlide(tabIndex)
 
 
-        WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
+        // WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
 
 
         // this.props.addFirstSocialCellPost(res.data.item)
@@ -679,11 +684,10 @@ class CameraScreen extends React.Component{
 
       })
 
-      this.onCancelPhoto();
+      // this.onCancelPhoto();
 
-      this.props.closeShowCamera()
-      this.props.navigation.navigate("GroupPost")
-      // setTimeout(() => {this.props.closeShowCamera()}, 1000);
+      // this.props.closeShowCamera()
+      // this.props.navigation.goBack()
 
   }
 
