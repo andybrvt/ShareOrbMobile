@@ -28,7 +28,10 @@ import { Avatar } from 'react-native-elements';
 import CameraPic from './camera.jpg';
 import BottomSheet from 'reanimated-bottom-sheet';
 import { TouchableOpacity as TouchableOpacity1 } from 'react-native-gesture-handler';
-import * as ImagePicker from 'expo-image-picker'
+import * as ImagePicker from 'expo-image-picker';
+import AddressSearch from './AddressSearch';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -65,6 +68,51 @@ class BasicGroupPage extends React.Component{
     }
   }
 
+
+  setAddress = async(address) => {
+    // this function will set the address into the states
+    const location = await Location.geocodeAsync(address)
+    this.setState({
+      selectedAddress: address,
+      showAddressSearch: false
+    })
+  }
+
+  onShowAddressSearch = () => {
+    this.setState({
+      showAddressSearch: true
+    })
+  }
+
+
+  onCloseAddressSearch = () => {
+    this.setState({
+      showAddressSearch: false
+    })
+  }
+
+  next = () => {
+
+      Alert.alert(
+        "Are you sure?",
+        "You cannot go back after this, but you will still be able to edit later in the future",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "Yes",
+            style:'destructive', onPress: () => this.props.submitGroup() }
+        ]
+
+      )
+
+
+
+
+  }
+
   handleTakeProfile = async() => {
     let permissionResult = await Camera.requestPermissionsAsync();
     if(permissionResult.granted === false){
@@ -86,6 +134,7 @@ class BasicGroupPage extends React.Component{
 
     if(!pickerResult.cancelled){
 
+      this.props.onChange(pickerResult.uri)
       this.setState({
         groupPic: pickerResult.uri
       })
@@ -120,7 +169,7 @@ class BasicGroupPage extends React.Component{
     if(!pickerResult.cancelled){
       // this is if you pick out a picture
       // in this case you will just change the picture right away
-
+      this.props.onChange(pickerResult.uri)
       // this.uploadProfileImage(pickerResult.uri);
       this.setState({
         groupPic: pickerResult.uri
@@ -189,7 +238,7 @@ class BasicGroupPage extends React.Component{
 
   componentDidUpdate(prevProps){
 
-    if(prevProps.visible !== this.props.visible){
+    if((prevProps.visible !== this.props.visible)){
       if(this.props.visible){
         if(this.textInput){
           this.textInput.focus()
@@ -269,6 +318,7 @@ class BasicGroupPage extends React.Component{
   }
 
   next = () => {
+    console.log("ENDDDDDDDd")
     if(this.props.pw){
       Alert.alert(
         "Are you sure?",
@@ -280,7 +330,9 @@ class BasicGroupPage extends React.Component{
             style: "cancel"
           },
           { text: "Yes",
-            style:'destructive', onPress: () => this.userSubmit() }
+            style:'destructive',
+            // onPress: () => this.userSubmit()
+          }
         ]
 
       )
@@ -306,27 +358,7 @@ class BasicGroupPage extends React.Component{
     if(this.props.value === ""){
       return false
     }
-    if(this.props.pw){
-      const value = this.props.value
 
-      if(value.length < 10){
-        // validate if the password is longer than 8 characters
-        return false
-      } else if(value.search(/[A-Z]/)< 0){
-        // Validates if it has an uppercase
-        return false
-      } else if(value.search(/[0-9]/)< 0){
-        // Validate if it has a number
-        return false
-      }
-    }
-
-    if(this.props.em){
-      const value = this.props.value
-      if(email(value)){
-        return false
-      }
-    }
 
     return true
 
@@ -342,8 +374,24 @@ class BasicGroupPage extends React.Component{
             backgroundColor: '#1890ff',
             alignItems: 'center'
           }}>
+            {(this.props.pp)?
+              <View
+              style = {styles.profilePicTopContainer}
+              >
 
-            <View
+
+              <TouchableOpacity
+              onPress={() =>this.props.navigation.navigate("Explore")}
+              style={{padding:20}}>
+              <XCircle
+                width = {40}
+                height = {40}
+                stroke = "white"
+                />
+                </TouchableOpacity>
+            </View>
+              :
+              <View
               style = {styles.topContainer}
               >
 
@@ -359,14 +407,17 @@ class BasicGroupPage extends React.Component{
                 </TouchableOpacity>
             </View>
 
+            }
+
+
             <View
               style = {styles.midContainer}
               >
               <Text style = {styles.promptText}>{this.props.prompt}</Text>
             </View>
 
-            {this.props.pp==true?
-              <View>
+            { this.props.pp==true?
+              <View style={{}}>
               {
                 this.state.groupPic !== "" ?
                 <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
@@ -375,17 +426,17 @@ class BasicGroupPage extends React.Component{
                     source = {{
                       uri: this.state.groupPic
                     }}
-                    size={125}
+                    size={175}
                      />
                 </TouchableOpacity>
 
                 :
-                <View style={{zIndex:99, borderWidth: 1, borderColor: 'white', borderRadius:75,}}>
+                <View style={{zIndex:99,  borderRadius:75,}}>
                 <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
                   <Avatar
                     rounded
                     source = {CameraPic}
-                    size={125}
+                    size={175}
                      />
                 </TouchableOpacity>
                 </View>
@@ -395,8 +446,49 @@ class BasicGroupPage extends React.Component{
               null
             }
 
+            { this.props.add==true?
+              <GooglePlacesAutocomplete
+                ref = {ref => this.ref = ref}
+                autoFocus = {true}
+                enablePoweredByContainer={false}
+                currentLocation={true}
+                placeholder='Search your address'
+                onChangeText = {this.props.onChange}
+                value = {this.props.value}
+                onPress={(data, details = null) => {
+                  // 'details' is provided when fetchDetails = true
+                  console.log(data, details);
+                  this.props.onChange(data.description)
+
+                }}
+                onFail = {(err) => {
+                  console.log(err)
+                }}
+                style = {{
+                  textInput: {
+
+                    color: 'black'
+                  },
+                  predefinedPlacesDescription: {
+                   color: '#1faadb',
+                 },
+                }}
+                query={{
+                  key: 'AIzaSyCSJihRY1IF_wsdEWBgtK6UnmC9p_kxkh4',
+                  language: 'en',
+                }}
+              />
+
+
+
+              :
+              null
+            }
+
+
+
             <TouchableWithoutFeedback
-              onPress = {() => this.textInput.focus()}
+
               >
               <View
                 style = {styles.textContainer}
@@ -410,36 +502,30 @@ class BasicGroupPage extends React.Component{
                       />
 
                   :
+                  <View>
+                    {this.props.pp?
+                      <View></View>
 
-                  <TextInput
-                    style = {{
-                      width: 'width'
-                    }}
-                    autoCapitalize="none"
-                    selectionColor={'white'}
-                    secureTextEntry={this.state.showPassword}
-                    style = {styles.textInput}
-                    ref={(input) => { this.textInput = input; }}
-                    onChangeText = {this.props.onChange}
-                    value = {this.props.value}
-                    />
+                    :
+                    <TextInput
+                      style = {{
+                        width: 'width'
+                      }}
+                      autoCapitalize="none"
+                      selectionColor={'white'}
+                      style = {styles.textInput}
+                      ref={(input) => { this.textInput = input; }}
+                      onChangeText = {this.props.onChange}
+                      value = {this.props.value}
+                      />
+
+
+                    }
+
+
+                  </View>
                 }
 
-                {
-                  this.props.pw ?
-
-                  <Button
-                    title = "show password"
-                    onPress = {() =>{
-                      this.setState({
-                        showPassword: !this.state.showPassword
-                      })
-                    }}
-                     />
-                   :
-
-                   null
-                }
 
                 </View>
 
@@ -484,11 +570,38 @@ class BasicGroupPage extends React.Component{
                 :
 
 
-                this.validate() ?
+                true ?
 
                 <View style = {styles.bottomRContainer}>
                   <TouchableOpacity
                     onPress = {() => this.next()}
+                    >
+                    <ArrowRightCircle
+                      width = {40}
+                      height = {40}
+                      stroke = "white"
+                      />
+                  </TouchableOpacity>
+
+                </View>
+
+                : null
+
+              }
+
+              {
+                this.props.loading ?
+
+                null
+
+                :
+
+
+                this.props.end ?
+
+                <View style = {styles.bottomRContainer}>
+                  <TouchableOpacity
+                    onPress = {() => this.props.submitGroup()}
                     >
                     <ArrowRightCircle
                       width = {40}
@@ -532,14 +645,19 @@ const styles = StyleSheet.create({
     fontSize: 27.5,
     fontFamily:'Nunito-Bold',
   },
+  profilePicTopContainer: {
+    width: width,
+    height:'5%',
+    backgroundColor: '#1890ff'
+  },
   topContainer: {
     width: width,
-    height:'10%',
+    height:'15%',
     backgroundColor: '#1890ff'
   },
   midContainer: {
     height: '20%',
-    marginTop:'10%',
+    marginTop:'5%',
     alignItems: 'center',
     justifyContent: 'center',
     width: '80%',
@@ -559,7 +677,7 @@ const styles = StyleSheet.create({
     fontFamily:'Nunito-SemiBold',
   },
   bottomContainer: {
-    height: '25%',
+
     width: width,
     flexDirection:'row'
   },

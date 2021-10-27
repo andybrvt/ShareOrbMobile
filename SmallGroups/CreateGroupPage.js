@@ -38,6 +38,8 @@ import Animated, {Easing} from 'react-native-reanimated';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 import BasicGroupPage from './BasicGroupPage';
 import SlideWrap from '../Login/SlideWrap';
+
+
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
@@ -191,11 +193,7 @@ class CreateGroupPage extends React.Component{
     })
   }
 
-  onShowSearch = () => {
-    this.setState({
-      showSearch: true
-    })
-  }
+
 
   onCloseSearch = () => {
     this.setState({
@@ -218,9 +216,23 @@ class CreateGroupPage extends React.Component{
     })
   }
 
+
+  onGroupPicChange = e => {
+    this.setState({
+      groupPic: e
+    })
+  }
+
   onDescriptionChange = e => {
     this.setState({
       description: e
+    })
+  }
+
+
+  onNameChange = e => {
+    this.setState({
+      firstName: e
     })
   }
 
@@ -265,11 +277,7 @@ class CreateGroupPage extends React.Component{
   }
 
 
-  onShowSearch = () => {
-    this.setState({
-      showSearch: true
-    })
-  }
+
   onUnShowSearch = () => {
      this.setState({
        showSearch: false
@@ -334,6 +342,10 @@ class CreateGroupPage extends React.Component{
 
     const location = await Location.geocodeAsync(selectedAddress)
     const address=selectedAddress
+    console.log("Final info!")
+    console.log(groupName)
+    console.log(description)
+    console.log(groupPic)
     console.log(address)
     const lat = location[0].latitude
     const long = location[0].longitude
@@ -372,7 +384,7 @@ class CreateGroupPage extends React.Component{
       //
       // // }
       //
-      this.props.navigation.navigate('Home')
+      this.props.navigation.navigate("Explore")
       this.props.authSetActiveNewsfeedSlide(numIndex+1)
 
       setTimeout(()=>{
@@ -385,19 +397,6 @@ class CreateGroupPage extends React.Component{
   }
 
 
-  businessAlert = () => {
-    console.log("hi")
-    return(
-        <Modal  animationType = "slide" visible = {true}>
-
-          <AddressSearch
-            onClose = {this.onCloseAddressSearch}
-            setAddress = {this.setAddress}
-            />
-        </Modal>
-    )
-  }
-
 
   onBack = () => {
     this.props.navigation.goBack(0)
@@ -409,16 +408,17 @@ class CreateGroupPage extends React.Component{
 
         <BasicGroupPage
           {...this.props}
-          loading = {this.state.loading}
-          visible = {this.state.one}
           prompt = {"What is the name of your business?"}
-          value = {this.state.firstName}
-          onChange = {this.onNameChange}
+          visible = {this.state.one}
           closeModal = {this.closeModal}
           openModal = {this.openModal}
+          onChange = {this.onGroupNameChange}
+          value = {this.state.groupName}
           closeNum = {'one'}
           openNum = {'two'}
-           />
+          loading = {this.state.loading}
+          />
+
         <SlideWrap visible = {this.state.two}>
           <BasicGroupPage
             {...this.props}
@@ -426,18 +426,24 @@ class CreateGroupPage extends React.Component{
             visible = {this.state.two}
             closeModal = {this.closeModal}
             openModal = {this.openModal}
+            autoCorrect={false}
             closeNum = {'two'}
             openNum = {'three'}
+            onChange = {this.onDescriptionChange}
+            value = {this.state.description}
+            loading = {this.state.loading}
             />
         </SlideWrap>
 
         <SlideWrap visible = {this.state.three}>
           <BasicGroupPage
             {...this.props}
+            loading = {this.state.loading}
             prompt = {"Upload a profile picture"}
-            visible = {this.state.two}
             closeModal = {this.closeModal}
             openModal = {this.openModal}
+            onChange = {this.onGroupPicChange}
+            value = {this.state.groupPic}
             closeNum = {'three'}
             openNum = {'four'}
             pp={true}
@@ -449,11 +455,16 @@ class CreateGroupPage extends React.Component{
           <BasicGroupPage
             {...this.props}
             prompt = {"Search your address"}
-            visible = {this.state.two}
+            visible = {this.state.four}
+            value = {this.state.selectedAddress}
+            onChange = {this.setAddress}
             closeModal = {this.closeModal}
             openModal = {this.openModal}
+            add={true}
+            submitGroup={this.onCreateGroup}
             closeNum = {'four'}
             openNum = {'five'}
+            end={true}
           />
 
         </SlideWrap>
@@ -486,173 +497,8 @@ class CreateGroupPage extends React.Component{
           null
         }
 
-        {
-          this.state.showSearch ?
 
 
-          <SearchResultsMultiple
-            searchValue = {this.state.searchValue}
-            onSearchChange = {this.onChangeNewSearch}
-            onClose = {this.onUnShowSearch}
-            data = {this.state.searchResults}
-            onSelect = {this.onSelectUser}
-            invited = {this.state.invitedPeople}
-             />
-
-          :
-
-          <View style ={{
-                flex: 1}}>
-            <TouchableWithoutFeedback
-              onPress = {() => this.onOutSideClick()}
-              >
-                <ScrollView style = {{
-                    height: height
-                  }}>
-
-                  <TouchableOpacity
-                    style = {{
-                      position: 'absolute',
-                      left: '5%',
-                      top: '5%',
-                      zIndex: 999
-                    }}
-                    onPress = {() => this.onBack()}
-                    >
-                    <ArrowLeft
-                      stroke="black"
-                      height = {30}
-                      width = {30}
-                      />
-                  </TouchableOpacity>
-
-                  <View underlayColor="#f0f0f0">
-                    <View style={{
-                        alignItems:'center',
-                        justifyContent:'center',
-                        flexDirection:'row',
-
-                      }}>
-
-    <View style={{flexDirection:'column',
-      alignItems:'center',
-      justifyContent:'center',
-      width:'100%',
-      // backgroundColor:'red',
-      marginTop:'20%', }}>
-
-
-                        <View style={{flexDirection:'row', alignItems:'center',}}>
-
-
-                        </View>
-                        <View style={{
-                          marginTop:10,
-                          width:'55%',
-                          flexDirection:'row',
-                          // justifyContent:'center',
-                          alignItems:'center',
-
-                          }}>
-                            <Text style={{color:'red',  marginRight:10, fontSize:18,}}>*</Text>
-                            <TextInput
-                             placeholder="Orb Name"
-                             placeholderTextColor="#919191"
-                             autoCorrect={false}
-                             style={{fontSize:18, fontFamily:'Nunito-SemiBold',
-
-                               textAlign:'center', color:'#919191', width:'75%' }}
-                             onChangeText = {this.onGroupNameChange}
-                             value = {this.state.groupName}
-                             >
-                           </TextInput>
-                         </View>
-                      </View>
-                     </View>
-                     <View style={{
-                         flexDirection:'row',
-                         justifyContent:'center',
-                         // backgroundColor:'blue',
-                         padding:25}}>
-                         <Text style={{color:'red',  marginRight:10, fontSize:18,}}>*</Text>
-                         <Menu stroke="#919191" strokeWidth={2.0} width={22.5} height={22.5} style={{top:3}}/>
-                         <TextInput
-                          placeholder="Description"
-                          placeholderTextColor="#919191"
-                          autoCorrect={false}
-                          style={{marginLeft:20,fontSize:16, fontFamily:'Nunito-SemiBold', width:'85%', color:'#919191'}}
-                          onChangeText = {this.onDescriptionChange}
-                          value = {this.state.description}
-                          />
-                      </View>
-
-
-
-                      <View>
-                        <Text>Add Address</Text>
-
-                      <TouchableOpacity
-                        onPress = {() => this.onShowAddressSearch()}
-                        >
-                        <Text>{this.state.selectedAddress}</Text>
-                        <Search />
-                      </TouchableOpacity>
-
-                      </View>
-
-                  </View>
-
-                  <View style={{marginTop:30}}>
-                  {
-                    this.checkCreating() ?
-                    <View style={{alignItems:'center',
-                      height: 100,
-                      justifyContent: 'center',
-                    }}>
-                    <TouchableOpacity
-                      onPress = {() => this.onCreateGroup()}
-                       style={styles.loginBtn1}>
-                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
-                    </TouchableOpacity>
-                    </View>
-
-                    :
-
-                    <View style={{alignItems:'center',
-                      height: 100,
-                      justifyContent: 'center',
-                    }}>
-                    <View style={styles.loginBtn2}>
-                      <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold'}}> CREATE ORB</Text>
-                    </View>
-                    </View>
-                  }
-                  </View>
-
-
-
-
-                </ScrollView>
-
-
-
-            </TouchableWithoutFeedback>
-          </View>
-
-        }
-
-
-
-
-     <Modal
-      animationType = "slide"
-      visible = {this.state.showAddressSearch}>
-
-       <AddressSearch
-         onClose = {this.onCloseAddressSearch}
-         setAddress = {this.setAddress}
-         />
-     </Modal>
 
 
       </BackgroundContainer>
