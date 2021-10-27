@@ -471,7 +471,7 @@ class SuggestedListGroup extends React.Component{
   }
 
   componentDidUpdate(previousProps, previousState){
-    if(this.state.inputValue=='Test'){
+    if(this.state.inputValue==''){
       if (previousState.businessCondition==true){
       this.setState({ businessCondition: false })
       }
