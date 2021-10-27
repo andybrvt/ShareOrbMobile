@@ -45,10 +45,24 @@ class GroupInfo extends React.Component{
       loading: false,
       username: '',
       loginCondition:true,
-      publicG: false
+      publicG: false,
+      smallGroupInfo: {}
     }
     this.bs = React.createRef()
   }
+
+
+  componentDidMount(){
+    const groupId = this.props.route.params.groupId
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getSmallGroupInfo/'+groupId)
+    .then(res => {
+      this.setState({
+        smallGroupInfo: res.data
+      })
+    })
+
+  }
+
 
   navPeopleInGroup = (groupId) => {
     this.props.navigation.navigate("PeopleInGroup", {groupId: groupId })
@@ -245,9 +259,6 @@ class GroupInfo extends React.Component{
   render(){
 
     let data = []
-    if(this.props.smallGroups){
-      data = this.props.smallGroups
-    }
     let creatorID=0
     let creatorFirstName=""
     let creatorLastName=""
@@ -261,32 +272,18 @@ class GroupInfo extends React.Component{
     let code = ""
     let groupID=""
     let address=""
-    if(this.props.smallGroups){
-      if(this.props.route.params.groupId){
-        const groupId = this.props.route.params.groupId
-        for(let i = 0; i < this.props.smallGroups.length; i++){
-          if(this.props.smallGroups[i].id === groupId){
-            const group = this.props.smallGroups[i]
-            console.log("LLLL")
-            console.log(group)
-            address=group.address
-            picture = `${global.IMAGE_ENDPOINT}`+group.groupPic
-            groupName = group.group_name;
-            members = group.members
-            description = group.description
-            publicG = group.public
-            code = group.groupCode
-            groupID=group.id
-          }
-        }
-      }
+
+
+
+    const {smallGroupInfo} = this.state
+    if(smallGroupInfo.creator){
+      creatorFirstName=smallGroupInfo.creator.first_name
+      creatorLastName=smallGroupInfo.creator.last_name
+      creatorID=smallGroupInfo.creator.id
+      creatorUserName=smallGroupInfo.creator.username
+
     }
-    if(data[0]){
-      creatorFirstName=data[0].creator.first_name
-      creatorLastName=data[0].creator.last_name
-      creatorID=data[0].creator.id
-      creatorUserName=data[0].creator.username
-    }
+
 
     return(
       <BackgroundContainer>
@@ -321,7 +318,7 @@ class GroupInfo extends React.Component{
                 <Avatar
                   rounded
                   source = {{
-                    uri: picture
+                    uri: `${global.IMAGE_ENDPOINT}`+smallGroupInfo.groupPic
                   }}
                   size={125}
                    />
@@ -330,7 +327,7 @@ class GroupInfo extends React.Component{
               <View style={{
                 marginTop:10,
                 }}>
-                  <Text style={{fontSize:20, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{groupName}</Text>
+                  <Text style={{fontSize:20, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{smallGroupInfo.group_name}</Text>
                 {/*
                 <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.groupId)}>
 
@@ -343,7 +340,6 @@ class GroupInfo extends React.Component{
                   <Text style={{fontSize:13, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{address}</Text>
                 </View>
               </View>
-              {/*
               <TouchableOpacity
                 onPress = {() => this.ViewProfile(creatorUserName)}
                 style={{flexDirection:'row', alignItems:'center'}}>
@@ -357,7 +353,6 @@ class GroupInfo extends React.Component{
                 <Text style={{marginLeft:5, fontFamily:'Nunito-SemiBold', fontSize:13}}>{creatorFirstName+" "+creatorLastName}</Text>
               </TouchableOpacity>
 
-              */}
             </View>
 
 
@@ -622,7 +617,7 @@ const mapStateToProps = state => {
   return {
     curId: state.auth.id,
     username: state.auth.username,
-    smallGroups: state.auth.smallGroups,
+    // smallGroups: state.auth.smallGroups,
   }
 }
 

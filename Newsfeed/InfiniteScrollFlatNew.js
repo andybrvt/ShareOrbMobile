@@ -28,7 +28,7 @@ import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import * as smallGroupsActions from '../store/actions/smallGroups';
 import NoPosts from './noPosts.svg';
 import FirstPost from './FirstPost';
-import { PlusCircle, UserPlus, Info } from "react-native-feather";
+import { PlusCircle, UserPlus, Info, Video } from "react-native-feather";
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import NoPostsGroup from './noPostsGroup.svg';
 import { Avatar } from 'react-native-elements';
@@ -108,10 +108,9 @@ const data = [
 
 class InfiniteScrollFlatNew extends React.Component{
 
-  navGroupInfo=()=> {
-    const groupId = this.props.groupId
+  navGroupInfo=(groupInfo)=> {
     this.props.navigation.navigate("GroupInfo",{
-      groupId: groupId
+      groupId: groupInfo
     });
   }
 
@@ -411,9 +410,18 @@ class InfiniteScrollFlatNew extends React.Component{
 
     const groupPic = this.props.route.params.groupPic
     const groupName = this.props.route.params.groupName
+    const groupId = this.props.route.params.orbId
+
 
     return(
       <View style = {styles.header}>
+
+        <TouchableOpacity
+          onPress={() => this.navGroupInfo(groupId)}
+          style={styles.roundButton1}>
+
+          <Users stroke="gray" strokeWidth={2.5} width={30} height={30} />
+        </TouchableOpacity>
         <Avatar
           size={120}
           rounded
@@ -426,16 +434,32 @@ class InfiniteScrollFlatNew extends React.Component{
     )
   }
 
+  onCameraNav = () => {
+    const groupPic = this.props.route.params.groupPic
+    const groupName = this.props.route.params.groupName
+    const groupId = this.props.route.params.orbId
+
+    console.log(groupPic, groupName, groupId)
+    this.props.navigation.navigate("Camera", {
+      groupPic: groupPic,
+      groupName: groupName,
+      groupId: groupId
+    })
+  }
+
   render(){
 
     // let post = [];
     // if(this.props.socialPosts){
     //   post = this.props.socialPosts
     // }
+
+    let closeId = "";
     let groupId = '';
     let groupPic = "";
     let groupName  = "";
     let groupPost = [];
+    let showButton = false;
 
     if(this.props.route.params.orbId){
       groupId = this.props.route.params.orbId
@@ -445,6 +469,12 @@ class InfiniteScrollFlatNew extends React.Component{
     }
     if(this.props.route.params.groupName){
       groupName = this.props.route.params.groupName
+    }
+    if(this.props.route.params.showButton){
+      showButton = this.props.route.params.showButton
+    }
+    if(this.props.closeOrb){
+      closeId = this.props.closeOrb.id
     }
 
 
@@ -457,44 +487,65 @@ class InfiniteScrollFlatNew extends React.Component{
     return(
       <SafeAreaView style = {{flex: 1}}>
 
-        <TouchableOpacity
-          onPress = {() => this.props.navigation.goBack()}
-          style = {{
-            flexDirection: 'row',
-            alignItems: 'center'
-          }}>
-          <ChevronsLeft />
-          <Text>Back</Text>
-        </TouchableOpacity>
+        <View >
+          <TouchableOpacity
+            onPress = {() => this.props.navigation.goBack()}
+            style = {{
+              flexDirection: 'row',
+              alignItems: 'center'
+            }}>
+            <ChevronsLeft />
+            <Text>Back</Text>
+          </TouchableOpacity>
 
-        <View style={{zIndex: 999, position:'absolute', right:'10%', bottom:'7%',}}>
-        <TouchableOpacity
-          onPress={() => this.navGroupInfo()}
-          style={styles.roundButton1}>
 
-          <Users stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
-        </TouchableOpacity>
+
+
+
         </View>
-              <FlatList
-                ListHeaderComponent = {this.listHeader}
-                maxToRenderPerBatch={10}
-                extraData={groupPost}
-                windowSize={10}
-                initialNumToRender={3}
-                contentContainerStyle={{
-                  paddingBottom: 75 }}
-                 data={groupPost}
-                 keyExtractor={(item, index) => String(index)}
-                 onEndReachedThreshold={0.5}
-                 onEndReached = {() => this.loadSocialPost()}
-                 // onRefresh = {() => this.onRefresh()}
-                 // refreshing = {this.state.refreshing}
-                 scrollEventThrottle = {16} // important for animation
-                 renderItem={this.renderItem}
-                 numColumns={3}
-             />
 
-         </SafeAreaView>
+
+        {
+          groupId === closeId ?
+
+          <TouchableOpacity
+            onPress = {() => this.onCameraNav()}
+            style = {styles.videoButton}>
+            <Text style = {{
+                color: 'white',
+                marginRight: 10,
+                fontSize: 20
+              }}>Share</Text>
+            <Video
+              stroke = "white"
+               />
+          </TouchableOpacity>
+
+
+          : null
+
+        }
+
+          <FlatList
+            ListHeaderComponent = {this.listHeader}
+            maxToRenderPerBatch={10}
+            extraData={groupPost}
+            windowSize={10}
+            initialNumToRender={3}
+            contentContainerStyle={{
+              paddingBottom: 75 }}
+             data={groupPost}
+             keyExtractor={(item, index) => String(index)}
+             onEndReachedThreshold={0.5}
+             onEndReached = {() => this.loadSocialPost()}
+             // onRefresh = {() => this.onRefresh()}
+             // refreshing = {this.state.refreshing}
+             scrollEventThrottle = {16} // important for animation
+             renderItem={this.renderItem}
+             numColumns={3}
+         />
+
+     </SafeAreaView>
     )
   }
 }
@@ -527,17 +578,12 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   roundButton1: {
-
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignSelf: "flex-end",
     zIndex:99,
-    borderRadius: 100,
-    left:10,
-    bottom:10,
-    backgroundColor: '#2f54eb',
     elevation:15,
+    top: '5%',
+    right: '5%',
+    position:'absolute'
   },
   header: {
     height: height*0.3,
@@ -547,6 +593,24 @@ const styles = StyleSheet.create({
   groupName: {
     marginTop: 10,
     fontSize: 25
+  },
+  videoButton: {
+    zIndex: 999,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'limegreen',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '50%',
+    alignSelf: 'center',
+    borderRadius: 30,
+    height: 50,
+    shadowColor:'black',
+    shadowOffset:{width:0,height:2},
+    shadowOpacity:0.5,
+    position: 'absolute',
+    bottom: '5%',
   }
 })
 
@@ -559,7 +623,8 @@ const mapStateToProps = state => {
     // socialPosts: state.socialNewsfeed.socialPosts,
     following: state.auth.following,
     curLoad: state.auth.curLoad,
-    groupPost: state.smallGroups.groupPosts
+    groupPost: state.smallGroups.groupPosts,
+    closeOrb: state.globeGroup.closeOrb
   }
 }
 

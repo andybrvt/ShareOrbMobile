@@ -11,6 +11,7 @@ import {
  Keyboard,
  TouchableWithoutFeedback,
  KeyboardAvoidingView,
+ TouchableHighlight,
  Dimensions,
  AsyncStorage,
  Modal,
@@ -20,7 +21,7 @@ import {
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
 // import * as Permissions from 'expo-permissions';
-import { Triangle, Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
+import { ChevronRight,Triangle, Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
@@ -42,6 +43,8 @@ const height = Dimensions.get('window').height
 import * as Progress from 'react-native-progress';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Avatar } from 'react-native-elements';
+import RecordingAnimationBtn from './RecordingAnimationBtn';
+
 
 const { Clock,
    cond,
@@ -501,7 +504,6 @@ class CameraScreen extends React.Component{
   onGroupPostDirect = (imageFile) => {
     // this function will be used to direct post
 
-    console.log('navigate here')
     this.props.closeShowCamera()
 
     this.props.navigation.navigate("GroupPost",
@@ -513,7 +515,6 @@ class CameraScreen extends React.Component{
 
   onSavePhoto = (image) => {
 
-    console.log('save photo')
 
     const {activeSlide} = this.state;
     const groupID = this.props.smallGroups[activeSlide].id;
@@ -627,7 +628,6 @@ class CameraScreen extends React.Component{
 
       ).then(res =>{
 
-        console.log(res.data)
 
         this.props.authAddCurLoad()
         this.props.authAddCurLoad()
@@ -832,6 +832,7 @@ class CameraScreen extends React.Component{
   render(){
     const smallGroups = this.props.smallGroups;
     const showCaption = this.state.showCaptionModal;
+    const groupPic = `${global.IMAGE_ENDPOINT}`+this.props.route.params.groupPic
     let groupsLength=smallGroups.length
     return(
       <View
@@ -945,7 +946,7 @@ class CameraScreen extends React.Component{
                   save = {this.onSaveNewGoal}
                   />
 
-                {this.renderSmallGroupCarousel(this.state.activeSlide)}
+                {/*this.renderSmallGroupCarousel(this.state.activeSlide)*/}
 
                <TouchableOpacity
                  onPress = {() => this.onCancelPhoto()}
@@ -1014,32 +1015,6 @@ class CameraScreen extends React.Component{
                }
 
 
-                 <TouchableOpacity
-                   onPress = {() => this.openShowGoals()}
-                   style ={{
-                     // position: 'relative',
-                     position: 'absolute',
-                     top: '5%',
-                     right:'5%',
-                     // top: 100
-                   }}
-                   >
-                   <Circle
-                     style={{top:0, position:'absolute'}}
-                     stroke = "#d9d9d9"
-                     strokeWidth={3}
-                     width = {35}
-                     height = {35}
-                      />
-
-                    <Circle
-                      strokeWidth={2}
-                      stroke = "white"
-                      width = {35}
-                      height = {35}
-                       />
-
-                 </TouchableOpacity>
 
                <TouchableOpacity
                  style = {styles.submitBtn}
@@ -1138,7 +1113,7 @@ class CameraScreen extends React.Component{
 
                   </TouchableWithoutFeedback>
 
-                  {this.renderSmallGroupCarousel(this.state.activeSlide)}
+                  {/*this.renderSmallGroupCarousel(this.state.activeSlide)*/}
 
 
                      <TouchableOpacity
@@ -1159,87 +1134,27 @@ class CameraScreen extends React.Component{
                          height = {40}
                          width = {40}/>
                      </TouchableOpacity>
-                     {/*
-                       this.state.selectedGoal.goal  ?
-
-                       <View
-                         style ={{
-                           // position: 'relative',
-                           position: 'absolute',
-                           top: '4%',
-                           right: '2%',
-                           alignSelf: 'flex-end',
-
-                           backgroundColor: '#000000aa',
-                           padding: 20,
-                           borderRadius: 30,
-                           flexDirection: 'row'
-                           // top: 100
-                         }}
-                         >
 
 
-
-                         <View>
-                           <Text style = {{
-                               color: 'white',
-                               textAlign: 'right'
-                             }}>{this.state.selectedGoal.goal}</Text>
-                         </View>
-
-                         <View style = {{
-                             height: 20,
-                             width: 40
-                           }}>
-
-                         </View>
-
-                       </View>
-
-                       :
-
-                       null
-
-
-
-
-                     */}
-                     <TouchableOpacity
-                       onPress = {() => this.openShowGoals()}
-                       style ={{
-                         // position: 'relative',
-                         position: 'absolute',
-                         top: '5%',
-                         right:'5%',
-                         // top: 100
-                       }}
-                       >
-                       <Circle
-                         style={{top:0, position:'absolute'}}
-                         stroke = "#d9d9d9"
-                         strokeWidth={3}
-                         width = {35}
-                         height = {35}
-                          />
-
-                        <Circle
-                          strokeWidth={2}
-                          stroke = "white"
-                          width = {35}
-                          height = {35}
-                           />
-
-                     </TouchableOpacity>
 
 
                      <TouchableOpacity
                        style = {styles.submitBtn}
                        onPress = {() => this.onSaveVideo(this.state.videoPreview)}
                        >
-                         <Text style = {{
-                             color: 'white',
-                             fontSize: 20
-                           }}> Save  </Text>
+                       <Avatar
+                         source = {{
+                           uri: groupPic
+                         }}
+                         rounded
+                         size = {40}
+                          />
+
+                         <ChevronRight
+                           height = {40}
+                           width = {40}
+                           stroke = "white"
+                            />
                      </TouchableOpacity>
                 </View>
                 <GoalDropDown
@@ -1289,7 +1204,7 @@ class CameraScreen extends React.Component{
 
                   */}
 
-                {
+                {/*
                   this.state.isRecording === true ?
 
                   null
@@ -1297,7 +1212,7 @@ class CameraScreen extends React.Component{
                   :
 
                   this.renderSmallGroupCarousel(this.state.activeSlide)
-                }
+                */}
 
 
                 {
@@ -1326,6 +1241,35 @@ class CameraScreen extends React.Component{
                       width = {40} height = {40} />
 
                   </TouchableOpacity>
+                }
+
+                {
+                  this.state.isRecording === true ?
+
+                  null
+
+                  :
+
+
+                  <View style = {{
+                      position: 'absolute',
+                      bottom: '5%',
+                      right: '5%',
+                      alignItems: 'center'
+                    }}>
+                    <Text style = {{
+                        color: 'white',
+                        marginBottom: 5,
+                      }}>Posting to:</Text>
+                    <Avatar
+                      source = {{
+                        uri: groupPic
+                      }}
+                      rounded
+                      size = {40}
+                       />
+                  </View>
+
                 }
 
 
@@ -1454,13 +1398,30 @@ class CameraScreen extends React.Component{
                 }
 
 
-
+                {
+                  this.state.isRecording === true ?
 
                   <TouchableOpacity
                     onPressOut = {() => this.handlePressOut()}
                     onLongPress = {() => this.handleLongPress()}
-                    onPress = {() => this.takePicture(groupsLength)}
-                    style = {[(this.state.capturing)&&styles.captureBtnActive,styles.captureBtn]}></TouchableOpacity>
+                    // onPress = {() => this.takePicture(groupsLength)}
+                    style = {styles.captureBtnActive}>
+                    <RecordingAnimationBtn />
+
+                  </TouchableOpacity>
+
+                  :
+
+                  <TouchableOpacity
+                    onPressOut = {() => this.handlePressOut()}
+                    onLongPress = {() => this.handleLongPress()}
+                    // onPress = {() => this.takePicture(groupsLength)}
+                    style = {styles.captureBtn}></TouchableOpacity>
+
+
+
+                }
+
 
 
 
@@ -1576,7 +1537,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 5,
     alignSelf: 'center',
-    borderColor: 'red'
+    borderColor: '#1890ff'
   },
   submitBtn: {
     position: 'absolute',
@@ -1585,7 +1546,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignSelf: 'flex-end',
     bottom: 25,
-    right: 25
+    right: 25,
+    flexDirection: 'row',
+    alignItems: 'center'
+
   }
 })
 
