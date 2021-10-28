@@ -111,21 +111,24 @@ class NewGlobePost extends React.Component{
 
   }
 
-  changeShowComments = () => {
-      this.props.navigation.navigate("Comments",{
-        postId: this.props.data.id,
-        type: 'globe'
-      })
+  changeShowComments = (postId) => {
+
+    this.props.navigation.navigate("Comments",{
+      postId: postId,
+      type: 'group'
+    })
   }
 
 
   renderPostInfo=(data, like, comment, created_at)=>{
+
+    console.log(data.id)
     let userUsername="";
     let profilePic="";
     let firstName="";
     let lastName="";
     let notificationToken = "";
-
+    let postId;
 
 
     let postCreatedAt= new Date();
@@ -134,6 +137,7 @@ class NewGlobePost extends React.Component{
     let utc3 = dateFns.format(new Date(), 'h:mma');
 
     if(data){
+      postId = data.id;
       if(data.creator){
         if(data.creator.profile_picture){
           profilePic = `${global.IMAGE_ENDPOINT}`+data.creator.profile_picture
@@ -163,9 +167,7 @@ class NewGlobePost extends React.Component{
           }
         }
       }
-      if(data.id){
-        postId = data.id
-      }
+
 
 
 
@@ -263,7 +265,7 @@ class NewGlobePost extends React.Component{
                       </TouchableOpacity>
                   }
 
-                  <TouchableWithoutFeedback  onPress={() => this.changeShowComments()}>
+                  <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
                     <View style={{marginLeft:20,}}>
                         <View style = {styles.justifyCenter}>
                           <MessageCircle

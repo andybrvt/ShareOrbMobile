@@ -159,11 +159,6 @@ class NewsfeedView extends React.Component{
     // WebSocketSocialNewsfeedInstance.disconnect()
   }
 
-  onCommentOpen = (postId) => {
-    this.props.navigation.navigate("Comments", {
-      postId: postId
-    })
-  }
 
   unShow = () => {
     authAxios.post(`${global.IP_CHANGE}`+'/userprofile/unShowIntialInstructions/'+this.props.id)

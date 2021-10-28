@@ -47,6 +47,7 @@ class GlobeGroup extends React.Component{
 
       const onRefresh = this.props.navigation.addListener("focus", () => {
 
+        // this will update the globe group each time
         WebSocketGlobeInstance.fetchGlobePost()
 
       })
@@ -197,6 +198,7 @@ class GlobeGroup extends React.Component{
      }
 
     render(){
+      console.log('globe her')
       let groupPosts = []
       if(this.props.globePosts){
         groupPosts = this.props.globePosts

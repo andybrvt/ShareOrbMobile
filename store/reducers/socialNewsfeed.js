@@ -6,7 +6,7 @@ const initialState = {
   socialPosts: [],
   curSocialCell: {},
   showFinalModal: false,
-  socialComments: {},
+  socialComments: [],
   commentHost: null,
   commentHostNotiToken: "",
   cellDate: new Date()

@@ -108,6 +108,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
    }
 
    onCommentSubmit = () => {
+     console.log('group')
      // use to submit the comments into the websocket
      const comment = this.state.comment
      if(this.state.comment.length > 0){
@@ -122,14 +123,20 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
          postId: cellId // this will be used mostly to get the groupId
        }
 
-       NotificationWebSocketInstance.sendNotification(notificationObject)
+       if(userId !== commentHost){
+         NotificationWebSocketInstance.sendNotification(notificationObject)
 
 
-       global.SEND_GROUP_COMMENT_NOTIFICATION(
-         this.props.commentHostNotiToken,
-         this.props.currentUser,
-         cellId
-       )
+         global.SEND_GROUP_COMMENT_NOTIFICATION(
+           this.props.commentHostNotiToken,
+           this.props.currentUser,
+           cellId
+         )
+
+       }
+
+
+
        // Now do the websocket here
        SocialCommentsWebsocketInstance.sendComment(
          cellId,
@@ -138,7 +145,7 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
        )
 
 
-      //
+
       setTimeout(() => WebSocketSmallGroupInstance.updateSingleGroupPost(
         cellId
       ), 1000)
@@ -317,7 +324,6 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
 
 
      let comments = []
-
      if(this.props.route.params.type === "group"){
 
        if(this.props.socialComments){
