@@ -365,8 +365,8 @@ class InfiniteScrollFlatNew extends React.Component{
           }}
           resizeMode = "cover"
           source = {{
-            // uri:  `${global.IMAGE_ENDPOINT}`+item.itemImage
-            uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
+            uri:  `${global.IMAGE_ENDPOINT}`+item.itemImage
+            // uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
           }}
            />
 
