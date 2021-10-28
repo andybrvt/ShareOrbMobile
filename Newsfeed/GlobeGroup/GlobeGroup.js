@@ -97,7 +97,7 @@ class GlobeGroup extends React.Component{
             detectSwipeDown: false,
           }}
           style = {{flex: 1}}
-          onSwipeLeft={(state) => this.onSwipeLeft(state)}
+          // onSwipeLeft={(state) => this.onSwipeLeft(state)}
           onSwipeRight={(state) => this.onSwipeRight(state)}
           >
           <NewGlobePost
@@ -121,7 +121,7 @@ class GlobeGroup extends React.Component{
                   uri: `${global.IMAGE_ENDPOINT}` + this.props.profilePic,
                 }}
                 rounded
-                size = {32.5}
+                size = {30}
                  />
 
             </TouchableOpacity>
@@ -131,7 +131,7 @@ class GlobeGroup extends React.Component{
           <View style = {styles.middleHeader}>
             <MainLogo
               height = {"80%"}
-              width = {"40%"}
+              width = {"45%"}
                />
           </View>
 
@@ -140,8 +140,11 @@ class GlobeGroup extends React.Component{
               onPress = {() => this.props.navigation.navigate("notification")}
               >
               <Bell
-                stroke = "gray"
-                fill = "gray"
+                width={20}
+                height={20}
+                stroke = "black"
+                fill = "white"
+                style={{marginRight:5}}
                  />
             </TouchableOpacity>
 
@@ -204,6 +207,7 @@ class GlobeGroup extends React.Component{
               stickyHeaderIndices={[0]}
               // contentContainerStyle={{paddingBottom:75}}
               ListHeaderComponent = {this.listHeader}
+              showsVerticalScrollIndicator={false}
               style = {{flex: 1}}
               data = {groupPosts}
               renderItem = {this.renderItem}

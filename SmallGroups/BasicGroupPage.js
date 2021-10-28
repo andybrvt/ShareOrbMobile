@@ -66,9 +66,10 @@ class BasicGroupPage extends React.Component{
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
 
-    if(this.props.visible){
+    if(this.props.visible||this.props.test){
       this.textInput.focus()
     }
+    console.log("EEEE")
   }
 
 
@@ -366,22 +367,18 @@ class BasicGroupPage extends React.Component{
             backgroundColor: '#1890ff',
             alignItems: 'center'
           }}>
-            {(this.props.pp||this.props.type)?
-              <View
-              style = {styles.profilePicTopContainer}
-              >
-
-
-              <TouchableOpacity
-              onPress={() =>this.props.navigation.navigate("Explore")}
-              style={{padding:20}}>
-              <XCircle
-                width = {40}
-                height = {40}
-                stroke = "white"
-                />
+            {(this.props.pp||this.props.type||this.props.add)?
+              <View style = {styles.profilePicTopContainer} >
+                <TouchableOpacity
+                onPress={() =>this.props.navigation.navigate("Explore")}
+                style={{padding:20}}>
+                  <XCircle
+                    width = {40}
+                    height = {40}
+                    stroke = "white"
+                    />
                 </TouchableOpacity>
-            </View>
+              </View>
               :
               <View
               style = {styles.topContainer}
@@ -409,7 +406,7 @@ class BasicGroupPage extends React.Component{
             </View>
 
             { this.props.pp==true?
-              <View style={{}}>
+              <View style={{marginTop:'10%'}}>
               {
                 this.state.groupPic !== "" ?
                 <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
@@ -418,7 +415,7 @@ class BasicGroupPage extends React.Component{
                     source = {{
                       uri: this.state.groupPic
                     }}
-                    size={175}
+                    size={150}
                      />
                 </TouchableOpacity>
 
@@ -428,7 +425,7 @@ class BasicGroupPage extends React.Component{
                   <Avatar
                     rounded
                     source = {CameraPic}
-                    size={175}
+                    size={150}
                      />
                 </TouchableOpacity>
                 </View>
@@ -439,27 +436,37 @@ class BasicGroupPage extends React.Component{
             }
 
             { this.props.add==true?
+              <Text style={{padding:15}}>
               <GooglePlacesAutocomplete
-                ref = {ref => this.ref = ref}
-                autoFocus = {true}
-                enablePoweredByContainer={false}
-                currentLocation={true}
-                placeholder='Search your address'
+                styles={{
+                  textInputContainer: {
+                    width:width-25
+                  },
+                  placesautocomplete: {
+                    flex:1,
+                  },
+                  textInput: {
+                    height: 38,
+                    color: '#5d5d5d',
+                    fontSize: 16,
+                  },
+                  predefinedPlacesDescription: {
+                    color: '#1faadb',
+                  },
+                }}
+                placeholder='Type here...                                            '
                 onChangeText = {this.props.onChange}
                 value = {this.props.value}
                 onPress={(data, details = null) => {
-                  // 'details' is provided when fetchDetails = true
-                  console.log(data, details);
                   this.props.onChange(data.description)
-
                 }}
                 onFail = {(err) => {
                   console.log(err)
                 }}
                 style = {{
                   textInput: {
+                    color: 'black',
 
-                    color: 'black'
                   },
                   predefinedPlacesDescription: {
                    color: '#1faadb',
@@ -471,7 +478,13 @@ class BasicGroupPage extends React.Component{
                 }}
               />
 
+              <View
+                style={{width:width-25, }}
+                >
+                <Text style = {styles.promptText}>{this.props.value}</Text>
+              </View>
 
+            </Text>
 
               :
               null
@@ -479,7 +492,7 @@ class BasicGroupPage extends React.Component{
 
 
             <View>
-              {this.props.pp||this.props.type?
+              {this.props.pp||this.props.type||this.props.add?
                 <View></View>
               :
               <TouchableWithoutFeedback>
@@ -506,17 +519,49 @@ class BasicGroupPage extends React.Component{
             <View>
               { this.props.type?
                 <View style={{height:'55%'}}>
+
+                  {this.props.value=="store"?
+
+                    <TouchableOpacity
+                      style={styles.rectButtonStore}
+                      activeOpacity={0.8}
+                       onPress = {() => this.checkType("store")}
+                       underlayColor={'gray'}  >
+                        <FontAwesomeIcon
+                        size = {50}
+                        style={{color:'white'}}
+                        icon={faStore} />
+                        <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>In Person</Text>
+                    </TouchableOpacity>
+                  :
+
                   <TouchableOpacity
+                    style={styles.rectButton}
+                    activeOpacity={0.8}
                      onPress = {() => this.checkType("store")}
                      underlayColor={'gray'}  >
-                    <View style={styles.rectButton}>
                       <FontAwesomeIcon
                       size = {50}
                       style={{color:'white'}}
                       icon={faStore} />
-                      <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>In-Person</Text>
-                    </View>
+                      <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>In Person</Text>
                   </TouchableOpacity>
+                  }
+
+                  {this.props.value=="online"?
+
+                    <TouchableOpacity
+
+                      onPress = {() => this.checkType("online")}
+                      underlayColor={'gray'}  style={styles.rectButtonOnline}>
+                      <FontAwesomeIcon
+                        size = {50}
+                        style={{color:'white'}}
+                        icon={faLaptopHouse} />
+                      <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>Online</Text>
+                    </TouchableOpacity>
+                  :
+
                   <TouchableOpacity
                     onPress = {() => this.checkType("online")}
                     underlayColor={'gray'}  style={styles.rectButton}>
@@ -526,6 +571,9 @@ class BasicGroupPage extends React.Component{
                       icon={faLaptopHouse} />
                     <Text style={{color:'white', fontSize:18, fontFamily:'Nunito-SemiBold'}}>Online</Text>
                   </TouchableOpacity>
+                  }
+
+
                 </View>
                 :
                 <Text></Text>
@@ -562,15 +610,21 @@ class BasicGroupPage extends React.Component{
 
               </View>
 
+
               {
-                this.props.loading ?
-
-                null
-
+                this.props.end ?
+                <View style = {styles.bottomRContainer}>
+                  <TouchableOpacity
+                    onPress = {() => this.props.submitGroup()}
+                    >
+                    <ArrowRightCircle
+                      width = {40}
+                      height = {40}
+                      stroke = "white"
+                      />
+                  </TouchableOpacity>
+                </View>
                 :
-
-
-                true ?
 
                 <View style = {styles.bottomRContainer}>
                   <TouchableOpacity
@@ -582,44 +636,9 @@ class BasicGroupPage extends React.Component{
                       stroke = "white"
                       />
                   </TouchableOpacity>
-
                 </View>
-
-                : null
-
               }
-
-              {
-                this.props.loading ?
-
-                null
-
-                :
-
-
-                this.props.end ?
-
-                <View style = {styles.bottomRContainer}>
-                  <TouchableOpacity
-                    onPress = {() => this.props.submitGroup()}
-                    >
-                    <ArrowRightCircle
-                      width = {40}
-                      height = {40}
-                      stroke = "white"
-                      />
-                  </TouchableOpacity>
-
-                </View>
-
-                : null
-
-              }
-
-
             </View>
-
-
 
             <BottomSheet
              ref={this.bs}
@@ -630,17 +649,14 @@ class BasicGroupPage extends React.Component{
              callbackNode={this.fall}
              enabledGestureInteraction={true}
            />
-
         </View>
-
-
-
     )
   }
 }
 
 const styles = StyleSheet.create({
   rectButton: {
+    marginTop:25,
     marginBottom:50,
     width:175,
     height:100,
@@ -653,10 +669,38 @@ const styles = StyleSheet.create({
     elevation:15,
 
   },
+  rectButtonOnline: {
+    marginTop:25,
+    marginBottom:50,
+    width:175,
+    height:100,
+    padding:15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:99,
+    borderRadius: 10,
+    backgroundColor: '#2f54eb',
+    elevation:15,
 
+  },
+
+  rectButtonStore: {
+    marginTop:25,
+    marginBottom:50,
+    width:175,
+    height:100,
+    padding:15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:99,
+    borderRadius: 10,
+    backgroundColor: '#2f54eb',
+    elevation:15,
+
+  },
   promptText: {
     color: 'white',
-    fontSize: 27.5,
+    fontSize: 25,
     fontFamily:'Nunito-Bold',
   },
   profilePicTopContainer: {
@@ -674,15 +718,18 @@ const styles = StyleSheet.create({
     marginTop:'5%',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '80%',
+    width: '90%',
+    padding:25,
     // backgroundColor:'red',
+
 
   },
   textContainer: {
     alignItems:'center',
     justifyContent: 'center',
     height: '37.5%',
-    width: width,
+    width: '90%',
+    top:'10%',
     // backgroundColor:'red',
   },
   textInput: {

@@ -21,7 +21,7 @@ import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent} from 'react-native-redash/lib/module/v1';
-import { User, Users,ChevronsLeft } from "react-native-feather";
+import { User, Users,ChevronsLeft, ArrowLeft } from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
@@ -351,10 +351,7 @@ class InfiniteScrollFlatNew extends React.Component{
           isLooping
           // shouldPlay
           volume={0.5}
-
-
            />
-
         */}
 
 
@@ -449,21 +446,33 @@ class InfiniteScrollFlatNew extends React.Component{
 
     return(
       <View style = {styles.header}>
+        <View>
+          <TouchableOpacity
+            onPress = {() => this.props.navigation.goBack()}
+            style = {{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              left:20,
+            }}>
+              <ArrowLeft stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
+          </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity
-          onPress={() => this.navGroupInfo(groupId)}
-          style={styles.roundButton1}>
-
-          <Users stroke="gray" strokeWidth={2.5} width={30} height={30} />
-        </TouchableOpacity>
-        <Avatar
-          size={120}
-          rounded
-          source = {{
-            uri: `${global.IMAGE_ENDPOINT}`+ groupPic
-          }}
-        />
-      <Text style = {styles.groupName}>{groupName}</Text>
+        <View style={{alignItems: 'center',}}>
+          <TouchableOpacity
+            onPress={() => this.navGroupInfo(groupId)}
+            style={styles.roundButton1}>
+            <Users stroke="gray" strokeWidth={2.5} width={25} height={25} />
+          </TouchableOpacity>
+          <Avatar
+            size={120}
+            rounded
+            source = {{
+              uri: `${global.IMAGE_ENDPOINT}`+ groupPic
+            }}
+          />
+          <Text style = {styles.groupName}>{groupName}</Text>
+        </View>
       </View>
     )
   }
@@ -535,22 +544,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
            />
 
-        <View >
-          <TouchableOpacity
-            onPress = {() => this.props.navigation.goBack()}
-            style = {{
-              flexDirection: 'row',
-              alignItems: 'center'
-            }}>
-            <ChevronsLeft />
-            <Text>Back</Text>
-          </TouchableOpacity>
 
-
-
-
-
-        </View>
 
 
 
@@ -564,7 +558,8 @@ class InfiniteScrollFlatNew extends React.Component{
             <Text style = {{
                 color: 'white',
                 marginRight: 10,
-                fontSize: 20
+                fontSize: 20,
+                fontFamily:'Nunito-SemiBold',
               }}>Share</Text>
 
           </TouchableOpacity>
@@ -635,30 +630,30 @@ const styles = StyleSheet.create({
   },
   header: {
     height: height*0.3,
-    alignItems: 'center',
+
     justifyContent: 'center'
   },
   groupName: {
     marginTop: 10,
-    fontSize: 25
+    fontSize: 22.5,
+    fontFamily:'Nunito-Bold'
   },
   videoButton: {
     zIndex: 999,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'limegreen',
-    padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
     width: '50%',
     alignSelf: 'center',
-    borderRadius: 30,
-    height: 50,
+    borderRadius: 25,
+    height: 45,
     shadowColor:'black',
     shadowOffset:{width:0,height:2},
     shadowOpacity:0.5,
     position: 'absolute',
-    bottom: '5%',
+    bottom: '3%',
   }
 })
 

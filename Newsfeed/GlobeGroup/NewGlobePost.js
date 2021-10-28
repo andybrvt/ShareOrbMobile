@@ -1,14 +1,15 @@
 import React from "react";
 import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity,
 ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback, } from 'react-native';
-import { Navigation2, Heart, MessageCircle, VolumeX, Volume2, UserCheck, UserPlus } from "react-native-feather";
+import { Navigation2, Heart, MessageCircle, VolumeX, Volume2, UserCheck, UserPlus, MapPin } from "react-native-feather";
 import { LinearGradient } from 'expo-linear-gradient';
 import * as dateFns from 'date-fns';
 import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import InViewPort from "../../RandomComponents/InViewPort";
 import { Video, AVPlaybackStatus } from 'expo-av';
 import FastImage from 'react-native-fast-image'
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faUsers, faUserCircle, faMapPin } from '@fortawesome/free-solid-svg-icons'
 
 
 import { Avatar } from 'react-native-elements';
@@ -180,14 +181,16 @@ class NewGlobePost extends React.Component{
       <View>
 
 
-        <View style={{flexDirection:'row', zIndex:999}}>
+        <View style={{flexDirection:'row', alignItems:'center', zIndex:999}}>
           <View style = {{
-              width: '15%',
+              width: '12.5%',
+              marginLeft:5,
+              // backgroundColor:'red',
               alignItems:'center'
             }}>
             <Avatar
               onPress = {() => this.ViewProfile(userUsername)}
-              size={37.5}
+              size={30}
               rounded
               source = {{
                 uri: profilePic
@@ -199,6 +202,7 @@ class NewGlobePost extends React.Component{
             <Text style = {styles.videoFooterUserName}>
               {global.NAMEMAKE(firstName, lastName)}
             </Text>
+            {/*
             <View style={{flexDirection:'row'}}>
               <Text style = {styles.videoFooterUserName2}>
                 {dateFns.format(new Date(created_at), "MMM")}&nbsp;
@@ -207,6 +211,7 @@ class NewGlobePost extends React.Component{
                 {dateFns.format(new Date(created_at), "dd")}
               </Text>
             </View>
+            */}
           </View>
 
           <View style = {{
@@ -337,19 +342,22 @@ class NewGlobePost extends React.Component{
         <View style = {styles.topContainer}>
           <View style = {{
               width: '65%',
+              left:'10%',
+              // backgroundColor:'red',
               justifyContent: 'center'
             }}>
 
             <View style = {{
                 flexDirection: 'row',
                 alignItems: 'center',
+                // justifyContent:'center',
                 marginLeft: 10
               }}>
               <TouchableOpacity
                 onPress = {() => this.viewOrb(group)}
                 >
                 <Avatar
-                  size = {40}
+                  size = {37.5}
                   rounded
                   source = {{
                     uri: groupPic
@@ -357,22 +365,44 @@ class NewGlobePost extends React.Component{
                    />
               </TouchableOpacity>
               <View style = {{
-                   marginLeft: 10
+                   marginLeft: 10,
+                   width:width-75,
+                   flexDirection:'row',
+                   alignItems:'flex-end',
+                   // backgroundColor:'red',
                  }}>
-                 <Text style = {{
-                    fontSize:16,
-                    fontFamily:'Nunito-Bold'
-                    }}>{global.CAPITALIZE(groupName)}</Text>
-                  <View style = {{
-                      // alignItems: 'center',
-                      // justifyContent: 'center'
-                    }}>
-                    <Text style = {{
-                       fontSize:12,
-                       color:'#8c8c8c',
-                       fontFamily:'Nunito-SemiBold'
-                       }}>{members.length} members</Text>
+                 <View style={{width:'62.5%',flexDirection:'column'}}>
+                   <View>
+                     <Text style = {{
+                      fontSize:16,
+                      fontFamily:'Nunito-Bold'
+                      }}>{global.CAPITALIZE(groupName)}</Text>
+                   </View>
+                  <View style={{flexDirection:'row'}}>
+                    <Text style={{fontFamily:'Nunito', fontSize:11, color:'#8c8c8c',}} >
+                      {dateFns.format(new Date(created_at), "MMM")}&nbsp;
+                    </Text>
+                    <Text style={{fontFamily:'Nunito', fontSize:11,color:'#8c8c8c',}}>
+                      {dateFns.format(new Date(created_at), "dd")}
+                    </Text>
                   </View>
+                </View>
+                <View style = {{
+                    alignItems: 'center',
+                    alignItems: 'flex-end',
+                    flexDirection:'row',
+                  }}>
+                  <FontAwesomeIcon
+                    size = {15}
+                    style={{color:'gray', marginRight:5,marginBottom:1}}
+                    icon={faMapPin} />
+
+                  <Text style = {{
+                     fontSize:14,
+                     color:'#8c8c8c',
+                     fontFamily:'Nunito-SemiBold'
+                   }}>Tucson, AZ</Text>
+                </View>
                </View>
              </View>
           </View>
@@ -408,7 +438,7 @@ class NewGlobePost extends React.Component{
                colors = {['transparent', '#000000']}>
              </LinearGradient>
 
-           <View style={{position:'absolute', bottom:'5%', width:'100%', flexDirection:'row'}}>
+           <View style={{position:'absolute', bottom:'3.5%', width:'100%', flexDirection:'row'}}>
              {this.renderPostInfo(post, groupLike, comment, created_at)}
            </View>
 
@@ -487,17 +517,19 @@ const styles = StyleSheet.create({
     // flexDirection: 'row'
   },
   topContainer:{
-    height: 70,
+
+    height: 60,
     // backgroundColor:'red',
     flexDirection:  'row'
   },
   bottomContainer: {
     alignSelf: 'center',
-    width: '90%',
+    width: '92.5%',
     height:500,
     // height: '100%',
-    borderRadius: 25,
+    borderRadius: 20,
     backgroundColor: 'gainsboro',
+    marginBottom:20,
     overflow: 'hidden'
   },
   joinbtn: {

@@ -364,7 +364,7 @@ class GroupInfo extends React.Component{
             </View>
             </View>
            </View>
-
+           {/*
            <TouchableHighlight underlayColor="#f0f0f0" onPress = {()=>this.navInvitePeople()}>
              <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
                <View style={styles.roundButton1}>
@@ -373,6 +373,7 @@ class GroupInfo extends React.Component{
                <Text style={styles.settingWord}> Invite People </Text>
              </View>
            </TouchableHighlight>
+           */}
            {
              (this.props.curId==creatorID)?
                <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navAnnouncements()}>
@@ -387,7 +388,7 @@ class GroupInfo extends React.Component{
               <Text></Text>
            }
 
-           {(!publicG)?
+           {/*(!publicG)?
              <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
               <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
                 <View style={styles.roundButton1}>
@@ -421,7 +422,7 @@ class GroupInfo extends React.Component{
            <View style={{marginTop:'0%'}}>
              <Text></Text>
            </View>
-            }
+            */}
            <View style={{flexDirection:'row', padding:10, borderTopWidth:1, borderColor:'whitesmoke',
              alignItems:'center', marginLeft:10,}}>
              <Text style={{color:'#919191',

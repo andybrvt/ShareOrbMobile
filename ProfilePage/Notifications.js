@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 import * as dateFns from 'date-fns';
 import * as authActions from '../store/actions/auth';
 import authAxios from '../util';
-import { Tag, Bookmark, Search, ChevronRight, ChevronsLeft, Settings, Sliders
+import { Tag, Bookmark, Search, ArrowLeft, ChevronsLeft, Settings, Sliders
   ,MessageCircle, UserPlus, Users, Clock} from "react-native-feather";
 
 
@@ -446,11 +446,11 @@ class Notifications extends React.Component{
      <BackgroundContainer>
        <View>
          <View style={{ flexDirection:'row', padding:10}}>
-           <View style={{flexDirection:'row', width:'90%'}}>
-             <TouchableOpacity
-               onPress = {() => this.props.navigation.goBack()}
-               >
-               <ChevronsLeft />
+           <View style={{flexDirection:'row', alignItems:'center', width:'90%'}}>
+             <TouchableOpacity onPress = {() => this.props.navigation.goBack()}>
+               <ArrowLeft
+                 style={{marginRight:10}}
+                 stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
              </TouchableOpacity>
              <Avatar
                size={30}

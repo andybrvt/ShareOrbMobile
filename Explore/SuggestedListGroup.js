@@ -22,7 +22,7 @@ import InvitePage from './InvitePage';
 import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as authActions from '../store/actions/auth';
-import { UserCheck, UserPlus} from "react-native-feather";
+import { UserCheck, UserPlus, MapPin} from "react-native-feather";
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Coffee from './coffee.jpg';
  // used in conjuction with the newsfeed view so that you
@@ -144,7 +144,12 @@ class SuggestedListGroup extends React.Component{
            />
          <View style={{marginLeft:10}}>
          <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>Presta Coffee</Text>
-         <Text style={{fontSize:14, fontFamily:'Nunito'}}>Tucson, Arizona</Text>
+         <View style={{flexDirection:'row', alignItems:'center'}}>
+           <MapPin
+             style={{ marginRight:3}}
+             stroke="gray" strokeWidth={2} width={12.5} height={12.5} />
+           <Text style={{fontSize:12, color:'#8c8c8c', fontFamily:'Nunito'}}>Tucson, Arizona</Text>
+         </View>
 
        </View>
 
@@ -471,7 +476,7 @@ class SuggestedListGroup extends React.Component{
   }
 
   componentDidUpdate(previousProps, previousState){
-    if(this.state.inputValue==''){
+    if(this.state.inputValue=='ShareOrb1'){
       if (previousState.businessCondition==true){
       this.setState({ businessCondition: false })
       }
