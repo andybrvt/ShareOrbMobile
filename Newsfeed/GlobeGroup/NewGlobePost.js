@@ -122,7 +122,6 @@ class NewGlobePost extends React.Component{
 
   renderPostInfo=(data, like, comment, created_at)=>{
 
-    console.log(data.id)
     let userUsername="";
     let profilePic="";
     let firstName="";

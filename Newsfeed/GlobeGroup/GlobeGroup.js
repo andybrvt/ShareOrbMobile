@@ -99,7 +99,7 @@ class GlobeGroup extends React.Component{
           }}
           style = {{flex: 1}}
           // onSwipeLeft={(state) => this.onSwipeLeft(state)}
-          onSwipeRight={(state) => this.onSwipeRight(state)}
+          // onSwipeRight={(state) => this.onSwipeRight(state)}
           >
           <NewGlobePost
             navigation = {this.props.navigation}
@@ -165,26 +165,28 @@ class GlobeGroup extends React.Component{
 
     loadSocialPost = () => {
       const {start, addMore} = this.state;
-      authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteGlobe/`+start+"/"+addMore)
-      .then(res => {
+      if(this.state.hasMore){
+        authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteGlobe/`+start+"/"+addMore)
+        .then(res => {
 
-        const globePost = res.data.globePost;
-        const hasMore = res.data.has_more
+          const globePost = res.data.globePost;
+          const hasMore = res.data.has_more
+          this.props.loadMoreGlobePost(globePost)
+          this.setState({
+            hasMore:hasMore,
+            loading: false,
+            start: start+addMore
+          })
 
-        this.props.loadMoreGlobePost(globePost)
-        this.setState({
-          hasMore:hasMore,
-          loading: false,
-          start: start+addMore
+
+        })
+        .catch(err => {
+          this.setState({
+            error: err.message
+          })
         })
 
-
-      })
-      .catch(err => {
-        this.setState({
-          error: err.message
-        })
-      })
+      }
 
 
     }
@@ -198,7 +200,6 @@ class GlobeGroup extends React.Component{
      }
 
     render(){
-      console.log('globe her')
       let groupPosts = []
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
@@ -216,7 +217,7 @@ class GlobeGroup extends React.Component{
               keyExtractor={(item, index) => String(index)}
               refreshing = {this.state.refreshing}
               onRefresh = {() => this.onRefresh()}
-              onEndReachedThreshold={0.5}
+              onEndReachedThreshold={0.6}
               onEndReached = {() => this.loadSocialPost()}
                />
         </View>
