@@ -119,41 +119,20 @@ class NewGlobePost extends React.Component{
 
 
   renderPostInfo=(data, like, comment, created_at)=>{
-
-    let postId = "";
-    let calCell = "";
-    let username = "";
-    let cellYear = "";
-    let cellMonth = "";
-    let cellDay = "";
-    let location = "";
     let userUsername="";
-    let post = {};
     let profilePic="";
-    let userPostImages = []
-    let like_people = [];
-    let commentList = [];
-    let peopleLikeId = []
-    let postCreatedAt= new Date();
-    let contentTypeId="";
-    let ownerId = "";
-    let cellDate = "";
     let firstName="";
     let lastName="";
-    let likeAvatarList=[]
-    let itemImage = "";
-    let video = "";
-    let calComment = 0;
-    let caption="";
     let notificationToken = "";
-    let goal = "";
+
+
+
+    let postCreatedAt= new Date();
+    let ownerId = "";
 
     let utc3 = dateFns.format(new Date(), 'h:mma');
 
     if(data){
-      if(data.caption){
-        caption = data.caption
-      }
       if(data.creator){
         if(data.creator.profile_picture){
           profilePic = `${global.IMAGE_ENDPOINT}`+data.creator.profile_picture
@@ -183,60 +162,18 @@ class NewGlobePost extends React.Component{
           }
         }
       }
-      if(data.calCell){
-        calCell = data.calCell
-      }
       if(data.id){
         postId = data.id
       }
-      if(data.goal){
-        goal = data.goal
-      }
 
-      if(data.itemImage){
-        itemImage = `${global.IMAGE_ENDPOINT}`+data.itemImage;
-      }
-      if(this.props.data.video){
-        if(this.props.data.video !== null){
-          video = `${global.IMAGE_ENDPOINT}`+this.props.data.video;
-          // video taken from the local site does not work but the videos
-          // taken from pretty much any where else works (sounds good to me)
-        }
 
-      }
-      if(data.people_like){
-        like_people = data.people_like
 
-        if(like_people.length > 0){
-          for(let i = 0; i< like_people.length; i++){
-            peopleLikeId.push(like_people[i].id)
-          }
-        }
-
-        if(data.people_like.length>0)
-        {
-          likeAvatarList = data.people_like.map(item => {
-           return {
-             imageUrl: `${global.IMAGE_ENDPOINT}`+item.profile_picture,
-           };
-           });
-        }
-
-      }
-      if(data.get_socialCalItemComment){
-        calComment =data.get_socialCalItemComment.length
-      }
     }
 
     let socialMonth=""
     let socialDay=""
-    // timestamp=postCreatedAt
-    // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
-    // socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
-    // socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
     let timestamp=postCreatedAt
-    // const timeDiff = Math.round((new Date().getTime() - new Date(timestamp).getTime())/60000)
-    //
+
     socialMonth = `${dateFns.format(new Date(timestamp), "MMMM")}`;
     socialDay = `${dateFns.format(new Date(timestamp), "d")}`;
     return(
@@ -344,63 +281,42 @@ class NewGlobePost extends React.Component{
   }
 
   render(){
-
-    let postId = ""
-    let itemImage = ""
     let group = {}
     let groupPic = ""
     let groupName = ""
     let members = []
+    let itemImage = ""
     let post = {}
     let groupLike = []
-    let video = "";
-
-    let creatorPic = ""
-    let username = ""
-    let firstName = ""
-    let lastName = ""
-
-    let caption = ""
-    let userUsername = ""
-
     let comment = []
     let created_at = new Date();
+    let username = ""
+    let caption = ""
 
     if(this.props.data){
-
-
-      if(this.props.data.people_like){
-        groupLike = this.props.data.people_like
-      }
-      if(this.props.data.get_globeItemComment){
-        comment = this.props.data.get_globeItemComment
-      }
-      if(this.props.data.created_at){
-        created_at = new Date(this.props.data.created_at)
-      }
       if(this.props.data.post){
 
         post = this.props.data.post
+        if(this.props.data.post.people_like){
+          groupLike = this.props.data.post.people_like
+        }
+        if(this.props.data.post.get_socialCalItemComment){
+          comment = this.props.data.post.get_socialCalItemComment
+        }
+        if(this.props.data.post.created_at){
+          created_at = new Date(this.props.data.post.created_at)
+        }
         if(this.props.data.post.itemImage){
           itemImage = `${global.IMAGE_ENDPOINT}` + this.props.data.post.itemImage
         }
-        if(this.props.data.post.video){
-          if(this.props.data.post.video !== null){
-            video = `${global.IMAGE_ENDPOINT}`+this.props.data.post.video;
 
-          }
-        }
 
         if(this.props.data.post.creator){
-          creatorPic  = `${global.IMAGE_ENDPOINT}`+ this.props.data.post.creator.profile_picture
           username = this.props.data.post.creator.username
         }
         if(this.props.data.post.caption){
           caption = this.props.data.post.caption
         }
-
-
-
       }
       if(this.props.data.group){
         group = this.props.data.group
@@ -413,9 +329,6 @@ class NewGlobePost extends React.Component{
         if(this.props.data.group.members){
           members = this.props.data.group.members
         }
-
-
-
       }
     }
 
@@ -475,11 +388,7 @@ class NewGlobePost extends React.Component{
 
         <View style = {styles.bottomContainer}>
           {/* FastImages */}
-
-          {
-            video === "" ?
-
-            <Image
+          <Image
               style={styles.cover}
               resizeMode = "cover"
               source={{
@@ -487,81 +396,7 @@ class NewGlobePost extends React.Component{
                 // priority: FastImage.priority.normal,
 
               }}
-              // resizeMode={FastImage.resizeMode.contain}
-
-              // blurRadius = {15}
                />
-
-            :
-
-            <InViewPort
-              onChange = {this.handlePlaying}
-              >
-              <Video
-                ref={ref => {this.video = ref}}
-                style = {styles.cover}
-                source={{
-                  uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-                  // uri: video
-                }}
-                rate={1.0}
-                isMuted={this.state.isMuted}
-                resizeMode="cover"
-                isLooping
-                // shouldPlay
-                volume={0.5}
-
-
-                 />
-
-               {
-                 !this.state.showMute ?
-
-                 null
-
-                 :
-
-                 this.state.isMuted ?
-
-                 <TouchableOpacity
-                   onPress = {() => this.unMute()}
-                   style = {styles.tagCSS4}>
-                   <View style = {styles.justifyCenter}>
-                     <VolumeX
-                       stroke = "white"
-                       width = {27.5}
-                       height = {27.5}
-                        />
-
-                   </View>
-                 </TouchableOpacity>
-
-                 :
-
-
-                 <TouchableOpacity
-                   onPress = {()=> this.mute()}
-                   style = {styles.tagCSS4}>
-                   <View style = {styles.justifyCenter}>
-                     <Volume2
-                       stroke = "white"
-                       width = {27.5}
-                       height = {27.5}
-                        />
-
-                   </View>
-                 </TouchableOpacity>
-
-               }
-
-
-
-
-            </InViewPort>
-
-          }
-
-
              <LinearGradient
                start={{x: 0, y: 0}} end={{x: 0, y: 1}}
                style = {{
