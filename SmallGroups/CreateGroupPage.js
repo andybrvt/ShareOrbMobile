@@ -394,7 +394,8 @@ class CreateGroupPage extends React.Component{
       // // }
       //
       this.props.navigation.navigate("Explore")
-      this.props.authSetActiveNewsfeedSlide(numIndex+1)
+
+      // this.props.authSetActiveNewsfeedSlide(numIndex+1)
 
       setTimeout(()=>{
          this.setState({
@@ -420,12 +421,14 @@ class CreateGroupPage extends React.Component{
           prompt = {"What is the name of your business?"}
           visible = {this.state.one}
           closeModal = {this.closeModal}
+          loading = {this.state.loading}
           openModal = {this.openModal}
           onChange = {this.onGroupNameChange}
           value = {this.state.groupName}
           closeNum = {'one'}
           openNum = {'two'}
           loading = {this.state.loading}
+
           />
 
           <SlideWrap visible = {this.state.two}>
@@ -465,7 +468,7 @@ class CreateGroupPage extends React.Component{
           <BasicGroupPage
             {...this.props}
             loading = {this.state.loading}
-            prompt = {"Upload a profile picture"}
+            prompt = {"Upload a picture"}
             closeModal = {this.closeModal}
             openModal = {this.openModal}
             onChange = {this.onGroupPicChange}

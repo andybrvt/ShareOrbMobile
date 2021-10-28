@@ -15,7 +15,7 @@ import ProfileHeader from './ProfileHeader';
 import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import Constant from 'expo-constants';
 import { connect } from "react-redux";
-import { Tag, Bookmark, Search, ChevronRight, Settings, ChevronsLeft
+import { Tag, Bookmark, Search, ChevronRight, Settings, ChevronsLeft, ArrowLeft
   ,MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 import * as authActions from '../store/actions/auth';
@@ -55,8 +55,6 @@ class NewProfile extends React.Component{
     // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
     // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
     // JOINSCREEN
-    console.log("FFFFFFFFFFFFFFFFFFFFF")
-
     const curId = this.props.curId
     const memberList = item.members
     const groupList=this.props.smallGroups
@@ -137,14 +135,17 @@ class NewProfile extends React.Component{
             <TouchableOpacity
               style = {{
                 flexDirection: 'row',
-                alignItems:'center'
+                alignItems:'center',
+                justifyContent:'center',
+                padding:25,
               }}
               onPress = {() => this.props.navigation.goBack()}
               >
-              <ChevronsLeft />
+              <ArrowLeft
+                stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
 
-            <View style={{flex:1, justifyContent:'center', paddingLeft: 10}}>
+            <View style={{flex:1, justifyContent:'center', }}>
               <Text style={styles.textStyle}>{this.props.username}</Text>
             </View>
           </View>

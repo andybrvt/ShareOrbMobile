@@ -171,15 +171,14 @@ class UserProfile extends React.Component{
           <TouchableOpacity
             onPress = {() => this.onRedirect()}>
           <ArrowLeft
-                stroke='black'
-                width ={35}
-                height = {25}
+            stroke='black'
+            width ={35}
+            height = {25}
            />
          </TouchableOpacity>
           <View >
             <Text style={styles.textStyle}>{username}</Text>
           </View>
-
         </View>
         <View style = {styles.profileHeader}>
           <ProfileHeader

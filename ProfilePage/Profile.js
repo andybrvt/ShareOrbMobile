@@ -20,8 +20,8 @@ import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
 import SocialCalendarTap from '../SocialCalendar/SocialCalendarTap';
-import { Tag, Bookmark, Search, ChevronRight, Settings
-  ,MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
+import { Tag, Bookmark, Search, ChevronRight, Settings, ArrowLeft,
+MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
 import { TabView, SceneMap } from 'react-native-tab-view';
 import GoalContainer from '../GoalAlbum/GoalContainer';
 import * as authActions from '../store/actions/auth';
