@@ -18,6 +18,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import GoalContainer from '../GoalAlbum/GoalContainer';
 import { Avatar } from 'react-native-elements';
 import authAxios from '../util';
+import NoOrbs from './noOrbs.svg';
 
 // this will be used mostly for the other person profile
 // I want to make it seperate is because for your profile you can just
@@ -111,8 +112,15 @@ class ProfilePage extends React.Component{
 
   renderEmptyContainer(){
     return(
-      <View>
-        <Text>No post here</Text>
+      <View style = {{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+        <NoOrbs width = {150} height = {150}/>
+        <Text style = {{
+            fontSize: 20,
+          }}>No orbs yet, go check out your city</Text>
       </View>
     )
   }
@@ -246,7 +254,7 @@ class ProfilePage extends React.Component{
           contentContainerStyle={{ paddingBottom: 25 }}
           keyExtractor={(item, index) => String(index)}
           renderItem={this.renderItem}
-          ListEmptyComponent={this.renderEmptyContainer()}
+          ListEmptyComponent={this.renderEmptyContainer}
 
            />
       </BackgroundContainer>

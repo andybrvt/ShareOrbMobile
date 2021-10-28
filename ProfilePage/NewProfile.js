@@ -19,6 +19,9 @@ import { Tag, Bookmark, Search, ChevronRight, Settings, ChevronsLeft, ArrowLeft
   ,MessageCircle, UserPlus, Users, Clock, Grid, Calendar, Clipboard} from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 import * as authActions from '../store/actions/auth';
+import NoOrbs from './noOrbs.svg';
+
+
 const {width, height} = Dimensions.get('screen')
 
 class NewProfile extends React.Component{
@@ -52,7 +55,7 @@ class NewProfile extends React.Component{
   }
 
   onGroupDirect = (item) => {
-    
+
 
     this.props.navigation.navigate("groupOrb", {
       orbId: item.id,
@@ -90,8 +93,15 @@ class NewProfile extends React.Component{
 
   renderEmptyContainer(){
     return(
-      <View>
-        <Text>No orbs here</Text>
+      <View style = {{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+        <NoOrbs width = {150} height = {150}/>
+        <Text style = {{
+            fontSize: 20,
+          }}>No orbs yet, go check out your city</Text>
       </View>
     )
   }
@@ -153,7 +163,7 @@ class NewProfile extends React.Component{
           numColumns={2}
           keyExtractor={(item, index) => String(index)}
           renderItem={this.renderItem}
-          ListEmptyComponent={this.renderEmptyContainer()}
+          ListEmptyComponent={this.renderEmptyContainer}
         />
 
 
