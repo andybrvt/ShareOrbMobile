@@ -156,6 +156,7 @@ export const grabUserCredentials = () => {
   return dispatch => {
     authAxios.get(`${global.IP_CHANGE}/userprofile/grabCurrentUser/`)
       .then(res => {
+        console.log(res.data)
       // AsyncStorage.setItem("username", username);
       // AsyncStorage.setItem("id", id);
       // AsyncStorage.setItem('firstName', firstName);
@@ -188,7 +189,8 @@ export const grabUserCredentials = () => {
          res.data.dailyNotification,
          res.data.inviteCode,
          res.data.get_small_groups,
-         res.data.id_small_groups
+         res.data.id_small_groups,
+         res.data.recentOrbs
       ))
     })
     .catch(err => {
@@ -215,7 +217,8 @@ export const addCredentials = (
    dailyNotification,
    inviteCode,
    smallGroups,
-   smallGroupIds
+   smallGroupIds,
+   recentOrbs,
  ) => {
 
   return {
@@ -237,7 +240,8 @@ export const addCredentials = (
     dailyNotification: dailyNotification,
     inviteCode: inviteCode,
     smallGroups: smallGroups,
-    smallGroupIds:smallGroupIds
+    smallGroupIds:smallGroupIds,
+    recentOrbs
   };
 };
 

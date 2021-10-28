@@ -131,13 +131,22 @@ class InfiniteScrollFlatNew extends React.Component{
       }
   }
 
+  componentDidMount(){
+    //add the most recents here
+    const groupId = this.props.route.params.orbId
+    authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
+    .then(res => {
+      console.log(res.data)
+    })
+
+  }
+
 
   componentDidUpdate(prevProps){
 
-  }
-  componentWillUnmount(){
 
   }
+
 
 
   FlatListItemSeparator = () => {
@@ -482,7 +491,6 @@ class InfiniteScrollFlatNew extends React.Component{
     const groupName = this.props.route.params.groupName
     const groupId = this.props.route.params.orbId
 
-    console.log(groupPic, groupName, groupId)
     this.props.navigation.navigate("Camera", {
       groupPic: groupPic,
       groupName: groupName,
@@ -497,7 +505,6 @@ class InfiniteScrollFlatNew extends React.Component{
     //   post = this.props.socialPosts
     // }
 
-    console.log(this.props)
     let closeId = "";
     let groupId = '';
     let groupPic = "";

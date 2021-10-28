@@ -86,7 +86,7 @@ class NewProfile extends React.Component{
     return(
       <View style={{width: width/2, justifyContent:'center', alignItems:'center', padding:10}} >
         <TouchableOpacity
-          onPress = {() => this.onGroupDirect(item)}
+          // onPress = {() => this.onGroupDirect(item)}
           >
           <Avatar
             source = {{
@@ -97,11 +97,6 @@ class NewProfile extends React.Component{
              />
           </TouchableOpacity>
            <Text style={{fontFamily:'Nunito-Bold', fontSize:16}}>{item.group_name}</Text>
-           <View>
-             <Text style={{fontFamily:'Nunito-SemiBold', color:'#8c8c8c', fontSize:12}}>{item.members.length} people</Text>
-
-           </View>
-
            {/*<View style={styles.roundButton1}></View> */}
       </View>
 
@@ -119,8 +114,8 @@ class NewProfile extends React.Component{
   render(){
 
     let data = []
-    if(this.props.smallGroups){
-      data = this.props.smallGroups
+    if(this.props.recentOrbs){
+      data = this.props.recentOrbs
     }
 
     return(
@@ -199,6 +194,7 @@ const mapStateToProps = state => {
     bio: state.auth.bio,
     smallGroups: state.auth.smallGroups,
     curId: state.auth.id,
+    recentOrbs: state.auth.recentOrbs
   }
 }
 
@@ -286,6 +282,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   }
+
 
 
 })

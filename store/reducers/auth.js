@@ -35,7 +35,7 @@ const initialState ={
   smallGroupIds: [],
   activeSlide: null,
   updateSlide:null,
-
+  recentOrbs: []
 }
 
 const authStart = (state, action) => {
@@ -137,7 +137,7 @@ const authLogout = (state, action) => {
     inviteCode: "",
     smallGroups: [],
     smallGroupIds: [],
-
+    recentOrbs: []
   });
 };
 
@@ -161,7 +161,8 @@ const addCredentials = (state, action) => {
     dailyNotification: action.dailyNotification,
     inviteCode: action.inviteCode,
     smallGroups: action.smallGroups,
-    smallGroupIds: action.smallGroupIds
+    smallGroupIds: action.smallGroupIds,
+    recentOrbs: action.recentOrbs
   });
 };
 
