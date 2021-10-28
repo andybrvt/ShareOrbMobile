@@ -468,7 +468,6 @@ class App extends Component{
       }
     })
     .then(res => {
-      console.log(res.data, 'gorup here')
 
       // Now you put in redux
 

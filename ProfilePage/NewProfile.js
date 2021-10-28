@@ -52,31 +52,16 @@ class NewProfile extends React.Component{
   }
 
   onGroupDirect = (item) => {
-    // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
-    // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
-    // JOINSCREEN
-    const curId = this.props.curId
-    const memberList = item.members
-    const groupList=this.props.smallGroups
-    console.log(this.props.curId)
-    // console.log(item.group_name)
-    console.log(memberList)
-    let itemIndex=0
-    if(memberList.includes(curId)){
-      console.log("really")
-      // console.log(groupList.indexOf(item))
-      for(let i=0; i<groupList.length; i++){
-        if(groupList[i].id===item.id){
-          this.props.navigation.navigate("Home")
-          this.props.authSetActiveNewsfeedSlide(i+1)
-        }
-      }
+    
 
-    } else {
-      this.props.navigation.navigate("JoinScreen", {
-        item:item
-      })
-    }
+    this.props.navigation.navigate("groupOrb", {
+      orbId: item.id,
+      groupName: item.group_name,
+      groupPic: item.groupPic
+    })
+
+
+
   }
 
   renderItem = ({item}) => {
@@ -86,7 +71,7 @@ class NewProfile extends React.Component{
     return(
       <View style={{width: width/2, justifyContent:'center', alignItems:'center', padding:10}} >
         <TouchableOpacity
-          // onPress = {() => this.onGroupDirect(item)}
+          onPress = {() => this.onGroupDirect(item)}
           >
           <Avatar
             source = {{

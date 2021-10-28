@@ -77,7 +77,7 @@ class ProfilePage extends React.Component{
       const name = this.props.route.params.username
       authAxios.get(`${global.IP_CHANGE}`+"/userprofile/"+name)
       .then(res => {
-
+        console.log(res.data)
         this.setState({
           profile: res.data
         })
@@ -122,54 +122,15 @@ class ProfilePage extends React.Component{
   }
 
   onGroupDirect = (item) => {
-    // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
-    // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
-    // JOINSCREEN
-    const curId = this.props.curId
-    const memberList = item.members
-    const groupList=this.props.smallGroups
-    // console.log(item.group_name)
-    let itemIndex=0
-    if(memberList.includes(curId)){
-      // console.log("really")
-      // console.log(groupList.indexOf(item))
-      for(let i=0; i<groupList.length; i++){
-        if(groupList[i].id===item.id){
-          this.props.navigation.navigate("Home")
-          this.props.authSetActiveNewsfeedSlide(i+1)
-        }
-      }
-
-    } else {
-
-      if(item.public === false){
-        alert("This group is private")
-      } else {
-        this.props.navigation.navigate("JoinScreen", {
-          item:item
-        })
-
-      }
-
-
-
-    }
+    this.props.navigation.navigate("groupOrb", {
+      orbId: item.id,
+      groupName: item.group_name,
+      groupPic: item.groupPic
+    })
   }
 
 
   listHeader = () => {
-    // const profile = {
-    //   username: this.props.username,
-    //   profile_picture: this.props.profilePic,
-    //   first_name: this.props.firstName,
-    //   last_name: this.props.lastName,
-    //   get_following: this.props.following,
-    //   id: this.props.currentId,
-    //   bio: this.props.bio,
-    //   get_followers: this.props.followers
-    // }
-
-    console.log(this.state.profile, 'profile here')
     const profile = this.state.profile
     const username = profile.username
     const profilePic = profile.profile_picture
@@ -227,10 +188,6 @@ class ProfilePage extends React.Component{
         </TouchableOpacity>
 
            <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
-           <View>
-             <Text>{item.members.length} people</Text>
-
-           </View>
 
            {/*<View style={styles.roundButton1}></View> */}
       </View>
@@ -250,7 +207,7 @@ class ProfilePage extends React.Component{
     let username = "";
     let userId = "";
 
-    const data = this.state.profile.get_small_groups
+    const data = this.state.profile.recentOrbs
 
     // you would use userId in this one
 
