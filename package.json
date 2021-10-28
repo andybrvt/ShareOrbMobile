@@ -93,6 +93,7 @@
     "react-native-tags": "^2.2.0",
     "react-native-unimodules": "~0.14.5",
     "react-native-vector-icons": "^8.1.0",
+    "react-native-video-to-gif": "0.0.3",
     "react-native-view-shot": "^3.1.2",
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.4",

@@ -654,7 +654,7 @@ class CameraScreen extends React.Component{
 
 
 
-        // WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
+        WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
 
 
         // this.props.addFirstSocialCellPost(res.data.item)
@@ -684,10 +684,10 @@ class CameraScreen extends React.Component{
 
       })
 
-      // this.onCancelPhoto();
+      this.onCancelPhoto();
 
-      // this.props.closeShowCamera()
-      // this.props.navigation.goBack()
+      this.props.closeShowCamera()
+      this.props.navigation.goBack()
 
   }
 
