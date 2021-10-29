@@ -280,11 +280,11 @@ class NewsfeedView extends React.Component{
               }}>
               <Globe
                 stroke = "white"
-                width = {40}
-                height = {40}
+                width = {37.5}
+                height = {37.5}
                  />
              </TouchableOpacity>
-
+             {/*
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Test1")}
               style = {{
@@ -299,7 +299,7 @@ class NewsfeedView extends React.Component{
 
                  />
              </TouchableOpacity>
-
+             */}
 
 
         </BackgroundContainer>

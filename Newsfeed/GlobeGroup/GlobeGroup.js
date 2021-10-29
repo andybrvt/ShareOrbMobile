@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   RefreshControl,
+  Pressable
  } from 'react-native';
 import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import { connect } from 'react-redux';
@@ -22,7 +23,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { Avatar } from 'react-native-elements';
 import { Bell,ArrowUpCircle, Plus, Mail, UserPlus, Globe } from "react-native-feather";
 import MainLogo from '../../logo.svg';
-
+import { SharedElement } from "react-navigation-shared-element";
 
 
 const height = Dimensions.get("window").height
@@ -88,24 +89,36 @@ class GlobeGroup extends React.Component{
 
 
     renderItem = ({item}) => {
+      console.log("???")
+      console.log(`${global.IMAGE_ENDPOINT}`+item.post.video)
+      {/*
 
-      return(
-        <GestureRecognizer
-          config={{
-            velocityThreshold: 0.2,
-            directionalOffsetThreshold: 90,
-            detectSwipeUp: false,
-            detectSwipeDown: false,
+        <Pressable
+          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+          onPress={() => {
+
+            this.props.navigation.navigate("Story",  {'video':'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}  );
           }}
-          style = {{flex: 1}}
-          // onSwipeLeft={(state) => this.onSwipeLeft(state)}
-          // onSwipeRight={(state) => this.onSwipeRight(state)}
-          >
+        >
+          <SharedElement>
+        <Image source={require('../../Explore/coffee.jpg')} style = {{height: 175, width: 200,}} />
+        </SharedElement>
+        </Pressable>
+        */}
+      return(
+        <Pressable
+          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+          onPress={() => {
+            this.props.navigation.navigate("Story",  {'video':`${global.IMAGE_ENDPOINT}`+item.post.video} );
+          }}
+        >
+        <SharedElement>
           <NewGlobePost
             navigation = {this.props.navigation}
             id = {this.props.id}
             data = {item}/>
-        </GestureRecognizer>
+          </SharedElement>
+        </Pressable>
 
       )
     }
@@ -204,8 +217,12 @@ class GlobeGroup extends React.Component{
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
       }
+      let test= [{'video':'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}]
       return(
-        <View style = {{flex: 1}}>
+          <View style = {{flex: 1}}>
+
+
+
             <FlatList
               stickyHeaderIndices={[0]}
               // contentContainerStyle={{paddingBottom:75}}
@@ -220,6 +237,7 @@ class GlobeGroup extends React.Component{
               onEndReachedThreshold={0.6}
               onEndReached = {() => this.loadSocialPost()}
                />
+
         </View>
       )
     }
