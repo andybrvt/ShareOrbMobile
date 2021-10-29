@@ -478,12 +478,15 @@ class SuggestedListGroup extends React.Component{
   }
 
   componentDidUpdate(previousProps, previousState){
-    if(this.state.inputValue=='ShareOrb1'){
-      if (previousState.businessCondition==true){
-      this.setState({ businessCondition: false })
-      }
-      this.props.navigation.navigate("createSmallGroup")
-    }
+    //
+    // if(this.state.inputValue=='ShareOrb1'){
+    //   if (previousState.businessCondition==true){
+    //   this.setState({ businessCondition: false })
+    //   }
+    //   this.props.navigation.navigate("createSmallGroup")
+    // }
+
+
   }
 
   render(){
@@ -600,7 +603,7 @@ class SuggestedListGroup extends React.Component{
            transparent
            visible={this.state.businessCondition}
            presentationStyle="overFullScreen"
-           onDismiss={this.onShowBusinessCondition}>
+           >
             <View style={styles.viewWrapper}>
                 <View style={styles.modalView}>
                     <TextInput
