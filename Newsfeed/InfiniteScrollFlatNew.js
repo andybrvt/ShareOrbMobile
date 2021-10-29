@@ -343,6 +343,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
       <NewGroupPost
         item = {item}
+        setName = {this.setName}
         />
 
 

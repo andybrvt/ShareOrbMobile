@@ -150,17 +150,21 @@ class GlobeGroup extends React.Component{
           </View>
 
           <View style = {styles.sideHeaders}>
-            <TouchableOpacity
-              onPress = {() => this.props.navigation.navigate("notification")}
-              >
-              <Bell
-                width={20}
-                height={20}
-                stroke = "black"
-                fill = "white"
-                style={{marginRight:5}}
-                 />
-            </TouchableOpacity>
+            {/*
+              <TouchableOpacity
+                onPress = {() => this.props.navigation.navigate("notification")}
+                >
+                <Bell
+                  width={20}
+                  height={20}
+                  stroke = "black"
+                  fill = "white"
+                  style={{marginRight:5}}
+                   />
+              </TouchableOpacity>
+
+
+              */}
 
           </View>
 
