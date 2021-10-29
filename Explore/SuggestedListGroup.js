@@ -81,6 +81,8 @@ class SuggestedListGroup extends React.Component{
       todayList:[],
       businessCondition:false,
       inputValue:'',
+      randomPics: [],
+      randomOrbs: []
     }
   }
   onShowBusinessCondition = () => {
@@ -91,26 +93,42 @@ class SuggestedListGroup extends React.Component{
 
 
   componentDidMount(){
-    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/suggestedGroups')
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getRandomPost')
     .then(res => {
       this.setState({
-        list: res.data
+        randomPics: res.data
       })
     })
-    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/exploreDay/1/8')
+
+
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getRandomOrbs')
     .then(res => {
+      console.log(res.data, 'data data')
       this.setState({
-        todayList: res.data
+        randomOrbs: res.data
       })
     })
-    console.log(this.state.todayList)
+
+    // authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/suggestedGroups')
+    // .then(res => {
+    //   this.setState({
+    //     list: res.data
+    //   })
+    // })
+    // authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/exploreDay/1/8')
+    // .then(res => {
+    //   this.setState({
+    //     todayList: res.data
+    //   })
+    // })
+    // console.log(this.state.todayList)
   }
 
   renderItem2 = ({item}) => {
     return(
       <View>
         <View style = {{
-            height: width/2,
+            height:300,
             width: '100%',
             borderRadius: 10,
             overflow: "hidden"
@@ -122,7 +140,7 @@ class SuggestedListGroup extends React.Component{
         }}
           resizeMode = "cover"
           source = {{
-            uri: item.itemImage
+            uri: `${global.IMAGE_ENDPOINT}`+ item.itemImage
           }}
          />
        </View>
@@ -132,18 +150,20 @@ class SuggestedListGroup extends React.Component{
 
   renderItem3 = ({item}) => {
     return(
-      <View style={{flexDirection:'row',padding:5,  marginTop:10, alignItems:'center'}}>
+      <TouchableOpacity
+        onPress = {() => this.onGroupDirect(item)}
+        style={{flexDirection:'row',padding:5,  marginTop:10, alignItems:'center'}}>
 
         <Avatar
           size={42.5}
           rounded
             resizeMode = "cover"
             source = {{
-              uri: item.itemImage
+              uri: `${global.IMAGE_ENDPOINT}`+item.groupPic
             }}
            />
          <View style={{marginLeft:10}}>
-         <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>Presta Coffee</Text>
+         <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
          <View style={{flexDirection:'row', alignItems:'center'}}>
            <MapPin
              style={{ marginRight:3}}
@@ -153,35 +173,17 @@ class SuggestedListGroup extends React.Component{
 
        </View>
 
-     </View>
+     </TouchableOpacity>
     )
   }
 
   onGroupDirect = (item) => {
-    // DO A CHECK HERE TO SEE IF YOU ARE IN THE GROUP YET IF YOU ARE
-    // YOU WILL BE DIRECTED INTO THE NEWSFEED AND IF NOT THEN YOU GO TO
-    // JOINSCREEN
-    const curId = this.props.curId
-    const memberList = item.members
-    const groupList=this.props.smallGroups
-    // console.log(item.group_name)
-    // console.log(groupList)
-    let itemIndex=0
-    if(memberList.includes(curId)){
-      // console.log("really")
-      // console.log(groupList.indexOf(item))
-      for(let i=0; i<groupList.length; i++){
-        if(groupList[i].id===item.id){
-          this.props.navigation.navigate("Home")
-          this.props.authSetActiveNewsfeedSlide(i+1)
-        }
-      }
-
-    } else {
-      this.props.navigation.navigate("JoinScreen", {
-        item:item
-      })
-    }
+    this.props.navigation.navigate("groupOrb", {
+      creator: item.creator,
+      orbId: item.id,
+      groupName: item.group_name,
+      groupPic: item.groupPic
+    })
   }
 
   onFollow = (follower, following, notiToken) => {
@@ -511,7 +513,7 @@ class SuggestedListGroup extends React.Component{
             <Carousel
               layout={'default'}
               autoplayInterval={3500}
-              data = {data2}
+              data = {this.state.randomPics}
               autoplay={true}
               loop={true}
               renderItem = {(item) => this.renderItem2(item)}
@@ -553,7 +555,7 @@ class SuggestedListGroup extends React.Component{
               initialNumToRender={2}
               // numColumns={2}
               ListHeaderComponent = {this.listHeader}
-              data={data3}
+              data={this.state.randomOrbs}
               // contentContainerStyle={{paddingBottom:25}}
               renderItem = {this.renderItem3}
               keyExtractor={(item, index) => String(index)}
