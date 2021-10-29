@@ -21,9 +21,9 @@ const loadSmallGroupsPost = (state, action) => {
 }
 
 const loadMoreSmallGroupPost = (state, action) => {
-
+  console.log(action)
   return updateObject(state, {
-    groupPosts: [...state.groupPosts, action.posts.serializedPost]
+    groupPosts: [...state.groupPosts, ...action.posts.serializedPost]
   })
 }
 

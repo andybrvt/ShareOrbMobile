@@ -260,33 +260,36 @@ class InfiniteScrollFlatNew extends React.Component{
 
   loadSocialPost = () => {
     const {start, addMore} = this.state;
-    const groupId = this.props.groupId
+    const groupId = this.props.route.params.orbId
 
-    authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSmallGroup/`+groupId+"/"+start+"/"+addMore)
-    .then( res => {
-      const serializedPost = res.data.serializedPost;
-      const groupId = res.data.groupId;
-      const hasMore = res.data.has_more;
+    if(this.state.hasMore){
+      authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSmallGroup/`+groupId+"/"+start+"/"+addMore)
+      .then( res => {
+        const serializedPost = res.data.serializedPost;
+        const groupId = res.data.groupId;
+        const hasMore = res.data.has_more;
 
-      const loadObj = {
-        serializedPost,
-        groupId
-      }
+        const loadObj = {
+          serializedPost,
+          groupId
+        }
 
-      this.props.loadMoreSmallGroupPost(loadObj)
+        this.props.loadMoreSmallGroupPost(loadObj)
 
-      this.setState({
-        hasMore:hasMore,
-        loading: false,
-        start: start+addMore
+        this.setState({
+          hasMore:hasMore,
+          loading: false,
+          start: start+addMore
+        })
+
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message
+        })
       })
 
-    })
-    .catch(err => {
-      this.setState({
-        error: err.message
-      })
-    })
+    }
 
   }
 
@@ -586,7 +589,7 @@ class InfiniteScrollFlatNew extends React.Component{
               paddingBottom: 75 }}
              data={groupPost}
              keyExtractor={(item, index) => String(index)}
-             onEndReachedThreshold={0.5}
+             onEndReachedThreshold={0.2}
              onEndReached = {() => this.loadSocialPost()}
              onRefresh = {() => this.onRefresh()}
              refreshing = {this.state.refreshing}
