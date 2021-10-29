@@ -96,7 +96,7 @@ class GlobeGroup extends React.Component{
         */}
       return(
         <View>
-          {/*
+          
           <Pressable
             style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
             onPress={() => {
@@ -108,7 +108,7 @@ class GlobeGroup extends React.Component{
           <Image source={require('../../Explore/coffee.jpg')} style = {{height: 175, width: 200,}} />
           </SharedElement>
           </Pressable>
-          */}
+
         <Pressable
           style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
           onPress={() => {

@@ -37,6 +37,7 @@ import { Avatar } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { SharedElement } from "react-navigation-shared-element";
+import NewGroupPost from './NewGroupPost';
 // this is used mostly for the new scroll newsfeed
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
@@ -343,88 +344,12 @@ class InfiniteScrollFlatNew extends React.Component{
     }
     // console.log(`${global.IMAGE_ENDPOINT}`+item.itemImage)
     return (
-      <View
 
-        style={styles.item}
-      >
-      {/*
-        <Video
-          ref={ref => {this.video = ref}}
-          style = {{
-            width: '100%',
-            height: '100%'
-          }}
-          source={{
-            uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            // uri: video
-          }}
-          rate={1.0}
-          isMuted={this.state.isMuted}
-          resizeMode="cover"
-          isLooping
-          // shouldPlay
-          volume={0.5}
-           />
-        */}
-        <TouchableWithoutFeedback
-          onPress={() => {
-            this.props.navigation.navigate("Story",  {'video':`${global.IMAGE_ENDPOINT}`+item.video} );
-          }}
-        >
-
-        <Image
-          style ={{
-            width: "100%",
-            height: '100%'
-          }}
-          resizeMode = "cover"
-          source = {{
-            uri:  `${global.IMAGE_ENDPOINT}`+item.itemImage
-            // uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
-          }}
-           />
+      <NewGroupPost
+        item = {item}
+        />
 
 
-       </TouchableWithoutFeedback>
-           <LinearGradient
-             start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
-             style = {{
-               position: 'absolute',
-               width: '100%',
-               bottom: '0%',
-               height: "30%"
-             }}
-             colors = {['transparent', '#000000']}>
-           </LinearGradient>
-         <View style = {{
-           position: 'absolute',
-           width: '100%',
-           bottom: '0%',
-           height: "20%",
-           flexDirection:'row',
-           alignItems:'center',
-           }}>
-             <View style={{
-               width: '15%',
-               marginLeft:5,
-               marginRight:7.5,
-               }}>
-               <Avatar
-                 onPress = {() => this.ViewProfile(userUsername)}
-                 size={20}
-                 rounded
-                 source = {{
-                   uri: profilePic
-                 }}
-               />
-           </View>
-           <Text style = {styles.videoFooterUserName}>
-             {this.setName(firstName, lastName)}
-           </Text>
-
-       </View>
-
-     </View>
     );
   };
 
@@ -502,6 +427,8 @@ class InfiniteScrollFlatNew extends React.Component{
       groupId: groupId
     })
   }
+
+  keyExtractor = (item, index) => String(index)
 
   render(){
 
@@ -583,17 +510,15 @@ class InfiniteScrollFlatNew extends React.Component{
 
           <FlatList
             ListHeaderComponent = {this.listHeader}
-            maxToRenderPerBatch={10}
-            extraData={groupPost}
-            windowSize={10}
-            initialNumToRender={3}
+            maxToRenderPerBatch={12}
+            windowSize={5}
             contentContainerStyle={{
               paddingBottom: 75 }}
              data={groupPost}
-             keyExtractor={(item, index) => String(index)}
+             keyExtractor={this.keyExtractor}
              onEndReachedThreshold={0.2}
-             onEndReached = {() => this.loadSocialPost()}
-             onRefresh = {() => this.onRefresh()}
+             onEndReached = {this.loadSocialPost}
+             onRefresh = {this.onRefresh}
              refreshing = {this.state.refreshing}
              scrollEventThrottle = {16} // important for animation
              renderItem={this.renderItem}
