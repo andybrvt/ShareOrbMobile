@@ -20,10 +20,10 @@ import * as Notifications from 'expo-notifications';
 
 
 // Ping UACI
-global.IP_CHANGE = "http://206.207.51.199:19002"
-global.IMAGE_ENDPOINT = "http://206.207.51.199:19002"
-global.WS_ENDPOINT = "206.207.51.199:19002"
-global.POSTLIST_SPEC = 'http://206.207.51.199:19002/media/'
+global.IP_CHANGE = "http://206.207.51.57:19002"
+global.IMAGE_ENDPOINT = "http://206.207.51.57:19002"
+global.WS_ENDPOINT = "206.207.51.57:19002"
+global.POSTLIST_SPEC = 'http://206.207.51.57:19002/media/'
 global.WS_HEADER = "ws"
 console.disableYellowBox = true;
 

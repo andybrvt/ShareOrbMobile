@@ -12,8 +12,6 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { TransitionPresets} from '@react-navigation/stack';
 const Tab = createMaterialBottomTabNavigator();
 
-
-enableScreens();
 const Stack = createNativeStackNavigator();
 
 class Routes extends React.Component{
