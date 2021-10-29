@@ -69,7 +69,6 @@ class BasicGroupPage extends React.Component{
     if(this.props.visible||this.props.test){
       this.textInput.focus()
     }
-    console.log("EEEE")
   }
 
 
@@ -367,12 +366,54 @@ class BasicGroupPage extends React.Component{
             backgroundColor: '#1890ff',
             alignItems: 'center'
           }}>
-            {(this.props.pp||this.props.type||this.props.add)?
-              <View style = {styles.profilePicTopContainer} >
+
+          <View
+            style = {styles.bottomContainer}
+            >
+
+            <View style = {styles.bottomLContainer}>
+              {
+                this.props.loading ?
+
                 <TouchableOpacity
-                onPress={() =>this.props.navigation.navigate("Explore")}
-                style={{padding:20}}>
+                  onPress = {() => this.props.closeModal(this.props.closeNum)}
+
+                  >
                   <XCircle
+                    width = {40}
+                    height = {40}
+                    stroke = "white"
+                    />
+                </TouchableOpacity>
+
+                :
+
+
+
+                <TouchableOpacity
+                  onPress = {() => this.props.closeModal(this.props.closeNum)}
+
+                  >
+                  <ArrowLeftCircle
+                    width = {40}
+                    height = {40}
+                    stroke = "white"
+                    />
+                </TouchableOpacity>
+
+
+              }
+
+            </View>
+
+
+            {
+              this.props.end ?
+              <View style = {styles.bottomRContainer}>
+                <TouchableOpacity
+                  onPress = {() => this.props.submitGroup()}
+                  >
+                  <ArrowRightCircle
                     width = {40}
                     height = {40}
                     stroke = "white"
@@ -380,23 +421,20 @@ class BasicGroupPage extends React.Component{
                 </TouchableOpacity>
               </View>
               :
-              <View
-              style = {styles.topContainer}
-              >
 
-
-              <TouchableOpacity
-              onPress={() =>this.props.navigation.navigate("Explore")}
-              style={{padding:20}}>
-              <XCircle
-                width = {40}
-                height = {40}
-                stroke = "white"
-                />
+              <View style = {styles.bottomRContainer}>
+                <TouchableOpacity
+                  onPress = {() => this.next()}
+                  >
+                  <ArrowRightCircle
+                    width = {40}
+                    height = {40}
+                    stroke = "white"
+                    />
                 </TouchableOpacity>
-            </View>
-
+              </View>
             }
+          </View>
 
 
             <View
@@ -582,67 +620,6 @@ class BasicGroupPage extends React.Component{
             </View>
 
 
-
-            <View
-              style = {styles.bottomContainer}
-              >
-
-              <View style = {styles.bottomLContainer}>
-                {
-                  this.props.loading ?
-
-                  null
-
-                  :
-
-
-
-                  <TouchableOpacity
-                    onPress = {() => this.props.closeModal(this.props.closeNum)}
-
-                    >
-                    <ArrowLeftCircle
-                      width = {40}
-                      height = {40}
-                      stroke = "white"
-                      />
-                  </TouchableOpacity>
-
-
-                }
-
-              </View>
-
-
-              {
-                this.props.end ?
-                <View style = {styles.bottomRContainer}>
-                  <TouchableOpacity
-                    onPress = {() => this.props.submitGroup()}
-                    >
-                    <ArrowRightCircle
-                      width = {40}
-                      height = {40}
-                      stroke = "white"
-                      />
-                  </TouchableOpacity>
-                </View>
-                :
-
-                <View style = {styles.bottomRContainer}>
-                  <TouchableOpacity
-                    onPress = {() => this.next()}
-                    >
-                    <ArrowRightCircle
-                      width = {40}
-                      height = {40}
-                      stroke = "white"
-                      />
-                  </TouchableOpacity>
-                </View>
-              }
-            </View>
-
             <BottomSheet
              ref={this.bs}
              snapPoints={[225, 0]}
@@ -742,7 +719,7 @@ const styles = StyleSheet.create({
     fontFamily:'Nunito-SemiBold',
   },
   bottomContainer: {
-
+    padding: 25,
     width: width,
     flexDirection:'row'
   },

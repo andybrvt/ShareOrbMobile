@@ -127,7 +127,7 @@ class CreateGroupPage extends React.Component{
       // this.setState({
       //   one:false
       // })
-      this.props.navigation.navigate('createSmallGroup')
+      this.props.navigation.goBack()
     }
     if(modalNum === 'two'){
       this.setState({
@@ -414,123 +414,129 @@ class CreateGroupPage extends React.Component{
 
   render(){
     return(
-      <BackgroundContainer>
 
-        <BasicGroupPage
-          {...this.props}
-          prompt = {"What is the name of your business?"}
-          visible = {this.state.one}
-          closeModal = {this.closeModal}
-          loading = {this.state.loading}
-          openModal = {this.openModal}
-          onChange = {this.onGroupNameChange}
-          value = {this.state.groupName}
-          closeNum = {'one'}
-          openNum = {'two'}
-          loading = {true}
+      <View style = {{flex: 1}}>
+        <View style = {{alignItems: 'center'}}>
 
-          />
 
-          <SlideWrap visible = {this.state.two}>
+          <BasicGroupPage
+            {...this.props}
+            prompt = {"What is the name of your business?"}
+            visible = {this.state.one}
+            closeModal = {this.closeModal}
+            loading = {this.state.loading}
+            openModal = {this.openModal}
+            onChange = {this.onGroupNameChange}
+            value = {this.state.groupName}
+            closeNum = {'one'}
+            openNum = {'two'}
+            loading = {true}
+
+            />
+
+            <SlideWrap visible = {this.state.two}>
+              <BasicGroupPage
+                {...this.props}
+                prompt = {"What type of business are you?"}
+                visible = {this.state.two}
+                closeModal = {this.closeModal}
+                openModal = {this.openModal}
+                autoCorrect={false}
+                closeNum = {'two'}
+                openNum = {'three'}
+                type={true}
+                onChange = {this.onTypeChange}
+                value = {this.state.type}
+                loading = {this.state.loading}
+                />
+            </SlideWrap>
+
+          <SlideWrap visible = {this.state.three}>
             <BasicGroupPage
               {...this.props}
-              prompt = {"What type of business are you?"}
-              visible = {this.state.two}
+              prompt = {"Write a description of your business"}
+              visible = {this.state.three}
               closeModal = {this.closeModal}
               openModal = {this.openModal}
               autoCorrect={false}
-              closeNum = {'two'}
-              openNum = {'three'}
-              type={true}
-              onChange = {this.onTypeChange}
-              value = {this.state.type}
+              closeNum = {'three'}
+              openNum = {'four'}
+              onChange = {this.onDescriptionChange}
+              value = {this.state.description}
               loading = {this.state.loading}
               />
           </SlideWrap>
 
-        <SlideWrap visible = {this.state.three}>
-          <BasicGroupPage
-            {...this.props}
-            prompt = {"Write a description of your business"}
-            visible = {this.state.three}
-            closeModal = {this.closeModal}
-            openModal = {this.openModal}
-            autoCorrect={false}
-            closeNum = {'three'}
-            openNum = {'four'}
-            onChange = {this.onDescriptionChange}
-            value = {this.state.description}
-            loading = {this.state.loading}
+          <SlideWrap visible = {this.state.four}>
+            <BasicGroupPage
+              {...this.props}
+              loading = {this.state.loading}
+              prompt = {"Upload a picture"}
+              closeModal = {this.closeModal}
+              openModal = {this.openModal}
+              onChange = {this.onGroupPicChange}
+              value = {this.state.groupPic}
+              closeNum = {'four'}
+              openNum = {'five'}
+              pp={true}
             />
-        </SlideWrap>
 
-        <SlideWrap visible = {this.state.four}>
-          <BasicGroupPage
-            {...this.props}
-            loading = {this.state.loading}
-            prompt = {"Upload a picture"}
-            closeModal = {this.closeModal}
-            openModal = {this.openModal}
-            onChange = {this.onGroupPicChange}
-            value = {this.state.groupPic}
-            closeNum = {'four'}
-            openNum = {'five'}
-            pp={true}
-          />
+          </SlideWrap>
 
-        </SlideWrap>
+          <SlideWrap visible = {this.state.five}>
+            <BasicGroupPage
+              {...this.props}
+              prompt = {"Search your address"}
+              visible = {this.state.four}
+              value = {this.state.selectedAddress}
+              onChange = {this.setAddress}
+              closeModal = {this.closeModal}
+              openModal = {this.openModal}
+              add={true}
+              submitGroup={this.onCreateGroup}
+              closeNum = {'five'}
+              openNum = {'six'}
+              end={true}
+            />
 
-        <SlideWrap visible = {this.state.five}>
-          <BasicGroupPage
-            {...this.props}
-            prompt = {"Search your address"}
-            visible = {this.state.four}
-            value = {this.state.selectedAddress}
-            onChange = {this.setAddress}
-            closeModal = {this.closeModal}
-            openModal = {this.openModal}
-            add={true}
-            submitGroup={this.onCreateGroup}
-            closeNum = {'five'}
-            openNum = {'six'}
-            end={true}
-          />
-
-        </SlideWrap>
-        {
-          this.state.loading ?
-          <View style = {{
-              width: width,
-              height: height,
-              backgroundColor: 'transparent',
-              position: 'absolute',
-              zIndex: 999,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
+          </SlideWrap>
+          {
+            this.state.loading ?
             <View style = {{
-                height: 200,
-                width: 200,
-                backgroundColor: "#000000aa",
-                borderRadius: 20,
+                width: width,
+                height: height,
+                backgroundColor: 'transparent',
+                position: 'absolute',
+                zIndex: 999,
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
-              <ActivityIndicator
-                size ="large"
-                color = "white"
-                 />
+              <View style = {{
+                  height: 200,
+                  width: 200,
+                  backgroundColor: "#000000aa",
+                  borderRadius: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                <ActivityIndicator
+                  size ="large"
+                  color = "white"
+                   />
+              </View>
             </View>
-          </View>
-          :
-          null
-        }
+            :
+            null
+          }
+
+        </View>
+
+      </View>
 
 
 
 
 
-      </BackgroundContainer>
     )
   }
 }
