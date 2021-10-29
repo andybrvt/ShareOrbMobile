@@ -130,7 +130,9 @@ class ProfilePage extends React.Component{
   }
 
   onGroupDirect = (item) => {
+
     this.props.navigation.navigate("groupOrb", {
+      creator: item.creator.id,
       orbId: item.id,
       groupName: item.group_name,
       groupPic: item.groupPic

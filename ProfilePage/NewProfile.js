@@ -56,8 +56,9 @@ class NewProfile extends React.Component{
 
   onGroupDirect = (item) => {
 
-
+    console.log(item)
     this.props.navigation.navigate("groupOrb", {
+      creator: item.creator.id,
       orbId: item.id,
       groupName: item.group_name,
       groupPic: item.groupPic
