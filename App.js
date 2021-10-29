@@ -922,6 +922,7 @@ class App extends Component{
                     <Stack.Screen
                       options={{headerShown: false, }}
                       name = "groupOrb"
+                      
                       component= {InfiniteScrollFlatNew}
                        />
 

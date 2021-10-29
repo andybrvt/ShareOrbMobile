@@ -89,23 +89,26 @@ class GlobeGroup extends React.Component{
 
 
     renderItem = ({item}) => {
-      console.log("???")
-      console.log(`${global.IMAGE_ENDPOINT}`+item.post.video)
+
       {/*
 
-        <Pressable
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-          onPress={() => {
 
-            this.props.navigation.navigate("Story",  {'video':'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}  );
-          }}
-        >
-          <SharedElement>
-        <Image source={require('../../Explore/coffee.jpg')} style = {{height: 175, width: 200,}} />
-        </SharedElement>
-        </Pressable>
         */}
       return(
+        <View>
+          
+          <Pressable
+            style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+            onPress={() => {
+
+              this.props.navigation.navigate("Story",  {'image':'https://images.unsplash.com/photo-1504297050568-910d24c426d3?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80'}  );
+            }}
+          >
+            <SharedElement>
+          <Image source={require('../../Explore/coffee.jpg')} style = {{height: 175, width: 200,}} />
+          </SharedElement>
+          </Pressable>
+
         <Pressable
           style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
           onPress={() => {
@@ -119,6 +122,8 @@ class GlobeGroup extends React.Component{
             data = {item}/>
           </SharedElement>
         </Pressable>
+
+        </View>
 
       )
     }

@@ -9,7 +9,9 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  RefreshControl
+  RefreshControl,
+  TouchableWithoutFeedback,
+  Pressable
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import axios from "axios";
@@ -34,6 +36,7 @@ import NoPostsGroup from './noPostsGroup.svg';
 import { Avatar } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Video, AVPlaybackStatus } from 'expo-av';
+import { SharedElement } from "react-navigation-shared-element";
 import NewGroupPost from './NewGroupPost';
 // this is used mostly for the new scroll newsfeed
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
@@ -136,7 +139,7 @@ class InfiniteScrollFlatNew extends React.Component{
     const groupId = this.props.route.params.orbId
     authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
     .then(res => {
-      console.log(res.data)
+      // console.log(res.data)
     })
 
   }
@@ -339,6 +342,7 @@ class InfiniteScrollFlatNew extends React.Component{
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
+    // console.log(`${global.IMAGE_ENDPOINT}`+item.itemImage)
     return (
 
       <NewGroupPost
