@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   RefreshControl,
+  Pressable
  } from 'react-native';
 import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import { connect } from 'react-redux';
@@ -22,7 +23,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { Avatar } from 'react-native-elements';
 import { Bell,ArrowUpCircle, Plus, Mail, UserPlus, Globe } from "react-native-feather";
 import MainLogo from '../../logo.svg';
-
+import { SharedElement } from "react-navigation-shared-element";
 
 
 const height = Dimensions.get("window").height
@@ -204,12 +205,60 @@ class GlobeGroup extends React.Component{
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
       }
+      let test= [{'video':'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}]
       return(
-        <View style = {{flex: 1}}>
+          <View style = {{flex: 1}}>
+            <View style = {styles.header}>
+              <View style = {styles.sideHeaders}>
+                <TouchableOpacity
+                  onPress = {() => this.props.navigation.navigate("profile")}
+                  >
+                  <Avatar
+                    source = {{
+                      uri: `${global.IMAGE_ENDPOINT}` + this.props.profilePic,
+                    }}
+                    rounded
+                    size = {30}
+                     />
+
+                </TouchableOpacity>
+              </View>
+              <View style = {styles.middleHeader}>
+                <MainLogo
+                  height = {"80%"}
+                  width = {"45%"}
+                   />
+              </View>
+              <View style = {styles.sideHeaders}>
+                <TouchableOpacity
+                  onPress = {() => this.props.navigation.navigate("notification")}
+                  >
+                  <Bell
+                    width={20}
+                    height={20}
+                    stroke = "black"
+                    fill = "white"
+                    style={{marginRight:5}}
+                     />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <Pressable
+              style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+              onPress={() => {
+
+                this.props.navigation.navigate("Story",  {'video':'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}  );
+              }}
+            >
+              <SharedElement>
+            <Image source={require('../../Explore/coffee.jpg')} style = {{height: 175, width: 200,}} />
+            </SharedElement>
+            </Pressable>
+            {/*
             <FlatList
               stickyHeaderIndices={[0]}
               // contentContainerStyle={{paddingBottom:75}}
-              ListHeaderComponent = {this.listHeader}
+              // ListHeaderComponent = {this.listHeader}
               showsVerticalScrollIndicator={false}
               style = {{flex: 1}}
               data = {groupPosts}
@@ -220,6 +269,7 @@ class GlobeGroup extends React.Component{
               onEndReachedThreshold={0.6}
               onEndReached = {() => this.loadSocialPost()}
                />
+               */}
         </View>
       )
     }

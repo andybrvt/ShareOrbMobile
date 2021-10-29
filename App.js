@@ -107,6 +107,7 @@ import Frame from './Frame.svg';
 import Testing from './RandomComponents/Testing';
 import * as Location from 'expo-location';
 import GlobeGroup from './Newsfeed/GlobeGroup/GlobeGroup';
+import Story from './Newsfeed/GlobeGroup/Story';
 import InfiniteScrollFlatNew from './Newsfeed/InfiniteScrollFlatNew';
 
 const TopTab = createMaterialTopTabNavigator();
@@ -895,6 +896,16 @@ class App extends Component{
                         // component= {this.createTabStack}
                         component= {CameraScreen}
                         />
+
+                        <Stack.Screen
+                          options={{
+                            headerShown: false,
+                            animationEnabled: false
+                          }}
+                          name = "Story"
+                          // component= {this.createTabStack}
+                          component= {Story}
+                          />
 
                     <Stack.Screen
                       options={{headerShown: false, }}
