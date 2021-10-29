@@ -374,21 +374,22 @@ class GroupInfo extends React.Component{
              </View>
            </TouchableHighlight>
            */}
-           {
+           {/*
              (this.props.curId==creatorID)?
                <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navAnnouncements()}>
                 <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
+
                   <View style={styles.roundButton1}>
                     <Mic stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />
                   </View>
-                  {/*
+
                  <Text style={styles.settingWord}> Create Announcements </Text>
-                 */}
+
                  </View>
                </TouchableHighlight>
                :
               <Text></Text>
-           }
+           */}
 
            {/*(!publicG)?
              <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>

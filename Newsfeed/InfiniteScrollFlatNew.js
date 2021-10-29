@@ -23,18 +23,20 @@ import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent} from 'react-native-redash/lib/module/v1';
-import { User, Users,ChevronsLeft, ArrowLeft } from "react-native-feather";
+import { User, Users,ChevronsLeft, ArrowLeft} from "react-native-feather";
+import { Video as Video1} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import * as socialNewsfeedActions from '../store/actions/socialNewsfeed';
 import * as smallGroupsActions from '../store/actions/smallGroups';
 import NoPosts from './noPosts.svg';
 import FirstPost from './FirstPost';
-import { PlusCircle, UserPlus, Info } from "react-native-feather";
 import WebSocketSmallGroupInstance from '../Websockets/smallGroupWebsocket';
 import NoPostsGroup from './noPostsGroup.svg';
 import { Avatar } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
+import { faVideo } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { SharedElement } from "react-navigation-shared-element";
 import NewGroupPost from './NewGroupPost';
@@ -541,6 +543,8 @@ class InfiniteScrollFlatNew extends React.Component{
             <TouchableOpacity
               onPress = {() => this.onCameraNav()}
               style = {styles.videoButton}>
+
+              
               <Text style = {{
                   color: 'white',
                   marginRight: 10,
