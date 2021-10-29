@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 
 class SearchResults extends React.Component{
   renderGroupItem = ({item}) => {
-  
+
     return(
       <TouchableOpacity
         onPress = {() => this.props.groupProfile(item)}
@@ -38,12 +38,7 @@ class SearchResults extends React.Component{
               <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.group_name, "", 20)} </Text>
             </View>
             <View>
-            {(item.mini_member.some(item => this.props.currentUser == item.username))?
-              <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12}}>You are part of this group</Text>
-              :
-              <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.members.length} members</Text>
-
-            }
+              <Text style={{fontFamily:'Nunito-SemiBold'}}>Tucson, Arizona</Text>            
             </View>
         </View>
       </View>
@@ -138,7 +133,7 @@ class SearchResults extends React.Component{
             }}>
             <Text style={styles.settingWord}>Users</Text>
             <FlatList
-
+              style = {{flex:1}}
               data = {data}
               renderItem = {this.renderItem}
               keyExtractor={(item, index) => String(index)}
@@ -148,7 +143,7 @@ class SearchResults extends React.Component{
                <Text style={styles.settingWord}>Groups</Text>
                </View>
                <FlatList
-
+                 style = {{flex: 1}}
                  data = {groupData}
                  renderItem = {this.renderGroupItem}
                  keyExtractor={(item, index) => String(index)}

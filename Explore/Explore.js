@@ -134,13 +134,15 @@ class Explore extends React.Component{
   viewGroup = (item) => {
     const curId = this.props.id
     const memberList = item.members
-    if(memberList.includes(curId)){
-      this.props.navigation.navigate("Home")
-    } else {
-      this.props.navigation.navigate("JoinScreen", {
-        item:item
-      })
-    }
+    console.log(item)
+
+    this.props.navigation.navigate("groupOrb", {
+      creator: item.creator,
+      orbId: item.id,
+      groupName: item.group_name,
+      groupPic: item.groupPic
+    })
+
   }
 
   onChangeNewSearch = e => {
