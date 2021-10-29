@@ -8,7 +8,8 @@ import { Text,
    FlatList,
    TouchableHighlight,
    TextInput,
-   Keyboard
+   Keyboard,
+   TouchableOpacity
   } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -18,7 +19,7 @@ import SearchBar from '../RandomComponents/SearchBar';
 import authAxios from '../util';
 import PictureBox from './PictureBox';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather";
+import { Tag, Bookmark, MapPin, Search, ChevronRight, ChevronsLeft} from "react-native-feather";
 import ExploreSearchBar from './ExploreSearchBar';
 import TrendingList from './TrendingList';
 // import SuggestedList from './SuggestedList';
@@ -200,6 +201,17 @@ class Explore extends React.Component{
         <View style = {{
             flex: 1,
           }}>
+          <TouchableOpacity
+            onPress = {() => this.props.navigation.goBack()}
+             style = {{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <ChevronsLeft />
+            <Text>Back</Text>
+
+          </TouchableOpacity>
+
           <ExploreSearchBar
             value = {this.state.searchValue}
             onOpen = {this.onShowSearch}
@@ -208,6 +220,7 @@ class Explore extends React.Component{
             onChange = {this.onChangeNewSearch}
             y = {this.y}
             />
+
 
             {/*
 
