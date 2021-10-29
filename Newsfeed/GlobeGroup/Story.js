@@ -22,10 +22,12 @@ const AnimatedVideo = Animated.createAnimatedComponent(Video);
 
 const Story = ({ route, navigation }: StoryProps) => {
   const story=route.params
-  console.log("WWWWWWWWWW")
+  console.log("WWWWWWWWWWf")
   console.log(story)
-  console.log("hello")
+  console.log("video")
   console.log(story.video)
+  console.log("image")
+  console.log(story.image)
   const isGestureActive = useSharedValue(false);
   const translation = useVector();
   const onGestureEvent = useAnimatedGestureHandler({
@@ -51,7 +53,7 @@ const Story = ({ route, navigation }: StoryProps) => {
     const scale = interpolate(
       translation.y.value,
       [0, height],
-      [1, 0.5],
+      [1, 0.99], // THIS IS HOW SENSITIVE IT IS TO CLOSE!!! VERTICALLY LIKE SNAP
       Extrapolate.CLAMP
     );
     return {
@@ -74,7 +76,7 @@ const Story = ({ route, navigation }: StoryProps) => {
         <SharedElement style={{ flex: 1 }}>
           {!story.video && (
             <Animated.Image
-              source={story.source}
+               source={{uri:story.image}}
               style={[
                 {
                   ...StyleSheet.absoluteFillObject,

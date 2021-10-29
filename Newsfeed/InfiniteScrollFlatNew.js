@@ -9,7 +9,9 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  RefreshControl
+  RefreshControl,
+  TouchableWithoutFeedback,
+  Pressable
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import axios from "axios";
@@ -34,7 +36,7 @@ import NoPostsGroup from './noPostsGroup.svg';
 import { Avatar } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Video, AVPlaybackStatus } from 'expo-av';
-
+import { SharedElement } from "react-navigation-shared-element";
 // this is used mostly for the new scroll newsfeed
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
@@ -136,7 +138,7 @@ class InfiniteScrollFlatNew extends React.Component{
     const groupId = this.props.route.params.orbId
     authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
     .then(res => {
-      console.log(res.data)
+      // console.log(res.data)
     })
 
   }
@@ -339,11 +341,10 @@ class InfiniteScrollFlatNew extends React.Component{
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
+    // console.log(`${global.IMAGE_ENDPOINT}`+item.itemImage)
     return (
-      <TouchableOpacity
-        delayPressIn={750}
-        onPress = {() => this.onNavPicDirect(item.id, item.smallGroup)}
-        activeOpacity={0.8}
+      <View
+
         style={styles.item}
       >
       {/*
@@ -365,7 +366,11 @@ class InfiniteScrollFlatNew extends React.Component{
           volume={0.5}
            />
         */}
-
+        <TouchableWithoutFeedback
+          onPress={() => {
+            this.props.navigation.navigate("Story",  {'video':`${global.IMAGE_ENDPOINT}`+item.video} );
+          }}
+        >
 
         <Image
           style ={{
@@ -380,7 +385,7 @@ class InfiniteScrollFlatNew extends React.Component{
            />
 
 
-
+       </TouchableWithoutFeedback>
            <LinearGradient
              start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
              style = {{
@@ -391,7 +396,6 @@ class InfiniteScrollFlatNew extends React.Component{
              }}
              colors = {['transparent', '#000000']}>
            </LinearGradient>
-
          <View style = {{
            position: 'absolute',
            width: '100%',
@@ -414,15 +418,13 @@ class InfiniteScrollFlatNew extends React.Component{
                  }}
                />
            </View>
-
-
            <Text style = {styles.videoFooterUserName}>
              {this.setName(firstName, lastName)}
            </Text>
 
        </View>
 
-      </TouchableOpacity>
+     </View>
     );
   };
 
