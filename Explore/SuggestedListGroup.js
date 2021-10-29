@@ -489,6 +489,25 @@ class SuggestedListGroup extends React.Component{
 
   }
 
+  onSubmitCreateOrb = () => {
+
+    if(this.state.inputValue === "ShareOrb1"){
+        this.setState({
+          inputValue: '',
+          businessCondition: false
+        })
+        this.props.navigation.navigate("createSmallGroup")
+    } else {
+        alert("Incorrect pin")
+        // this.setState({
+        //   inputValue: '',
+        //   businessCondition: false
+        // })
+    }
+
+
+  }
+
   render(){
 
     {/*
@@ -603,10 +622,12 @@ class SuggestedListGroup extends React.Component{
            transparent
            visible={this.state.businessCondition}
            presentationStyle="overFullScreen"
-           >
+            >
             <View style={styles.viewWrapper}>
                 <View style={styles.modalView}>
                     <TextInput
+                      placeholderTextColor="gray"
+
                        placeholder="Enter Code..."
                        value={this.state.inputValue}
                        style={styles.textInput}
@@ -618,6 +639,9 @@ class SuggestedListGroup extends React.Component{
                      <View style={{flexDirection:'row', marginTop:25, alignItems:'flex-end'}}>
                        <TouchableOpacity onPress={this.onShowBusinessCondition} style={styles.cancelButton}>
                          <Text style={{color:'white'}}>Cancel</Text>
+                       </TouchableOpacity>
+                       <TouchableOpacity onPress={this.onSubmitCreateOrb} style={styles.cancelButton}>
+                         <Text style={{color:'white'}}>Submit</Text>
                        </TouchableOpacity>
                     </View>
               </View>

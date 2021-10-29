@@ -436,7 +436,8 @@ class BasicGroupPage extends React.Component{
             }
 
             { this.props.add==true?
-              <Text style={{padding:15}}>
+
+              <View style={{padding:15}}>
               <GooglePlacesAutocomplete
                 styles={{
                   textInputContainer: {
@@ -484,7 +485,7 @@ class BasicGroupPage extends React.Component{
                 <Text style = {styles.promptText}>{this.props.value}</Text>
               </View>
 
-            </Text>
+            </View>
 
               :
               null
@@ -594,6 +595,8 @@ class BasicGroupPage extends React.Component{
 
                   :
 
+
+
                   <TouchableOpacity
                     onPress = {() => this.props.closeModal(this.props.closeNum)}
 
@@ -700,8 +703,9 @@ const styles = StyleSheet.create({
   },
   promptText: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 20,
     fontFamily:'Nunito-Bold',
+    flexWrap: 'wrap'
   },
   profilePicTopContainer: {
     width: width,
@@ -720,7 +724,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '90%',
     padding:25,
-    // backgroundColor:'red',
+    flexWrap: 'wrap',
 
 
   },

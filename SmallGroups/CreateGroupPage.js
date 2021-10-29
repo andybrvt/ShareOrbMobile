@@ -427,7 +427,7 @@ class CreateGroupPage extends React.Component{
           value = {this.state.groupName}
           closeNum = {'one'}
           openNum = {'two'}
-          loading = {this.state.loading}
+          loading = {true}
 
           />
 
