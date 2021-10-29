@@ -864,7 +864,7 @@ class App extends Component{
                     // headerMode ="none"
                     initialRouteName = {this.props.showIntialInstructions ? "intro" : "tab"}
                     screenOptions={{
-                      gestureEnabled: true,
+
                       // headerShown: false,
                       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
                     }}>
@@ -922,7 +922,7 @@ class App extends Component{
                     <Stack.Screen
                       options={{headerShown: false, }}
                       name = "groupOrb"
-                      
+
                       component= {InfiniteScrollFlatNew}
                        />
 
@@ -970,7 +970,7 @@ class App extends Component{
                     <Stack.Screen
                       options={{
                         headerShown: true,
-                        gestureEnabled: true,
+
                         gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
                       }}
                       name = 'PostingPage' component = {PostingPage}/>
@@ -978,7 +978,7 @@ class App extends Component{
                     <Stack.Screen
                       options={{
                         headerShown: true,
-                        gestureEnabled: true,
+                
                         gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
                       }}
                       name = 'CameraScreenTrue' component = {CameraScreen}/>
@@ -1116,7 +1116,7 @@ class App extends Component{
                      <Stack.Screen
                        options={{
                          headerShown: false,
-                         gestureEnabled: true,
+
                          gestureDirection: 'horizontal-inverted',
                          // ...TransitionPresets.SlideFromRightIOS,
 

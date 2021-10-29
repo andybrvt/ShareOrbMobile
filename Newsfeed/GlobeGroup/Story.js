@@ -1,6 +1,6 @@
 import { NavigationProp, RouteProp } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, View, Text, TouchableOpacity} from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
@@ -15,7 +15,7 @@ import Animated, {
 import { useVector, snapPoint } from "react-native-redash";
 import { SharedElement } from "react-navigation-shared-element";
 import { Video } from "expo-av";
-
+import { ArrowLeft } from "react-native-feather";
 
 const { height } = Dimensions.get("window");
 const AnimatedVideo = Animated.createAnimatedComponent(Video);
@@ -28,6 +28,8 @@ const Story = ({ route, navigation }: StoryProps) => {
   console.log(story.video)
   console.log("image")
   console.log(story.image)
+  console.log(navigation)
+  console.log(story.id)
   const isGestureActive = useSharedValue(false);
   const translation = useVector();
   const onGestureEvent = useAnimatedGestureHandler({
@@ -41,7 +43,27 @@ const Story = ({ route, navigation }: StoryProps) => {
         snapPoint(translationY, velocityY, [0, height]) === height;
 
       if (snapBack) {
+
         runOnJS(navigation.goBack)();
+      } else {
+        isGestureActive.value = false;
+        translation.x.value = withSpring(0);
+        translation.y.value = withSpring(0);
+      }
+    },
+  });
+  const onGestureEvent1 = useAnimatedGestureHandler({
+    onStart: () => (isGestureActive.value = true),
+    onActive: ({ translationX, translationY }) => {
+      translation.x.value = translationX;
+      translation.y.value = translationY;
+    },
+    onEnd: ({ translationY, velocityY }) => {
+      const snapBack =
+        snapPoint(translationY, velocityY, [0, height]) === height;
+
+      if (snapBack) {
+        runOnJS(navigation.navigate)(story.id);
       } else {
         isGestureActive.value = false;
         translation.x.value = withSpring(0);
@@ -67,13 +89,13 @@ const Story = ({ route, navigation }: StoryProps) => {
   });
   const borderStyle = useAnimatedStyle(() => {
     return {
-      borderRadius: withTiming(isGestureActive.value ? 24 : 0),
+      borderRadius: withTiming(isGestureActive.value ? 100 : 0),
     };
   });
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Animated.View style={style}>
-        <SharedElement style={{ flex: 1 }}>
+        <SharedElement id={story.id} style={{ flex: 1 }}>
           {!story.video && (
             <Animated.Image
                source={{uri:story.image}}
@@ -89,6 +111,7 @@ const Story = ({ route, navigation }: StoryProps) => {
             />
           )}
           {story.video && (
+
             <AnimatedVideo
                source={{uri:story.video}}
               // source={story.video}
@@ -98,11 +121,17 @@ const Story = ({ route, navigation }: StoryProps) => {
               shouldPlay
               isLooping
               style={[StyleSheet.absoluteFill, borderStyle]}
-            />
+            >
+
+
+          </AnimatedVideo>
           )}
         </SharedElement>
       </Animated.View>
     </PanGestureHandler>
+
+
+
   );
 };
 

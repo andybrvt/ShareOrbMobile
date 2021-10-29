@@ -67,8 +67,7 @@ class NewGlobePost extends React.PureComponent{
     if (this.props.item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
-    console.log(video)
-    console.log(this.props.item.itemImage)
+
     return(
       <View
 
@@ -97,7 +96,11 @@ class NewGlobePost extends React.PureComponent{
 
         <TouchableWithoutFeedback
          onPress={() => {
-           this.props.navigation.navigate("Story",  {'video':video} );
+           this.props.navigation.navigate("Story",
+           {'video':video, 'id':this.props.item.smallGroup,
+
+          }
+          );
          }}
        >
 
