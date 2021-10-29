@@ -211,7 +211,7 @@ class InfiniteScrollFlatNew extends React.Component{
     this.setState({
       refreshing: true
     })
-    const groupId = this.props.groupId
+    const groupId = this.props.route.params.orbId
 
     WebSocketSmallGroupInstance.fetchGroupPost(groupId)
 
@@ -588,8 +588,8 @@ class InfiniteScrollFlatNew extends React.Component{
              keyExtractor={(item, index) => String(index)}
              onEndReachedThreshold={0.5}
              onEndReached = {() => this.loadSocialPost()}
-             // onRefresh = {() => this.onRefresh()}
-             // refreshing = {this.state.refreshing}
+             onRefresh = {() => this.onRefresh()}
+             refreshing = {this.state.refreshing}
              scrollEventThrottle = {16} // important for animation
              renderItem={this.renderItem}
              numColumns={3}
