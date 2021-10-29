@@ -348,6 +348,7 @@ class InfiniteScrollFlatNew extends React.Component{
       <NewGroupPost
         navigation={this.props.navigation}
         item = {item}
+        setName = {this.setName}
         />
 
 
