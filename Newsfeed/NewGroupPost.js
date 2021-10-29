@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  TouchableWithoutFeedback,
   Dimensions,
   RefreshControl
  } from 'react-native';
@@ -16,7 +17,11 @@ import { Avatar } from 'react-native-elements';
 
 
 class NewGlobePost extends React.PureComponent{
-
+  constructor(props){
+      super(props)
+      this.state = {
+      }
+   }
   setName=(firstName, lastName)=>{
     let name=""
     let lastCut=""
@@ -62,12 +67,11 @@ class NewGlobePost extends React.PureComponent{
     if (this.props.item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
-
+    console.log(video)
+    console.log(this.props.item.itemImage)
     return(
-      <TouchableOpacity
-        delayPressIn={750}
-        onPress = {() => this.onNavPicDirect(this.props.item.id, this.props.item.smallGroup)}
-        activeOpacity={0.8}
+      <View
+
         style={styles.item}
       >
       {/*
@@ -91,17 +95,26 @@ class NewGlobePost extends React.PureComponent{
         */}
 
 
-        <Image
-          style ={{
-            width: "100%",
-            height: '100%'
-          }}
-          resizeMode = "cover"
-          source = {{
-            uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
-            // uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
-          }}
-           />
+        <TouchableWithoutFeedback
+         onPress={() => {
+           this.props.navigation.navigate("Story",  {'video':video} );
+         }}
+       >
+
+       <Image
+         style ={{
+           width: "100%",
+           height: '100%'
+         }}
+         resizeMode = "cover"
+         source = {{
+           uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
+           // uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
+         }}
+          />
+
+
+      </TouchableWithoutFeedback>
 
 
 
@@ -146,7 +159,7 @@ class NewGlobePost extends React.PureComponent{
 
        </View>
 
-      </TouchableOpacity>
+     </View>
     )
   }
 }
