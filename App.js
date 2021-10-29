@@ -108,6 +108,8 @@ import Testing from './RandomComponents/Testing';
 import * as Location from 'expo-location';
 import GlobeGroup from './Newsfeed/GlobeGroup/GlobeGroup';
 import Story from './Newsfeed/GlobeGroup/Story';
+import Story1 from './Newsfeed/GlobeGroup/Story1';
+import Story2 from './Newsfeed/GlobeGroup/Story2';
 import InfiniteScrollFlatNew from './Newsfeed/InfiniteScrollFlatNew';
 
 const TopTab = createMaterialTopTabNavigator();
@@ -862,7 +864,7 @@ class App extends Component{
                     mode = "modal"
                     //keep this here, its important
                     // headerMode ="none"
-                    initialRouteName = {this.props.showIntialInstructions ? "intro" : "tab"}
+
                     screenOptions={{
 
                       // headerShown: false,
@@ -897,6 +899,26 @@ class App extends Component{
                         component= {CameraScreen}
                         />
 
+
+                        <Stack.Screen
+                          options={{
+                            headerShown: false,
+                            animationEnabled: false
+                          }}
+                          name = "Story1"
+                          // component= {this.createTabStack}
+                          component= {Story1}
+                          />
+
+                          <Stack.Screen
+                            options={{
+                              headerShown: false,
+                              animationEnabled: true
+                            }}
+                            name = "Story2"
+                            // component= {this.createTabStack}
+                            component= {Story2}
+                            />
                         <Stack.Screen
                           options={{
                             headerShown: false,
@@ -920,7 +942,10 @@ class App extends Component{
                       name = "intro" component= {MiniAppIntro}/>
 
                     <Stack.Screen
-                      options={{headerShown: false, }}
+                      options={{
+                        headerShown: false,
+                         ...TransitionPresets.SlideFromRightIOS,
+                       }}
                       name = "groupOrb"
 
                       component= {InfiniteScrollFlatNew}
@@ -978,7 +1003,7 @@ class App extends Component{
                     <Stack.Screen
                       options={{
                         headerShown: true,
-                
+
                         gestureDirection: showPostModal ? "vertical-inverted" : "vertical",
                       }}
                       name = 'CameraScreenTrue' component = {CameraScreen}/>

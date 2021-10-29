@@ -10,16 +10,19 @@ import {
   Image,
   TouchableWithoutFeedback,
   Dimensions,
-  RefreshControl
+  RefreshControl,
+
  } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar } from 'react-native-elements';
 
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 class NewGlobePost extends React.PureComponent{
   constructor(props){
       super(props)
       this.state = {
+
       }
    }
   setName=(firstName, lastName)=>{
@@ -44,8 +47,11 @@ class NewGlobePost extends React.PureComponent{
     let lastName="";
     let profilePic="";
     let itemImage = "";
-    let video = "";
-
+    let vid=""
+    let groupInfo=this.props.groupInfo
+    vid = this.props.vid
+    let groupName=groupInfo.groupName
+    let groupPic=groupInfo.groupPic
     if(this.props.item) {
 
       if(this.props.item.video){
@@ -73,6 +79,8 @@ class NewGlobePost extends React.PureComponent{
 
         style={styles.item}
       >
+
+
       {/*
         <Video
           ref={ref => {this.video = ref}}
@@ -92,32 +100,87 @@ class NewGlobePost extends React.PureComponent{
           volume={0.5}
            />
         */}
+        {/*creator: orb.creator,
+        orbId: orb.id,
+        groupName: orb.group_name,
+        groupPic: orb.groupPic
+        creator: 4
+        orbId: 20
+        groupName: test1
+        groupPic: /media/post_pictures/2021/10/f5dcd008-8fd2-4891-bc49-aa2866656f72.jpg
 
 
-        <TouchableWithoutFeedback
-         onPress={() => {
-           this.props.navigation.navigate("Story",
-           {'video':video, 'id':this.props.item.smallGroup,
 
-          }
-          );
-         }}
-       >
+        */}
+        {(Platform.OS === "android")?
+          <TouchableWithoutFeedback
+            onPress={() => {this.props.changeVideo(vid)}}
+            >
+          <Image
+            style ={{
+              width: "100%",
+              height: '100%'
+            }}
+            resizeMode = "cover"
+            source = {{
+              uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
+              // uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
+            }} >
 
-       <Image
-         style ={{
-           width: "100%",
-           height: '100%'
-         }}
-         resizeMode = "cover"
-         source = {{
-           uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
-           // uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
-         }}
-          />
+          {/*
+          <TouchableWithoutFeedback
+           onPress={() => {
+             this.props.navigation.navigate("Story2",
+             {
+               'video':video,
+               'creator':this.props.item.creator.id,
+               'groupName': groupName,
+               'groupPic': groupPic,
+               'orbId':this.props.item.smallGroup,
 
 
-      </TouchableWithoutFeedback>
+             }
+              );
+             }}>
+           <Image
+             style ={{
+               width: "100%",
+               height: '100%'
+             }}
+             resizeMode = "cover"
+             source = {{
+               uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
+               // uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
+             }}
+            />
+          </TouchableWithoutFeedback>
+          */}
+          </Image>
+        </TouchableWithoutFeedback>
+          :
+
+          <TouchableWithoutFeedback
+           onPress={() => {
+             this.props.navigation.navigate("Story",
+             {'video':video, 'id':this.props.item.smallGroup,
+              }
+              );
+             }}>
+           <Image
+             style ={{
+               width: "100%",
+               height: '100%'
+             }}
+             resizeMode = "cover"
+             source = {{
+               uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
+               // uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
+             }}
+            />
+          </TouchableWithoutFeedback>
+
+        }
+
 
 
 

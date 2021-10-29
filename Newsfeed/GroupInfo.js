@@ -381,7 +381,9 @@ class GroupInfo extends React.Component{
                   <View style={styles.roundButton1}>
                     <Mic stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />
                   </View>
+                  {/*
                  <Text style={styles.settingWord}> Create Announcements </Text>
+                 */}
                  </View>
                </TouchableHighlight>
                :

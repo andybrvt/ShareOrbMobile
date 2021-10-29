@@ -20,16 +20,18 @@ import { ArrowLeft } from "react-native-feather";
 const { height } = Dimensions.get("window");
 const AnimatedVideo = Animated.createAnimatedComponent(Video);
 
-const Story = ({ route, navigation }: StoryProps) => {
+const Story1 = ({ route, navigation }: StoryProps) => {
   const story=route.params
   console.log("WWWWWWWWWWf")
   console.log(story)
-  console.log("video")
   console.log(story.video)
-  console.log("image")
-  console.log(story.image)
-  console.log(navigation)
-  console.log(story.id)
+  console.log("start")
+  console.log(story.creator)
+  console.log(story.orbId)
+  console.log(story.groupName)
+  console.log(story.groupPic)
+
+
   const isGestureActive = useSharedValue(false);
   const translation = useVector();
   const onGestureEvent = useAnimatedGestureHandler({
@@ -43,8 +45,22 @@ const Story = ({ route, navigation }: StoryProps) => {
         snapPoint(translationY, velocityY, [0, height]) === height;
 
       if (snapBack) {
+        // works
+        // runOnJS(navigation.navigate)("Explore");
+        // DOESNT work...
+        // runOnJS(navigation.navigate("Explore"))();
 
-        runOnJS(navigation.goBack)();
+
+        runOnJS(navigation.navigate)("groupOrb", {
+          video:story.video,
+          creator:story.creator,
+          groupName: story.groupName,
+          groupPic: story.groupPic,
+          orbId:story.orbId,
+
+
+        });
+
       } else {
         isGestureActive.value = false;
         translation.x.value = withSpring(0);
@@ -117,4 +133,4 @@ const Story = ({ route, navigation }: StoryProps) => {
   );
 };
 
-export default Story;
+export default Story1;

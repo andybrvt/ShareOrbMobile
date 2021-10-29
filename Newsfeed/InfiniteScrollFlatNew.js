@@ -233,6 +233,21 @@ class InfiniteScrollFlatNew extends React.Component{
     })
   }
 
+  changeVideo = e => {
+    this.setState({
+      video: e
+    })
+
+  }
+
+  goBackMethod = e => {
+    this.setState({
+      video: ''
+    })
+
+  }
+
+
 
   setName=(firstName, lastName)=>{
     let name=""
@@ -346,6 +361,10 @@ class InfiniteScrollFlatNew extends React.Component{
     return (
 
       <NewGroupPost
+        vid={video}
+        changeVideo={this.changeVideo}
+        value={this.state.video}
+        groupInfo={this.props.route.params}
         navigation={this.props.navigation}
         item = {item}
         setName = {this.setName}
@@ -439,7 +458,7 @@ class InfiniteScrollFlatNew extends React.Component{
     //   post = this.props.socialPosts
     // }
 
-    console.log(this.props)
+
 
     let closeId = "";
     let groupId = '';
@@ -448,7 +467,7 @@ class InfiniteScrollFlatNew extends React.Component{
     let groupPost = [];
     let showButton = false;
     let creatorId = ""
-
+    let video=""
     if(this.props.route.params.orbId){
       groupId = this.props.route.params.orbId
     }
@@ -478,18 +497,22 @@ class InfiniteScrollFlatNew extends React.Component{
     return(
       <SafeAreaView style = {{flex: 1}}>
 
+        {this.state.video?
+          null
+          :
+          <Progress.Bar
+            animationType = "timing"
+            borderWidth = {0}
+            style = {{
+              position: 'relative',
+              left: 0,
+            }}
+            progress = {this.props.curLoad}
+            width = {width}
 
-        <Progress.Bar
-          animationType = "timing"
-          borderWidth = {0}
-          style = {{
-            position: 'relative',
-            left: 0,
-          }}
-          progress = {this.props.curLoad}
-          width = {width}
+             />
+        }
 
-           />
 
 
 
@@ -515,22 +538,66 @@ class InfiniteScrollFlatNew extends React.Component{
           :
 
 
-          <TouchableOpacity
-            onPress = {() => this.onCameraNav()}
-            style = {styles.videoButton}>
-            <Text style = {{
-                color: 'white',
-                marginRight: 10,
-                fontSize: 20,
-                fontFamily:'Nunito-SemiBold',
-              }}>Share</Text>
+            <TouchableOpacity
+              onPress = {() => this.onCameraNav()}
+              style = {styles.videoButton}>
+              <Text style = {{
+                  color: 'white',
+                  marginRight: 10,
+                  fontSize: 20,
+                  fontFamily:'Nunito-SemiBold',
+                }}>Share</Text>
 
-          </TouchableOpacity>
+            </TouchableOpacity>
+
 
 
           : null
 
         }
+
+
+        {this.state.video?
+          <View >
+            <TouchableOpacity
+              style = {{
+                position:'absolute', top:'5%', left:'5%',
+                zIndex:1000,
+              }}
+              onPress = {() => this.goBackMethod()}
+              >
+              <ArrowLeft
+                stroke = "white"
+                height = {35}
+                width = {35} />
+
+            </TouchableOpacity>
+          <Video
+            style = {{
+              width: '100%',
+              height: '100%',
+              zIndex:999,
+            }}
+              resizeMode = "cover"
+              source = {{
+                uri: this.state.video
+                // uri: `${global.IMAGE_ENDPOINT}`+video
+              }}
+              rate={1.0}
+              isMuted={false}
+              volume={0.5}
+              isLooping
+              shouldPlay
+
+             />
+
+         </View>
+        :
+        <View></View>
+
+      }
+
+
 
           <FlatList
             ListHeaderComponent = {this.listHeader}
@@ -616,6 +683,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: '3%',
   },
+
+
   videoButtonD: {
     zIndex: 999,
     flexDirection: 'row',
