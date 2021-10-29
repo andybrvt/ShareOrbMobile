@@ -74,8 +74,8 @@ class NewGlobePost extends React.Component{
 
   viewOrb = (orb) => {
 
-    console.log(orb)
     this.props.navigation.navigate("groupOrb", {
+      creator: orb.creator,
       orbId: orb.id,
       groupName: orb.group_name,
       groupPic: orb.groupPic

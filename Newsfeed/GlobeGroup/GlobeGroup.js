@@ -90,13 +90,10 @@ class GlobeGroup extends React.Component{
 
     renderItem = ({item}) => {
 
-      {/*
 
-
-        */}
       return(
         <View>
-          
+
           <Pressable
             style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
             onPress={() => {
@@ -226,7 +223,6 @@ class GlobeGroup extends React.Component{
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
       }
-      let test= [{'video':'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}]
       return(
           <View style = {{flex: 1}}>
 

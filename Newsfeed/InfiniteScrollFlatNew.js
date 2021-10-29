@@ -439,12 +439,15 @@ class InfiniteScrollFlatNew extends React.Component{
     //   post = this.props.socialPosts
     // }
 
+    console.log(this.props)
+
     let closeId = "";
     let groupId = '';
     let groupPic = "";
     let groupName  = "";
     let groupPost = [];
     let showButton = false;
+    let creatorId = ""
 
     if(this.props.route.params.orbId){
       groupId = this.props.route.params.orbId
@@ -457,6 +460,9 @@ class InfiniteScrollFlatNew extends React.Component{
     }
     if(this.props.route.params.showButton){
       showButton = this.props.route.params.showButton
+    }
+    if(this.props.route.params.creator){
+      creatorId = this.props.route.params.creator
     }
     if(this.props.closeOrb){
       closeId = this.props.closeOrb.id
@@ -492,6 +498,22 @@ class InfiniteScrollFlatNew extends React.Component{
 
         {
           groupId === closeId ?
+
+          creatorId === this.props.id ?
+
+          <View
+            style = {styles.videoButtonD}>
+            <Text style = {{
+                color: 'white',
+                marginRight: 10,
+                fontSize: 20,
+                fontFamily:'Nunito-SemiBold',
+              }}>You are the owner</Text>
+
+          </View>
+
+          :
+
 
           <TouchableOpacity
             onPress = {() => this.onCameraNav()}
@@ -582,6 +604,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'limegreen',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '50%',
+    alignSelf: 'center',
+    borderRadius: 25,
+    height: 45,
+    shadowColor:'black',
+    shadowOffset:{width:0,height:2},
+    shadowOpacity:0.5,
+    position: 'absolute',
+    bottom: '3%',
+  },
+  videoButtonD: {
+    zIndex: 999,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'lightgray',
     alignItems: 'center',
     justifyContent: 'center',
     width: '50%',
