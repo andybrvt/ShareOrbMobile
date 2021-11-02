@@ -32,7 +32,9 @@
         "NSPhotoLibraryUsageDescription": "To access your photos",
         "NSCameraUsageDescription": "To take more pictures"
       },
-      "buildNumber": "22"
+      "buildNumber": "22",
+      "sdkVersion": "41.0.0",
+
     },
     "description": ""
   }
