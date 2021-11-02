@@ -461,7 +461,7 @@ class NewGlobePost extends React.Component{
                       <Text>
                         <Text style = {{
                               fontSize:15, fontFamily:'Nunito-Bold', color:'black' }}>{username+" "}</Text>
-                        <Text style={styles.captionText}>{caption} write wome more stuf idk what i am toasfkan asdkfas  sdafkaj;fljasd fsad </Text>
+                        <Text style={styles.captionText}>{caption}</Text>
                       </Text>
                     </View>
 
