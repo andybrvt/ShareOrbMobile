@@ -26,6 +26,7 @@
       "versionCode": 21
     },
     "ios": {
+      "supportsTablet": true,
       "bundleIdentifier": "com.shareorb.shareorbmobile",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "To access your photos",
