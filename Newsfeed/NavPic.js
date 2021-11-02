@@ -518,7 +518,7 @@ class NavPic extends React.Component{
                video === "" ?
                <TouchableWithoutFeedback
                  >
-               <Image
+               <FastImage
                  style={styles.cover}
                  resizeMode = "cover"
                  source={{
