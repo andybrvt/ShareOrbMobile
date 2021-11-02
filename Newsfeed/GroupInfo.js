@@ -233,16 +233,14 @@ class GroupInfo extends React.Component{
   }
 
   ViewProfile = (username) => {
-    // This fucntion will be used to navigate to the post page
-    // that you can use to post pictures and write caption
-    if(username !== this.props.username){
+
+    if(username === this.props.username){
+      this.props.navigation.navigate("Profile");
+    } else {
       this.props.navigation.navigate("ProfilePage", {
         username: username
       })
-    } else {
-      this.props.navigation.navigate("Profile")
     }
-
   }
 
 
@@ -272,17 +270,20 @@ class GroupInfo extends React.Component{
     let code = ""
     let groupID=""
     let address=""
+    let creatorPic=""
 
 
 
     const {smallGroupInfo} = this.state
+    console.log(smallGroupInfo)
     if(smallGroupInfo.creator){
       creatorFirstName=smallGroupInfo.creator.first_name
       creatorLastName=smallGroupInfo.creator.last_name
       creatorID=smallGroupInfo.creator.id
       creatorUserName=smallGroupInfo.creator.username
-
+      creatorPic=smallGroupInfo.creator.profile_picture
     }
+    console.log(creatorUserName)
 
 
     return(
@@ -347,7 +348,7 @@ class GroupInfo extends React.Component{
                     size={15}
                     rounded
                     source = {{
-                      uri: `https://images.unsplash.com/photo-1569173112611-52a7cd38bea9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80`
+                      uri: `${global.IMAGE_ENDPOINT}`+creatorPic
                     }}
                   />
                 <Text style={{marginLeft:5, fontFamily:'Nunito-SemiBold', fontSize:13}}>{creatorFirstName+" "+creatorLastName}</Text>

@@ -812,7 +812,7 @@ class App extends Component{
                 },
               }}
              />
-
+           // this is the MAIN PROFILE PAGE for you
             <Tab.Screen
                name="Profile"
                component={NewProfile}
@@ -861,6 +861,7 @@ class App extends Component{
               {
                 !this.props.loading && this.props.username ?
                   <Stack.Navigator
+                    detachInactiveScreens={false}
                     mode = "modal"
                     //keep this here, its important
                     // headerMode ="none"

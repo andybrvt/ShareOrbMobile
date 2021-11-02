@@ -7,7 +7,8 @@ import { Text,
    Dimensions,
    FlatList,
    TouchableHighlight,
-   TextInput
+   TextInput,
+   TouchableOpacity
   } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -17,7 +18,7 @@ import SearchBar from '../RandomComponents/SearchBar';
 import  authAxios from '../util';
 import PictureBox from './PictureBox';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
-import { Tag, Bookmark, MapPin, Search, ChevronRight} from "react-native-feather";
+import { Tag, Bookmark, MapPin, Search, ChevronRight, ArrowLeft} from "react-native-feather";
 import Animated from 'react-native-reanimated';
 
 const {width, height} = Dimensions.get('screen')
@@ -53,13 +54,28 @@ class ExploreSearchBar extends React.Component{
             ]
           }}>
 
-          <SearchBar
-            value = {this.props.value}
-            onOpen = {this.props.onOpen}
-            onClose = {this.props.onClose}
-            visible = {this.props.visible}
-            onChange = {this.props.onChange}
-             />
+          <View style={{flexDirection:'row'}}>
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.goBack()}
+               style = {{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <ArrowLeft
+                style={{left:7.5, right:2.5}}
+                stroke="black" strokeWidth={2} width={25} height={25} />
+
+            </TouchableOpacity>
+            <SearchBar
+              value = {this.props.value}
+              onOpen = {this.props.onOpen}
+              onClose = {this.props.onClose}
+              visible = {this.props.visible}
+              onChange = {this.props.onChange}
+               />
+          </View>
+
+
           {/*
             <View style={{backgroundColor:'#f0f0f0', width:'97.5%', flexDirection:'row', borderRadius:10, padding:5,}}>
             <Search style={{top:6, left:10}} stroke="#8c8c8c" strokeWidth={2.5} width={17.5} height={17.5}   />

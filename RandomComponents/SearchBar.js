@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1890ff',
     alignItems: "center",
     backgroundColor: "#1890ff",
-    padding: 10
+    padding: 5,
   },
   searchText: {
     flexDirection: 'row',

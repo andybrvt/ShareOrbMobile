@@ -358,7 +358,7 @@ class NewGlobePost extends React.Component{
                 onPress = {() => this.viewOrb(group)}
                 >
                 <Avatar
-                  size = {37.5}
+                  size = {35}
                   rounded
                   source = {{
                     uri: groupPic
@@ -366,6 +366,7 @@ class NewGlobePost extends React.Component{
                    />
               </TouchableOpacity>
               <View style = {{
+
                    marginLeft: 10,
                    width:width-75,
                    flexDirection:'row',
@@ -433,13 +434,13 @@ class NewGlobePost extends React.Component{
                style = {{
                  position: 'absolute',
                  width: '100%',
-                 bottom: '0%',
+                 bottom:0,
                  height: "30%"
                }}
                colors = {['transparent', '#000000']}>
              </LinearGradient>
 
-           <View style={{position:'absolute', bottom:'3.5%', width:'100%', flexDirection:'row'}}>
+           <View style={{position:'absolute', bottom:'3.5%', width:'100%', flexDirection:'row', }}>
              {this.renderPostInfo(post, groupLike, comment, created_at)}
            </View>
 
@@ -455,22 +456,17 @@ class NewGlobePost extends React.Component{
 
           :
 
-          <View>
             <View style={styles.testWhere4}>
-                <View style={styles.testWhere4}>
-
-                    <View style={{ width:'92.5%', flexWrap:'wrap', flexDirection:'row', marginBottom:10}}>
+                    <View style={{ width:'95.5%', flexWrap:'wrap', flexDirection:'row',}}>
                       <Text>
                         <Text style = {{
-                            fontWeight: 'bold',
                               fontSize:15, fontFamily:'Nunito-Bold', color:'black' }}>{username+" "}</Text>
                         <Text style={styles.captionText}>{caption} write wome more stuf idk what i am toasfkan asdkfas  sdafkaj;fljasd fsad </Text>
                       </Text>
                     </View>
 
-                </View>
             </View>
-          </View>
+
 
         }
 
@@ -530,7 +526,7 @@ const styles = StyleSheet.create({
     // height: '100%',
     borderRadius: 20,
     backgroundColor: 'gainsboro',
-    marginBottom:20,
+    marginBottom:5,
     overflow: 'hidden'
   },
   joinbtn: {
@@ -569,7 +565,7 @@ const styles = StyleSheet.create({
   },
   videoFooterUserName: {
     color:'white',
-    fontSize:15,
+    fontSize:14,
     fontFamily:'Nunito-Bold',
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     zIndex:1,
@@ -611,8 +607,8 @@ const styles = StyleSheet.create({
     zIndex:1,
     flexDirection:'row',
     padding:5,
-    left:'1%',
-    width:'90%',
+    marginLeft:'7.5%',
+    width:'100%',
     alignSelf:'center'
   },
 

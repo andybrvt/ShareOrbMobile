@@ -400,44 +400,43 @@ class InfiniteScrollFlatNew extends React.Component{
   }
 
   listHeader = () => {
-
     const groupPic = this.props.route.params.groupPic
     const groupName = this.props.route.params.groupName
     const groupId = this.props.route.params.orbId
-
-
     return(
       <View style = {styles.header}>
-        <View>
-          <TouchableOpacity
-            onPress = {() => this.props.navigation.goBack()}
-            style = {{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              left:20,
-            }}>
-              <ArrowLeft stroke="black" strokeWidth={2.5} width={22.5} height={22.5} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={{alignItems: 'center',}}>
-          <TouchableOpacity
-            onPress={() => this.navGroupInfo(groupId)}
-            style={styles.roundButton1}>
-            <Users stroke="gray" strokeWidth={2.5} width={25} height={25} />
-          </TouchableOpacity>
-          <Avatar
-            size={120}
-            rounded
-            source = {{
-              uri: `${global.IMAGE_ENDPOINT}`+ groupPic
-            }}
-          />
-          <Text style = {styles.groupName}>{groupName}</Text>
+        <View style={{flexDirection:'row'}}>
+          <View style={{flex:1}}>
+            <Text>
+              <ArrowLeft
+              stroke = "black"
+              height = {30}
+              width = {30} />
+            </Text>
+          </View>
+          <View style={{flex:2, alignItems:'center'}}>
+            <Text>
+               <Avatar
+                size={120}
+                rounded
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+ groupPic
+                }}/>
+            </Text>
+            <Text style = {styles.groupName}>{groupName}</Text>
+          </View>
+          <View style={{flex:1,}}>
+            <TouchableOpacity
+              onPress={() => this.navGroupInfo(groupId)}
+              style={styles.roundButton1}>
+              <Users stroke="gray" strokeWidth={2.5} width={25} height={25} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     )
   }
+
 
   onCameraNav = () => {
     const groupPic = this.props.route.params.groupPic
@@ -496,6 +495,11 @@ class InfiniteScrollFlatNew extends React.Component{
     }
 
 
+    console.log("groupid: "+groupId)
+    console.log("closeID: "+closeId)
+    console.log("creator id: "+creatorId)
+    console.log("your id:"+this.props.id)
+
     return(
       <SafeAreaView style = {{flex: 1}}>
 
@@ -531,7 +535,7 @@ class InfiniteScrollFlatNew extends React.Component{
             <Text style = {{
                 color: 'white',
                 marginRight: 10,
-                fontSize: 20,
+                fontSize: 18,
                 fontFamily:'Nunito-SemiBold',
               }}>You are the owner</Text>
 
@@ -540,20 +544,19 @@ class InfiniteScrollFlatNew extends React.Component{
           :
 
 
-            <TouchableOpacity
-              onPress = {() => this.onCameraNav()}
-              style = {styles.videoButton}>
+          <TouchableOpacity
+            onPress = {() => this.onCameraNav()}
+            style = {styles.videoButton}>
+            <Video1
+              stroke="white" strokeWidth={2.5} width={20} height={20} />
+            <Text style = {{
+                color: 'white',
 
-              
-              <Text style = {{
-                  color: 'white',
-                  marginRight: 10,
-                  fontSize: 20,
-                  fontFamily:'Nunito-SemiBold',
-                }}>Share</Text>
+                fontSize: 18,
+                fontFamily:'Nunito-SemiBold',
+              }}>  Share</Text>
 
-            </TouchableOpacity>
-
+          </TouchableOpacity>
 
 
           : null
@@ -661,7 +664,7 @@ const styles = StyleSheet.create({
     position:'absolute'
   },
   header: {
-    height: height*0.3,
+    padding:20,
 
     justifyContent: 'center'
   },
@@ -677,10 +680,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'limegreen',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '50%',
+    width: '45%',
     alignSelf: 'center',
     borderRadius: 25,
-    height: 45,
+    height: 40,
     shadowColor:'black',
     shadowOffset:{width:0,height:2},
     shadowOpacity:0.5,

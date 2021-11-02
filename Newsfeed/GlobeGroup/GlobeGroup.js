@@ -89,8 +89,10 @@ class GlobeGroup extends React.Component{
 
 
     renderItem = ({item}) => {
-
-
+      console.log(item.post.creator)
+      let firstName=item.post.creator.first_name
+      let lastName=item.post.creator.last_name
+      let profilePic=item.post.creator.profile_picture
       return(
           <View>
             {/*
@@ -111,7 +113,9 @@ class GlobeGroup extends React.Component{
           style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
 
           onPress={() => {
-            this.props.navigation.navigate("Story",  {'video':`${global.IMAGE_ENDPOINT}`+item.post.video} );
+            this.props.navigation.navigate("Story",
+            {'video':`${global.IMAGE_ENDPOINT}`+item.post.video,
+            'firstName':firstName, 'lastName':lastName, 'profilePic':`${global.IMAGE_ENDPOINT}`+profilePic} );
           }}
         >
         <SharedElement>
