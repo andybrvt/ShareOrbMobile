@@ -417,7 +417,7 @@ class InfiniteScrollFlatNew extends React.Component{
           <View style={{flex:2, alignItems:'center'}}>
             <Text>
                <Avatar
-                size={120}
+                size={110}
                 rounded
                 source = {{
                   uri: `${global.IMAGE_ENDPOINT}`+ groupPic
@@ -429,7 +429,7 @@ class InfiniteScrollFlatNew extends React.Component{
             <TouchableOpacity
               onPress={() => this.navGroupInfo(groupId)}
               style={styles.roundButton1}>
-              <Users stroke="gray" strokeWidth={2.5} width={25} height={25} />
+              <Users stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
           </View>
         </View>
@@ -669,8 +669,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   groupName: {
-    marginTop: 10,
-    fontSize: 22.5,
+    marginTop: 5,
+    fontSize: 20,
     fontFamily:'Nunito-Bold'
   },
   videoButton: {

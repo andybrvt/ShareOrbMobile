@@ -337,7 +337,9 @@ class GroupInfo extends React.Component{
                   </TouchableOpacity>
                 */}
                 <View style={{flexDirection:'row', width:'60%', justifyContent:'center', alignItems:'center'}}>
+                  {/*
                   <MapPin style={{marginRight:5,}} stroke="#8c8c8c" strokeWidth={2.5}  width={15} height={15} />
+                  */}
                   <Text style={{fontSize:13, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{address}</Text>
                 </View>
               </View>
