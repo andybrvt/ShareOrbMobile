@@ -15,7 +15,7 @@ import {
  } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar } from 'react-native-elements';
-
+import FastImage from 'react-native-fast-image'
 import { Video, AVPlaybackStatus } from 'expo-av';
 
 class NewGlobePost extends React.PureComponent{
@@ -133,7 +133,8 @@ class NewGlobePost extends React.PureComponent{
               }
               );
              }}>
-           <Image
+             {/* FastImage */}
+           <FastImage
              style ={{
                width: "100%",
                height: '100%'
