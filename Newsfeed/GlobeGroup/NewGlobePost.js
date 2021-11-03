@@ -420,7 +420,7 @@ class NewGlobePost extends React.Component{
 
         <View style = {styles.bottomContainer}>
           {/* FastImage */}
-          <Image
+          <FastImage
               style={styles.cover}
               resizeMode = "cover"
               source={{
