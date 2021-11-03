@@ -132,14 +132,14 @@ class NewGlobePost extends React.PureComponent{
            onPress={() => {
              this.props.navigation.navigate("Story",
              {'video':`${global.IMAGE_ENDPOINT}`+this.props.item.video,
-      
+
              day:day,
              'story':this.props.item,
               }
               );
              }}>
              {/* FastImage */}
-           <Image
+           <FastImage
              style ={{
                width: "100%",
                height: '100%'

@@ -28,6 +28,7 @@ import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
 import FlashMessage from "react-native-flash-message";
 import { showMessage, hideMessage } from "react-native-flash-message";
+import * as Linking from 'expo-linking';
 
 const data3=[
     {
@@ -98,11 +99,12 @@ class GroupPost extends React.PureComponent {
   }
 
   _openCameraRoll = async (imageFile) => {
-    let image = await ImagePicker.launchImageLibraryAsync();
-    let { origURL } = image;
-    let encodedURL = encodeURIComponent(origURL);
-    let instagramURL = `instagram://library?AssetPath=${encodedURL}`;
-    Linking.openURL(instagramURL);
+    this.downloadFile(imageFile)
+    setTimeout(() => {
+      let instagramURL = `instagram://library?AssetPath=null`;
+      Linking.openURL(instagramURL);
+    }, 1000)
+
   }
 
 
@@ -206,7 +208,7 @@ class GroupPost extends React.PureComponent {
           <View style= {{flexDirection:'row'}}>
             <TouchableOpacity
             style={styles.roundButton2}
-            onPress = {() => this.testInstagram(imageFile)}>
+            onPress = {() => this._openCameraRoll(imageFile)}>
               <Instagram
                 stroke = "#bfbfbf"
                 strokeWidth={2}

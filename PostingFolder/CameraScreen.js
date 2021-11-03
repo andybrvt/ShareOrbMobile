@@ -21,7 +21,7 @@ import {
 import { connect } from 'react-redux'
 import { Camera } from 'expo-camera';
 // import * as Permissions from 'expo-permissions';
-import { ChevronRight,Triangle, Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
+import { Download, Instagram, ChevronRight,Triangle, Zap, ZapOff, X, ArrowLeft, Grid, Repeat, Circle} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
 import WebSocketSocialNewsfeedInstance from '../Websockets/socialNewsfeedWebsocket';
@@ -44,6 +44,11 @@ import * as Progress from 'react-native-progress';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Avatar } from 'react-native-elements';
 import RecordingAnimationBtn from './RecordingAnimationBtn';
+import * as FileSystem from 'expo-file-system';
+import * as Permissions from 'expo-permissions';
+import * as Linking from 'expo-linking';
+import { showMessage, hideMessage } from "react-native-flash-message";
+import * as MediaLibrary from 'expo-media-library';
 
 
 const { Clock,
@@ -116,6 +121,47 @@ class CameraScreen extends React.Component{
     super(props)
     this.showFinal = new Value(false)
   }
+
+  downloadFile(imageFile) {
+    console.log(imageFile)
+    showMessage({
+      message: "Downloaded to phone",
+      type: "info",
+      backgroundColor: "#1890ff", // background color
+      color: "white", // text color
+      duration:850
+    });
+    const uri = "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+    let fileUri = FileSystem.documentDirectory + "shareorb.jpg";
+    FileSystem.downloadAsync(uri, fileUri)
+    .then(({ uri }) => {
+        this.saveFile(uri);
+      })
+      .catch(error => {
+        console.log('stuff here')
+        console.error(error);
+      })
+  }
+
+  saveFile = async (fileUri: string) => {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status === "granted") {
+          const asset = await MediaLibrary.createAssetAsync(fileUri)
+          await MediaLibrary.createAlbumAsync("Download", asset, false)
+      }
+  }
+
+  _openCameraRoll = async () => {
+    const file = this.state.videoPreview
+    this.downloadFile(file)
+    setTimeout(() => {
+      let instagramURL = `instagram://library?AssetPath=null`;
+      Linking.openURL(instagramURL);
+    }, 1000)
+
+  }
+
+
   state = {
     allowCamera: false,
     allowMicrophone: false,
@@ -1160,6 +1206,44 @@ class CameraScreen extends React.Component{
                            width = {40}
                            stroke = "white"
                             />
+                     </TouchableOpacity>
+
+                     <TouchableOpacity
+                       onPress = {() => this._openCameraRoll()}
+                       style = {{
+                         position: 'absolute',
+                         bottom: '5%',
+                         left:'5%',
+                       }}>
+                       <Instagram
+                         style={{top:0, position:'absolute'}}
+                         strokeWidth={2}
+                         stroke = "#d9d9d9"
+                         height = {40}
+                         width = {40}/>
+                       <Instagram
+                         stroke = 'white'
+                         height = {40}
+                         width = {40}/>
+                     </TouchableOpacity>
+
+                     <TouchableOpacity
+                       onPress = {() => this.downloadFile()}
+                       style = {{
+                         position: 'absolute',
+                         bottom: '5%',
+                         left:'18%',
+                       }}>
+                       <Download
+                         style={{top:0, position:'absolute'}}
+                         strokeWidth={2}
+                         stroke = "#d9d9d9"
+                         height = {40}
+                         width = {40}/>
+                       <Download
+                         stroke = 'white'
+                         height = {40}
+                         width = {40}/>
                      </TouchableOpacity>
                 </View>
                 <GoalDropDown
