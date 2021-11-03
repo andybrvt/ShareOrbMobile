@@ -17,6 +17,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar } from 'react-native-elements';
 import FastImage from 'react-native-fast-image'
 import { Video, AVPlaybackStatus } from 'expo-av';
+import * as dateFns from 'date-fns';
 
 class NewGlobePost extends React.PureComponent{
   constructor(props){
@@ -62,7 +63,10 @@ class NewGlobePost extends React.PureComponent{
     vid = this.props.vid
     let groupName=groupInfo.groupName
     let groupPic=groupInfo.groupPic
-    console.log(this.props.item.video)
+    let month=dateFns.format(new Date(this.props.item.created_at), "MMM")
+    let day=dateFns.format(new Date(this.props.item.created_at), "dd")
+    console.log(this.props.item)
+    console.log(month, day)
     if(this.props.item) {
 
       if(this.props.item.video){
@@ -128,8 +132,9 @@ class NewGlobePost extends React.PureComponent{
            onPress={() => {
              this.props.navigation.navigate("Story",
              {'video':`${global.IMAGE_ENDPOINT}`+this.props.item.video,
-             firstName:firstName, lastName:lastName,
-             profilePic:profilePic
+      
+             day:day,
+             'story':this.props.item,
               }
               );
              }}>

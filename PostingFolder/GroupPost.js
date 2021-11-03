@@ -181,7 +181,7 @@ class GroupPost extends React.PureComponent {
   }
   render(){
 
-    const imageFile = this.props.route.params.imageFile.uri
+    const imageFile = this.props.route.params.imageFile
     console.log(imageFile)
     return(
       <BackgroundContainer>
