@@ -1022,8 +1022,8 @@ class CameraScreen extends React.Component{
 
                <TouchableOpacity
                  style = {styles.submitBtn}
-                 // onPress = {() => this.onSavePhoto(this.state.imagePreview)}
-                 onPress = {() => this.onGroupPostDirect(this.state.imagePreview)}
+                 onPress = {() => this.onSavePhoto(this.state.imagePreview)}
+                 // onPress = {() => this.onGroupPostDirect(this.state.imagePreview)}
                  >
                    <Text style = {{
                        color: 'white',
@@ -1144,7 +1144,8 @@ class CameraScreen extends React.Component{
 
                      <TouchableOpacity
                        style = {styles.submitBtn}
-                       onPress = {() => this.onSaveVideo(this.state.videoPreview)}
+                       // onPress = {() => this.onSaveVideo(this.state.videoPreview)}
+                       onPress = {() => this.onGroupPostDirect(this.state.imagePreview)}
                        >
                        <Avatar
                          source = {{

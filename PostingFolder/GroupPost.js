@@ -70,9 +70,10 @@ class GroupPost extends React.PureComponent {
       color: "white", // text color
       duration:850
     });
-    const uri = "https://images.unsplash.com/photo-1634937916052-a893c9597b0d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
-    let fileUri = FileSystem.documentDirectory + "shareorb.jpg";
-    FileSystem.downloadAsync(uri, fileUri)
+    FileSystem.downloadAsync(
+  'http://techslides.com/demos/sample-videos/small.mp4',
+  FileSystem.documentDirectory + 'small.mp4'
+)
     .then(({ uri }) => {
         this.saveFile(uri);
       })
