@@ -112,25 +112,26 @@ const Story = ({ route, navigation }: StoryProps) => {
             </Animated.View>
         </Animated.View>
         <Animated.View style={{position:'absolute',
-          bottom:'10%', left:'5%', zIndex:99, }}>
+          bottom:'11%', left:'5%', zIndex:99, }}>
           <Animated.View style={{ width:'90%',
             // backgroundColor:'red',
             flexWrap:'wrap',flexDirection:'row', alignItems:'center'
              }}>
 
              {/* bottom caption*/}
-              <Animated.Text style={{}}>
 
-                <Avatar
-                  size={22.5}
-                  rounded
-                  source = {{
-                    uri:profilePic,
-                  }}
-                />
-                <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
+             <Avatar
+               size={25}
+               rounded
+               source = {{
+                 uri:profilePic,
+               }}
+             />
+           <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
+
+            <Animated.Text style={{marginTop:10}}>
                 <Animated.Text style={styles.videoFooterCaption}>{caption}</Animated.Text>
-              </Animated.Text>
+            </Animated.Text>
           </Animated.View>
         </Animated.View>
 
