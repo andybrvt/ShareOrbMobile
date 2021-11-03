@@ -114,8 +114,8 @@ class GlobeGroup extends React.Component{
 
           onPress={() => {
             this.props.navigation.navigate("Story",
-            {'video':`${global.IMAGE_ENDPOINT}`+item.post.video,
-            'firstName':firstName, 'lastName':lastName, 'profilePic':`${global.IMAGE_ENDPOINT}`+profilePic} );
+            {'story':item.post,
+          } );
           }}
         >
         <SharedElement>
