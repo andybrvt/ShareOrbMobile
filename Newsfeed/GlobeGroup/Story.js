@@ -106,20 +106,40 @@ const Story = ({ route, navigation }: StoryProps) => {
                 }}
               />
             </Animated.View>
-            <Animated.View style={{marginLeft:5}}>
+            <Animated.View style={{}}>
               <Animated.Text style={styles.videoFooterGroupName}>{groupName}</Animated.Text>
               <Animated.Text style={styles.videoFooterDate}>{month+" "+day}</Animated.Text>
             </Animated.View>
         </Animated.View>
+
+        {/* bottom caption*/}
+        {caption.length?
+          <Animated.View style={{position:'absolute',
+            bottom:'12.5%', left:'5%', zIndex:99, }}>
+            <Animated.View style={{ width:'90%',
+              flexWrap:'wrap',flexDirection:'row',
+               alignItems:'center'
+               }}>
+               <Avatar
+                 size={25}
+                 rounded
+                 source = {{
+                   uri:profilePic,
+                 }}
+               />
+              <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
+              <Animated.Text style={{marginTop:10}}>
+                  <Animated.Text style={styles.videoFooterCaption}>{caption}</Animated.Text>
+              </Animated.Text>
+            </Animated.View>
+          </Animated.View>
+        :
         <Animated.View style={{position:'absolute',
-          bottom:'11%', left:'5%', zIndex:99, }}>
-          <Animated.View style={{ width:'90%',
-            // backgroundColor:'red',
-            flexWrap:'wrap',flexDirection:'row', alignItems:'center'
+          bottom:'10%', left:'5%', zIndex:99, }}>
+          <Animated.View style={{
+            flexWrap:'wrap',flexDirection:'row',
+             alignItems:'center'
              }}>
-
-             {/* bottom caption*/}
-
              <Avatar
                size={25}
                rounded
@@ -127,13 +147,10 @@ const Story = ({ route, navigation }: StoryProps) => {
                  uri:profilePic,
                }}
              />
-           <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
-
-            <Animated.Text style={{marginTop:10}}>
-                <Animated.Text style={styles.videoFooterCaption}>{caption}</Animated.Text>
-            </Animated.Text>
-          </Animated.View>
-        </Animated.View>
+             <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
+             </Animated.View>
+           </Animated.View>
+        }
 
 
         <Animated.View style={{position:'absolute', top:'60%',
@@ -142,17 +159,17 @@ const Story = ({ route, navigation }: StoryProps) => {
           <Animated.View>
 
           <Animated.View style={{alignItems:'center'}}>
-           <Animated.Text style={{marginTop:10}}>
-             <Heart
-               stroke = "red"
-               fill="red"
-               width ={27.5}
-               height = {27.5}
-             />
-           </Animated.Text>
-           <Animated.Text style={styles.videoFooterNum}>
-             23
-           </Animated.Text>
+             <Animated.Text style={{marginTop:10}}>
+               <Heart
+                 stroke = "red"
+                 fill="red"
+                 width ={27.5}
+                 height = {27.5}
+               />
+             </Animated.Text>
+             <Animated.Text style={styles.videoFooterNum}>
+               23
+             </Animated.Text>
            </Animated.View>
              <Animated.View style={{alignItems:'center'}}>
               <Animated.Text style={{marginTop:10}}>
