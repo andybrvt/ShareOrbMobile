@@ -122,8 +122,9 @@ class CameraScreen extends React.Component{
     this.showFinal = new Value(false)
   }
 
-  downloadFile(imageFile) {
-    console.log(imageFile)
+  downloadFile() {
+    const file = this.state.videoPreview
+    console.log(file)
     showMessage({
       message: "Downloaded to phone",
       type: "info",
@@ -131,9 +132,9 @@ class CameraScreen extends React.Component{
       color: "white", // text color
       duration:850
     });
-    const uri = "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-    let fileUri = FileSystem.documentDirectory + "shareorb.jpg";
-    FileSystem.downloadAsync(uri, fileUri)
+    const uri = "http://techslides.com/demos/sample-videos/small.mp4"
+    let fileUri = FileSystem.documentDirectory + "small.mp4";
+    FileSystem.downloadAsync(file, fileUri)
     .then(({ uri }) => {
         this.saveFile(uri);
       })

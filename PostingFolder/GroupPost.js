@@ -87,7 +87,7 @@ class GroupPost extends React.PureComponent {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (status === "granted") {
           const asset = await MediaLibrary.createAssetAsync(fileUri)
-          await MediaLibrary.createAlbumAsync("Download", asset, false)
+          await MediaLibrary.createAlbumAsync("Downloads", asset, false)
       }
   }
 
