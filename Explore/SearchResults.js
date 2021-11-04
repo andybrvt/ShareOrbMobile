@@ -38,7 +38,7 @@ class SearchResults extends React.Component{
               <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.group_name, "", 20)} </Text>
             </View>
             <View>
-              <Text style={{fontFamily:'Nunito-SemiBold'}}>Tucson, Arizona</Text>            
+              <Text style={{fontFamily:'Nunito-SemiBold'}}>Tucson, Arizona</Text>
             </View>
         </View>
       </View>

@@ -244,7 +244,7 @@ class GlobeGroup extends React.Component{
 
             <FlatList
               stickyHeaderIndices={[0]}
-              // contentContainerStyle={{paddingBottom:75}}
+              contentContainerStyle={{paddingBottom:50}}
               ListHeaderComponent = {this.listHeader}
               showsVerticalScrollIndicator={false}
               style = {{flex: 1}}

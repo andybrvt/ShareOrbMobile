@@ -130,11 +130,7 @@ class GroupInfo extends React.Component{
     //     // this.props.authSetActiveNewsfeedSlide(i+2)
     //   }
     // }
-
-
   }
-
-
 
   toggleLeave = (groupID) => {
     Alert.alert(
@@ -271,8 +267,8 @@ class GroupInfo extends React.Component{
     let groupID=""
     let address=""
     let creatorPic=""
-
-
+    console.log("????????????")
+    console.log(this.props)
 
     const {smallGroupInfo} = this.state
     console.log(smallGroupInfo)
@@ -282,15 +278,21 @@ class GroupInfo extends React.Component{
       creatorID=smallGroupInfo.creator.id
       creatorUserName=smallGroupInfo.creator.username
       creatorPic=smallGroupInfo.creator.profile_picture
+
+    }
+    if(smallGroupInfo){
+      address=smallGroupInfo.address
+      description=smallGroupInfo.description
     }
     console.log(creatorUserName)
-
+    console.log(address)
 
     return(
       <BackgroundContainer>
         <View underlayColor="#f0f0f0">
           <View style={{
-
+              height:'80%',
+              // backgroundColor:'red',
               flexDirection:'column',
             }}>
             <View style={{flexDirection:'column',
@@ -328,24 +330,22 @@ class GroupInfo extends React.Component{
               <View style={{
                 marginTop:10,
                 }}>
-                  <Text style={{fontSize:20, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{smallGroupInfo.group_name}</Text>
-                {/*
-                <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.groupId)}>
+                <Text style={{fontSize:20, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{smallGroupInfo.group_name}</Text>
 
-                    <Text style={{fontSize:12,fontFamily:'Nunito-SemiBold', textAlign:'center', color:'#8c8c8c',}}> {members.length} Members </Text>
-
-                  </TouchableOpacity>
-                */}
-                <View style={{flexDirection:'row', width:'60%', justifyContent:'center', alignItems:'center'}}>
-                  {/*
-                  <MapPin style={{marginRight:5,}} stroke="#8c8c8c" strokeWidth={2.5}  width={15} height={15} />
-                  */}
-                  <Text style={{fontSize:13, fontFamily:'Nunito-SemiBold', textAlign:'center', }}>{address}</Text>
+                <View style={{flexDirection:'row', width:'80%', justifyContent:'center', alignItems:'center'}}>
+                  {
+                    (address)?
+                    <MapPin style={{marginRight:5,}} stroke="#8c8c8c" strokeWidth={2.5}  width={12.5} height={12.5} />
+                  :
+                    null
+                  }
+                  <Text style={{fontSize:12, fontFamily:'Nunito', textAlign:'center', }}>{address}</Text>
                 </View>
               </View>
+              {/*
               <TouchableOpacity
                 onPress = {() => this.ViewProfile(creatorUserName)}
-                style={{flexDirection:'row', alignItems:'center'}}>
+                style={{flexDirection:'row', alignItems:'center', top:5}}>
                   <Avatar
                     size={15}
                     rounded
@@ -353,30 +353,21 @@ class GroupInfo extends React.Component{
                       uri: `${global.IMAGE_ENDPOINT}`+creatorPic
                     }}
                   />
-                <Text style={{marginLeft:5, fontFamily:'Nunito-SemiBold', fontSize:13}}>{creatorFirstName+" "+creatorLastName}</Text>
+                <Text style={{marginLeft:5, fontFamily:'Nunito-SemiBold', fontSize:12}}>{creatorFirstName+" "+creatorLastName}</Text>
               </TouchableOpacity>
-
+              */}
             </View>
 
 
             <View style={{ }}>
             <View style={{ alignItems:'center', marginTop:15, marginBottom:15,}}>
-              <Text style={{marginLeft:20,fontSize:16, fontFamily:'Nunito', width:'85%',}}>
+              <Text style={{marginLeft:20,fontSize:16, fontFamily:'Nunito-SemiBold', color:'#919191', width:'85%',}}>
                 {description}
               </Text>
             </View>
             </View>
            </View>
-           {/*
-           <TouchableHighlight underlayColor="#f0f0f0" onPress = {()=>this.navInvitePeople()}>
-             <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
-               <View style={styles.roundButton1}>
-                 <UserPlus stroke="white" strokeWidth={2.5} width={17.5} height={17.5} />
-               </View>
-               <Text style={styles.settingWord}> Invite People </Text>
-             </View>
-           </TouchableHighlight>
-           */}
+
            {/*
              (this.props.curId==creatorID)?
                <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navAnnouncements()}>
@@ -394,46 +385,12 @@ class GroupInfo extends React.Component{
               <Text></Text>
            */}
 
-           {/*(!publicG)?
-             <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
-              <View style={{flexDirection:'row', padding:10, alignItems:'center', marginLeft:20,}}>
-                <View style={styles.roundButton1}>
-                  <Unlock stroke="white" strokeWidth={2.5}  width={17.5} height={17.5} />
-                </View>
-               <Text style={styles.settingWord}> Make Orb Public </Text>
-               <View style = {{
-                   flex: 1,
-                   alignItems: 'center',
-                   justifyContent: 'center',
-                 }}>
-                 {
-                   this.state.loading === true ?
-                   <ActivityIndicator />
-                 :
 
-                 <Switch
-                   trackColor={ this.state.condition ? "gray": "red" }
-                   thumbColor={this.state.condition ? "white" : "white"}
-                   ios_backgroundColor="#3e3e3e"
-                   onValueChange={this.toggleChange}
-                   value={publicG}
-                   disabled = {publicG}
-                    />
-                 }
-               </View>
-              </View>
-             </TouchableHighlight>
-
-           :
-           <View style={{marginTop:'0%'}}>
-             <Text></Text>
-           </View>
-            */}
            <View style={{flexDirection:'row', padding:10, borderTopWidth:1, borderColor:'whitesmoke',
              alignItems:'center', marginLeft:10,}}>
              <Text style={{color:'#919191',
              fontSize:15,
-             fontFamily:'Nunito-SemiBold', marginLeft:10,}}> Share The Orb </Text>
+             fontFamily:'Nunito-SemiBold', marginLeft:10,}}> Locate Business </Text>
             </View>
               <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
             <TouchableHighlight

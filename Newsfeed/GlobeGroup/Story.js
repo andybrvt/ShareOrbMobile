@@ -159,17 +159,20 @@ const Story = ({ route, navigation }: StoryProps) => {
           <Animated.View>
 
           <Animated.View style={{alignItems:'center'}}>
-             <Animated.Text style={{marginTop:10}}>
+             <Animated.Text style={{marginTop:10, marginBottom:15,}}>
                <Heart
-                 stroke = "red"
-                 fill="red"
+
+                 stroke = "white"
+                 fill="white"
                  width ={27.5}
                  height = {27.5}
                />
              </Animated.Text>
+             {/*
              <Animated.Text style={styles.videoFooterNum}>
                23
              </Animated.Text>
+             */}
            </Animated.View>
              <Animated.View style={{alignItems:'center'}}>
               <Animated.Text style={{marginTop:10}}>
@@ -180,9 +183,11 @@ const Story = ({ route, navigation }: StoryProps) => {
                   height = {27.5}
                 />
               </Animated.Text>
+              {/*
               <Animated.Text style={styles.videoFooterNum}>
                 3
               </Animated.Text>
+              */}
               </Animated.View>
             </Animated.View>
         </Animated.View>
