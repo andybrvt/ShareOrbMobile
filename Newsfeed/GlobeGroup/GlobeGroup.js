@@ -89,7 +89,13 @@ class GlobeGroup extends React.Component{
 
 
     renderItem = ({item}) => {
+      console.log("AAAAAAAA")
+      console.log(item)
+      console.log("BBBBBBBBB")
       console.log(item.post.creator)
+      let groupPic=item.group.groupPic
+      let groupName=item.group.group_name
+      console.log(groupName)
       let firstName=item.post.creator.first_name
       let lastName=item.post.creator.last_name
       let profilePic=item.post.creator.profile_picture
@@ -114,7 +120,9 @@ class GlobeGroup extends React.Component{
 
           onPress={() => {
             this.props.navigation.navigate("Story",
-            {'story':item.post,
+            { 'story':item.post,
+              'groupPic':groupPic,
+              'groupName':groupName
           } );
           }}
         >

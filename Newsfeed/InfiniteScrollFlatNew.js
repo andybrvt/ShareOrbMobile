@@ -409,9 +409,10 @@ class InfiniteScrollFlatNew extends React.Component{
           <View style={{flex:1}}>
             <Text>
               <ArrowLeft
+                onPress = {() => this.props.navigation.goBack(0)}
               stroke = "black"
-              height = {30}
-              width = {30} />
+              height = {25}
+              width = {25} />
             </Text>
           </View>
           <View style={{flex:2, alignItems:'center'}}>

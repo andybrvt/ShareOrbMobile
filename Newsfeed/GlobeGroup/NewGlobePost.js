@@ -112,7 +112,6 @@ class NewGlobePost extends React.Component{
   }
 
   changeShowComments = (postId) => {
-
     this.props.navigation.navigate("Comments",{
       postId: postId,
       type: 'group'
@@ -201,7 +200,7 @@ class NewGlobePost extends React.Component{
         <View style={{
             flexDirection:'column',  width:'50%'}}>
             <Text style = {styles.videoFooterUserName}>
-              {global.NAMEMAKE(firstName, lastName)}
+              {userUsername}
             </Text>
             {/*
             <View style={{flexDirection:'row'}}>

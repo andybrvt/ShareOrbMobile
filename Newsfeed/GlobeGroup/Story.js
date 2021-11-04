@@ -15,14 +15,15 @@ import Animated, {
 import { useVector, snapPoint } from "react-native-redash";
 import { SharedElement } from "react-navigation-shared-element";
 import { Video } from "expo-av";
-import { ArrowLeft } from "react-native-feather";
+import { ArrowLeft, Heart, MessageCircle  } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 import * as dateFns from 'date-fns';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const { height } = Dimensions.get("window");
 const AnimatedVideo = Animated.createAnimatedComponent(Video);
+
 
 const Story = ({ route, navigation }: StoryProps) => {
   console.log("STartttt")
@@ -32,6 +33,8 @@ const Story = ({ route, navigation }: StoryProps) => {
   const lastName=story.creator.last_name
   const username=story.creator.username
   const caption=story.caption
+  const groupPic=`${global.IMAGE_ENDPOINT}`+route.params.groupPic
+  const groupName=route.params.groupName
   const profilePic=`${global.IMAGE_ENDPOINT}`+story.creator.profile_picture
   const month=dateFns.format(new Date(story.created_at), "MMMM").substring(0,3)
   const day=dateFns.format(new Date(story.created_at), "dd")
@@ -82,35 +85,107 @@ const Story = ({ route, navigation }: StoryProps) => {
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Animated.View style={style}>
+        <LinearGradient
+          start={{x: 0, y: 0}} end={{x: 0, y: 1}}
+          style = {{
+            position: 'absolute',
+            width: '100%',
+            bottom:0,
+            height: "40%",
+            zIndex:99
+          }}
+          colors = {['transparent', '#000000']}>
+        </LinearGradient>
         <Animated.View style={{position:'absolute', padding:20, color:'white', zIndex:99, flexDirection:'row',}}>
             <Animated.View style={{flexDirection:'row', alignItems:'center'}}>
               <Avatar
-                size={30}
+                size={32}
                 rounded
                 source = {{
-                  uri:profilePic,
+                  uri:groupPic,
                 }}
               />
             </Animated.View>
-            <Animated.View style={{marginLeft:5}}>
-              <Animated.Text style={styles.videoFooterName}>{firstName+" "+lastName}</Animated.Text>
+            <Animated.View style={{}}>
+              <Animated.Text style={styles.videoFooterGroupName}>{groupName}</Animated.Text>
               <Animated.Text style={styles.videoFooterDate}>{month+" "+day}</Animated.Text>
             </Animated.View>
         </Animated.View>
+
+        {/* bottom caption*/}
+        {caption.length?
+          <Animated.View style={{position:'absolute',
+            bottom:'12.5%', left:'5%', zIndex:99, }}>
+            <Animated.View style={{ width:'90%',
+              flexWrap:'wrap',flexDirection:'row',
+               alignItems:'center'
+               }}>
+               <Avatar
+                 size={25}
+                 rounded
+                 source = {{
+                   uri:profilePic,
+                 }}
+               />
+              <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
+              <Animated.Text style={{marginTop:10}}>
+                  <Animated.Text style={styles.videoFooterCaption}>{caption}</Animated.Text>
+              </Animated.Text>
+            </Animated.View>
+          </Animated.View>
+        :
         <Animated.View style={{position:'absolute',
           bottom:'10%', left:'5%', zIndex:99, }}>
-          <Animated.View style={{ width:'90%',
+          <Animated.View style={{
             flexWrap:'wrap',flexDirection:'row',
+             alignItems:'center'
              }}>
-              <Animated.Text style={{}}>
-                <Animated.Text style={styles.videoFooterUserName}>{username} </Animated.Text>
-                <Animated.Text style={styles.videoFooterCaption}>{caption}</Animated.Text>
+             <Avatar
+               size={25}
+               rounded
+               source = {{
+                 uri:profilePic,
+               }}
+             />
+             <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
+             </Animated.View>
+           </Animated.View>
+        }
+
+
+        <Animated.View style={{position:'absolute', top:'60%',
+          alignItems:'center',
+          right:15, color:'white', zIndex:99, }}>
+          <Animated.View>
+
+          <Animated.View style={{alignItems:'center'}}>
+             <Animated.Text style={{marginTop:10}}>
+               <Heart
+                 stroke = "red"
+                 fill="red"
+                 width ={27.5}
+                 height = {27.5}
+               />
+             </Animated.Text>
+             <Animated.Text style={styles.videoFooterNum}>
+               23
+             </Animated.Text>
+           </Animated.View>
+             <Animated.View style={{alignItems:'center'}}>
+              <Animated.Text style={{marginTop:10}}>
+                <MessageCircle
+                  stroke = "white"
+                  fill="white"
+                  width ={27.5}
+                  height = {27.5}
+                />
               </Animated.Text>
-          </Animated.View>
+              <Animated.Text style={styles.videoFooterNum}>
+                3
+              </Animated.Text>
+              </Animated.View>
+            </Animated.View>
         </Animated.View>
-
-
-
         <SharedElement style={{ flex: 1 }}>
           {!story.video && (
             <Animated.Image
@@ -179,7 +254,7 @@ const styles = StyleSheet.create({
 
     // fontWeight:'bold',
   },
-  videoFooterName: {
+  videoFooterGroupName: {
     marginLeft:5,
     color:'white',
     fontSize:14,
@@ -194,6 +269,21 @@ const styles = StyleSheet.create({
   },
   videoFooterUserName: {
     marginLeft:5,
+    color:'white',
+    fontSize:13,
+    fontFamily:'Nunito-Bold',
+    // textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    zIndex:1,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+
+    // fontWeight:'bold',
+  },
+  videoFooterNum: {
+    marginTop:2.5,
+    marginBottom:10,
+
     color:'white',
     fontSize:13,
     fontFamily:'Nunito-Bold',

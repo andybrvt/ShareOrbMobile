@@ -59,16 +59,25 @@ class NewGlobePost extends React.PureComponent{
     let profilePic="";
     let itemImage = "";
     let vid=""
+    let groupName="";
+    let groupPic="";
     let groupInfo=this.props.groupInfo
     vid = this.props.vid
-    let groupName=groupInfo.groupName
-    let groupPic=groupInfo.groupPic
+    groupName=groupInfo.groupName
+    groupPic=groupInfo.groupPic
     let month=dateFns.format(new Date(this.props.item.created_at), "MMM")
     let day=dateFns.format(new Date(this.props.item.created_at), "dd")
-    console.log(this.props.item)
     console.log(month, day)
     if(this.props.item) {
-
+      if(this.props.groupInfo.groupName){
+        groupName = this.props.groupInfo.groupName;
+      }
+      if(this.props.groupInfo.groupPic){
+        groupPic = this.props.groupInfo.groupPic;
+      }
+      if(this.props.item.creator.first_name){
+        firstName = this.props.item.creator.first_name;
+      }
       if(this.props.item.video){
         video = `${global.IMAGE_ENDPOINT}`+this.props.item.video
       }
@@ -90,83 +99,42 @@ class NewGlobePost extends React.PureComponent{
     }
 
     return(
-      <View
+      <View style={styles.item}>
+        <TouchableWithoutFeedback
+         onPress={() => {
+           this.props.navigation.navigate("Story",
+             {
+               'video':`${global.IMAGE_ENDPOINT}`+this.props.item.video,
+               day:day,
+               'groupName':groupName,
+               'groupPic':groupPic,
+               'story':this.props.item,
+             }
+             );
+          }}>
+           {/* FastImage */}
+         <Image
+           style ={{
+             width: "100%",
+             height: '100%'
+           }}
+           resizeMode = "cover"
+           source = {{
+             uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
+           }}
+          />
+        </TouchableWithoutFeedback>
 
-        style={styles.item}
-      >
-
-
-      {/*
-        <Video
-          ref={ref => {this.video = ref}}
-          style = {{
-            width: '100%',
-            height: '100%'
-          }}
-          source={{
-            uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-            // uri: video
-          }}
-          rate={1.0}
-          isMuted={this.state.isMuted}
-          resizeMode="cover"
-          isLooping
-          // shouldPlay
-          volume={0.5}
-           />
-        */}
-        {/*creator: orb.creator,
-        orbId: orb.id,
-        groupName: orb.group_name,
-        groupPic: orb.groupPic
-        creator: 4
-        orbId: 20
-        groupName: test1
-        groupPic: /media/post_pictures/2021/10/f5dcd008-8fd2-4891-bc49-aa2866656f72.jpg
-        */}
-
-
-
-
-          <TouchableWithoutFeedback
-           onPress={() => {
-             this.props.navigation.navigate("Story",
-             {'video':`${global.IMAGE_ENDPOINT}`+this.props.item.video,
-
-             day:day,
-             'story':this.props.item,
-              }
-              );
-             }}>
-             {/* FastImage */}
-           <Image
-             style ={{
-               width: "100%",
-               height: '100%'
-             }}
-             resizeMode = "cover"
-             source = {{
-               uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
-               // uri:  "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
-             }}
-            />
-          </TouchableWithoutFeedback>
-
-
-
-
-
-
-           <LinearGradient
-             start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
-             style = {{
-               position: 'absolute',
-               width: '100%',
-               bottom: '0%',
-               height: "30%"
-             }}
-             colors = {['transparent', '#000000']}>
-           </LinearGradient>
+         <LinearGradient
+           start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
+           style = {{
+             position: 'absolute',
+             width: '100%',
+             bottom: '0%',
+             height: "30%"
+           }}
+           colors = {['transparent', '#000000']}>
+         </LinearGradient>
 
          <View style = {{
            position: 'absolute',
@@ -176,28 +144,24 @@ class NewGlobePost extends React.PureComponent{
            flexDirection:'row',
            alignItems:'center',
            }}>
-             <View style={{
-               width: '15%',
-               marginLeft:5,
-               marginRight:7.5,
-               }}>
+           <View style={{
+             width: '15%',
+             marginLeft:5,
+             marginRight:5,
+             }}>
                <Avatar
                  onPress = {() => this.ViewProfile(userUsername)}
-                 size={20}
+                 size={17.5}
                  rounded
                  source = {{
                    uri: profilePic
                  }}
                />
            </View>
-
-
            <Text style = {styles.videoFooterUserName}>
-             {this.setName(firstName, lastName)}
+             {userUsername}
            </Text>
-
-       </View>
-
+         </View>
      </View>
     )
   }
@@ -215,8 +179,8 @@ const styles = StyleSheet.create({
   },
   videoFooterUserName: {
     color:'white',
-    fontSize:11,
-    fontFamily:'Nunito-Bold',
+    fontSize:10,
+    fontFamily:'Nunito-SemiBold',
     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
     zIndex:1,
     textShadowColor: 'black',
