@@ -95,7 +95,7 @@ class SearchResults extends React.Component{
       groupData = this.props.groupData
     }
 
-    console.log(data.length,groupData.length)
+    console.log(data)
 
     return(
       <KeyboardAvoidingView
@@ -107,7 +107,7 @@ class SearchResults extends React.Component{
 
         }}>
         {
-          data.length === 0 || groupData.length === 0 ?
+          data.length === 0 && groupData.length === 0 ?
 
           <View style = {{
               height: 100,
