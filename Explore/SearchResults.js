@@ -38,7 +38,7 @@ class SearchResults extends React.Component{
               <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.group_name, "", 20)} </Text>
             </View>
             <View>
-              <Text style={{fontFamily:'Nunito-SemiBold'}}>Tucson, Arizona</Text>            
+              <Text style={{fontFamily:'Nunito-SemiBold'}}>Tucson, Arizona</Text>
             </View>
         </View>
       </View>
@@ -95,6 +95,8 @@ class SearchResults extends React.Component{
       groupData = this.props.groupData
     }
 
+    console.log(data.length,groupData.length)
+
     return(
       <KeyboardAvoidingView
 
@@ -105,7 +107,7 @@ class SearchResults extends React.Component{
 
         }}>
         {
-          data.length === 0 ?
+          data.length === 0 || groupData.length === 0 ?
 
           <View style = {{
               height: 100,
@@ -128,27 +130,31 @@ class SearchResults extends React.Component{
           :
 
           <View style = {{
-              width: "100%",
-              flex: 1,
+              flex:1,
+              width: '100%',
             }}>
-            <Text style={styles.settingWord}>Users</Text>
-            <FlatList
-              style = {{flex:1}}
-              data = {data}
-              renderItem = {this.renderItem}
-              keyExtractor={(item, index) => String(index)}
 
-               />
-             <View style={{marginTop:15}}>
-               <Text style={styles.settingWord}>Groups</Text>
-               </View>
-               <FlatList
-                 style = {{flex: 1}}
-                 data = {groupData}
-                 renderItem = {this.renderGroupItem}
-                 keyExtractor={(item, index) => String(index)}
 
-                  />
+              <Text style={styles.settingWord}>Users</Text>
+              <FlatList
+                style = {{flex:1}}
+                data = {data}
+                renderItem = {this.renderItem}
+                keyExtractor={(item, index) => String(index)}
+
+                 />
+               <View style={{marginTop:15}}>
+                 <Text style={styles.settingWord}>Groups</Text>
+                 </View>
+                 <FlatList
+                   style = {{flex: 1}}
+                   data = {groupData}
+                   renderItem = {this.renderGroupItem}
+                   keyExtractor={(item, index) => String(index)}
+
+                    />
+
+
 
           </View>
         }

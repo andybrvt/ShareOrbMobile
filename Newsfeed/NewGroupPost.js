@@ -139,7 +139,7 @@ class NewGlobePost extends React.PureComponent{
               );
              }}>
              {/* FastImage */}
-           <FastImage
+           <Image
              style ={{
                width: "100%",
                height: '100%'
