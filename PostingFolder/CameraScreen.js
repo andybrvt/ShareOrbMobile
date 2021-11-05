@@ -122,9 +122,21 @@ class CameraScreen extends React.Component{
     this.showFinal = new Value(false)
   }
 
-  downloadFile() {
-    const file = this.state.videoPreview
-    console.log(file)
+  onInstaActivate = () => {
+    this.setState({
+      shareToInsta: true
+    })
+  }
+
+  onInstaDeactivate = () => {
+    this.setState({
+      shareToInsta: false
+    })
+  }
+
+  downloadFile(file) {
+    // const file = this.state.videoPreview
+    console.log(file, 'stuff here here')
     showMessage({
       message: "Downloaded to phone",
       type: "info",
@@ -142,6 +154,8 @@ class CameraScreen extends React.Component{
         console.log('stuff here')
         console.error(error);
       })
+
+
   }
 
   saveFile = async (fileUri: string) => {
@@ -152,8 +166,7 @@ class CameraScreen extends React.Component{
       }
   }
 
-  _openCameraRoll = async () => {
-    const file = this.state.videoPreview
+  _openCameraRoll = async (file) => {
     this.downloadFile(file)
     setTimeout(() => {
       let instagramURL = `instagram://library?AssetPath=null`;
@@ -186,7 +199,7 @@ class CameraScreen extends React.Component{
     timer: null,
     showGroupText: false,
     activeSlide: 0,
-
+    shareToInsta: false
   }
 
   componentDidMount(){
@@ -469,6 +482,7 @@ class CameraScreen extends React.Component{
         selectedGoal: {},
         videoPreview: null,
         isVideoOpen: false,
+        shareToInsta: false
       }), 1 )
 
   }
@@ -704,35 +718,21 @@ class CameraScreen extends React.Component{
         WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
 
 
-        // this.props.addFirstSocialCellPost(res.data.item)
-        // const coverPicForm = new FormData();
-        // coverPicForm.append('cellId', res.data.cellId)
-        //
-        // coverPicForm.append('coverVideo', videoFile)
-        //
-      //
-        //
-        // authAxios.post(`${global.IP_CHANGE}/mySocialCal/updateCoverVid/`+ownerId,
-        //   coverPicForm,
-        //   {headers: {"content-type": "multipart/form-data"}}
-        //
-        // ).then( res => {
-        //
-        //
-        //
-        //   if(res.data === 1){
-        //     // run the
-        //     setTimeout(() => this.props.authShowFirstPostModal(), 1200);
-        //
-        //   }
-        //
-        // })
+        setTimeout(() => {
 
+          if(this.state.shareToInsta){
+
+            // send this shit here from the shareToInsta
+            console.log('here here here')
+            this._openCameraRoll(`${global.IMAGE_ENDPOINT}` + res.data.item.video)
+
+
+          }
+        }, 1500)
 
       })
 
       this.onCancelPhoto();
-
       this.props.closeShowCamera()
       this.props.navigation.goBack()
 
@@ -1191,8 +1191,8 @@ class CameraScreen extends React.Component{
 
                      <TouchableOpacity
                        style = {styles.submitBtn}
-                       // onPress = {() => this.onSaveVideo(this.state.videoPreview)}
-                       onPress = {() => this.onGroupPostDirect(this.state.imagePreview)}
+                       onPress = {() => this.onSaveVideo(this.state.videoPreview)}
+                       // onPress = {() => this.onGroupPostDirect(this.state.imagePreview)}
                        >
                        <Avatar
                          source = {{
@@ -1209,43 +1209,75 @@ class CameraScreen extends React.Component{
                             />
                      </TouchableOpacity>
 
-                     <TouchableOpacity
-                       onPress = {() => this._openCameraRoll()}
-                       style = {{
-                         position: 'absolute',
-                         bottom: '5%',
-                         left:'5%',
-                       }}>
-                       <Instagram
-                         style={{top:0, position:'absolute'}}
-                         strokeWidth={2}
-                         stroke = "#d9d9d9"
-                         height = {40}
-                         width = {40}/>
-                       <Instagram
-                         stroke = 'white'
-                         height = {40}
-                         width = {40}/>
-                     </TouchableOpacity>
+                     {
+                       this.state.shareToInsta ?
 
-                     <TouchableOpacity
-                       onPress = {() => this.downloadFile()}
-                       style = {{
-                         position: 'absolute',
-                         bottom: '5%',
-                         left:'18%',
-                       }}>
-                       <Download
-                         style={{top:0, position:'absolute'}}
-                         strokeWidth={2}
-                         stroke = "#d9d9d9"
-                         height = {40}
-                         width = {40}/>
-                       <Download
-                         stroke = 'white'
-                         height = {40}
-                         width = {40}/>
-                     </TouchableOpacity>
+                       <TouchableOpacity
+                         onPress = {() => this.onInstaDeactivate()}
+                         style = {{
+                           position: 'absolute',
+                           bottom: '5%',
+                           left:'5%',
+                         }}>
+                         <Instagram
+                           style={{top:0, position:'absolute'}}
+                           strokeWidth={2}
+                           stroke = "purple"
+                           height = {45}
+                           width = {45}/>
+                         <Instagram
+                           stroke = 'purple'
+                           height = {45}
+                           width = {45}/>
+                       </TouchableOpacity>
+
+
+                       :
+
+                       <TouchableOpacity
+                         onPress = {() => this.onInstaActivate()}
+                         style = {{
+                           position: 'absolute',
+                           bottom: '5%',
+                           left:'5%',
+                         }}>
+                         <Instagram
+                           style={{top:0, position:'absolute'}}
+                           strokeWidth={2}
+                           stroke = "#d9d9d9"
+                           height = {45}
+                           width = {45}/>
+                         <Instagram
+                           stroke = 'white'
+                           height = {45}
+                           width = {45}/>
+                       </TouchableOpacity>
+
+
+                     }
+
+                     {/*
+                       <TouchableOpacity
+                         onPress = {() => this.downloadFile()}
+                         style = {{
+                           position: 'absolute',
+                           bottom: '5%',
+                           left:'18%',
+                         }}>
+                         <Download
+                           style={{top:0, position:'absolute'}}
+                           strokeWidth={2}
+                           stroke = "#d9d9d9"
+                           height = {40}
+                           width = {40}/>
+                         <Download
+                           stroke = 'white'
+                           height = {40}
+                           width = {40}/>
+                       </TouchableOpacity>
+
+                       */}
+
                 </View>
                 <GoalDropDown
                   cancel = {this.onClearSelectedGoal}

@@ -496,12 +496,6 @@ class InfiniteScrollFlatNew extends React.Component{
       groupPost = this.props.groupPost
     }
 
-
-    console.log("groupid: "+groupId)
-    console.log("closeID: "+closeId)
-    console.log("creator id: "+creatorId)
-    console.log("your id:"+this.props.id)
-
     return(
       <SafeAreaView style = {{flex: 1}}>
 
