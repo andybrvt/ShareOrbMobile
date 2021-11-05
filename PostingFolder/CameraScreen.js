@@ -731,6 +731,9 @@ class CameraScreen extends React.Component{
         }, 1500)
 
       })
+      .catch(err => {
+        alert(err)
+      })
 
       this.onCancelPhoto();
       this.props.closeShowCamera()

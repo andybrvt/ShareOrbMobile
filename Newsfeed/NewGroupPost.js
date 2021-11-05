@@ -18,6 +18,7 @@ import { Avatar } from 'react-native-elements';
 import FastImage from 'react-native-fast-image'
 import { Video, AVPlaybackStatus } from 'expo-av';
 import * as dateFns from 'date-fns';
+import InViewPort from "../RandomComponents/InViewPort";
 
 class NewGlobePost extends React.PureComponent{
   constructor(props){
@@ -49,6 +50,28 @@ class NewGlobePost extends React.PureComponent{
       name=first+" "+lastCut+"."
     }
     return name
+  }
+
+  playVideo = () => {
+    this.setState({
+      showMute: true
+    })
+    if(this.video){
+      this.video.playAsync();
+    }
+  }
+
+  pauseVideo = () => {
+    this.setState({
+      showMute: false
+    })
+    if(this.video){
+      this.video.pauseAsync();
+    }
+  }
+
+  handlePlaying = (isVisible) => {
+    isVisible ? this.playVideo() : this.pauseVideo();
   }
 
   render(){
@@ -113,16 +136,51 @@ class NewGlobePost extends React.PureComponent{
              );
           }}>
            {/* FastImage */}
-         <Image
-           style ={{
-             width: "100%",
-             height: '100%'
-           }}
-           resizeMode = "cover"
-           source = {{
-             uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
-           }}
-          />
+          {/*
+            <Image
+              style ={{
+                width: "100%",
+                height: '100%'
+              }}
+              resizeMode = "cover"
+              source = {{
+                uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
+              }}
+             />
+
+            */}
+            <View style = {{
+              width: "100%",
+              height: '100%'
+              }}>
+              <InViewPort
+                onChange = {this.handlePlaying}
+                >
+                <Video
+                  ref={ref => {this.video = ref}}
+                  style ={{
+                    width: "100%",
+                    height: '100%'
+                  }}
+                  source={{
+                    // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                    uri: video
+                  }}
+                  rate={1.0}
+                  isMuted={true}
+                  resizeMode="cover"
+                  isLooping
+                  shouldPlay
+                  volume={0.5}
+
+
+                   />
+
+              </InViewPort>
+
+            </View>
+
+
         </TouchableWithoutFeedback>
 
          <LinearGradient

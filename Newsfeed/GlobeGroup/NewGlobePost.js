@@ -285,12 +285,35 @@ class NewGlobePost extends React.Component{
     )
   }
 
+  playVideo = () => {
+    this.setState({
+      showMute: true
+    })
+    if(this.video){
+      this.video.playAsync();
+    }
+  }
+
+  pauseVideo = () => {
+    this.setState({
+      showMute: false
+    })
+    if(this.video){
+      this.video.pauseAsync();
+    }
+  }
+
+  handlePlaying = (isVisible) => {
+    isVisible ? this.playVideo() : this.pauseVideo();
+  }
+
   render(){
     let group = {}
     let groupPic = ""
     let groupName = ""
     let members = []
     let itemImage = ""
+    let video = ""
     let post = {}
     let groupLike = []
     let comment = []
@@ -298,6 +321,8 @@ class NewGlobePost extends React.Component{
     let username = ""
     let caption = ""
 
+
+    console.log(this.props.data, 'data')
     if(this.props.data){
       if(this.props.data.post){
 
@@ -313,6 +338,9 @@ class NewGlobePost extends React.Component{
         }
         if(this.props.data.post.itemImage){
           itemImage = `${global.IMAGE_ENDPOINT}` + this.props.data.post.itemImage
+        }
+        if(this.props.data.post.video){
+          video = `${global.IMAGE_ENDPOINT}` + this.props.data.video
         }
 
 
@@ -419,15 +447,50 @@ class NewGlobePost extends React.Component{
 
         <View style = {styles.bottomContainer}>
           {/* FastImage */}
-          <Image
-              style={styles.cover}
-              resizeMode = "cover"
-              source={{
-                uri: itemImage,
-                // priority: FastImage.priority.normal,
+          {
+            video === "" ?
 
-              }}
-               />
+            <Image
+                style={styles.cover}
+                resizeMode = "cover"
+                source={{
+                  uri: itemImage,
+                  // priority: FastImage.priority.normal,
+
+                }}
+                 />
+
+               :
+
+
+               <InViewPort
+                 onChange = {this.handlePlaying}
+                 >
+                 <Video
+                   ref={ref => {this.video = ref}}
+                   style = {styles.cover}
+                   source={{
+                     // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                     uri: video
+                   }}
+                   rate={1.0}
+                   isMuted={false}
+                   resizeMode="cover"
+                   isLooping
+                   shouldPlay
+                   volume={0.5}
+
+
+                    />
+
+               </InViewPort>
+
+
+
+
+          }
+
+
              <LinearGradient
                start={{x: 0, y: 0}} end={{x: 0, y: 1}}
                style = {{
