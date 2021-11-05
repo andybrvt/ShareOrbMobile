@@ -424,7 +424,7 @@ class App extends Component{
 
   componentDidMount(){
 
-    this.locationChecker()
+    // this.locationChecker()
 
     this.props.onTryAutoSignup();
     this.loadFonts();
@@ -434,7 +434,7 @@ class App extends Component{
       this.registerForPushNotificationsAsync()
 
 
-      this.connectToLocation()
+      // this.connectToLocation()
 
     }
 
@@ -453,7 +453,7 @@ class App extends Component{
 
     ExpoNotifications.addNotificationResponseReceivedListener(this.handleNotificationResponse);
 
-    this.interval = setInterval(() => this.locationChecker(), 60000)
+    // this.interval = setInterval(() => this.locationChecker(), 60000)
 
 
   }
@@ -571,7 +571,7 @@ class App extends Component{
 
 
   componentWillUnmount(){
-    clearInterval(this.interval)
+    // clearInterval(this.interval)
   }
 
   initialiseNotification(){

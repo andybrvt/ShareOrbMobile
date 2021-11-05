@@ -324,7 +324,6 @@ class NewGlobePost extends React.Component{
     let caption = ""
 
 
-    console.log(this.props.data, 'data')
     if(this.props.data){
       if(this.props.data.post){
 

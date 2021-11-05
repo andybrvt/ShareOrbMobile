@@ -18,7 +18,14 @@ import {
 
  class AdjModal extends React.Component{
 
-
+   // the different props
+   // onCancel
+   // onAction
+   // visible
+   // height
+   // width
+   // information
+   //
 
    onCancel = () => {
      this.props.onCancel()
@@ -49,16 +56,21 @@ import {
                    backgroundColor: "#ffffff",
                    // margin: 50,
                    padding: 30,
-                   borderRadius: 10,
+                   borderRadius: 15,
                    height: this.props.height,
                    width: this.props.width,
                    alignItems: 'center'
                    // flex: 1
                  }}>
                  <Text style = {{
+                     textAlign: 'center',
+                     fontSize: 25,
+                     marginBottom: 10
+                   }}>{this.props.title}</Text>
+                 <Text style = {{
                     textAlign: "center",
-                    fontSize: 20}}>
-                   Are you sure you want to delete this photo?
+                    fontSize: 16}}>
+                   {this.props.information}
                  </Text>
                  <TouchableOpacity
                    onPress = {() => this.onAction()}
@@ -66,7 +78,7 @@ import {
                    >
                    <Text
                      style = {styles.buttonText}
-                     >Accept</Text>
+                     >{this.props.acceptText}</Text>
                  </TouchableOpacity>
 
                  <View
@@ -74,7 +86,7 @@ import {
                    <Text
                      onPress = {() => this.onCancel()}
 
-                     > Nope, I'm good </Text>
+                     >{this.props.cancelText}</Text>
                  </View>
 
                </View>
