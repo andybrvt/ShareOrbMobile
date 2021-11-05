@@ -89,13 +89,13 @@ class GlobeGroup extends React.Component{
 
 
     renderItem = ({item}) => {
-      console.log("AAAAAAAA")
-      console.log(item)
-      console.log("BBBBBBBBB")
-      console.log(item.post.creator)
+      console.log("!!!!!!!!!")
+      console.log(item.post.people_like)
+      console.log(item.post.get_socialCalItemComment)
+      let likeCount=item.post.people_like.length
+      let commentCount=item.post.get_socialCalItemComment
       let groupPic=item.group.groupPic
       let groupName=item.group.group_name
-      console.log(groupName)
       let firstName=item.post.creator.first_name
       let lastName=item.post.creator.last_name
       let profilePic=item.post.creator.profile_picture
@@ -122,7 +122,8 @@ class GlobeGroup extends React.Component{
             this.props.navigation.navigate("Story",
             { 'story':item.post,
               'groupPic':groupPic,
-              'groupName':groupName
+              'groupName':groupName,
+          
           } );
           }}
         >
@@ -163,6 +164,7 @@ class GlobeGroup extends React.Component{
               height = {"80%"}
               width = {"45%"}
                />
+
           </View>
 
           <View style = {styles.sideHeaders}>
@@ -237,6 +239,7 @@ class GlobeGroup extends React.Component{
       if(this.props.globePosts){
         groupPosts = this.props.globePosts
       }
+
       return(
           <View style = {{flex: 1}}>
 
@@ -280,7 +283,8 @@ const mapDispatchToProps = dispatch => {
 const styles = StyleSheet.create({
   header: {
     height: 50,
-    backgroundColor: 'white',
+    // backgroundColor: '#1890ff',
+    backgroundColor:'white',
     width: '100%',
     flexDirection: 'row'
   },

@@ -152,7 +152,6 @@ class SwipeInfiniteScrollHolder extends React.Component{
                     }}>
                     <NoPosts width = {150} height = {150} />
                     <View style = {{
-
                       }}>
                       <Text style = {{
                           top: '15%',
@@ -181,26 +180,10 @@ class SwipeInfiniteScrollHolder extends React.Component{
                           color: '#1890ff'}}>Create a group</Text>
                       </TouchableOpacity>
                     </View>
-
                   </View>
-
                 </View>
-
-
-
-
             </ScrollableTabView>
-
-
-
-
-
-
         </View>
-
-
-
-
       </ScrollView>
     </View>
 

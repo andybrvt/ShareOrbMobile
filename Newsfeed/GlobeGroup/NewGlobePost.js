@@ -508,6 +508,8 @@ const styles = StyleSheet.create({
   },
   totalHolderContainer: {
     position: 'relative',
+    marginBottom:30,
+    // backgroundColor:'#fafafa',
     // height: 600,
     // borderTopWidth:1, borderColor:'#F0F0F0'
     // flexDirection: 'row'

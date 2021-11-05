@@ -67,7 +67,7 @@ class NewGlobePost extends React.PureComponent{
     groupPic=groupInfo.groupPic
     let month=dateFns.format(new Date(this.props.item.created_at), "MMM")
     let day=dateFns.format(new Date(this.props.item.created_at), "dd")
-    console.log(month, day)
+
     if(this.props.item) {
       if(this.props.groupInfo.groupName){
         groupName = this.props.groupInfo.groupName;
