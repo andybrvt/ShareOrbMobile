@@ -885,7 +885,7 @@ class App extends Component{
                         headerShown: false,
                         animationEnabled: false
                       }}
-                      name = "profile"
+                      name = "Profile"
                       // component= {this.createTabStack}
                       component= {NewProfile}
                       />

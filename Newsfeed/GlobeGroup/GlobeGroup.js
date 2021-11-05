@@ -89,9 +89,6 @@ class GlobeGroup extends React.Component{
 
 
     renderItem = ({item}) => {
-      console.log("!!!!!!!!!")
-      console.log(item.post.people_like)
-      console.log(item.post.get_socialCalItemComment)
       let likeCount=item.post.people_like.length
       let commentCount=item.post.get_socialCalItemComment
       let groupPic=item.group.groupPic
@@ -99,6 +96,7 @@ class GlobeGroup extends React.Component{
       let firstName=item.post.creator.first_name
       let lastName=item.post.creator.last_name
       let profilePic=item.post.creator.profile_picture
+      let groupID=item.id
       return(
           <View>
             {/*
@@ -123,7 +121,9 @@ class GlobeGroup extends React.Component{
             { 'story':item.post,
               'groupPic':groupPic,
               'groupName':groupName,
-          
+              'userID':this.props.id,
+              'groupID':groupID,
+
           } );
           }}
         >
@@ -145,7 +145,7 @@ class GlobeGroup extends React.Component{
         <View style = {styles.header}>
           <View style = {styles.sideHeaders}>
             <TouchableOpacity
-              onPress = {() => this.props.navigation.navigate("profile")}
+              onPress = {() => this.props.navigation.navigate("Profile")}
               >
               <Avatar
                 source = {{

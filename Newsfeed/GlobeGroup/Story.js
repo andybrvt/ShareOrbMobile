@@ -19,20 +19,33 @@ import { ArrowLeft, Heart, MessageCircle  } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 import * as dateFns from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 
 const { height } = Dimensions.get("window");
 const AnimatedVideo = Animated.createAnimatedComponent(Video);
 
-const ViewProfile = (username) => {
-  this.setState({
-    searchValue: "",
-    showSearch: false
-  })
-  if(username === this.props.username){
-    this.props.navigation.navigate("Profile");
+const onLike = ( likerId, groupID, notificationToken) => {
+  console.log(likerId, groupID)
+  WebSocketGlobeInstance.sendGroupLike(
+    groupID,
+    likerId
+  )
+}
+
+const onUnlike = (unlikerId, groupID, notificationToken) =>{
+  WebSocketGlobeInstance.sendGroupUnlike(
+    groupID,
+    unlikerId
+  )
+}
+
+
+
+const ViewProfile = (navigation, username) => {
+  if(username === "admin2"){
+    navigation.navigate("Profile");
   } else {
-    this.props.navigation.navigate("ProfilePage", {
+    navigation.navigate("ProfilePage", {
       username: username
     })
   }
@@ -42,8 +55,8 @@ const Story = ({ route, navigation }: StoryProps) => {
   console.log("STartttt")
 
   const story=route.params.story
-  console.log(route.params)
   const storyID=story.id
+  const groupID=route.params.groupID
   const firstName=story.creator.first_name
   const lastName=story.creator.last_name
   const username=story.creator.username
@@ -55,6 +68,8 @@ const Story = ({ route, navigation }: StoryProps) => {
   const profilePic=`${global.IMAGE_ENDPOINT}`+story.creator.profile_picture
   const month=dateFns.format(new Date(story.created_at), "MMMM").substring(0,3)
   const day=dateFns.format(new Date(story.created_at), "dd")
+  const userID=route.params.userID
+  const notificationToken=story.creator.notificationToken
   const isGestureActive = useSharedValue(false);
   const translation = useVector();
   const onGestureEvent = useAnimatedGestureHandler({
@@ -113,7 +128,14 @@ const Story = ({ route, navigation }: StoryProps) => {
           }}
           colors = {['transparent', '#000000']}>
         </LinearGradient>
-        <Animated.View style={{position:'absolute', padding:20, color:'white', zIndex:99, flexDirection:'row',}}>
+        {/*
+
+          <TouchableOpacity
+            onPress = {() => ViewProfile(navigation, "admin")}>
+          */}
+        <Animated.View
+          onPress = {() => ViewProfile(navigation, "admin")}
+          style={{position:'absolute', padding:20, color:'white', zIndex:99, flexDirection:'row',}}>
             <Animated.View style={{flexDirection:'row', alignItems:'center'}}>
               <Avatar
                 size={32}
@@ -176,14 +198,22 @@ const Story = ({ route, navigation }: StoryProps) => {
           <Animated.View>
 
           <Animated.View style={{alignItems:'center'}}>
-             <Animated.Text style={{marginTop:10,}}>
+            <TouchableOpacity
+              style={{marginTop:10,}}
+              onPress = {() => onLike(
+                userID,
+                groupID,
+                notificationToken,
+              )}
+              >
+
                <Heart
                  stroke = "white"
                  fill="white"
                  width ={27.5}
                  height = {27.5}
                />
-             </Animated.Text>
+             </TouchableOpacity>
 
              <Animated.Text style={styles.videoFooterNum}>
                {likeCount}

@@ -84,6 +84,8 @@ class NewGlobePost extends React.Component{
 
 
   onLike = ( likerId, notificationToken) => {
+    console.log("WOOOOO")
+    console.log(likerId, this.props.data.id)
     WebSocketGlobeInstance.sendGroupLike(
       this.props.data.id,
       likerId
