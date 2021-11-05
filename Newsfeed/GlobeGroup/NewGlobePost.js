@@ -84,6 +84,8 @@ class NewGlobePost extends React.Component{
 
 
   onLike = ( likerId, notificationToken) => {
+    console.log("WOOOOO")
+    console.log(likerId, this.props.data.id)
     WebSocketGlobeInstance.sendGroupLike(
       this.props.data.id,
       likerId
@@ -571,6 +573,8 @@ const styles = StyleSheet.create({
   },
   totalHolderContainer: {
     position: 'relative',
+    marginBottom:30,
+    // backgroundColor:'#fafafa',
     // height: 600,
     // borderTopWidth:1, borderColor:'#F0F0F0'
     // flexDirection: 'row'

@@ -19,25 +19,57 @@ import { ArrowLeft, Heart, MessageCircle  } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 import * as dateFns from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 
 const { height } = Dimensions.get("window");
 const AnimatedVideo = Animated.createAnimatedComponent(Video);
 
+const onLike = ( likerId, groupID, notificationToken) => {
+  console.log(likerId, groupID)
+  WebSocketGlobeInstance.sendGroupLike(
+    groupID,
+    likerId
+  )
+}
+
+const onUnlike = (unlikerId, groupID, notificationToken) =>{
+  WebSocketGlobeInstance.sendGroupUnlike(
+    groupID,
+    unlikerId
+  )
+}
+
+
+
+const ViewProfile = (navigation, username) => {
+  if(username === "admin2"){
+    navigation.navigate("Profile");
+  } else {
+    navigation.navigate("ProfilePage", {
+      username: username
+    })
+  }
+}
 
 const Story = ({ route, navigation }: StoryProps) => {
   console.log("STartttt")
+
   const story=route.params.story
-  console.log(route.params.story)
+  const storyID=story.id
+  const groupID=route.params.groupID
   const firstName=story.creator.first_name
   const lastName=story.creator.last_name
   const username=story.creator.username
   const caption=story.caption
+  const likeCount=story.people_like.length
+  const commentCount=story.get_socialCalItemComment.length
   const groupPic=`${global.IMAGE_ENDPOINT}`+route.params.groupPic
   const groupName=route.params.groupName
   const profilePic=`${global.IMAGE_ENDPOINT}`+story.creator.profile_picture
   const month=dateFns.format(new Date(story.created_at), "MMMM").substring(0,3)
   const day=dateFns.format(new Date(story.created_at), "dd")
+  const userID=route.params.userID
+  const notificationToken=story.creator.notificationToken
   const isGestureActive = useSharedValue(false);
   const translation = useVector();
   const onGestureEvent = useAnimatedGestureHandler({
@@ -96,7 +128,14 @@ const Story = ({ route, navigation }: StoryProps) => {
           }}
           colors = {['transparent', '#000000']}>
         </LinearGradient>
-        <Animated.View style={{position:'absolute', padding:20, color:'white', zIndex:99, flexDirection:'row',}}>
+        {/*
+
+          <TouchableOpacity
+            onPress = {() => ViewProfile(navigation, "admin")}>
+          */}
+        <Animated.View
+          onPress = {() => ViewProfile(navigation, "admin")}
+          style={{position:'absolute', padding:20, color:'white', zIndex:99, flexDirection:'row',}}>
             <Animated.View style={{flexDirection:'row', alignItems:'center'}}>
               <Avatar
                 size={32}
@@ -159,29 +198,43 @@ const Story = ({ route, navigation }: StoryProps) => {
           <Animated.View>
 
           <Animated.View style={{alignItems:'center'}}>
-             <Animated.Text style={{marginTop:10, marginBottom:15,}}>
-               <Heart
+            <TouchableOpacity
+              style={{marginTop:10,}}
+              onPress = {() => onLike(
+                userID,
+                groupID,
+                notificationToken,
+              )}
+              >
 
+               <Heart
                  stroke = "white"
                  fill="white"
                  width ={27.5}
                  height = {27.5}
                />
-             </Animated.Text>
-             {/*
+             </TouchableOpacity>
+
              <Animated.Text style={styles.videoFooterNum}>
-               23
+               {likeCount}
              </Animated.Text>
-             */}
+
            </Animated.View>
              <Animated.View style={{alignItems:'center'}}>
               <Animated.Text style={{marginTop:10}}>
                 <MessageCircle
+                  onPress={() => navigation.navigate("Comments",{
+                    postId: storyID,
+                    type: 'group'
+                  })}
                   stroke = "white"
                   fill="white"
                   width ={27.5}
                   height = {27.5}
                 />
+              </Animated.Text>
+              <Animated.Text style={styles.videoFooterNum}>
+                {commentCount}
               </Animated.Text>
               {/*
               <Animated.Text style={styles.videoFooterNum}>
