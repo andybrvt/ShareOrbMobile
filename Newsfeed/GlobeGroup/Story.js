@@ -1,5 +1,5 @@
 import { NavigationProp, RouteProp } from "@react-navigation/native";
-import React from "react";
+import React, {useState} from "react";
 import { StyleSheet, Dimensions, View, Text, TouchableOpacity} from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
@@ -15,11 +15,14 @@ import Animated, {
 import { useVector, snapPoint } from "react-native-redash";
 import { SharedElement } from "react-navigation-shared-element";
 import { Video } from "expo-av";
-import { ArrowLeft, Heart, MessageCircle  } from "react-native-feather";
+import { ArrowLeft, Heart, MessageCircle, Flag  } from "react-native-feather";
 import { Avatar } from 'react-native-elements';
 import * as dateFns from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
 import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
+import FlagModal from './FlagModal';
+
+
 
 const { height } = Dimensions.get("window");
 const AnimatedVideo = Animated.createAnimatedComponent(Video);
@@ -52,7 +55,8 @@ const ViewProfile = (navigation, username) => {
 }
 
 const Story = ({ route, navigation }: StoryProps) => {
-  console.log("STartttt")
+
+  const[showFlag, setFlag] = useState(false);
 
   const story=route.params.story
   const storyID=story.id
@@ -72,6 +76,13 @@ const Story = ({ route, navigation }: StoryProps) => {
   const notificationToken=story.creator.notificationToken
   const isGestureActive = useSharedValue(false);
   const translation = useVector();
+
+
+  const onReport = () => {
+    console.log('report this:', storyID)
+  }
+
+
   const onGestureEvent = useAnimatedGestureHandler({
     onStart: () => (isGestureActive.value = true),
     onActive: ({ translationX, translationY }) => {
@@ -133,6 +144,8 @@ const Story = ({ route, navigation }: StoryProps) => {
           <TouchableOpacity
             onPress = {() => ViewProfile(navigation, "admin")}>
           */}
+
+
         <Animated.View
           onPress = {() => ViewProfile(navigation, "admin")}
           style={{position:'absolute', padding:20, color:'white', zIndex:99, flexDirection:'row',}}>
@@ -191,9 +204,36 @@ const Story = ({ route, navigation }: StoryProps) => {
            </Animated.View>
         }
 
+        <Animated.View
+          style = {{
+            position: 'absolute',
+            top: '5%',
+            right: '3%',
+            zIndex: 99,
+            shadowColor:'black',
+            shadowOffset:{width:0,height:2},
+            shadowOpacity:0.2,
+          }}
+          >
+          <TouchableOpacity
+            onPress = {() => setFlag(true)}
+            >
+            <Flag
+              stroke = "white"
+              fill="white"
+              width ={27.5}
+              height = {27.5}
+              />
+          </TouchableOpacity>
+
+        </Animated.View>
+
 
         <Animated.View style={{position:'absolute', top:'60%',
           alignItems:'center',
+          shadowColor:'black',
+          shadowOffset:{width:0,height:2},
+          shadowOpacity:0.2,
           right:15, color:'white', zIndex:99, }}>
           <Animated.View>
 
@@ -220,7 +260,11 @@ const Story = ({ route, navigation }: StoryProps) => {
              </Animated.Text>
 
            </Animated.View>
-             <Animated.View style={{alignItems:'center'}}>
+             <Animated.View style={{
+               shadowColor:'black',
+               shadowOffset:{width:0,height:2},
+               shadowOpacity:0.2,
+                  alignItems:'center'}}>
               <Animated.Text style={{marginTop:10}}>
                 <MessageCircle
                   onPress={() => navigation.navigate("Comments",{
@@ -262,7 +306,11 @@ const Story = ({ route, navigation }: StoryProps) => {
           {story.video && (
 
             <AnimatedVideo
-               source={{uri:`${global.IMAGE_ENDPOINT}`+story.video}}
+               source={{
+                 // uri:`${global.IMAGE_ENDPOINT}`+story.video
+                 uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+
+               }}
               // source={story.video}
               rate={1.0}
               isMuted={false}
@@ -277,7 +325,21 @@ const Story = ({ route, navigation }: StoryProps) => {
 
           )}
         </SharedElement>
+
+        <FlagModal
+          onCancel = {() => setFlag(false)}
+          onAction = {() => onReport()}
+          visible = {showFlag}
+          width = {300}
+          title = {"Report Post"}
+          information = {"Report content because it contains inappropriate content. Inappropriate content includes, but not limited to: nudity, violence, or drug usage."}
+          acceptText = {"Report"}
+          cancelText = {"Cancel"}
+          />
       </Animated.View>
+
+
+
     </PanGestureHandler>
 
 
