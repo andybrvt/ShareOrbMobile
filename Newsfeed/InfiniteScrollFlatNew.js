@@ -138,7 +138,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
       this.state = {
         deleteCondition:false,
-        list: [1,2,3],
+        list: [],
         refreshing: false,
         start: 6,
         addMore: 5,
@@ -146,6 +146,15 @@ class InfiniteScrollFlatNew extends React.Component{
         currentMonth: dateFns.format(new Date(), "MMMM"),
         currentDay: dateFns.format(new Date(), "d")
       }
+  }
+
+  addToList = (vidId) => {
+    // this function will be use to add to the list of videos you are trying to
+    // delete
+
+    this.setState({
+      list:[...this.state.list, vidId]
+    })
   }
 
   componentDidMount(){
@@ -162,7 +171,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
   selectDelete = () => {
     this.setState({
-      deleteCondition: !this.state.deleteCondition
+      deleteCondition: !this.state.deleteCondition,
     })
   }
 
@@ -370,6 +379,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
       <NewGroupPost
         vid={video}
+        addTo = {this.addToList}
         triggerDelete={this.state.deleteCondition}
         changeVideo={this.changeVideo}
         value={this.state.video}
@@ -385,6 +395,10 @@ class InfiniteScrollFlatNew extends React.Component{
     );
   };
 
+  deleteSubmit = () => {
+    console.log(this.state.list)
+  }
+
   confirmDelete = () => {
 
       Alert.alert(
@@ -397,7 +411,7 @@ class InfiniteScrollFlatNew extends React.Component{
             style: "cancel"
           },
           { text: "Yes",
-            style:'destructive', onPress: () => this.userSubmit() }
+            style:'destructive', onPress: () => this.deleteSubmit() }
         ]
       )
 

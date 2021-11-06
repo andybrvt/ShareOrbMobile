@@ -30,8 +30,8 @@ class NewGlobePost extends React.PureComponent{
 
 
    onSelectVid = (vid) => {
-     console.log(vid)
-     console.log(vid.id)
+     console.log(vid.id, 'choose this')
+     this.props.addTo(vid.id)
      if(this.state.invitedPeople.some(item => vid.id == item.id)){
        const newList = this.state.invitedPeople.filter(function(el) { return el.id != vid.id });
        this.setState({
