@@ -19,6 +19,7 @@ import FastImage from 'react-native-fast-image'
 import { Video, AVPlaybackStatus } from 'expo-av';
 import * as dateFns from 'date-fns';
 import { Circle} from "react-native-feather";
+import InViewPort from "../RandomComponents/InViewPort";
 class NewGlobePost extends React.PureComponent{
   constructor(props){
       super(props)

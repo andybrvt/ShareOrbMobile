@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Alert,
   Dimensions,
   RefreshControl,
   TouchableWithoutFeedback,
@@ -382,6 +383,23 @@ class InfiniteScrollFlatNew extends React.Component{
     );
   };
 
+  confirmDelete = () => {
+
+      Alert.alert(
+        "Delete Posts",
+        "Are you sure you want to delete these posts?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "Yes",
+            style:'destructive', onPress: () => this.userSubmit() }
+        ]
+      )
+
+  }
 
   renderEmptyContainer(){
     return(
@@ -533,7 +551,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
         {this.state.deleteCondition?
           <TouchableOpacity
-            onPress = {() => this.onCameraNav()}
+            onPress = {() => this.confirmDelete()}
             style = {styles.trashButton}>
             <Trash2
               stroke="white" strokeWidth={2.5} width={20} height={20} />
