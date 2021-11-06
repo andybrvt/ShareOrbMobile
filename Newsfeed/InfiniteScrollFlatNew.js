@@ -397,6 +397,15 @@ class InfiniteScrollFlatNew extends React.Component{
 
   deleteSubmit = () => {
     console.log(this.state.list)
+    const formData = new FormData();
+
+    formData.append('posts', JSON.stringify(this.state.list))
+    authAxios.post(`${global.IP_CHANGE}/mySocialCal/deletePostMultiple`,
+      formData
+    ).then( res => {
+      this.onRefresh()
+    })
+
   }
 
   confirmDelete = () => {

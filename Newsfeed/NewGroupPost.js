@@ -150,28 +150,52 @@ class NewGlobePost extends React.PureComponent{
            onPress={() => this.onSelectVid(this.props.item)}
            >
            {this.state.invitedPeople.includes(this.props.item)?
-             <Image
-               style ={{
-                 width: "100%",
-                 height: '100%',
-                 opacity:0.3,
-               }}
-               resizeMode = "cover"
-               source = {{
-                 uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
-               }}
-              />
+
+               <Video
+                 ref={ref => {this.video = ref}}
+                 style ={{
+                   width: "100%",
+                   height: '100%',
+                   opacity: 0.3
+                 }}
+                 source={{
+                   // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                   uri: video
+                 }}
+                 rate={1.0}
+                 isMuted={true}
+                 resizeMode="cover"
+                 isLooping
+                 shouldPlay
+                 volume={0.5}
+
+
+                  />
+
+
              :
-             <Image
-               style ={{
-                 width: "100%",
-                 height: '100%'
-               }}
-               resizeMode = "cover"
-               source = {{
-                 uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
-               }}
-              />
+
+               <Video
+                 ref={ref => {this.video = ref}}
+                 style ={{
+                   width: "100%",
+                   height: '100%'
+                 }}
+                 source={{
+                   // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                   uri: video
+                 }}
+                 rate={1.0}
+                 isMuted={true}
+                 resizeMode="cover"
+                 isLooping
+                 shouldPlay
+                 volume={0.5}
+
+
+                  />
+
+
            }
 
           </TouchableWithoutFeedback>
