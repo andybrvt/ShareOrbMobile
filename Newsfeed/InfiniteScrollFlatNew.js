@@ -426,9 +426,12 @@ class InfiniteScrollFlatNew extends React.Component{
   }
 
   listHeader = () => {
+    const creatorId = this.props.route.params.creator
     const groupPic = this.props.route.params.groupPic
     const groupName = this.props.route.params.groupName
     const groupId = this.props.route.params.orbId
+
+    console.log(this.props.id, creatorId)
     return(
       <View style = {styles.header}>
         <View style={{flexDirection:'row'}}>
@@ -459,12 +462,24 @@ class InfiniteScrollFlatNew extends React.Component{
               style={styles.roundButton1}>
               <Users stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={{marginTop:50}}
-              onPress={() => this.selectDelete()}
-              >
-              <Edit2 stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
-            </TouchableOpacity>
+
+
+            {
+              this.props.id === creatorId ?
+
+              <TouchableOpacity
+                style={{marginTop:50}}
+                onPress={() => this.selectDelete()}
+                >
+                <Edit2 stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
+              </TouchableOpacity>
+
+              :
+              null
+
+            }
+
+
           </View>
         </View>
       </View>
@@ -566,7 +581,12 @@ class InfiniteScrollFlatNew extends React.Component{
           </TouchableOpacity>
 
           :
-          <View style = {styles.videoButton}>
+          <View style = {{
+              position: 'absolute',
+              bottom: '3%',
+              alignSelf: 'center',
+              width: '45%',
+            }}>
         {
           groupId === closeId ?
 
@@ -585,10 +605,14 @@ class InfiniteScrollFlatNew extends React.Component{
 
           :
 
+          <TouchableOpacity
+            style = {styles.videoButton}
+            onPress = {() => this.onCameraNav()}
 
-            <TouchableOpacity
+            >
+
+            <View
               style={{flexDirection:'row', alignItems:'center'}}
-              onPress = {() => this.onCameraNav()}
               >
               <Video1
                 stroke="white" strokeWidth={2.5} width={20} height={20} />
@@ -599,7 +623,9 @@ class InfiniteScrollFlatNew extends React.Component{
                   fontFamily:'Nunito-SemiBold',
                 }}>  Share</Text>
 
-            </TouchableOpacity>
+            </View>
+
+          </TouchableOpacity>
 
 
           : null
@@ -730,15 +756,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'limegreen',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '45%',
-    alignSelf: 'center',
+    width: '100%',
     borderRadius: 25,
     height: 40,
     shadowColor:'black',
     shadowOffset:{width:0,height:2},
     shadowOpacity:0.5,
-    position: 'absolute',
-    bottom: '3%',
+    position:'relative'
   },
 
   trashButton: {
@@ -767,15 +791,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '50%',
-    alignSelf: 'center',
+    width: '100%',
     borderRadius: 25,
-    height: 45,
+    height: 40,
     shadowColor:'black',
     shadowOffset:{width:0,height:2},
     shadowOpacity:0.5,
-    position: 'absolute',
-    bottom: '3%',
+    position:'relative'
+
   }
 })
 
