@@ -60,6 +60,17 @@ const ViewProfile = (navigation, username, creator) => {
   }
 }
 
+const ViewGroup = (navigation, creator, orbId, groupName, groupPic) => {
+  // creator has to be the id
+
+  navigation.navigate("groupOrb",{
+    creator: creator,
+    orbId: orbId,
+    groupName: groupName,
+    groupPic:groupPic
+  })
+}
+
 const Story = ({ route, navigation }: StoryProps) => {
 
   const[showFlag, setFlag] = useState(false);
@@ -67,6 +78,7 @@ const Story = ({ route, navigation }: StoryProps) => {
   const story=route.params.story
   const storyID=story.id
   const groupID=route.params.groupID
+  const creatorId = story.creator.id
   const firstName=story.creator.first_name
   const lastName=story.creator.last_name
   const username=story.creator.username
@@ -158,7 +170,7 @@ const Story = ({ route, navigation }: StoryProps) => {
 
 
         <TouchableOpacity
-          onPress = {() => ViewProfile(navigation,curUser, username)}
+          onPress = {() => ViewGroup(navigation, creatorId, groupID, groupName, route.params.groupPic)}
           style={{position:'absolute', padding:20, color:'white', zIndex:99, flexDirection:'row',}}>
             <Animated.View style={{flexDirection:'row', alignItems:'center'}}>
 
@@ -184,13 +196,19 @@ const Story = ({ route, navigation }: StoryProps) => {
               flexWrap:'wrap',flexDirection:'row',
                alignItems:'center'
                }}>
-               <Avatar
-                 size={25}
-                 rounded
-                 source = {{
-                   uri:profilePic,
-                 }}
-               />
+               <TouchableOpacity
+                 onPress = {() => ViewProfile(navigation,curUser, username)}
+
+                 >
+                 <Avatar
+                   size={25}
+                   rounded
+                   source = {{
+                     uri:profilePic,
+                   }}
+                 />
+               </TouchableOpacity>
+
               <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
               <Animated.Text style={{marginTop:10}}>
                   <Animated.Text style={styles.videoFooterCaption}>{caption}</Animated.Text>
@@ -204,13 +222,19 @@ const Story = ({ route, navigation }: StoryProps) => {
             flexWrap:'wrap',flexDirection:'row',
              alignItems:'center'
              }}>
-             <Avatar
-               size={25}
-               rounded
-               source = {{
-                 uri:profilePic,
-               }}
-             />
+
+             <TouchableOpacity
+               onPress = {() => ViewProfile(navigation,curUser, username)}
+               >
+               <Avatar
+                 size={25}
+                 rounded
+                 source = {{
+                   uri:profilePic,
+                 }}
+               />
+             </TouchableOpacity>
+
              <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
              </Animated.View>
            </Animated.View>

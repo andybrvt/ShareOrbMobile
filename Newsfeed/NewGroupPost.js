@@ -84,6 +84,7 @@ class NewGlobePost extends React.PureComponent{
     let vid=""
     let groupName="";
     let groupPic="";
+    let groupId = "";
     let groupInfo=this.props.groupInfo
     vid = this.props.vid
     groupName=groupInfo.groupName
@@ -94,6 +95,9 @@ class NewGlobePost extends React.PureComponent{
     if(this.props.item) {
       if(this.props.groupInfo.groupName){
         groupName = this.props.groupInfo.groupName;
+      }
+      if(this.props.groupInfo.id){
+        groupId = this.props.groupInfo.id
       }
       if(this.props.groupInfo.groupPic){
         groupPic = this.props.groupInfo.groupPic;
@@ -127,11 +131,13 @@ class NewGlobePost extends React.PureComponent{
          onPress={() => {
            this.props.navigation.navigate("Story",
              {
-               'video':`${global.IMAGE_ENDPOINT}`+this.props.item.video,
-               day:day,
+                day:day,
                'groupName':groupName,
                'groupPic':groupPic,
+               "userId":this.props.id,
+               "groupId": groupId,
                'story':this.props.item,
+               "curUser": this.props.username
              }
              );
           }}>

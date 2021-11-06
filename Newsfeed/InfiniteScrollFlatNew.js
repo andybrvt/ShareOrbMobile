@@ -370,6 +370,8 @@ class InfiniteScrollFlatNew extends React.Component{
         navigation={this.props.navigation}
         item = {item}
         setName = {this.setName}
+        username = {this.props.username}
+        id = {this.props.id}
         />
 
 

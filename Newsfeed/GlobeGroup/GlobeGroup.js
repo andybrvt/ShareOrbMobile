@@ -96,7 +96,7 @@ class GlobeGroup extends React.Component{
       let firstName=item.post.creator.first_name
       let lastName=item.post.creator.last_name
       let profilePic=item.post.creator.profile_picture
-      let groupID=item.id
+      let groupID=item.group.id
       return(
           <View>
             {/*
