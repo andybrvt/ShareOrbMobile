@@ -21,6 +21,7 @@ import * as dateFns from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
 import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import FlagModal from './FlagModal';
+import authAxios from '../../util';
 
 
 
@@ -80,6 +81,11 @@ const Story = ({ route, navigation }: StoryProps) => {
 
   const onReport = () => {
     console.log('report this:', storyID)
+
+    authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/flagPost/'+storyID)
+
+    setFlag(false)
+    alert("Post has been reported for further review")
   }
 
 
