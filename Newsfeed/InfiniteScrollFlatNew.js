@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Alert,
   Dimensions,
   RefreshControl,
   TouchableWithoutFeedback,
@@ -23,7 +24,7 @@ import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent} from 'react-native-redash/lib/module/v1';
-import { User, Users,ChevronsLeft, ArrowLeft} from "react-native-feather";
+import { User, Trash2, Users,ChevronsLeft, ArrowLeft, Edit2, CheckCircle} from "react-native-feather";
 import { Video as Video1} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
@@ -134,6 +135,17 @@ class InfiniteScrollFlatNew extends React.Component{
         // initialize the websocket here
         this.initialiseSmallGroup()
       }
+
+      this.state = {
+        deleteCondition:false,
+        list: [1,2,3],
+        refreshing: false,
+        start: 6,
+        addMore: 5,
+        hasMore: true,
+        currentMonth: dateFns.format(new Date(), "MMMM"),
+        currentDay: dateFns.format(new Date(), "d")
+      }
   }
 
   componentDidMount(){
@@ -145,6 +157,15 @@ class InfiniteScrollFlatNew extends React.Component{
     })
 
   }
+
+
+
+  selectDelete = () => {
+    this.setState({
+      deleteCondition: !this.state.deleteCondition
+    })
+  }
+
 
 
   componentDidUpdate(prevProps){
@@ -176,16 +197,12 @@ class InfiniteScrollFlatNew extends React.Component{
       //fetch the stuff here
       WebSocketSmallGroupInstance.fetchGroupPost(groupId)
     })
-
     // connect there now
     WebSocketSmallGroupInstance.connect(groupId)
-
   }
 
   componentWillUnmount(){
-
     WebSocketSmallGroupInstance.disconnect()
-
   }
 
   waitForSmallGroupsSocketConnection(callback){
@@ -202,24 +219,13 @@ class InfiniteScrollFlatNew extends React.Component{
   }
 
 
-  state = {
-    list: [1,2,3],
-    refreshing: false,
-    start: 6,
-    addMore: 5,
-    hasMore: true,
-    currentMonth: dateFns.format(new Date(), "MMMM"),
-    currentDay: dateFns.format(new Date(), "d")
-  }
 
   onRefresh = () => {
     this.setState({
       refreshing: true
     })
     const groupId = this.props.route.params.orbId
-
     WebSocketSmallGroupInstance.fetchGroupPost(groupId)
-
     this.setState({
       refreshing: false
     })
@@ -364,6 +370,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
       <NewGroupPost
         vid={video}
+        triggerDelete={this.state.deleteCondition}
         changeVideo={this.changeVideo}
         value={this.state.video}
         groupInfo={this.props.route.params}
@@ -378,6 +385,23 @@ class InfiniteScrollFlatNew extends React.Component{
     );
   };
 
+  confirmDelete = () => {
+
+      Alert.alert(
+        "Delete Posts",
+        "Are you sure you want to delete these posts?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "Yes",
+            style:'destructive', onPress: () => this.userSubmit() }
+        ]
+      )
+
+  }
 
   renderEmptyContainer(){
     return(
@@ -408,7 +432,7 @@ class InfiniteScrollFlatNew extends React.Component{
     return(
       <View style = {styles.header}>
         <View style={{flexDirection:'row'}}>
-          <View style={{flex:1}}>
+          <View style={{flex:1, }}>
             <TouchableOpacity
               onPress = {() => this.props.navigation.goBack(0)}
               >
@@ -429,11 +453,17 @@ class InfiniteScrollFlatNew extends React.Component{
             </Text>
             <Text style = {styles.groupName}>{groupName}</Text>
           </View>
-          <View style={{flex:1,}}>
+          <View style={{flexDirection:'column', alignItems:'flex-end', flex:1, }}>
             <TouchableOpacity
               onPress={() => this.navGroupInfo(groupId)}
               style={styles.roundButton1}>
               <Users stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{marginTop:50}}
+              onPress={() => this.selectDelete()}
+              >
+              <Edit2 stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
           </View>
         </View>
@@ -521,8 +551,22 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
 
+        {this.state.deleteCondition?
+          <TouchableOpacity
+            onPress = {() => this.confirmDelete()}
+            style = {styles.trashButton}>
+            <Trash2
+              stroke="white" strokeWidth={2.5} width={20} height={20} />
+            <Text style = {{
+                color: 'white',
+                fontSize: 18,
+                fontFamily:'Nunito-SemiBold',
+              }}>  Delete</Text>
 
+          </TouchableOpacity>
 
+          :
+          <View style = {styles.videoButton}>
         {
           groupId === closeId ?
 
@@ -542,24 +586,32 @@ class InfiniteScrollFlatNew extends React.Component{
           :
 
 
-          <TouchableOpacity
-            onPress = {() => this.onCameraNav()}
-            style = {styles.videoButton}>
-            <Video1
-              stroke="white" strokeWidth={2.5} width={20} height={20} />
-            <Text style = {{
-                color: 'white',
+            <TouchableOpacity
+              style={{flexDirection:'row', alignItems:'center'}}
+              onPress = {() => this.onCameraNav()}
+              >
+              <Video1
+                stroke="white" strokeWidth={2.5} width={20} height={20} />
+              <Text style = {{
+                  color: 'white',
 
-                fontSize: 18,
-                fontFamily:'Nunito-SemiBold',
-              }}>  Share</Text>
+                  fontSize: 18,
+                  fontFamily:'Nunito-SemiBold',
+                }}>  Share</Text>
 
-          </TouchableOpacity>
+            </TouchableOpacity>
 
 
           : null
 
         }
+
+</View>
+      }
+
+
+
+
 
 
         {this.state.video?
@@ -676,6 +728,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'limegreen',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '45%',
+    alignSelf: 'center',
+    borderRadius: 25,
+    height: 40,
+    shadowColor:'black',
+    shadowOffset:{width:0,height:2},
+    shadowOpacity:0.5,
+    position: 'absolute',
+    bottom: '3%',
+  },
+
+  trashButton: {
+    zIndex: 999,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f5222d',
     alignItems: 'center',
     justifyContent: 'center',
     width: '45%',
