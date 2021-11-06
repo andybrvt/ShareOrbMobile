@@ -18,16 +18,34 @@ import { Avatar } from 'react-native-elements';
 import FastImage from 'react-native-fast-image'
 import { Video, AVPlaybackStatus } from 'expo-av';
 import * as dateFns from 'date-fns';
-
+import { Circle} from "react-native-feather";
 class NewGlobePost extends React.PureComponent{
   constructor(props){
       super(props)
       this.state = {
-
+        invitedPeople:[],
       }
    }
-   ViewProfile = (username) => {
 
+
+   onSelectVid = (vid) => {
+     console.log(vid)
+     console.log(vid.id)
+     if(this.state.invitedPeople.some(item => vid.id == item.id)){
+       const newList = this.state.invitedPeople.filter(function(el) { return el.id != vid.id });
+       this.setState({
+         invitedPeople: newList
+       })
+     }
+     else{
+       this.setState({
+         invitedPeople: [...this.state.invitedPeople, vid],
+       })
+     }
+   }
+
+
+   ViewProfile = (username) => {
      if(username === this.props.username){
        this.props.navigation.navigate("Profile");
      } else {
@@ -100,6 +118,39 @@ class NewGlobePost extends React.PureComponent{
 
     return(
       <View style={styles.item}>
+        {this.props.triggerDelete?
+          <TouchableWithoutFeedback
+           onPress={() => this.onSelectVid(this.props.item)}
+           >
+           {this.state.invitedPeople.includes(this.props.item)?
+             <Image
+               style ={{
+                 width: "100%",
+                 height: '100%',
+                 opacity:0.3,
+               }}
+               resizeMode = "cover"
+               source = {{
+                 uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
+               }}
+              />
+             :
+             <Image
+               style ={{
+                 width: "100%",
+                 height: '100%'
+               }}
+               resizeMode = "cover"
+               source = {{
+                 uri:  `${global.IMAGE_ENDPOINT}`+this.props.item.itemImage
+               }}
+              />
+           }
+
+          </TouchableWithoutFeedback>
+
+        :
+
         <TouchableWithoutFeedback
          onPress={() => {
            this.props.navigation.navigate("Story",
@@ -113,6 +164,7 @@ class NewGlobePost extends React.PureComponent{
              );
           }}>
            {/* FastImage */}
+
          <Image
            style ={{
              width: "100%",
@@ -124,6 +176,8 @@ class NewGlobePost extends React.PureComponent{
            }}
           />
         </TouchableWithoutFeedback>
+        }
+
 
          <LinearGradient
            start={{x: 0, y: 0}} end={{x: 0, y:1.25}}
@@ -135,7 +189,40 @@ class NewGlobePost extends React.PureComponent{
            }}
            colors = {['transparent', '#000000']}>
          </LinearGradient>
+         <View style = {{
+           position: 'absolute',
+           width: '100%',
+           top: '0%',
+           justifyContent:'flex-end',
+           height: "20%",
+           // backgroundColor:'red',
+           flexDirection:'row',
+           alignItems:'center',
+         }}>
+         {this.props.triggerDelete?
+          <View>
+             {this.state.invitedPeople.includes(this.props.item)?
+             <View style={{right:'20%'}}>
+               <Circle
+               stroke = "white"
+               fill="#1890ff"
+               height = {20}
+               width = {20} />
+             </View>
+             :
+             <View style={{right:'20%'}}>
+               <Circle
+               stroke = "white"
+               height = {20}
+               width = {20} />
+             </View>}
+           </View>
+             :
+             null
 
+         }
+
+         </View>
          <View style = {{
            position: 'absolute',
            width: '100%',
