@@ -45,12 +45,17 @@ const onUnlike = (unlikerId, groupID, notificationToken) =>{
 
 
 
-const ViewProfile = (navigation, username) => {
-  if(username === "admin2"){
+const ViewProfile = (navigation, username, creator) => {
+  // usename will be the person clicking on it
+  // the creator will be the creator of the post
+
+  console.log(username, creator)
+
+  if(username === creator){
     navigation.navigate("Profile");
   } else {
     navigation.navigate("ProfilePage", {
-      username: username
+      username: creator
     })
   }
 }
@@ -77,7 +82,7 @@ const Story = ({ route, navigation }: StoryProps) => {
   const notificationToken=story.creator.notificationToken
   const isGestureActive = useSharedValue(false);
   const translation = useVector();
-
+  const curUser = route.params.curUser
 
   const onReport = () => {
     console.log('report this:', storyID)
@@ -152,10 +157,11 @@ const Story = ({ route, navigation }: StoryProps) => {
           */}
 
 
-        <Animated.View
-          onPress = {() => ViewProfile(navigation, "admin")}
+        <TouchableOpacity
+          onPress = {() => ViewProfile(navigation,curUser, username)}
           style={{position:'absolute', padding:20, color:'white', zIndex:99, flexDirection:'row',}}>
             <Animated.View style={{flexDirection:'row', alignItems:'center'}}>
+
               <Avatar
                 size={32}
                 rounded
@@ -168,7 +174,7 @@ const Story = ({ route, navigation }: StoryProps) => {
               <Animated.Text style={styles.videoFooterGroupName}>{groupName}</Animated.Text>
               <Animated.Text style={styles.videoFooterDate}>{month+" "+day}</Animated.Text>
             </Animated.View>
-        </Animated.View>
+        </TouchableOpacity>
 
         {/* bottom caption*/}
         {caption.length?
