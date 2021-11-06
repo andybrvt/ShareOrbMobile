@@ -16,7 +16,7 @@ import {
  } from 'react-native';
 
 
- class AdjModal extends React.Component{
+ class FlagModal extends React.Component{
 
    // the different props
    // onCancel
@@ -120,4 +120,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AdjModal;
+export default FlagModal;

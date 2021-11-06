@@ -123,7 +123,7 @@ class GlobeGroup extends React.Component{
               'groupName':groupName,
               'userID':this.props.id,
               'groupID':groupID,
-
+              "curUser": this.props.username
           } );
           }}
         >
@@ -270,7 +270,8 @@ const mapStateToProps = state => {
   return{
     globePosts: state.globeGroup.globePosts,
     id: state.auth.id,
-    profilePic: state.auth.profilePic
+    profilePic: state.auth.profilePic,
+    username: state.auth.username
   }
 }
 

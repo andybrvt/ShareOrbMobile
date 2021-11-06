@@ -9,7 +9,8 @@ import {
   Dimensions,
   TouchableOpacity,
   processColor,
-  FlatList
+  FlatList,
+  Modal
  } from 'react-native';
 import axios from "axios";
 import * as authActions from '../store/actions/auth';
@@ -23,6 +24,7 @@ import * as dateFns from 'date-fns';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import LoadingBar from '../RandomComponents/LoadingBar';
+import AdjModal from '../RandomComponents/AdjModal';
 import AppIntro from '../Login/AppIntro';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -38,6 +40,10 @@ import SwipeInfiniteScrollHolder from './SwipeInfiniteScrollHolder';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import GlobeGroup from './GlobeGroup/GlobeGroup';
 import { Globe, Map } from "react-native-feather";
+import * as Location from 'expo-location';
+import * as globeGroupActions from '../store/actions/globeGroup';
+
+
 
 const { Clock, interpolateColors, Extrapolate, cond, sub,divide, eq, add, call, set, Value, event, or } = Animated;
 const height = Dimensions.get('window').height
@@ -56,9 +62,80 @@ class NewsfeedView extends React.Component{
 
   }
 
+  connectToLocation = async() => {
+
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    this.setState({
+      showLocationModal:false
+    })
+
+    let location = await Location.getCurrentPositionAsync({});
+    console.log('location')
+    return location
+  }
+
+  getLocationPermission = async() => {
 
 
-  componentDidMount = () => {
+    const permission = await Location.getForegroundPermissionsAsync()
+
+    if(permission.granted === false){
+      this.setState({
+        showLocationModal: true
+      })
+
+    } else {
+      // if you already have it then run the interval command
+      this.interval = setInterval(() => this.locationChecker(), 10000)
+
+    }
+
+  }
+
+  locationChecker = async() => {
+    // this function will check for the closes orbs within a 5 mile radius
+    // and then return it,
+    const location = await this.connectToLocation()
+
+    // now put a backend call function so that you can grab the nears orb
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/getClosestOrb`, {
+      params: {
+        lat: location.coords.latitude,
+        long: location.coords.longitude
+      }
+    })
+    .then(res => {
+
+      // Now you put in redux
+
+      if(res.data !== false){
+        this.props.addCloseOrb(res.data)
+
+
+      } else {
+        // set the thing to false
+        this.props.nullCloseOrb()
+
+      }
+
+
+    })
+  }
+
+
+
+  componentDidMount(){
+
+    // this.connectToLocation()
+
+    this.getLocationPermission()
+
+
   }
 
   ViewProfile = (username) => {
@@ -83,6 +160,7 @@ class NewsfeedView extends React.Component{
       eventShow:false,
       upperStart: 6,
       newsFeedCondition:true,
+      showLocationModal: false
     }
     this.myRef = React.createRef();
     this.commentRef = React.createRef();
@@ -157,6 +235,7 @@ class NewsfeedView extends React.Component{
 
   ComponentWillUnmount(){
     // WebSocketSocialNewsfeedInstance.disconnect()
+    clearInterval(this.interval)
   }
 
 
@@ -178,6 +257,21 @@ class NewsfeedView extends React.Component{
 
    onSwipeRight(gestureState) {
      this.props.navigation.navigate("Test1")
+   }
+
+
+   onCloseLocationModal = () => {
+     this.setState({
+       showLocationModal: false
+     })
+   }
+
+   onOpenLocationModal = async() => {
+
+     await this.locationChecker()
+     this.interval = setInterval(() => this.locationChecker(), 10000)
+
+
    }
 
 
@@ -301,6 +395,18 @@ class NewsfeedView extends React.Component{
              </TouchableOpacity>
              */}
 
+             <AdjModal
+               onCancel = {this.onCloseLocationModal}
+               onAction = {this.onOpenLocationModal}
+               visible = {this.state.showLocationModal}
+               width = {300}
+               title = {"Enable Location?"}
+               information = {"You can only post if you are within 1 mile of an orb. We use your location to find avaliable businesses near you and thus allowing you to post direct to them."}
+               acceptText = {"Allow location"}
+               cancelText = {"Do not allow location"}
+                />
+
+
 
         </BackgroundContainer>
 
@@ -384,7 +490,11 @@ const mapDispatchToProps = dispatch => {
     unShowIntialInstructions: (bool) => dispatch(authActions.unShowIntialInstructions(bool)),
     authShowFirstPostModal: () => dispatch(authActions.authShowFirstPostModal()),
     authUnshowFirstPostModal: () => dispatch(authActions.authUnshowFirstPostModal()),
-    authSetActiveNewsfeedSlideNull: () => dispatch(authActions.authSetActiveNewsfeedSlideNull())
+    authSetActiveNewsfeedSlideNull: () => dispatch(authActions.authSetActiveNewsfeedSlideNull()),
+    addCloseOrb: (orb) => dispatch(globeGroupActions.addCloseOrb(orb)),
+    nullCloseOrb: () => dispatch(globeGroupActions.nullCloseOrb()),
+
+
   }
 }
 
