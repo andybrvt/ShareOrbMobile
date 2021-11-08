@@ -655,7 +655,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
         }
 
-</View>
+      </View>
       }
 
 
@@ -663,7 +663,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
 
-        {this.state.video?
+        { this.state.video?
           <View >
             <TouchableOpacity
               style = {{

@@ -24,6 +24,13 @@ import { authLogin, authInvited } from "../store/actions/auth";
 import * as ImagePicker from 'expo-image-picker';
 import { ArrowRightCircle } from "react-native-feather";
 import axios from "axios";
+import { WebView } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
+import { useAuthRequest, makeRedirectUri } from 'expo-auth-session';
+import InstagramLogin from 'react-native-instagram-login';
+// import CookieManager from '@react-native-community/cookies';
+WebBrowser.maybeCompleteAuthSession(); // <-- will close web window after authentication
+
 
 
 
@@ -36,6 +43,20 @@ class Login extends React.Component{
     inviteCode: "",
     loginLoading: false,
     inviteLoading: false,
+    token: '',
+  }
+
+
+  setIgToken = (data) => {
+    console.log('data', data)
+    this.setState({ token: data.access_token })
+  }
+
+  onClear() {
+    // CookieManager.clearAll(true)
+    //   .then((res) => {
+    //     this.setState({ token: null })
+    //   });
   }
 
   handleClick = () => {
@@ -192,8 +213,35 @@ class Login extends React.Component{
             </TouchableOpacity>
 
 
-
-
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => this.instagramLogin.show()}>
+          <Text style={{ color: 'white', textAlign: 'center' }}>Login now</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.btn, { marginTop: 10, backgroundColor: 'green' }]}
+          onPress={() => this.onClear()}>
+          <Text style={{ color: 'white', textAlign: 'center' }}>Logout</Text>
+        </TouchableOpacity>
+        <Text style={{ margin: 10 }}>Token: {this.state.token}</Text>
+        {this.state.failure && (
+          <View>
+            <Text style={{ margin: 10 }}>
+              failure: {JSON.stringify(this.state.failure)}
+            </Text>
+          </View>
+        )}
+        <InstagramLogin
+          ref={ref => (this.instagramLogin = ref)}
+          appId='414116966915736'
+          appSecret='55fb4d3e5ca2a04146a8ba4b95debb9e'
+          redirectUrl='https://shareorb.com/'
+          scopes={['user_profile', 'user_media']}
+          onLoginSuccess={this.setIgToken}
+          onLoginFailure={(data) => console.log(data)}
+        />
+      </View>
           </View>
 
         </View>
@@ -201,6 +249,7 @@ class Login extends React.Component{
     )
   }
 }
+
 
 
 const mapStateToProps = state => {
