@@ -126,6 +126,17 @@ import {
      )
    }
 
+   renderEmptyContainer(){
+     return(
+       <View style = {{
+           alignSelf: 'center'
+         }}>
+         <Text>You have no orbs to block someone</Text>
+       </View>
+     )
+   }
+
+
    render(){
      return(
        <View>
@@ -165,7 +176,7 @@ import {
                  </Text>
 
                  <FlatList
-
+                   ListEmptyComponent = {this.renderEmptyContainer}
                    style = {{
                      backgroundColor: 'whitesmoke',
                      width: '100%',
@@ -174,14 +185,32 @@ import {
                    keyExtractor={(item, index) => String(index)}
                    renderItem = {this.renderItem}
                     />
-                 <TouchableOpacity
-                   onPress = {() => this.onAction()}
-                   style = {styles.button}
-                   >
-                   <Text
-                     style = {styles.buttonText}
-                     >{this.props.acceptText}</Text>
-                 </TouchableOpacity>
+
+                  {
+                    this.state.selectedItems.length === 0 ?
+
+                    <View
+                      style = {styles.buttonB}
+                      >
+                      <Text
+                        style = {styles.buttonText}
+                        >{this.props.acceptText}</Text>
+                    </View>
+
+
+                    :
+
+                    <TouchableOpacity
+                      onPress = {() => this.props.onAction(this.state.selectedItems)}
+                      style = {styles.button}
+                      >
+                      <Text
+                        style = {styles.buttonText}
+                        >{this.props.acceptText}</Text>
+                    </TouchableOpacity>
+
+
+                  }
 
                  <View
                    style = {styles.cancelText}>
@@ -210,7 +239,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 30,
-    backgroundColor: "#1890ff",
+    backgroundColor: "red",
+
+  },
+
+  buttonB: {
+    position: "relative",
+    width: "90%",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    backgroundColor: "gray",
 
   },
   buttonText: {

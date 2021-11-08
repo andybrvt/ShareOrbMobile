@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Text,
   FlatList,
    SafeAreaView, View, TouchableOpacity, Button,StyleSheet, ScrollView, Dimensions } from 'react-native';
@@ -223,6 +224,36 @@ class ProfilePage extends React.Component{
     )
   }
 
+  onAlertBlock = (selected) => {
+
+
+    Alert.alert(
+      "Block user",
+      "Are you sure you want to block the users from these orbs?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Yes",
+          style:'destructive', onPress: () => this.onBlock(selected) }
+      ]
+
+    )
+
+  }
+
+  onBlock = (selected) => {
+    console.log(selected, 'block users')
+    formData.append('posts', JSON.stringify(selected))
+    authAxios.post(`${global.IP_CHANGE}/mySocialCal/deletePostMultiple`,
+      formData
+    ).then( res => {
+      this.onRefresh()
+    })
+  }
+
 
 
 
@@ -295,7 +326,7 @@ class ProfilePage extends React.Component{
 
          <BlockingModal
            onCancel = {this.onCloseBlockingModal}
-           onAction = {this.onOpenBlockingModal}
+           onAction = {this.onAlertBlock}
            visible = {this.state.showBlockingModal}
            yourGroup = {this.props.smallGroups}
            width = {350}
