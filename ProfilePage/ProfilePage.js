@@ -246,11 +246,15 @@ class ProfilePage extends React.Component{
 
   onBlock = (selected) => {
     console.log(selected, 'block users')
-    formData.append('posts', JSON.stringify(selected))
-    authAxios.post(`${global.IP_CHANGE}/mySocialCal/deletePostMultiple`,
+    console.log(this.state.profile.id)
+    const formData = new FormData()
+    formData.append('orbs', JSON.stringify(selected))
+    formData.append("curUser", JSON.stringify(this.state.profile.id))
+    authAxios.post(`${global.IP_CHANGE}/mySocialCal/blockUser`,
       formData
     ).then( res => {
-      this.onRefresh()
+      console.log('done')
+
     })
   }
 
