@@ -50,8 +50,8 @@ import {
            }}
              resizeMode = "cover"
              source = {{
-               uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-               // uri: `${global.IMAGE_ENDPOINT}`+video
+               // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+               uri: `${global.IMAGE_ENDPOINT}`+video
              }}
              rate={1.0}
              isMuted={false}

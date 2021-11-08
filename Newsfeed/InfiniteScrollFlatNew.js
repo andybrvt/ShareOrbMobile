@@ -160,9 +160,39 @@ class InfiniteScrollFlatNew extends React.Component{
   componentDidMount(){
     //add the most recents here
     const groupId = this.props.route.params.orbId
-    authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
+    const currentId = this.props.id
+    // do an axios call here that checks if you are blocked or not
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/checkBlocked/`+currentId+"/"+groupId)
     .then(res => {
-      // console.log(res.data)
+
+      if(res.data){
+        // if true then that means you are blocked
+        Alert.alert(
+          "Blocked",
+          "You are blocked from this orb",
+          [
+            {
+              text: "Ok",
+              style:'destructive',
+              onPress: () => this.props.navigation.goBack()
+            }
+          ]
+
+
+        )
+
+
+      } else {
+        authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
+        .then(res => {
+          // console.log(res.data)
+        })
+
+
+      }
+
+
+
     })
 
   }
@@ -589,86 +619,19 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
 
-        {this.state.deleteCondition?
-          <TouchableOpacity
-            onPress = {() => this.confirmDelete()}
-            style = {styles.trashButton}>
-            <Trash2
-              stroke="white" strokeWidth={2.5} width={20} height={20} />
-            <Text style = {{
-                color: 'white',
-                fontSize: 18,
-                fontFamily:'Nunito-SemiBold',
-              }}>  Delete</Text>
-
-          </TouchableOpacity>
-
-          :
-          <View style = {{
-              position: 'absolute',
-              bottom: '3%',
-              alignSelf: 'center',
-              width: '45%',
-            }}>
-        {
-          groupId === closeId ?
-
-          creatorId === this.props.id ?
-
-          <View
-            style = {styles.videoButtonD}>
-            <Text style = {{
-                color: 'white',
-                marginRight: 10,
-                fontSize: 18,
-                fontFamily:'Nunito-SemiBold',
-              }}>You are the owner</Text>
-
-          </View>
-
-          :
-
-          <TouchableOpacity
-            style = {styles.videoButton}
-            onPress = {() => this.onCameraNav()}
-
-            >
-
-            <View
-              style={{flexDirection:'row', alignItems:'center'}}
-              >
-              <Video1
-                stroke="white" strokeWidth={2.5} width={20} height={20} />
-              <Text style = {{
-                  color: 'white',
-
-                  fontSize: 18,
-                  fontFamily:'Nunito-SemiBold',
-                }}>  Share</Text>
-
-            </View>
-
-          </TouchableOpacity>
-
-
-          : null
-
-        }
-
-      </View>
-      }
 
 
 
 
 
 
-        { this.state.video?
+
+        {/*this.state.video?
           <View >
             <TouchableOpacity
               style = {{
                 position:'absolute', top:'5%', left:'5%',
-                zIndex:1000,
+                zIndex:100,
               }}
               onPress = {() => this.goBackMethod()}
               >
@@ -682,7 +645,7 @@ class InfiniteScrollFlatNew extends React.Component{
             style = {{
               width: '100%',
               height: '100%',
-              zIndex:999,
+              zIndex:99,
             }}
               resizeMode = "cover"
               source = {{
@@ -701,7 +664,7 @@ class InfiniteScrollFlatNew extends React.Component{
         :
         <View></View>
 
-      }
+      */}
 
 
 
@@ -721,6 +684,75 @@ class InfiniteScrollFlatNew extends React.Component{
              renderItem={this.renderItem}
              numColumns={3}
          />
+
+         {this.state.deleteCondition?
+           <TouchableOpacity
+             onPress = {() => this.confirmDelete()}
+             style = {styles.trashButton}>
+             <Trash2
+               stroke="white" strokeWidth={2.5} width={20} height={20} />
+             <Text style = {{
+                 color: 'white',
+                 fontSize: 18,
+                 fontFamily:'Nunito-SemiBold',
+               }}>  Delete</Text>
+
+           </TouchableOpacity>
+
+           :
+           <View style = {{
+               position: 'absolute',
+               bottom: '3%',
+               alignSelf: 'center',
+               width: '45%',
+             }}>
+         {
+           groupId === closeId ?
+
+           creatorId === this.props.id ?
+
+           <View
+             style = {styles.videoButtonD}>
+             <Text style = {{
+                 color: 'white',
+                 marginRight: 10,
+                 fontSize: 18,
+                 fontFamily:'Nunito-SemiBold',
+               }}>You are the owner</Text>
+
+           </View>
+
+           :
+
+           <TouchableOpacity
+             style = {styles.videoButton}
+             onPress = {() => this.onCameraNav()}
+
+             >
+
+             <View
+               style={{flexDirection:'row', alignItems:'center'}}
+               >
+               <Video1
+                 stroke="white" strokeWidth={2.5} width={20} height={20} />
+               <Text style = {{
+                   color: 'white',
+
+                   fontSize: 18,
+                   fontFamily:'Nunito-SemiBold',
+                 }}>  Share</Text>
+
+             </View>
+
+           </TouchableOpacity>
+
+
+           : null
+
+         }
+
+  </View>
+       }
 
      </SafeAreaView>
     )
