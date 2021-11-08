@@ -343,8 +343,8 @@ const Story = ({ route, navigation }: StoryProps) => {
 
             <AnimatedVideo
                source={{
-                 // uri:`${global.IMAGE_ENDPOINT}`+story.video
-                 uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                 uri:`${global.IMAGE_ENDPOINT}`+story.video
+                 // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
 
                }}
               // source={story.video}
