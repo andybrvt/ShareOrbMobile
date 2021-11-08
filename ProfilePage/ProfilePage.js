@@ -12,13 +12,14 @@ import BackgroundContainer from "../RandomComponents/BackgroundContainer";
 import SocialCalendar from '../SocialCalendar/SocialCalendar';
 import SocialCalendarHori from '../SocialCalendar/SocialCalendarHori';
 import SocialCalendarVonly from '../SocialCalendar/SocialCalendarVonly';
-import { ArrowLeft, Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus, Calendar, Clipboard} from "react-native-feather";
+import { ArrowLeft, Shield, Tag, Bookmark, Bell, Search, ChevronRight, Settings, UserPlus, Calendar, Clipboard} from "react-native-feather";
 import * as authActions from '../store/actions/auth';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import GoalContainer from '../GoalAlbum/GoalContainer';
 import { Avatar } from 'react-native-elements';
 import authAxios from '../util';
 import NoOrbs from './noOrbs.svg';
+import BlockingModal from './BlockingModal';
 
 // this will be used mostly for the other person profile
 // I want to make it seperate is because for your profile you can just
@@ -34,10 +35,23 @@ class ProfilePage extends React.Component{
 
     this.state = {
 
-      profile: {}
+      profile: {},
+      showBlockingModal: false
     }
   }
 
+  onCloseBlockingModal = () => {
+    this.setState({
+      showBlockingModal: false
+    })
+  }
+
+
+  onOpenBlockingModal = () => {
+    this.setState({
+      showBlockingModal: true
+    })
+  }
 
   initialiseProfile() {
 
@@ -134,7 +148,7 @@ class ProfilePage extends React.Component{
     console.log("orbId: "+item.id)
     console.log("groupName: "+item.group_name)
     console.log("groupPic: "+item.groupPic)
-    
+
     this.props.navigation.navigate("groupOrb", {
       creator: item.creator.id,
       orbId: item.id,
@@ -214,7 +228,7 @@ class ProfilePage extends React.Component{
 
 
   render(){
-    console.log(this.props, 'here in the props')
+    console.log(this.props.smallGroups, 'groupgroup grup')
 
     const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -248,6 +262,21 @@ class ProfilePage extends React.Component{
               <Text style={styles.textStyle}>{this.state.profile.username}</Text>
             </View>
 
+          <View style = {{
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              right: '5%',
+              top: '30%'
+            }}>
+            <TouchableOpacity
+              onPress = {() => this.onOpenBlockingModal()}
+              >
+              <Shield />
+            </TouchableOpacity>
+
+          </View>
+
 
         </View>
 
@@ -263,6 +292,18 @@ class ProfilePage extends React.Component{
           ListEmptyComponent={this.renderEmptyContainer}
 
            />
+
+         <BlockingModal
+           onCancel = {this.onCloseBlockingModal}
+           onAction = {this.onOpenBlockingModal}
+           visible = {this.state.showBlockingModal}
+           yourGroup = {this.props.smallGroups}
+           width = {350}
+           title = {"Block this user"}
+           information = {"Which orb do you want to block this user from?"}
+           acceptText = {"Block"}
+           cancelText = {"Cancel"}
+            />
       </BackgroundContainer>
     )
   }
@@ -325,7 +366,6 @@ const styles = StyleSheet.create({
 
   },
   viewStyle: {
-
 
     height:50,
     paddingTop:0,

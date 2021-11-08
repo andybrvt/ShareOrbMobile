@@ -75,7 +75,6 @@ class NewsfeedView extends React.Component{
     })
 
     let location = await Location.getCurrentPositionAsync({});
-    console.log('location')
     return location
   }
 
