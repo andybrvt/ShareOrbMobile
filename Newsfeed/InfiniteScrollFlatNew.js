@@ -160,9 +160,39 @@ class InfiniteScrollFlatNew extends React.Component{
   componentDidMount(){
     //add the most recents here
     const groupId = this.props.route.params.orbId
-    authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
+    const currentId = this.props.id
+    // do an axios call here that checks if you are blocked or not
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/checkBlocked/`+currentId+"/"+groupId)
     .then(res => {
-      // console.log(res.data)
+
+      if(res.data){
+        // if true then that means you are blocked
+        Alert.alert(
+          "Blocked",
+          "You are blocked from this orb",
+          [
+            {
+              text: "Ok",
+              style:'destructive',
+              onPress: () => this.props.navigation.goBack()
+            }
+          ]
+
+
+        )
+
+
+      } else {
+        authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
+        .then(res => {
+          // console.log(res.data)
+        })
+
+
+      }
+
+
+
     })
 
   }

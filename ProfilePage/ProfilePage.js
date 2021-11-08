@@ -253,7 +253,7 @@ class ProfilePage extends React.Component{
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/blockUser`,
       formData
     ).then( res => {
-      console.log('done')
+      this.onCloseBlockingModal()
 
     })
   }
