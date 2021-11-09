@@ -30,4 +30,6 @@ target 'ShareOrbMobile' do
 
   pod 'RNShare', :path => '../node_modules/react-native-share'
 
+  pod 'react-native-cookies', :path => '../node_modules/@react-native-community/cookies'
+
 end

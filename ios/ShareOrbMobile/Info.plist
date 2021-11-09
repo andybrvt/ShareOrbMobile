@@ -92,6 +92,9 @@
 		<string>Raleway-Regular.ttf</string>
 		<string>Raleway-SemiBold.ttf</string>
 		<string>Lato-Regular.ttf</string>
+		<string>Nunito-Bold.ttf</string>
+		<string>Nunito-Regular.ttf</string>
+		<string>Nunito-SemiBold.ttf</string>
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>

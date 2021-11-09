@@ -34,6 +34,15 @@ export default StyleSheet.create({
   },
 
 
+  btn: {
+    borderRadius: 5,
+    backgroundColor: 'orange',
+    height: 30,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
 
   logo: {
     alignItems: "center",

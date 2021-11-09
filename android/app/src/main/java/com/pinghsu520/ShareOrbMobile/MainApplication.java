@@ -6,6 +6,8 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.cookies.CookieManagerPackage;
+import com.reactnativecommunity.cookies.CookieManagerPackage;
 import cl.json.RNSharePackage;
 import cl.json.RNSharePackage;
 import com.imagepicker.ImagePickerPackage;
