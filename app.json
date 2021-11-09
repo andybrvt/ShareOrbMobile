@@ -32,9 +32,14 @@
         "NSPhotoLibraryUsageDescription": "Enabled access to your gallery so you can upload pictures and videos to your favorite business!",
         "NSCameraUsageDescription": "Enabled access to your camera so that you can take videos of your experiences at your favorite business.",
         "NSContactsUsageDescription": "This app requires microphone access to run the function properly",
-        "NSLocationAlwaysAndWhenInUseUsageDescription":"Enabled access to your location in order to find resturants and small businesses near you"
+        "NSLocationAlwaysAndWhenInUseUsageDescription":"Enabled access to your location in order to find resturants and small businesses near you",
+        "NSMicrophoneUsageDescription": "This app requires microphone access to be able to record audio for videos.",
+        "NSLocationAlwaysUsageDescription": "Enabled access to your location in order to find resturants and small businesses near you",
+        "NSLocationUsageDescription": "Enabled access to your location in order to find resturants and small businesses near you",
+        "NSLocationWhenInUseUsageDescription": "Find resturants and small businesses near you"
+
       },
-      "buildNumber": "28",
+      "buildNumber": "29",
 
     },
     "description": ""
