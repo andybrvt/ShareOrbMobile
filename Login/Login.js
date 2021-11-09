@@ -283,13 +283,9 @@ class Login extends React.Component{
         <TouchableOpacity
           style={styles.btn}
           onPress={() => this.instagramLogin.show()}>
-          <Text style={{ color: 'white', textAlign: 'center' }}>Login now</Text>
+          <Text style={{ color: 'white', textAlign: 'center' }}>Login/SignUp with Instagram</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.btn, { marginTop: 10, backgroundColor: 'green' }]}
-          onPress={() => this.onClear()}>
-          <Text style={{ color: 'white', textAlign: 'center' }}>Logout</Text>
-        </TouchableOpacity>
+
         <Text style={{ margin: 10 }}>Token: {this.state.token}</Text>
 
         {this.state.failure && (
