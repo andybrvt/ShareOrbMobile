@@ -34,7 +34,7 @@
         "NSContactsUsageDescription": "This app requires microphone access to run the function properly",
         "NSLocationAlwaysAndWhenInUseUsageDescription":"Enabled access to your location in order to find resturants and small businesses near you"
       },
-      "buildNumber": "27",
+      "buildNumber": "28",
 
     },
     "description": ""
