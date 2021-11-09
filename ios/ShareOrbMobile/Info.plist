@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>For choosing a photo.</string>
+	<string>Enabled access to your gallery so you can upload pictures and videos to your favorite business!</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires camera access to run the function properly</string>
+	<string>Enabled access to your camera so that you can take videos of your experiences at your favorite business.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>For saving a photo.</string>
+	<string>Enabled access to your gallery so you can upload pictures and videos to your favorite business!</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Invite your friends to make connections</string>
 	<key>NSMicrophoneUsageDescription</key>
