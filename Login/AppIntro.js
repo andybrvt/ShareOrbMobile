@@ -380,29 +380,49 @@ class AppIntro extends React.Component{
               closeNum = {'one'}
               openNum = {'two'}
                />
+             {/*
+               <SlideWrap visible = {this.state.two}>
+                 <BirthdaySlide
+                   {...this.props}
+                   showBirthdayAndroid={this.state.showDatePicker}
+                   currSlide={this.state.two}
+                   value = {this.state.dob}
+                   onChange = {this.onDobChange}
+                   closeModal = {this.closeModal}
+                   closeNum = {"two"}
+                   openModal = {this.openModal}
+                   openNum = {"three"}
+                    />
+               </SlideWrap>
+
+
+               */}
             <SlideWrap visible = {this.state.two}>
-              <BirthdaySlide
-                {...this.props}
-                showBirthdayAndroid={this.state.showDatePicker}
-                currSlide={this.state.two}
-                value = {this.state.dob}
-                onChange = {this.onDobChange}
-                closeModal = {this.closeModal}
-                closeNum = {"two"}
-                openModal = {this.openModal}
-                openNum = {"three"}
-                 />
-            </SlideWrap>
-            <SlideWrap visible = {this.state.three}>
               <BasicSignUp
                 un = {true}
                 pw = {false}
                 em = {false}
                 loading = {this.state.loading}
-                visible = {this.state.three}
+                visible = {this.state.two}
                 prompt = {"What is your username?"}
                 value = {this.state.username}
                 onChange = {this.onUsernameChange}
+                closeModal = {this.closeModal}
+                openModal = {this.openModal}
+                closeNum = {'two'}
+                openNum = {'three'}/>
+
+            </SlideWrap>
+            <SlideWrap visible = {this.state.three}>
+              <BasicSignUp
+                un = {false}
+                pw = {false}
+                em = {true}
+                loading = {this.state.loading}
+                visible = {this.state.three}
+                prompt = {"What is your email?"}
+                value = {this.state.email}
+                onChange = {this.onEmailChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
                 closeNum = {'three'}
@@ -410,47 +430,31 @@ class AppIntro extends React.Component{
 
             </SlideWrap>
             <SlideWrap visible = {this.state.four}>
-              <BasicSignUp
-                un = {false}
-                pw = {false}
-                em = {true}
-                loading = {this.state.loading}
-                visible = {this.state.four}
-                prompt = {"What is your email?"}
-                value = {this.state.email}
-                onChange = {this.onEmailChange}
-                closeModal = {this.closeModal}
-                openModal = {this.openModal}
-                closeNum = {'four'}
-                openNum = {'five'}/>
-
-            </SlideWrap>
-            <SlideWrap visible = {this.state.five}>
               <ProfilePicSlide
 
                 value = {this.state.profilePic}
                 onChange = {this.onPicChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
-                closeNum = {'five'}
-                openNum = {'six'}
+                closeNum = {'four'}
+                openNum = {'five'}
                 />
             </SlideWrap>
-            <SlideWrap visible = {this.state.six}>
+            <SlideWrap visible = {this.state.five}>
               <BasicSignUp
                 pw = {true}
                 un = {false}
                 em = {false}
                 loading = {this.state.loading}
                 signup = {this.onSignupSubmit}
-                visible = {this.state.six}
+                visible = {this.state.five}
                 prompt = {"Create a password"}
                 value = {this.state.password}
                 onChange = {this.onPasswordChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
-                closeNum = {'six'}
-                openNum = {'seven'}
+                closeNum = {'five'}
+                openNum = {'six'}
                  />
             </SlideWrap>
 

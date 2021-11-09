@@ -10,7 +10,8 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Platform
+  Platform,
+  Keyboard
  } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -86,7 +87,7 @@ class ProfilePicSlide extends React.Component{
       // in this case you will just change the picture right away
 
       // this.uploadProfileImage(pickerResult.uri);
-  
+
       this.props.onChange(pickerResult.uri);
       this.bs.current.snapTo(1)
     }
