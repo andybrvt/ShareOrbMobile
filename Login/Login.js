@@ -15,6 +15,7 @@ import {
   Keyboard,
  TouchableWithoutFeedback,
  ActivityIndicator,
+ AsyncStorage,
 
 } from "react-native";
 import styles from './LoginStyle';
@@ -28,6 +29,10 @@ import { WebView } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { useAuthRequest, makeRedirectUri } from 'expo-auth-session';
 import InstagramLogin from 'react-native-instagram-login';
+import authAxios from '../util';
+
+
+
 // import CookieManager from '@react-native-community/cookies';
 WebBrowser.maybeCompleteAuthSession(); // <-- will close web window after authentication
 
@@ -43,14 +48,69 @@ class Login extends React.Component{
     inviteCode: "",
     loginLoading: false,
     inviteLoading: false,
+
     token: '',
+    instaInfo:null,
+    test:null,
   }
 
 
   setIgToken = (data) => {
-    console.log('data', data)
     this.setState({ token: data.access_token })
+
+    // example of async storage
+    // AsyncStorage.setItem('foo', 'bar');
+    // AsyncStorage.getItem('foo').then(console.log); // 'bar'
+
+
+
+
+
+    // grab username of user
+    authAxios.get(`https://graph.instagram.com/me?fields=id,username&access_token=${data.access_token}`)
+    .then( res => {
+      this.setState({
+        instaInfo: res.data
+      })
+        AsyncStorage.setItem('instaToken', res.data);
+    })
+    // AsyncStorage.getItem("instaToken").then(console.log);
+
+    console.log("Test Instagram")
+    console.log(this.state.instaInfo.username)
+
+
+    if(this.state.instaInfo){
+      //grab instagram info
+      axios.request(
+      {
+        method: 'GET',
+        url: 'https://instagram-growth.p.rapidapi.com/v2/profile',
+        params: {username: 'pinghsu521'},
+        headers: {
+          'x-rapidapi-host': 'instagram-growth.p.rapidapi.com',
+          'x-rapidapi-key': '1e025a4798msh54c2561d9a1a213p1cb936jsn57712b6587f8'
+        }
+      }
+      ).then(function (response) {
+        console.log("BIG ISNTAGRAM INFO")
+      	console.log(response.data);
+        console.log(response.data.profile_pic_url)
+        console.log(response.data.full_name)
+        console.log(response.data.username)
+        this.setState({
+          instaInfo: res.data
+        })
+      }).catch(function (error) {
+      	console.error(error);
+      });
+    }
+
+    console.log(this.state.instaInfo)
+
+
   }
+
 
   onClear() {
     // CookieManager.clearAll(true)
@@ -139,6 +199,12 @@ class Login extends React.Component{
     if(token){
       this.props.navigation.navigate("LoadingScreen")
     }
+    console.log("MADE IT")
+    if(this.state.instaInfo){
+      console.log(this.state.instaInfo.id)
+      console.log(this.state.token)
+    }
+
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
         <View
@@ -225,6 +291,7 @@ class Login extends React.Component{
           <Text style={{ color: 'white', textAlign: 'center' }}>Logout</Text>
         </TouchableOpacity>
         <Text style={{ margin: 10 }}>Token: {this.state.token}</Text>
+
         {this.state.failure && (
           <View>
             <Text style={{ margin: 10 }}>
