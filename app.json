@@ -29,8 +29,10 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.shareorb.shareorbmobile",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "To access your photos",
-        "NSCameraUsageDescription": "To take more pictures"
+        "NSPhotoLibraryUsageDescription": "Enabled access to your gallery so you can upload pictures and videos to your favorite business!",
+        "NSCameraUsageDescription": "Enabled access to your camera so that you can take videos of your experiences at your favorite business.",
+        "NSContactsUsageDescription": "This app requires microphone access to run the function properly",
+        "NSLocationAlwaysAndWhenInUseUsageDescription":"Enabled access to your location in order to find resturants and small businesses near you"
       },
       "buildNumber": "27",
 
