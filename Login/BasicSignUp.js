@@ -23,6 +23,7 @@ import {
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Square, CheckSquare, ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
 import axios from "axios";
+import * as Linking from 'expo-linking';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -400,8 +401,20 @@ class BasicSignUp extends React.Component{
                   }
 
                   <Text style = {{
-                      fontSize: 10
-                    }}>Agree to terms of service and privacy policy</Text>
+                      fontSize: 10,
+                      color: 'white'
+                    }}>Agree to
+                    <Text style = {{
+                        color: 'blue'
+                      }}
+                      onPress = {() => Linking.openURL("https://shareorb.notion.site/ShareOrb-Terms-of-Service-8c737aea1ed1454da11fb08348743ff9")}
+                      > terms of service</Text> and
+
+                      <Text style = {{
+                        color: 'blue'
+                      }}
+                      onPress = {() => Linking.openURL("https://shareorb.notion.site/Privacy-Policy-9809f5f8a71343bbae98fb05a102d6d8")}
+                      > privacy policy</Text></Text>
                 </View>
 
 
