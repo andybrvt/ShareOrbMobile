@@ -278,33 +278,35 @@ class Login extends React.Component{
               <Text >Sign up</Text>
             </TouchableOpacity>
 
+            {/*
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => this.instagramLogin.show()}>
+            <Text style={{ color: 'white', textAlign: 'center' }}>Login/SignUp with Instagram</Text>
+          </TouchableOpacity>
 
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => this.instagramLogin.show()}>
-          <Text style={{ color: 'white', textAlign: 'center' }}>Login/SignUp with Instagram</Text>
-        </TouchableOpacity>
+          <Text style={{ margin: 10 }}>Token: {this.state.token}</Text>
 
-        <Text style={{ margin: 10 }}>Token: {this.state.token}</Text>
+          {this.state.failure && (
+            <View>
+              <Text style={{ margin: 10 }}>
+                failure: {JSON.stringify(this.state.failure)}
+              </Text>
+            </View>
+          )}
+          <InstagramLogin
+            ref={ref => (this.instagramLogin = ref)}
+            appId='414116966915736'
+            appSecret='55fb4d3e5ca2a04146a8ba4b95debb9e'
+            redirectUrl='https://shareorb.com/'
+            scopes={['user_profile', 'user_media']}
+            onLoginSuccess={this.setIgToken}
+            onLoginFailure={(data) => console.log(data)}
+          />
+        </View>
+              */}
 
-        {this.state.failure && (
-          <View>
-            <Text style={{ margin: 10 }}>
-              failure: {JSON.stringify(this.state.failure)}
-            </Text>
-          </View>
-        )}
-        <InstagramLogin
-          ref={ref => (this.instagramLogin = ref)}
-          appId='414116966915736'
-          appSecret='55fb4d3e5ca2a04146a8ba4b95debb9e'
-          redirectUrl='https://shareorb.com/'
-          scopes={['user_profile', 'user_media']}
-          onLoginSuccess={this.setIgToken}
-          onLoginFailure={(data) => console.log(data)}
-        />
-      </View>
           </View>
 
         </View>
