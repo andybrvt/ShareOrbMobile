@@ -73,25 +73,12 @@ class Login extends React.Component{
       {
         method: 'GET',
         url: 'https://instagram-growth.p.rapidapi.com/v2/profile',
-<<<<<<< HEAD
-        params: {username: 'pinghsu521', id:'', full_name:'', profile_pic_url:''},
-=======
         params: {username: res.data.username},
->>>>>>> 86d56cd8bb464c44ebd2399e8281f24647e4c999
         headers: {
           'x-rapidapi-host': 'instagram-growth.p.rapidapi.com',
           'x-rapidapi-key': '1e025a4798msh54c2561d9a1a213p1cb936jsn57712b6587f8'
         }
       }
-<<<<<<< HEAD
-      ).then(function (response) {
-        console.log("BIG ISNTAGRAM INFO")
-      	console.log(response.data);
-        console.log(response.data.id);
-        console.log(response.data.profile_pic_url)
-        console.log(response.data.full_name)
-        console.log(response.data.username)
-=======
     ).then(res => {
 
       const data = res.data
@@ -128,7 +115,6 @@ class Login extends React.Component{
 
       })
 
->>>>>>> 86d56cd8bb464c44ebd2399e8281f24647e4c999
 
       }).catch(function (error) {
 
@@ -163,7 +149,6 @@ class Login extends React.Component{
       const token = res.data.key;
       const formData = new FormData();
       const newPic = profilePic
-
       console.log(newPic)
 
       formData.append("profilePic", newPic)
@@ -358,7 +343,7 @@ class Login extends React.Component{
               style={styles.loginBtn1}
               onPress={() => this.instagramLogin.show()}>
               <Instagram
-
+                style={{right:5}}
                 stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
               <Text style={{ color: 'white', textAlign: 'center', fontSize:16 }}> Use Instagram</Text>
             </TouchableOpacity>
