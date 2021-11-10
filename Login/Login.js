@@ -154,7 +154,6 @@ class Login extends React.Component{
       const token = res.data.key;
       const formData = new FormData();
       const newPic = profilePic
-
       console.log(newPic)
 
       formData.append("profilePic", newPic)
@@ -352,7 +351,7 @@ class Login extends React.Component{
               onPress={() => this.instagramLogin.show()}
               >
               <Instagram
-
+                style={{right:5}}
                 stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
               <Text style={{ color: 'white', textAlign: 'center', fontSize:16 }}> Use Instagram</Text>
             </TouchableOpacity>
