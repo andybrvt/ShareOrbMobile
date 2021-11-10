@@ -23,7 +23,7 @@ import SvgUri from 'react-native-svg-uri';
 import { connect } from "react-redux";
 import { authLogin, authInvited } from "../store/actions/auth";
 import * as ImagePicker from 'expo-image-picker';
-import { ArrowRightCircle } from "react-native-feather";
+import { ArrowRightCircle, Instagram } from "react-native-feather";
 import axios from "axios";
 import { WebView } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
@@ -69,7 +69,7 @@ class Login extends React.Component{
       {
         method: 'GET',
         url: 'https://instagram-growth.p.rapidapi.com/v2/profile',
-        params: {username: 'pinghsu521'},
+        params: {username: 'pinghsu521', id:'', full_name:'', profile_pic_url:''},
         headers: {
           'x-rapidapi-host': 'instagram-growth.p.rapidapi.com',
           'x-rapidapi-key': '1e025a4798msh54c2561d9a1a213p1cb936jsn57712b6587f8'
@@ -82,9 +82,7 @@ class Login extends React.Component{
         console.log(response.data.profile_pic_url)
         console.log(response.data.full_name)
         console.log(response.data.username)
-        this.setState({
-          instaInfo: res.data
-        })
+
       }).catch(function (error) {
       	console.error(error);
       });
@@ -186,9 +184,17 @@ class Login extends React.Component{
 
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
+
         <View
           style = {styles.background}>
            <StatusBar style="auto" />
+
+             <TouchableOpacity
+               onPress = {() => this.handleSignupDirect()}
+               style = {styles.regSignup}>
+               <Text style={{color:'white', fontSize:12}} >Sign up</Text>
+             </TouchableOpacity>
+
            <View style = {styles.logo}>
              <MainLogo height = {100}  width = {200} />
            </View>
@@ -219,12 +225,8 @@ class Login extends React.Component{
             <Text>
               Username or Password Incorrect
             </Text>
-
             :
-
             null
-
-
           }
           <View style ={{
               flex: 1,
@@ -245,27 +247,25 @@ class Login extends React.Component{
 
                 <Text style = {styles.loginText}> Login</Text>
                }
-
             </TouchableOpacity>
 
             <Text>
               or
             </Text>
+
             <TouchableOpacity
-              onPress = {() => this.handleSignupDirect()}
-              style = {styles.signUpBtn}>
-              <Text >Sign up</Text>
+              style={styles.loginBtn1}
+              onPress={() => this.instagramLogin.show()}>
+              <Instagram
+
+                stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+              <Text style={{ color: 'white', textAlign: 'center', fontSize:16 }}> Use Instagram</Text>
             </TouchableOpacity>
-
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => this.instagramLogin.show()}>
-            <Text style={{ color: 'white', textAlign: 'center' }}>Login/SignUp with Instagram</Text>
-          </TouchableOpacity>
 
-          <Text style={{ margin: 10 }}>Token: {this.state.token}</Text>
-
+          {/*
+            <Text style={{ margin: 10 }}>Token: {this.state.token}</Text>
+          */}
           {this.state.failure && (
             <View>
               <Text style={{ margin: 10 }}>
