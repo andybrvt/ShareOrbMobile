@@ -23,6 +23,7 @@ import FlashMessage from "react-native-flash-message";
 import { showMessage, hideMessage } from "react-native-flash-message";
 import { faQrcode, faFire, faAppleAlt, Android, faRobot, faAndroid, faGoogle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import * as WebBrowser from 'expo-web-browser';
  // this class will be a page on its own where
  // you can upload pictures and write a caption after uploaidng
  // pictures
@@ -94,6 +95,15 @@ import * as authActions from '../store/actions/auth';
    navigatePrivacy = () => {
      this.props.navigation.navigate("Privacy")
    }
+
+
+   openToTermsAndConditions = () => {
+     WebBrowser.openBrowserAsync('https://shareorb.notion.site/ShareOrb-Terms-of-Service-8c737aea1ed1454da11fb08348743ff9');
+   }
+   openToPrivacyPolicyPage = () => {
+     WebBrowser.openBrowserAsync('https://shareorb.notion.site/Privacy-Policy-9809f5f8a71343bbae98fb05a102d6d8');
+   }
+
    handleLogOut = () => {
      this.props.logout()
      // this.props.navigation.navigate("Login")
@@ -216,31 +226,27 @@ import * as authActions from '../store/actions/auth';
            </View>
           <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.navigateUserInfo()}>
              <View style={{flexDirection:'row', padding:20}}>
-                <User stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
+                <User stroke="black" strokeWidth={2.5} width={18} height={18} style={{top:3}}/>
                 <Text style={styles.settingWord}> User Information</Text>
             </View>
           </TouchableHighlight>
-
             <View
               style = {{
                 flexDirection: 'row'
               }}
               underlayColor="#f0f0f0" onPress={() => this.cancelNotifications()}>
                 <View style={{
-                    flex: 4,
-                    flexDirection:'row',
-                    padding:20}}>
-                  <Bell stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
-                  <Text style={styles.settingWord}>Show Notifications</Text>
-
-
+                  flex: 3,
+                  flexDirection:'row',
+                  padding:20}}>
+                    <Bell stroke="black" strokeWidth={2.5} width={18} height={18}  style={{top:3}}/>
+                    <Text style={styles.settingWord}>Show Notifications</Text>
                  </View>
 
                 <View style = {{
                     flex: 1,
                     alignItems: 'center',
                     justifyContent: 'center',
-
                   }}>
                   {
                     this.state.loading === true ?
@@ -340,7 +346,12 @@ import * as authActions from '../store/actions/auth';
             }
 
 
-
+            <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.handleLogOut()}>
+              <View style={{flexDirection:'row', padding:20}}>
+               <LogOut stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
+                 <Text style={styles.settingWord}> Log Out</Text>
+             </View>
+           </TouchableHighlight>
 
 
 
@@ -354,13 +365,19 @@ import * as authActions from '../store/actions/auth';
            </View>
           </TouchableHighlight>
           */}
-        <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.handleLogOut()}>
-          <View style={{flexDirection:'row', padding:20}}>
-           <LogOut stroke="black" strokeWidth={2.5} width={20} height={20} style={{top:3}}/>
-             <Text style={styles.settingWord}> Log Out</Text>
-         </View>
-       </TouchableHighlight>
-       <View style={{flexDirection:'row', justifyContent:'center', marginTop:'75%'}}>
+        <View style={{top:'15%'}}>
+          <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.openToTermsAndConditions()}>
+             <View style={{flexDirection:'row', padding:20}}>
+                <Text style={styles.documentFonts}>Terms and Conditions</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight underlayColor="#f0f0f0" onPress={() => this.openToPrivacyPolicyPage()}>
+             <View style={{flexDirection:'row', padding:20}}>
+                <Text style={styles.documentFonts}> Privacy Policy</Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+       <View style={{flexDirection:'row', justifyContent:'center', marginTop:'35%'}}>
          <View style={{marginRight:'15%', }}>
 
 
@@ -425,10 +442,16 @@ import * as authActions from '../store/actions/auth';
      textAlign: 'center',
      fontFamily:'Nunito-SemiBold',
    },
+   documentFonts: {
+     left:5,
+     color:'gray',
+     fontSize:13,
+     fontFamily:'Nunito-SemiBold',
+   },
    settingWord: {
      left:5,
      color:'black',
-     fontSize:16,
+     fontSize:14,
      fontFamily:'Nunito-SemiBold',
    },
    roundButton2: {

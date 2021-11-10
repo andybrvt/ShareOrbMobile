@@ -327,7 +327,7 @@ class ProfilePage extends React.Component{
           ListEmptyComponent={this.renderEmptyContainer}
 
            />
-
+         
          <BlockingModal
            onCancel = {this.onCloseBlockingModal}
            onAction = {this.onAlertBlock}
