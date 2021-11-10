@@ -2,17 +2,16 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 
+
   scrollView: {
     position: 'relative',
     height: "100%"
   },
 
   background: {
-    position: 'relative',
     backgroundColor: '#fafafa',
-    flex: 1,
-
-    alignItems: 'center'
+    alignItems: 'center',
+    flex:1,
   },
 
   image: {
@@ -34,21 +33,45 @@ export default StyleSheet.create({
   },
 
 
+  loginBtn1: {
+
+    width: "70%",
+    borderRadius: 10,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1890ff",
+    flexDirection:'row',
+    // backgroundColor: "pink",
+  },
+
   btn: {
+    flexDirection:'row',
     borderRadius: 5,
     backgroundColor: 'orange',
     height: 30,
-    width: 100,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
 
+  regSignup:{
+    position: "absolute",
+    right:25,
+    width: "20%",
+    borderRadius: 30,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 50,
+    backgroundColor: "#b37feb",
+  },
 
   logo: {
     alignItems: "center",
     position: "relative",
-    top: "10%",
-    height: "25%",
+    height: "20%",
+    marginTop:'25%',
     // flex: 1,
   },
 
@@ -60,7 +83,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 50,
-    backgroundColor: "#1890ff",
+    backgroundColor: "#d9d9d9",
     // backgroundColor: "pink",
   },
 
