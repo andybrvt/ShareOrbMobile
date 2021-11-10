@@ -146,25 +146,26 @@ class Login extends React.Component{
     }).then(res => {
 
       console.log(res.data)
-      // const token = res.data.key;
-      // const formData = new FormData();
-      // const newPic = global.FILE_NAME_GETTER(profilePic)
-      //
-      //
-      // formData.append("profilePic", newPic)
-      //
-      //
-      // AsyncStorage.setItem('token', token)
-      //
-      // authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePic`,
-      //   formData
-      // ).then( res => {
-      //   this.setState({
-      //     loading:false
-      //   })
-      //   this.props.authSuccess(token);
-      //   this.props.navigation.navigate("")
-      // })
+      const token = res.data.key;
+      const formData = new FormData();
+      const newPic = profilePic
+
+      console.log(newPic)
+
+      formData.append("profilePic", newPic)
+
+
+      AsyncStorage.setItem('token', token)
+
+      authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePic`,
+        formData
+      ).then( res => {
+        this.setState({
+          loading:false
+        })
+        this.props.authSuccess(token);
+        this.props.navigation.navigate("")
+      })
 
 
     })
