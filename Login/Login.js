@@ -73,25 +73,14 @@ class Login extends React.Component{
       {
         method: 'GET',
         url: 'https://instagram-growth.p.rapidapi.com/v2/profile',
-<<<<<<< HEAD
-        params: {username: 'pinghsu521', id:'', full_name:'', profile_pic_url:''},
-=======
+
         params: {username: res.data.username},
->>>>>>> 86d56cd8bb464c44ebd2399e8281f24647e4c999
         headers: {
           'x-rapidapi-host': 'instagram-growth.p.rapidapi.com',
           'x-rapidapi-key': '1e025a4798msh54c2561d9a1a213p1cb936jsn57712b6587f8'
         }
       }
-<<<<<<< HEAD
-      ).then(function (response) {
-        console.log("BIG ISNTAGRAM INFO")
-      	console.log(response.data);
-        console.log(response.data.id);
-        console.log(response.data.profile_pic_url)
-        console.log(response.data.full_name)
-        console.log(response.data.username)
-=======
+
     ).then(res => {
 
       const data = res.data
@@ -128,7 +117,6 @@ class Login extends React.Component{
 
       })
 
->>>>>>> 86d56cd8bb464c44ebd2399e8281f24647e4c999
 
       }).catch(function (error) {
 
@@ -140,6 +128,9 @@ class Login extends React.Component{
 
     })
   }
+
+
+
 
 
   onSignupSubmit = (id, firstName, username, profilePic) => {
@@ -171,14 +162,16 @@ class Login extends React.Component{
 
       AsyncStorage.setItem('token', token)
 
-      authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePic`,
+      authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePicURL`,
         formData
       ).then( res => {
+
         this.setState({
           loading:false
         })
         this.props.authSuccess(token);
         this.props.navigation.navigate("")
+
       })
 
 
@@ -356,7 +349,8 @@ class Login extends React.Component{
 
             <TouchableOpacity
               style={styles.loginBtn1}
-              onPress={() => this.instagramLogin.show()}>
+              onPress={() => this.instagramLogin.show()}
+              >
               <Instagram
 
                 stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
