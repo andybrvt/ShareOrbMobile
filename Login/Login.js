@@ -62,26 +62,9 @@ class Login extends React.Component{
     // AsyncStorage.setItem('foo', 'bar');
     // AsyncStorage.getItem('foo').then(console.log); // 'bar'
 
-
-
-
-
     // grab username of user
     authAxios.get(`https://graph.instagram.com/me?fields=id,username&access_token=${data.access_token}`)
     .then( res => {
-      this.setState({
-        instaInfo: res.data
-      })
-        AsyncStorage.setItem('instaToken', res.data);
-    })
-    // AsyncStorage.getItem("instaToken").then(console.log);
-
-    console.log("Test Instagram")
-    console.log(this.state.instaInfo.username)
-
-
-    if(this.state.instaInfo){
-      //grab instagram info
       axios.request(
       {
         method: 'GET',
@@ -95,6 +78,7 @@ class Login extends React.Component{
       ).then(function (response) {
         console.log("BIG ISNTAGRAM INFO")
       	console.log(response.data);
+        console.log(response.data.id);
         console.log(response.data.profile_pic_url)
         console.log(response.data.full_name)
         console.log(response.data.username)
@@ -104,13 +88,8 @@ class Login extends React.Component{
       }).catch(function (error) {
       	console.error(error);
       });
-    }
-
-    console.log(this.state.instaInfo)
-
-
+    })
   }
-
 
   onClear() {
     // CookieManager.clearAll(true)
@@ -278,7 +257,6 @@ class Login extends React.Component{
               <Text >Sign up</Text>
             </TouchableOpacity>
 
-            {/*
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <TouchableOpacity
             style={styles.btn}
@@ -305,7 +283,7 @@ class Login extends React.Component{
             onLoginFailure={(data) => console.log(data)}
           />
         </View>
-              */}
+
 
           </View>
 
