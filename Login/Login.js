@@ -278,7 +278,7 @@ class Login extends React.Component{
               <Text >Sign up</Text>
             </TouchableOpacity>
 
-            {/*
+
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <TouchableOpacity
             style={styles.btn}
@@ -305,7 +305,7 @@ class Login extends React.Component{
             onLoginFailure={(data) => console.log(data)}
           />
         </View>
-              */}
+        
 
           </View>
 
