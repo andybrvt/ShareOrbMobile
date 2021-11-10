@@ -31,7 +31,7 @@ import { useAuthRequest, makeRedirectUri } from 'expo-auth-session';
 import InstagramLogin from 'react-native-instagram-login';
 import authAxios from '../util';
 import * as dateFns from 'date-fns';
-
+import LoadingModal from '../RandomComponents/LoadingModal';
 
 
 // import CookieManager from '@react-native-community/cookies';
@@ -49,7 +49,7 @@ class Login extends React.Component{
     inviteCode: "",
     loginLoading: false,
     inviteLoading: false,
-
+    loading: false,
     token: '',
     instaInfo:null,
     test:null,
@@ -57,7 +57,10 @@ class Login extends React.Component{
 
 
   setIgToken = (data) => {
-    this.setState({ token: data.access_token })
+    this.setState({
+      loading: true,
+      token: data.access_token
+    })
 
     // example of async storage
     // AsyncStorage.setItem('foo', 'bar');
@@ -104,6 +107,9 @@ class Login extends React.Component{
 
         const token = res.data.key
         AsyncStorage.setItem('token', token)
+        this.setState({
+          loading: false
+        })
         this.props.authSuccess(token)
 
       })
@@ -381,7 +387,14 @@ class Login extends React.Component{
 
           </View>
 
+          <LoadingModal
+            visible = {this.state.loading}
+             />
+
+
         </View>
+
+
       </TouchableWithoutFeedback>
     )
   }
