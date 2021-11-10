@@ -16,6 +16,7 @@ import {
  TouchableWithoutFeedback,
  ActivityIndicator,
  AsyncStorage,
+ KeyboardAvoidingView
 
 } from "react-native";
 import styles from './LoginStyle';
@@ -270,7 +271,11 @@ class Login extends React.Component{
 
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
-
+        <KeyboardAvoidingView
+          behavior="null"
+          keyboardVerticalOffset={300}
+          style={{flex:1}}
+        >
         <View
           style = {styles.background}>
            <StatusBar style="auto" />
@@ -335,7 +340,7 @@ class Login extends React.Component{
                }
             </TouchableOpacity>
 
-            <Text>
+            <Text style={{marginTop:10, marginBottom:10}}>
               or
             </Text>
 
@@ -343,9 +348,9 @@ class Login extends React.Component{
               style={styles.loginBtn1}
               onPress={() => this.instagramLogin.show()}>
               <Instagram
-                style={{right:5}}
+                style={{right:10}}
                 stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
-              <Text style={{ color: 'white', textAlign: 'center', fontSize:16 }}> Use Instagram</Text>
+              <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}> Use Instagram</Text>
             </TouchableOpacity>
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
@@ -362,6 +367,8 @@ class Login extends React.Component{
           <InstagramLogin
             ref={ref => (this.instagramLogin = ref)}
             appId='414116966915736'
+            // containerStyle={{width:'100%', height:'100%', backgroundColor:'red'}}
+            // wrapperStyle={{width:'100%', height:'100%', backgroundColor:'blue'}}
             appSecret='55fb4d3e5ca2a04146a8ba4b95debb9e'
             redirectUrl='https://shareorb.com/'
             scopes={['user_profile', 'user_media']}
@@ -374,6 +381,7 @@ class Login extends React.Component{
           </View>
 
         </View>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     )
   }

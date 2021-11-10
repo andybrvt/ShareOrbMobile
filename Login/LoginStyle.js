@@ -36,7 +36,7 @@ export default StyleSheet.create({
   loginBtn1: {
 
     width: "70%",
-    borderRadius: 10,
+    borderRadius: 5,
     height: 40,
     alignItems: "center",
     justifyContent: "center",
@@ -64,7 +64,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 50,
-    backgroundColor: "#b37feb",
+    backgroundColor: "#2f54eb",
   },
 
   logo: {
@@ -77,13 +77,13 @@ export default StyleSheet.create({
 
   loginBtn: {
     position: "relative",
-    width: "70%",
+    width: "50%",
     borderRadius: 10,
     height: 35,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50,
-    backgroundColor: "#d9d9d9",
+    marginTop: 25,
+    backgroundColor: "#2f54eb",
     // backgroundColor: "pink",
   },
 
