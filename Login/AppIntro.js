@@ -85,6 +85,15 @@ class AppIntro extends React.Component{
     resumeOnce:false,
     showDatePicker: true,
     loading:false,
+    agreeToTOS: false,
+  }
+
+  acceptTerms =() =>{
+    const terms = this.state.agreeToTOS
+
+    this.setState({
+      agreeToTOS: !terms
+    })
   }
 
   resumeVid = () =>  {
@@ -455,6 +464,8 @@ class AppIntro extends React.Component{
                 openModal = {this.openModal}
                 closeNum = {'five'}
                 openNum = {'six'}
+                termCondition = {this.state.agreeToTOS}
+                acceptTerms = {this.acceptTerms}
                  />
             </SlideWrap>
 

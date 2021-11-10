@@ -21,7 +21,7 @@ import {
 
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
+import { Square, CheckSquare, ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
 import axios from "axios";
 
 const width = Dimensions.get("window").width
@@ -290,29 +290,7 @@ class BasicSignUp extends React.Component{
             </TouchableWithoutFeedback>
 
 
-            {
-              this.props.pw ?
 
-              <View style = {{
-                  position: 'absolute',
-                  top: '70%',
-                }}>
-                <Text style = {{
-                  color: 'white'
-                  }}>At least 10 characters</Text>
-                <Text style = {{
-                  color: 'white'
-                  }}>At least 1 uppercase</Text>
-                <Text style = {{
-                  color: 'white'
-                  }}>At least 1 number</Text>
-              </View>
-
-              :
-
-              null
-
-            }
 
 
             <View
@@ -373,6 +351,71 @@ class BasicSignUp extends React.Component{
 
             </View>
 
+            {
+              this.props.pw ?
+
+              <View style = {{
+                  position: 'absolute',
+                  top: '70%',
+                  alignItems:'center'
+                }}>
+                <Text style = {{
+                  color: 'white'
+                  }}>At least 10 characters</Text>
+                <Text style = {{
+                  color: 'white'
+                  }}>At least 1 uppercase</Text>
+                <Text style = {{
+                  color: 'white'
+                  }}>At least 1 number</Text>
+                <View style = {{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    zIndex: 99,
+                  }}>
+                  {
+                    this.props.termCondition ?
+
+
+                    <TouchableOpacity
+                      onPress = {() => this.props.acceptTerms()}
+                      >
+                      <CheckSquare
+                        stroke = "white"
+                         />
+
+                    </TouchableOpacity>
+
+                    :
+
+                    <TouchableOpacity
+                      onPress = {() => this.props.acceptTerms()}
+                      >
+                      <Square
+                        stroke = "white"
+                        />
+
+                    </TouchableOpacity>
+
+                  }
+
+                  <Text style = {{
+                      fontSize: 10
+                    }}>Agree to terms of service and privacy policy</Text>
+                </View>
+
+
+
+
+
+              </View>
+
+              :
+
+              null
+
+            }
+
 
 
 
@@ -424,7 +467,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'center',
-    paddingLeft: 30
+    paddingLeft: 30,
   },
   bottomRContainer: {
     flex: 1,
