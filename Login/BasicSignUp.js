@@ -24,6 +24,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Square, CheckSquare, ArrowRightCircle, ArrowLeftCircle, Plus, Mail, UserPlus } from "react-native-feather";
 import axios from "axios";
 import * as Linking from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -47,6 +48,14 @@ class BasicSignUp extends React.Component{
       }
       this._keyboardDidShow = this._keyboardDidShow.bind(this)
       this._keyboardDidHide = this._keyboardDidHide.bind(this)
+  }
+
+  openPrivatePolicy = async () => {
+    const result = await WebBrowser.openBrowserAsync('https://shareorb.notion.site/Privacy-Policy-9809f5f8a71343bbae98fb05a102d6d8');
+  };
+
+  openTermsOfConditions = async() => {
+    const result = await WebBrowser.openBrowserAsync('https://shareorb.notion.site/ShareOrb-Terms-of-Service-8c737aea1ed1454da11fb08348743ff9');
   }
 
 
@@ -201,6 +210,10 @@ class BasicSignUp extends React.Component{
         return false
       } else if(value.search(/[0-9]/)< 0){
         // Validate if it has a number
+        return false
+      }
+
+      if(!this.props.termCondition){
         return false
       }
     }
@@ -407,13 +420,13 @@ class BasicSignUp extends React.Component{
                     <Text style = {{
                         color: 'blue'
                       }}
-                      onPress = {() => Linking.openURL("https://shareorb.notion.site/ShareOrb-Terms-of-Service-8c737aea1ed1454da11fb08348743ff9")}
+                      onPress = {() => this.openTermsOfConditions()}
                       > terms of service</Text> and
 
                       <Text style = {{
                         color: 'blue'
                       }}
-                      onPress = {() => Linking.openURL("https://shareorb.notion.site/Privacy-Policy-9809f5f8a71343bbae98fb05a102d6d8")}
+                      onPress = {() => this.openPrivatePolicy()}
                       > privacy policy</Text></Text>
                 </View>
 
