@@ -21,7 +21,7 @@ import {
 import styles from './LoginStyle';
 import SvgUri from 'react-native-svg-uri';
 import { connect } from "react-redux";
-import { authLogin, authInvited } from "../store/actions/auth";
+import { authLogin, authInvited, authSuccess } from "../store/actions/auth";
 import * as ImagePicker from 'expo-image-picker';
 import { ArrowRightCircle, Instagram } from "react-native-feather";
 import axios from "axios";
@@ -30,6 +30,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { useAuthRequest, makeRedirectUri } from 'expo-auth-session';
 import InstagramLogin from 'react-native-instagram-login';
 import authAxios from '../util';
+import * as dateFns from 'date-fns';
 
 
 
@@ -65,16 +66,24 @@ class Login extends React.Component{
     // grab username of user
     authAxios.get(`https://graph.instagram.com/me?fields=id,username&access_token=${data.access_token}`)
     .then( res => {
+
+      console.log(res.data)
+
       axios.request(
       {
         method: 'GET',
         url: 'https://instagram-growth.p.rapidapi.com/v2/profile',
+<<<<<<< HEAD
         params: {username: 'pinghsu521', id:'', full_name:'', profile_pic_url:''},
+=======
+        params: {username: res.data.username},
+>>>>>>> 86d56cd8bb464c44ebd2399e8281f24647e4c999
         headers: {
           'x-rapidapi-host': 'instagram-growth.p.rapidapi.com',
           'x-rapidapi-key': '1e025a4798msh54c2561d9a1a213p1cb936jsn57712b6587f8'
         }
       }
+<<<<<<< HEAD
       ).then(function (response) {
         console.log("BIG ISNTAGRAM INFO")
       	console.log(response.data);
@@ -82,10 +91,102 @@ class Login extends React.Component{
         console.log(response.data.profile_pic_url)
         console.log(response.data.full_name)
         console.log(response.data.username)
+=======
+    ).then(res => {
+
+      const data = res.data
+      console.log(res.data.id, 'second function call')
+      console.log(res.data.profile_pic_url, 'second function call')
+      console.log(res.data.full_name, 'second function call')
+      console.log(res.data.username, 'second function call')
+
+
+
+      const tempUsername = res.data.id
+      const tempPassword = res.data.id+"ShareOrb123"
+
+      // Now try login here
+
+      axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
+        username: tempUsername,
+        password: tempPassword
+      })
+      .then(res => {
+
+        const token = res.data.key
+        AsyncStorage.setItem('token', token)
+        this.props.authSuccess(token)
+
+      })
+      .catch(err => {
+
+        console.log('no account here')
+        //if there is no account you will go through sign up
+
+        this.onSignupSubmit(data.id, data.full_name, data.username,data.profile_pic_url)
+
+
+      })
+
+>>>>>>> 86d56cd8bb464c44ebd2399e8281f24647e4c999
 
       }).catch(function (error) {
-      	console.error(error);
+
+
+
       });
+
+
+
+    })
+  }
+
+
+  onSignupSubmit = (id, firstName, username, profilePic) => {
+
+    const lastName = "";
+    const email = "a"+id+"@gmail.com"
+    const password = id+"ShareOrb123"
+
+    console.log(id, firstName, username, email, password)
+    return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
+      username: id,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      dob: dateFns.format(new Date(), "yyyy-MM-dd"),
+      password1: password,
+      password2: password
+    }).then(res => {
+
+      console.log(res.data)
+      // const token = res.data.key;
+      // const formData = new FormData();
+      // const newPic = global.FILE_NAME_GETTER(profilePic)
+      //
+      //
+      // formData.append("profilePic", newPic)
+      //
+      //
+      // AsyncStorage.setItem('token', token)
+      //
+      // authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePic`,
+      //   formData
+      // ).then( res => {
+      //   this.setState({
+      //     loading:false
+      //   })
+      //   this.props.authSuccess(token);
+      //   this.props.navigation.navigate("")
+      // })
+
+
+    })
+    .catch( err => {
+      alert('Check email or use a different one')
+      this.setState({
+        loading:false
+      })
     })
   }
 
@@ -176,7 +277,6 @@ class Login extends React.Component{
     if(token){
       this.props.navigation.navigate("LoadingScreen")
     }
-    console.log("MADE IT")
     if(this.state.instaInfo){
       console.log(this.state.instaInfo.id)
       console.log(this.state.token)
@@ -308,7 +408,8 @@ const mapDispatchToProps = dispatch => {
   // the actual login in function is in here and this is from redux (store)
   return {
     login: (username, password) => dispatch(authLogin(username, password)),
-    invited: (token) => dispatch(authInvited(token))
+    invited: (token) => dispatch(authInvited(token)),
+    authSuccess:(token) => dispatch(authSuccess(token))
   };
 };
 
