@@ -245,6 +245,7 @@ class App extends Component{
     NotificationWebSocketInstance.addCallbacks(
       this.props.setNotifications.bind(this),
       this.props.newNotification.bind(this),
+      this.props.addNotificationSeen.bind(this)
       // this.props.updateRequestList.bind(this),
       // this.props.newUpRequestList.bind(this),
       // this.props.authAddFollower.bind(this),
@@ -1462,6 +1463,7 @@ const mapDispatchToProps = dispatch => {
     fetchExpiringColab: (albums) => dispatch(colabAlbumActions.fetchExpiringColab(albums)),
     authAddNotificationToken: (token) => dispatch(authActions.authAddNotificationToken(token)),
     resetNotificationSeen: () => dispatch(authActions.resetNotificationSeen()),
+    addNotificationSeen: () => dispatch(authActions.addNotificationSeen()),
 
     loadSmallGroupsPost: (posts) => dispatch(smallGroupsActions.loadSmallGroupsPost(posts)),
     sendGroupPost: (post) => dispatch(smallGroupsActions.sendGroupPost(post)),

@@ -129,6 +129,7 @@ class GlobeGroup extends React.Component{
         >
         <SharedElement>
           <NewGlobePost
+            currentUser = {this.props.username}
             navigation = {this.props.navigation}
             id = {this.props.id}
             data = {item}/>
