@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity,
+import { ActivityIndicator, Text, View, Button,StyleSheet, Image, Dimensions, TouchableOpacity,
 ImageBackground, TouchableWithoutFeedback, TouchableNativeFeedback, } from 'react-native';
 import { Navigation2, Heart, MessageCircle, VolumeX, Volume2, UserCheck, UserPlus, MapPin } from "react-native-feather";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -23,7 +23,8 @@ class NewGlobePost extends React.Component{
       super(props)
       this.state = {
         isMuted: true,
-        showMute: false
+        showMute: false,
+        loading: false
       }
   }
 
@@ -84,18 +85,39 @@ class NewGlobePost extends React.Component{
 
 
   onLike = ( likerId, notificationToken) => {
-      WebSocketGlobeInstance.sendGroupLike(
+    this.setState({
+      loading: true
+    })
+
+    WebSocketGlobeInstance.sendGroupLike(
       this.props.data.id,
       likerId
     )
+
+    // this.setState({
+    //   loading:false
+    // })
+    setTimeout(() => this.setState({ loading: false}), 1000)
+
+
   }
 
   onUnlike = (unlikerId, notificationToken) =>{
+
+    this.setState({
+      loading: true
+    })
 
     WebSocketGlobeInstance.sendGroupUnlike(
       this.props.data.id,
       unlikerId
     )
+
+    setTimeout(() => this.setState({ loading: false}), 1000)
+    // this.setState({
+    //   loading: false
+    // })
+
   }
 
   ViewProfile = (username) => {
@@ -223,45 +245,57 @@ class NewGlobePost extends React.Component{
                 flexDirection: 'row'
               }}>
               {
-                      like.includes(this.props.id) ?
-                      <TouchableOpacity
-                        onPress = {() => this.onUnlike(
-                          this.props.id,
-                          notificationToken,
-                        )}
+                  this.state.loading ?
+
+                  <ActivityIndicator />
+
+                  :
+
+                  like.includes(this.props.id) ?
+
+
+                  <TouchableOpacity
+                    onPress = {() => this.onUnlike(
+                      this.props.id,
+                      notificationToken,
+                    )}
                     >
-                        <View style = {styles.justifyCenter}>
-                          <Heart
-                            stroke = "red"
-                            fill="red"
-                            width = {27.5}
-                            height = {27.5}
-                             />
-                          <Text  style = {styles.statNum}>
-                            {like.length}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                      :
-                      <TouchableOpacity
-                        onPress = {() => this.onLike(
-                          this.props.id,
-                          notificationToken,
-                        )}
-                        >
-                        <View style = {styles.justifyCenter}>
-                          <Heart
-                            stroke = "white"
-                            fill="white"
-                            width = {27.5}
-                            height = {27.5}
-                          />
-                         <Text style = {styles.statNum}>
-                          {like.length}
-                        </Text>
-                        </View>
-                      </TouchableOpacity>
-                  }
+                    <View style = {styles.justifyCenter}>
+                      <Heart
+                        stroke = "red"
+                        fill="red"
+                        width = {27.5}
+                        height = {27.5}
+                         />
+                      <Text  style = {styles.statNum}>
+                        {like.length}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+
+
+                  :
+
+
+                  <TouchableOpacity
+                    onPress = {() => this.onLike(
+                      this.props.id,
+                      notificationToken,
+                    )}
+                    >
+                    <View style = {styles.justifyCenter}>
+                      <Heart
+                        stroke = "white"
+                        fill="white"
+                        width = {27.5}
+                        height = {27.5}
+                      />
+                     <Text style = {styles.statNum}>
+                      {like.length}
+                    </Text>
+                    </View>
+                  </TouchableOpacity>
+                }
 
                   <TouchableWithoutFeedback  onPress={() => this.changeShowComments(postId)}>
                     <View style={{marginLeft:20,}}>

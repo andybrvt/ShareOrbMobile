@@ -62,6 +62,7 @@ class Login extends React.Component{
 
   facebookLogIn = async () => {
     try {
+      this.props.navigation.navigate("FBCreateUserPass")
     await Facebook.initializeAsync({
       appId: '981416685741603',
     });
@@ -74,17 +75,62 @@ class Login extends React.Component{
     } = await Facebook.logInWithReadPermissionsAsync({
       permissions: ['public_profile'],
     });
+
+
     if (type === 'success') {
       // Get the user's name using Facebook's Graph API
-      fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`)
+      //https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)
+      fetch(`www.google.com`)
         .then(response => response.json())
         .then(data => {
-          this.setState({
-            isLoggedin:true,
-            userData:data,
+          console.log("LLLLLLL")
+          console.log(data)
+          console.log(data.id, 'second function call')
+          console.log(data.picture.data.url, 'second function call')
+          console.log(data.name, 'second function call')
+          console.log(data.username, 'second function call')
+
+
+
+          const tempUsername = data.id
+          const tempPassword = data.id+"ShareOrb123"
+
+          {/*
+          axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
+            username: tempUsername,
+            password: tempPassword
           })
-          console.log(this.state.userData)
+          .then(res => {
+
+            const token = res.data.key
+            AsyncStorage.setItem('token', token)
+            this.setState({
+              loading: false
+            })
+            this.props.authSuccess(token)
+
+          })
+          .catch(err => {
+
+            console.log('no account here')
+            //if there is no account you will go through sign up
+            console.log(data.id, data.name, tempUsername, data.picture.data.url)
+
+            // this.onSignupSubmit(data.id, data.name, tempUsername,data.picture.data.url)
+
+
+          })
+          */}
+
+          // this.setState({
+          //   isLoggedin:true,
+          //   userData:data,
+          // })
+          // console.log(this.state.userData)
+
+
         })
+
         .catch(e => console.log(e))
     } else {
       // type === 'cancel'
@@ -92,40 +138,11 @@ class Login extends React.Component{
   } catch ({ message }) {
     alert(`Facebook Login Error: ${message}`);
   }
+
   }
 
 
   setIgToken = (data) => {
-    {/*try {
-      await Facebook.initializeAsync({
-        appId: '981416685741603',
-      });
-      const {
-        type,
-        token,
-        expires,
-        permissions,
-        declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile'],
-      });
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`)
-          .then(response => response.json())
-          .then(data => {
-            this.setState({
-              isLoggedin:true,
-              userData:data,
-            })
-          })
-          .catch(e => console.log(e))
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }*/}
     this.setState({
       loading: true,
       token: data.access_token

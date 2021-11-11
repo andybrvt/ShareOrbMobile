@@ -35,6 +35,7 @@ import Explore from './Explore/Explore';
 import Friends from './Friends';
 import Login from './Login/Login';
 import AppIntro from './Login/AppIntro';
+import FBCreateUserPass from './Login/FBCreateUserPass';
 import MiniAppIntro from './Login/MiniAppIntro';
 import SuggestedGroups from './Login/SuggestedGroups';
 import Signup from './Signup/Signup';
@@ -211,7 +212,7 @@ class App extends Component{
     // login because people might have unread messages so you
     // wnat to render it along with notificaitons
 
-    this.initialiseChats()
+    // this.initialiseChats()
     this.initialiseNotification()
     WebSocketSocialNewsfeedInstance.addCallbacks(
       this.props.id,
@@ -557,12 +558,13 @@ class App extends Component{
 
         NotificationWebSocketInstance.disconnect()
 
-        this.waitForNotificationSocketConnection(() => {
-            NotificationWebSocketInstance.fetchFriendRequests(
-              this.props.id
-            )
-          })
-        NotificationWebSocketInstance.connect(this.props.username)
+        // this.waitForNotificationSocketConnection(() => {
+        //     NotificationWebSocketInstance.fetchFriendRequests(
+        //       this.props.id
+        //     )
+        //   })
+
+        setTimeout(() =>NotificationWebSocketInstance.connect(this.props.username), 1000)
 
 
       }
@@ -575,11 +577,11 @@ class App extends Component{
   }
 
   initialiseNotification(){
-    this.waitForNotificationSocketConnection(() => {
-      NotificationWebSocketInstance.fetchFriendRequests(
-        this.props.id
-      )
-    })
+    // this.waitForNotificationSocketConnection(() => {
+    //   NotificationWebSocketInstance.fetchFriendRequests(
+    //     this.props.id
+    //   )
+    // })
     NotificationWebSocketInstance.connect(this.props.username)
 
   }
@@ -1138,6 +1140,19 @@ class App extends Component{
                        component = {Explore}
 
                        />
+
+                       <Stack.Screen
+                         options={{
+                           headerShown: false,
+                            ...TransitionPresets.SlideFromRightIOS,
+                          }}
+
+                          name = 'FBCreateUserPass'
+                          component = {FBCreateUserPass}
+
+                          />
+
+
 
                      <Stack.Screen
                        options={{
