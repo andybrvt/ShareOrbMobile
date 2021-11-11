@@ -303,6 +303,12 @@ export const resetNotificationSeen = () => {
   }
 }
 
+export const addNotificationSeen = () => {
+  return{
+    type: actionTypes.ADD_NOTIFICATION_SEEN
+  }
+}
+
 export const authAddUnaddFollowing = (following) => {
   return{
     type: actionTypes.AUTH_ADD_UNADD_FOLLOWING,

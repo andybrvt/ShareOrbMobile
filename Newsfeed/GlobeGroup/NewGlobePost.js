@@ -10,6 +10,7 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import FastImage from 'react-native-fast-image'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUsers, faUserCircle, faMapPin } from '@fortawesome/free-solid-svg-icons'
+import NotificationWebSocketInstance from  '../../Websockets/notificationWebsocket';
 
 
 import { Avatar } from 'react-native-elements';
@@ -84,7 +85,9 @@ class NewGlobePost extends React.Component{
   }
 
 
-  onLike = ( likerId, notificationToken) => {
+  onLike = ( likerId, notificationToken, ownerId) => {
+
+
     this.setState({
       loading: true
     })
@@ -94,9 +97,25 @@ class NewGlobePost extends React.Component{
       likerId
     )
 
-    // this.setState({
-    //   loading:false
-    // })
+    const postId = this.props.data.post.id
+
+    const notificationObject = {
+      command: 'group_like_notification',
+      actor: likerId,
+      recipient: ownerId,
+      postId: postId
+    }
+
+    NotificationWebSocketInstance.sendNotification(notificationObject)
+
+
+    global.SEND_GROUP_LIKE_NOTIFICATION(
+      notificationToken,
+      this.props.currentUser,
+      postId,
+    )
+
+
     setTimeout(() => this.setState({ loading: false}), 1000)
 
 
@@ -281,6 +300,7 @@ class NewGlobePost extends React.Component{
                     onPress = {() => this.onLike(
                       this.props.id,
                       notificationToken,
+                      ownerId
                     )}
                     >
                     <View style = {styles.justifyCenter}>

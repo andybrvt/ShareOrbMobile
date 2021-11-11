@@ -213,6 +213,12 @@ const resetNotificationSeen = (state, action) => {
   })
 }
 
+const addNotificationSeen = (state, action) => {
+  return updateObject(state, {
+    notificationSeen: state.notificationSeen+ 1
+  })
+}
+
 const authAddUnaddFollowing = (state, action) => {
   return updateObject(state, {
     following: action.following
@@ -326,6 +332,8 @@ const reducer = (state = initialState, action) => {
       return unShowIntialInstructions(state, action);
     case actionTypes.RESET_NOTIFCATION_SEEN:
       return resetNotificationSeen(state, action);
+    case actionTypes.ADD_NOTIFICATION_SEEN:
+      return addNotificationSeen(state, action);
     case actionTypes.AUTH_ADD_UNADD_FOLLOWING:
       return authAddUnaddFollowing(state, action);
     case actionTypes.SET_DAILY_NOTI:

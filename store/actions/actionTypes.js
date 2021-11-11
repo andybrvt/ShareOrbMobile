@@ -29,6 +29,7 @@ export const AUTH_SET_ACTIVE_NEWSFEED_SLIDE_NULL = "AUTH_SET_ACTIVE_NEWSFEED_SLI
 export const SET_DAILY_NOTI = "SET_DAILY_NOTI";
 
 export const RESET_NOTIFCATION_SEEN = 'RESET_NOTIFCATION_SEEN';
+export const ADD_NOTIFICATION_SEEN = "ADD_NOTIFICATION_SEEN";
 
 
 // used to update more than just profilePic

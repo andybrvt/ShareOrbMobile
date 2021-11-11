@@ -76,7 +76,9 @@ class WebSocketNotifications {
     } else if (command === 'new_notification') {
         const notification = JSON.parse(parsedData.notification)
         this.callbacks['new_notification'](notification)
-        //
+
+        this.callbacks['add_notification_seen']()
+
         // // Add a call back where you jsut add 1 to the notificationseen her
         //
         // this.callbacks['add_one_notification_seen']()
@@ -110,6 +112,7 @@ class WebSocketNotifications {
   addCallbacks(
     notificationsCallback,
     newNotificationCallback,
+    addNotificationSeen
     // addNewFollowRequest,
     // updateFollowRequest,
     // authAddFollower,
@@ -118,6 +121,7 @@ class WebSocketNotifications {
   ){
     this.callbacks['notifications'] = notificationsCallback;
     this.callbacks['new_notification'] = newNotificationCallback;
+    this.callbacks['add_notification_seen'] = addNotificationSeen;
     // this.callbacks['new_follow_request'] = addNewFollowRequest;
     // this.callbacks['update_follow_request'] = updateFollowRequest;
     // this.callbacks['auth_add_follower'] = authAddFollower;

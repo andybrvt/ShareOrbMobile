@@ -136,7 +136,7 @@ class SocialNewsfeedPost extends React.Component{
 
 
     const notificationObject = {
-      command: 'group_like_notifcation',
+      command: 'group_like_notification',
       actor: likerId,
       recipient: ownerId,
       postId: postId

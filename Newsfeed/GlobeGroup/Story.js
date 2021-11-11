@@ -22,26 +22,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import FlagModal from './FlagModal';
 import authAxios from '../../util';
+import NotificationWebSocketInstance from  '../../Websockets/notificationWebsocket';
 
 
 
 const { height } = Dimensions.get("window");
 const AnimatedVideo = Animated.createAnimatedComponent(Video);
 
-const onLike = ( likerId, groupID, notificationToken) => {
-  console.log(likerId, groupID)
-  WebSocketGlobeInstance.sendGroupLike(
-    groupID,
-    likerId
-  )
-}
 
-const onUnlike = (unlikerId, groupID, notificationToken) =>{
-  WebSocketGlobeInstance.sendGroupUnlike(
-    groupID,
-    unlikerId
-  )
-}
 
 
 
@@ -75,7 +63,12 @@ const Story = ({ route, navigation }: StoryProps) => {
 
   const[showFlag, setFlag] = useState(false);
 
+
+
   const story=route.params.story
+
+  const[likes, setLikes] = useState(story.people_like)
+
   const storyID=story.id
   const groupID=route.params.groupID
   const creatorId = story.creator.id
@@ -96,6 +89,8 @@ const Story = ({ route, navigation }: StoryProps) => {
   const translation = useVector();
   const curUser = route.params.curUser
 
+  console.log(story.people_like)
+
   const onReport = () => {
     console.log('report this:', storyID)
 
@@ -103,6 +98,50 @@ const Story = ({ route, navigation }: StoryProps) => {
 
     setFlag(false)
     alert("Post has been reported for further review")
+  }
+
+  const onLike = ( likerId, postId, notificationToken, creatorId) => {
+    // console.log(likerId, groupID)
+
+    // problly just gonna add a function here and change the linking in the hooks
+
+    authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/socialCalItemLike/'+postId+"/"+likerId)
+    .then(res => {
+      setLikes(res.data)
+
+      const notificationObject = {
+        command: 'group_like_notification',
+        actor: likerId,
+        recipient: creatorId,
+        postId: postId
+      }
+
+      NotificationWebSocketInstance.sendNotification(notificationObject)
+
+
+      global.SEND_GROUP_LIKE_NOTIFICATION(
+        notificationToken,
+        curUser,
+        postId,
+      )
+
+
+    })
+
+  }
+
+  const onUnlike = (unlikerId, postId, notificationToken) =>{
+    console.log(postId)
+
+    authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/socialCalItemUnlike/'+postId+"/"+unlikerId)
+    .then(res => {
+      setLikes(res.data)
+
+    })
+    // WebSocketGlobeInstance.sendGroupUnlike(
+    //   groupID,
+    //   unlikerId
+    // )
   }
 
 
@@ -274,25 +313,54 @@ const Story = ({ route, navigation }: StoryProps) => {
           <Animated.View>
 
           <Animated.View style={{alignItems:'center'}}>
-            <TouchableOpacity
-              style={{marginTop:10,}}
-              onPress = {() => onLike(
-                userID,
-                groupID,
-                notificationToken,
-              )}
-              >
 
-               <Heart
-                 stroke = "white"
-                 fill="white"
-                 width ={27.5}
-                 height = {27.5}
-               />
-             </TouchableOpacity>
+            {
+              likes.includes(userID) ?
+
+
+              <TouchableOpacity
+                style={{marginTop:10,}}
+                onPress = {() => onUnlike(
+                  userID,
+                  storyID,
+                  notificationToken,
+                )}
+                >
+
+                 <Heart
+                   stroke = "red"
+                   fill="red"
+                   width ={27.5}
+                   height = {27.5}
+                 />
+               </TouchableOpacity>
+
+
+               :
+
+               <TouchableOpacity
+                 style={{marginTop:10,}}
+                 onPress = {() => onLike(
+                   userID,
+                   storyID,
+                   notificationToken,
+                   creatorId
+                 )}
+                 >
+
+                  <Heart
+                    stroke = "white"
+                    fill="white"
+                    width ={27.5}
+                    height = {27.5}
+                  />
+                </TouchableOpacity>
+
+
+            }
 
              <Animated.Text style={styles.videoFooterNum}>
-               {likeCount}
+               {likes.length}
              </Animated.Text>
 
            </Animated.View>
