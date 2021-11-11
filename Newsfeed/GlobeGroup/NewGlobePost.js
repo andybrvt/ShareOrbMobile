@@ -97,7 +97,7 @@ class NewGlobePost extends React.Component{
       likerId
     )
 
-    const postId = this.props.data.id
+    const postId = this.props.data.post.id
 
     const notificationObject = {
       command: 'group_like_notification',

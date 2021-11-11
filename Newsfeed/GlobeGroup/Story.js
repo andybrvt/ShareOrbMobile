@@ -22,6 +22,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import FlagModal from './FlagModal';
 import authAxios from '../../util';
+import NotificationWebSocketInstance from  '../../Websockets/notificationWebsocket';
 
 
 
@@ -99,7 +100,7 @@ const Story = ({ route, navigation }: StoryProps) => {
     alert("Post has been reported for further review")
   }
 
-  const onLike = ( likerId, postId, notificationToken) => {
+  const onLike = ( likerId, postId, notificationToken, creatorId) => {
     // console.log(likerId, groupID)
 
     // problly just gonna add a function here and change the linking in the hooks
@@ -107,6 +108,24 @@ const Story = ({ route, navigation }: StoryProps) => {
     authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/socialCalItemLike/'+postId+"/"+likerId)
     .then(res => {
       setLikes(res.data)
+
+      const notificationObject = {
+        command: 'group_like_notification',
+        actor: likerId,
+        recipient: creatorId,
+        postId: postId
+      }
+
+      NotificationWebSocketInstance.sendNotification(notificationObject)
+
+
+      global.SEND_GROUP_LIKE_NOTIFICATION(
+        notificationToken,
+        curUser,
+        postId,
+      )
+
+
     })
 
   }
@@ -325,6 +344,7 @@ const Story = ({ route, navigation }: StoryProps) => {
                    userID,
                    storyID,
                    notificationToken,
+                   creatorId
                  )}
                  >
 
