@@ -137,6 +137,7 @@ class NewsfeedView extends React.Component{
 
   }
 
+
   ViewProfile = (username) => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
@@ -284,10 +285,6 @@ class NewsfeedView extends React.Component{
 
 
         <BackgroundContainer>
-
-
-
-
 
 
           {

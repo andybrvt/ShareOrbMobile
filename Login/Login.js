@@ -24,7 +24,8 @@ import SvgUri from 'react-native-svg-uri';
 import { connect } from "react-redux";
 import { authLogin, authInvited, authSuccess } from "../store/actions/auth";
 import * as ImagePicker from 'expo-image-picker';
-import { ArrowRightCircle, Instagram } from "react-native-feather";
+import { ArrowRightCircle, Instagram} from "react-native-feather";
+import { Facebook as Facebook1 } from "react-native-feather";
 import axios from "axios";
 import { WebView } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
@@ -32,8 +33,8 @@ import { useAuthRequest, makeRedirectUri } from 'expo-auth-session';
 import InstagramLogin from 'react-native-instagram-login';
 import authAxios from '../util';
 import * as dateFns from 'date-fns';
-
-
+import LoadingModal from '../RandomComponents/LoadingModal';
+import * as Facebook from 'expo-facebook';
 
 // import CookieManager from '@react-native-community/cookies';
 WebBrowser.maybeCompleteAuthSession(); // <-- will close web window after authentication
@@ -50,15 +51,85 @@ class Login extends React.Component{
     inviteCode: "",
     loginLoading: false,
     inviteLoading: false,
-
+    loading: false,
     token: '',
     instaInfo:null,
     test:null,
+    isLoggedin:false,
+    userData:null,
+    isImageLoading:false,
+  }
+
+  facebookLogIn = async () => {
+    try {
+    await Facebook.initializeAsync({
+      appId: '981416685741603',
+    });
+    const {
+      type,
+      token,
+      expirationDate,
+      permissions,
+      declinedPermissions,
+    } = await Facebook.logInWithReadPermissionsAsync({
+      permissions: ['public_profile'],
+    });
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`)
+        .then(response => response.json())
+        .then(data => {
+          this.setState({
+            isLoggedin:true,
+            userData:data,
+          })
+          console.log(this.state.userData)
+        })
+        .catch(e => console.log(e))
+    } else {
+      // type === 'cancel'
+    }
+  } catch ({ message }) {
+    alert(`Facebook Login Error: ${message}`);
+  }
   }
 
 
   setIgToken = (data) => {
-    this.setState({ token: data.access_token })
+    {/*try {
+      await Facebook.initializeAsync({
+        appId: '981416685741603',
+      });
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile'],
+      });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`)
+          .then(response => response.json())
+          .then(data => {
+            this.setState({
+              isLoggedin:true,
+              userData:data,
+            })
+          })
+          .catch(e => console.log(e))
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }*/}
+    this.setState({
+      loading: true,
+      token: data.access_token
+    })
 
     // example of async storage
     // AsyncStorage.setItem('foo', 'bar');
@@ -74,12 +145,14 @@ class Login extends React.Component{
       {
         method: 'GET',
         url: 'https://instagram-growth.p.rapidapi.com/v2/profile',
+
         params: {username: res.data.username},
         headers: {
           'x-rapidapi-host': 'instagram-growth.p.rapidapi.com',
           'x-rapidapi-key': '1e025a4798msh54c2561d9a1a213p1cb936jsn57712b6587f8'
         }
       }
+
     ).then(res => {
 
       const data = res.data
@@ -103,6 +176,9 @@ class Login extends React.Component{
 
         const token = res.data.key
         AsyncStorage.setItem('token', token)
+        this.setState({
+          loading: false
+        })
         this.props.authSuccess(token)
 
       })
@@ -127,6 +203,9 @@ class Login extends React.Component{
 
     })
   }
+
+
+
 
 
   onSignupSubmit = (id, firstName, username, profilePic) => {
@@ -157,14 +236,16 @@ class Login extends React.Component{
 
       AsyncStorage.setItem('token', token)
 
-      authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePic`,
+      authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePicURL`,
         formData
       ).then( res => {
+
         this.setState({
           loading:false
         })
         this.props.authSuccess(token);
         this.props.navigation.navigate("")
+
       })
 
 
@@ -268,6 +349,7 @@ class Login extends React.Component{
       console.log(this.state.instaInfo.id)
       console.log(this.state.token)
     }
+    const userData=this.state.userData
 
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
@@ -346,12 +428,36 @@ class Login extends React.Component{
 
             <TouchableOpacity
               style={styles.loginBtn1}
-              onPress={() => this.instagramLogin.show()}>
+              onPress={() => this.instagramLogin.show()}
+              >
               <Instagram
                 style={{right:10}}
                 stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
               <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}> Use Instagram</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.loginBtn1}
+              onPress={() => this.facebookLogIn()}
+              >
+              <Facebook1
+                style={{right:10}}
+                stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+              <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}> Use Facebook</Text>
+            </TouchableOpacity>
+            {/*
+            <View style={styles.container}>
+              <Image
+                style={{ width: 200, height: 200, borderRadius: 50 }}
+                source={{ uri: userData.picture.data.url }}
+                onLoadEnd={() => setImageLoadStatus(true)} />
+              <ActivityIndicator size="large" color="#0000ff" animating={!isImageLoading} style={{ position: "absolute" }} />
+              <Text style={{ fontSize: 22, marginVertical: 10 }}>Hi {userData.name}!</Text>
+              <TouchableOpacity style={styles.logoutBtn} onPress={this.logout}>
+                <Text style={{ color: "#fff" }}>Logout</Text>
+              </TouchableOpacity>
+            </View>
+            */}
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
           {/*
@@ -380,8 +486,15 @@ class Login extends React.Component{
 
           </View>
 
+          <LoadingModal
+            visible = {this.state.loading}
+             />
+
+
         </View>
+
         </KeyboardAvoidingView>
+
       </TouchableWithoutFeedback>
     )
   }

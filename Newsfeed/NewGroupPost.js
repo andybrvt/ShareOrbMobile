@@ -115,7 +115,7 @@ class NewGlobePost extends React.PureComponent{
 
     let timeDiff = Math.round((new Date().getTime() - new Date(this.props.item.created_at).getTime())/60000)
 
-
+    console.log(timeDiff)
     if(this.props.item) {
       if(this.props.groupInfo.groupName){
         groupName = this.props.groupInfo.groupName;
@@ -152,7 +152,7 @@ class NewGlobePost extends React.PureComponent{
 
 
     return(
-      <View style={[timeDiff < 24*60?styles.item:styles.item2]}>
+      <View style={[timeDiff < 24*60?styles.item2:styles.item]}>
         {this.props.triggerDelete?
           <TouchableWithoutFeedback
            onPress={() => this.onSelectVid(this.props.item)}
