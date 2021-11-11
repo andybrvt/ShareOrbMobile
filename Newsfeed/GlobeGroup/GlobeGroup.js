@@ -168,21 +168,38 @@ class GlobeGroup extends React.Component{
           </View>
 
           <View style = {styles.sideHeaders}>
-            {/*
+
+
+
+
               <TouchableOpacity
                 onPress = {() => this.props.navigation.navigate("notification")}
                 >
                 <Bell
-                  width={20}
-                  height={20}
+                  width={25}
+                  height={25}
                   stroke = "black"
                   fill = "white"
                   style={{marginRight:5}}
                    />
+
+                   {
+                     this.props.notificationSeen > 0 ?
+
+                     <View  style={{position:'absolute', right:'20%', top:'0%',}}>
+                       <View style = {styles.notiCircle}>
+                       </View>
+                     </View>
+
+                     :
+
+                     null
+                   }
+
               </TouchableOpacity>
 
 
-              */}
+
 
           </View>
 
@@ -271,7 +288,9 @@ const mapStateToProps = state => {
     globePosts: state.globeGroup.globePosts,
     id: state.auth.id,
     profilePic: state.auth.profilePic,
-    username: state.auth.username
+    username: state.auth.username,
+    notificationSeen: state.auth.notificationSeen,
+
   }
 }
 
@@ -298,7 +317,14 @@ const styles = StyleSheet.create({
     width: '70%',
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  notiCircle: {
+    position:'absolute',
+    height: 10,
+    width: 10,
+    borderRadius: 1000,
+    backgroundColor:'red',
+  },
 })
 
 

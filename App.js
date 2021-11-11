@@ -211,7 +211,7 @@ class App extends Component{
     // login because people might have unread messages so you
     // wnat to render it along with notificaitons
 
-    this.initialiseChats()
+    // this.initialiseChats()
     this.initialiseNotification()
     WebSocketSocialNewsfeedInstance.addCallbacks(
       this.props.id,
@@ -557,12 +557,13 @@ class App extends Component{
 
         NotificationWebSocketInstance.disconnect()
 
-        this.waitForNotificationSocketConnection(() => {
-            NotificationWebSocketInstance.fetchFriendRequests(
-              this.props.id
-            )
-          })
-        NotificationWebSocketInstance.connect(this.props.username)
+        // this.waitForNotificationSocketConnection(() => {
+        //     NotificationWebSocketInstance.fetchFriendRequests(
+        //       this.props.id
+        //     )
+        //   })
+
+        setTimeout(() =>NotificationWebSocketInstance.connect(this.props.username), 1000)
 
 
       }
@@ -575,11 +576,11 @@ class App extends Component{
   }
 
   initialiseNotification(){
-    this.waitForNotificationSocketConnection(() => {
-      NotificationWebSocketInstance.fetchFriendRequests(
-        this.props.id
-      )
-    })
+    // this.waitForNotificationSocketConnection(() => {
+    //   NotificationWebSocketInstance.fetchFriendRequests(
+    //     this.props.id
+    //   )
+    // })
     NotificationWebSocketInstance.connect(this.props.username)
 
   }

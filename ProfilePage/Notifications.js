@@ -22,9 +22,16 @@ import * as authActions from '../store/actions/auth';
 import authAxios from '../util';
 import { Tag, Bookmark, Search, ArrowLeft, ChevronsLeft, Settings, Sliders
   ,MessageCircle, UserPlus, Users, Clock} from "react-native-feather";
+  import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 
 
 class Notifications extends React.Component{
+
+  constructor(props){
+    super(props)
+
+    this.initialiseNotification()
+  }
 
  onHomeNav = () => {
    // this function will be use to navigate back
@@ -53,6 +60,33 @@ class Notifications extends React.Component{
   })
  }
 
+ initialiseNotification(){
+   this.waitForNotificationSocketConnection(() => {
+     NotificationWebSocketInstance.fetchFriendRequests(
+       this.props.userId
+     )
+   })
+   // NotificationWebSocketInstance.connect(this.props.username)
+
+ }
+
+ waitForNotificationSocketConnection (callback) {
+   const component = this;
+   setTimeout(
+     function(){
+
+       if (NotificationWebSocketInstance.state() === 1){
+
+         callback();
+         return;
+       } else{
+
+           component.waitForNotificationSocketConnection(callback);
+       }
+     }, 100)
+
+ }
+
  componentDidMount(){
 
    authAxios.post(`${global.IP_CHANGE}/userprofile/resetNotificationSeen`, {
@@ -63,6 +97,8 @@ class Notifications extends React.Component{
       this.props.resetNotificationSeen()
 
     })
+
+
 }
 
   onNavPicDirect = (postId) => {
