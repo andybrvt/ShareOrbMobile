@@ -72,16 +72,6 @@ const Story = ({ route, navigation,id, username }: StoryProps) => {
   const[post, setPost] = useState({})
   const[comments, setComments] = useState([])
 
-
-  const storyID=story.id
-  const firstName=story.creator.first_name
-  const lastName=story.creator.last_name
-  const creatorName=story.creator.username
-  const likeCount=story.people_like.length
-  const commentCount=story.get_socialCalItemComment.length
-
-
-
   let caption=""
   let creatorId = ""
   let creatorUsername = ""
@@ -115,10 +105,8 @@ const Story = ({ route, navigation,id, username }: StoryProps) => {
   }
 
 
-  const userID=route.params.userID
   const isGestureActive = useSharedValue(false);
   const translation = useVector();
-  const curUser = route.params.curUser
 
 
   useEffect(() => {
@@ -369,7 +357,7 @@ const Story = ({ route, navigation,id, username }: StoryProps) => {
           <Animated.View style={{alignItems:'center'}}>
 
             {
-              likes.includes(userID) ?
+              likes.includes(id) ?
 
 
               <TouchableOpacity
