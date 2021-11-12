@@ -90,7 +90,8 @@ class NewsfeedView extends React.Component{
 
     } else {
       // if you already have it then run the interval command
-      this.interval = setInterval(() => this.locationChecker(), 10000)
+      // this.interval = setInterval(() => this.locationChecker(), 10000)
+      this.locationChecker()
 
     }
 
@@ -99,6 +100,11 @@ class NewsfeedView extends React.Component{
   locationChecker = async() => {
     // this function will check for the closes orbs within a 5 mile radius
     // and then return it,
+
+    console.log('how many times does this run')
+    this.setState({
+      loading: true
+    })
     const location = await this.connectToLocation()
 
     // now put a backend call function so that you can grab the nears orb
@@ -115,10 +121,17 @@ class NewsfeedView extends React.Component{
       if(res.data !== false){
         this.props.addCloseOrb(res.data)
 
+        this.setState({
+          loading: false
+        })
 
       } else {
         // set the thing to false
         this.props.nullCloseOrb()
+
+        this.setState({
+          loading: false
+        })
 
       }
 
@@ -160,7 +173,8 @@ class NewsfeedView extends React.Component{
       eventShow:false,
       upperStart: 6,
       newsFeedCondition:true,
-      showLocationModal: false
+      showLocationModal: false,
+      loading: false
     }
     this.myRef = React.createRef();
     this.commentRef = React.createRef();
@@ -212,7 +226,7 @@ class NewsfeedView extends React.Component{
       if(this.props.isAuthenticated){
         // this.waitForSocialNewsfeedSocketConnection(() => {
         //       // Fetch stuff here
-        //   WebSocketSocialNewsfeedInstance.fetchSocialPost(
+        //   WebSocketSocialNetruewsfeedInstance.fetchSocialPost(
         //     this.props.id,
         //     curDate,
         //     this.state.upperStart)
@@ -269,7 +283,8 @@ class NewsfeedView extends React.Component{
    onOpenLocationModal = async() => {
 
      await this.locationChecker()
-     this.interval = setInterval(() => this.locationChecker(), 10000)
+     // this.interval = setInterval(() => this.locationChecker(), 10000)
+     this.locationChecker()
 
 
    }
@@ -342,9 +357,20 @@ class NewsfeedView extends React.Component{
             */}
 
             {
+              this.state.loading ?
+
+              <NearOrbButton
+                loading = {true}
+                orb = {this.props.closeOrb}
+                navigation = {this.props.navigation}
+                 />
+
+               :
+
               this.props.closeOrb ?
 
               <NearOrbButton
+                loading = {false}
                 orb = {this.props.closeOrb}
                 navigation = {this.props.navigation}
                  />

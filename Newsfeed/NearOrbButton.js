@@ -69,6 +69,36 @@ class NearOrbButton extends React.Component{
         }}
         >
 
+        {
+          this.props.loading  ?
+
+          <View style = {{
+              // flex: 1,
+              pointerEvents:"none",
+
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+            <LottieView
+             style={{
+               width: 170,
+               height: 170,
+               position: 'absolute'
+             }}
+             autoPlay
+             loop
+             // ref={animation => {
+             //    this.animation = animation;
+             //  }}
+             source={require('./data7.json')}
+             progress={this.state.progress}
+           />
+
+          </View>
+
+
+          :
+
 
           <View style = {{
               // flex: 1,
@@ -129,6 +159,11 @@ class NearOrbButton extends React.Component{
          </View>
 
           </View>
+
+
+
+        }
+
 
           <Triangle
             height = {15}
