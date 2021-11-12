@@ -38,6 +38,13 @@ class Notifications extends React.Component{
    // to the home page
  }
 
+ onStoryDirect = (postId) => {
+
+   this.props.navigation.navigate("Story", {
+     "postId":postId
+   })
+ }
+
  ViewProfile = (username) => {
    // This fucntion will be used to navigate to the post page
    // that you can use to post pictures and write caption
@@ -148,7 +155,7 @@ class Notifications extends React.Component{
 
      return(
        <TouchableOpacity
-         onPress = {() => this.onNavPicDirect(item.post)}
+         onPress = {() => this.onStoryDirect(item.post)}
          >
           <View style={{
              flexDirection:'row',
@@ -191,7 +198,7 @@ class Notifications extends React.Component{
 
      return(
        <TouchableOpacity
-         onPress = {() => this.onNavPicDirect(item.post)}
+         onPress = {() => this.onStoryDirect(item.post)}
          >
           <View style={{
              flexDirection:'row',
