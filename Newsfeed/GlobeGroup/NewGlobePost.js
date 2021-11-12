@@ -99,21 +99,30 @@ class NewGlobePost extends React.Component{
 
     const postId = this.props.data.post.id
 
-    const notificationObject = {
-      command: 'group_like_notification',
-      actor: likerId,
-      recipient: ownerId,
-      postId: postId
+
+    if(ownerId !== likerId){
+
+      const notificationObject = {
+        command: 'group_like_notification',
+        actor: likerId,
+        recipient: ownerId,
+        postId: postId
+      }
+
+      NotificationWebSocketInstance.sendNotification(notificationObject)
+
+
+      global.SEND_GROUP_LIKE_NOTIFICATION(
+        notificationToken,
+        this.props.currentUser,
+        postId,
+      )
+
+
+
     }
 
-    NotificationWebSocketInstance.sendNotification(notificationObject)
 
-
-    global.SEND_GROUP_LIKE_NOTIFICATION(
-      notificationToken,
-      this.props.currentUser,
-      postId,
-    )
 
 
     setTimeout(() => this.setState({ loading: false}), 1000)

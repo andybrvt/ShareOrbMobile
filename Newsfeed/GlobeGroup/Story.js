@@ -109,21 +109,25 @@ const Story = ({ route, navigation }: StoryProps) => {
     .then(res => {
       setLikes(res.data)
 
-      const notificationObject = {
-        command: 'group_like_notification',
-        actor: likerId,
-        recipient: creatorId,
-        postId: postId
+
+      if(creatorId !== likerId){
+        const notificationObject = {
+          command: 'group_like_notification',
+          actor: likerId,
+          recipient: creatorId,
+          postId: postId
+        }
+
+        NotificationWebSocketInstance.sendNotification(notificationObject)
+
+
+        global.SEND_GROUP_LIKE_NOTIFICATION(
+          notificationToken,
+          curUser,
+          postId,
+        )
+
       }
-
-      NotificationWebSocketInstance.sendNotification(notificationObject)
-
-
-      global.SEND_GROUP_LIKE_NOTIFICATION(
-        notificationToken,
-        curUser,
-        postId,
-      )
 
 
     })
