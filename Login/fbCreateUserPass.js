@@ -52,7 +52,7 @@ import * as authActions from '../store/actions/auth';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
-class FBCreateUserPass extends React.Component{
+class fbCreateUserPass extends React.Component{
 
   constructor(props) {
     super(props);
@@ -357,4 +357,4 @@ const mapDispatchToProps = dispatch => {
 
 
 
- export default connect(mapStateToProps, mapDispatchToProps)(FBCreateUserPass)
+ export default connect(mapStateToProps, mapDispatchToProps)(fbCreateUserPass)
