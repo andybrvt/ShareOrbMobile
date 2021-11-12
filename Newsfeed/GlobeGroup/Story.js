@@ -158,7 +158,7 @@ const Story = ({ route, navigation,id, username }: StoryProps) => {
 
         global.SEND_GROUP_LIKE_NOTIFICATION(
           notificationToken,
-          curUser,
+          username,
           postId,
         )
 
@@ -170,7 +170,6 @@ const Story = ({ route, navigation,id, username }: StoryProps) => {
   }
 
   const onUnlike = (unlikerId, postId, notificationToken) =>{
-    console.log(postId)
 
     authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/socialCalItemUnlike/'+postId+"/"+unlikerId)
     .then(res => {

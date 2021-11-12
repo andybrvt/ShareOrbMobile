@@ -369,11 +369,10 @@ class App extends Component{
 
 
                 const postId = response.notification.request.trigger.payload.body.groupId
-                console.log(postId, 'the post Id here')
 
-                // this.refContainer.navigate("NavPic", {
-                //   postId, postId
-                // })
+                this.refContainer.navigate("Story", {
+                  "postId": postId
+                })
 
 
               }
