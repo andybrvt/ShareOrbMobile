@@ -118,13 +118,9 @@ class GlobeGroup extends React.Component{
 
           onPress={() => {
             this.props.navigation.navigate("Story",
-            { 'story':item.post,
-              'groupPic':groupPic,
-              'groupName':groupName,
-              'userID':this.props.id,
-              'groupID':groupID,
-              "curUser": this.props.username
-          } );
+            {
+              'postId': item.post.id,
+            } );
           }}
         >
         <SharedElement>

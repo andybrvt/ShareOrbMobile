@@ -99,15 +99,12 @@ class NewGlobePost extends React.PureComponent{
     let lastName="";
     let profilePic="";
     let itemImage = "";
-    let vid=""
+    let video=""
     let groupName="";
     let groupPic="";
     let groupId = "";
 
     let groupInfo=this.props.groupInfo
-    vid = this.props.vid
-    groupName=groupInfo.groupName
-    groupPic=groupInfo.groupPic
     let month=dateFns.format(new Date(this.props.item.created_at), "MMM")
     let day=dateFns.format(new Date(this.props.item.created_at), "dd")
     console.log("each post!!!!")
@@ -214,13 +211,8 @@ class NewGlobePost extends React.PureComponent{
          onPress={() => {
            this.props.navigation.navigate("Story",
              {
-                day:day,
-               'groupName':groupName,
-               'groupPic':groupPic,
-               "userId":this.props.id,
-               "groupId": groupId,
-               'story':this.props.item,
-               "curUser": this.props.username
+              "postId":this.props.item.id,
+
              }
              );
           }}>

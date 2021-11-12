@@ -1,5 +1,5 @@
 import { NavigationProp, RouteProp } from "@react-navigation/native";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { StyleSheet, Dimensions, View, Text, TouchableOpacity} from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
@@ -23,6 +23,7 @@ import WebSocketGlobeInstance from '../../Websockets/globeGroupWebsocket';
 import FlagModal from './FlagModal';
 import authAxios from '../../util';
 import NotificationWebSocketInstance from  '../../Websockets/notificationWebsocket';
+import { connect } from 'react-redux';
 
 
 
@@ -59,7 +60,7 @@ const ViewGroup = (navigation, creator, orbId, groupName, groupPic) => {
   })
 }
 
-const Story = ({ route, navigation }: StoryProps) => {
+const Story = ({ route, navigation,id, username }: StoryProps) => {
 
   const[showFlag, setFlag] = useState(false);
 
@@ -67,32 +68,66 @@ const Story = ({ route, navigation }: StoryProps) => {
 
   const story=route.params.story
 
-  const[likes, setLikes] = useState(story.people_like)
+  const[likes, setLikes] = useState([])
+  const[post, setPost] = useState({})
+  const[comments, setComments] = useState([])
 
-  const storyID=story.id
-  const groupID=route.params.groupID
-  const creatorId = story.creator.id
-  const firstName=story.creator.first_name
-  const lastName=story.creator.last_name
-  const username=story.creator.username
-  const caption=story.caption
-  const likeCount=story.people_like.length
-  const commentCount=story.get_socialCalItemComment.length
-  const groupPic=`${global.IMAGE_ENDPOINT}`+route.params.groupPic
-  const groupName=route.params.groupName
-  const profilePic=`${global.IMAGE_ENDPOINT}`+story.creator.profile_picture
-  const month=dateFns.format(new Date(story.created_at), "MMMM").substring(0,3)
-  const day=dateFns.format(new Date(story.created_at), "dd")
-  const userID=route.params.userID
-  const notificationToken=story.creator.notificationToken
+  let caption=""
+  let creatorId = ""
+  let creatorUsername = ""
+  let creatorPic = ""
+  let notificationToken=""
+
+  let groupId=""
+  let groupName=""
+  let groupPic=""
+  // `${global.IMAGE_ENDPOINT}`+route.params.groupPic
+  let month= ""
+  let day= ""
+
+  if(post.smallGroup){
+    groupPic = `${global.IMAGE_ENDPOINT}`+post.smallGroup.groupPic
+    groupName = post.smallGroup.group_name
+    groupId = post.smallGroup.id
+  }
+  if(post.creator){
+    creatorId = post.creator.id
+    creatorUsername = post.creator.username
+    creatorPic = `${global.IMAGE_ENDPOINT}`+post.creator.profile_picture
+    notificationToken = post.creator.notificationToken
+  }
+  if(post.caption){
+    caption = post.caption
+  }
+  if(post.created_at){
+    month = dateFns.format(new Date(post.created_at), "MMMM").substring(0,3)
+    day = dateFns.format(new Date(post.created_at), "dd")
+  }
+
+
   const isGestureActive = useSharedValue(false);
   const translation = useVector();
-  const curUser = route.params.curUser
 
-  console.log(story.people_like)
+
+  useEffect(() => {
+
+    navigation.addListener('focus', () =>{
+      const postId = route.params.postId;
+      authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getSinglePost/'+postId)
+      .then(res => {
+        setPost(res.data)
+        setLikes(res.data.people_like)
+        setComments(res.data.get_socialCalItemComment)
+      })
+
+    })
+
+
+
+  }, [])
 
   const onReport = () => {
-    console.log('report this:', storyID)
+    console.log('report this:', post.id)
 
     authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/flagPost/'+storyID)
 
@@ -109,21 +144,25 @@ const Story = ({ route, navigation }: StoryProps) => {
     .then(res => {
       setLikes(res.data)
 
-      const notificationObject = {
-        command: 'group_like_notification',
-        actor: likerId,
-        recipient: creatorId,
-        postId: postId
+
+      if(creatorId !== likerId){
+        const notificationObject = {
+          command: 'group_like_notification',
+          actor: likerId,
+          recipient: creatorId,
+          postId: postId
+        }
+
+        NotificationWebSocketInstance.sendNotification(notificationObject)
+
+
+        global.SEND_GROUP_LIKE_NOTIFICATION(
+          notificationToken,
+          username,
+          postId,
+        )
+
       }
-
-      NotificationWebSocketInstance.sendNotification(notificationObject)
-
-
-      global.SEND_GROUP_LIKE_NOTIFICATION(
-        notificationToken,
-        curUser,
-        postId,
-      )
 
 
     })
@@ -131,7 +170,6 @@ const Story = ({ route, navigation }: StoryProps) => {
   }
 
   const onUnlike = (unlikerId, postId, notificationToken) =>{
-    console.log(postId)
 
     authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/socialCalItemUnlike/'+postId+"/"+unlikerId)
     .then(res => {
@@ -182,11 +220,13 @@ const Story = ({ route, navigation }: StoryProps) => {
       ],
     };
   });
+
   const borderStyle = useAnimatedStyle(() => {
     return {
       borderRadius: withTiming(isGestureActive.value ? 75 : 0),
     };
   });
+
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Animated.View style={style}>
@@ -209,7 +249,8 @@ const Story = ({ route, navigation }: StoryProps) => {
 
 
         <TouchableOpacity
-          onPress = {() => ViewGroup(navigation, creatorId, groupID, groupName, route.params.groupPic)}
+          // REDO HERE
+          onPress = {() => ViewGroup(navigation, creatorId, groupId, groupName, post.smallGroup.groupPic)}
           style={{position:'absolute', padding:20, color:'white', zIndex:99, flexDirection:'row',}}>
             <Animated.View style={{flexDirection:'row', alignItems:'center'}}>
 
@@ -236,19 +277,19 @@ const Story = ({ route, navigation }: StoryProps) => {
                alignItems:'center'
                }}>
                <TouchableOpacity
-                 onPress = {() => ViewProfile(navigation,curUser, username)}
+                 onPress = {() => ViewProfile(navigation,username, creatorUsername)}
 
                  >
                  <Avatar
                    size={25}
                    rounded
                    source = {{
-                     uri:profilePic,
+                     uri:creatorPic,
                    }}
                  />
                </TouchableOpacity>
 
-              <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
+              <Animated.Text style={styles.videoFooterUserName}> {creatorUsername} </Animated.Text>
               <Animated.Text style={{marginTop:10}}>
                   <Animated.Text style={styles.videoFooterCaption}>{caption}</Animated.Text>
               </Animated.Text>
@@ -263,18 +304,18 @@ const Story = ({ route, navigation }: StoryProps) => {
              }}>
 
              <TouchableOpacity
-               onPress = {() => ViewProfile(navigation,curUser, username)}
+               onPress = {() => ViewProfile(navigation,username, creatorUsername)}
                >
                <Avatar
                  size={25}
                  rounded
                  source = {{
-                   uri:profilePic,
+                   uri:creatorPic,
                  }}
                />
              </TouchableOpacity>
 
-             <Animated.Text style={styles.videoFooterUserName}> {username} </Animated.Text>
+             <Animated.Text style={styles.videoFooterUserName}> {creatorUsername} </Animated.Text>
              </Animated.View>
            </Animated.View>
         }
@@ -315,14 +356,14 @@ const Story = ({ route, navigation }: StoryProps) => {
           <Animated.View style={{alignItems:'center'}}>
 
             {
-              likes.includes(userID) ?
+              likes.includes(id) ?
 
 
               <TouchableOpacity
                 style={{marginTop:10,}}
                 onPress = {() => onUnlike(
-                  userID,
-                  storyID,
+                  id,
+                  post.id,
                   notificationToken,
                 )}
                 >
@@ -341,8 +382,8 @@ const Story = ({ route, navigation }: StoryProps) => {
                <TouchableOpacity
                  style={{marginTop:10,}}
                  onPress = {() => onLike(
-                   userID,
-                   storyID,
+                   id,
+                   post.id,
                    notificationToken,
                    creatorId
                  )}
@@ -372,7 +413,7 @@ const Story = ({ route, navigation }: StoryProps) => {
               <Animated.Text style={{marginTop:10}}>
                 <MessageCircle
                   onPress={() => navigation.navigate("Comments",{
-                    postId: storyID,
+                    postId: post.id,
                     type: 'group'
                   })}
                   stroke = "white"
@@ -382,7 +423,7 @@ const Story = ({ route, navigation }: StoryProps) => {
                 />
               </Animated.Text>
               <Animated.Text style={styles.videoFooterNum}>
-                {commentCount}
+                {comments.length}
               </Animated.Text>
               {/*
               <Animated.Text style={styles.videoFooterNum}>
@@ -393,9 +434,9 @@ const Story = ({ route, navigation }: StoryProps) => {
             </Animated.View>
         </Animated.View>
         <SharedElement style={{ flex: 1 }}>
-          {!story.video && (
+          {!post.video && (
             <Animated.Image
-               source={{uri:story.image}}
+               source={{uri:post.itemImage}}
               style={[
                 {
                   ...StyleSheet.absoluteFillObject,
@@ -407,15 +448,14 @@ const Story = ({ route, navigation }: StoryProps) => {
               ]}
             />
           )}
-          {story.video && (
+          {post.video && (
 
             <AnimatedVideo
                source={{
-                 uri:`${global.IMAGE_ENDPOINT}`+story.video
+                 uri:`${global.IMAGE_ENDPOINT}`+post.video
                  // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
 
                }}
-              // source={story.video}
               rate={1.0}
               isMuted={false}
               resizeMode="cover"
@@ -520,4 +560,14 @@ const styles = StyleSheet.create({
     // fontWeight:'bold',
   },
 })
-export default Story;
+
+const mapStateToProps = state => {
+  return{
+      username: state.auth.username,
+      id: state.auth.id
+  }
+}
+
+
+
+export default connect(mapStateToProps, null)(Story);

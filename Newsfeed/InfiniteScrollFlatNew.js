@@ -408,7 +408,6 @@ class InfiniteScrollFlatNew extends React.Component{
     return (
 
       <NewGroupPost
-        vid={video}
         addTo = {this.addToList}
         triggerDelete={this.state.deleteCondition}
         changeVideo={this.changeVideo}
