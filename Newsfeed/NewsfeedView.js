@@ -39,7 +39,7 @@ import NearOrbButton from './NearOrbButton';
 import SwipeInfiniteScrollHolder from './SwipeInfiniteScrollHolder';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import GlobeGroup from './GlobeGroup/GlobeGroup';
-import { Globe, Map } from "react-native-feather";
+import { Globe, Map, Search } from "react-native-feather";
 import * as Location from 'expo-location';
 import * as globeGroupActions from '../store/actions/globeGroup';
 
@@ -377,13 +377,23 @@ class NewsfeedView extends React.Component{
 
               :
 
-              <View style = {{
+              <TouchableOpacity style = {{
                   position: 'absolute',
                   alignSelf: 'center',
                   bottom: '5%',
-                }}>
-                <Text style = {{color:'white', fontSize: 30}}>|</Text>
-              </View>
+                }}
+                onPress = {() => this.locationChecker()}
+                >
+
+                <View style = {styles.roundButton}>
+                  <Search
+                    stroke = "white"
+                    width = {45}
+                    height = {45}
+                     />
+                </View>
+
+               </TouchableOpacity>
 
             }
 
@@ -477,7 +487,28 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     bottom: 15,
     backgroundColor: 'pink'
-  }
+  },
+  roundButton: {
+    width: 95,
+    height: 95,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 55,
+    shadowColor: '#333333',
+    shadowOffset: {width: 1, height: 3},
+    shadowRadius: 2,
+    shadowOpacity: 0.4,
+    elevation: 20,
+    backgroundColor: '#1890ff',
+  },
+  roundButton1: {
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 55,
+    backgroundColor: 'white',
+  },
 
 })
 
