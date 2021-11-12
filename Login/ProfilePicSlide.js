@@ -157,6 +157,9 @@ class ProfilePicSlide extends React.Component{
   }
 
   render(){
+    let data=this.props.data
+    console.log("proifle!!1")
+    console.log(data)
     return(
       <View
         style = {{
@@ -166,13 +169,40 @@ class ProfilePicSlide extends React.Component{
            alignItems: 'center'
          }}
         >
-        <View style = {styles.topContainer}>
-          <Text style = {styles.profilePicText}>Pick a profile picture</Text>
-        </View>
 
-        <TouchableWithoutFeedback
-          onPress={() => this.bs.current.snapTo(0)}
-          >
+
+
+        <View style = {styles.topContainer}>
+          {(this.props.data)?
+            <View style={{marginTop:'50%', alignItems:'center'}}>
+            <View style={{marginBottom:'2%',}}>
+            </View>
+            <View style={{alignItems:'center'}}>
+              <Text style={styles.fbText}>Welcome, {data.name}</Text>
+              <View style={{top:50}}>
+                <TouchableWithoutFeedback onPress={() => this.bs.current.snapTo(0)}>
+                  <Avatar
+                      size={250}
+                      rounded
+                      source = {{
+                        uri:this.props.value,
+                      }}
+                    />
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+            </View>
+          :
+
+          <Text style = {styles.profilePicText}>Pick a profile picture</Text>
+          }
+
+        </View>
+        <View>
+        {!this.props.data?
+
+
+        <TouchableWithoutFeedback onPress={() => this.bs.current.snapTo(0)}>
           <View style = {styles.midContainer}>
             {
               this.props.value !== "" ?
@@ -190,9 +220,12 @@ class ProfilePicSlide extends React.Component{
                  source = {pic}
                   />
             }
+            </View>
+          </TouchableWithoutFeedback>
+          :
+          <View style = {styles.midContainer}></View>
+          }
           </View>
-        </TouchableWithoutFeedback>
-
         <View style = {styles.bottomContainer}>
           <View style = {styles.bottomLContainer}>
             <TouchableOpacity
@@ -237,6 +270,12 @@ class ProfilePicSlide extends React.Component{
 }
 
 const styles = StyleSheet.create({
+
+fbText: {
+  color: 'white',
+  fontSize: 24.5,
+  fontFamily:'Nunito-Bold',
+},
   topContainer: {
     width: width,
     height: '25%',
@@ -253,6 +292,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: width,
+    // backgroundColor:'red'
   },
   bottomContainer: {
     height: '25%',

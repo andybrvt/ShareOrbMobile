@@ -52,7 +52,7 @@ import * as authActions from '../store/actions/auth';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 
-class fbCreateUserPass extends React.Component{
+class FBCreateUserPass extends React.Component{
 
   constructor(props) {
     super(props);
@@ -68,12 +68,19 @@ class fbCreateUserPass extends React.Component{
     four: false,
     five: false,
 
-
+    profilePic:this.props.route.params.fb_profile_pic,
     username: "",
     password: "",
-
+    agreeToTOS: false,
+    fb_default:false,
   }
 
+
+  onPicChange = (pic) => {
+    this.setState({
+      profilePic:pic
+    })
+  }
 
 
   close = () =>  {
@@ -151,6 +158,8 @@ class fbCreateUserPass extends React.Component{
     this.setState({
       username: e
     })
+    console.log("NEW USER!!!")
+    console.log(e)
   }
 
 
@@ -160,6 +169,19 @@ class fbCreateUserPass extends React.Component{
     })
   }
 
+  setFBDefault = e => {
+    this.setState({
+      fb_default:true
+    })
+  }
+
+  acceptTerms =() =>{
+    const terms = this.state.agreeToTOS
+
+    this.setState({
+      agreeToTOS: !terms
+    })
+  }
 
   componentDidUpdate(prevProps){
 
@@ -172,50 +194,49 @@ class fbCreateUserPass extends React.Component{
     this.setState({
       loading: true
     })
-    const { profilePic, username, firstName, lastName, email, dob, password} = this.state;
-    return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
+    const { profilePic, username, password} = this.state;
+    console.log("SIGN UP STEP!!!!!!!!")
+    console.log(profilePic, username, password)
+    axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
       username: username,
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      dob: dateFns.format(dob, "yyyy-MM-dd"),
-      password1: password,
-      password2: password
+      password: password
     }).then(res => {
-      const token = res.data.key;
-      const formData = new FormData();
-      const newPic = global.FILE_NAME_GETTER(profilePic)
 
-
-      formData.append("profilePic", newPic)
-
-
+      const token = res.data.key
       AsyncStorage.setItem('token', token)
-
-      authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePic`,
-        formData
-      ).then( res => {
-        this.setState({
-          loading:false
-        })
-        this.props.authSuccess(token);
-        this.props.navigation.navigate("")
-      })
-      // change userprofile picture using username
-    })
-    .catch( err => {
-      alert('Check email or use a different one')
       this.setState({
-        loading:false
+        loading: false
       })
+      this.props.authSuccess(token)
+
     })
+    .catch(err => {
+
+      console.log('no account here')
+      //if there is no account you will go through sign up
+
+      this.onSignupSubmit(data.id, data.full_name, data.username,data.profile_pic_url)
+
+
+    })
+
   }
 
   render(){
     let showPicker=this.state.showDatePicker
+    let id=this.props.route.params.id
+    let username=this.props.route.params.username
+    let name=this.props.route.params.name
+    let fb_profile_pic=this.props.route.params.fb_profile_pic
+
+
+    console.log("here it is!")
+    console.log(this.state.profilePic)
+    // console.log(id, username, name, fb_profile_pic)
     return(
       <View style = {{flex: 1}}>
           <View style = {{alignItems:'center'}}>
+          {/*
             <BasicSignUp
               un = {false}
               pw = {false}
@@ -230,24 +251,56 @@ class fbCreateUserPass extends React.Component{
               closeNum = {'one'}
               openNum = {'two'}
                />
-
-            <SlideWrap visible = {this.state.two}>
+               */}
+               {/*
+              <View style={{width: '100%', height:'100%', backgroundColor: '#1890ff'}}>
+              <View style={{padding:50, alignItems:'center'}}>
+                <Text style={{color: 'white', fontSize: 25, fontFamily:'Nunito-SemiBold',}}>
+                  Welcome, {name}
+                </Text>
+                <Avatar
+                  size={125}
+                  rounded
+                  source = {{
+                    uri:fb_profile_pic,
+                  }}
+                />
+                </View>
+                <Text style={{color: 'white', fontSize: 25, fontFamily:'Nunito-SemiBold',}}>
+                  Please enter a profile picture
+                </Text>
+              </View>
+              */}
+              <ProfilePicSlide
+                data={this.props.route.params}
+                value = {this.state.profilePic}
+                onChange = {this.onPicChange}
+                closeModal = {this.closeModal}
+                openModal = {this.openModal}
+                closeNum = {'one'}
+                openNum = {'two'}
+                />
+              <SlideWrap visible = {this.state.two}>
               <BasicSignUp
+              data={false}
                 un = {true}
                 pw = {false}
                 em = {false}
                 loading = {this.state.loading}
                 visible = {this.state.two}
-                prompt = {"What is your username?"}
+                name={name}
+                prompt = {"Please enter a username"}
                 value = {this.state.username}
                 onChange = {this.onUsernameChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
+
                 closeNum = {'two'}
-                openNum = {'three'}/>
+                openNum = {'three'}
+                />
 
-            </SlideWrap>
 
+                </SlideWrap>
 
             <SlideWrap visible = {this.state.three}>
               <BasicSignUp
@@ -256,14 +309,17 @@ class fbCreateUserPass extends React.Component{
                 em = {false}
                 loading = {this.state.loading}
                 signup = {this.onSignupSubmit}
-                visible = {this.state.five}
-                prompt = {"Create a password"}
+                visible = {this.state.three}
+                prompt = {"Please enter a password"}
                 value = {this.state.password}
                 onChange = {this.onPasswordChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
                 closeNum = {'three'}
-                openNum = {'four'}/>
+                openNum = {'four'}
+                termCondition = {this.state.agreeToTOS}
+                acceptTerms = {this.acceptTerms}
+                />
 
             </SlideWrap>
 
@@ -357,4 +413,4 @@ const mapDispatchToProps = dispatch => {
 
 
 
- export default connect(mapStateToProps, mapDispatchToProps)(fbCreateUserPass)
+ export default connect(mapStateToProps, mapDispatchToProps)(FBCreateUserPass)

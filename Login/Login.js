@@ -43,26 +43,30 @@ WebBrowser.maybeCompleteAuthSession(); // <-- will close web window after authen
 
 
 class Login extends React.Component{
-
-  state = {
-    username: "",
-    paassword: "",
-    login: false,
-    inviteCode: "",
-    loginLoading: false,
-    inviteLoading: false,
-    loading: false,
-    token: '',
-    instaInfo:null,
-    test:null,
-    isLoggedin:false,
-    userData:null,
-    isImageLoading:false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      paassword: "",
+      login: false,
+      inviteCode: "",
+      loginLoading: false,
+      inviteLoading: false,
+      loading: false,
+      token: '',
+      instaInfo:null,
+      test:null,
+      isLoggedin:false,
+      userData:null,
+      isImageLoading:false,
+    }
   }
 
+
   facebookLogIn = async () => {
+
     try {
-      this.props.navigation.navigate("FBCreateUserPass")
+
     await Facebook.initializeAsync({
       appId: '981416685741603',
     });
@@ -78,9 +82,10 @@ class Login extends React.Component{
 
 
     if (type === 'success') {
+
       // Get the user's name using Facebook's Graph API
       //https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)
-      fetch(`www.google.com`)
+      fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`)
         .then(response => response.json())
         .then(data => {
           console.log("LLLLLLL")
@@ -94,6 +99,15 @@ class Login extends React.Component{
 
           const tempUsername = data.id
           const tempPassword = data.id+"ShareOrb123"
+
+            this.props.navigation.navigate("FBCreateUserPass",
+            {
+              'id':data.id,
+              'username':data.username,
+              'name':data.name,
+              'fb_profile_pic':data.picture.data.url,
+            } );
+
 
           {/*
           axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {

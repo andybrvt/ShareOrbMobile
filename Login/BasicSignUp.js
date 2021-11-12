@@ -25,6 +25,10 @@ import { Square, CheckSquare, ArrowRightCircle, ArrowLeftCircle, Plus, Mail, Use
 import axios from "axios";
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
+import { Avatar } from 'react-native-elements';
+import pic from './default.png';
+
+
 
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
@@ -195,13 +199,11 @@ class BasicSignUp extends React.Component{
   }
 
   validate = () => {
-
     if(this.props.value === ""){
       return false
     }
     if(this.props.pw){
       const value = this.props.value
-
       if(value.length < 10){
         // validate if the password is longer than 8 characters
         return false
@@ -212,7 +214,6 @@ class BasicSignUp extends React.Component{
         // Validate if it has a number
         return false
       }
-
       if(!this.props.termCondition){
         return false
       }
@@ -224,34 +225,60 @@ class BasicSignUp extends React.Component{
         return false
       }
     }
-
     return true
-
   }
 
   render(){
-
     return(
-
         <View style = {{
             height: height-this.state.pageHeight,
             width: width,
             backgroundColor: '#1890ff',
             alignItems: 'center'
           }}>
-
             <View
               style = {styles.topContainer}
               >
-
 
             </View>
 
             <View
               style = {styles.midContainer}
               >
-              <Text style = {styles.promptText}>{this.props.prompt}</Text>
-            </View>
+              {
+                this.props.FBSignUp?
+                <View style={{marginTop:'30%', marginBottom:'10%', alignItems:'center'}}>
+                <Text style = {styles.fbText}>Welcome, {this.props.name} </Text>
+                </View>
+                :
+                null
+              }
+
+              {(this.props.fb_profile_pic=='https://scontent-lax3-2.xx.fbcdn.net/v/t1.30497-1/s960x960/84628273_176159830277856_972693363922829312_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=12b3be&_nc_ohc=rwm2RFKAQyQAX8FZxMF&_nc_ht=scontent-lax3-2.xx&edm=AP4hL3IEAAAA&oh=3b573608a45801eaf1e3f1f284d40a81&oe=61B3A6BD')?
+                <View  style={{alignItems:'center', marginTop:'10%', marginBottom:'10%'}}>>
+                  <Avatar
+                    size={125}
+                    rounded
+                    source = {pic}
+                  />
+                  <Text style = {styles.fbText}>Please enter a profile picture</Text>
+              </View>
+              :
+              <View style={{alignItems:'center', top:'10%', marginBottom:'20%'}}>
+                <Avatar
+                  size={125}
+                  rounded
+                  source = {{
+                    uri:this.props.fb_profile_pic,
+                  }}
+                />
+              </View>
+              }
+
+              <Text style = {styles.fbText}>{this.props.prompt}</Text>
+
+          </View>
+
 
             <TouchableWithoutFeedback
               onPress = {() => this.textInput.focus()}
@@ -298,6 +325,7 @@ class BasicSignUp extends React.Component{
 
                    null
                 }
+
 
                 </View>
 
@@ -457,7 +485,12 @@ class BasicSignUp extends React.Component{
 const styles = StyleSheet.create({
   promptText: {
     color: 'white',
-    fontSize: 27.5,
+    fontSize: 26.5,
+    fontFamily:'Nunito-Bold',
+  },
+  fbText: {
+    color: 'white',
+    fontSize: 22.5,
     fontFamily:'Nunito-Bold',
   },
   topContainer: {

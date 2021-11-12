@@ -4,6 +4,7 @@ import React from 'react';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import Friends from './Friends';
 import Login from './Login/Login';
+import FBCreateUserPass from './Login/FBCreateUserPass';
 import AppIntro from './Login/AppIntro';
 import LoadingScreen from './Login/LoadingScreen';
 import Signup from './Signup/Signup';
@@ -51,6 +52,7 @@ class Routes extends React.Component{
         <Stack.Screen name = "AppIntro" component = {AppIntro}/>
         <Stack.Screen name = "Signup" component = {Signup} />
         <Stack.Screen name = "Explore" component = {Explore} />
+        <Stack.Screen name = "FBCreateUserPass" component = {FBCreateUserPass} />
 
       </Stack.Navigator>
     )
