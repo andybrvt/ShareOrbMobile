@@ -366,10 +366,16 @@ class App extends Component{
               }
 
               if(notiType === "group_like"){
-                const postId = response.notification.request.trigger.payload.body.postId
-                this.refContainer.navigate("NavPic", {
-                  postId, postId
-                })
+
+
+                const postId = response.notification.request.trigger.payload.body.groupId
+                console.log(postId, 'the post Id here')
+
+                // this.refContainer.navigate("NavPic", {
+                //   postId, postId
+                // })
+
+
               }
 
               if(notiType === "group_comment"){

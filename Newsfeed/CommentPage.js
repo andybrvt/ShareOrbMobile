@@ -108,8 +108,10 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
    }
 
    onCommentSubmit = () => {
-     console.log('group')
-     // use to submit the comments into the websocket
+     // USE THIS ONE HERE
+
+
+    // use to submit the comments into the websocket
      const comment = this.state.comment
      if(this.state.comment.length > 0){
        const cellId = this.props.route.params.postId

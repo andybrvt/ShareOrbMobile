@@ -100,7 +100,7 @@ class NewGlobePost extends React.Component{
     const postId = this.props.data.post.id
 
 
-    if(ownerId !== likerId){
+    // if(ownerId !== likerId){
 
       const notificationObject = {
         command: 'group_like_notification',
@@ -120,7 +120,7 @@ class NewGlobePost extends React.Component{
 
 
 
-    }
+    // }
 
 
 
