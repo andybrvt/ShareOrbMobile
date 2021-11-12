@@ -35,6 +35,7 @@ import Explore from './Explore/Explore';
 import Friends from './Friends';
 import Login from './Login/Login';
 import AppIntro from './Login/AppIntro';
+import fbCreateUserPass from './Login/fbCreateUserPass';
 import MiniAppIntro from './Login/MiniAppIntro';
 import SuggestedGroups from './Login/SuggestedGroups';
 import Signup from './Signup/Signup';
@@ -1140,6 +1141,19 @@ class App extends Component{
                        component = {Explore}
 
                        />
+
+                       <Stack.Screen
+                         options={{
+                           headerShown: false,
+                            ...TransitionPresets.SlideFromRightIOS,
+                          }}
+
+                          name = 'fbCreateUserPass'
+                          component = {fbCreateUserPass}
+
+                          />
+
+
 
                      <Stack.Screen
                        options={{

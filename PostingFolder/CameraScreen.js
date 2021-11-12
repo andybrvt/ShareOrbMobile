@@ -1568,9 +1568,7 @@ class CameraScreen extends React.Component{
               <Text style = {styles.btnText}>
                 Allow camera permissions
               </Text>
-
            </TouchableOpacity>
-
           </View>
 
 

@@ -16,6 +16,7 @@ import {
  TouchableWithoutFeedback,
  ActivityIndicator,
  AsyncStorage,
+ KeyboardAvoidingView
 
 } from "react-native";
 import styles from './LoginStyle';
@@ -23,7 +24,8 @@ import SvgUri from 'react-native-svg-uri';
 import { connect } from "react-redux";
 import { authLogin, authInvited, authSuccess } from "../store/actions/auth";
 import * as ImagePicker from 'expo-image-picker';
-import { ArrowRightCircle, Instagram } from "react-native-feather";
+import { ArrowRightCircle, Instagram} from "react-native-feather";
+import { Facebook as Facebook1 } from "react-native-feather";
 import axios from "axios";
 import { WebView } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
@@ -32,7 +34,7 @@ import InstagramLogin from 'react-native-instagram-login';
 import authAxios from '../util';
 import * as dateFns from 'date-fns';
 import LoadingModal from '../RandomComponents/LoadingModal';
-
+import * as Facebook from 'expo-facebook';
 
 // import CookieManager from '@react-native-community/cookies';
 WebBrowser.maybeCompleteAuthSession(); // <-- will close web window after authentication
@@ -53,6 +55,90 @@ class Login extends React.Component{
     token: '',
     instaInfo:null,
     test:null,
+    isLoggedin:false,
+    userData:null,
+    isImageLoading:false,
+  }
+
+  facebookLogIn = async () => {
+    try {
+      this.props.navigation.navigate("FBCreateUserPass")
+    await Facebook.initializeAsync({
+      appId: '981416685741603',
+    });
+    const {
+      type,
+      token,
+      expirationDate,
+      permissions,
+      declinedPermissions,
+    } = await Facebook.logInWithReadPermissionsAsync({
+      permissions: ['public_profile'],
+    });
+
+
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      //https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)
+      fetch(`www.google.com`)
+        .then(response => response.json())
+        .then(data => {
+          console.log("LLLLLLL")
+          console.log(data)
+          console.log(data.id, 'second function call')
+          console.log(data.picture.data.url, 'second function call')
+          console.log(data.name, 'second function call')
+          console.log(data.username, 'second function call')
+
+
+
+          const tempUsername = data.id
+          const tempPassword = data.id+"ShareOrb123"
+
+          {/*
+          axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
+            username: tempUsername,
+            password: tempPassword
+          })
+          .then(res => {
+
+            const token = res.data.key
+            AsyncStorage.setItem('token', token)
+            this.setState({
+              loading: false
+            })
+            this.props.authSuccess(token)
+
+          })
+          .catch(err => {
+
+            console.log('no account here')
+            //if there is no account you will go through sign up
+            console.log(data.id, data.name, tempUsername, data.picture.data.url)
+
+            // this.onSignupSubmit(data.id, data.name, tempUsername,data.picture.data.url)
+
+
+          })
+          */}
+
+          // this.setState({
+          //   isLoggedin:true,
+          //   userData:data,
+          // })
+          // console.log(this.state.userData)
+
+
+        })
+
+        .catch(e => console.log(e))
+    } else {
+      // type === 'cancel'
+    }
+  } catch ({ message }) {
+    alert(`Facebook Login Error: ${message}`);
+  }
+
   }
 
 
@@ -280,10 +366,15 @@ class Login extends React.Component{
       console.log(this.state.instaInfo.id)
       console.log(this.state.token)
     }
+    const userData=this.state.userData
 
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
-
+        <KeyboardAvoidingView
+          behavior="null"
+          keyboardVerticalOffset={300}
+          style={{flex:1}}
+        >
         <View
           style = {styles.background}>
            <StatusBar style="auto" />
@@ -348,7 +439,7 @@ class Login extends React.Component{
                }
             </TouchableOpacity>
 
-            <Text>
+            <Text style={{marginTop:10, marginBottom:10}}>
               or
             </Text>
 
@@ -357,10 +448,33 @@ class Login extends React.Component{
               onPress={() => this.instagramLogin.show()}
               >
               <Instagram
-                style={{right:5}}
+                style={{right:10}}
                 stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
-              <Text style={{ color: 'white', textAlign: 'center', fontSize:16 }}> Use Instagram</Text>
+              <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}> Use Instagram</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.loginBtn1}
+              onPress={() => this.facebookLogIn()}
+              >
+              <Facebook1
+                style={{right:10}}
+                stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+              <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}> Use Facebook</Text>
+            </TouchableOpacity>
+            {/*
+            <View style={styles.container}>
+              <Image
+                style={{ width: 200, height: 200, borderRadius: 50 }}
+                source={{ uri: userData.picture.data.url }}
+                onLoadEnd={() => setImageLoadStatus(true)} />
+              <ActivityIndicator size="large" color="#0000ff" animating={!isImageLoading} style={{ position: "absolute" }} />
+              <Text style={{ fontSize: 22, marginVertical: 10 }}>Hi {userData.name}!</Text>
+              <TouchableOpacity style={styles.logoutBtn} onPress={this.logout}>
+                <Text style={{ color: "#fff" }}>Logout</Text>
+              </TouchableOpacity>
+            </View>
+            */}
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
           {/*
@@ -376,6 +490,8 @@ class Login extends React.Component{
           <InstagramLogin
             ref={ref => (this.instagramLogin = ref)}
             appId='414116966915736'
+            // containerStyle={{width:'100%', height:'100%', backgroundColor:'red'}}
+            // wrapperStyle={{width:'100%', height:'100%', backgroundColor:'blue'}}
             appSecret='55fb4d3e5ca2a04146a8ba4b95debb9e'
             redirectUrl='https://shareorb.com/'
             scopes={['user_profile', 'user_media']}
@@ -394,6 +510,7 @@ class Login extends React.Component{
 
         </View>
 
+        </KeyboardAvoidingView>
 
       </TouchableWithoutFeedback>
     )

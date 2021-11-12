@@ -103,13 +103,19 @@ class NewGlobePost extends React.PureComponent{
     let groupName="";
     let groupPic="";
     let groupId = "";
+
     let groupInfo=this.props.groupInfo
     vid = this.props.vid
     groupName=groupInfo.groupName
     groupPic=groupInfo.groupPic
     let month=dateFns.format(new Date(this.props.item.created_at), "MMM")
     let day=dateFns.format(new Date(this.props.item.created_at), "dd")
+    console.log("each post!!!!")
+    console.log(this.props.item.created_at)
 
+    let timeDiff = Math.round((new Date().getTime() - new Date(this.props.item.created_at).getTime())/60000)
+
+    console.log(timeDiff)
     if(this.props.item) {
       if(this.props.groupInfo.groupName){
         groupName = this.props.groupInfo.groupName;
@@ -143,8 +149,10 @@ class NewGlobePost extends React.PureComponent{
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
 
+
+
     return(
-      <View style={styles.item}>
+      <View style={[timeDiff < 24*60?styles.item2:styles.item]}>
         {this.props.triggerDelete?
           <TouchableWithoutFeedback
            onPress={() => this.onSelectVid(this.props.item)}
@@ -347,6 +355,16 @@ const styles = StyleSheet.create({
     // backgroundColor: '#4D243D',
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
+    margin: 1,
+    height: Dimensions.get('window').width / 2, // approximate a square
+  },
+  item2: {
+    // backgroundColor: '#4D243D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopWidth:1,
+    borderColor:'red',
     flex: 1,
     margin: 1,
     height: Dimensions.get('window').width / 2, // approximate a square
