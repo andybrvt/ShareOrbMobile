@@ -368,7 +368,7 @@ class App extends Component{
               if(notiType === "group_like"){
 
 
-                const postId = response.notification.request.trigger.payload.body.groupId
+                const postId = response.notification.request.trigger.payload.body.postId
 
                 this.refContainer.navigate("Story", {
                   "postId": postId
@@ -379,8 +379,8 @@ class App extends Component{
 
               if(notiType === "group_comment"){
                 const postId = response.notification.request.trigger.payload.body.postId
-                this.refContainer.navigate("NavPic", {
-                  postId, postId
+                this.refContainer.navigate("Story", {
+                  "postId": postId
                 })
               }
 

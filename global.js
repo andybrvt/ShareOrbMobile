@@ -240,7 +240,7 @@ global.SEND_GROUP_COMMENT_NOTIFICATION = async(
       body: 'Click to check it out!',
       data: {
         type: "group_comment",
-        groupId: groupId,
+        postId: groupId,
        },
     }
 
@@ -272,7 +272,7 @@ global.SEND_GROUP_LIKE_NOTIFICATION = async(
       body: 'Click to check it out!',
       data: {
         type: "group_like",
-        groupId: groupId,
+        postId: groupId,
        },
     }
 
