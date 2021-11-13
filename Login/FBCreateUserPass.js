@@ -69,6 +69,8 @@ class FBCreateUserPass extends React.Component{
     five: false,
 
     profilePic:this.props.route.params.fb_profile_pic,
+    id:this.props.route.params.id,
+    name:this.props.route.params.name,
     username: "",
     password: "",
     agreeToTOS: false,
@@ -155,6 +157,7 @@ class FBCreateUserPass extends React.Component{
   }
 
   onUsernameChange = e => {
+    console.log("HelloOOO")
     this.setState({
       username: e
     })
@@ -164,6 +167,7 @@ class FBCreateUserPass extends React.Component{
 
 
   onPasswordChange = e => {
+    console.log(e+ " pass wordd!!!! ")
     this.setState({
       password:e
     })
@@ -190,12 +194,13 @@ class FBCreateUserPass extends React.Component{
     }
   }
 
-  onSignupSubmit = () => {
+  FBLogin = () => {
+    console.log("LOGIN STePPPP!!")
     this.setState({
       loading: true
     })
-    const { profilePic, username, password} = this.state;
-    console.log("SIGN UP STEP!!!!!!!!")
+    const { id, name, profilePic, username, password} = this.state;
+
     console.log(profilePic, username, password)
     axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
       username: username,
@@ -215,11 +220,59 @@ class FBCreateUserPass extends React.Component{
       console.log('no account here')
       //if there is no account you will go through sign up
 
-      this.onSignupSubmit(data.id, data.full_name, data.username,data.profile_pic_url)
+      this.onSignupSubmit(id, name, username, profilePic)
 
 
     })
 
+  }
+
+
+  onSignupSubmit = (id, firstName, username, profilePic) => {
+    console.log("SIGN UP STEP!!!!!!!!")
+    const lastName = "";
+    const email = "alphie"+id+"@gmail.com"
+    const {password} = this.state;
+
+    console.log(id, firstName, username, email, password,dateFns.format(new Date(), "yyyy-MM-dd"))
+    return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
+      username: username,
+      first_name: firstName,
+      email: email,
+      dob: dateFns.format(new Date(), "yyyy-MM-dd"),
+      password1: password,
+      password2: password
+    }).then(res => {
+      console.log("you DID IT!")
+      console.log(res.data)
+      const token = res.data.key;
+      const formData = new FormData();
+      const newPic = profilePic
+      formData.append("profilePic", newPic)
+
+
+      AsyncStorage.setItem('token', token)
+
+      authAxios.post(`${global.IP_CHANGE}/userprofile/changeProfilePicURL`,
+        formData
+      ).then( res => {
+
+        this.setState({
+          loading:false
+        })
+        this.props.authSuccess(token);
+        this.props.navigation.navigate("")
+
+      })
+
+
+    })
+    .catch( err => {
+      alert('Check email or use a different one')
+      this.setState({
+        loading:false
+      })
+    })
   }
 
   render(){
@@ -230,8 +283,7 @@ class FBCreateUserPass extends React.Component{
     let fb_profile_pic=this.props.route.params.fb_profile_pic
 
 
-    console.log("here it is!")
-    console.log(this.state.profilePic)
+
     // console.log(id, username, name, fb_profile_pic)
     return(
       <View style = {{flex: 1}}>
@@ -283,12 +335,12 @@ class FBCreateUserPass extends React.Component{
               <SlideWrap visible = {this.state.two}>
               <BasicSignUp
               data={false}
-                un = {true}
+                un = {false}
                 pw = {false}
                 em = {false}
                 loading = {this.state.loading}
-                visible = {this.state.two}
-                name={name}
+
+
                 prompt = {"Please enter a username"}
                 value = {this.state.username}
                 onChange = {this.onUsernameChange}
@@ -308,7 +360,7 @@ class FBCreateUserPass extends React.Component{
                 un = {false}
                 em = {false}
                 loading = {this.state.loading}
-                signup = {this.onSignupSubmit}
+                signup = {this.FBLogin}
                 visible = {this.state.three}
                 prompt = {"Please enter a password"}
                 value = {this.state.password}
