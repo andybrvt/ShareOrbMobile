@@ -1147,16 +1147,7 @@ class App extends Component{
 
                        />
 
-                       <Stack.Screen
-                         options={{
-                           headerShown: false,
-                            ...TransitionPresets.SlideFromRightIOS,
-                          }}
 
-                          name = 'FBCreateUserPass'
-                          component = {FBCreateUserPass}
-
-                          />
 
 
 
