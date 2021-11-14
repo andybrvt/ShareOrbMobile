@@ -30,7 +30,6 @@ class NewGlobePost extends React.PureComponent{
 
 
    onSelectVid = (vid) => {
-     console.log(vid.id, 'choose this')
      this.props.addTo(vid.id)
      if(this.state.invitedPeople.some(item => vid.id == item.id)){
        const newList = this.state.invitedPeople.filter(function(el) { return el.id != vid.id });
@@ -107,12 +106,9 @@ class NewGlobePost extends React.PureComponent{
     let groupInfo=this.props.groupInfo
     let month=dateFns.format(new Date(this.props.item.created_at), "MMM")
     let day=dateFns.format(new Date(this.props.item.created_at), "dd")
-    console.log("each post!!!!")
-    console.log(this.props.item.created_at)
 
     let timeDiff = Math.round((new Date().getTime() - new Date(this.props.item.created_at).getTime())/60000)
 
-    console.log(timeDiff)
     if(this.props.item) {
       if(this.props.groupInfo.groupName){
         groupName = this.props.groupInfo.groupName;
@@ -149,7 +145,7 @@ class NewGlobePost extends React.PureComponent{
 
 
     return(
-      <View style={[timeDiff < 24*60?styles.item2:styles.item]}>
+      <View style={[ timeDiff < 8*60 ?styles.item2:styles.item]}>
         {this.props.triggerDelete?
           <TouchableWithoutFeedback
            onPress={() => this.onSelectVid(this.props.item)}
