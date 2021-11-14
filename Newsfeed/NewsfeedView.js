@@ -101,7 +101,6 @@ class NewsfeedView extends React.Component{
     // this function will check for the closes orbs within a 5 mile radius
     // and then return it,
 
-    console.log('how many times does this run')
     this.setState({
       loading: true
     })

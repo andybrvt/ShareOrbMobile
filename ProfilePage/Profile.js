@@ -245,6 +245,8 @@ const mapStateToProps = state => {
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,
     bio: state.auth.bio,
+    secondUsername: state.auth.secondUsername,
+    isOtherAccount: state.auth.isOtherAccount
   }
 }
 
