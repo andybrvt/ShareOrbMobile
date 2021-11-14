@@ -221,7 +221,7 @@ class FBCreateUserPass extends React.Component{
 
     console.log(id, firstName, username, email)
     return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
-      username: username,
+      username: id,
       first_name: firstName,
       email: email,
       dob: dateFns.format(new Date(), "yyyy-MM-dd"),

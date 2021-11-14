@@ -93,7 +93,7 @@ class ProfilePage extends React.Component{
       const name = this.props.route.params.username
       authAxios.get(`${global.IP_CHANGE}`+"/userprofile/"+name)
       .then(res => {
-        console.log(res.data)
+        console.log(res.data, 'res res ')
         this.setState({
           profile: res.data
         })
@@ -161,7 +161,15 @@ class ProfilePage extends React.Component{
 
   listHeader = () => {
     const profile = this.state.profile
-    const username = profile.username
+    const isOtherAccount = profile.isOtherAccount
+
+    let username = ""
+    if(isOtherAccount){
+      username = profile.secondUsername
+    } else {
+      username = profile.username
+    }
+
     const profilePic = profile.profile_picture
     const bio = profile.bio
     const name = profile.first_name
@@ -272,6 +280,12 @@ class ProfilePage extends React.Component{
 
     const data = this.state.profile.recentOrbs
 
+    if(this.state.profile.isOtherAccount){
+        username = this.state.profile.secondUsername
+    } else {
+      username = this.state.profile.username
+    }
+
     // you would use userId in this one
 
     return (
@@ -294,7 +308,7 @@ class ProfilePage extends React.Component{
           </View>
 
             <View style={{justifyContent:'center', paddingLeft: 10}}>
-              <Text style={styles.textStyle}>{this.state.profile.username}</Text>
+              <Text style={styles.textStyle}>{username}</Text>
             </View>
 
           <View style = {{
@@ -327,7 +341,7 @@ class ProfilePage extends React.Component{
           ListEmptyComponent={this.renderEmptyContainer}
 
            />
-         
+
          <BlockingModal
            onCancel = {this.onCloseBlockingModal}
            onAction = {this.onAlertBlock}
