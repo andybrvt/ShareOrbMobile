@@ -128,12 +128,21 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
        if(userId !== commentHost){
          NotificationWebSocketInstance.sendNotification(notificationObject)
 
+         if(this.props.isOtherAccount){
+           global.SEND_GROUP_COMMENT_NOTIFICATION(
+             this.props.commentHostNotiToken,
+             this.props.secondUsername,
+             cellId
+           )
+         } else {
+           global.SEND_GROUP_COMMENT_NOTIFICATION(
+             this.props.commentHostNotiToken,
+             this.props.currentUser,
+             cellId
+           )
+         }
 
-         global.SEND_GROUP_COMMENT_NOTIFICATION(
-           this.props.commentHostNotiToken,
-           this.props.currentUser,
-           cellId
-         )
+
 
        }
 
@@ -397,7 +406,9 @@ import { ChevronLeft, ArrowLeft } from "react-native-feather";
      commentHost: state.socialNewsfeed.commentHost,
      cellDate: state.socialNewsfeed.cellDate,
      commentHostNotiToken: state.socialNewsfeed.commentHostNotiToken,
-     globeComments: state.globeGroup.globeComments
+     globeComments: state.globeGroup.globeComments,
+     secondUsername: state.auth.secondUsername,
+     isOtherAccount: state.auth.isOtherAccount
    }
  }
 
