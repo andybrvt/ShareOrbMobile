@@ -166,7 +166,7 @@ class BasicSignUp extends React.Component{
   }
 
   next = () => {
-    if(this.props.pw){
+    if(this.props.pw || this.props.uns){
       Alert.alert(
         "Are you sure?",
         "You cannot go back after this, but you will still be able to edit later in the future",
@@ -214,6 +214,11 @@ class BasicSignUp extends React.Component{
         // Validate if it has a number
         return false
       }
+      if(!this.props.termCondition){
+        return false
+      }
+    }
+    if(this.props.uns){
       if(!this.props.termCondition){
         return false
       }
@@ -468,6 +473,61 @@ class BasicSignUp extends React.Component{
 
               null
 
+            }
+
+            {
+              this.props.uns === true ?
+
+              <View style = {{
+                  position: 'absolute',
+                  top: '70%',
+                  alignItems:'center',
+                  flexDirection: 'row'
+                }}>
+                {
+                  this.props.termCondition ?
+
+
+                  <TouchableOpacity
+                    onPress = {() => this.props.acceptTerms()}
+                    >
+                    <CheckSquare
+                      stroke = "white"
+                       />
+
+                  </TouchableOpacity>
+
+                  :
+
+                  <TouchableOpacity
+                    onPress = {() => this.props.acceptTerms()}
+                    >
+                    <Square
+                      stroke = "white"
+                      />
+
+                  </TouchableOpacity>
+
+                }
+
+                <Text style = {{
+                    fontSize: 10,
+                    color: 'white'
+                  }}>Agree to
+                  <Text style = {{
+                      color: 'blue'
+                    }}
+                    onPress = {() => this.openTermsOfConditions()}
+                    > terms of service</Text> and
+
+                    <Text style = {{
+                      color: 'blue'
+                    }}
+                    onPress = {() => this.openPrivatePolicy()}
+                    > privacy policy</Text></Text>
+              </View>
+
+              : null
             }
 
 

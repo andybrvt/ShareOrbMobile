@@ -195,35 +195,20 @@ class FBCreateUserPass extends React.Component{
   }
 
   FBLogin = () => {
-    console.log("LOGIN STePPPP!!")
+
+
     this.setState({
       loading: true
     })
     const { id, name, profilePic, username, password} = this.state;
 
-    console.log(profilePic, username, password)
-    axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
-      username: username,
-      password: password
-    }).then(res => {
+    console.log('no account here')
+    //if there is no account you will go through sign up
 
-      const token = res.data.key
-      AsyncStorage.setItem('token', token)
-      this.setState({
-        loading: false
-      })
-      this.props.authSuccess(token)
-
-    })
-    .catch(err => {
-
-      console.log('no account here')
-      //if there is no account you will go through sign up
-
-      this.onSignupSubmit(id, name, username, profilePic)
+    this.onSignupSubmit(id, name, username, profilePic)
 
 
-    })
+
 
   }
 
@@ -231,25 +216,28 @@ class FBCreateUserPass extends React.Component{
   onSignupSubmit = (id, firstName, username, profilePic) => {
     console.log("SIGN UP STEP!!!!!!!!")
     const lastName = "";
-    const email = "alphie"+id+"@gmail.com"
-    const {password} = this.state;
+    const email = "a"+id+"@gmail.com"
+    const password = id+"ShareOrb123";
 
-    console.log(id, firstName, username, email, password,dateFns.format(new Date(), "yyyy-MM-dd"))
+    console.log(id, firstName, username, email)
     return axios.post(`${global.IP_CHANGE}/rest-auth/registration/`, {
-      username: username,
+      username: id,
       first_name: firstName,
       email: email,
       dob: dateFns.format(new Date(), "yyyy-MM-dd"),
       password1: password,
       password2: password
     }).then(res => {
-      console.log("you DID IT!")
-      console.log(res.data)
+
+      // the username that will be used will be the id
+      //  now you set the second username be the one that they choose
+
       const token = res.data.key;
       const formData = new FormData();
       const newPic = profilePic
       formData.append("profilePic", newPic)
-
+      formData.append("username", username)
+      formData.append("isOtherAccount", true)
 
       AsyncStorage.setItem('token', token)
 
@@ -334,8 +322,9 @@ class FBCreateUserPass extends React.Component{
                 />
               <SlideWrap visible = {this.state.two}>
               <BasicSignUp
-              data={false}
-                un = {false}
+                data={false}
+                uns = {true}
+                un = {true}
                 pw = {false}
                 em = {false}
                 loading = {this.state.loading}
@@ -346,6 +335,9 @@ class FBCreateUserPass extends React.Component{
                 onChange = {this.onUsernameChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
+                acceptTerms = {this.acceptTerms}
+                termCondition = {this.state.agreeToTOS}
+                signup = {this.FBLogin}
 
                 closeNum = {'two'}
                 openNum = {'three'}
@@ -354,26 +346,30 @@ class FBCreateUserPass extends React.Component{
 
                 </SlideWrap>
 
-            <SlideWrap visible = {this.state.three}>
-              <BasicSignUp
-                pw = {true}
-                un = {false}
-                em = {false}
-                loading = {this.state.loading}
-                signup = {this.FBLogin}
-                visible = {this.state.three}
-                prompt = {"Please enter a password"}
-                value = {this.state.password}
-                onChange = {this.onPasswordChange}
-                closeModal = {this.closeModal}
-                openModal = {this.openModal}
-                closeNum = {'three'}
-                openNum = {'four'}
-                termCondition = {this.state.agreeToTOS}
-                acceptTerms = {this.acceptTerms}
-                />
 
-            </SlideWrap>
+            {/*
+              <SlideWrap visible = {this.state.three}>
+                <BasicSignUp
+                  pw = {true}
+                  un = {false}
+                  em = {false}
+                  loading = {this.state.loading}
+                  signup = {this.FBLogin}
+                  visible = {this.state.three}
+                  prompt = {"Please enter a password"}
+                  value = {this.state.password}
+                  onChange = {this.onPasswordChange}
+                  closeModal = {this.closeModal}
+                  openModal = {this.openModal}
+                  closeNum = {'three'}
+                  openNum = {'four'}
+                  termCondition = {this.state.agreeToTOS}
+                  acceptTerms = {this.acceptTerms}
+                  />
+
+              </SlideWrap>
+
+              */}
 
           </View>
       </View>

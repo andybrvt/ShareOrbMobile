@@ -100,16 +100,6 @@ class Login extends React.Component{
           const tempUsername = data.id
           const tempPassword = data.id+"ShareOrb123"
 
-            this.props.navigation.navigate("FBCreateUserPass",
-            {
-              'id':data.id,
-              'username':data.username,
-              'name':data.name,
-              'fb_profile_pic':data.picture.data.url,
-            } );
-
-
-          {/*
           axios.post(`${global.IP_CHANGE}/rest-auth/login/`, {
             username: tempUsername,
             password: tempPassword
@@ -126,21 +116,15 @@ class Login extends React.Component{
           })
           .catch(err => {
 
-            console.log('no account here')
-            //if there is no account you will go through sign up
-            console.log(data.id, data.name, tempUsername, data.picture.data.url)
-
-            // this.onSignupSubmit(data.id, data.name, tempUsername,data.picture.data.url)
-
+            this.props.navigation.navigate("FBCreateUserPass",
+            {
+              'id':data.id,
+              'username':data.username,
+              'name':data.name,
+              'fb_profile_pic':data.picture.data.url,
+            } );
 
           })
-          */}
-
-          // this.setState({
-          //   isLoggedin:true,
-          //   userData:data,
-          // })
-          // console.log(this.state.userData)
 
 
         })
