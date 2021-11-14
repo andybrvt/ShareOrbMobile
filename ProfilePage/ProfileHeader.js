@@ -98,6 +98,8 @@ class ProfileHeader extends React.Component{
     let profileId = 0
     let notiToken = ""
 
+
+
     if(this.props.profile){
       console.log(this.props.profile, 'here')
       if(this.props.profile.notificationToken){
@@ -110,9 +112,16 @@ class ProfileHeader extends React.Component{
         const firstName = global.CAPITALIZE(this.props.profile.first_name)
         name = firstName
       }
-      if(this.props.profile.username){
-        username = this.props.profile.username
+      if(this.props.isOtherAccount){
+        if(this.props.profile.secondUsername){
+          username = this.props.profile.secondUsername
+        }
+      } else {
+        if(this.props.profile.username){
+          username = this.props.profile.username
+        }
       }
+
       if(this.props.profile.bio){
         bio = this.props.profile.bio
       }

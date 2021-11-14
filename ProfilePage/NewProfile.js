@@ -40,7 +40,9 @@ class NewProfile extends React.Component{
       get_following: this.props.following,
       id: this.props.currentId,
       bio: this.props.bio,
-      get_followers: this.props.followers
+      get_followers: this.props.followers,
+      secondUsername: this.props.secondUsername,
+      isOtherAccount: this.props.isOtherAccount
     }
 
     return(
@@ -117,6 +119,16 @@ class NewProfile extends React.Component{
       data = this.props.recentOrbs
     }
 
+    let username = ""
+
+    if(this.props.isOtherAccount){
+      username = this.props.secondUsername
+    } else {
+      username = this.props.username
+    }
+
+    console.log(this.props, 'profilen')
+
     return(
       <BackgroundContainer>
 
@@ -140,7 +152,7 @@ class NewProfile extends React.Component{
             </TouchableOpacity>
 
             <View style={{flex:1, justifyContent:'center', }}>
-              <Text style={styles.textStyle}>{this.props.username}</Text>
+              <Text style={styles.textStyle}>{username}</Text>
             </View>
           </View>
 
@@ -193,7 +205,9 @@ const mapStateToProps = state => {
     bio: state.auth.bio,
     smallGroups: state.auth.smallGroups,
     curId: state.auth.id,
-    recentOrbs: state.auth.recentOrbs
+    recentOrbs: state.auth.recentOrbs,
+    secondUsername: state.auth.secondUsername,
+    isOtherAccount: state.auth.isOtherAccount
   }
 }
 

@@ -190,7 +190,9 @@ export const grabUserCredentials = () => {
          res.data.inviteCode,
          res.data.get_small_groups,
          res.data.id_small_groups,
-         res.data.recentOrbs
+         res.data.recentOrbs,
+         res.data.secondUsername,
+         res.data.isOtherAccount
       ))
     })
     .catch(err => {
@@ -219,6 +221,8 @@ export const addCredentials = (
    smallGroups,
    smallGroupIds,
    recentOrbs,
+   secondUsername,
+   isOtherAccount
  ) => {
 
   return {
@@ -241,7 +245,9 @@ export const addCredentials = (
     inviteCode: inviteCode,
     smallGroups: smallGroups,
     smallGroupIds:smallGroupIds,
-    recentOrbs
+    recentOrbs,
+    secondUsername,
+    isOtherAccount
   };
 };
 

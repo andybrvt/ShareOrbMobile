@@ -65,10 +65,13 @@ import * as exploreActions from '../store/actions/explore';
 
        headerLeft: () => this.renderBack()
      })
+
+
+     const isOtherAccount = this.props.isOtherAccount
      this.setState({
        firstName: this.props.firstName,
        lastName: this.props.lastName,
-       username: this.props.username
+       username: isOtherAccount ? this.props.secondUsername : this.props.username
      })
    }
 
@@ -76,10 +79,12 @@ import * as exploreActions from '../store/actions/explore';
 
 
      if(this.props !== prevProps){
+
+       const isOtherAccount = this.props.isOtherAccount
        this.setState({
          firstName: this.props.firstName,
          lastName: this.props.lastName,
-         username: this.props.username
+         username:  isOtherAccount ? this.props.secondUsername : this.props.username
        })
 
      }
@@ -224,18 +229,27 @@ import * as exploreActions from '../store/actions/explore';
     var data = new FormData();
 
     data.append("first_name", this.state.firstName)
-    data.append('username', this.state.username)
+    if(this.props.isOtherAccount){
+      data.append("secondUsername", this.state.username)
+      data.append("username", this.props.username)
+    } else {
+      data.append('username', this.state.username)
+
+    }
 
     authAxios.put(`${global.IP_CHANGE}/userprofile/profile/update/`+userId,
       data,
     ).then(res => {
+      console.log(res.data,'datat data')
+      // changes needs to be put here
       const pic = res.data.profile_picture.replace(global.IP_CHANGE, "")
 
       const profileInfo = {
         first_name: res.data.first_name,
         username: res.data.username,
         profile_picture: pic,
-        bio: res.data.bio
+        bio: res.data.bio,
+        secondUsername: res.data.secondUsername
       }
 
       this.props.changeProfileInfoAuth(profileInfo);
@@ -335,6 +349,13 @@ import * as exploreActions from '../store/actions/explore';
        profilePic = `${global.IMAGE_ENDPOINT}`+this.props.profile_picture
      }
      const {firstName, lastName, username} = this.state
+
+     let textUsername = ""
+     if(this.props.isOtherAccount){
+       textUsername = this.props.secondUsername
+     } else {
+       textUsername = this.props.username
+     }
      return (
        <BackgroundContainer>
          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -364,7 +385,7 @@ import * as exploreActions from '../store/actions/explore';
               {this.props.firstName+" "+this.props.lastName}
             </Text>
             <Text style={{ fontSize: 15, color:'gray'}}>
-              @{this.props.username}
+              @{textUsername}
             </Text>
           </View>
 
@@ -486,7 +507,9 @@ const mapStateToProps = state => {
     userId: state.auth.id,
     currentUser: state.auth.username,
     profile_picture: state.auth.profilePic,
-    bio: state.auth.bio
+    bio: state.auth.bio,
+    secondUsername: state.auth.secondUsername,
+    isOtherAccount: state.auth.isOtherAccount
   }
 }
 

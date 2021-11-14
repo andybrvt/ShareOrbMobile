@@ -35,7 +35,9 @@ const initialState ={
   smallGroupIds: [],
   activeSlide: null,
   updateSlide:null,
-  recentOrbs: []
+  recentOrbs: [],
+  secondUsername: "",
+  isOtherAccount: false
 }
 
 const authStart = (state, action) => {
@@ -137,7 +139,9 @@ const authLogout = (state, action) => {
     inviteCode: "",
     smallGroups: [],
     smallGroupIds: [],
-    recentOrbs: []
+    recentOrbs: [],
+    secondUsername: "",
+    isOtherAccount: false
   });
 };
 
@@ -162,7 +166,9 @@ const addCredentials = (state, action) => {
     inviteCode: action.inviteCode,
     smallGroups: action.smallGroups,
     smallGroupIds: action.smallGroupIds,
-    recentOrbs: action.recentOrbs
+    recentOrbs: action.recentOrbs,
+    secondUsername: action.secondUsername,
+    isOtherAccount: action.isOtherAccount
   });
 };
 
@@ -179,7 +185,8 @@ const changeProfileInfoAuth = (state, action) => {
     profilePic: action.profileInfo.profile_picture,
     firstName: action.profileInfo.first_name,
     username: action.profileInfo.username,
-    bio: action.profileInfo.bio
+    bio: action.profileInfo.bio,
+    secondUsername: action.profileInfo.secondUsername
   })
 }
 
