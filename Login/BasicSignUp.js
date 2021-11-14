@@ -253,7 +253,7 @@ class BasicSignUp extends React.Component{
               {
                 this.props.FBSignUp?
                 <View style={{marginTop:'30%', marginBottom:'10%', alignItems:'center'}}>
-                <Text style = {styles.fbText}>Welcome, {this.props.name} </Text>
+                  <Text style = {styles.fbText}>Welcome, {this.props.name} </Text>
                 </View>
                 :
                 null
@@ -428,6 +428,7 @@ class BasicSignUp extends React.Component{
                       onPress = {() => this.props.acceptTerms()}
                       >
                       <CheckSquare
+
                         stroke = "white"
                          />
 
@@ -436,9 +437,11 @@ class BasicSignUp extends React.Component{
                     :
 
                     <TouchableOpacity
+
                       onPress = {() => this.props.acceptTerms()}
                       >
                       <Square
+
                         stroke = "white"
                         />
 
@@ -447,7 +450,8 @@ class BasicSignUp extends React.Component{
                   }
 
                   <Text style = {{
-                      fontSize: 10,
+                    fontSize: 11,
+                    marginLeft:10,
                       color: 'white'
                     }}>Agree to
                     <Text style = {{
@@ -511,7 +515,8 @@ class BasicSignUp extends React.Component{
                 }
 
                 <Text style = {{
-                    fontSize: 10,
+                    fontSize: 11,
+                    marginLeft:10,
                     color: 'white'
                   }}>Agree to
                   <Text style = {{

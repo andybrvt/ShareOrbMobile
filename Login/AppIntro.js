@@ -285,10 +285,7 @@ class AppIntro extends React.Component{
       const token = res.data.key;
       const formData = new FormData();
       const newPic = global.FILE_NAME_GETTER(profilePic)
-
-
       formData.append("profilePic", newPic)
-
 
       AsyncStorage.setItem('token', token)
 

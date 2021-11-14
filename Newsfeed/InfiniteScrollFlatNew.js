@@ -707,7 +707,7 @@ class InfiniteScrollFlatNew extends React.Component{
              }}>
          {
            groupId === closeId ?
-
+           
            creatorId === this.props.id ?
 
            <View
