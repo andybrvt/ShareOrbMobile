@@ -18,6 +18,13 @@ class SingleComment extends React.PureComponent {
     const item = this.props.item
     const profilePic = `${global.IMAGE_ENDPOINT}`+item.commentUser.profile_picture
     const user = item.commentUser
+    let username = ""
+
+    if(user.isOtherAccount){
+      username = user.secondUsername
+    } else {
+      username = user.username
+    }
     return(
       <View style = {styles.container}>
         <View style = {styles.leftContainer}>
@@ -31,7 +38,7 @@ class SingleComment extends React.PureComponent {
         </View>
         <View style = {styles.rightContainer}>
           <View>
-            <Text style = {styles.nameText}>{user.username+" "}</Text>
+            <Text style = {styles.nameText}>{username+" "}</Text>
             <Text style = {styles.mainText}>{item.body} </Text>
           </View>
           <View style={{flexDirection:'row', marginTop:5}}>

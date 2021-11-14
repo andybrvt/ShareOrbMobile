@@ -111,10 +111,15 @@ class NewGlobePost extends React.Component{
 
       NotificationWebSocketInstance.sendNotification(notificationObject)
 
-
+      let userUser = ""
+      if(this.props.isOtherAccount){
+        userUser = this.props.secondUsername
+      } else {
+        userUser = this.props.currentUser
+      }
       global.SEND_GROUP_LIKE_NOTIFICATION(
         notificationToken,
-        this.props.currentUser,
+        userUser,
         postId,
       )
 
@@ -199,8 +204,15 @@ class NewGlobePost extends React.Component{
         if(data.creator.id){
           ownerId = data.creator.id
         }
-        if(data.creator.username){
-          userUsername = data.creator.username
+        if(data.creator.isOtherAccount){
+          if(data.creator.secondUsername){
+            userUsername = data.creator.secondUsername
+          }
+        } else {
+          if(data.creator.username){
+            userUsername = data.creator.username
+          }
+
         }
 
         if(data.creator.notificationToken){
@@ -384,7 +396,6 @@ class NewGlobePost extends React.Component{
     let username = ""
     let caption = ""
 
-
     if(this.props.data){
       if(this.props.data.post){
 
@@ -405,10 +416,16 @@ class NewGlobePost extends React.Component{
           video = `${global.IMAGE_ENDPOINT}` + this.props.data.video
         }
 
-
-        if(this.props.data.post.creator){
-          username = this.props.data.post.creator.username
+        if(this.props.data.post.creator.isOtherAccount){
+          if(this.props.data.post.creator){
+            username = this.props.data.post.creator.secondUsername
+          }
+        } else {
+          if(this.props.data.post.creator){
+            username = this.props.data.post.creator.username
+          }
         }
+
         if(this.props.data.post.caption){
           caption = this.props.data.post.caption
         }

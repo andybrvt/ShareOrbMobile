@@ -179,7 +179,7 @@ class Notifications extends React.Component{
                 <Text>
                   <Text style = {{fontFamily:'Nunito-Bold', fontSize:13}}>{global.NAMEMAKE(item.actor.first_name, item.actor.last_name, 20)}
                   </Text>
-                  <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:13,}}>commented on your post in {item.groupInvite.group_name} orb</Text>
+                  <Text style = {{fontFamily:'Nunito-SemiBold', fontSize:13,}}> commented on your post in {item.groupInvite.group_name} orb</Text>
                 </Text>
               </View>
             <View style = {{marginTop: 5}}>

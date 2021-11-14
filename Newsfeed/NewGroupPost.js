@@ -131,9 +131,16 @@ class NewGlobePost extends React.PureComponent{
       if(this.props.item.creator.last_name){
         lastName = this.props.item.creator.last_name;
       }
-      if(this.props.item.creator.username){
-        userUsername = this.props.item.creator.username
+      if(this.props.item.creator.isOtherAccount){
+        if(this.props.item.creator.secondUsername){
+          userUsername = this.props.item.creator.secondUsername
+        }
+      } else {
+        if(this.props.item.creator.username){
+          userUsername = this.props.item.creator.username
+        }
       }
+
       if(this.props.item.creator.profile_picture){
         profilePic = `${global.IMAGE_ENDPOINT}`+this.props.item.creator.profile_picture;
       }

@@ -60,7 +60,7 @@ const ViewGroup = (navigation, creator, orbId, groupName, groupPic) => {
   })
 }
 
-const Story = ({ route, navigation,id, username }: StoryProps) => {
+const Story = ({ route, navigation,id, username, secondUsername, isOtherAccount }: StoryProps) => {
 
   const[showFlag, setFlag] = useState(false);
 
@@ -92,7 +92,12 @@ const Story = ({ route, navigation,id, username }: StoryProps) => {
   }
   if(post.creator){
     creatorId = post.creator.id
-    creatorUsername = post.creator.username
+    if(post.creator.isOtherAccount){
+      creatorUsername = post.creator.secondUsername
+    } else {
+      creatorUsername = post.creator.username
+
+    }
     creatorPic = `${global.IMAGE_ENDPOINT}`+post.creator.profile_picture
     notificationToken = post.creator.notificationToken
   }
@@ -155,12 +160,23 @@ const Story = ({ route, navigation,id, username }: StoryProps) => {
 
         NotificationWebSocketInstance.sendNotification(notificationObject)
 
+        if(isOtherAccount){
+          global.SEND_GROUP_LIKE_NOTIFICATION(
+            notificationToken,
+            secondUsername,
+            postId,
+          )
 
-        global.SEND_GROUP_LIKE_NOTIFICATION(
-          notificationToken,
-          username,
-          postId,
-        )
+        } else {
+          global.SEND_GROUP_LIKE_NOTIFICATION(
+            notificationToken,
+            username,
+            postId,
+          )
+
+        }
+
+
 
       }
 
@@ -564,7 +580,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return{
       username: state.auth.username,
-      id: state.auth.id
+      id: state.auth.id,
+      secondUsername: state.auth.secondUsername,
+      isOtherAccount: state.auth.isOtherAccount
   }
 }
 
