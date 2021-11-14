@@ -105,7 +105,7 @@ import JoinScreen from './SmallGroups/JoinScreen';
 import Announcements from './SmallGroups/Announcements';
 import PeopleInGroup from './SmallGroups/PeopleInGroup';
 import Frame from './Frame.svg';
-import Testing from './RandomComponents/Testing';
+import Maps from './Newsfeed/Maps';
 import * as Location from 'expo-location';
 import GlobeGroup from './Newsfeed/GlobeGroup/GlobeGroup';
 import Story from './Newsfeed/GlobeGroup/Story';
@@ -1159,12 +1159,8 @@ class App extends Component{
                          // ...TransitionPresets.SlideFromRightIOS,
 
                         }}
-
-
-
-                        name = 'Test1'
-                        // component = {GroupPost}
-                        component = {Testing}
+                        name = 'Maps'
+                        component = {Maps}
 
                         />
                     <Stack.Screen
