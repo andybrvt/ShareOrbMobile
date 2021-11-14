@@ -125,6 +125,8 @@ class GlobeGroup extends React.Component{
         >
         <SharedElement>
           <NewGlobePost
+            secondUsername = {this.props.secondUsername}
+            isOtherAccount = {this.props.isOtherAccount}
             currentUser = {this.props.username}
             navigation = {this.props.navigation}
             id = {this.props.id}
@@ -287,7 +289,8 @@ const mapStateToProps = state => {
     profilePic: state.auth.profilePic,
     username: state.auth.username,
     notificationSeen: state.auth.notificationSeen,
-
+    secondUsername: state.auth.secondUsername,
+    isOtherAccount: state.auth.isOtherAccount
   }
 }
 

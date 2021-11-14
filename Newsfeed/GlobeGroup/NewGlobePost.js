@@ -111,10 +111,15 @@ class NewGlobePost extends React.Component{
 
       NotificationWebSocketInstance.sendNotification(notificationObject)
 
-
+      let userUser = ""
+      if(this.props.isOtherAccount){
+        userUser = this.props.secondUsername
+      } else {
+        userUser = this.props.currentUser
+      }
       global.SEND_GROUP_LIKE_NOTIFICATION(
         notificationToken,
-        this.props.currentUser,
+        userUser,
         postId,
       )
 
