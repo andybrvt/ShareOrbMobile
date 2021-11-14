@@ -174,34 +174,36 @@ class ProfilePicSlide extends React.Component{
 
         <View style = {styles.topContainer}>
           {(this.props.data)?
-            <View style={{marginTop:'50%', alignItems:'center'}}>
-            <View style={{marginBottom:'2%',}}>
-            </View>
+            <View style={{marginTop:'48%', alignItems:'center'}}>
+
             <View style={{alignItems:'center'}}>
-              <Text style={styles.fbText}>Welcome, {data.name}</Text>
-              <View style={{top:50}}>
+              <Text style={styles.fbText}>Welcome to ShareOrb</Text>
+
+              <View style={{top:25, alignItems:'center'}}>
                 <TouchableWithoutFeedback onPress={() => this.bs.current.snapTo(0)}>
                   <Avatar
-                      size={250}
+                      size={210}
                       rounded
                       source = {{
                         uri:this.props.value,
                       }}
                     />
+
                 </TouchableWithoutFeedback>
+                <View style={{top:20}}>
+                  <Text style={styles.fbText}>{data.name}</Text>
+                </View>
               </View>
             </View>
             </View>
           :
 
-          <Text style = {styles.profilePicText}>Pick a profile picture</Text>
+        ''
           }
 
         </View>
-        <View>
+        <View style={{height:'47.5%', }}>
         {!this.props.data?
-
-
         <TouchableWithoutFeedback onPress={() => this.bs.current.snapTo(0)}>
           <View style = {styles.midContainer}>
             {
@@ -223,7 +225,22 @@ class ProfilePicSlide extends React.Component{
             </View>
           </TouchableWithoutFeedback>
           :
-          <View style = {styles.midContainer}></View>
+          <View style = {styles.midContainer}>
+
+          </View>
+          }
+          </View>
+          <View>
+          {
+            (this.props.value=="https://scontent-lax3-2.xx.fbcdn.net/v/t1.30497-1/s960x960/84628273_176159830277856_972693363922829312_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=12b3be&_nc_ohc=iaSSiD4IA5cAX_Qg0zD&_nc_ht=scontent-lax3-2.xx&edm=AP4hL3IEAAAA&oh=ef00f6c1e2823c946ae3616645a0fa37&oe=61B79B3D")?
+          <View>
+
+            <Text style = {styles.fbText2}>
+              Please enter a profile picture
+            </Text>
+          </View>
+          :
+          <Text></Text>
           }
           </View>
         <View style = {styles.bottomContainer}>
@@ -238,22 +255,48 @@ class ProfilePicSlide extends React.Component{
                  />
             </TouchableOpacity>
           </View>
+         <View>
+           {this.props.data?
+             <View style = {styles.bottomRContainer}>
+               {
+                  this.props.value !== ""&& this.props.value!=="https://scontent-lax3-2.xx.fbcdn.net/v/t1.30497-1/s960x960/84628273_176159830277856_972693363922829312_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=12b3be&_nc_ohc=iaSSiD4IA5cAX_Qg0zD&_nc_ht=scontent-lax3-2.xx&edm=AP4hL3IEAAAA&oh=ef00f6c1e2823c946ae3616645a0fa37&oe=61B79B3D"  ?
+                  <View >
+                    <TouchableOpacity
+                      onPress = {() => this.next()}
+                      >
+                      <ArrowRightCircle
+                        width = {40}
+                        height = {40}
+                        stroke = "white"
+                         />
+                    </TouchableOpacity>
+                  </View>
+                  : null
+                }
+               </View>
+           :
+           <View style = {styles.bottomRContainer}>
+             {
+                this.props.value !== "" ?
+                <View>
+                  <TouchableOpacity
+                    onPress = {() => this.next()}
+                    >
+                    <ArrowRightCircle
+                      width = {40}
+                      height = {40}
+                      stroke = "white"
+                       />
+                  </TouchableOpacity>
+                </View>
+                : null
+              }
+           </View>
 
-          {
-            this.props.value !== "" ?
-            <View style = {styles.bottomRContainer}>
-              <TouchableOpacity
-                onPress = {() => this.next()}
-                >
-                <ArrowRightCircle
-                  width = {40}
-                  height = {40}
-                  stroke = "white"
-                   />
-              </TouchableOpacity>
-            </View>
-            : null
+
           }
+
+          </View>
           <BottomSheet
            ref={this.bs}
            snapPoints={[250, 0]}
@@ -276,6 +319,11 @@ fbText: {
   fontSize: 24.5,
   fontFamily:'Nunito-Bold',
 },
+fbText2: {
+  color: 'white',
+  fontSize: 20,
+  fontFamily:'Nunito-Bold',
+},
   topContainer: {
     width: width,
     height: '25%',
@@ -289,6 +337,13 @@ fbText: {
   },
   midContainer:{
     height: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width,
+    // backgroundColor:'red'
+  },
+  midContainer2:{
+    height: '40%',
     alignItems: 'center',
     justifyContent: 'center',
     width: width,
