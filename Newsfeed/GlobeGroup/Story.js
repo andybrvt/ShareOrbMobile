@@ -92,7 +92,12 @@ const Story = ({ route, navigation,id, username }: StoryProps) => {
   }
   if(post.creator){
     creatorId = post.creator.id
-    creatorUsername = post.creator.username
+    if(post.creator.isOtherAccount){
+      creatorUsername = post.creator.secondUsername
+    } else {
+      creatorUsername = post.creator.username
+      
+    }
     creatorPic = `${global.IMAGE_ENDPOINT}`+post.creator.profile_picture
     notificationToken = post.creator.notificationToken
   }

@@ -47,6 +47,14 @@ class SearchResults extends React.Component{
   }
 
   renderItem = ({item}) => {
+
+    let username = ""
+
+    if(item.isOtherAccount){
+      username = item.secondUsername
+    } else {
+      username = item.username
+    }
     return(
       <TouchableOpacity onPress = {() => this.props.ViewProfile(item.username)}>
         <View style={{
@@ -68,7 +76,7 @@ class SearchResults extends React.Component{
           <View style = {{flexDirection: 'row'}}>
             <Text style = {{fontFamily:'Nunito-Bold'}}>{global.NAMEMAKE(item.first_name, item.last_name, 20)} </Text>
           </View>
-          <Text style={{fontFamily:'Nunito-SemiBold'}}>{item.username}</Text>
+          <Text style={{fontFamily:'Nunito-SemiBold'}}>{username}</Text>
         </View>
       </View>
       </TouchableOpacity>
