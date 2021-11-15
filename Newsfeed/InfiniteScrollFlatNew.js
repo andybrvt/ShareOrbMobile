@@ -41,6 +41,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { SharedElement } from "react-navigation-shared-element";
 import NewGroupPost from './NewGroupPost';
+import NoPostInOrb from './noPostInOrb.svg';
+
 // this is used mostly for the new scroll newsfeed
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
@@ -551,6 +553,22 @@ class InfiniteScrollFlatNew extends React.Component{
     })
   }
 
+  renderEmptyContainer(){
+
+    return(
+      <View style = {{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+        <NoPostInOrb width = {150} height = {150}/>
+        <Text style = {{
+            fontSize: 20,
+          }}>No posts yet, let's show some love!</Text>
+      </View>
+    )
+  }
+
   keyExtractor = (item, index) => String(index)
 
   render(){
@@ -682,6 +700,8 @@ class InfiniteScrollFlatNew extends React.Component{
              scrollEventThrottle = {16} // important for animation
              renderItem={this.renderItem}
              numColumns={3}
+             ListEmptyComponent={this.renderEmptyContainer}
+
          />
 
          {this.state.deleteCondition?
@@ -707,7 +727,7 @@ class InfiniteScrollFlatNew extends React.Component{
              }}>
          {
            groupId === closeId ?
-           
+
            creatorId === this.props.id ?
 
            <View
