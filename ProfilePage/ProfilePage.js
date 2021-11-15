@@ -88,10 +88,10 @@ class ProfilePage extends React.Component{
 	}
 
   componentDidMount(){
-    if(this.props.route.params.username !== null){
+    if(this.props.route.params.userId !== null){
     //     this.initialiseProfile()
-      const name = this.props.route.params.username
-      authAxios.get(`${global.IP_CHANGE}`+"/userprofile/"+name)
+      const id = this.props.route.params.userId
+      authAxios.get(`${global.IP_CHANGE}`+"/userprofile/user/"+id)
       .then(res => {
         console.log(res.data, 'res res ')
         this.setState({
@@ -170,7 +170,7 @@ class ProfilePage extends React.Component{
       username = profile.username
     }
 
-    const profilePic = profile.profile_picture
+    const profilePic =`${global.IMAGE_ENDPOINT}`+profile.profile_picture
     const bio = profile.bio
     const name = profile.first_name
     return(
@@ -271,7 +271,6 @@ class ProfilePage extends React.Component{
 
 
   render(){
-    console.log(this.props.smallGroups, 'groupgroup grup')
 
     const screenWidth = Math.round(Dimensions.get('window').width);
 

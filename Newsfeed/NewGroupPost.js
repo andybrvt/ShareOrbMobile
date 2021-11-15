@@ -45,12 +45,12 @@ class NewGlobePost extends React.PureComponent{
    }
 
 
-   ViewProfile = (username) => {
-     if(username === this.props.username){
+   ViewProfile = (id) => {
+     if(id === this.props.id){
        this.props.navigation.navigate("Profile");
      } else {
        this.props.navigation.navigate("ProfilePage", {
-         username: username
+         userId: id
        })
      }
    }
@@ -102,6 +102,7 @@ class NewGlobePost extends React.PureComponent{
     let groupName="";
     let groupPic="";
     let groupId = "";
+    let creatorId = "";
 
     let groupInfo=this.props.groupInfo
     let month=dateFns.format(new Date(this.props.item.created_at), "MMM")
@@ -121,6 +122,9 @@ class NewGlobePost extends React.PureComponent{
       }
       if(this.props.item.creator.first_name){
         firstName = this.props.item.creator.first_name;
+      }
+      if(this.props.item.creator.id){
+        creatorId = this.props.item.creator.id
       }
       if(this.props.item.video){
         video = `${global.IMAGE_ENDPOINT}`+this.props.item.video
@@ -327,7 +331,7 @@ class NewGlobePost extends React.PureComponent{
              marginRight:5,
              }}>
                <Avatar
-                 onPress = {() => this.ViewProfile(userUsername)}
+                 onPress = {() => this.ViewProfile(creatorId)}
                  size={17.5}
                  rounded
                  source = {{

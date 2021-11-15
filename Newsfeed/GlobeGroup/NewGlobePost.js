@@ -153,12 +153,12 @@ class NewGlobePost extends React.Component{
 
   }
 
-  ViewProfile = (username) => {
+  ViewProfile = (id) => {
     // This fucntion will be used to navigate to the post page
     // that you can use to post pictures and write caption
-    if(username !== this.props.username){
+    if(id !== this.props.id){
       this.props.navigation.navigate("ProfilePage", {
-        username: username
+        userId: id
       })
     } else {
       this.props.navigation.navigate("Profile")
@@ -251,7 +251,7 @@ class NewGlobePost extends React.Component{
               alignItems:'center'
             }}>
             <Avatar
-              onPress = {() => this.ViewProfile(userUsername)}
+              onPress = {() => this.ViewProfile(ownerId)}
               size={30}
               rounded
               source = {{
