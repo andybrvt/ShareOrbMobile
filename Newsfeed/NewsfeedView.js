@@ -290,17 +290,9 @@ class NewsfeedView extends React.Component{
 
 
 
-
-
-
   render(){
-
     return(
-
-
         <BackgroundContainer>
-
-
           {
             this.props.showFirstPostModal ?
             <FirstPost
@@ -319,10 +311,7 @@ class NewsfeedView extends React.Component{
           <GlobeGroup
             navigation = {this.props.navigation}
              />
-
-
           </View>
-
           <LinearGradient
             start={{x: 0, y: 0}} end={{x: 0, y: 1}}
             style = {{
@@ -383,7 +372,6 @@ class NewsfeedView extends React.Component{
                 }}
                 onPress = {() => this.locationChecker()}
                 >
-
                 <View style = {styles.roundButton}>
                   <Search
                     stroke = "white"
@@ -391,7 +379,6 @@ class NewsfeedView extends React.Component{
                     height = {45}
                      />
                 </View>
-
                </TouchableOpacity>
 
             }
@@ -411,21 +398,18 @@ class NewsfeedView extends React.Component{
              </TouchableOpacity>
              {/*
             <TouchableOpacity
-              onPress = {() => this.props.navigation.navigate("Test1")}
+              onPress = {() => this.props.navigation.navigate("Maps")}
               style = {{
                 position: 'absolute',
                 bottom: '5%',
                 left: '23%'
               }}>
-              <Map
-                stroke = "white"
-                width = {40}
-                height = {40}
-
-                 />
+                <Map
+                  stroke = "white"
+                  width = {37.5}
+                  height = {37.5} />
              </TouchableOpacity>
              */}
-
              <AdjModal
                onCancel = {this.onCloseLocationModal}
                onAction = {this.onOpenLocationModal}
@@ -436,13 +420,7 @@ class NewsfeedView extends React.Component{
                acceptText = {"Allow location"}
                cancelText = {"Do not allow location"}
                 />
-
-
-
         </BackgroundContainer>
-
-
-
 
     )
   }
