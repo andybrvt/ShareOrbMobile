@@ -16,7 +16,7 @@
       "backgroundColor": "#1890FF"
     },
     "orientation": "portrait",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "assetBundlePatterns": [
       "assets/**"
     ],
@@ -39,7 +39,7 @@
         "NSLocationWhenInUseUsageDescription": "Enabled access to your location in order to find resturants and small businesses near you"
 
       },
-      "buildNumber": "31",
+      "buildNumber": "32",
 
     },
     "description": ""
