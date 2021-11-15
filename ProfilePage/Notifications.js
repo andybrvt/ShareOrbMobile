@@ -22,7 +22,8 @@ import * as authActions from '../store/actions/auth';
 import authAxios from '../util';
 import { Tag, Bookmark, Search, ArrowLeft, ChevronsLeft, Settings, Sliders
   ,MessageCircle, UserPlus, Users, Clock} from "react-native-feather";
-  import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
+import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
+import NoNotification from './noNotification.svg';
 
 
 class Notifications extends React.Component{
@@ -479,6 +480,22 @@ class Notifications extends React.Component{
    );
  }
 
+ renderEmptyContainer(){
+
+   return(
+     <View style = {{
+         width: '100%',
+         alignItems: 'center',
+         justifyContent: 'center'
+       }}>
+       <NoNotification width = {150} height = {150}/>
+       <Text style = {{
+           fontSize: 20,
+         }}>No notifications</Text>
+     </View>
+   )
+ }
+
  render(){
    let notifications = [];
    if(this.props.notifications){
@@ -522,6 +539,7 @@ class Notifications extends React.Component{
              data = {notifications}
              renderItem = {this.renderItem}
              keyExtractor={(item, index) => String(index)}
+             ListEmptyComponent={this.renderEmptyContainer}
 
               />
          </View>
