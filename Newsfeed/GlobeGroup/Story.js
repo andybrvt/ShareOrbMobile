@@ -130,11 +130,8 @@ const Story = ({ route, navigation,id, username, secondUsername, isOtherAccount 
 
   }, [])
 
-  const onReport = () => {
-    console.log('report this:', post.id)
-
+  const onReport = (storyID) => {
     authAxios.post(`${global.IP_CHANGE}`+'/mySocialCal/flagPost/'+storyID)
-
     setFlag(false)
     alert("Post has been reported for further review")
   }
@@ -482,7 +479,7 @@ const Story = ({ route, navigation,id, username, secondUsername, isOtherAccount 
 
         <FlagModal
           onCancel = {() => setFlag(false)}
-          onAction = {() => onReport()}
+          onAction = {() => onReport(post.id)}
           visible = {showFlag}
           width = {300}
           title = {"Report Post"}

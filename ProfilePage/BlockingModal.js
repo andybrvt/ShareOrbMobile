@@ -150,7 +150,7 @@ import {
                onPress = {() => this.onCancel()}
                style = {{
                  backgroundColor: "#000000aa",
-                 flex: "1",
+                 flex: 1,
                  alignItems: 'center',
                  justifyContent: 'center'
                }}>

@@ -58,7 +58,7 @@ import {
                   <View
                     style = {{
                       backgroundColor: "#000000aa",
-                      flex: "1",
+                      flex: 1,
                       alignItems: 'center',
                       justifyContent: 'center'
                     }}>

@@ -43,7 +43,7 @@ class BottomModal extends React.Component{
               onPress = {() => this.onCancel()}
               style = {{
                 backgroundColor: "#000000aa",
-                flex: "1",
+                flex: 1,
               }}>
               <Animated.View style = {{
                   backgroundColor: "#808080",
