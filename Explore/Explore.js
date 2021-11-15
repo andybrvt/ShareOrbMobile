@@ -117,16 +117,16 @@ class Explore extends React.Component{
     })
   }
 
-  ViewProfile = (username) => {
+  ViewProfile = (id) => {
     this.setState({
       searchValue: "",
       showSearch: false
     })
-    if(username === this.props.username){
+    if(id === this.props.id){
       this.props.navigation.navigate("Profile");
     } else {
       this.props.navigation.navigate("ProfilePage", {
-        username: username
+        userId: id
       })
     }
   }

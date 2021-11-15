@@ -45,15 +45,15 @@ class Notifications extends React.Component{
    })
  }
 
- ViewProfile = (username) => {
+ ViewProfile = (id) => {
    // This fucntion will be used to navigate to the post page
    // that you can use to post pictures and write caption
-   if(username === this.props.username){
+   if(id === this.props.userId){
      this.props.navigation.navigate("Profile");
 
    } else {
      this.props.navigation.navigate("ProfilePage", {
-       username: username
+       userId: id
      })
    }
 
@@ -162,7 +162,7 @@ class Notifications extends React.Component{
              padding:15}}>
             <View style={{flex:1}}>
               <Avatar
-                // onPress = {() => this.ViewProfile(item.actor.username)}
+                onPress = {() => this.ViewProfile(item.actor.id)}
                 size={40}
                 rounded
                 source = {{
@@ -203,9 +203,11 @@ class Notifications extends React.Component{
           <View style={{
              flexDirection:'row',
              padding:15}}>
-            <View style={{flex:1}}>
+            <View style={{
+                zIndex: 999,
+                  flex:1}}>
               <Avatar
-                // onPress = {() => this.ViewProfile(item.actor.username)}
+                onPress = {() => this.ViewProfile(item.actor.id)}
                 size={40}
                 rounded
                 source = {{

@@ -34,17 +34,16 @@ const AnimatedVideo = Animated.createAnimatedComponent(Video);
 
 
 
-const ViewProfile = (navigation, username, creator) => {
+const ViewProfile = (navigation, id, creator) => {
   // usename will be the person clicking on it
   // the creator will be the creator of the post
 
-  console.log(username, creator)
 
-  if(username === creator){
+  if(id === creator){
     navigation.navigate("Profile");
   } else {
     navigation.navigate("ProfilePage", {
-      username: creator
+      userId: creator
     })
   }
 }
@@ -257,11 +256,6 @@ const Story = ({ route, navigation,id, username, secondUsername, isOtherAccount 
           }}
           colors = {['transparent', '#000000']}>
         </LinearGradient>
-        {/*
-
-          <TouchableOpacity
-            onPress = {() => ViewProfile(navigation, "admin")}>
-          */}
 
 
         <TouchableOpacity
@@ -293,7 +287,7 @@ const Story = ({ route, navigation,id, username, secondUsername, isOtherAccount 
                alignItems:'center'
                }}>
                <TouchableOpacity
-                 onPress = {() => ViewProfile(navigation,username, creatorUsername)}
+                 onPress = {() => ViewProfile(navigation,id, creatorId)}
 
                  >
                  <Avatar
@@ -320,7 +314,7 @@ const Story = ({ route, navigation,id, username, secondUsername, isOtherAccount 
              }}>
 
              <TouchableOpacity
-               onPress = {() => ViewProfile(navigation,username, creatorUsername)}
+               onPress = {() => ViewProfile(navigation,id, creatorId)}
                >
                <Avatar
                  size={25}
