@@ -4,7 +4,7 @@
   "expo": {
     "facebookScheme":"fb981416685741603",
     "facebookAppId": "981416685741603",
-    "FacebookDisplayName": "ShareOrbMobile",
+    "facebookDisplayName": "ShareOrbMobile",
     "name": "ShareOrbMobile",
     "slug": "ShareOrbMobile",
     "privacy": "unlisted",

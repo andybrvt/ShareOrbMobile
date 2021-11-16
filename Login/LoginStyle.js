@@ -83,8 +83,8 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 25,
-    // backgroundColor: "#2f54eb",
-    backgroundColor: "pink",
+    backgroundColor: "#2f54eb",
+    // backgroundColor: "pink",
   },
 
   signUpBtn: {

@@ -437,10 +437,13 @@ class Login extends React.Component{
                }
             </TouchableOpacity>
 
-            <Text style={{marginTop:10, marginBottom:10}}>
-              or
-            </Text>
             {/*
+              <Text style={{marginTop:10, marginBottom:10}}>
+                or
+              </Text>
+
+              */}
+                        {/*
             <TouchableOpacity
               style={styles.loginBtn1}
               onPress={() => this.instagramLogin.show()}
@@ -451,15 +454,18 @@ class Login extends React.Component{
               <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}> Use Instagram</Text>
             </TouchableOpacity>
             */}
-            <TouchableOpacity
-              style={styles.loginBtn1}
-              onPress={() => this.facebookLogIn()}
-              >
-              <Facebook1
-                style={{right:10}}
-                stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
-              <Text style={{ color: 'white', textAlign: 'center', fontSize:14 }}> Use Facebook</Text>
-            </TouchableOpacity>
+            {/*
+              <TouchableOpacity
+                style={styles.loginBtn1}
+                onPress={() => this.facebookLogIn()}
+                >
+                <Facebook1
+                  style={{right:10}}
+                  stroke="white" strokeWidth={2.5} width={22.5} height={22.5} />
+                <Text style={{ color: 'white', textAlign: 'center', fontSize:14 }}> Use Facebook</Text>
+              </TouchableOpacity>
+
+              */}
             {/*
             <View style={styles.container}>
               <Image
