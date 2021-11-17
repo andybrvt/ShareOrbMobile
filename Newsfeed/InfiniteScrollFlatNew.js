@@ -24,7 +24,7 @@ import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent} from 'react-native-redash/lib/module/v1';
-import { User, Trash2, Users,ChevronsLeft, ArrowLeft, Edit2, CheckCircle} from "react-native-feather";
+import { Settings, User, Trash2, Users,ChevronsLeft, ArrowLeft, Edit2, CheckCircle} from "react-native-feather";
 import { Video as Video1} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
@@ -127,6 +127,13 @@ class InfiniteScrollFlatNew extends React.Component{
     });
   }
 
+  onOrbSettingDirect = (orbId) => {
+    this.props.navigation.navigate("OrbSettings", {
+      orbId: orbId
+    })
+
+  }
+
   // for this one here you will try to connect to the websocket
   // given the group id and then try to grab all the post of that
   // group
@@ -149,6 +156,8 @@ class InfiniteScrollFlatNew extends React.Component{
         currentDay: dateFns.format(new Date(), "d")
       }
   }
+
+
 
   addToList = (vidId) => {
     // this function will be use to add to the list of videos you are trying to
@@ -427,7 +436,6 @@ class InfiniteScrollFlatNew extends React.Component{
   };
 
   deleteSubmit = () => {
-    console.log(this.state.list)
     const formData = new FormData();
 
     formData.append('posts', JSON.stringify(this.state.list))
@@ -485,7 +493,6 @@ class InfiniteScrollFlatNew extends React.Component{
     const groupName = this.props.route.params.groupName
     const groupId = this.props.route.params.orbId
 
-    console.log(this.props.id, creatorId)
     return(
       <View style = {styles.header}>
         <View style={{flexDirection:'row'}}>
@@ -526,6 +533,21 @@ class InfiniteScrollFlatNew extends React.Component{
                 onPress={() => this.selectDelete()}
                 >
                 <Edit2 stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
+              </TouchableOpacity>
+
+              :
+              null
+
+            }
+
+            {
+              this.props.id === creatorId ?
+
+              <TouchableOpacity
+                style={{marginTop:25}}
+                onPress = {() => this.onOrbSettingDirect(groupId)}
+                >
+                <Settings stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
               </TouchableOpacity>
 
               :

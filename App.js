@@ -27,6 +27,7 @@ import { connect } from 'react-redux';
 import NavPic from './Newsfeed/NavPic';
 import NewsfeedView from './Newsfeed/NewsfeedView';
 import GroupInfo from './Newsfeed/GroupInfo';
+import OrbSettings from './Newsfeed/OrbSettings';
 import DownloadQR from './Newsfeed/DownloadQR';
 import InvitePeople from './Newsfeed/InvitePeople';
 import InviteContacts from './Newsfeed/InviteContacts';
@@ -1331,6 +1332,18 @@ class App extends Component{
                         }}
                        name = "GroupInfo"
                        component= {GroupInfo}/>
+
+                   <Stack.Screen
+                     options={{
+                       headerStyle:{
+                         shadowColor:'#fff', //ios
+                         elevation:0,        // android
+                       },
+                       title: 'Settings',
+                        ...TransitionPresets. SlideFromRightIOS,
+                      }}
+                     name = "OrbSettings"
+                     component= {OrbSettings}/>
                        <Stack.Screen
                          options={{
                            headerStyle:{

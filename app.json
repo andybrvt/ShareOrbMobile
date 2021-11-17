@@ -2,6 +2,9 @@
   "name": "ShareOrbMobile",
   "displayName": "ShareOrbMobile",
   "expo": {
+    "facebookScheme":"fb981416685741603",
+    "facebookAppId": "981416685741603",
+    "facebookDisplayName": "ShareOrbMobile",
     "name": "ShareOrbMobile",
     "slug": "ShareOrbMobile",
     "privacy": "unlisted",
@@ -16,7 +19,7 @@
       "backgroundColor": "#1890FF"
     },
     "orientation": "portrait",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "assetBundlePatterns": [
       "assets/**"
     ],
@@ -36,10 +39,9 @@
         "NSMicrophoneUsageDescription": "This app requires microphone access to be able to record audio for videos.",
         "NSLocationAlwaysUsageDescription": "Enabled access to your location in order to find resturants and small businesses near you",
         "NSLocationUsageDescription": "Enabled access to your location in order to find resturants and small businesses near you",
-        "NSLocationWhenInUseUsageDescription": "Enabled access to your location in order to find resturants and small businesses near you"
-
+        "NSLocationWhenInUseUsageDescription": "Enabled access to your location in order to find resturants and small businesses near you",
       },
-      "buildNumber": "30",
+      "buildNumber": "33",
 
     },
     "description": ""
