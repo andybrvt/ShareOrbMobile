@@ -385,6 +385,13 @@ class Login extends React.Component{
 
            <View style = {styles.logo}>
              <MainLogo height = {100}  width = {200} />
+               <Text style={{
+                   color: "#1890ff",
+                   fontFamily:'Nunito-SemiBold',
+                   flexWrap: 'wrap',
+                   fontSize: 15,
+                   margin: 0 }}>Conect with others in the moment, at "the" place</Text>
+
            </View>
           <View style = {styles.inputHolders}>
             <View style = {styles.inputHolder}>
@@ -454,7 +461,7 @@ class Login extends React.Component{
               <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}> Use Instagram</Text>
             </TouchableOpacity>
             */}
-            {/*
+
               <TouchableOpacity
                 style={styles.loginBtn1}
                 onPress={() => this.facebookLogIn()}
@@ -465,7 +472,7 @@ class Login extends React.Component{
                 <Text style={{ color: 'white', textAlign: 'center', fontSize:14 }}> Use Facebook</Text>
               </TouchableOpacity>
 
-              */}
+
             {/*
             <View style={styles.container}>
               <Image
@@ -481,9 +488,6 @@ class Login extends React.Component{
             */}
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
-          {/*
-            <Text style={{ margin: 10 }}>Token: {this.state.token}</Text>
-          */}
           {this.state.failure && (
             <View>
               <Text style={{ margin: 10 }}>
