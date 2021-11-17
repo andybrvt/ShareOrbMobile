@@ -198,29 +198,52 @@ class ProfilePicSlide extends React.Component{
             </View>
           :
 
-        ''
+          null
           }
 
         </View>
+
+
         <View style={{height:'47.5%', }}>
         {!this.props.data?
         <TouchableWithoutFeedback onPress={() => this.bs.current.snapTo(0)}>
           <View style = {styles.midContainer}>
             {
               this.props.value !== "" ?
-              <Avatar
-                size = {250}
-                rounded
-                source = {{
-                  uri: this.props.value
-                }}
-                 />
+              <View>
+                <Avatar
+                  size = {250}
+                  rounded
+                  source = {{
+                    uri: this.props.value
+                  }}
+                   />
+                 <Text style = {{
+                     marginTop: 20,
+                     alignSelf: 'center',
+                     color: 'white',
+                     fontSize: 25,
+                     fontFamily: "Nunito-SemiBold"
+                   }} >Choose a profile picture</Text>
+              </View>
+
                :
-               <Avatar
-                 size = {250}
-                 rounded
-                 source = {pic}
-                  />
+
+               <View>
+                 <Avatar
+                   size = {250}
+                   rounded
+                   source = {pic}
+                    />
+                  <Text style = {{
+                      marginTop: 20,
+                      alignSelf: 'center',
+                      color: 'white',
+                      fontSize: 25,
+                      fontFamily: "Nunito-SemiBold"
+                    }} >Choose a profile picture</Text>
+               </View>
+
             }
             </View>
           </TouchableWithoutFeedback>
@@ -231,17 +254,7 @@ class ProfilePicSlide extends React.Component{
           }
           </View>
           <View>
-          {
-            (this.props.value=="https://scontent-lax3-2.xx.fbcdn.net/v/t1.30497-1/s960x960/84628273_176159830277856_972693363922829312_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=12b3be&_nc_ohc=iaSSiD4IA5cAX_Qg0zD&_nc_ht=scontent-lax3-2.xx&edm=AP4hL3IEAAAA&oh=ef00f6c1e2823c946ae3616645a0fa37&oe=61B79B3D")?
-          <View>
-
-            <Text style = {styles.fbText2}>
-              Please enter a profile picture
-            </Text>
-          </View>
-          :
-          <Text></Text>
-          }
+        
           </View>
         <View style = {styles.bottomContainer}>
           <View style = {styles.bottomLContainer}>
