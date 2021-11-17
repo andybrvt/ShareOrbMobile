@@ -17,7 +17,9 @@ import {
   Share,
   Alert,
   AsyncStorage,
-  ActivityIndicator
+  ActivityIndicator,
+  Plateform,
+  TextInput
  } from 'react-native';
 import newfeedpic from '../newfeedpic.jpg';
 import profilepic from '../profilepic.jpg';
@@ -365,27 +367,31 @@ class AppIntro extends React.Component{
 
               */}
 
-              {/*
-                <SlideWrap visible = {this.state.one}>
 
-                </SlideWrap>
 
-                */}
 
-            <BasicSignUp
-              un = {false}
-              pw = {false}
-              em = {false}
-              loading = {this.state.loading}
-              visible = {this.state.one}
-              prompt = {"What's your name?"}
-              value = {this.state.firstName}
-              onChange = {this.onNameChange}
-              closeModal = {this.closeModal}
-              openModal = {this.openModal}
-              closeNum = {'one'}
-              openNum = {'two'}
-               />
+
+                <BasicSignUp
+                  un = {false}
+                  pw = {false}
+                  em = {false}
+                  loading = {this.state.loading}
+                  visible = {this.state.one}
+                  prompt = {"What's your name?"}
+                  value = {this.state.firstName}
+                  onChange = {this.onNameChange}
+                  closeModal = {this.closeModal}
+                  openModal = {this.openModal}
+                  closeNum = {'one'}
+                  openNum = {'two'}
+                   />
+
+              
+
+
+
+
+
              {/*
                <SlideWrap visible = {this.state.two}>
                  <BirthdaySlide

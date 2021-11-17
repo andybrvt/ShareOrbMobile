@@ -68,7 +68,8 @@ class BasicSignUp extends React.Component{
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
 
     if(this.props.visible){
-      this.textInput.focus()
+      setTimeout(() =>this.textInput.focus(), 100)
+      console.log('hit here')
     }
   }
 
@@ -86,12 +87,16 @@ class BasicSignUp extends React.Component{
 
   componentDidUpdate(prevProps){
 
+
     if(prevProps.visible !== this.props.visible){
       if(this.props.visible){
+        console.log('dismis here her ')
         if(this.textInput){
           this.textInput.focus()
         }
       } else {
+
+        console.log('here her ')
         Keyboard.dismiss()
         this.setState({
           pageHeight: 0
@@ -303,7 +308,7 @@ class BasicSignUp extends React.Component{
 
                   <TextInput
                     style = {{
-                      width: 'width'
+                      width: width
                     }}
                     autoCapitalize="none"
                     selectionColor={'white'}

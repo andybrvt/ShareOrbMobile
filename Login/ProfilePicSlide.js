@@ -158,8 +158,7 @@ class ProfilePicSlide extends React.Component{
 
   render(){
     let data=this.props.data
-    console.log("proifle!!1")
-    console.log(data)
+
     return(
       <View
         style = {{
@@ -254,7 +253,7 @@ class ProfilePicSlide extends React.Component{
           }
           </View>
           <View>
-        
+
           </View>
         <View style = {styles.bottomContainer}>
           <View style = {styles.bottomLContainer}>

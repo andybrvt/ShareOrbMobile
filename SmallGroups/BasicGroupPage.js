@@ -67,7 +67,7 @@ class BasicGroupPage extends React.Component{
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
 
     if(this.props.visible||this.props.test){
-      this.textInput.focus()
+      setTimeout(() => this.textInput.focus(), 100)
     }
   }
 
