@@ -413,7 +413,7 @@ class NewGlobePost extends React.Component{
           itemImage = `${global.IMAGE_ENDPOINT}` + this.props.data.post.itemImage
         }
         if(this.props.data.post.video){
-          video = `${global.IMAGE_ENDPOINT}` + this.props.data.video
+          video = `${global.IMAGE_ENDPOINT}` + this.props.data.post.video
         }
 
         if(this.props.data.post.creator.isOtherAccount){
@@ -525,49 +525,35 @@ class NewGlobePost extends React.Component{
         </View>
 
         <View style = {styles.bottomContainer}>
-          {/* FastImage */}
-          {
-            video === "" ?
-
-            <Image
-                style={styles.cover}
-                resizeMode = "cover"
-                source={{
-                  uri: itemImage,
-                  // priority: FastImage.priority.normal,
-
-                }}
-                 />
-
-               :
 
 
-               <InViewPort
-                 onChange = {this.handlePlaying}
-                 >
-                 <Video
-                   ref={ref => {this.video = ref}}
-                   style = {styles.cover}
-                   source={{
-                     // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
-                     uri: video
-                   }}
-                   rate={1.0}
-                   isMuted={false}
-                   resizeMode="cover"
-                   isLooping
-                   shouldPlay
-                   volume={0.5}
+
+           <InViewPort
+             onChange = {this.handlePlaying}
+             >
+             <Video
+               ref={ref => {this.video = ref}}
+               style = {styles.cover}
+               source={{
+                 // uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+                 uri: video
+               }}
+               rate={1.0}
+               isMuted={false}
+               resizeMode="cover"
+               isLooping
+               shouldPlay
+               volume={0.5}
 
 
-                    />
+                />
 
-               </InViewPort>
+           </InViewPort>
 
 
 
 
-          }
+
 
 
              <LinearGradient

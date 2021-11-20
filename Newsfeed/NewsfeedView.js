@@ -144,7 +144,6 @@ class NewsfeedView extends React.Component{
 
     // this.connectToLocation()
 
-    this.getLocationPermission()
 
 
   }
@@ -344,7 +343,7 @@ class NewsfeedView extends React.Component{
 
             */}
 
-            {
+            {/*
               this.state.loading ?
 
               <NearOrbButton
@@ -381,21 +380,25 @@ class NewsfeedView extends React.Component{
                 </View>
                </TouchableOpacity>
 
-            }
+            */}
 
-            <TouchableOpacity
-              onPress = {() => this.props.navigation.navigate("Explore")}
-               style = {{
-                position: 'absolute',
-                bottom: '5%',
-                right: '23%'
-              }}>
-              <Globe
-                stroke = "white"
-                width = {37.5}
-                height = {37.5}
-                 />
-             </TouchableOpacity>
+            {/*
+              <TouchableOpacity
+                onPress = {() => this.props.navigation.navigate("Explore")}
+                 style = {{
+                  position: 'absolute',
+                  bottom: '5%',
+                  right: '23%'
+                }}>
+                <Globe
+                  stroke = "white"
+                  width = {37.5}
+                  height = {37.5}
+                   />
+               </TouchableOpacity>
+
+              */}
+
              {/*
             <TouchableOpacity
               onPress = {() => this.props.navigation.navigate("Maps")}
