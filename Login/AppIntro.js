@@ -279,7 +279,7 @@ class AppIntro extends React.Component{
       username: username,
       first_name: firstName,
       last_name: lastName,
-      email: email,
+      email: username+"@gmail.com",
       dob: dateFns.format(dob, "yyyy-MM-dd"),
       password1: password,
       password2: password
@@ -386,7 +386,7 @@ class AppIntro extends React.Component{
                   openNum = {'two'}
                    />
 
-              
+
 
 
 
@@ -425,6 +425,8 @@ class AppIntro extends React.Component{
                 openNum = {'three'}/>
 
             </SlideWrap>
+
+            {/*
             <SlideWrap visible = {this.state.three}>
               <BasicSignUp
                 un = {false}
@@ -439,20 +441,20 @@ class AppIntro extends React.Component{
                 openModal = {this.openModal}
                 closeNum = {'three'}
                 openNum = {'four'}/>
-
             </SlideWrap>
-            <SlideWrap visible = {this.state.four}>
+            */}
+            <SlideWrap visible = {this.state.three}>
               <ProfilePicSlide
 
                 value = {this.state.profilePic}
                 onChange = {this.onPicChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
-                closeNum = {'four'}
-                openNum = {'five'}
+                closeNum = {'three'}
+                openNum = {'four'}
                 />
             </SlideWrap>
-            <SlideWrap visible = {this.state.five}>
+            <SlideWrap visible = {this.state.four}>
               <BasicSignUp
                 pw = {true}
                 un = {false}
@@ -465,8 +467,8 @@ class AppIntro extends React.Component{
                 onChange = {this.onPasswordChange}
                 closeModal = {this.closeModal}
                 openModal = {this.openModal}
-                closeNum = {'five'}
-                openNum = {'six'}
+                closeNum = {'four'}
+                openNum = {'five'}
                 termCondition = {this.state.agreeToTOS}
                 acceptTerms = {this.acceptTerms}
                  />

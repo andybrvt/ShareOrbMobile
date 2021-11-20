@@ -1299,6 +1299,7 @@ class CameraScreen extends React.Component{
                 autoFocus={"on"}
                 ref = {node => {this.cameraRef = node}}
                 type = {this.state.type}
+                zoom={0.5}
                 ratio={"16:9"}
                 skipProcessing={false}
                 flashMode = {this.state.showFlash}
@@ -1527,8 +1528,10 @@ class CameraScreen extends React.Component{
                   this.state.isRecording === true ?
 
                   <TouchableOpacity
-                    onPressOut = {() => this.handlePressOut()}
-                    onLongPress = {() => this.handleLongPress()}
+                    // onPressIn = {() => this.handleLongPress()}
+                    onPress = {() => this.handlePressOut()}
+                    // onPressOut = {() => this.handlePressOut()}
+                    // onLongPress = {() => this.handleLongPress()}
                     // onPress = {() => this.takePicture(groupsLength)}
                     style = {styles.captureBtnActive}>
                     <RecordingAnimationBtn />
@@ -1538,8 +1541,9 @@ class CameraScreen extends React.Component{
                   :
 
                   <TouchableOpacity
-                    onPressOut = {() => this.handlePressOut()}
-                    onLongPress = {() => this.handleLongPress()}
+                    onPress = {() => this.handleLongPress()}
+                    // onPressOut = {() => this.handlePressOut()}
+                    // onLongPress = {() => this.handleLongPress()}
                     // onPress = {() => this.takePicture(groupsLength)}
                     style = {styles.captureBtn}></TouchableOpacity>
 

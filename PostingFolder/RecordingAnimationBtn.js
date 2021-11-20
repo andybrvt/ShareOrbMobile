@@ -50,6 +50,7 @@ class RecordingAnimationBtn extends React.Component{
           shadowOffset:{width:0,height:2},
           shadowOpacity:0.2,
           alignSelf: 'center',
+
         }}
         >
 
@@ -57,7 +58,7 @@ class RecordingAnimationBtn extends React.Component{
           <View style = {{
               // flex: 1,
               pointerEvents:"none",
-
+              backgroundColor:'red',
               alignItems: 'center',
               justifyContent: 'center'
             }}>
@@ -65,6 +66,7 @@ class RecordingAnimationBtn extends React.Component{
              style={{
                width: 170,
                height: 170,
+               borderRadius:100,
                position: 'absolute'
              }}
              autoPlay
