@@ -14,15 +14,74 @@ import { Text,
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import MainLogo from '../logo.svg';
-import { Bell,ArrowUpCircle, Plus, Mail, UserPlus, Globe } from "react-native-feather";
+import { MapPin,Bell,ArrowUpCircle, Plus, Mail, UserPlus, Globe } from "react-native-feather";
 import { connect } from 'react-redux';
+import authAxios from '../util';
 
 
 class SimpleExplore extends React.Component{
 
-  renderItem = () => {
-    return <View><Text>Hi</Text></View>
+
+  constructor(props){
+    super(props)
+
+    this.state = {
+      orbs: []
+    }
+
   }
+
+  onGroupDirect = (item) => {
+    this.props.navigation.navigate("groupOrb", {
+      creator: item.creator,
+      orbId: item.id,
+      groupName: item.group_name,
+      groupPic: item.groupPic
+    })
+  }
+
+
+  renderItem = ({item}) => {
+    return(
+      <TouchableOpacity
+        onPress = {() => this.onGroupDirect(item)}
+        style={{flexDirection:'row',padding:5,  marginTop:10, alignItems:'center'}}>
+
+        <Avatar
+          size={42.5}
+          rounded
+            resizeMode = "cover"
+            source = {{
+              uri: `${global.IMAGE_ENDPOINT}`+item.groupPic
+            }}
+           />
+         <View style={{marginLeft:10}}>
+         <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
+         <View style={{flexDirection:'row', alignItems:'center'}}>
+           <MapPin
+             style={{ marginRight:3}}
+             stroke="gray" strokeWidth={2} width={12.5} height={12.5} />
+           <Text style={{fontSize:12, color:'#8c8c8c', fontFamily:'Nunito'}}>Tucson, Arizona</Text>
+         </View>
+
+       </View>
+
+     </TouchableOpacity>
+    )
+  }
+
+  componentDidMount(){
+
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getRandomOrbs')
+    .then(res => {
+      console.log(res.data, 'data data')
+      this.setState({
+        orbs: res.data
+      })
+    })
+  }
+
+
 
   listHeader = () => {
     return(
@@ -105,7 +164,7 @@ class SimpleExplore extends React.Component{
           ListHeaderComponent = {this.listHeader}
           showsVerticalScrollIndicator={false}
           style = {{flex: 1}}
-          data = {groupPosts}
+          data = {this.state.orbs}
           renderItem = {this.renderItem}
           keyExtractor={(item, index) => String(index)}
           // onRefresh = {() => this.onRefresh()}
