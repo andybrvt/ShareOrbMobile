@@ -1299,7 +1299,6 @@ class CameraScreen extends React.Component{
                 autoFocus={"on"}
                 ref = {node => {this.cameraRef = node}}
                 type = {this.state.type}
-                zoom={0.5}
                 ratio={"16:9"}
                 skipProcessing={false}
                 flashMode = {this.state.showFlash}

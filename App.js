@@ -33,6 +33,7 @@ import InvitePeople from './Newsfeed/InvitePeople';
 import InviteContacts from './Newsfeed/InviteContacts';
 import InfiniteScrollFlat from './Newsfeed/InfiniteScrollFlat';
 import Explore from './Explore/Explore';
+import SimpleExplore from './Explore/SimpleExplore';
 import Friends from './Friends';
 import Login from './Login/Login';
 import AppIntro from './Login/AppIntro';
@@ -881,6 +882,18 @@ class App extends Component{
                       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
                     }}>
 
+                    <Stack.Screen
+                      options={{
+                        headerShown: false,
+                         ...TransitionPresets.SlideFromRightIOS,
+                       }}
+
+                       name = 'Explore'
+                       component = {SimpleExplore}
+
+                       />
+
+
 
                     <Stack.Screen
                       options={{headerShown: false, }}
@@ -1136,17 +1149,6 @@ class App extends Component{
 
                     />
 
-                    <Stack.Screen
-                      options={{
-                        headerShown: false,
-                         ...TransitionPresets.SlideFromRightIOS,
-                       }}
-
-                       name = 'Explore'
-                       // component = {GroupPost}
-                       component = {Explore}
-
-                       />
 
 
 
