@@ -49,6 +49,7 @@ import * as Permissions from 'expo-permissions';
 import * as Linking from 'expo-linking';
 import { showMessage, hideMessage } from "react-native-flash-message";
 import * as MediaLibrary from 'expo-media-library';
+import * as smallGroupsActions from '../store/actions/smallGroups';
 
 
 const { Clock,
@@ -93,7 +94,7 @@ class CameraScreen extends React.Component{
     }
 
     const config = {
-      duration: 10000, // how long it will go for in ms
+      duration: 45000, // how long it will go for in ms
       toValue: new Value(width), // this will be the value it will go to
       easing: Easing.inOut(Easing.ease)
     }
@@ -224,7 +225,7 @@ class CameraScreen extends React.Component{
 
    tick = () => {
      this.setState({
-       counter: this.state.counter + 0.1
+       counter: this.state.counter + 0.022
      })
    }
 
@@ -418,7 +419,7 @@ class CameraScreen extends React.Component{
         //   maxDuration: 1
         // })
         const video = await this.cameraRef.recordAsync({
-          maxDuration: 10
+          maxDuration: 45
         });
 
 
@@ -515,7 +516,7 @@ class CameraScreen extends React.Component{
      aspect: [4, 3],
      quality: 1,
      base64: true,
-     videoMaxDuration: 10,
+     videoMaxDuration: 45,
    });
 
    if(!pickerResult.cancelled){
@@ -532,9 +533,9 @@ class CameraScreen extends React.Component{
      }
      if(pickerResult.type === "video"){
 
-       if(pickerResult.duration/1000 > 10){
+       if(pickerResult.duration/1000 > 45){
 
-          setTimeout(() => alert("Video duration cannot be over 10 seconds"), 300)
+          setTimeout(() => alert("Video duration cannot be over 45 seconds"), 300)
           // return
        } else {
 
@@ -715,7 +716,13 @@ class CameraScreen extends React.Component{
 
 
 
-        WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
+        // WebSocketSmallGroupInstance.sendPostToGroup(groupID, res.data.item.id)
+
+        const obj = {
+          groupPost: res.data.item
+        }
+
+        this.props.sendGroupPost(obj)
 
 
         setTimeout(() => {
@@ -1594,6 +1601,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    sendGroupPost: (post) => dispatch(smallGroupsActions.sendGroupPost(post)),
     closeShowCamera: () => dispatch(authActions.closeShowCamera()),
     authAddCurLoad: () => dispatch(authActions.authAddCurLoad()),
     authAddTotalLoad: () => dispatch(authActions.authAddTotalLoad()),

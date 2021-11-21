@@ -105,12 +105,13 @@ class NewGlobePost extends React.PureComponent{
     let creatorId = "";
 
     let groupInfo=this.props.groupInfo
-    let month=dateFns.format(new Date(this.props.item.created_at), "MMM")
-    let day=dateFns.format(new Date(this.props.item.created_at), "dd")
 
     let timeDiff = Math.round((new Date().getTime() - new Date(this.props.item.created_at).getTime())/60000)
 
+
     if(this.props.item) {
+
+
       if(this.props.groupInfo.groupName){
         groupName = this.props.groupInfo.groupName;
       }
