@@ -201,12 +201,19 @@ class InfiniteScrollFlatNew extends React.Component{
 
         authAxios.get(`${global.IP_CHANGE}/mySocialCal/fetchOrbPost/`+groupId)
         .then(res => {
-          console.log(res.data, 'stuff hereh here')
           this.setState({
-            groupPosts: res.data.posts,
             groupInfo: res.data.group
           })
+
+          const obj = {
+            groupPosts: res.data.posts,
+
+          }
+          this.props.loadSmallGroupsPost(obj)
+
         })
+
+
         // authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
 
 
@@ -648,7 +655,7 @@ class InfiniteScrollFlatNew extends React.Component{
     let groupId = '';
     let groupPic = "";
     let groupName  = "";
-    let groupPosts = this.state.groupPosts;
+    let groupPosts = [];
     let showButton = false;
     let creatorId = ""
     let video=""
@@ -675,8 +682,9 @@ class InfiniteScrollFlatNew extends React.Component{
       members = this.state.groupInfo.members
     }
 
-
-
+    if(this.props.groupPosts){
+      groupPosts = this.props.groupPosts
+    }
 
 
     return(
@@ -992,13 +1000,14 @@ const mapStateToProps = state => {
     userName: state.auth.username,
     following: state.auth.following,
     curLoad: state.auth.curLoad,
-    groupPost: state.smallGroups.groupPosts,
+    groupPosts: state.smallGroups.groupPosts,
     closeOrb: state.globeGroup.closeOrb
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadSmallGroupsPost: (posts) => dispatch(smallGroupsActions.loadSmallGroupsPost(posts)),
     loadMoreSmallGroupPost: (posts) => dispatch(smallGroupsActions.loadMoreSmallGroupPost(posts)),
     loadMoreSocialPost: (post) => dispatch(socialNewsfeedActions.loadMoreSocialPost(post)),
     openShowCamera: () => dispatch(authActions.openShowCamera()),
