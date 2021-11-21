@@ -277,7 +277,7 @@ class ProfilePage extends React.Component{
     let username = "";
     let userId = "";
 
-    const data = this.state.profile.recentOrbs
+    const data = this.state.profile.get_small_groups
 
     if(this.state.profile.isOtherAccount){
         username = this.state.profile.secondUsername

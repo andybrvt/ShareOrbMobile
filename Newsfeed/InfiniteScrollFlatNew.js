@@ -141,8 +141,8 @@ class InfiniteScrollFlatNew extends React.Component{
       super(props)
 
       if(this.props.isAuthenticated){
-        // initialize the websocket here
-        this.initialiseSmallGroup()
+        // IF YOU WANT WEBSOCKET HERE JUST PUT THIS BACK
+        // this.initialiseSmallGroup()
       }
 
       this.state = {
@@ -153,7 +153,9 @@ class InfiniteScrollFlatNew extends React.Component{
         addMore: 5,
         hasMore: true,
         currentMonth: dateFns.format(new Date(), "MMMM"),
-        currentDay: dateFns.format(new Date(), "d")
+        currentDay: dateFns.format(new Date(), "d"),
+        groupPosts: []
+
       }
   }
 
@@ -194,20 +196,30 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
       } else {
-        authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
+
+        // IF YOU ARE NOT BLOCKED THEN JUST GET THE INFO HERE
+
+        authAxios.get(`${global.IP_CHANGE}/mySocialCal/fetchOrbPost/`+groupId)
         .then(res => {
-          // console.log(res.data)
+          console.log(res.data, 'stuff hereh here')
+          this.setState({
+            groupPosts: res.data
+          })
         })
+        // authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
 
 
       }
 
 
 
+
+
     })
 
-  }
+    authAxios.get()
 
+  }
 
 
   selectDelete = () => {
@@ -252,7 +264,10 @@ class InfiniteScrollFlatNew extends React.Component{
   }
 
   componentWillUnmount(){
-    WebSocketSmallGroupInstance.disconnect()
+
+    // PUT THIS BACK IF YOU WANNA DO WEBSOCKETS
+    // WebSocketSmallGroupInstance.disconnect()
+
   }
 
   waitForSmallGroupsSocketConnection(callback){
@@ -516,6 +531,25 @@ class InfiniteScrollFlatNew extends React.Component{
                 }}/>
             </Text>
             <Text style = {styles.groupName}>{groupName}</Text>
+            {
+              true ?
+
+              <TouchableOpacity>
+                <View style = {styles.loginBtn1}>
+                  <Text style = {{color: 'white'}}>Join</Text>
+                </View>
+              </TouchableOpacity>
+
+              :
+
+              <TouchableOpacity>
+                <View style = {styles.loginBtn1}>
+                  <Text style = {{color: 'white'}}>Join</Text>
+                </View>
+              </TouchableOpacity>
+
+            }
+
           </View>
           <View style={{flexDirection:'column', alignItems:'flex-end', flex:1, }}>
             <TouchableOpacity
@@ -606,7 +640,7 @@ class InfiniteScrollFlatNew extends React.Component{
     let groupId = '';
     let groupPic = "";
     let groupName  = "";
-    let groupPost = [];
+    let groupPosts = this.state.groupPosts;
     let showButton = false;
     let creatorId = ""
     let video=""
@@ -630,11 +664,7 @@ class InfiniteScrollFlatNew extends React.Component{
     }
 
 
-
-    if(this.props.groupPost){
-      groupPost = this.props.groupPost
-    }
-
+    console.log(this.state.groupPosts, 'posts posts')
     return(
       <SafeAreaView style = {{flex: 1}}>
 
@@ -713,7 +743,7 @@ class InfiniteScrollFlatNew extends React.Component{
             windowSize={5}
             contentContainerStyle={{
               paddingBottom: 75 }}
-             data={groupPost}
+             data={groupPosts}
              keyExtractor={this.keyExtractor}
              onEndReachedThreshold={0.2}
              onEndReached = {this.loadSocialPost}
@@ -895,7 +925,17 @@ const styles = StyleSheet.create({
     shadowOpacity:0.5,
     position:'relative'
 
-  }
+  },
+  loginBtn1: {
+    width: 150,
+    borderRadius: 25,
+    height: 40,
+
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 9999,
+    backgroundColor: "#40a9ff",
+  },
 })
 
 const mapStateToProps = state => {
@@ -904,7 +944,6 @@ const mapStateToProps = state => {
     isAuthenticated: state.auth.token !== null,
     id: state.auth.id,
     userName: state.auth.username,
-    // socialPosts: state.socialNewsfeed.socialPosts,
     following: state.auth.following,
     curLoad: state.auth.curLoad,
     groupPost: state.smallGroups.groupPosts,
