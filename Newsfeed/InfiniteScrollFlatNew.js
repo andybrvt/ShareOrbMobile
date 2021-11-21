@@ -503,19 +503,25 @@ class InfiniteScrollFlatNew extends React.Component{
     )
   }
 
+  joinOrb = () => {
+    const groupId = this.props.route.params.orbId
+
+    authAxios.post(`${global.IP_CHANGE}/mySocialCal/joinSmallGroup/`+groupId+"/"+this.props.id)
+    .then(res => {
+      this.setState({
+        groupInfo: res.data
+      })
+    })
+
+  }
+
   listHeader = () => {
     const creatorId = this.props.route.params.creator
     const groupPic = this.props.route.params.groupPic
     const groupName = this.props.route.params.groupName
     const groupId = this.props.route.params.orbId
 
-    let members = []
 
-    if(this.state.groupInfo.members){
-      members = this.state.groupInfo.members
-    }
-
-    console.log(members, 'members')
     return(
       <View style = {styles.header}>
         <View style={{flexDirection:'row'}}>
@@ -539,25 +545,6 @@ class InfiniteScrollFlatNew extends React.Component{
                 }}/>
             </Text>
             <Text style = {styles.groupName}>{groupName}</Text>
-            {
-              members.includes(this.props.id) ?
-
-
-                <View style = {styles.loginBtn}>
-                  <Text style = {{color: 'white'}}>Join</Text>
-                </View>
-
-              :
-
-              <TouchableOpacity
-                onPress = {() => this.joinOrb()}
-                >
-                <View style = {styles.loginBtn1}>
-                  <Text style = {{color: 'white'}}>Join</Text>
-                </View>
-              </TouchableOpacity>
-
-            }
 
           </View>
           <View style={{flexDirection:'column', alignItems:'flex-end', flex:1, }}>
@@ -645,7 +632,6 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
 
-    let closeId = "";
     let groupId = '';
     let groupPic = "";
     let groupName  = "";
@@ -653,6 +639,9 @@ class InfiniteScrollFlatNew extends React.Component{
     let showButton = false;
     let creatorId = ""
     let video=""
+    let members = []
+
+
     if(this.props.route.params.orbId){
       groupId = this.props.route.params.orbId
     }
@@ -668,9 +657,12 @@ class InfiniteScrollFlatNew extends React.Component{
     if(this.props.route.params.creator){
       creatorId = this.props.route.params.creator
     }
-    if(this.props.closeOrb){
-      closeId = this.props.closeOrb.id
+
+    if(this.state.groupInfo.members){
+      members = this.state.groupInfo.members
     }
+
+
 
 
 
@@ -787,22 +779,8 @@ class InfiniteScrollFlatNew extends React.Component{
                width: '45%',
              }}>
          {
-           groupId === closeId ?
 
-           creatorId === this.props.id ?
-
-           <View
-             style = {styles.videoButtonD}>
-             <Text style = {{
-                 color: 'white',
-                 marginRight: 10,
-                 fontSize: 18,
-                 fontFamily:'Nunito-SemiBold',
-               }}>You are the owner</Text>
-
-           </View>
-
-           :
+           members.includes(this.props.id) ?
 
            <TouchableOpacity
              style = {styles.videoButton}
@@ -826,8 +804,30 @@ class InfiniteScrollFlatNew extends React.Component{
 
            </TouchableOpacity>
 
+           :
 
-           : null
+           <TouchableOpacity
+             style = {styles.videoButton1}
+             onPress = {() => this.joinOrb()}
+
+             >
+
+             <View
+               style={{flexDirection:'row', alignItems:'center'}}
+               >
+               <Text style = {{
+                 color: 'white',
+
+                 fontSize: 18,
+                 fontFamily:'Nunito-SemiBold',
+               }}>  Join</Text>
+
+             </View>
+
+           </TouchableOpacity>
+
+
+
 
          }
 
@@ -899,7 +899,21 @@ const styles = StyleSheet.create({
     shadowOpacity:0.5,
     position:'relative'
   },
-
+  videoButton1: {
+    zIndex: 999,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    borderRadius: 25,
+    height: 40,
+    shadowColor:'black',
+    shadowOffset:{width:0,height:2},
+    shadowOpacity:0.5,
+    position:'relative'
+  },
   trashButton: {
     zIndex: 999,
     flexDirection: 'row',
