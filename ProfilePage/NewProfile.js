@@ -115,8 +115,8 @@ class NewProfile extends React.Component{
   render(){
 
     let data = []
-    if(this.props.recentOrbs){
-      data = this.props.recentOrbs
+    if(this.props.smallGroups){
+      data = this.props.smallGroups
     }
 
     let username = ""
@@ -192,6 +192,7 @@ class NewProfile extends React.Component{
 
 const mapStateToProps = state => {
   return {
+
     currentId: state.auth.id,
     currentUser: state.auth.username,
     curUserFriend: state.auth.friends,

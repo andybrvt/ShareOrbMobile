@@ -74,7 +74,6 @@ class SimpleExplore extends React.Component{
 
     authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getRandomOrbs')
     .then(res => {
-      console.log(res.data, 'data data')
       this.setState({
         orbs: res.data
       })
