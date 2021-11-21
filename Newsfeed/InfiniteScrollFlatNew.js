@@ -154,8 +154,8 @@ class InfiniteScrollFlatNew extends React.Component{
         hasMore: true,
         currentMonth: dateFns.format(new Date(), "MMMM"),
         currentDay: dateFns.format(new Date(), "d"),
-        groupPosts: []
-
+        groupPosts: [],
+        groupInfo: {}
       }
   }
 
@@ -203,7 +203,8 @@ class InfiniteScrollFlatNew extends React.Component{
         .then(res => {
           console.log(res.data, 'stuff hereh here')
           this.setState({
-            groupPosts: res.data
+            groupPosts: res.data.posts,
+            groupInfo: res.data.group
           })
         })
         // authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
@@ -508,6 +509,13 @@ class InfiniteScrollFlatNew extends React.Component{
     const groupName = this.props.route.params.groupName
     const groupId = this.props.route.params.orbId
 
+    let members = []
+
+    if(this.state.groupInfo.members){
+      members = this.state.groupInfo.members
+    }
+
+    console.log(members, 'members')
     return(
       <View style = {styles.header}>
         <View style={{flexDirection:'row'}}>
@@ -532,17 +540,18 @@ class InfiniteScrollFlatNew extends React.Component{
             </Text>
             <Text style = {styles.groupName}>{groupName}</Text>
             {
-              true ?
+              members.includes(this.props.id) ?
 
-              <TouchableOpacity>
-                <View style = {styles.loginBtn1}>
+
+                <View style = {styles.loginBtn}>
                   <Text style = {{color: 'white'}}>Join</Text>
                 </View>
-              </TouchableOpacity>
 
               :
 
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress = {() => this.joinOrb()}
+                >
                 <View style = {styles.loginBtn1}>
                   <Text style = {{color: 'white'}}>Join</Text>
                 </View>
@@ -664,7 +673,7 @@ class InfiniteScrollFlatNew extends React.Component{
     }
 
 
-    console.log(this.state.groupPosts, 'posts posts')
+
     return(
       <SafeAreaView style = {{flex: 1}}>
 
@@ -745,10 +754,10 @@ class InfiniteScrollFlatNew extends React.Component{
               paddingBottom: 75 }}
              data={groupPosts}
              keyExtractor={this.keyExtractor}
-             onEndReachedThreshold={0.2}
-             onEndReached = {this.loadSocialPost}
-             onRefresh = {this.onRefresh}
-             refreshing = {this.state.refreshing}
+             // onEndReachedThreshold={0.2}
+             // onEndReached = {this.loadSocialPost}
+             // onRefresh = {this.onRefresh}
+             // refreshing = {this.state.refreshing}
              scrollEventThrottle = {16} // important for animation
              renderItem={this.renderItem}
              numColumns={3}
@@ -935,6 +944,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     zIndex: 9999,
     backgroundColor: "#40a9ff",
+  },
+  loginBtn: {
+    width: 150,
+    borderRadius: 25,
+    height: 40,
+
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 9999,
+    backgroundColor: "lightgray",
   },
 })
 
