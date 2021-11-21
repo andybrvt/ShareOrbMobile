@@ -63,11 +63,6 @@ class GroupInfo extends React.Component{
 
   }
 
-
-  navPeopleInGroup = (groupId) => {
-    this.props.navigation.navigate("PeopleInGroup", {groupId: groupId })
-  }
-
   navInvitePeople = () => {
     this.props.navigation.navigate("InvitePeople")
   }
@@ -291,7 +286,7 @@ class GroupInfo extends React.Component{
       <BackgroundContainer>
         <View underlayColor="#f0f0f0">
           <View style={{
-              height:'80%',
+              height:'70%',
               // backgroundColor:'red',
               flexDirection:'column',
             }}>
@@ -407,7 +402,7 @@ class GroupInfo extends React.Component{
           </View>
 
 
-          {/*
+          {
             (this.props.curId==creatorID)?
             <View style={{alignItems:'center', top:'5%'}}>
               <TouchableOpacity  onPress={() => this.toggleLeave(groupID)} style={styles.loginBtn1}>
@@ -422,7 +417,7 @@ class GroupInfo extends React.Component{
               </TouchableOpacity>
             </View>
 
-          */}
+          }
 
         </View>
 

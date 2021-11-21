@@ -78,7 +78,7 @@ class SimpleExplore extends React.Component{
     .then(res => {
       this.setState({
         orbs: res.data
-      })
+    })
     })
   }
 

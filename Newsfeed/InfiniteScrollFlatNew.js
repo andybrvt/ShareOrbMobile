@@ -463,6 +463,10 @@ class InfiniteScrollFlatNew extends React.Component{
 
   }
 
+  navPeopleInGroup = (groupId) => {
+    this.props.navigation.navigate("PeopleInGroup", {groupId: groupId })
+  }
+
   confirmDelete = () => {
 
       Alert.alert(
@@ -504,6 +508,8 @@ class InfiniteScrollFlatNew extends React.Component{
   }
 
   listHeader = () => {
+    console.log("ZZZZZZZZZZZZZZZZZZzz")
+    console.log(this.props.route.params)
     const creatorId = this.props.route.params.creator
     const groupPic = this.props.route.params.groupPic
     const groupName = this.props.route.params.groupName
@@ -539,16 +545,17 @@ class InfiniteScrollFlatNew extends React.Component{
                 }}/>
             </Text>
             <Text style = {styles.groupName}>{groupName}</Text>
+            <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.orbId)}>
+            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12}}>
+              {members} members
+            </Text>
+          </TouchableOpacity>
             {
               members.includes(this.props.id) ?
-
-
                 <View style = {styles.loginBtn}>
                   <Text style = {{color: 'white'}}>Join</Text>
                 </View>
-
               :
-
               <TouchableOpacity
                 onPress = {() => this.joinOrb()}
                 >
@@ -556,17 +563,16 @@ class InfiniteScrollFlatNew extends React.Component{
                   <Text style = {{color: 'white'}}>Join</Text>
                 </View>
               </TouchableOpacity>
-
             }
 
           </View>
+
           <View style={{flexDirection:'column', alignItems:'flex-end', flex:1, }}>
             <TouchableOpacity
               onPress={() => this.navGroupInfo(groupId)}
               style={styles.roundButton1}>
               <Users stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
-
 
             {
               this.props.id === creatorId ?
@@ -577,10 +583,8 @@ class InfiniteScrollFlatNew extends React.Component{
                 >
                 <Edit2 stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
               </TouchableOpacity>
-
               :
               null
-
             }
 
             {
