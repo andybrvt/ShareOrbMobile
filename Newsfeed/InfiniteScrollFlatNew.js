@@ -463,6 +463,10 @@ class InfiniteScrollFlatNew extends React.Component{
 
   }
 
+  navPeopleInGroup = (groupId) => {
+    this.props.navigation.navigate("PeopleInGroup", {groupId: groupId })
+  }
+
   confirmDelete = () => {
 
       Alert.alert(
@@ -522,6 +526,12 @@ class InfiniteScrollFlatNew extends React.Component{
     const groupId = this.props.route.params.orbId
 
 
+    let members = []
+
+    if(this.state.groupInfo.members){
+      members = this.state.groupInfo.members
+    }
+
     return(
       <View style = {styles.header}>
         <View style={{flexDirection:'row'}}>
@@ -545,15 +555,20 @@ class InfiniteScrollFlatNew extends React.Component{
                 }}/>
             </Text>
             <Text style = {styles.groupName}>{groupName}</Text>
+            <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.orbId)}>
+            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12}}>
+              {members.length} members
+            </Text>
+          </TouchableOpacity>
 
           </View>
+
           <View style={{flexDirection:'column', alignItems:'flex-end', flex:1, }}>
             <TouchableOpacity
               onPress={() => this.navGroupInfo(groupId)}
               style={styles.roundButton1}>
               <Users stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
             </TouchableOpacity>
-
 
             {
               this.props.id === creatorId ?
@@ -564,10 +579,8 @@ class InfiniteScrollFlatNew extends React.Component{
                 >
                 <Edit2 stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
               </TouchableOpacity>
-
               :
               null
-
             }
 
             {
