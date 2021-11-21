@@ -45,10 +45,12 @@ class SimpleExplore extends React.Component{
     return(
       <TouchableOpacity
         onPress = {() => this.onGroupDirect(item)}
-        style={{flexDirection:'row',padding:5,  marginTop:10, alignItems:'center'}}>
+        style={{flexDirection:'row',padding:5, padding:20, alignItems:'center',
+          borderBottomWidth:1, borderBottomColor: '#f2f2f2',
+        }}>
 
         <Avatar
-          size={42.5}
+          size={50}
           rounded
             resizeMode = "cover"
             source = {{
@@ -56,12 +58,12 @@ class SimpleExplore extends React.Component{
             }}
            />
          <View style={{marginLeft:10}}>
-         <Text style={{fontSize:14, fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
+         <Text style={{fontSize:16, fontFamily:'Nunito-SemiBold'}}>{item.group_name}</Text>
          <View style={{flexDirection:'row', alignItems:'center'}}>
            <MapPin
              style={{ marginRight:3}}
              stroke="gray" strokeWidth={2} width={12.5} height={12.5} />
-           <Text style={{fontSize:12, color:'#8c8c8c', fontFamily:'Nunito'}}>Tucson, Arizona</Text>
+           <Text style={{fontSize:15, color:'#8c8c8c', fontFamily:'Nunito'}}>Tucson, Arizona</Text>
          </View>
 
        </View>
@@ -158,12 +160,13 @@ class SimpleExplore extends React.Component{
     const groupPosts = [1,2, 3]
     return(
       <BackgroundContainer>
+
         <FlatList
           stickyHeaderIndices={[0]}
           contentContainerStyle={{paddingBottom:50}}
           ListHeaderComponent = {this.listHeader}
           showsVerticalScrollIndicator={false}
-          style = {{flex: 1}}
+          style = {{flex: 1, }}
           data = {this.state.orbs}
           renderItem = {this.renderItem}
           keyExtractor={(item, index) => String(index)}
