@@ -201,6 +201,7 @@ class InfiniteScrollFlatNew extends React.Component{
 
         authAxios.get(`${global.IP_CHANGE}/mySocialCal/fetchOrbPost/`+groupId)
         .then(res => {
+          console.log(res.data.group, 'stuff here')
           this.setState({
             groupInfo: res.data.group
           })
@@ -617,11 +618,14 @@ class InfiniteScrollFlatNew extends React.Component{
     const groupPic = this.props.route.params.groupPic
     const groupName = this.props.route.params.groupName
     const groupId = this.props.route.params.orbId
+    const members = this.state.groupInfo.mini_member
+
 
     this.props.navigation.navigate("Camera", {
       groupPic: groupPic,
       groupName: groupName,
-      groupId: groupId
+      groupId: groupId,
+      members: members,
     })
   }
 

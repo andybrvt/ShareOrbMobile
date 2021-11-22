@@ -742,6 +742,26 @@ class CameraScreen extends React.Component{
         alert(err)
       })
 
+
+      const members = this.props.route.params.members
+      const creatorId = this.props.route.params.creatorId
+      const orbId = this.props.route.params.groupId
+      const groupName = this.props.route.params.groupName
+      const groupPic = this.props.route.params.groupPic
+      for(let i = 0; i<members.length; i++){
+
+        // need creator id, orbId, groupName, groupPic
+
+        //need the expo notificaiton tokenk
+        global.SEND_GROUP_POST_NOTIFICATION(
+          members[i].notificationToken,
+          creatorId,
+          orbId,
+          groupName,
+          groupPic
+        )
+      }
+
       this.onCancelPhoto();
       this.props.closeShowCamera()
       this.props.navigation.goBack()

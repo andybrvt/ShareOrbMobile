@@ -114,10 +114,10 @@ import * as Notifications from 'expo-notifications';
 
 
 // Andy UACI
-global.IP_CHANGE = "http://206.207.51.105:19000"
-global.IMAGE_ENDPOINT = "http://206.207.51.105:19000"
-global.WS_ENDPOINT = "206.207.51.105:19000"
-global.POSTLIST_SPEC = 'http://206.207.51.105:19000/media/'
+global.IP_CHANGE = "http://206.207.51.108:19000"
+global.IMAGE_ENDPOINT = "http://206.207.51.108:19000"
+global.WS_ENDPOINT = "206.207.51.108:19000"
+global.POSTLIST_SPEC = 'http://206.207.51.108:19000/media/'
 global.WS_HEADER = "ws"
 
 
@@ -225,6 +225,42 @@ global.FILE_NAME_GETTER = (fileURI) => {
     name: fileName,
   }
 
+}
+
+global.SEND_GROUP_POST_NOTIFICATION = async(
+  expoPushToken,
+  creatorId,
+  orbId,
+  groupName,
+  groupPic
+) => {
+  if(expoPushToken !== ""){
+    const message = {
+      to: expoPushToken,
+      sound: "default",
+      title:'Someone posted on your '+groupName+' orb',
+      body: 'Click to check it out!',
+      data: {
+        type: "group_post",
+        creatorId: creatorId,
+        orbId: orbId,
+        groupName: groupName,
+        groupPic: groupPic
+       },
+    }
+
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    })
+
+
+  }
 }
 
 global.SEND_GROUP_COMMENT_NOTIFICATION = async(

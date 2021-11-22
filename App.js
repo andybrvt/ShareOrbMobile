@@ -360,6 +360,8 @@ class App extends Component{
 
              const notiType = response.notification.request.trigger.payload.body.type;
 
+
+
               if(notiType === "like"){
                 this.refContainer.navigate('DayAlbum', {
                   cellId: response.notification.request.trigger.payload.body.dayId
@@ -378,6 +380,24 @@ class App extends Component{
 
 
               }
+
+              if(notiType === "group_post"){
+                const body = response.notification.request.trigger.payload.body
+
+                const creator = body.creatorId
+                const orbId = body.orbId
+                const groupName = body.groupName
+                const groupPic = body.groupPic
+
+                this.refContainer.navigate('groupOrb', {
+                  creator: creator,
+                  orbId: orbId,
+                  groupName: groupName,
+                  groupPic: groupPic
+                })
+
+              }
+
 
               if(notiType === "group_comment"){
                 const postId = response.notification.request.trigger.payload.body.postId
