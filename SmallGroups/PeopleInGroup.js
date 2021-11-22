@@ -5,13 +5,13 @@ import { Text,
    StyleSheet,
    TouchableOpacity,
    TouchableHighlight,
-   ActivityIndicator
+   ActivityIndicator,
+   FlatList
  } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import NotificationWebSocketInstance from '../Websockets/notificationWebsocket';
 import authAxios from '../util';
 import * as authActions from '../store/actions/auth';
@@ -32,9 +32,15 @@ import * as authActions from '../store/actions/auth';
    }
 
    selectItem(item) {
-     this.props.navigation.navigate("ProfilePage", {
-       username: item.username
-     })
+
+     console.log(item)
+     if(item.id === this.props.curId){
+       this.props.navigation.navigate("Profile");
+     } else {
+       this.props.navigation.navigate("ProfilePage", {
+         userId: item.id
+       })
+     }
    }
 
    componentDidMount(){

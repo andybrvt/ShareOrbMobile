@@ -388,26 +388,28 @@ class GroupInfo extends React.Component{
               <Text></Text>
            */}
 
-
-           <View style={{flexDirection:'row', padding:10, borderTopWidth:1, borderColor:'whitesmoke',
-             alignItems:'center', marginLeft:10,}}>
-             <Text style={{color:'#919191',
-             fontSize:15,
-             fontFamily:'Nunito-SemiBold', marginLeft:10,}}> Locate Business </Text>
+           {/*
+             <View style={{flexDirection:'row', padding:10, borderTopWidth:1, borderColor:'whitesmoke',
+               alignItems:'center', marginLeft:10,}}>
+               <Text style={{color:'#919191',
+               fontSize:15,
+               fontFamily:'Nunito-SemiBold', marginLeft:10,}}> Locate Business </Text>
+              </View>
+                <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
+              <TouchableHighlight
+                onPress={() => this.navMapsLocation(address)}
+                style={styles.roundButton2}>
+                <FontAwesomeIcon
+                 style = {{
+                   color:'white',
+                   right:1,
+                 }}
+                 size = {25}
+                 icon={faMapMarked} />
+              </TouchableHighlight>
             </View>
-              <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}>
-            <TouchableHighlight
-              onPress={() => this.navMapsLocation(address)}
-              style={styles.roundButton2}>
-              <FontAwesomeIcon
-               style = {{
-                 color:'white',
-                 right:1,
-               }}
-               size = {25}
-               icon={faMapMarked} />
-            </TouchableHighlight>
-          </View>
+
+             */}
 
 
           {

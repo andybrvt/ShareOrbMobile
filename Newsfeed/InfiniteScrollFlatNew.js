@@ -520,6 +520,9 @@ class InfiniteScrollFlatNew extends React.Component{
 
     authAxios.post(`${global.IP_CHANGE}/mySocialCal/joinSmallGroup/`+groupId+"/"+this.props.id)
     .then(res => {
+
+      this.props.authAddSmallGroup(res.data)
+
       this.setState({
         groupInfo: res.data
       })
@@ -592,7 +595,7 @@ class InfiniteScrollFlatNew extends React.Component{
             }
 
             {
-              this.props.id === creatorId ?
+               false   ?
 
               <TouchableOpacity
                 style={{marginTop:25}}
@@ -1015,6 +1018,7 @@ const mapDispatchToProps = dispatch => {
     loadMoreSmallGroupPost: (posts) => dispatch(smallGroupsActions.loadMoreSmallGroupPost(posts)),
     loadMoreSocialPost: (post) => dispatch(socialNewsfeedActions.loadMoreSocialPost(post)),
     openShowCamera: () => dispatch(authActions.openShowCamera()),
+    authAddSmallGroup: (group) => dispatch(authActions.authAddSmallGroup(group)),
     authAddUnaddFollowing: (following) => dispatch(authActions.authAddUnaddFollowing(following))
   }
 }
