@@ -56,6 +56,7 @@ class GroupInfo extends React.Component{
     const groupId = this.props.route.params.groupId
     authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/getSmallGroupInfo/'+groupId)
     .then(res => {
+      console.log(res.data, 'in the info')
       this.setState({
         smallGroupInfo: res.data
       })
@@ -92,6 +93,8 @@ class GroupInfo extends React.Component{
   leaveGroup = (groupId) => {
     const userId = this.props.curId
     const groupList=this.props.smallGroups
+
+    console.log(groupId, userId)
     this.setState({
       loading: true,
       disabled:true,
@@ -106,7 +109,7 @@ class GroupInfo extends React.Component{
         loading: false
       })
 
-      this.props.navigation.navigate("Home")
+      this.props.navigation.navigate("Explore")
 
 
     })
@@ -262,11 +265,17 @@ class GroupInfo extends React.Component{
     let groupID=""
     let address=""
     let creatorPic=""
-    console.log("????????????")
-    console.log(this.props)
 
     const {smallGroupInfo} = this.state
     console.log(smallGroupInfo)
+    if(smallGroupInfo.id){
+      groupID = smallGroupInfo.id
+
+    }
+    if(smallGroupInfo.members){
+      members = smallGroupInfo.members
+
+    }
     if(smallGroupInfo.creator){
       creatorFirstName=smallGroupInfo.creator.first_name
       creatorLastName=smallGroupInfo.creator.last_name
@@ -279,8 +288,7 @@ class GroupInfo extends React.Component{
       address=smallGroupInfo.address
       description=smallGroupInfo.description
     }
-    console.log(creatorUserName)
-    console.log(address)
+
 
     return(
       <BackgroundContainer>
@@ -403,7 +411,7 @@ class GroupInfo extends React.Component{
 
 
           {
-            (this.props.curId==creatorID)?
+            members.includes(this.props.curId)?
             <View style={{alignItems:'center', top:'5%'}}>
               <TouchableOpacity  onPress={() => this.toggleLeave(groupID)} style={styles.loginBtn1}>
                 <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
@@ -411,11 +419,7 @@ class GroupInfo extends React.Component{
             </View>
 
             :
-            <View style={{alignItems:'center', top:'10%'}}>
-              <TouchableOpacity  onPress={() => this.toggleLeave(groupID)} style={styles.loginBtn1}>
-                <Text style={{color:'white', fontSize:14, fontFamily:'Nunito-Bold'}}> LEAVE GROUP</Text>
-              </TouchableOpacity>
-            </View>
+            null
 
           }
 
