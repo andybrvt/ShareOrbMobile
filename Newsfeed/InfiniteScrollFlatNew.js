@@ -24,7 +24,7 @@ import NewsfeedButtonContainer from './NewsfeedButtonContainer';
 import SocialNewsfeedPost from './SocialNewsfeedPost';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent} from 'react-native-redash/lib/module/v1';
-import { Settings, User, Trash2, Users,ChevronsLeft, ArrowLeft, Edit2, CheckCircle} from "react-native-feather";
+import { Settings, User, Trash2, Bell, Users,ChevronsLeft, ArrowLeft, Edit2, CheckCircle} from "react-native-feather";
 import { Video as Video1} from "react-native-feather";
 import * as dateFns from 'date-fns';
 import  authAxios from '../util';
@@ -42,7 +42,8 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import { SharedElement } from "react-navigation-shared-element";
 import NewGroupPost from './NewGroupPost';
 import NoPostInOrb from './noPostInOrb.svg';
-
+import MainLogo from '../logo.svg';
+import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 // this is used mostly for the new scroll newsfeed
 import { SCREEN_HEIGHT, SCREEN_WIDTH, MAX_PIC} from "../Constants";
 const width=SCREEN_WIDTH;
@@ -544,9 +545,78 @@ class InfiniteScrollFlatNew extends React.Component{
     }
 
     return(
+
+
       <View style = {styles.header}>
-        <View style={{flexDirection:'row'}}>
+        <View style = {styles.header2}>
+          <View style = {styles.sideHeaders}>
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate("Profile")}
+              >
+              <Avatar
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}` + this.props.profilePic,
+                }}
+                rounded
+                size = {30}
+                 />
+
+            </TouchableOpacity>
+
+          </View>
+
+          <View style = {styles.middleHeader}>
+            <MainLogo
+              height = {"80%"}
+              width = {"45%"}
+               />
+
+          </View>
+
+          <View style = {styles.sideHeaders}>
+
+
+
+
+              <TouchableOpacity
+                onPress = {() => this.props.navigation.navigate("notification")}
+                >
+                <Bell
+                  width={25}
+                  height={25}
+                  stroke = "black"
+                  fill = "white"
+                  style={{marginRight:5}}
+                   />
+
+                   {
+                     this.props.notificationSeen > 0 ?
+
+                     <View  style={{position:'absolute', right:'20%', top:'0%',}}>
+                       <View style = {styles.notiCircle}>
+                       </View>
+                     </View>
+
+                     :
+
+                     null
+                   }
+
+              </TouchableOpacity>
+
+
+
+
+          </View>
+
+
+
+        </View>
+
+
+        <View style={{flexDirection:'row', padding:20,}}>
           <View style={{flex:1, }}>
+            {/*
             <TouchableOpacity
               onPress = {() => this.props.navigation.goBack(0)}
               >
@@ -555,6 +625,7 @@ class InfiniteScrollFlatNew extends React.Component{
               height = {25}
               width = {25} />
           </TouchableOpacity>
+          */}
           </View>
           <View style={{flex:2, alignItems:'center'}}>
             <Text>
@@ -613,6 +684,7 @@ class InfiniteScrollFlatNew extends React.Component{
           </View>
         </View>
       </View>
+
     )
   }
 
@@ -771,6 +843,7 @@ class InfiniteScrollFlatNew extends React.Component{
             maxToRenderPerBatch={12}
             windowSize={5}
             contentContainerStyle={{
+              top:0,
               paddingBottom: 75 }}
              data={groupPosts}
              keyExtractor={this.keyExtractor}
@@ -868,6 +941,38 @@ class InfiniteScrollFlatNew extends React.Component{
 }
 
 const styles = StyleSheet.create({
+  sideHeaders:{
+      width: '15%',
+      alignItems: 'center',
+      justifyContent: 'center'
+  },
+  middleHeader:{
+    width: '70%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  notiCircle: {
+    position:'absolute',
+    height: 10,
+    width: 10,
+    borderRadius: 1000,
+    backgroundColor:'red',
+  },
+  header: {
+
+    backgroundColor:'white',
+    justifyContent: 'center'
+  },
+  header2: {
+    height: 45,
+    width:'100%',
+    // backgroundColor: '#1890ff',
+    backgroundColor:'white',
+    width: '100%',
+    flexDirection: 'row',
+    borderBottomWidth:0.5,
+    borderColor:'lightgray',
+  },
   videoFooterUserName: {
     color:'white',
     fontSize:11,
@@ -902,11 +1007,7 @@ const styles = StyleSheet.create({
     right: '5%',
     position:'absolute'
   },
-  header: {
-    padding:20,
 
-    justifyContent: 'center'
-  },
   groupName: {
     marginTop: 5,
     fontSize: 20,
@@ -1008,7 +1109,8 @@ const mapStateToProps = state => {
     following: state.auth.following,
     curLoad: state.auth.curLoad,
     groupPosts: state.smallGroups.groupPosts,
-    closeOrb: state.globeGroup.closeOrb
+    closeOrb: state.globeGroup.closeOrb,
+    profilePic:state.auth.profilePic,
   }
 }
 

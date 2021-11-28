@@ -904,16 +904,7 @@ class App extends Component{
                       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
                     }}>
 
-                    <Stack.Screen
-                      options={{
-                        headerShown: false,
-                         ...TransitionPresets.SlideFromRightIOS,
-                       }}
 
-                       name = 'AskGroupCode'
-                       component = {AskGroupCode}
-
-                       />
 
                     <Stack.Screen
                       options={{
@@ -927,7 +918,16 @@ class App extends Component{
                        />
 
 
+                       <Stack.Screen
+                         options={{
+                           headerShown: false,
+                            ...TransitionPresets.SlideFromRightIOS,
+                          }}
 
+                          name = 'AskGroupCode'
+                          component = {AskGroupCode}
+
+                          />
                     <Stack.Screen
                       options={{headerShown: false, }}
                       name = "tabs"

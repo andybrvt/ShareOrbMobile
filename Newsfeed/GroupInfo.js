@@ -293,6 +293,7 @@ class GroupInfo extends React.Component{
 
     return(
       <BackgroundContainer>
+
         <View underlayColor="#f0f0f0">
           <View style={{
               height:'70%',

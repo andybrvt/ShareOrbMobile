@@ -462,7 +462,7 @@ class Login extends React.Component{
               <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}> Use Instagram</Text>
             </TouchableOpacity>
             */}
-
+            {/*
               <TouchableOpacity
                 style={styles.loginBtn1}
                 onPress={() => this.facebookLogIn()}
@@ -473,7 +473,7 @@ class Login extends React.Component{
                 <Text style={{ color: 'white', textAlign: 'center', fontSize:14 }}> Use Facebook</Text>
               </TouchableOpacity>
 
-
+            */}
             {/*
             <View style={styles.container}>
               <Image
