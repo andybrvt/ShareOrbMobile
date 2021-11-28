@@ -385,13 +385,14 @@ class Login extends React.Component{
 
            <View style = {styles.logo}>
              <MainLogo height = {100}  width = {200} />
+             {/*
                <Text style={{
                    color: "#1890ff",
                    fontFamily:'Nunito-SemiBold',
                    flexWrap: 'wrap',
                    fontSize: 15,
                    margin: 0 }}>Conect with others in the moment, at "the" place</Text>
-
+              */}
            </View>
           <View style = {styles.inputHolders}>
             <View style = {styles.inputHolder}>

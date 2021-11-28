@@ -110,6 +110,8 @@ import Frame from './Frame.svg';
 import Maps from './Newsfeed/Maps';
 import * as Location from 'expo-location';
 import GlobeGroup from './Newsfeed/GlobeGroup/GlobeGroup';
+
+import AskGroupCode from './Newsfeed/AskGroupCode';
 import Story from './Newsfeed/GlobeGroup/Story';
 import Story1 from './Newsfeed/GlobeGroup/Story1';
 import Story2 from './Newsfeed/GlobeGroup/Story2';
@@ -901,6 +903,17 @@ class App extends Component{
                       // headerShown: false,
                       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
                     }}>
+
+                    <Stack.Screen
+                      options={{
+                        headerShown: false,
+                         ...TransitionPresets.SlideFromRightIOS,
+                       }}
+
+                       name = 'AskGroupCode'
+                       component = {AskGroupCode}
+
+                       />
 
                     <Stack.Screen
                       options={{
