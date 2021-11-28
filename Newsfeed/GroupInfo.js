@@ -267,6 +267,7 @@ class GroupInfo extends React.Component{
     let creatorPic=""
 
     const {smallGroupInfo} = this.state
+    console.log("SMall group")
     console.log(smallGroupInfo)
     if(smallGroupInfo.id){
       groupID = smallGroupInfo.id
@@ -305,7 +306,7 @@ class GroupInfo extends React.Component{
 
 
             }}>
-            {/*
+
               <View style={{flexDirection:'row', alignItems:'center', marginBottom:'5%',}}>
                 <Text style={styles.settingWord}>
 
@@ -314,11 +315,11 @@ class GroupInfo extends React.Component{
                 <TouchableOpacity onPress={()=>this.shareMessage()}>
 
                 <View style={styles.loginBtn0}>
-                  <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>{code}</Text>
+                  <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>NWA6424{code}</Text>
                 </View>
                 </TouchableOpacity>
               </View>
-            */}
+
 
               <TouchableOpacity   onPress={() => this.bs.current.snapTo(0)}>
                 <Avatar

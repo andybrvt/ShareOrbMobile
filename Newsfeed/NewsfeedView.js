@@ -413,6 +413,7 @@ class NewsfeedView extends React.Component{
                   height = {37.5} />
              </TouchableOpacity>
              */}
+
              <AdjModal
                onCancel = {this.onCloseLocationModal}
                onAction = {this.onOpenLocationModal}

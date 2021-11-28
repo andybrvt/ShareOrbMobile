@@ -8,17 +8,19 @@ import { Text,
    FlatList,
    TouchableHighlight,
    TextInput,
+   Modal,
    Keyboard,
    TouchableOpacity
   } from 'react-native';
 import BackgroundContainer from '../RandomComponents/BackgroundContainer';
 import { Avatar } from 'react-native-elements';
 import MainLogo from '../logo.svg';
-import { MapPin,Bell,ArrowUpCircle, Plus, Mail, UserPlus, Globe } from "react-native-feather";
+import { MapPin,Bell,ArrowUpCircle, Plus, PlusCircle, Search, Mail, UserPlus, Globe } from "react-native-feather";
 import { connect } from 'react-redux';
 import authAxios from '../util';
 
-
+const width = Dimensions.get("window").width
+const height = Dimensions.get("window").height
 class SimpleExplore extends React.Component{
 
 
@@ -26,7 +28,8 @@ class SimpleExplore extends React.Component{
     super(props)
 
     this.state = {
-      orbs: []
+      orbs: [],
+      businessCondition:false,
     }
 
   }
@@ -40,6 +43,12 @@ class SimpleExplore extends React.Component{
     })
   }
 
+
+  onShowBusinessCondition = () => {
+    this.setState({
+      businessCondition: !this.state.businessCondition,
+    })
+  }
 
   renderItem = ({item}) => {
     return(
@@ -149,6 +158,7 @@ class SimpleExplore extends React.Component{
 
 
 
+
       </View>
     )
   }
@@ -172,7 +182,53 @@ class SimpleExplore extends React.Component{
           // onRefresh = {() => this.onRefresh()}
 
            />
+           <TouchableOpacity style = {{
+               position: 'absolute',
+               alignSelf: 'center',
+               bottom: '5%',
+             }}
+             onPress={() => this.onShowBusinessCondition()}
+             >
+             <View style = {styles.roundButton}>
+               <PlusCircle
+                 stroke = "white"
+                 width = {40}
+                 height = {40}
+                  />
+             </View>
+            </TouchableOpacity>
 
+
+            <Modal
+               animationType="fade"
+               transparent
+               visible={this.state.businessCondition}
+               presentationStyle="overFullScreen"
+                >
+                <View style={styles.viewWrapper}>
+                    <View style={styles.modalView}>
+                        <TextInput
+                          placeholderTextColor="gray"
+
+                           placeholder="Enter Group Code..."
+                           value={this.state.inputValue}
+                           style={styles.textInput}
+                           onChangeText={(value) =>
+                               this.setState({
+                               inputValue:value
+                             })
+                           } />
+                         <View style={{flexDirection:'row', marginTop:25, alignItems:'flex-end'}}>
+                           <TouchableOpacity onPress={this.onShowBusinessCondition} style={styles.cancelButton}>
+                             <Text style={{color:'white'}}>Cancel</Text>
+                           </TouchableOpacity>
+                           <TouchableOpacity onPress={this.onSubmitCreateOrb} style={styles.cancelButton}>
+                             <Text style={{color:'white'}}>Submit</Text>
+                           </TouchableOpacity>
+                        </View>
+                  </View>
+                </View>
+            </Modal>
       </BackgroundContainer>
     )
   }
@@ -191,6 +247,62 @@ const mapStateToProps = state => {
 
 
 const styles = StyleSheet.create({
+  cancelButton: {
+    marginRight:10,
+    borderRadius: 5,
+    padding:10,
+    elevation:5,
+    textShadowColor: 'black',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "blue",
+    flexDirection:'row'
+  },
+  viewWrapper: {
+      flex: 1,
+
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
+  },
+  modalView: {
+      alignItems: "center",
+      justifyContent: "center",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      elevation: 5,
+      transform: [{ translateX: -(width * 0.4) },
+                  { translateY: -90 }],
+      height: 180,
+      width: width * 0.8,
+      backgroundColor: "#fff",
+      borderRadius: 7,
+  },
+  textInput: {
+      width: "80%",
+      borderRadius: 5,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      borderColor: "rgba(0, 0, 0, 0.2)",
+      borderWidth: 1,
+      marginBottom: 8,
+  },
+  roundButton: {
+    width: 65,
+    height: 65,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 55,
+    shadowColor: '#333333',
+    shadowOffset: {width: 1, height: 3},
+    shadowRadius: 2,
+    shadowOpacity: 0.4,
+    elevation: 20,
+    backgroundColor: '#1890ff',
+  },
   header: {
     height: 50,
     // backgroundColor: '#1890ff',
