@@ -33,9 +33,21 @@ class AskGroupCode extends React.Component{
       orbs: [],
       businessCondition:false,
       groupCode:'',
+      currGroup:'',
     }
 
   }
+
+  ViewGroup = ( creator, orbId, groupName, groupPic) => {
+   // creator has to be the id
+
+   navigation.navigate("groupOrb",{
+     creator: creator,
+     orbId: orbId,
+     groupName: groupName,
+     groupPic:groupPic
+   })
+ }
 
   onGroupCodeChange = e => {
     this.setState({
@@ -43,6 +55,20 @@ class AskGroupCode extends React.Component{
     })
   }
 
+  handleSubmit = e => {
+    console.log(this.state.groupCode)
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/pullOrbFromCode/iKCunMqY')
+    .then(res => {
+      console.log(res.data)
+      this.props.navigation.navigate("groupOrb",{
+        creator: res.data.creator.id,
+        orbId: res.data.id,
+        groupName: res.data.group_name,
+        groupPic:res.data.groupPic,
+      })
+    })
+
+  }
 
 
   componentDidMount(){
@@ -92,6 +118,21 @@ class AskGroupCode extends React.Component{
               </TouchableWithoutFeedback>
             </View>
         </View>
+        <TouchableOpacity
+          onPress = {() => this.handleSubmit()}
+           style = {styles.loginBtn}>
+           {
+             this.state.loginLoading ?
+
+             <ActivityIndicator
+               color = "white"
+                />
+
+             :
+
+            <Text style = {styles.loginText}> Submit</Text>
+           }
+        </TouchableOpacity>
 
 
 
@@ -114,6 +155,23 @@ const mapStateToProps = state => {
 
 
 const styles = StyleSheet.create({
+  loginText:{
+    color:'white',
+    fontFamily:'Nunito-SemiBold',
+    fontSize:20,
+  },
+  loginBtn: {
+    position: "absolute",
+    bottom:100,
+    width: "50%",
+    borderRadius: 10,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 25,
+    backgroundColor: "#2f54eb",
+    // backgroundColor: "pink",
+  },
   regSignup:{
     position: "absolute",
     right:25,

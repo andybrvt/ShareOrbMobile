@@ -905,7 +905,16 @@ class App extends Component{
                     }}>
 
 
+                    <Stack.Screen
+                      options={{
+                        headerShown: false,
+                         ...TransitionPresets.SlideFromRightIOS,
+                       }}
 
+                       name = 'AskGroupCode'
+                       component = {AskGroupCode}
+
+                       />
                     <Stack.Screen
                       options={{
                         headerShown: false,
@@ -918,16 +927,7 @@ class App extends Component{
                        />
 
 
-                       <Stack.Screen
-                         options={{
-                           headerShown: false,
-                            ...TransitionPresets.SlideFromRightIOS,
-                          }}
 
-                          name = 'AskGroupCode'
-                          component = {AskGroupCode}
-
-                          />
                     <Stack.Screen
                       options={{headerShown: false, }}
                       name = "tabs"
