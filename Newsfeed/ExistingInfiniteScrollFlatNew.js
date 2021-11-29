@@ -181,11 +181,14 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
     console.log("MADE TO EXISTING")
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/pullFirstOrb/`+this.props.id)
     .then(res => {
+      console.log(res.data)
+      temp=res.data
+      console.log(temp.smallGroups[0])
         this.setState({
-           creatorId: res.data.smallGroups.creator.id,
-           groupName: res.data.smallGroups.group_name,
-           groupPic:res.data.smallGroups.groupPic,
-           groupId: res.data.smallGroups.id,
+           creatorId: temp.smallGroups[0].creator.id,
+           groupName: temp.smallGroups[0].group_name,
+           groupPic:temp.smallGroups[0].groupPic,
+           groupId: temp.smallGroups[0].id,
         });
     })
     // const groupId=this.props.route.params.orbId

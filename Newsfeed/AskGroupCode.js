@@ -10,6 +10,7 @@ import { Text,
    TextInput,
    Modal,
    TouchableWithoutFeedback,
+   KeyboardAvoidingView,
    Keyboard,
    TouchableOpacity
   } from 'react-native';
@@ -94,48 +95,60 @@ class AskGroupCode extends React.Component{
           style = {styles.regSignup}>
           <Text style={{color:'white', fontSize:12}} >Log Out</Text>
         </TouchableOpacity>
-        <View style={{alignItems:'center', justifyContent:'center', top:'25%'}}>
-          <FriendShip width = {125} height = {125} />
-          <Text style={{fontSize:25,
-            marginTop:25,
-            color:'white',
-            fontFamily:"Nunito-Bold"}}>Enter Group Code</Text>
-          <View style={{top:25}}>
-            <TouchableWithoutFeedback
-            style={{backgroundColor:'red',}}
-              onPress = {() => this.textInput.focus()}>
-              <TextInput
-                style = {{
-                  width: width,
 
-                }}
-                autoCapitalize="none"
-                selectionColor={'white'}
-                style = {styles.textInput}
-                ref={(input) => { this.textInput = input; }}
-                onChangeText = {this.onGroupCodeChange}
-                value = {this.props.value}
-                />
-              </TouchableWithoutFeedback>
+        <KeyboardAvoidingView
+
+          behavior = {Platform.OS =='ios'?"null":"null"}
+          style = {{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent:'center',
+
+          }}>
+          <View style={{alignItems:'center', }}>
+            <FriendShip width = {125} height = {125} />
+            <Text style={{fontSize:25,
+              marginTop:25,
+              color:'white',
+              fontFamily:"Nunito-Bold"}}>Enter Group Code</Text>
+            <View style={{top:25}}>
+              <TouchableWithoutFeedback
+              style={{backgroundColor:'red',}}
+                onPress = {() => this.textInput.focus()}>
+                <TextInput
+                  style = {{
+                    width: width,
+
+                  }}
+                  autoCapitalize="none"
+                  selectionColor={'white'}
+                  style = {styles.textInput}
+                  ref={(input) => { this.textInput = input; }}
+                  onChangeText = {this.onGroupCodeChange}
+                  value = {this.props.value}
+                  />
+                </TouchableWithoutFeedback>
+              </View>
+
+
+                <TouchableOpacity
+                  onPress = {() => this.handleSubmit()}
+                   style = {styles.loginBtn}>
+                   {
+                     this.state.loginLoading ?
+
+                     <ActivityIndicator
+                       color = "white"
+                        />
+
+                     :
+
+                    <Text style = {styles.loginText}> Submit</Text>
+                   }
+                </TouchableOpacity>
+
             </View>
-        </View>
-        <TouchableOpacity
-          onPress = {() => this.handleSubmit()}
-           style = {styles.loginBtn}>
-           {
-             this.state.loginLoading ?
-
-             <ActivityIndicator
-               color = "white"
-                />
-
-             :
-
-            <Text style = {styles.loginText}> Submit</Text>
-           }
-        </TouchableOpacity>
-
-
+          </KeyboardAvoidingView>
 
 
       </View>
@@ -162,14 +175,13 @@ const styles = StyleSheet.create({
     fontSize:20,
   },
   loginBtn: {
-    position: "absolute",
-    bottom:100,
-    width: "50%",
+
+    width: 200,
     borderRadius: 10,
     height: 35,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 25,
+    marginTop: 50,
     backgroundColor: "#2f54eb",
     // backgroundColor: "pink",
   },

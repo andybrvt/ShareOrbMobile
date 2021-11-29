@@ -874,7 +874,8 @@ class App extends Component{
   }
 
   render(){
-
+    console.log("any groups?")
+    console.log(this.props.smallGroupIds)
     // DELETE SOME STUFF IN THESE ROUTES HERE
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
@@ -893,7 +894,7 @@ class App extends Component{
               {
                 !this.props.loading && this.props.username ?
                   <Stack.Navigator
-                    initialRouteName = {this.props.smallGroupIds ? "ExistingInfiniteScrollFlatNew" : "AskGroupCode"}
+                    initialRouteName = {this.props.smallGroupIds.length!=0 ? "ExistingInfiniteScrollFlatNew" : "AskGroupCode"}
                     detachInactiveScreens={false}
                     mode = "modal"
                     //keep this here, its important
