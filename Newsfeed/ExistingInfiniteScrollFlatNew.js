@@ -120,7 +120,7 @@ const data = [
 
 
 
-class InfiniteScrollFlatNew extends React.Component{
+class ExistingInfiniteScrollFlatNew extends React.Component{
 
   navGroupInfo=(groupInfo)=> {
     this.props.navigation.navigate("GroupInfo",{
@@ -156,7 +156,12 @@ class InfiniteScrollFlatNew extends React.Component{
         currentMonth: dateFns.format(new Date(), "MMMM"),
         currentDay: dateFns.format(new Date(), "d"),
         groupPosts: [],
-        groupInfo: {}
+        groupInfo: {},
+        groupPic:'',
+        groupName:'',
+        groupId:0,
+        creatorId:0,
+
       }
   }
 
@@ -173,13 +178,22 @@ class InfiniteScrollFlatNew extends React.Component{
 
   componentDidMount(){
     //add the most recents here
-
-    const groupId=this.props.route.params.orbId
+    console.log("MADE TO EXISTING")
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/pullFirstOrb/`+this.props.id)
+    .then(res => {
+        this.setState({
+           creatorId: res.data.smallGroups.creator.id,
+           groupName: res.data.smallGroups.group_name,
+           groupPic:res.data.smallGroups.groupPic,
+           groupId: res.data.smallGroups.id,
+        });
+    })
+    // const groupId=this.props.route.params.orbId
 
     // do an axios call here that checks if you are blocked or not
-    authAxios.get(`${global.IP_CHANGE}/mySocialCal/checkBlocked/`+this.props.id+"/"+groupId)
+    authAxios.get(`${global.IP_CHANGE}/mySocialCal/checkBlocked/`+this.props.id+"/"+3)
     .then(res => {
-      
+
       if(res.data){
         // if true then that means you are blocked
         Alert.alert(
@@ -533,11 +547,6 @@ class InfiniteScrollFlatNew extends React.Component{
   }
 
   listHeader = () => {
-    const creatorId = this.props.route.params.creator
-    const groupPic = this.props.route.params.groupPic
-    const groupName = this.props.route.params.groupName
-    const groupId = this.props.route.params.orbId
-
 
     let members = []
 
@@ -634,11 +643,11 @@ class InfiniteScrollFlatNew extends React.Component{
                 size={110}
                 rounded
                 source = {{
-                  uri: `${global.IMAGE_ENDPOINT}`+ groupPic
+                  uri: `${global.IMAGE_ENDPOINT}`+ this.groupPic
                 }}/>
             </Text>
             <Text style = {styles.groupName}>{groupName}</Text>
-            <TouchableOpacity onPress = {()=>this.navPeopleInGroup(this.props.route.params.orbId)}>
+            <TouchableOpacity onPress = {()=>this.navPeopleInGroup(groupId)}>
             <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12}}>
               {members.length} members
             </Text>
@@ -724,6 +733,10 @@ class InfiniteScrollFlatNew extends React.Component{
   keyExtractor = (item, index) => String(index)
 
   render(){
+    let creatorId=this.state.creatorId
+    let groupName=this.state.groupName
+    let groupPic=this.state.groupPic
+    let groupId=this.state.groupId
 
     // let post = [];
     // if(this.props.socialPosts){
@@ -732,31 +745,29 @@ class InfiniteScrollFlatNew extends React.Component{
 
 
 
-    let groupId = '';
-    let groupPic = "";
-    let groupName  = "";
     let groupPosts = [];
     let showButton = false;
-    let creatorId = ""
+
     let video=""
     let members = []
 
-
-    if(this.props.route.params.orbId){
-      groupId = this.props.route.params.orbId
-    }
-    if(this.props.route.params.groupPic){
-      groupPic = this.props.route.params.groupPic
-    }
-    if(this.props.route.params.groupName){
-      groupName = this.props.route.params.groupName
-    }
-    if(this.props.route.params.showButton){
-      showButton = this.props.route.params.showButton
-    }
-    if(this.props.route.params.creator){
-      creatorId = this.props.route.params.creator
-    }
+    //
+    //
+    // if(this.props.route.params.orbId){
+    //   groupId = this.props.route.params.orbId
+    // }
+    // if(this.props.route.params.groupPic){
+    //   groupPic = this.props.route.params.groupPic
+    // }
+    // if(this.props.route.params.groupName){
+    //   groupName = this.props.route.params.groupName
+    // }
+    // if(this.props.route.params.showButton){
+    //   showButton = this.props.route.params.showButton
+    // }
+    // if(this.props.route.params.creator){
+    //   creatorId = this.props.route.params.creator
+    // }
 
     if(this.state.groupInfo.members){
       members = this.state.groupInfo.members
@@ -765,8 +776,9 @@ class InfiniteScrollFlatNew extends React.Component{
     if(this.props.groupPosts){
       groupPosts = this.props.groupPosts
     }
-    groupId = this.props.route.params.orbId
-
+    console.log("BEGINNINGGGGGGG")
+    console.log(this.groupPic)
+    console.log("lol")
 
     return(
       <SafeAreaView style = {{flex: 1}}>
@@ -838,10 +850,146 @@ class InfiniteScrollFlatNew extends React.Component{
 
       */}
 
+      <View style = {styles.header}>
+        <View style = {styles.header2}>
+          <View style = {styles.sideHeaders}>
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.navigate("Profile")}
+              >
+              <Avatar
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}` + this.props.profilePic,
+                }}
+                rounded
+                size = {30}
+                 />
 
+            </TouchableOpacity>
+
+          </View>
+
+          <View style = {styles.middleHeader}>
+            <MainLogo
+              height = {"80%"}
+              width = {"45%"}
+               />
+
+          </View>
+
+          <View style = {styles.sideHeaders}>
+
+
+
+
+              <TouchableOpacity
+                onPress = {() => this.props.navigation.navigate("notification")}
+                >
+                <Bell
+                  width={25}
+                  height={25}
+                  stroke = "black"
+                  fill = "white"
+                  style={{marginRight:5}}
+                   />
+
+                   {
+                     this.props.notificationSeen > 0 ?
+
+                     <View  style={{position:'absolute', right:'20%', top:'0%',}}>
+                       <View style = {styles.notiCircle}>
+                       </View>
+                     </View>
+
+                     :
+
+                     null
+                   }
+
+              </TouchableOpacity>
+
+
+
+
+          </View>
+
+
+
+        </View>
+
+
+        <View style={{flexDirection:'row', padding:20,}}>
+          <View style={{flex:1, }}>
+            {/*
+            <TouchableOpacity
+              onPress = {() => this.props.navigation.goBack(0)}
+              >
+              <ArrowLeft
+              stroke = "black"
+              height = {25}
+              width = {25} />
+          </TouchableOpacity>
+          */}
+          </View>
+          <View style={{flex:2, alignItems:'center'}}>
+            <Text>
+               <Avatar
+                size={110}
+                rounded
+                source = {{
+                  uri: `${global.IMAGE_ENDPOINT}`+ groupPic
+                }}/>
+            </Text>
+            <Text style = {styles.groupName}>{groupName}</Text>
+            <TouchableOpacity onPress = {()=>this.navPeopleInGroup(groupId)}>
+            <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12}}>
+              {members.length} members
+            </Text>
+          </TouchableOpacity>
+
+          </View>
+
+          <View style={{flexDirection:'column', alignItems:'flex-end', flex:1, }}>
+            <TouchableOpacity
+              onPress={() => this.navGroupInfo(groupId)}
+              style={styles.roundButton1}>
+              <Users stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
+            </TouchableOpacity>
+
+            {
+              this.props.id === creatorId ?
+
+              <TouchableOpacity
+                style={{marginTop:50}}
+                onPress={() => this.selectDelete()}
+                >
+                <Edit2 stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
+              </TouchableOpacity>
+              :
+              null
+            }
+
+            {
+               false   ?
+
+              <TouchableOpacity
+                style={{marginTop:25}}
+                onPress = {() => this.onOrbSettingDirect(groupId)}
+                >
+                <Settings stroke="gray" strokeWidth={2.5} width={22.5} height={22.5} />
+              </TouchableOpacity>
+
+              :
+              null
+
+            }
+
+
+          </View>
+        </View>
+      </View>
 
           <FlatList
-            ListHeaderComponent = {this.listHeader}
+            // ListHeaderComponent = {this.listHeader}
             maxToRenderPerBatch={12}
             windowSize={5}
             contentContainerStyle={{
@@ -1127,4 +1275,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InfiniteScrollFlatNew);
+export default connect(mapStateToProps, mapDispatchToProps)(ExistingInfiniteScrollFlatNew);

@@ -56,8 +56,9 @@ class AskGroupCode extends React.Component{
   }
 
   handleSubmit = e => {
-    console.log(this.state.groupCode)
-    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/pullOrbFromCode/iKCunMqY')
+
+    authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/pullOrbFromCode/'+'HeLbpd8v')
+    // authAxios.get(`${global.IP_CHANGE}`+'/mySocialCal/pullOrbFromCode/'+this.state.groupCode)
     .then(res => {
       console.log(res.data)
       this.props.navigation.navigate("groupOrb",{

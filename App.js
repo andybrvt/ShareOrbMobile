@@ -116,6 +116,7 @@ import Story from './Newsfeed/GlobeGroup/Story';
 import Story1 from './Newsfeed/GlobeGroup/Story1';
 import Story2 from './Newsfeed/GlobeGroup/Story2';
 import InfiniteScrollFlatNew from './Newsfeed/InfiniteScrollFlatNew';
+import ExistingInfiniteScrollFlatNew from './Newsfeed/ExistingInfiniteScrollFlatNew';
 
 const TopTab = createMaterialTopTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -875,7 +876,6 @@ class App extends Component{
   render(){
 
     // DELETE SOME STUFF IN THESE ROUTES HERE
-
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the
     // login page and one for the other when authetnicated, when you are not auth
@@ -893,6 +893,7 @@ class App extends Component{
               {
                 !this.props.loading && this.props.username ?
                   <Stack.Navigator
+                    initialRouteName = {this.props.smallGroupIds ? "ExistingInfiniteScrollFlatNew" : "AskGroupCode"}
                     detachInactiveScreens={false}
                     mode = "modal"
                     //keep this here, its important
@@ -904,17 +905,20 @@ class App extends Component{
                       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
                     }}>
 
+                      <Stack.Screen
+                        options={{
+                          headerShown: false,
+                           ...TransitionPresets.SlideFromRightIOS,
+                         }}
 
-                    <Stack.Screen
-                      options={{
-                        headerShown: false,
-                         ...TransitionPresets.SlideFromRightIOS,
-                       }}
+                         name = 'AskGroupCode'
+                         component = {AskGroupCode}
 
-                       name = 'AskGroupCode'
-                       component = {AskGroupCode}
+                         />
 
-                       />
+
+
+
                     <Stack.Screen
                       options={{
                         headerShown: false,
@@ -1006,6 +1010,17 @@ class App extends Component{
 
                       component= {InfiniteScrollFlatNew}
                        />
+
+                       <Stack.Screen
+                         options={{
+                           headerShown: false,
+                            ...TransitionPresets.SlideFromRightIOS,
+                          }}
+                         name = "ExistingInfiniteScrollFlatNew"
+
+                         component= {ExistingInfiniteScrollFlatNew}
+                          />
+
 
 
                       <Stack.Screen
