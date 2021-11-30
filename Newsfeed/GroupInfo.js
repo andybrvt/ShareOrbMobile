@@ -76,7 +76,7 @@ class GroupInfo extends React.Component{
     //Here is the Share API
     Share.share({
       // message: inputValue.toString(),
-      message:"Join my Fitness orb with my code: N324FJ3A "+ codeInvite
+      message:"Join my Fitness orb with my code: "+ codeInvite
     })
       //after successful share return result
       .then((result) => console.log(result))
@@ -108,8 +108,8 @@ class GroupInfo extends React.Component{
       this.setState({
         loading: false
       })
-
-      this.props.navigation.navigate("Explore")
+      this.props.logout()
+      // this.props.navigation.navigate("Explore")
 
 
     })
@@ -267,8 +267,6 @@ class GroupInfo extends React.Component{
     let creatorPic=""
 
     const {smallGroupInfo} = this.state
-    console.log("SMall group")
-    console.log(smallGroupInfo)
     if(smallGroupInfo.id){
       groupID = smallGroupInfo.id
 
@@ -591,6 +589,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps= dispatch =>{
     return{
+        logout: () => dispatch(authActions.logout()),
       authUpdateNewsfeedSlide: (index) => dispatch(authActions.authUpdateNewsfeedSlide(index)),
       authSetActiveNewsfeedSlide: (index) => dispatch(authActions.authSetActiveNewsfeedSlide(index)),
       authUpdateSmallGroup: (group) => dispatch(authActions.authUpdateSmallGroup(group)),

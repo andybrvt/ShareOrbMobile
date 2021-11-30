@@ -179,7 +179,7 @@ class InfiniteScrollFlatNew extends React.Component{
     // do an axios call here that checks if you are blocked or not
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/checkBlocked/`+this.props.id+"/"+groupId)
     .then(res => {
-      
+
       if(res.data){
         // if true then that means you are blocked
         Alert.alert(
@@ -740,7 +740,7 @@ class InfiniteScrollFlatNew extends React.Component{
     let creatorId = ""
     let video=""
     let members = []
-
+    
 
     if(this.props.route.params.orbId){
       groupId = this.props.route.params.orbId
