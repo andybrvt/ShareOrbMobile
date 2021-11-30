@@ -76,12 +76,12 @@ class GroupInfo extends React.Component{
     //Here is the Share API
     Share.share({
       // message: inputValue.toString(),
-      message:"Join my Fitness orb with my code: "+ codeInvite
+      message:"Join my orb with my code: "+ codeInvite
     })
       //after successful share return result
       .then((result) => console.log(result))
       //If any thing goes wrong it comes here
-      .catch((errorMsg) => console.log(errorMsg));z
+      .catch((errorMsg) => console.log(errorMsg));
   };
 
   navMapsLocation = (address) => {
@@ -286,6 +286,7 @@ class GroupInfo extends React.Component{
     if(smallGroupInfo){
       address=smallGroupInfo.address
       description=smallGroupInfo.description
+      code=smallGroupInfo.groupCode
     }
 
 
@@ -302,19 +303,16 @@ class GroupInfo extends React.Component{
               alignItems:'center',
               justifyContent:'center',
               width:'100%',
-
-
             }}>
 
               <View style={{flexDirection:'row', alignItems:'center', marginBottom:'5%',}}>
                 <Text style={styles.settingWord}>
-
                 Invite code
                 </Text>
-                <TouchableOpacity onPress={()=>this.shareMessage()}>
+                <TouchableOpacity onPress={()=>this.shareMessage(code)}>
 
                 <View style={styles.loginBtn0}>
-                  <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>NWA6424{code}</Text>
+                  <Text style={{color:'white', fontSize:16, fontFamily:'Nunito-Bold', padding:5}}>{code}</Text>
                 </View>
                 </TouchableOpacity>
               </View>

@@ -182,8 +182,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
     console.log("MADE TO EXISTING")
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/pullFirstOrb/`+this.props.id)
     .then(res => {
-      console.log("LOLLLLLLLLLLLLLLL")
-      console.log(res.data)
+
       temp=res.data
 
         this.setState({
@@ -220,8 +219,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
 
             authAxios.get(`${global.IP_CHANGE}/mySocialCal/fetchOrbPost/`+this.state.groupId)
             .then(res => {
-              console.log("WWWWWWWWW")
-              console.log(res.data)
+
               this.setState({
                 groupInfo: res.data.group
               })
@@ -247,8 +245,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
         })
     })
     let groupId=this.state.groupId
-    console.log("HELLLOO")
-    console.log(groupId)
+
     // const groupId=this.props.route.params.orbId
 
     // do an axios call here that checks if you are blocked or not
@@ -751,8 +748,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
 
     let video=""
     let members = []
-    console.log("BBBBBBBb")
-    console.log(this.state.groupInfo)
+
     //
     //
     // if(this.props.route.params.orbId){
@@ -770,8 +766,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
     // if(this.props.route.params.creator){
     //   creatorId = this.props.route.params.creator
     // }
-    console.log("Start render")
-    console.log(this.state.groupInfo)
+
     if(this.state.groupInfo.members){
       members = this.state.members
     }
