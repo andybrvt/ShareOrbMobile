@@ -874,8 +874,6 @@ class App extends Component{
   }
 
   render(){
-    console.log("any groups?")
-    console.log(this.props.smallGroupIds)
     // DELETE SOME STUFF IN THESE ROUTES HERE
     const showPostModal = this.props.showFinalModal
     // pretty much how this works is that you will have a nativgation for the

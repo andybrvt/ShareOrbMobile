@@ -161,6 +161,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
         groupName:'',
         groupId:0,
         creatorId:0,
+        members:0,
 
       }
   }
@@ -181,69 +182,74 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
     console.log("MADE TO EXISTING")
     authAxios.get(`${global.IP_CHANGE}/mySocialCal/pullFirstOrb/`+this.props.id)
     .then(res => {
-      console.log(res.data)
+
       temp=res.data
-      console.log(temp.smallGroups[0])
+
         this.setState({
            creatorId: temp.smallGroups[0].creator.id,
            groupName: temp.smallGroups[0].group_name,
            groupPic:temp.smallGroups[0].groupPic,
            groupId: temp.smallGroups[0].id,
+           members: temp.smallGroups[0].members,
         });
+
+        authAxios.get(`${global.IP_CHANGE}/mySocialCal/checkBlocked/`+this.props.id+"/"+this.state.groupId)
+        .then(res => {
+
+          if(res.data){
+            // if true then that means you are blocked
+            Alert.alert(
+              "Blocked",
+              "You are blocked from this orb",
+              [
+                {
+                  text: "Ok",
+                  style:'destructive',
+                  onPress: () => this.props.navigation.goBack()
+                }
+              ]
+
+
+            )
+
+
+          } else {
+
+            // IF YOU ARE NOT BLOCKED THEN JUST GET THE INFO HERE
+
+            authAxios.get(`${global.IP_CHANGE}/mySocialCal/fetchOrbPost/`+this.state.groupId)
+            .then(res => {
+
+              this.setState({
+                groupInfo: res.data.group
+              })
+
+              const obj = {
+                groupPosts: res.data.posts,
+
+              }
+              this.props.loadSmallGroupsPost(obj)
+
+            })
+
+
+            // authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
+
+
+          }
+
+
+
+
+
+        })
     })
+    let groupId=this.state.groupId
+
     // const groupId=this.props.route.params.orbId
 
     // do an axios call here that checks if you are blocked or not
-    authAxios.get(`${global.IP_CHANGE}/mySocialCal/checkBlocked/`+this.props.id+"/"+3)
-    .then(res => {
 
-      if(res.data){
-        // if true then that means you are blocked
-        Alert.alert(
-          "Blocked",
-          "You are blocked from this orb",
-          [
-            {
-              text: "Ok",
-              style:'destructive',
-              onPress: () => this.props.navigation.goBack()
-            }
-          ]
-
-
-        )
-
-
-      } else {
-
-        // IF YOU ARE NOT BLOCKED THEN JUST GET THE INFO HERE
-
-        authAxios.get(`${global.IP_CHANGE}/mySocialCal/fetchOrbPost/`+groupId)
-        .then(res => {
-          console.log(res.data.group, 'stuff here')
-          this.setState({
-            groupInfo: res.data.group
-          })
-
-          const obj = {
-            groupPosts: res.data.posts,
-
-          }
-          this.props.loadSmallGroupsPost(obj)
-
-        })
-
-
-        // authAxios.get(`${global.IP_CHANGE}/userprofile/addRecentOrb/`+groupId)
-
-
-      }
-
-
-
-
-
-    })
 
     authAxios.get()
 
@@ -282,7 +288,6 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
     // used to connect to the websocket and then pull the intial
     // group info
 
-    const groupId = this.props.route.params.orbId
     this.waitForSmallGroupsSocketConnection(() => {
       //fetch the stuff here
       WebSocketSmallGroupInstance.fetchGroupPost(groupId)
@@ -317,7 +322,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
     this.setState({
       refreshing: true
     })
-    const groupId = this.props.route.params.orbId
+
     WebSocketSmallGroupInstance.fetchGroupPost(groupId)
     this.setState({
       refreshing: false
@@ -379,7 +384,6 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
 
   loadSocialPost = () => {
     const {start, addMore} = this.state;
-    const groupId = this.props.route.params.orbId
 
     if(this.state.hasMore){
       authAxios.get(`${global.IP_CHANGE}/mySocialCal/infiniteSmallGroup/`+groupId+"/"+start+"/"+addMore)
@@ -466,7 +470,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
         triggerDelete={this.state.deleteCondition}
         changeVideo={this.changeVideo}
         value={this.state.video}
-        groupInfo={this.props.route.params}
+        groupInfo={this.state.groupInfo}
         navigation={this.props.navigation}
         item = {item}
         setName = {this.setName}
@@ -535,9 +539,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
   }
 
   joinOrb = () => {
-    const groupId = this.props.route.params.orbId
-
-    authAxios.post(`${global.IP_CHANGE}/mySocialCal/joinSmallGroup/`+groupId+"/"+this.props.id)
+    authAxios.post(`${global.IP_CHANGE}/mySocialCal/joinSmallGroup/`+this.state.groupId+"/"+this.props.id)
     .then(res => {
 
       this.props.authAddSmallGroup(res.data)
@@ -550,7 +552,6 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
   }
 
   listHeader = () => {
-
     let members = []
 
     if(this.state.groupInfo.members){
@@ -652,7 +653,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
             <Text style = {styles.groupName}>{groupName}</Text>
             <TouchableOpacity onPress = {()=>this.navPeopleInGroup(groupId)}>
             <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12}}>
-              {members.length} members
+              {2} members
             </Text>
           </TouchableOpacity>
 
@@ -702,13 +703,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
   }
 
 
-  onCameraNav = () => {
-    const groupPic = this.props.route.params.groupPic
-    const groupName = this.props.route.params.groupName
-    const groupId = this.props.route.params.orbId
-    const members = this.state.groupInfo.mini_member
-
-
+  onCameraNav = (groupPic, groupName, groupId, members) => {
     this.props.navigation.navigate("Camera", {
       groupPic: groupPic,
       groupName: groupName,
@@ -773,15 +768,12 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
     // }
 
     if(this.state.groupInfo.members){
-      members = this.state.groupInfo.members
+      members = this.state.members
     }
 
     if(this.props.groupPosts){
       groupPosts = this.props.groupPosts
     }
-    console.log("BEGINNINGGGGGGG")
-    console.log(this.groupPic)
-    console.log("lol")
 
     return(
       <SafeAreaView style = {{flex: 1}}>
@@ -945,7 +937,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
             <Text style = {styles.groupName}>{groupName}</Text>
             <TouchableOpacity onPress = {()=>this.navPeopleInGroup(groupId)}>
             <Text style={{fontFamily:'Nunito-SemiBold', fontSize:12}}>
-              {members.length} members
+              {this.state.members.length} members
             </Text>
           </TouchableOpacity>
 
@@ -1038,7 +1030,7 @@ class ExistingInfiniteScrollFlatNew extends React.Component{
 
            <TouchableOpacity
              style = {styles.videoButton}
-             onPress = {() => this.onCameraNav()}
+             onPress = {() => this.onCameraNav(groupPic, groupName, groupId, members)}
 
              >
 
