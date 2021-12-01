@@ -241,7 +241,7 @@ class AppIntro extends React.Component{
 
   onUsernameChange = e => {
     this.setState({
-      username: e
+      username: e.replace(/\s/g, '')
     })
   }
 
@@ -253,7 +253,7 @@ class AppIntro extends React.Component{
 
   onPasswordChange = e => {
     this.setState({
-      password:e
+      password:e.replace(/\s/g, '')
     })
   }
 
